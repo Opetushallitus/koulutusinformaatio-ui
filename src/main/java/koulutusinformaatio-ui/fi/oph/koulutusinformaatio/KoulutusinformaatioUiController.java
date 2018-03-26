@@ -1,4 +1,4 @@
-package fi.oph.koski;
+package fi.oph.koulutusinformaatio;
 
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
