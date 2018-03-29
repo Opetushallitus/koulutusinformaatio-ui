@@ -7,7 +7,8 @@
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
-    "superagent": "^3.8.2"
+    "superagent": "^3.8.2",
+    "oph-urls-js": "Opetushallitus/oph-urls-js#master"
   },
   "scripts": {
     "start": "react-scripts start",

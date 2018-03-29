@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import superagent from 'superagent';
 import '../assets/css/oph-styles-min.css';
 import '../assets/css/styles.css';
-import '../assets/css/font-awesome.min.css'
-import '../assets/css/bootstrap.min.css'
+import '../assets/css/font-awesome.min.css';
+import '../assets/css/bootstrap.min.css';
+import {urls} from 'oph-urls-js';
+import frontUrls from '../oppija-urls.js';
 
 class Search extends Component {
 
@@ -16,6 +18,12 @@ class Search extends Component {
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+    }
+
+    async componentDidMount() {
+        urls.addProperties(frontUrls);
+        await urls.load({overrides: '/rest/config/frontProperties'});
+        console.log(urls.url('koulutusinformaatio-backend.search'));
         if(this.state.search) {
             this.search();
         }
@@ -23,7 +31,7 @@ class Search extends Component {
 
     search() {
         superagent
-            .get('http://localhost:3000/tarjonta-indeksoija/api/ui/search')
+            .get(urls.url('koulutusinformaatio-backend.search'))
             .query({query: this.state.search})
             .end((err, res) => {
                 console.log(res.body.result.map((m) => m.nimi));

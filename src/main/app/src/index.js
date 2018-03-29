@@ -10,4 +10,13 @@ ReactDOM.render((
     </BrowserRouter>
 ), document.getElementById('root'));
 
-registerServiceWorker();
+
+//registerServiceWorker auheuttaa ongelmia kutsuttaessa
+//backendin config/frontProperties-rajapintaa, koska
+//se ohjaa sen react-sovellukseen, jos reactin puolella
+//on käyty. On muutenkin ongelmallinen, ks:
+//https://github.com/facebook/create-react-app/issues/2398
+//https://github.com/ReactTraining/react-router/issues/5520
+
+//TODO: Poistetaanko kokonaan?
+//registerServiceWorker();
