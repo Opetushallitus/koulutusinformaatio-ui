@@ -1,4 +1,4 @@
-package fi.oph.koulutusinformaatio;
+package fi.oph.konfo;
 
 import fi.vm.sade.properties.OphProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,9 @@ public class UrlConfiguration extends OphProperties {
 
     @Autowired
     public UrlConfiguration(Environment environment) {
-        addFiles("/koulutusinformaatio-ui-oph.properties");
+        addFiles("/konfo-ui-oph.properties");
         this.addOverride("host-oppija", environment.getRequiredProperty("host.host-oppija"));
-        this.frontProperties.setProperty("koulutusinformaatio-backend.base-url", this.require("koulutusinformaatio-backend.base-url"));
-        this.frontProperties.setProperty("koulutusinformaatio-backend.search", this.require("koulutusinformaatio-backend.search"));
+        this.frontProperties.setProperty("konfo-backend.base-url", this.require("konfo-backend.base-url"));
+        this.frontProperties.setProperty("konfo-backend.search", this.require("konfo-backend.search"));
     }
 }

@@ -28,7 +28,7 @@ class Search extends Component {
             urls.addProperties(production);
             await urls.load({overrides: '/rest/config/frontProperties'});
         }
-        console.log(urls.url('koulutusinformaatio-backend.search'));
+        console.log(urls.url('konfo-backend.search'));
         if(this.state.search) {
             this.search();
         }
@@ -36,7 +36,7 @@ class Search extends Component {
 
     search() {
         superagent
-            .get(urls.url('koulutusinformaatio-backend.search'))
+            .get(urls.url('konfo-backend.search'))
             .query({query: this.state.search})
             .end((err, res) => {
                 console.log(res.body.result.map((m) => m.nimi));

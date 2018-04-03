@@ -1,6 +1,6 @@
 {
-  "short_name": "Koulutusinformaatio UI",
-  "name": "Koulutusinformaatio UI",
+  "short_name": "Konfo UI",
+  "name": "Konfo UI",
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",

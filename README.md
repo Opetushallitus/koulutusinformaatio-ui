@@ -1,10 +1,10 @@
-# Koulutusinformaatio UI
+# Konfo-UI
 
-Koulutusinformaatio UI on luotu create-react-app:lla. Backend, jonka ainoa tehtävä on jakaa käyttöliittymä, on Spring Boot 2.0 -sovellus.
+Konfo-UI on luotu create-react-app:lla. Backend, jonka ainoa tehtävä on jakaa käyttöliittymä, on Spring Boot 2.0 -sovellus.
 
 ## Vaatimukset
 
-Lokaalia ajoa varten koulutusinformaatio backendin pitää vastata osoitteessa: http://localhost:5000
+Lokaalia ajoa varten Konfo-backendin pitää vastata osoitteessa: http://localhost:5000
 
 ## Buildaus ja käynnistys
 
@@ -14,7 +14,7 @@ Projektin saa buildattua komennolla:
 
 Tämän jälkeen projektin voi käynnistää lokaalisti komennolla:
 
-`java -jar target/koulutusinformaatio-ui-0.1.0-SNAPSHOT.jar --spring.config.location=./koulutusinformaatioui-dev.yml`
+`java -jar target/konfo-ui-0.1.0-SNAPSHOT.jar --spring.config.location=./konfoui-dev.yml`
 
 Sovellus aukeaa osoitteeseen:
 
