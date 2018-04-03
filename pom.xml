@@ -23,6 +23,22 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <id>oph-sade-artifactory-snapshots</id>
+            <url>https://artifactory.oph.ware.fi/artifactory/oph-sade-snapshot-local</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>oph-sade-artifactory-releases</id>
+            <url>https://artifactory.oph.ware.fi/artifactory/oph-sade-release-local</url>
+        </repository>
+    </repositories>
     <properties>
         <java.version>1.8</java.version>
     </properties>
