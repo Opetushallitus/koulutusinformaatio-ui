@@ -7,6 +7,9 @@
     <version>0.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <name>konfo-ui</name>
+    <description>Konfo-ui (Uusi koulutusinformaatio UI)</description>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>

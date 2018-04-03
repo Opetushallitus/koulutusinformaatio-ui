@@ -26,7 +26,7 @@ class Search extends Component {
             urls.addProperties(development);
         } else {
             urls.addProperties(production);
-            await urls.load({overrides: '/rest/config/frontProperties'});
+            await urls.load({overrides: '/konfo/rest/config/frontProperties'}); //TODO: Poista "konfo" urlista?
         }
         console.log(urls.url('konfo-backend.search'));
         if(this.state.search) {

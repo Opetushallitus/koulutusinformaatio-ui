@@ -1,2 +1,5 @@
+server:
+  servlet:
+    context-path: /konfo
 host:
   host-oppija: http://localhost:3000
