@@ -5,7 +5,7 @@ import '../assets/css/styles.css';
 import '../assets/css/font-awesome.min.css';
 import '../assets/css/bootstrap.min.css';
 import {urls} from 'oph-urls-js';
-import frontUrls from '../oppija-urls.js';
+import {production, development} from '../oppija-urls.js';
 
 class Search extends Component {
 
@@ -21,8 +21,13 @@ class Search extends Component {
     }
 
     async componentDidMount() {
-        urls.addProperties(frontUrls);
-        await urls.load({overrides: '/rest/config/frontProperties'});
+        console.log(process.env.NODE_ENV);
+        if (process.env.NODE_ENV === 'development') {
+            urls.addProperties(development);
+        } else {
+            urls.addProperties(production);
+            await urls.load({overrides: '/rest/config/frontProperties'});
+        }
         console.log(urls.url('koulutusinformaatio-backend.search'));
         if(this.state.search) {
             this.search();

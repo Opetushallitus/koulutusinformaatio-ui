@@ -2,6 +2,10 @@
 
 Koulutusinformaatio UI on luotu create-react-app:lla. Backend, jonka ainoa tehtävä on jakaa käyttöliittymä, on Spring Boot 2.0 -sovellus.
 
+## Vaatimukset
+
+Lokaalia ajoa varten koulutusinformaatio backendin pitää vastata osoitteessa: http://localhost:5000
+
 ## Buildaus ja käynnistys
 
 Projektin saa buildattua komennolla:
@@ -10,7 +14,7 @@ Projektin saa buildattua komennolla:
 
 Tämän jälkeen projektin voi käynnistää lokaalisti komennolla:
 
-`java -jar target/koulutusinformaatio-ui-0.1.0-SNAPSHOT.jar
+`java -jar target/koulutusinformaatio-ui-0.1.0-SNAPSHOT.jar --spring.config.location=./koulutusinformaatioui-dev.yml`
 
 Sovellus aukeaa osoitteeseen:
 

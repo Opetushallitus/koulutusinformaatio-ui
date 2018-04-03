@@ -1,0 +1,2 @@
+host:
+  host-oppija: http://{{host_oppija}}
