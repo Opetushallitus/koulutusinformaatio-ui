@@ -2,4 +2,4 @@ server:
   servlet:
     context-path: /konfo
 host:
-  host-oppija: http://{{host_oppija}}
+  host-oppija: https://{{host_oppija}}
