@@ -6,7 +6,7 @@ Konfo-UI on luotu create-react-app:lla. Backend, jonka ainoa tehtävä on jakaa 
 
 Lokaalia ajoa varten Konfo-backendin pitää vastata osoitteessa: 
 
-http://localhost:3000
+http://localhost:3006
 
 ## Buildaus ja käynnistys
 
