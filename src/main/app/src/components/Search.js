@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import superagent from 'superagent';
+import { Link } from 'react-router-dom'
 import '../assets/css/oph-styles-min.css';
 import '../assets/css/styles.css';
 import '../assets/css/font-awesome.min.css';
@@ -67,7 +68,7 @@ class Search extends Component {
                         <i class="fa fa-heart-o" aria-hidden="true"></i>
                     </div>
                     <div class="text">
-                        <a href="koulutus1.html">{r.nimi.kieli_fi}.</a>
+                        <Link to={{ pathname: '/koulutus', state: r }}>{r.nimi ? r.nimi.kieli_fi : "nimi puuttuu"}.</Link>
                         <p>Ammattinimikkeitä: datanomi, testaaja, 3D-mallintaja, ohjelmoija, pelialan osaaja.</p>
                     </div>
                     <div class="compare-button">
