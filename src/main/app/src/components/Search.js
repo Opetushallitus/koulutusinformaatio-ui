@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import superagent from 'superagent';
 import { Link } from 'react-router-dom'
+import {observer, inject} from 'mobx-react';
 import '../assets/css/oph-styles-min.css';
 import '../assets/css/styles.css';
 import '../assets/css/font-awesome.min.css';
@@ -8,13 +9,14 @@ import '../assets/css/bootstrap.min.css';
 import {urls} from 'oph-urls-js';
 import {production, development} from '../oppija-urls.js';
 
+@inject("searchStore")
+@observer
 class Search extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            search: props.location.state.search,
-            result: '',
+            keywordInput : props.location.state && props.location.state.keyword ? props.location.state.keyword : '',
             error: ''
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -30,7 +32,7 @@ class Search extends Component {
             await urls.load({overrides: '/konfo/rest/config/frontProperties'}); //TODO: Poista "konfo" urlista?
         }
         console.log(urls.url('konfo-backend.search'));
-        if(this.state.search) {
+        if(this.state.keywordInput) {
             this.search();
         }
     }
@@ -38,28 +40,42 @@ class Search extends Component {
     search() {
         superagent
             .get(urls.url('konfo-backend.search'))
-            .query({query: this.state.search})
+            .query({query: this.state.keywordInput})
             .end((err, res) => {
                 console.log(res.body.result.map((m) => m.nimi));
+                this.props.searchStore.keyword = this.state.keywordInput;
+                this.props.searchStore.result = res ? res.body.result : [];
                 this.setState({
-                    result: res ? res.body.result : undefined,
+                    keywordInput: '',
                     error: err
                 })
             });
     }
 
     handleChange(event) {
-        this.setState({search: event.target.value});
+        this.setState({keywordInput: event.target.value});
     }
 
     handleSubmit(event){
-        event.preventDefault();
         this.search();
     }
 
     render() {
-        const result = this.state.result;
-        const count = result ? result.length : 0;
+        const result = this.props.searchStore.result;
+        const count = this.props.searchStore.count;
+        const keyword = this.props.searchStore.keyword;
+        const keywordSet = this.props.searchStore.keywordSet;
+
+        var resultSummary = <div/>
+        if(keywordSet) {
+            resultSummary =
+                <div class="col-xs-12">
+                    <h1>Etsintäsi tuotti {count} osumaa, termillä
+                        <span class="highlight"> "{keyword}"</span>
+                    </h1>
+                </div>
+        }
+
         var resultList = <div/>
         if(0 < count) {
             resultList = result.map((r) => <div class="col-xs-12 col-md-6 box-container">
@@ -103,11 +119,7 @@ class Search extends Component {
                 </div>
                 <div class="container search-results">
                     <div class="row">
-                        <div class="col-xs-12">
-                            <h1>Etsintäsi tuotti {count} osumaa, termillä
-                                <span class="highlight"> "{this.state.search}"</span>
-                            </h1>
-                        </div>
+                        {resultSummary}
                     </div>
                     <div class="row">
                         {resultList}

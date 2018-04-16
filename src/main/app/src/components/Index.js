@@ -9,14 +9,13 @@ class Index extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            search : ''
-        };
+        super(props);
+        this.state = { keyword : '' };
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(event) {
-        this.setState({search: event.target.value});
+        this.setState({keyword: event.target.value});
     }
 
     render() {
