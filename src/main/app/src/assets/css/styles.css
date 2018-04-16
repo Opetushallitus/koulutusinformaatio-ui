@@ -38,6 +38,38 @@ button:focus {
 .nav .open > a:focus {
   background-color: transparent;
 }
+.koulutusinfolaatikko {
+  width: 55%;
+  height: 200px;
+  background-color: #4d92e3;
+  border: solid 1px #979797;
+  color: white;
+
+}
+.koulutusinfolaatikko > li {
+  padding-left: 30px;
+  padding-right: 200px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.right-column-new {
+  width: 40%;
+  height: 100%;
+  background-color: #4a90e2;
+  color: black;
+  opacity: 0.1;
+  display: inline-block;
+  float: right;
+  z-index: 1;
+
+  position: absolute;
+  top: 80px;
+  right: 0;
+  border: 3px solid #73AD21;
+
+}
+
 .oph-input {
   font-family: inherit;
   font-size: inherit;
@@ -1479,8 +1511,8 @@ ul.tutkinnon-osat li {
 }
 .left-column,
 .right-column {
-  margin-bottom: -99999px;
-  padding-bottom: 99999px;
+  margin-bottom: -200px;
+  padding-bottom: 200px;
 }
 ul.ng-scope {
   list-style-type: disc;

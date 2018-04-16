@@ -9,10 +9,10 @@ import Header from './components/Header';
 import Haku from "./components/Haku";
 import Etusivu from "./components/Etusivu";
 import Koulutus from "./components/Koulutus";
-//import registerServiceWorker from './registerServiceWorker';
 import './assets/css/bootstrap.min.css'
 import './assets/css/oph-styles-min.css';
 import './assets/css/styles.css';
+//import registerServiceWorker from './registerServiceWorker';
 
 class App extends Component {
 
@@ -34,7 +34,7 @@ class App extends Component {
                             <Switch>
                                 <Route exact path='/' component={Etusivu}/>
                                 <Route path='/haku' component={Haku}/>
-                                <Route path='/koulutus' component={Koulutus}/>
+                                <Route path='/koulutus/:oid' component={Koulutus}/>
                             </Switch>
                         </div>
                     </React.Fragment>

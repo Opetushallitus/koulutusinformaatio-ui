@@ -14,5 +14,6 @@ public class UrlConfiguration extends OphProperties {
         this.addOverride("host-oppija", environment.getRequiredProperty("host.host-oppija"));
         this.frontProperties.setProperty("konfo-backend.base-url", this.require("konfo-backend.base-url"));
         this.frontProperties.setProperty("konfo-backend.search", this.require("konfo-backend.search"));
+        this.frontProperties.setProperty("konfo-backend.koulutus", this.require("konfo-backend.koulutus"));
     }
 }

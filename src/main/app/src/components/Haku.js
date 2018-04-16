@@ -110,7 +110,7 @@ class Haku extends Component {
                                 <i class="fa fa-heart-o" aria-hidden="true"></i>
                             </div>*/}
                             <div class="text">
-                                <Link to={{ pathname: '/koulutus', state: r }}>{this.getKoulutusNimi(r)}</Link>
+                                <Link to={{ pathname: '/koulutus/'+r.oid, state: r }}>{this.getKoulutusNimi(r)}</Link>
                                 <p>{r.tarjoaja ? r.tarjoaja : ""}<br/>{this.getKoulutusAiheet(r)}</p>
                             </div>
                             {/*<div class="compare-button">
@@ -121,7 +121,6 @@ class Haku extends Component {
 
             });
         }
-
 
         return (
             <React.Fragment>
