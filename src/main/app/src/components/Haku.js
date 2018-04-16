@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import superagent from 'superagent';
 import { Link } from 'react-router-dom'
 import {observer, inject} from 'mobx-react';
+import HakuNavigaatio from './HakuNavigaatio';
 import '../assets/css/oph-styles-min.css';
 import '../assets/css/styles.css';
 import '../assets/css/font-awesome.min.css';
@@ -9,9 +10,9 @@ import '../assets/css/bootstrap.min.css';
 import {urls} from 'oph-urls-js';
 import {production, development} from '../oppija-urls.js';
 
-@inject("searchStore")
+@inject("hakuStore")
 @observer
-class Search extends Component {
+class Haku extends Component {
 
     constructor(props) {
         super(props);
@@ -43,8 +44,8 @@ class Search extends Component {
             .query({query: this.state.keywordInput})
             .end((err, res) => {
                 console.log(res.body.result.map((m) => m.nimi));
-                this.props.searchStore.keyword = this.state.keywordInput;
-                this.props.searchStore.result = res ? res.body.result : [];
+                this.props.hakuStore.keyword = this.state.keywordInput;
+                this.props.hakuStore.result = res ? res.body.result : [];
                 this.setState({
                     keywordInput: '',
                     error: err
@@ -61,10 +62,10 @@ class Search extends Component {
     }
 
     render() {
-        const result = this.props.searchStore.result;
-        const count = this.props.searchStore.count;
-        const keyword = this.props.searchStore.keyword;
-        const keywordSet = this.props.searchStore.keywordSet;
+        const result = this.props.hakuStore.result;
+        const count = this.props.hakuStore.count;
+        const keyword = this.props.hakuStore.keyword;
+        const keywordSet = this.props.hakuStore.keywordSet;
 
         var resultSummary = <div/>
         if(keywordSet) {
@@ -125,9 +126,10 @@ class Search extends Component {
                         {resultList}
                     </div>
                 </div>
+                <HakuNavigaatio/>
             </React.Fragment>
         );
     }
 }
 
-export default Search;
+export default Haku;

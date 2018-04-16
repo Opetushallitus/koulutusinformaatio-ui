@@ -5,7 +5,7 @@ import '../assets/css/styles.css';
 import '../assets/css/font-awesome.min.css';
 import '../assets/css/bootstrap.min.css';
 
-class FloatingNavigation extends Component {
+class HakuNavigaatio extends Component {
     render() {
         return (
             <div class="container-fluid app-navigation-bar">
@@ -17,7 +17,7 @@ class FloatingNavigation extends Component {
                             </a>
                         </div>
                         <div class="col-xs-4 search">
-                            <Link to={{ pathname: '/search'}} class="search-button">
+                            <Link to={{ pathname: '/haku'}} class="search-button">
                                 <i class="fa fa-circle-thin" aria-hidden="true"></i>
                             </Link>
                         </div>
@@ -33,4 +33,4 @@ class FloatingNavigation extends Component {
     }
 }
 
-export default FloatingNavigation;
+export default HakuNavigaatio;

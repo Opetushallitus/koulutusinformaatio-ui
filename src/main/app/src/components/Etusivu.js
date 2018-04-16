@@ -5,7 +5,7 @@ import '../assets/css/styles.css';
 import '../assets/css/font-awesome.min.css'
 import '../assets/css/bootstrap.min.css'
 
-class Index extends Component {
+class Etusivu extends Component {
 
     constructor(props) {
         super(props);
@@ -27,7 +27,7 @@ class Index extends Component {
                             <div class="col-xs-12 col-md-8 header-search main">
                                 <div class="search">
                                     <input id="regular-input" class="oph-input" type="text" placeholder="Etsi ja vertaile koulutuksia ja oppilaitoksia" onChange={this.handleChange}/>
-                                    <Link to={{ pathname: '/search', state: this.state }} class="search-button"/>
+                                    <Link to={{ pathname: '/haku', state: this.state }} class="search-button"/>
                                 </div>
                             </div>
                         </div>
@@ -38,4 +38,4 @@ class Index extends Component {
     }
 }
 
-export default Index;
+export default Etusivu;

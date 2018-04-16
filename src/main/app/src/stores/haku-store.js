@@ -1,6 +1,6 @@
 import { observable, computed } from "mobx"
 
-class SearchStore {
+class HakuStore {
     @observable keyword = '';
     @observable result = [];
 
@@ -13,4 +13,4 @@ class SearchStore {
     }
 }
 
-export default SearchStore;
+export default HakuStore;
