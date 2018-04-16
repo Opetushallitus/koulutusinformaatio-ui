@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import {production, development} from './oppija-urls.js';
 import HakuStore from './stores/haku-store'
+import UrlStore from './stores/url-store'
 import {Provider} from 'mobx-react';
 import Sidebar from "./components/Sidebar";
 import Header from './components/Header';
@@ -16,12 +18,26 @@ import './assets/css/bootstrap.min.css'
 
 class App extends Component {
 
+    urlStore = new UrlStore();
+
+    async componentDidMount() { //TODO: Siirrä nätimpään paikkaan
+        console.log(process.env.NODE_ENV);
+        if (process.env.NODE_ENV === 'development') {
+            this.urlStore.urls.addProperties(development);
+        } else {
+            this.urlStore.urls.addProperties(production);
+            await this.urlStore.urls.load({overrides: '/konfo/rest/config/frontProperties'}); //TODO: Poista "konfo" urlista?
+        }
+        console.log(this.urlStore.urls.url('konfo-backend.search'));
+    }
+
     hakuStore = new HakuStore();
 
     render() {
         const hakuStore = this.hakuStore;
+        const urlStore = this.urlStore;
         return (
-            <Provider hakuStore={hakuStore}>
+            <Provider hakuStore={hakuStore} urlStore={urlStore}>
                 <div id="wrapper">
                     <div class="container-fluid navigation-bar"/>
                     <Sidebar/>

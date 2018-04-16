@@ -7,10 +7,9 @@ import '../assets/css/oph-styles-min.css';
 import '../assets/css/styles.css';
 import '../assets/css/font-awesome.min.css';
 import '../assets/css/bootstrap.min.css';
-import {urls} from 'oph-urls-js';
-import {production, development} from '../oppija-urls.js';
 
 @inject("hakuStore")
+@inject("urlStore")
 @observer
 class Haku extends Component {
 
@@ -25,14 +24,6 @@ class Haku extends Component {
     }
 
     async componentDidMount() {
-        console.log(process.env.NODE_ENV);
-        if (process.env.NODE_ENV === 'development') {
-            urls.addProperties(development);
-        } else {
-            urls.addProperties(production);
-            await urls.load({overrides: '/konfo/rest/config/frontProperties'}); //TODO: Poista "konfo" urlista?
-        }
-        console.log(urls.url('konfo-backend.search'));
         if(this.state.keywordInput) {
             this.search();
         }
@@ -40,7 +31,7 @@ class Haku extends Component {
 
     search() {
         superagent
-            .get(urls.url('konfo-backend.search'))
+            .get(this.props.urlStore.urls.url('konfo-backend.search'))
             .query({query: this.state.keywordInput})
             .end((err, res) => {
                 console.log(res.body.result.map((m) => m.nimi));
