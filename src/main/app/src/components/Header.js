@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 
 class Header extends Component {
     render() {
@@ -10,7 +11,7 @@ class Header extends Component {
                         <span class="hamb-middle"></span>
                         <span class="hamb-bottom"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Opintopolku</a>
+                    <Link to={{ pathname: '/'}} class="navbar-brand">Opintopolku</Link>
                     <div class="wrapper">
                         <input type="text" class="nabvar-search oph-input" placeholder="Etsi..."/>
                     </div>
