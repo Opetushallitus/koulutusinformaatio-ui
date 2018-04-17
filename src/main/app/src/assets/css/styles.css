@@ -2327,10 +2327,13 @@ a.titlelink {
     padding: 7% 0 6%;
 }
 }
-@media (max-width: 991px) {
-  .box-container:nth-child(even) {
+/*@media (max-width: 991px) {
+  .box-container {
     margin-top: 30px;
   }
+}*/
+.box-container {
+  margin-top: 30px;
 }
 @media (max-width: 992px) {
   footer .site-icons {
