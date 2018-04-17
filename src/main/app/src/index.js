@@ -10,10 +10,9 @@ import Haku from "./components/Haku";
 import Etusivu from "./components/Etusivu";
 import Koulutus from "./components/Koulutus";
 //import registerServiceWorker from './registerServiceWorker';
+import './assets/css/bootstrap.min.css'
 import './assets/css/oph-styles-min.css';
 import './assets/css/styles.css';
-import './assets/css/font-awesome.min.css'
-import './assets/css/bootstrap.min.css'
 
 class App extends Component {
 
@@ -24,20 +23,23 @@ class App extends Component {
         const hakuStore = this.hakuStore;
         const urlStore = this.urlStore;
         return (
-            <Provider hakuStore={hakuStore} urlStore={urlStore}>
-                <div id="wrapper">
-                    <div class="container-fluid navigation-bar"/>
-                    <Sidebar/>
-                    <div id="page-content-wrapper">
-                        <Header/>
-                        <Switch>
-                            <Route exact path='/' component={Etusivu}/>
-                            <Route path='/haku' component={Haku}/>
-                            <Route path='/koulutus' component={Koulutus}/>
-                        </Switch>
-                    </div>
-                </div>
-            </Provider>
+
+                <Provider hakuStore={hakuStore} urlStore={urlStore}>
+                    <React.Fragment>
+                        <div class="container-fluid navigation-bar"/>
+                        <div class="overlay"></div>
+                        <Sidebar/>
+                        <div id="page-content-wrapper">
+                            <Header/>
+                            <Switch>
+                                <Route exact path='/' component={Etusivu}/>
+                                <Route path='/haku' component={Haku}/>
+                                <Route path='/koulutus' component={Koulutus}/>
+                            </Switch>
+                        </div>
+                    </React.Fragment>
+                </Provider>
+
         );
     }
 }
@@ -46,7 +48,7 @@ ReactDOM.render((
     <BrowserRouter basename={'/konfo'}>
         <App/>
     </BrowserRouter>
-), document.getElementById('root'));
+), document.getElementById('wrapper'));
 
 //registerServiceWorker auheuttaa ongelmia kutsuttaessa
 //backendin config/frontProperties-rajapintaa, koska

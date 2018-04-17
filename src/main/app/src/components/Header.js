@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import '../assets/css/oph-styles-min.css';
-import '../assets/css/styles.css';
-import '../assets/css/font-awesome.min.css'
-import '../assets/css/bootstrap.min.css'
 
 class Header extends Component {
     render() {
         return (
-            <div class="container">
+            <div class="container navigation">
                 <div class="row">
                     <button type="button" class="menu is-closed" data-toggle="offcanvas">
                         <span class="hamb-top"></span>

@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import HakuNavigaatio from './HakuNavigaatio';
-import '../assets/css/oph-styles-min.css';
-import '../assets/css/styles.css';
-import '../assets/css/font-awesome.min.css';
-import '../assets/css/bootstrap.min.css';
 
 class Koulutus extends Component {
 
