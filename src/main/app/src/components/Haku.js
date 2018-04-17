@@ -112,7 +112,8 @@ class Haku extends Component {
                         <div class="container">
                             <div class="row">
                                 <div class="col-xs-12 col-md-8 header-search">
-                                    <input id="regular-input" class="oph-input" type="text" placeholder="Etsi ja vertaile koulutuksia ja oppilaitoksia" onChange={this.handleChange}/>
+                                    <input id="regular-input" class="oph-input" type="text" placeholder="Etsi ja vertaile koulutuksia ja oppilaitoksia"
+                                           onChange={this.handleChange} onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit() }}}/>
                                     <button class="search-button" onClick={this.handleSubmit}/>
                                 </div>
                             </div>
