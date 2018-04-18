@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 class Etusivu extends Component {
 
     constructor(props) {
         super(props);
         super(props);
-        this.state = { keyword : '' };
+        this.state = { keyword : '', redirect: false };
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(event) {
-        this.setState({keyword: event.target.value});
+        this.setState({keyword: event.target.value, redirect: false});
+    }
+
+    handleSubmit(event) {
+        this.setState({keyword: event.target.value, redirect: true});
     }
 
     render() {
+        if(this.state.redirect) {
+            return <Redirect push to={{ pathname: '/haku', state: { keyword: this.state.keyword }}}/>
+        }
         return (
             <div class="container-fluid" id="call-to-action">
                 <div class="jumbotron">
@@ -22,8 +29,9 @@ class Etusivu extends Component {
                         <div class="row">
                             <div class="col-xs-12 col-md-8 header-search main">
                                 <div class="search">
-                                    <input id="regular-input" class="oph-input" type="text" placeholder="Etsi ja vertaile koulutuksia ja oppilaitoksia" onChange={this.handleChange}/>
-                                    <Link to={{ pathname: '/haku', state: this.state }} class="search-button"/>
+                                    <input id="regular-input" class="oph-input" type="text" placeholder="Etsi ja vertaile koulutuksia ja oppilaitoksia"
+                                           onChange={this.handleChange} onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit(e)}}}/>
+                                    <Link to={{ pathname: '/haku', state: { keyword: this.state.keyword } }} class="search-button"/>
                                 </div>
                             </div>
                         </div>
@@ -35,3 +43,25 @@ class Etusivu extends Component {
 }
 
 export default Etusivu;
+
+
+
+/*
+import { Redirect } from 'react-router';
+
+// ... your class implementation
+
+handleOnClick = () => {
+  // some action...
+  // then redirect
+  this.setState({redirect: true});
+}
+
+render() {
+  if (this.state.redirect) {
+    return <Redirect push to="/sample" />;
+  }
+
+  return <button onClick={this.handleOnClick} type="button">Button</button>;
+}
+ */
