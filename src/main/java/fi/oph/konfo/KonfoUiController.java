@@ -6,7 +6,12 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class KonfoUiController {
 
-    @GetMapping(value = {"/",  "/search"})
+    @GetMapping(value = {
+            "/",
+            "/haku",
+            "/haku/*",
+            "/koulutus",
+            "/koulutus/*"})
     public String frontProperties() {
         return "index.html";
     }
