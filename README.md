@@ -18,6 +18,10 @@ Tämän jälkeen projektin voi käynnistää lokaalisti komennolla:
 
 `java -jar target/konfo-ui-0.1.0-SNAPSHOT.jar --spring.config.location=./konfoui-dev.yml`
 
+tai komennolla:
+
+`mvn spring-boot:run`
+
 Sovellus aukeaa osoitteeseen: 
 
 http://localhost:8080/
