@@ -38,19 +38,39 @@ button:focus {
 .nav .open > a:focus {
   background-color: transparent;
 }
+
+.koulutusOtsikko {
+  margin-left: 51px;
+}
+
+.oppiaineet {
+  margin-left: 51px;
+}
+
 .koulutusinfolaatikko {
   width: 55%;
-  height: 200px;
   background-color: #4d92e3;
   border: solid 1px #979797;
   color: white;
-
+  padding: 1%;
+  margin-left: 51px;
 }
-.koulutusinfolaatikko > li {
+
+.koulutusinfolaatikko > ul {
+  font-family: SourceSansPro;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
   padding-left: 30px;
   padding-right: 200px;
   padding-top: 5px;
   padding-bottom: 5px;
+  margin-left: 51px;
 }
 
 .koulutusIcon {

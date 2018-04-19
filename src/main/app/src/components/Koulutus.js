@@ -12,9 +12,7 @@ class Koulutus extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            oid: props.location.state.oid,
-            //oid: this.props.match.params.oid, //Oidin poimiminen urlista
-            nimi: props.location.state.nimi,
+            oid: this.props.match.params.oid,
             result: undefined
         };
     }
@@ -34,6 +32,9 @@ class Koulutus extends Component {
                     result: res ? res.body.result.koulutus : undefined,
                     error: err
                 })
+                if(res) {
+                    console.log("Got koulutusdata: %O", res.body.result);
+                }
             });
     }
 
