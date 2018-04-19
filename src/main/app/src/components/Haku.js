@@ -102,7 +102,7 @@ class Haku extends Component {
         var resultList = <div/>
         if(0 < count) {
             resultList = result.map((r) => {
-                var tyyli = "col-xs-12 search-box " + this.getKoulutusStyle(r);
+                var tyyli = "col-xs-12 search-box " + this.getKoulutusStyle(r) + (r.haettavissa ? " haku" : "");
                 return (
                     <div class="col-xs-12 col-md-6 box-container">
                         <div className={tyyli}>
