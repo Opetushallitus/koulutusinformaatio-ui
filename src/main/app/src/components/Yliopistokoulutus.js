@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import koulutusIcon from '../assets/images/kk_otsikonvieruskuva.png';
 
 class Yliopistokoulutus extends Component {
 
@@ -13,7 +14,9 @@ class Yliopistokoulutus extends Component {
 
     //fi, en, sv
     localize(obj) {
-        return obj.kieli_fi; //Toistaiseksi palautetaan kaikelle kieleksi suomi, mutta linkitetään kaikki tätä kautta jotta kielistystoteutus on myöhemmin helppo lisätä.
+        if (obj) {
+            return obj.kieli_fi; //Toistaiseksi palautetaan kaikelle kieleksi suomi, mutta linkitetään kaikki tätä kautta jotta kielistystoteutus on myöhemmin helppo lisätä.
+        }
     }
 
     render() {
@@ -21,7 +24,7 @@ class Yliopistokoulutus extends Component {
         return (
             <div>
                 <div>
-                    <div><h1 className="koulutusOtsikko">{this.localize(this.state.name)}</h1></div>
+                    <div> <h1 className="koulutusOtsikko"><img className='koulutusIcon' src={koulutusIcon} alt={"logo"}/> {this.localize(this.state.name)}</h1></div>
                     <div>
                     <ul className="koulutusinfolaatikko">
                         <li>Koulutuksen laajuus: {this.localize(this.state.result.opintojenLaajuusarvo.nimi)} {this.localize(this.state.result.opintojenLaajuusyksikko.nimi)}</li>
@@ -43,7 +46,7 @@ class Yliopistokoulutus extends Component {
                 <div className="right-column-new">
                     <div className="row">
                                 
-                                    <div class="col-md-12 hidden-xs">
+                                    <div>
                                         <p>
                                             "Tuskin olen koskaan oppinut näin paljon näin lyhyessä ajassa. Parasta on myös loistavat luokkakaverit, jotka tekevät opiskelusta"
                                         </p>
@@ -54,7 +57,7 @@ class Yliopistokoulutus extends Component {
 
                     </div>
                 </div>
-                </div>
+            </div>
                 );
     }
 }
