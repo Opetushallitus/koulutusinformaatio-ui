@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import koulutusIcon from '../assets/images/kk_otsikonvieruskuva.png';
+import sidebarPic from '../assets/images/student-success.jpg'; //Joku satunnainen kuva vaan
 
 class Yliopistokoulutus extends Component {
 
@@ -45,23 +46,39 @@ class Yliopistokoulutus extends Component {
 
                     <div className="oppiaineet">
                         <h2>Pääaineet tai erikoistumisalat: </h2>
-                    <ul>
-                        {this.parseAineListaus()}
-                    </ul>
+                        <div class="">
+                            <ul>
+                                {this.parseAineListaus()}
+                            </ul>
+                        </div>
 
                     </div>
+
+                    <div className="oppilaitokset">
+                        <h2>Oppilaitokset (n kpl)</h2>
+                        <div class="box-container">
+                            <div className="col-xs-12 oppilaitos-box">
+                                <h3>Oppilaitoksen nimi</h3>
+                                <div class="text">
+                                    <p>erikoistumisalat</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="jatko-opintomahdollisuudet">
+                        <h2>Jatko-opintomahdollisuudet: </h2>
+                        <p>{this.localize(this.state.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET)}</p>
+                    </div>
+
                 </div>
 
                 <div className="right-column-new">
-                    <div className="row">
-                                
+                    <div className="right-innards">
+                        <img className='sidebar-pic' src={sidebarPic}></img>
                                     <div>
-                                        <p>
-                                            "Tuskin olen koskaan oppinut näin paljon näin lyhyessä ajassa. Parasta on myös loistavat luokkakaverit, jotka tekevät opiskelusta"
-                                        </p>
                                     </div>
                                     <div>
-                                        <h2>Tähän koulutukseen liittyviä muita koulutuksia</h2>
                                     </div>
 
                     </div>
