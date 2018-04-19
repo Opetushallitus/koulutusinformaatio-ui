@@ -30,7 +30,7 @@ class Haku extends Component {
                 .get(this.props.urlStore.urls.url('konfo-backend.search'))
                 .query({query: this.state.keywordInput})
                 .end((err, res) => {
-                    console.log(res.body.result.map((m) => m.nimi));
+                    //console.log(res.body.result.map((m) => m.nimi));
                     this.props.hakuStore.keyword = this.state.keywordInput;
                     this.props.hakuStore.result = res ? res.body.result : [];
                     this.props.hakuStore.total = res ? res.body.count : 0;
@@ -63,6 +63,25 @@ class Haku extends Component {
         return 'amk'
     }
 
+    getKoulutusNimi(koulutus) {
+        if(koulutus.nimi) {
+            return koulutus.nimi.kieli_fi;
+        } else if(koulutus.hakukohteet && (0 < koulutus.hakukohteet.length)) {
+            //Avoimen yliopiston koulutuksen nimi näyttäisi olevan hakukohteen nimenä
+            return koulutus.hakukohteet[0].nimi.fi;
+        }
+        return "Koulutus (ei nimeä)"
+    }
+
+    getKoulutusAiheet(koulutus) {
+        if (koulutus.opintoala) {
+            return koulutus.opintoala.kieli_fi;
+        } else if(koulutus.aiheet && (0 < koulutus.aiheet.length)) {
+            return koulutus.aiheet.map(a => a.nimi.kieli_fi).join(', ');
+        }
+        return "";
+    }
+
     render() {
         const result = this.props.hakuStore.result;
         const count = this.props.hakuStore.count;
@@ -84,7 +103,6 @@ class Haku extends Component {
         if(0 < count) {
             resultList = result.map((r) => {
                 var tyyli = "col-xs-12 search-box " + this.getKoulutusStyle(r);
-
                 return (
                     <div class="col-xs-12 col-md-6 box-container">
                         <div className={tyyli}>
@@ -92,8 +110,8 @@ class Haku extends Component {
                                 <i class="fa fa-heart-o" aria-hidden="true"></i>
                             </div>*/}
                             <div class="text">
-                                <Link to={{ pathname: '/koulutus', state: r }}>{r.nimi ? r.nimi.kieli_fi : "Koulutus"}</Link>
-                                <p>{r.tarjoaja ? r.tarjoaja : ""}<br/>{r.opintoala ? r.opintoala.kieli_fi : ""}</p>
+                                <Link to={{ pathname: '/koulutus', state: r }}>{this.getKoulutusNimi(r)}</Link>
+                                <p>{r.tarjoaja ? r.tarjoaja : ""}<br/>{this.getKoulutusAiheet(r)}</p>
                             </div>
                             {/*<div class="compare-button">
                                 <span role="button"></span>
