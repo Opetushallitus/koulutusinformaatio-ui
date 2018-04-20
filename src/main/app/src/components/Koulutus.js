@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import HakuNavigaatio from './HakuNavigaatio';
+import Haku from './Haku';
 import superagent from 'superagent';
 import {observer, inject} from 'mobx-react';
 import Yliopistokoulutus from "./Yliopistokoulutus";
