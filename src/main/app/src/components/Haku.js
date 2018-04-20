@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import superagent from 'superagent';
 import { Link } from 'react-router-dom'
+import '../assets/css/hakutulos.css'
 import {observer, inject} from 'mobx-react';
 
 @inject("hakuStore")
@@ -98,15 +99,26 @@ class Haku extends Component {
         var resultSummary = <div/>
         if(keywordSet) {
             resultSummary =
-                <div class="col-xs-12">
+                <div class="col Etsinta">
                     <h1>Etsintäsi tuotti {total} osumaa, termillä
                         <span class="highlight"> "{keyword}"</span>
                     </h1>
-                    <div class="col-xs-12">
-                        <h2><a onClick={(e) => {this.setState({toggleKoulutus: true})}}>Koulutukset ({this.props.hakuStore.koulutusCount})</a></h2>
+                </div>
+        }
+
+        var koulutusOppilaitosToggle = <div/>
+        if(keywordSet) {
+            koulutusOppilaitosToggle =
+                <div class="row">
+                    <div class="col-md-2 col-xs-12">
+                        <h2 class="KoulutuksetOppilaitokset" onClick={(e) => {this.setState({toggleKoulutus: true})}}>
+                            <span class={this.state.toggleKoulutus ? "Valittu" : ""}>Koulutukset</span>&nbsp;
+                            <span class="Hakutulos_pallo">{this.props.hakuStore.koulutusCount}</span></h2>
                     </div>
-                    <div class="col-xs-12">
-                        <h2><a onClick={(e) => {this.setState({toggleKoulutus: false})}}>Oppilaitokset ({this.props.hakuStore.oppilaitosCount})</a></h2>
+                    <div class="col-md-2 col-xs-12">
+                        <h2 class="KoulutuksetOppilaitokset" onClick={(e) => {this.setState({toggleKoulutus: false})}}>
+                            <span class={this.state.toggleKoulutus ? "" : "Valittu"}>Oppilaitokset</span>&nbsp;
+                            <span class="Hakutulos_pallo">{this.props.hakuStore.oppilaitosCount}</span></h2>
                     </div>
                 </div>
         }
@@ -176,10 +188,13 @@ class Haku extends Component {
                         </div>
                     </div>
                 </div>
-                <div class="container search-results">
+                <div class="container">
                     <div class="row">
                         {resultSummary}
                     </div>
+                    {koulutusOppilaitosToggle}
+                </div>
+                <div class="container search-results">
                     <div class="row">
                         {resultList}
                     </div>
