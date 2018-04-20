@@ -12,6 +12,7 @@ class Haku extends Component {
         super(props);
         this.state = {
             keywordInput : props.location.state && props.location.state.keyword ? props.location.state.keyword : '',
+            toggleKoulutus : true,
             error: ''
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,20 +26,26 @@ class Haku extends Component {
     }
 
     search() {
+        const _this = this;
+        const _handleError = (e) => { console.log(e); _this.setState({error: e})};
         if(this.state.keywordInput && !(0 === this.state.keywordInput.length)) {
-            superagent
-                .get(this.props.urlStore.urls.url('konfo-backend.search.koulutukset'))
-                .query({keyword: this.state.keywordInput})
-                .end((err, res) => {
-                    //console.log(res.body.result.map((m) => m.nimi));
-                    this.props.hakuStore.keyword = this.state.keywordInput;
-                    this.props.hakuStore.result = res ? res.body.result : [];
-                    this.props.hakuStore.total = res ? res.body.count : 0;
-                    this.setState({
-                        keywordInput: '',
-                        error: err
-                    })
-                });
+            Promise.all([
+                superagent
+                    .get(this.props.urlStore.urls.url('konfo-backend.search.koulutukset'))
+                    .query({keyword: this.state.keywordInput})
+                    .catch(_handleError),
+                superagent
+                    .get(this.props.urlStore.urls.url('konfo-backend.search.organisaatiot'))
+                    .query({keyword: this.state.keywordInput})
+                    .catch(_handleError)
+            ]).then((result) => {
+                _this.props.hakuStore.koulutusResult = result[0] ? result[0].body.result : [];
+                _this.props.hakuStore.koulutusCount = result[0] ? result[0].body.count : 0;
+                _this.props.hakuStore.oppilaitosResult = result[1] ? result[1].body.result : [];
+                _this.props.hakuStore.oppilaitosCount = result[1] ? result[1].body.count : 0;
+                _this.props.hakuStore.keyword = _this.state.keywordInput;
+                _this.setState({toggleKoulutus : this.props.hakuStore.koulutusCount >= this.props.hakuStore.oppilaitosCount});
+            }).catch(_handleError);
         }
     }
 
@@ -83,9 +90,8 @@ class Haku extends Component {
     }
 
     render() {
-        const result = this.props.hakuStore.result;
-        const count = this.props.hakuStore.count;
-        const total = this.props.hakuStore.total;
+        const result = this.props.hakuStore.koulutusResult;
+        const total = this.props.hakuStore.totalCount;
         const keyword = this.props.hakuStore.keyword;
         const keywordSet = this.props.hakuStore.keywordSet;
 
@@ -96,11 +102,17 @@ class Haku extends Component {
                     <h1>Etsintäsi tuotti {total} osumaa, termillä
                         <span class="highlight"> "{keyword}"</span>
                     </h1>
+                    <div class="col-xs-12">
+                        <h2><a onClick={(e) => {this.setState({toggleKoulutus: true})}}>Koulutukset ({this.props.hakuStore.koulutusCount})</a></h2>
+                    </div>
+                    <div class="col-xs-12">
+                        <h2><a onClick={(e) => {this.setState({toggleKoulutus: false})}}>Oppilaitokset ({this.props.hakuStore.oppilaitosCount})</a></h2>
+                    </div>
                 </div>
         }
 
         var resultList = <div/>
-        if(0 < count) {
+        if(this.props.hakuStore.hasKoulutusResult && this.state.toggleKoulutus) {
             resultList = result.map((r) => {
                 var tyyli = "col-xs-12 search-box " + this.getKoulutusStyle(r) + (r.haettavissa ? " haku" : "");
                 return (
@@ -112,6 +124,25 @@ class Haku extends Component {
                             <div class="text">
                                 <Link to={{ pathname: '/koulutus/'+r.oid, state: r }}>{this.getKoulutusNimi(r)}</Link>
                                 <p>{r.tarjoaja ? r.tarjoaja : ""}<br/>{this.getKoulutusAiheet(r)}</p>
+                            </div>
+                            {/*<div class="compare-button">
+                                <span role="button"></span>
+                            </div>*/}
+                        </div>
+                    </div>)
+
+            });
+        } else if(this.props.hakuStore.hasOppilaitosResult && !this.state.toggleKoulutus) {
+            resultList = this.props.hakuStore.oppilaitosResult.map((r) => {
+                return (
+                    <div class="col-xs-12 col-md-6 box-container">
+                        <div class="col-xs-12 search-box">
+                            {/*<div class="suosikkit">
+                                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                            </div>*/}
+                            <div class="text">
+                                <Link to={{ pathname: '/oppilaitos/'+r.oid, state: r }}>{r.nimi}</Link>
+                                <p>{r.kayntiosoite ? r.kayntiosoite : ""}<br/>{r.postitoimipaikka ? r.postitoimipaikka : ""}</p>
                             </div>
                             {/*<div class="compare-button">
                                 <span role="button"></span>
