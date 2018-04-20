@@ -27,8 +27,8 @@ class Haku extends Component {
     search() {
         if(this.state.keywordInput && !(0 === this.state.keywordInput.length)) {
             superagent
-                .get(this.props.urlStore.urls.url('konfo-backend.search'))
-                .query({query: this.state.keywordInput})
+                .get(this.props.urlStore.urls.url('konfo-backend.search.koulutukset'))
+                .query({keyword: this.state.keywordInput})
                 .end((err, res) => {
                     //console.log(res.body.result.map((m) => m.nimi));
                     this.props.hakuStore.keyword = this.state.keywordInput;

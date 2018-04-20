@@ -17,7 +17,7 @@ class UrlStore {
             this.urls.addProperties(production);
             this.loadFrontProperties();
         }
-        console.log(this.urls.url('konfo-backend.search'));
+        console.log(this.urls.url('konfo-backend.search.koulutukset'));
     }
 }
 
