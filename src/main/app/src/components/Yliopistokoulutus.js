@@ -40,7 +40,7 @@ class Yliopistokoulutus extends Component {
                             <li>Koulutuksen laajuus: {this.localize(this.state.result.opintojenLaajuusarvo.nimi)} {this.localize(this.state.result.opintojenLaajuusyksikko.nimi)}</li>
                             <li>Suunniteltu kesto: {this.state.result.suunniteltuKestoArvo} {this.localize(this.state.result.suunniteltuKestoTyyppi.nimi)}</li>
                             <li>Maksullinen: {this.state.result.opintojenMaksullisuus ? "Kyllä" : "Ei"}</li>
-                            <li>Tutkintonimikkeet: {this.state.result.tutkintonimikes.map(t => this.localize(t.nimi))} </li>
+                            <li>Tutkintonimikkeet: {this.state.result.tutkintonimikes.map(t => this.localize(t.nimi) + " ")} </li>
                         </ul>
                     </div>
 
