@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import superagent from 'superagent';
+import qs from 'query-string';
 import { Link } from 'react-router-dom'
 import '../assets/css/hakutulos.css'
 import {observer, inject} from 'mobx-react';
@@ -12,8 +13,8 @@ class Haku extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            keywordInput : props.location.state && props.location.state.keyword ? props.location.state.keyword : '',
             toggleKoulutus : true,
+            keywordInput: this.props.match.params.keyword ? this.props.match.params.keyword : '',
             error: ''
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,31 +22,35 @@ class Haku extends Component {
     }
 
     async componentDidMount() {
-        if(this.state.keywordInput) {
-            this.search();
-        }
+        const queryParams = qs.parse(this.props.location.search);
+        this.search(this.props.match.params.keyword, queryParams.toggle);
     }
 
-    search() {
+    search(keyword, toggle) {
         const _this = this;
         const _handleError = (e) => { console.log(e); _this.setState({error: e})};
-        if(this.state.keywordInput && !(0 === this.state.keywordInput.length)) {
+        if(keyword && !(0 === keyword.length)) {
             Promise.all([
                 superagent
                     .get(this.props.urlStore.urls.url('konfo-backend.search.koulutukset'))
-                    .query({keyword: this.state.keywordInput})
+                    .query({keyword: keyword})
                     .catch(_handleError),
                 superagent
                     .get(this.props.urlStore.urls.url('konfo-backend.search.organisaatiot'))
-                    .query({keyword: this.state.keywordInput})
+                    .query({keyword: keyword})
                     .catch(_handleError)
             ]).then((result) => {
                 _this.props.hakuStore.koulutusResult = result[0] ? result[0].body.result : [];
                 _this.props.hakuStore.koulutusCount = result[0] ? result[0].body.count : 0;
                 _this.props.hakuStore.oppilaitosResult = result[1] ? result[1].body.result : [];
                 _this.props.hakuStore.oppilaitosCount = result[1] ? result[1].body.count : 0;
-                _this.props.hakuStore.keyword = _this.state.keywordInput;
-                _this.setState({toggleKoulutus : this.props.hakuStore.koulutusCount >= this.props.hakuStore.oppilaitosCount});
+                _this.props.hakuStore.keyword = keyword;
+                if(toggle) {
+                    _this.setState({toggleKoulutus : ('koulutus' === toggle)});
+                } else {
+                    _this.setState({toggleKoulutus : this.props.hakuStore.koulutusCount >= this.props.hakuStore.oppilaitosCount});
+                }
+                _this.props.history.push('/haku/' + keyword + '?toggle=' + (_this.state.toggleKoulutus ? 'koulutus' : 'oppilaitos'));
             }).catch(_handleError);
         }
     }
@@ -55,7 +60,7 @@ class Haku extends Component {
     }
 
     handleSubmit(event){
-        this.search();
+        this.search(this.state.keywordInput);
     }
 
     getKoulutusStyle(koulutus) {
@@ -188,7 +193,8 @@ class Haku extends Component {
                         <div class="container">
                             <div class="row">
                                 <div class="col-xs-12 col-md-8 header-search">
-                                    <input id="regular-input" class="oph-input" type="text" placeholder="Etsi ja vertaile koulutuksia ja oppilaitoksia"
+                                    <input id="regular-input" class="oph-input" type="text" value={this.state.keywordInput}
+                                           placeholder="Etsi ja vertaile koulutuksia ja oppilaitoksia"
                                            onChange={this.handleChange} onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit() }}}/>
                                     <button class="search-button" onClick={this.handleSubmit}/>
                                 </div>

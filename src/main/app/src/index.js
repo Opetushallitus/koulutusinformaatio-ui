@@ -33,6 +33,7 @@ class App extends Component {
                             <Header/>
                             <Switch>
                                 <Route exact path='/' component={Etusivu}/>
+                                <Route path='/haku/:keyword' component={Haku}/>
                                 <Route path='/haku' component={Haku}/>
                                 <Route path='/koulutus/:oid' component={Koulutus}/>
                             </Switch>
