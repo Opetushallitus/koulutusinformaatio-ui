@@ -29,12 +29,20 @@ class Yliopistokoulutus extends Component {
         }
     }
 
+    safeParseNimi() {
+        if (this.state.result && this.state.result.koulutuskoodi && this.state.result.koulutuskoodi.nimi) {
+            return this.localize(this.state.result.koulutuskoodi.nimi);
+        } else {
+            return "Opintojakson nimi epäselvä, koulutuskoodia ei löytynyt";
+        }
+    }
+
     render() {
         console.log("Rendataan sivu, data: %O", this.state.result );
         return (
             <div>
                 <div>
-                    <div> <h1 className="koulutusOtsikko"><img className='koulutusIcon' src={koulutusIcon} alt={"logo"}/> {this.localize(this.state.result.koulutuskoodi.nimi)}</h1></div>
+                    <div> <h1 className="koulutusOtsikko"><img className='koulutusIcon' src={koulutusIcon} alt={"logo"}/> {this.safeParseNimi()}</h1></div>
                     <div >
                         <ul className="koulutusinfolaatikko">
                             <li>Koulutuksen laajuus: {this.localize(this.state.result.opintojenLaajuusarvo.nimi)} {this.localize(this.state.result.opintojenLaajuusyksikko.nimi)}</li>
