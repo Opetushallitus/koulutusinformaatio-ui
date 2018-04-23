@@ -19,11 +19,40 @@ class Haku extends Component {
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.toggleOppilaitos = this.toggleOppilaitos.bind(this);
+        this.toggleKoulutus = this.toggleKoulutus.bind(this);
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         const queryParams = qs.parse(this.props.location.search);
         this.search(this.props.match.params.keyword, queryParams.toggle);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.props = nextProps;
+        if(this.props.match.params.keyword === this.props.hakuStore.keyword) {
+            const queryParams = qs.parse(this.props.location.search);
+            this.setState({toggleKoulutus: ('koulutus' === queryParams.toggle )})
+        } else {
+            const queryParams = qs.parse(this.props.location.search);
+            this.search(this.props.match.params.keyword, queryParams.toggle);
+        }
+    }
+
+    changeUrl() {
+        if(this.props.hakuStore.keyword === this.props.match.params.keyword) {
+            this.props.history.replace('/haku/' + this.props.hakuStore.keyword +
+                '?toggle=' + (this.state.toggleKoulutus ? 'koulutus' : 'oppilaitos'));
+        } else {
+            this.props.history.push('/haku/' + this.props.hakuStore.keyword +
+                '?toggle=' + (this.state.toggleKoulutus ? 'koulutus' : 'oppilaitos'));
+        }
+    }
+
+    toggle(value) {
+        this.setState({toggleKoulutus: value}, function() {
+            this.changeUrl();
+        });
     }
 
     search(keyword, toggle) {
@@ -45,12 +74,12 @@ class Haku extends Component {
                 _this.props.hakuStore.oppilaitosResult = result[1] ? result[1].body.result : [];
                 _this.props.hakuStore.oppilaitosCount = result[1] ? result[1].body.count : 0;
                 _this.props.hakuStore.keyword = keyword;
+                _this.state.keywordInput = keyword;
                 if(toggle) {
-                    _this.setState({toggleKoulutus : ('koulutus' === toggle)});
+                    _this.toggle(('koulutus' === toggle));
                 } else {
-                    _this.setState({toggleKoulutus : this.props.hakuStore.koulutusCount >= this.props.hakuStore.oppilaitosCount});
+                    _this.toggle(this.props.hakuStore.koulutusCount >= this.props.hakuStore.oppilaitosCount);
                 }
-                _this.props.history.push('/haku/' + keyword + '?toggle=' + (_this.state.toggleKoulutus ? 'koulutus' : 'oppilaitos'));
             }).catch(_handleError);
         }
     }
@@ -111,6 +140,14 @@ class Haku extends Component {
         return "Oppilaitos (ei nimeä)"
     }
 
+    toggleOppilaitos() {
+        this.toggle(false);
+    }
+
+    toggleKoulutus() {
+        this.toggle(true);
+    }
+
     render() {
         const result = this.props.hakuStore.koulutusResult;
         const total = this.props.hakuStore.totalCount;
@@ -121,7 +158,7 @@ class Haku extends Component {
         if(keywordSet) {
             resultSummary =
                 <div class="col Etsinta">
-                    <h1>Etsintäsi tuotti {total} osumaa, termillä
+                    <h1>Etsintäsi tuotti {total} osumaa termillä {this.state.toggleKoulutus ? 'true ' : 'false '}
                         <span class="highlight"> "{keyword}"</span>
                     </h1>
                 </div>
@@ -132,12 +169,12 @@ class Haku extends Component {
             koulutusOppilaitosToggle =
                 <div class="row">
                     <div class="col-md-2 col-xs-12">
-                        <h2 class="KoulutuksetOppilaitokset" onClick={(e) => {this.setState({toggleKoulutus: true})}}>
+                        <h2 class="KoulutuksetOppilaitokset" onClick={this.toggleKoulutus}>
                             <span class={this.state.toggleKoulutus ? "Valittu" : ""}>Koulutukset</span>&nbsp;
                             <span class="Hakutulos_pallo">{this.props.hakuStore.koulutusCount}</span></h2>
                     </div>
                     <div class="col-md-2 col-xs-12">
-                        <h2 class="KoulutuksetOppilaitokset" onClick={(e) => {this.setState({toggleKoulutus: false})}}>
+                        <h2 class="KoulutuksetOppilaitokset" onClick={this.toggleOppilaitos}>
                             <span class={this.state.toggleKoulutus ? "" : "Valittu"}>Oppilaitokset</span>&nbsp;
                             <span class="Hakutulos_pallo">{this.props.hakuStore.oppilaitosCount}</span></h2>
                     </div>
