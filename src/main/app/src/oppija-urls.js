@@ -2,8 +2,8 @@ const production = {
     "konfo-backend.base-url" : "/",
     "konfo-backend.search.koulutukset" : "/konfo-backend/search/koulutukset",
     "konfo-backend.search.organisaatiot" : "/konfo-backend/search/organisaatiot",
-    "konfo-backend.koulutus" : "/konfo-backend/koulutus",
-    "konfo-backend.organisaatio" : "/konfo-backend/organisaatio"
+    "konfo-backend.koulutus" : "/konfo-backend/koulutus/",
+    "konfo-backend.organisaatio" : "/konfo-backend/organisaatio/"
 };
 
 const development = {
