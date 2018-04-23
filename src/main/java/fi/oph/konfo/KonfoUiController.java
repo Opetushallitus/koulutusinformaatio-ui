@@ -13,6 +13,6 @@ public class KonfoUiController {
             "/koulutus",
             "/koulutus/*"})
     public String frontProperties() {
-        return "index.html";
+        return "/index.html";
     }
 }
