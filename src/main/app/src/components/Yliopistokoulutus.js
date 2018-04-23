@@ -37,19 +37,30 @@ class Yliopistokoulutus extends Component {
         }
     }
 
+    safeParseKoulutusinfolaatikko() {
+        console.log("Safe parse koulutusinfolaatikko!");
+        var laajuus = (this.state.result.opintojenlaajuusarvo && this.state.result.opintojenlaajuusarvo.nimi) ? this.localize(this.state.result.opintojenlaajuusarvo.nimi) : "?";
+        var laajuusYksikko = (this.state.result.opintojenLaajuusyksikko && this.state.result.opintojenLaajuusyksikko.nimi) ? this.localize(this.state.result.opintojenLaajuusyksikko.nimi) : "?";
+        var kesto = (this.state.result.suunniteltuKestoArvo) ? this.state.result.suunniteltuKestoArvo : "?";
+        var kestoYksikko = (this.state.result.suunniteltuKestoTyyppi && this.state.result.suunniteltuKestoTyyppi.nimi) ? this.localize(this.state.result.suunniteltuKestoTyyppi.nimi) : "?";
+        var tutkintonimikkeet = this.state.result.tutkintonimikes ? this.state.result.tutkintonimikes.map(t => this.localize(t.nimi) + " ") : "?";
+
+         return <ul className="koulutusinfolaatikko">
+            <li>Koulutuksen laajuus: {laajuus} {laajuusYksikko}</li>
+            <li>Suunniteltu kesto: {kesto} {kestoYksikko}</li>
+            <li>Maksullinen: {this.state.result.opintojenMaksullisuus ? "Kyllä" : "Ei"}</li>
+            <li>Tutkintonimikkeet: {tutkintonimikkeet} </li>
+            </ul>;
+    }
+
     render() {
         console.log("Rendataan sivu, data: %O", this.state.result );
         return (
             <div>
                 <div>
                     <div> <h1 className="koulutusOtsikko"><img className='koulutusIcon' src={koulutusIcon} alt={"logo"}/> {this.safeParseNimi()}</h1></div>
-                    <div >
-                        <ul className="koulutusinfolaatikko">
-                            <li>Koulutuksen laajuus: {this.localize(this.state.result.opintojenLaajuusarvo.nimi)} {this.localize(this.state.result.opintojenLaajuusyksikko.nimi)}</li>
-                            <li>Suunniteltu kesto: {this.state.result.suunniteltuKestoArvo} {this.localize(this.state.result.suunniteltuKestoTyyppi.nimi)}</li>
-                            <li>Maksullinen: {this.state.result.opintojenMaksullisuus ? "Kyllä" : "Ei"}</li>
-                            <li>Tutkintonimikkeet: {this.state.result.tutkintonimikes.map(t => this.localize(t.nimi) + " ")} </li>
-                        </ul>
+                    <div className="koulutusinfo">
+                        {this.safeParseKoulutusinfolaatikko()}
                     </div>
 
                     <div className="oppiaineet">
