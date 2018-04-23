@@ -90,6 +90,22 @@ class Haku extends Component {
         return "";
     }
 
+    /*
+    fi: fi -> sv -> en
+    sv: sv -> fi -> en
+    en: en -> fi -> sv
+    */
+    getOppilaitosNimi(oppilaitos) {
+        if(oppilaitos.nimi.fi) {
+            return oppilaitos.nimi.fi;
+        } else if (oppilaitos.nimi.sv) {
+            return oppilaitos.nimi.sv;
+        } else if (oppilaitos.nimi.en) {
+            return oppilaitos.nimi.en;
+        }
+        return "Oppilaitos (ei nimeä)"
+    }
+
     render() {
         const result = this.props.hakuStore.koulutusResult;
         const total = this.props.hakuStore.totalCount;
@@ -153,7 +169,7 @@ class Haku extends Component {
                                 <i class="fa fa-heart-o" aria-hidden="true"></i>
                             </div>*/}
                             <div class="text">
-                                <Link to={{ pathname: '/oppilaitos/'+r.oid, state: r }}>{r.nimi}</Link>
+                                <Link to={{ pathname: '/oppilaitos/'+r.oid, state: r }}>{this.getOppilaitosNimi(r)}</Link>
                                 <p>{r.kayntiosoite ? r.kayntiosoite : ""}<br/>{r.postitoimipaikka ? r.postitoimipaikka : ""}</p>
                             </div>
                             {/*<div class="compare-button">
