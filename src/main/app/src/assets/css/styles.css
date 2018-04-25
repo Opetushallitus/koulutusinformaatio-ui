@@ -39,6 +39,35 @@ button:focus {
   background-color: transparent;
 }
 
+.organisaatio-yhteystiedot div {
+  margin-top: 51px;
+}
+
+.organisaatio-right {
+  width: 30%;
+  height: 100%;
+  color: black;
+  display: inline-block;
+  float: right;
+  position: absolute;
+  top: 80px;
+  right: 0;
+
+  border-left: thin solid black;
+}
+
+.organisaatiosivu {
+  margin-left: 51px;
+}
+
+.organisaatiosivu h2 {
+  width: 55%;
+}
+
+.yleiskuvaus {
+  width: 55%;
+}
+
 .koulutusOtsikko {
   margin-left: 51px;
 }

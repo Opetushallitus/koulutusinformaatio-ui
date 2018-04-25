@@ -23,7 +23,7 @@ class Yliopistokoulutus extends Component {
 
     parseAineListaus() {
         if(this.state.result.oppiaineet.length > 0) {
-            return this.state.result.oppiaineet.map(o => <li>{o.oppiaine}</li>);
+            return this.state.result.oppiaineet.map(o => <li>{o.oppiaine ? o.oppiaine : "Tuntematon"}</li>);
         } else {
             return this.state.result.aihees.map(a => <li>{this.localize(a.nimi)}</li>);
         }
@@ -39,7 +39,7 @@ class Yliopistokoulutus extends Component {
 
     safeParseKoulutusinfolaatikko() {
         console.log("Safe parse koulutusinfolaatikko!");
-        var laajuus = (this.state.result.opintojenlaajuusarvo && this.state.result.opintojenlaajuusarvo.nimi) ? this.localize(this.state.result.opintojenlaajuusarvo.nimi) : "?";
+        var laajuus = (this.state.result.opintojenLaajuusarvo && this.state.result.opintojenLaajuusarvo.nimi) ? this.localize(this.state.result.opintojenLaajuusarvo.nimi) : "?";
         var laajuusYksikko = (this.state.result.opintojenLaajuusyksikko && this.state.result.opintojenLaajuusyksikko.nimi) ? this.localize(this.state.result.opintojenLaajuusyksikko.nimi) : "?";
         var kesto = (this.state.result.suunniteltuKestoArvo) ? this.state.result.suunniteltuKestoArvo : "?";
         var kestoYksikko = (this.state.result.suunniteltuKestoTyyppi && this.state.result.suunniteltuKestoTyyppi.nimi) ? this.localize(this.state.result.suunniteltuKestoTyyppi.nimi) : "?";

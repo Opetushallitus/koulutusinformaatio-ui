@@ -9,6 +9,7 @@ import Header from './components/Header';
 import Haku from "./components/Haku";
 import Etusivu from "./components/Etusivu";
 import Koulutus from "./components/Koulutus";
+import Organisaatio from "./components/Oppilaitos";
 import './assets/css/bootstrap.min.css'
 import './assets/css/oph-styles-min.css';
 import './assets/css/styles.css';
@@ -36,6 +37,7 @@ class App extends Component {
                                 <Route path='/haku/:keyword' component={Haku}/>
                                 <Route path='/haku' component={Haku}/>
                                 <Route path='/koulutus/:oid' component={Koulutus}/>
+                                <Route path='/oppilaitos/:oid' component={Organisaatio}/>
                             </Switch>
                         </div>
                     </React.Fragment>
