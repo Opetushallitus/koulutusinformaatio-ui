@@ -9,7 +9,7 @@ import Utils from './Utils';
 @inject("hakuStore")
 @inject("urlStore")
 @observer
-class Organisaatio extends Component {
+class Oppilaitos extends Component {
 
     constructor(props) {
         super(props);
@@ -18,7 +18,7 @@ class Organisaatio extends Component {
             result: undefined,
             loading: undefined
         };
-        console.log("Created component Organisaatio with oid: " + this.state.oid + ", result: " + this.state.result);
+        console.log("Created component Oppilaitos with oid: " + this.state.oid + ", result: " + this.state.result);
     }
 
     async componentDidMount() {
@@ -78,7 +78,7 @@ class Organisaatio extends Component {
             <React.Fragment>
                 <div className='organisaatiosivu'>
                     <h2><img className='koulutusIcon' src={koulutusIcon} alt={"logo"}/>{this.state.result.nimi.fi}</h2>
-                    <div className='yleiskuvaus'>
+                    <div className='oppilaitos-yleiskuvaus'>
                         <p>{this.state.result.metadata.data.YLEISKUVAUS["kieli_fi#1"]}</p>
                     </div>
                     <div className="organisaatio-right">
@@ -107,4 +107,4 @@ class Organisaatio extends Component {
     }
 }
 
-export default Organisaatio;
+export default Oppilaitos;
