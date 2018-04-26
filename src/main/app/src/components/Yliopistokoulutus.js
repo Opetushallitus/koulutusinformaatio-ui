@@ -57,7 +57,7 @@ class Yliopistokoulutus extends Component {
         console.log("Rendataan sivu, data: %O", this.state.result );
         return (
             <div>
-                <div>
+                <div className='yliopistokoulutus-left'>
                     <div> <h1 className="koulutusOtsikko"><img className='koulutusIcon' src={koulutusIcon} alt={"logo"}/> {this.safeParseNimi()}</h1></div>
                     <div className="koulutusinfo">
                         {this.safeParseKoulutusinfolaatikko()}

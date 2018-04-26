@@ -43,6 +43,34 @@ button:focus {
   margin-top: 51px;
 }
 
+.oppilaitos-kotisivu {
+  margin-left: 51px;
+}
+
+.sosiaalinen-media {
+  margin-left: 51px;
+}
+
+.sosiaalinen-media img {
+  width: 60px;
+  height: 60px;
+}
+
+.oppilaitos-linkki-ikoni {
+  width: 16px;
+  height: 16px;
+  border: thin solid black;
+}
+
+.oppilaitos-linkki::before {
+
+  width: 16px;
+  height: 16px;
+  border: thin solid black;
+
+}
+
+
 .organisaatio-right {
   width: 30%;
   height: 100%;
@@ -68,10 +96,12 @@ button:focus {
   width: 55%;
   border-bottom: thin solid black;
   padding-bottom: 25px;
+  padding-top: 25px;
 }
 
 .koulutusOtsikko {
   margin-left: 51px;
+  margin-bottom: 37px;
 }
 
 .oppiaineet h2 {
@@ -116,6 +146,7 @@ button:focus {
   padding-bottom: 5px;
   margin-left: 51px;
 }
+
 
 .oppilaitokset {
   margin-left: 51px;
