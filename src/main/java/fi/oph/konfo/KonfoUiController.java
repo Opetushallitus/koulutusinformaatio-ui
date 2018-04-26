@@ -11,7 +11,9 @@ public class KonfoUiController {
             "/haku",
             "/haku/*",
             "/koulutus",
-            "/koulutus/*"})
+            "/koulutus/*",
+            "/oppilaitos",
+            "/oppilaitos/*"})
     public String frontProperties() {
         return "/index.html";
     }
