@@ -39,13 +39,15 @@ class Haku extends Component {
         }
     }
 
+    createHakuUrl() {
+        return '/haku/' + this.props.hakuStore.keyword + '?toggle=' + (this.state.toggleKoulutus ? 'koulutus' : 'oppilaitos')
+    }
+
     changeUrl() {
         if(this.props.hakuStore.keyword === this.props.match.params.keyword) {
-            this.props.history.replace('/haku/' + this.props.hakuStore.keyword +
-                '?toggle=' + (this.state.toggleKoulutus ? 'koulutus' : 'oppilaitos'));
+            this.props.history.replace(this.createHakuUrl());
         } else {
-            this.props.history.push('/haku/' + this.props.hakuStore.keyword +
-                '?toggle=' + (this.state.toggleKoulutus ? 'koulutus' : 'oppilaitos'));
+            this.props.history.push(this.createHakuUrl());
         }
     }
 
@@ -192,7 +194,7 @@ class Haku extends Component {
                                 <i class="fa fa-heart-o" aria-hidden="true"></i>
                             </div>*/}
                             <div class="text">
-                                <Link to={{ pathname: '/koulutus/'+r.oid, state: r }}>{this.getKoulutusNimi(r)}</Link>
+                                <Link to={{ pathname: '/koulutus/'+r.oid+"?haku="+encodeURIComponent(this.createHakuUrl()), state: r }}>{this.getKoulutusNimi(r)}</Link>
                                 <p>{r.tarjoaja ? r.tarjoaja : ""}<br/>{this.getKoulutusAiheet(r)}</p>
                             </div>
                             {/*<div class="compare-button">
@@ -211,7 +213,7 @@ class Haku extends Component {
                                 <i class="fa fa-heart-o" aria-hidden="true"></i>
                             </div>*/}
                             <div class="text">
-                                <Link to={{ pathname: '/oppilaitos/'+r.oid, state: r }}>{this.getOppilaitosNimi(r)}</Link>
+                                <Link to={{ pathname: '/oppilaitos/'+r.oid+"?haku="+encodeURIComponent(this.createHakuUrl()), state: r }}>{this.getOppilaitosNimi(r)}</Link>
                                 <p>{r.kayntiosoite ? r.kayntiosoite : ""}<br/>{r.postitoimipaikka ? r.postitoimipaikka : ""}</p>
                             </div>
                             {/*<div class="compare-button">

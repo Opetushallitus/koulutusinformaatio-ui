@@ -8,6 +8,7 @@ import twitterIcon from '../assets/images/twitter-icon.png';
 import fbIcon from '../assets/images/fb-icon.png';
 import instaIcon from '../assets/images/insta-icon.png';
 import Utils from './Utils';
+import qs from 'query-string';
 
 @inject("hakuStore")
 @inject("urlStore")
@@ -31,6 +32,12 @@ class Oppilaitos extends Component {
             });
             this.getOppilaitosTiedot();
         }
+    }
+
+    getHakuUrl() {
+        const queryParams = qs.parse(this.props.location.search);
+        console.log(queryParams);
+        return queryParams.haku;
     }
 
     //Todo: Selvitä, onko tämä ylipäänsä järkevää
@@ -186,7 +193,7 @@ class Oppilaitos extends Component {
                         </div>
                     </div>
                 </div>
-                <HakuNavigaatio/>
+                <HakuNavigaatio haku={this.getHakuUrl()} selected={this.state.oid}/>
             </React.Fragment>
         );
     }
