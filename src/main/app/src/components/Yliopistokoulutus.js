@@ -38,7 +38,6 @@ class Yliopistokoulutus extends Component {
     }
 
     safeParseKoulutusinfolaatikko() {
-        console.log("Safe parse koulutusinfolaatikko!");
         var laajuus = (this.state.result.opintojenLaajuusarvo && this.state.result.opintojenLaajuusarvo.nimi) ? this.localize(this.state.result.opintojenLaajuusarvo.nimi) : "?";
         var laajuusYksikko = (this.state.result.opintojenLaajuusyksikko && this.state.result.opintojenLaajuusyksikko.nimi) ? this.localize(this.state.result.opintojenLaajuusyksikko.nimi) : "?";
         var kesto = (this.state.result.suunniteltuKestoArvo) ? this.state.result.suunniteltuKestoArvo : "?";

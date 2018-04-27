@@ -62,25 +62,16 @@ button:focus {
   border: thin solid black;
 }
 
-.oppilaitos-linkki::before {
-
-  width: 16px;
-  height: 16px;
-  border: thin solid black;
-
-}
-
-
 .organisaatio-right {
   width: 30%;
   height: 100%;
   color: black;
-  display: inline-block;
+  display: block;
   float: right;
   position: absolute;
   top: 80px;
   right: 0;
-
+  min-width: 400px;
   border-left: thin solid black;
 }
 
@@ -97,6 +88,7 @@ button:focus {
   border-bottom: thin solid black;
   padding-bottom: 25px;
   padding-top: 25px;
+  display: block;
 }
 
 .koulutusOtsikko {
@@ -146,7 +138,6 @@ button:focus {
   padding-bottom: 5px;
   margin-left: 51px;
 }
-
 
 .oppilaitokset {
   margin-left: 51px;
