@@ -160,7 +160,7 @@ class Haku extends Component {
         if(keywordSet) {
             resultSummary =
                 <div class="col Etsinta">
-                    <h1>Etsintäsi tuotti {total} osumaa termillä {this.state.toggleKoulutus ? 'true ' : 'false '}
+                    <h1>Etsintäsi tuotti {total} osumaa termillä
                         <span class="highlight"> "{keyword}"</span>
                     </h1>
                 </div>
@@ -186,6 +186,7 @@ class Haku extends Component {
         var resultList = <div/>
         if(this.props.hakuStore.hasKoulutusResult && this.state.toggleKoulutus) {
             resultList = result.map((r) => {
+                const koulutusLinkString = '/koulutus/' + r.oid + '?haku=' + encodeURIComponent(this.createHakuUrl());
                 var tyyli = "col-xs-12 search-box " + this.getKoulutusStyle(r) + (r.haettavissa ? " haku" : "");
                 return (
                     <div class="col-xs-12 col-md-6 box-container">
@@ -194,7 +195,7 @@ class Haku extends Component {
                                 <i class="fa fa-heart-o" aria-hidden="true"></i>
                             </div>*/}
                             <div class="text">
-                                <Link to={{ pathname: '/koulutus/'+r.oid+"?haku="+encodeURIComponent(this.createHakuUrl()), state: r }}>{this.getKoulutusNimi(r)}</Link>
+                                <Link to={koulutusLinkString}>{this.getKoulutusNimi(r)}</Link>
                                 <p>{r.tarjoaja ? r.tarjoaja : ""}<br/>{this.getKoulutusAiheet(r)}</p>
                             </div>
                             {/*<div class="compare-button">
@@ -202,10 +203,10 @@ class Haku extends Component {
                             </div>*/}
                         </div>
                     </div>)
-
             });
         } else if(this.props.hakuStore.hasOppilaitosResult && !this.state.toggleKoulutus) {
             resultList = this.props.hakuStore.oppilaitosResult.map((r) => {
+                const oppilaitosLinkString = '/oppilaitos/' + r.oid + '?haku=' + encodeURIComponent(this.createHakuUrl());
                 return (
                     <div class="col-xs-12 col-md-6 box-container">
                         <div class="col-xs-12 search-box">
@@ -213,7 +214,7 @@ class Haku extends Component {
                                 <i class="fa fa-heart-o" aria-hidden="true"></i>
                             </div>*/}
                             <div class="text">
-                                <Link to={{ pathname: '/oppilaitos/'+r.oid+"?haku="+encodeURIComponent(this.createHakuUrl()), state: r }}>{this.getOppilaitosNimi(r)}</Link>
+                                <Link to={oppilaitosLinkString}>{this.getOppilaitosNimi(r)}</Link>
                                 <p>{r.kayntiosoite ? r.kayntiosoite : ""}<br/>{r.postitoimipaikka ? r.postitoimipaikka : ""}</p>
                             </div>
                             {/*<div class="compare-button">

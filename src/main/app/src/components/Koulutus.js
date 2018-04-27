@@ -13,7 +13,7 @@ class Koulutus extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            oid: this.parseOid(this.props.match.params.oid),
+            oid: this.props.match.params.oid,
             result: undefined
         };
         console.log("Created component Koulutus with oid: " + this.state.oid + ", result: " + this.state.result);
@@ -22,14 +22,6 @@ class Koulutus extends Component {
     async componentDidMount() {
         if(this.state.oid) {
             this.getKoulutus();
-        }
-    }
-
-    parseOid(oidWithPossibleParams) {
-        if(oidWithPossibleParams && oidWithPossibleParams.indexOf("?") !== -1 ) {
-            return oidWithPossibleParams.substr(0, oidWithPossibleParams.indexOf("?"));
-        } else {
-            return oidWithPossibleParams;
         }
     }
 

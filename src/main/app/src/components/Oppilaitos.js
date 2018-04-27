@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import HakuNavigaatio from './HakuNavigaatio';
-import Haku from './Haku';
 import superagent from 'superagent';
 import {observer, inject} from 'mobx-react';
 import koulutusIcon from '../assets/images/logo-oppilaitos.png';
 import twitterIcon from '../assets/images/twitter-icon.png';
 import fbIcon from '../assets/images/fb-icon.png';
 import instaIcon from '../assets/images/insta-icon.png';
-import Utils from './Utils';
 import qs from 'query-string';
 
 @inject("hakuStore")
@@ -32,7 +30,6 @@ class Oppilaitos extends Component {
 
     getHakuUrl() {
         const queryParams = qs.parse(this.props.location.search);
-        console.log(queryParams);
         return queryParams.haku;
     }
 

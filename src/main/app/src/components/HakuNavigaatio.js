@@ -23,7 +23,7 @@ class HakuNavigaatio extends Component {
                             </a>*/}
                         </div>
                         <div class="col-xs-4 search">
-                            <Link to={{ pathname: this.state.hakuUrl}}>
+                            <Link to={this.state.hakuUrl}>
                                 <i class="fa fa-circle-thin" aria-hidden="true"/>
                             </Link>
                         </div>
