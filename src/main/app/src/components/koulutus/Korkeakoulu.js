@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import koulutusIcon from '../../assets/images/kk_otsikonvieruskuva.png';
-import sidebarPic from '../../assets/images/student-success.jpg'; //Joku satunnainen kuva vaan
-import KoulutusInfo from './KoulutusInfo';
-import {Localizer as l} from '../Utils';
+import KoulutusInfoBox from './KoulutusInfoBox';
+import KoulutusSidebar from './KoulutusSidebar';
+import {Localizer as l, Parser as p} from '../Utils';
 
 class Korkeakoulu extends Component {
 
@@ -16,39 +15,46 @@ class Korkeakoulu extends Component {
 
     parseAineListaus() {
         if(this.state.result.oppiaineet.length > 0) {
-            return this.state.result.oppiaineet.map(o => <li>{o.oppiaine ? o.oppiaine : "Tuntematon"}</li>);
+            return this.state.result.oppiaineet.map(o => <li class="osaamisalat_list_item">{o.oppiaine ? o.oppiaine : "Tuntematon"}</li>);
         } else {
-            return this.state.result.aihees.map(a => <li>{l.localize(a.nimi)}</li>);
+            return this.state.result.aihees.map(a => <li class="osaamisalat_list_item">{l.localize(a.nimi)}</li>);
         }
     }
 
-    safeParseNimi() {
-        if (this.state.result && this.state.result.koulutuskoodi && this.state.result.koulutuskoodi.nimi) {
-            return l.localize(this.state.result.koulutuskoodi.nimi);
-        } else {
-            return "Opintojakson nimi epäselvä, koulutuskoodia ei löytynyt";
+    parseNimi() {
+        if(this.state.result) {
+            return l.localize(this.state.result.koulutuskoodi, "Tuntematon koulutus")
         }
+        return ""
     }
 
     render() {
+        const jatkoOpinnot = l.localize(this.state.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined);
         return (
-            <div>
-                <div className='korkeakoulutus-left'>
-                    <div> <h1 className="koulutusOtsikko"><img className='koulutusIcon' src={koulutusIcon} alt={"logo"}/> {this.safeParseNimi()}</h1></div>
-                    <KoulutusInfo result={this.state.result}/>
+            <div class="container">
+                <div class="row info-page">
+                    <div class="col-xs-12 col-md-9 left-column">
+                        <h1>
+                            <i class="fa fa-circle korkeakoulu-hattu" aria-hidden="true"></i>
+                            <span>{this.parseNimi()}</span>
+                        </h1>
+                        <div class="row">
+                            <div class="col-xs-12 left-column">
+                                <KoulutusInfoBox result={this.state.result}/>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-9 left-column">
+                            <h2 class="line_otsikko">Pääaineet tai erikoistumisalat</h2>
+                            <div class="">
+                                <ul>
+                                    {this.parseAineListaus()}
+                                </ul>
+                            </div>
 
-                    <div className="oppiaineet">
-                        <h2>Pääaineet tai erikoistumisalat: </h2>
-                        <div class="">
-                            <ul>
-                                {this.parseAineListaus()}
-                            </ul>
                         </div>
 
-                    </div>
-
-                    <div className="oppilaitokset">
-                        <h2>Oppilaitokset (n kpl)</h2>
+                        {/*<div class="col-xs-12 col-md-9 left-column oppilaitokset"> //TODO Toiseen demoversioon?
+                        <h2 class="line_otsikko">Oppilaitokset (n kpl)</h2>
                         <div class="box-container">
                             <div className="col-xs-12 oppilaitos-box">
                                 <h3>Oppilaitoksen nimi</h3>
@@ -57,27 +63,20 @@ class Korkeakoulu extends Component {
                                 </div>
                             </div>
                         </div>
+                    </div>*/}
+
+                        {jatkoOpinnot &&
+                        <div class="col-xs-12 col-md-9 left-column">
+                            <h2 class="line_otsikko">Jatko-opintomahdollisuudet</h2>
+                            <div class="">
+                                {p.removeHtmlTags(jatkoOpinnot)}
+                            </div>
+                        </div>}
                     </div>
-
-                    <div className="jatko-opintomahdollisuudet">
-                        <h2>Jatko-opintomahdollisuudet: </h2>
-                        <p>{l.localize(this.state.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET)}</p>
-                    </div>
-
-                </div>
-
-                <div className="right-column-new">
-                    <div className="right-innards">
-                        <img className='sidebar-pic' src={sidebarPic}></img>
-                                    <div>
-                                    </div>
-                                    <div>
-                                    </div>
-
-                    </div>
+                    <KoulutusSidebar/>
                 </div>
             </div>
-                );
+        );
     }
 }
 

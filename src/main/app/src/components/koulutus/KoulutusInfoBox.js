@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Localizer as l} from '../Utils';
 
-class KoulutusInfo extends Component {
+class KoulutusInfoBox extends Component {
 
     constructor(props) {
         super(props);
@@ -34,4 +34,4 @@ class KoulutusInfo extends Component {
     }
 }
 
-export default KoulutusInfo;
+export default KoulutusInfoBox;

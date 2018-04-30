@@ -107,12 +107,6 @@ button:focus {
   margin-left: 51px;
 }
 
-.jatko-opintomahdollisuudet {
-  float:left;
-  margin-left: 51px;
-  width: 55%;
-}
-
 .koulutusinfolaatikko {
   width: 55%;
   background-color: #4d92e3;
@@ -821,9 +815,14 @@ ul.disc-list {
   overflow: hidden;
 }
 .info-page .left-column h1 i {
-  color: #7ed222;
   position: relative;
   top: 10px;
+}
+.korkeakoulu-hattu {
+  color: #9c56b8;
+}
+.ammatillinen-hattu {
+  color: #7ed222;
 }
 .info-page.tutkinnonosat .left-column h1 i {
   color: #f5a623;

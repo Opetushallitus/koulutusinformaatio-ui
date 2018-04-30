@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import koulutusIcon from '../../assets/images/kk_otsikonvieruskuva.png';
-import sidebarPic from '../../assets/images/student-success.jpg'; //Joku satunnainen kuva vaan
-import KoulutusInfo from './KoulutusInfo';
+import KoulutusInfoBox from './KoulutusInfoBox';
+import KoulutusSidebar from './KoulutusSidebar';
 import {Localizer as l, Parser as p} from '../Utils';
 
 class Ammatillinen extends Component {
@@ -30,17 +29,16 @@ class Ammatillinen extends Component {
                 <div class="row info-page">
                     <div class="col-xs-12 col-md-9 left-column">
                         <h1>
-                            <i class="fa fa-circle" aria-hidden="true"></i>
+                            <i class="fa fa-circle ammatillinen-hattu" aria-hidden="true"></i>
                             <span>{this.parseNimi()}</span>
                         </h1>
                         <div class="row">
                             <div class="col-xs-12 left-column">
-                                <KoulutusInfo result={this.state.result}/>
+                                <KoulutusInfoBox result={this.state.result}/>
                             </div>
                         </div>
-                    </div>
 
-                    {osaamisalat &&
+                        {osaamisalat &&
                         <div class="col-xs-12 col-md-9 left-column">
                             <h2 class="line_otsikko">Osaamisalat</h2>
                             <div class="">
@@ -50,7 +48,7 @@ class Ammatillinen extends Component {
                             </div>
                         </div>}
 
-                    {tutkinnonOsat &&
+                        {tutkinnonOsat &&
                         <div class="col-xs-12 col-md-9 left-column">
                             <h2 class="line_otsikko">Tutkinnon rakenne</h2>
                             <div class="">
@@ -58,14 +56,15 @@ class Ammatillinen extends Component {
                             </div>
                         </div>}
 
-                    {jatkoOpinnot &&
+                        {jatkoOpinnot &&
                         <div class="col-xs-12 col-md-9 left-column">
                             <h2 class="line_otsikko">Jatko-opintomahdollisuudet</h2>
                             <div class="">
                                 {p.removeHtmlTags(jatkoOpinnot)}
                             </div>
                         </div>}
-
+                    </div>
+                    <KoulutusSidebar/>
                 </div>
             </div>);
     }
