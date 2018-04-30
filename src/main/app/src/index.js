@@ -8,7 +8,7 @@ import Sidebar from "./components/Sidebar";
 import Header from './components/Header';
 import Haku from "./components/Haku";
 import Etusivu from "./components/Etusivu";
-import Koulutus from "./components/Koulutus";
+import Koulutus from "./components/koulutus/Koulutus";
 import Oppilaitos from "./components/Oppilaitos";
 import './assets/css/bootstrap.min.css'
 import './assets/css/oph-styles-min.css';

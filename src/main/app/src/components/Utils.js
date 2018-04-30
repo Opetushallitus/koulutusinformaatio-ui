@@ -1,12 +1,35 @@
-class Utils {
-    //fi, en, sv
-    static localize(obj) {
-        if (obj && obj.kieli_fi) {
-            return obj.kieli_fi; //Toistaiseksi palautetaan kaikelle kieleksi suomi, mutta linkitetään kaikki tätä kautta jotta kielistystoteutus on myöhemmin helppo lisätä.
+class Localizer {
+
+    static getKieli(nimi, defaultValue = "") {
+        if(nimi.kieli_fi) {
+            return nimi.kieli_fi;
+        } else if(nimi.kieli_sv) {
+            return nimi.kieli_sv;
+        } else if(nimi.kieli_en) {
+            return nimi.kieli.en;
         } else {
-            return "Haluttua kielistystä ei löydetty";
+            return defaultValue;
         }
+    }
+
+    static localize(obj, defaultValue = "") {
+        if(obj) {
+            return obj.nimi ? Localizer.getKieli(obj.nimi, defaultValue) : Localizer.getKieli(obj, defaultValue);
+        }
+        return defaultValue;
     }
 }
 
-export default Utils;
+class Parser {
+
+    static removeHtmlTags(html) {
+        if(html) {
+            var div = document.createElement("div");
+            div.innerHTML = html;
+            return div.innerText;
+        }
+        return html;
+    }
+}
+
+export {Parser, Localizer};

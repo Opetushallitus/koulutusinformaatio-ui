@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import HakuNavigaatio from './HakuNavigaatio';
+import HakuNavigaatio from './../HakuNavigaatio';
 import superagent from 'superagent';
 import {observer, inject} from 'mobx-react';
-import Yliopistokoulutus from "./Yliopistokoulutus";
+import Korkeakoulu from "./Korkeakoulu";
+import Ammatillinen from "./Ammatillinen";
 import qs from 'query-string';
 
 @inject("hakuStore")
@@ -42,11 +43,26 @@ class Koulutus extends Component {
             });
     }
 
+    chooseKoulutus(koulutus) {
+        if(koulutus) {
+            if(koulutus.moduulityyppi === 'LUKIOKOULUTUS') {
+                return <Korkeakoulu name={this.state.nimi} oid={this.state.oid} result={koulutus}/> //TODO
+            }
+            if(koulutus.moduulityyppi === 'KORKEAKOULUTUS' && !(koulutus.isAvoimenYliopistonKoulutus)) {
+                return <Korkeakoulu name={this.state.nimi} oid={this.state.oid} result={koulutus}/>
+            }
+            if(koulutus.isAvoimenYliopistonKoulutus) {
+                return <Korkeakoulu name={this.state.nimi} oid={this.state.oid} result={koulutus}/> //TODO
+            }
+            return <Ammatillinen name={this.state.nimi} oid={this.state.oid} result={koulutus}/> //TODO
+        }
+        return <div/>
+    }
+
     render() {
-        //Tähän päättely, minkä tyypin koulutussivupohjaa käytetään. Nyt kaikille valitaan yliopistokoulutuksen pohja.
         var selectedKoulutus=<div/>;
-        if(this.state.result && this.state.result[this.state.oid]) {
-                selectedKoulutus = <Yliopistokoulutus name={this.state.nimi} oid={this.state.oid} result={this.state.result[this.state.oid]}/>
+        if(this.state.result) {
+                selectedKoulutus = this.chooseKoulutus(this.state.result[this.state.oid]);
         }
         return (
             <React.Fragment>

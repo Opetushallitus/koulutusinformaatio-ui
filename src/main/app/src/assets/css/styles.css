@@ -119,7 +119,7 @@ button:focus {
   border: solid 1px #979797;
   color: white;
   padding: 1%;
-  margin-left: 51px;
+  /*margin-left: 51px;*/
 }
 
 .koulutusinfolaatikko > ul {
@@ -154,6 +154,14 @@ button:focus {
 }
 .oppilaitokset h3 {
   margin-left: 51px;
+}
+
+.line_otsikko {
+  border-bottom: solid 1px #979797;
+}
+
+.osaamisalat_list_item {
+  list-style-type: disc;
 }
 
 .sidebar-pic {

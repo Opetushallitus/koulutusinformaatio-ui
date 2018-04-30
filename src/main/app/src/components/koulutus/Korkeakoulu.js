@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import koulutusIcon from '../assets/images/kk_otsikonvieruskuva.png';
-import sidebarPic from '../assets/images/student-success.jpg'; //Joku satunnainen kuva vaan
+import koulutusIcon from '../../assets/images/kk_otsikonvieruskuva.png';
+import sidebarPic from '../../assets/images/student-success.jpg'; //Joku satunnainen kuva vaan
+import KoulutusInfo from './KoulutusInfo';
+import {Localizer as l} from '../Utils';
 
-class Yliopistokoulutus extends Component {
+class Korkeakoulu extends Component {
 
     constructor(props) {
         super(props);
@@ -12,55 +14,28 @@ class Yliopistokoulutus extends Component {
         };
     }
 
-    //fi, en, sv
-    localize(obj) {
-        if (obj && obj.kieli_fi) {
-            return obj.kieli_fi; //Toistaiseksi palautetaan kaikelle kieleksi suomi, mutta linkitetään kaikki tätä kautta jotta kielistystoteutus on myöhemmin helppo lisätä.
-        } else {
-            return "Haluttua kielistystä ei löydetty";
-        }
-    }
-
     parseAineListaus() {
         if(this.state.result.oppiaineet.length > 0) {
             return this.state.result.oppiaineet.map(o => <li>{o.oppiaine ? o.oppiaine : "Tuntematon"}</li>);
         } else {
-            return this.state.result.aihees.map(a => <li>{this.localize(a.nimi)}</li>);
+            return this.state.result.aihees.map(a => <li>{l.localize(a.nimi)}</li>);
         }
     }
 
     safeParseNimi() {
         if (this.state.result && this.state.result.koulutuskoodi && this.state.result.koulutuskoodi.nimi) {
-            return this.localize(this.state.result.koulutuskoodi.nimi);
+            return l.localize(this.state.result.koulutuskoodi.nimi);
         } else {
             return "Opintojakson nimi epäselvä, koulutuskoodia ei löytynyt";
         }
     }
 
-    safeParseKoulutusinfolaatikko() {
-        var laajuus = (this.state.result.opintojenLaajuusarvo && this.state.result.opintojenLaajuusarvo.nimi) ? this.localize(this.state.result.opintojenLaajuusarvo.nimi) : "?";
-        var laajuusYksikko = (this.state.result.opintojenLaajuusyksikko && this.state.result.opintojenLaajuusyksikko.nimi) ? this.localize(this.state.result.opintojenLaajuusyksikko.nimi) : "?";
-        var kesto = (this.state.result.suunniteltuKestoArvo) ? this.state.result.suunniteltuKestoArvo : "?";
-        var kestoYksikko = (this.state.result.suunniteltuKestoTyyppi && this.state.result.suunniteltuKestoTyyppi.nimi) ? this.localize(this.state.result.suunniteltuKestoTyyppi.nimi) : "?";
-        var tutkintonimikkeet = this.state.result.tutkintonimikes ? this.state.result.tutkintonimikes.map(t => this.localize(t.nimi) + " ") : "?";
-
-         return <ul className="koulutusinfolaatikko">
-            <li>Koulutuksen laajuus: {laajuus} {laajuusYksikko}</li>
-            <li>Suunniteltu kesto: {kesto} {kestoYksikko}</li>
-            <li>Maksullinen: {this.state.result.opintojenMaksullisuus ? "Kyllä" : "Ei"}</li>
-            <li>Tutkintonimikkeet: {tutkintonimikkeet} </li>
-            </ul>;
-    }
-
     render() {
-        console.log("Rendataan sivu, data: %O", this.state.result );
         return (
             <div>
-                <div className='yliopistokoulutus-left'>
+                <div className='korkeakoulutus-left'>
                     <div> <h1 className="koulutusOtsikko"><img className='koulutusIcon' src={koulutusIcon} alt={"logo"}/> {this.safeParseNimi()}</h1></div>
-                    <div className="koulutusinfo">
-                        {this.safeParseKoulutusinfolaatikko()}
-                    </div>
+                    <KoulutusInfo result={this.state.result}/>
 
                     <div className="oppiaineet">
                         <h2>Pääaineet tai erikoistumisalat: </h2>
@@ -86,7 +61,7 @@ class Yliopistokoulutus extends Component {
 
                     <div className="jatko-opintomahdollisuudet">
                         <h2>Jatko-opintomahdollisuudet: </h2>
-                        <p>{this.localize(this.state.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET)}</p>
+                        <p>{l.localize(this.state.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET)}</p>
                     </div>
 
                 </div>
@@ -106,4 +81,4 @@ class Yliopistokoulutus extends Component {
     }
 }
 
-export default Yliopistokoulutus;
+export default Korkeakoulu;
