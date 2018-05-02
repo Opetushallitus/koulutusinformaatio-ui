@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import HakuNavigaatio from './HakuNavigaatio';
 import superagent from 'superagent';
 import {observer, inject} from 'mobx-react';
-import koulutusIcon from '../assets/images/logo-oppilaitos.png';
-import twitterIcon from '../assets/images/twitter-icon.png';
-import fbIcon from '../assets/images/fb-icon.png';
-import instaIcon from '../assets/images/insta-icon.png';
 import qs from 'query-string';
 import {Localizer as l, Parser as p} from './Utils';
 
