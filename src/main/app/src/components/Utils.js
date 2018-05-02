@@ -6,7 +6,7 @@ class Localizer {
         } else if(nimi.kieli_sv) {
             return nimi.kieli_sv;
         } else if(nimi.kieli_en) {
-            return nimi.kieli.en;
+            return nimi.kieli_en;
         } else {
             return defaultValue;
         }
