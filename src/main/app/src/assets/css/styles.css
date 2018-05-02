@@ -84,11 +84,8 @@ button:focus {
 }
 
 .oppilaitos-yleiskuvaus {
-  width: 55%;
   border-bottom: thin solid black;
-  padding-bottom: 25px;
-  padding-top: 25px;
-  display: block;
+  padding-bottom: 30px;
 }
 
 .koulutusOtsikko {

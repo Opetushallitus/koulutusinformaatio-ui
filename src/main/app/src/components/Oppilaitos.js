@@ -7,6 +7,7 @@ import twitterIcon from '../assets/images/twitter-icon.png';
 import fbIcon from '../assets/images/fb-icon.png';
 import instaIcon from '../assets/images/insta-icon.png';
 import qs from 'query-string';
+import {Localizer as l, Parser as p} from './Utils';
 
 @inject("hakuStore")
 @inject("urlStore")
@@ -67,7 +68,7 @@ class Oppilaitos extends Component {
         });
         if(found) {
             return (
-                <a className='oppilaitos-linkki' href={found}><div className='oppilaitos-linkki-ikoni'></div>Oppilaitoksen verkkosivu</a>
+                <a href={found}><i className='fa fa-external-link'> </i>Oppilaitoksen verkkosivu</a>
             )
         }
     }
@@ -112,9 +113,9 @@ class Oppilaitos extends Component {
 
     parseSome() {
         var data = this.state.result.metadata.data;
-        var fb = <p>(No Facebook)</p>;
-        var twitter = <p>(No Twitter)</p>;
-        var insta = <p>(No Instagram)</p>;
+        var fb = <li></li>;
+        var twitter = <li></li>;
+        var insta = <li></li>;
 
         for (var i = 1; i < 10; i++) {
             var key = "sosiaalinenmedia_"+i+"#1";
@@ -122,22 +123,22 @@ class Oppilaitos extends Component {
                 var k = data[key];
                 if(k["kieli_fi#1"]) {
                     if(k["kieli_fi#1"].indexOf('facebook') !== -1 ) {
-                        fb = <a href={k["kieli_fi#1"]}><img className='fb-icon' src={fbIcon} alt={"Facebook"}/></a>
+                        fb = <li><a className='fa fa-facebook-square fa-3x' href={k["kieli_fi#1"]}></a></li>
                     } else if (k["kieli_fi#1"].indexOf('twitter') !== -1) {
-                        twitter = <a href={k["kieli_fi#1"]}><img className='twitter-icon' src={twitterIcon} alt={"Twitter"}/></a>
+                        twitter = <li><a className='fa fa-twitter-square fa-3x' href={k["kieli_fi#1"]}></a></li>
                     } else if (k["kieli_fi#1"].indexOf('instagram') !== -1) {
-                        insta = <a href={k["kieli_fi#1"]}><img className='insta-icon' src={instaIcon} alt={"Instagram"}/></a>
+                        insta = <li><a className='fa fa-instagram fa-3x' href={k["kieli_fi#1"]}></a></li>
                     }
                 }
 
             }
         }
         return (
-            <div>
+            <ul className='social'>
                 {fb}
                 {twitter}
                 {insta}
-            </div>
+            </ul>
         )
 
         //<img className='fb-icon' src={fbIcon} alt={"Facebook"}/>
@@ -153,35 +154,39 @@ class Oppilaitos extends Component {
         console.log("Rendering page, data: %O", this.state.result );
         return (
             <React.Fragment>
-                <div className='organisaatiosivu'>
-                    <h2><img className='koulutusIcon' src={koulutusIcon} alt={"logo"}/>{this.state.result.nimi.fi}</h2>
-                    <div className='oppilaitos-yleiskuvaus'>
-                        <p>{this.state.result.metadata.data.YLEISKUVAUS["kieli_fi#1"]}</p>
-                    </div>
-                    <div className="organisaatio-right">
-                        <div className="right-innards">
-                            <div className='organisaatio-yhteystiedot'>
-                                <div>
+                <div className='container'>
+                    <div className='row info-page oppilaitos'>
+                        <div className='col-xs-12 col-md-9 left-column'>
+                            <h1><i className='fa fa-circle'></i>{this.state.result.nimi.fi}</h1>
+                            <div className='oppilaitos-yleiskuvaus'>
+                                <p>{p.removeHtmlTags(this.state.result.metadata.data.YLEISKUVAUS["kieli_fi#1"])}</p>
+                            </div>
+                        </div>
+
+                        <div className="col-xs-12 col-md-3 right-column row-eq-height">
+                            <div className='orgaanisaatio-yhteystiedot'>
+                                <div className='col-md-12'>
                                     {this.parseKayntiOsoite()}
                                 </div>
-                                <div>
+                                <div className='col-md-12'>
                                     {this.parsePostiOsoite()}
                                 </div>
-                                <div>
+                                <div className='col-md-12'>
                                     <ul>
                                         <li>{this.getEmailFromYhteystiedot()}</li>
                                         <li>{this.getPuhelinFromYhteystiedot()}</li>
                                     </ul>
                                 </div>
-                                <div className='oppilaitos-kotisivu'>
+                                <div className='col-md-12'>
                                     {this.getKotisivuFromYhteystiedot()}
                                 </div>
-                                <div className='sosiaalinen-media'>
+                                <div className='sosiaalinen-media col-md-12'>
                                     {this.parseSome()}
                                 </div>
                             </div>
 
                         </div>
+
                     </div>
                 </div>
                 <HakuNavigaatio haku={this.getHakuUrl()} selected={this.state.oid}/>
