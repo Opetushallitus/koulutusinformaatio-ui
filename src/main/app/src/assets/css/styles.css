@@ -130,6 +130,13 @@ button:focus {
   margin-left: 51px;
 }
 
+.koulutusSidebar {
+  height: 100vh;
+  min-height: 650px;
+  margin-bottom: 0px !important;
+  padding-bottom: 0px !important;
+}
+
 .oppilaitokset {
   margin-left: 51px;
 }
@@ -2232,7 +2239,7 @@ button.toggle-compare.closed::after {
   text-align: center;
 }
 .app-navigation-bar .search a::after {
-  content: "Etsinän tulos";
+  content: "Etsinnän tulos";
   position: relative;
   display: block;
   left: -10px;

@@ -10,7 +10,7 @@ class KoulutusSidebar extends Component {
 
     render() {
         return (
-            <div class="col-xs-12 col-md-3 right-column row-eq-height">
+            <div class="col-xs-12 col-md-3 koulutusSidebar right-column">
                 <div class="row">
                     
                     <img class="hidden-xs" src={sidebarPic} alt=""/>
