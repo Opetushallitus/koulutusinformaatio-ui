@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import HakuNavigaatio from './HakuNavigaatio';
+import HakuNavigaatio from '../HakuNavigaatio';
 import superagent from 'superagent';
 import {observer, inject} from 'mobx-react';
 import qs from 'query-string';
-import {Localizer as l, Parser as p} from './Utils';
+import {Localizer as l, Parser as p} from '../../tools/Utils';
+import OskariKartta from "./OskariKartta";
 
 @inject("hakuStore")
 @inject("urlStore")
@@ -107,6 +108,14 @@ class Oppilaitos extends Component {
         </div>);
     }
 
+    safeParseYleiskuvaus() {
+        var data = this.state.result;
+        var result = <div></div>;
+        if(data && data.yleiskuvaus && data.yleiskuvaus["kieli_fi#1"])
+            result = <div>{p.removeHtmlTags(data.yleiskuvaus["kieli_fi#1"])}</div>
+        return result;
+    }
+
     parseSome() {
         var data = this.state.result.metadata.data;
         var fb = <li></li>;
@@ -155,7 +164,7 @@ class Oppilaitos extends Component {
                         <div className='col-xs-12 col-md-9 left-column'>
                             <h1><i className='fa fa-circle'></i>{this.state.result.nimi.fi}</h1>
                             <div className='oppilaitos-yleiskuvaus'>
-                                <p>{p.removeHtmlTags(this.state.result.metadata.data.YLEISKUVAUS["kieli_fi#1"])}</p>
+                                <p>{this.safeParseYleiskuvaus()}</p>
                             </div>
                         </div>
 
@@ -178,6 +187,9 @@ class Oppilaitos extends Component {
                                 </div>
                                 <div className='sosiaalinen-media col-md-12'>
                                     {this.parseSome()}
+                                </div>
+                                <div>
+                                    <OskariKartta/>
                                 </div>
                             </div>
 

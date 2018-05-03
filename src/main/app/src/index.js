@@ -10,7 +10,7 @@ import Footer from './components/Footer';
 import Haku from "./components/Haku";
 import Etusivu from "./components/Etusivu";
 import Koulutus from "./components/koulutus/Koulutus";
-import Oppilaitos from "./components/Oppilaitos";
+import Oppilaitos from "./components/Oppilaitos/Oppilaitos";
 import './assets/css/bootstrap.min.css'
 import './assets/css/oph-styles-min.css';
 import './assets/css/styles.css';

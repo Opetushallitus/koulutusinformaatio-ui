@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import KoulutusInfoBox from './KoulutusInfoBox';
 import KoulutusSidebar from './KoulutusSidebar';
-import {Localizer as l, Parser as p} from '../Utils';
+import {Localizer as l, Parser as p} from '../../tools/Utils';
 
 class Ammatillinen extends Component {
 

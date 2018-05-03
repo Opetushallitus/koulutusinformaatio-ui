@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import sidebarPic from '../../assets/images/student-success.jpg';
-import {Localizer as l} from '../Utils';
+import {Localizer as l} from '../../tools/Utils';
 
 class KoulutusSidebar extends Component {
 

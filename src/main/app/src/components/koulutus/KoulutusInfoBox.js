@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Localizer as l} from '../Utils';
+import {Localizer as l} from '../../tools/Utils';
 
 class KoulutusInfoBox extends Component {
 
