@@ -6,6 +6,7 @@ import UrlStore from './stores/url-store'
 import {Provider} from 'mobx-react';
 import Sidebar from "./components/Sidebar";
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Haku from "./components/Haku";
 import Etusivu from "./components/Etusivu";
 import Koulutus from "./components/koulutus/Koulutus";
@@ -39,6 +40,7 @@ class App extends Component {
                                 <Route path='/koulutus/:oid' component={Koulutus}/>
                                 <Route path='/oppilaitos/:oid' component={Oppilaitos}/>
                             </Switch>
+                            <Footer/>
                         </div>
                     </React.Fragment>
                 </Provider>
