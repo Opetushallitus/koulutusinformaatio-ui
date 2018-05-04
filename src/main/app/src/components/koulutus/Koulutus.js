@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import HakuNavigaatio from './../HakuNavigaatio';
 import superagent from 'superagent';
 import {observer, inject} from 'mobx-react';
 import Korkeakoulu from "./Korkeakoulu";
 import Ammatillinen from "./Ammatillinen";
 import qs from 'query-string';
+import Hakupalkki from "../haku/Hakupalkki";
+import Hakunavigaatio from './../haku/Hakunavigaatio';
 
 @inject("hakuStore")
 @inject("urlStore")
@@ -66,8 +67,9 @@ class Koulutus extends Component {
         }
         return (
             <React.Fragment>
+                <Hakupalkki redirect={true}/>
                 {selectedKoulutus}
-                <HakuNavigaatio haku={this.getHakuUrl()} selected={this.state.oid}/>
+                <Hakunavigaatio haku={this.getHakuUrl()} selected={this.state.oid}/>
             </React.Fragment>
         );
     }

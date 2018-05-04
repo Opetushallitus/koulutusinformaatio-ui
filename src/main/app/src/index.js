@@ -7,7 +7,7 @@ import {Provider} from 'mobx-react';
 import Sidebar from "./components/Sidebar";
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Haku from "./components/Haku";
+import Haku from "./components/haku/Haku";
 import Etusivu from "./components/Etusivu";
 import Koulutus from "./components/koulutus/Koulutus";
 import Oppilaitos from "./components/Oppilaitos/Oppilaitos";
@@ -28,8 +28,8 @@ class App extends Component {
 
                 <Provider hakuStore={hakuStore} urlStore={urlStore}>
                     <React.Fragment>
-                        <div class="container-fluid navigation-bar"/>
-                        <div class="overlay"></div>
+                        <div className="container-fluid navigation-bar"/>
+                        <div className="overlay"></div>
                         <Sidebar/>
                         <div id="page-content-wrapper">
                             <Header/>

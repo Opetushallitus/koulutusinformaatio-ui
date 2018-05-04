@@ -6,6 +6,7 @@ class HakuStore {
     @observable koulutusCount = 0;
     @observable oppilaitosResult = [];
     @observable oppilaitosCount = 0;
+    @observable toggleKoulutus = true;
 
     @computed get keywordSet() {
         return this.keyword && !(0 === this.keyword.length)
@@ -21,6 +22,10 @@ class HakuStore {
 
     @computed get totalCount() {
         return this.koulutusCount + this.oppilaitosCount;
+    }
+
+    @computed get createHakuUrl() {
+        return '/haku/' + this.keyword + '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos')
     }
 }
 

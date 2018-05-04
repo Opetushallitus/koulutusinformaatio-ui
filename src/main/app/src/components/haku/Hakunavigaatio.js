@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import '../assets/css/hakutulos.css'
+import '../../assets/css/hakutulos.css'
 
-class HakuNavigaatio extends Component {
+class Hakunavigaatio extends Component {
 
     constructor(props){
         super(props);
@@ -39,4 +39,4 @@ class HakuNavigaatio extends Component {
     }
 }
 
-export default HakuNavigaatio;
+export default Hakunavigaatio;

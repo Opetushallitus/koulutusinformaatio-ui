@@ -5,7 +5,7 @@ class Sidebar extends Component {
         return (
             <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
                 <ul class="nav sidebar-nav">
-                    <li class="sidebar-brand">
+                    <li className="sidebar-brand">
                         Valikko
                     </li>
                 </ul>
