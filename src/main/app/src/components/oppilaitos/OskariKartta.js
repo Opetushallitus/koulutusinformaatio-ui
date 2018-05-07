@@ -26,7 +26,7 @@ class OskariKartta extends Component {
 
     setMapLocation(osoitetieto) {
         console.log("Set map location: " +osoitetieto);
-        var IFRAME_DOMAIN = "https://hkp.maanmittauslaitos.fi";
+        var IFRAME_DOMAIN = "https://hahtuvaopintopolku.fi";
         var iFrame = document.getElementById('publishedMap');
         var channel = OskariRPC.connect(
             iFrame,
@@ -110,7 +110,7 @@ class OskariKartta extends Component {
             <React.Fragment>
                 <div>
                 <iframe id='publishedMap'
-                    src="https://hkp.maanmittauslaitos.fi/hkp/published/fi/277da693-ae10-4508-bc5a-d6ced2056fd0"></iframe>
+                        src="https://hkp.maanmittauslaitos.fi/hkp/published/fi/74aff82d-7c67-40ba-bd3f-893c8bdb4daa"></iframe>
                 </div>
             </React.Fragment>
         );
