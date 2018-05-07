@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom'
 class Footer extends Component {
     render() {
         return (
-            <footer class="container-fluid">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12 col-md-4">
-                            <ul class="site-links">
+            <footer className="container-fluid">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-xs-12 col-md-4">
+                            <ul className="site-links">
                                 <li>
                                     <a href="#">
                                         <img src="images/opintopolku_large-fi.png" alt=""/>
@@ -22,36 +22,36 @@ class Footer extends Component {
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-xs-12 col-md-4">
-                            <div class="row site-icons">
-                                <div class="col-xs-6">
+                        <div className="col-xs-12 col-md-4">
+                            <div className="row site-icons">
+                                <div className="col-xs-6">
                                     <img src="images/logo_fi.svg" alt=""/>
                                 </div>
-                                <div class="col-xs-6">
+                                <div className="col-xs-6">
                                     <img src="images/OPH_logo-fi.svg" alt=""/>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-md-4">
-                            <div class="row">
-                                <div class="col-xs-12">
+                        <div className="col-xs-12 col-md-4">
+                            <div className="row">
+                                <div className="col-xs-12">
                                     <p>Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja koulutuksistaan Opintopolussa. Tietojen oikeellisuuden
                                         voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.</p>
                                 </div>
-                                <div class="col-xs-12">
-                                    <ul class="social-media">
+                                <div className="col-xs-12">
+                                    <ul className="social-media">
                                         <li>Suomeksi</li>
                                         <li>In English</li>
                                         <li>På svenska</li>
-                                        <li class="separator">|</li>
+                                        <li className="separator">|</li>
                                         <li>
-                                            <i class="fa fa-twitter-square" aria-hidden="true"></i>
+                                            <i className="fa fa-twitter-square" aria-hidden="true"></i>
                                         </li>
                                         <li>
-                                            <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                                            <i className="fa fa-facebook-square" aria-hidden="true"></i>
                                         </li>
                                         <li>
-                                            <i class="fa fa-instagram" aria-hidden="true"></i>
+                                            <i className="fa fa-instagram" aria-hidden="true"></i>
                                         </li>
                                     </ul>
                                 </div>

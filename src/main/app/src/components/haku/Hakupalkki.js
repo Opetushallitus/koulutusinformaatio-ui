@@ -38,23 +38,23 @@ class Hakupalkki extends Component {
             return <Redirect push to={'/haku/' + this.state.input}/>
         }
         return (
-            <div class="container-fluid" id={this.props.main ? "call-to-action" : "call-to-action-secondary"}>
-                <div class="jumbotron">
-                    <div class="container">
-                        <div class="row">
-                            <div class={"col-xs-12 col-md-8 header-search" + (this.props.main ? " main" : "")}>
-                                <div class="search">
-                                    <input id="regular-input" class="oph-input" type="text" placeholder="Etsi ja vertaile koulutuksia ja oppilaitoksia"
+            <div className="container-fluid" id={this.props.main ? "call-to-action" : "call-to-action-secondary"}>
+                <div className="jumbotron">
+                    <div className="container">
+                        <div className="row">
+                            <div className={"col-xs-12 col-md-8 header-search" + (this.props.main ? " main" : "")}>
+                                <div className="search">
+                                    <input id="regular-input" className="oph-input" type="text" placeholder="Etsi ja vertaile koulutuksia ja oppilaitoksia"
                                            onChange={this.handleChange} onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit(e)}}}/>
-                                    <Link to={'/haku/' + this.state.input} onClick={this.handleSubmit} class="search-button"/>
+                                    <Link to={'/haku/' + this.state.input} onClick={this.handleSubmit} className="search-button"/>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {/*<div class="container"> //TODO rajaimet
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="filter-button" role="button">
+                    {/*<div className="container"> //TODO rajaimet
+                        <div className="row">
+                            <div className="col-xs-12">
+                                <div className="filter-button" role="button">
                                 </div>
                             </div>
                         </div>

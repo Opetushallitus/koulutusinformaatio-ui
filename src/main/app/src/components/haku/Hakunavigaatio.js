@@ -14,22 +14,22 @@ class Hakunavigaatio extends Component {
 
     render() {
         return (
-            <div class="container-fluid app-navigation-bar hakupalkki">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-4 previous">
+            <div className="container-fluid app-navigation-bar hakupalkki">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-xs-4 previous">
                             {/*<a href="#"> Poistettu 1. demoversiosta
-                                <i class="fa fa-circle-thin" aria-hidden="true"/>
+                                <i className="fa fa-circle-thin" aria-hidden="true"/>
                             </a>*/}
                         </div>
-                        <div class="col-xs-4 search">
+                        <div className="col-xs-4 search">
                             <Link to={this.state.hakuUrl}>
-                                <i class="fa fa-circle-thin" aria-hidden="true"/>
+                                <i className="fa fa-circle-thin" aria-hidden="true"/>
                             </Link>
                         </div>
-                        <div class="col-xs-4 next">
+                        <div className="col-xs-4 next">
                             {/*<a href="#"> Poistettu 1. demoversiosta
-                                <i class="fa fa-circle-thin" aria-hidden="true"/>
+                                <i className="fa fa-circle-thin" aria-hidden="true"/>
                             </a>*/}
                         </div>
                     </div>
