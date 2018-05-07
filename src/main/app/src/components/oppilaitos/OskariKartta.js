@@ -15,7 +15,9 @@ class OskariKartta extends Component {
 
     componentDidMount() {
         console.log("did mount");
-        this.setMapLocation(this.state.osoitetieto);
+        if(this.state.osoitetieto[0] && this.state.osoitetieto[1]) {
+            this.setMapLocation(this.state.osoitetieto);
+        }
     }
 
     shouldComponentUpdate() {
@@ -39,7 +41,7 @@ class OskariKartta extends Component {
                     if(data.result && data.result.locations && data.result.locations.length > 0) {
                         var location = data.result.locations[0];
                         data.result.locations.map(loc => {
-                            console.log("LOC: %O", loc);
+                            //console.log("LOC: %O", loc);
                             if(loc.region.toLowerCase() === osoitetieto[1].toLowerCase() || loc.village.toLowerCase() === osoitetieto[1].toLowerCase()) {
                                 location = loc;
                             }
