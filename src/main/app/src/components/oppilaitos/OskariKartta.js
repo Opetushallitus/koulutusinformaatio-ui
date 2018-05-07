@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import OskariRPC from '../../tools/rpc-client/rpc-client';
+import { OsoiteParser as op } from '../../tools/Utils'
 
 class OskariKartta extends Component {
 
@@ -7,7 +8,7 @@ class OskariKartta extends Component {
         super(props);
         this.state = {
             result: undefined,
-            osoitetieto: [props.osoite, props.postitoimipaikka]
+            osoitetieto: [op.getCoreAddress(props.osoite), props.postitoimipaikka]
         };
         console.log("Created component OskariKartta");
     }
@@ -22,6 +23,7 @@ class OskariKartta extends Component {
     }
 
     setMapLocation(osoitetieto) {
+        console.log("Set map location: " +osoitetieto);
         var IFRAME_DOMAIN = "https://hkp.maanmittauslaitos.fi";
         var iFrame = document.getElementById('publishedMap');
         var channel = OskariRPC.connect(
@@ -92,8 +94,8 @@ class OskariKartta extends Component {
             });
 
             //var data = ['Kaisaniemenkatu 2, Helsinki'];
-            var data = osoitetieto;
-            console.log("Triggering search!");
+            var data = osoitetieto[0];
+            console.log("Triggering search!" + data);
             channel.postRequest('SearchRequest', data);
             //console.log("searchResult: " + searchResult);
 

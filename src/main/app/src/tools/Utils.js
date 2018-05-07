@@ -32,4 +32,11 @@ class Parser {
     }
 }
 
-export {Parser, Localizer};
+class OsoiteParser {
+    static getCoreAddress(katuosoite) {
+        var regexp = '^.+? \\d+'; //Merkkejä ja välilyönnillä siitä erotettu numero, esim: Ratapiha 3, Hubert Hepolaisen Katu 888.
+        return katuosoite.match(regexp);
+    }
+}
+
+export {Parser, Localizer, OsoiteParser};
