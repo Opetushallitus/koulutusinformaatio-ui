@@ -38,6 +38,11 @@ class OskariKartta extends Component {
 
 
     setMapLocation(osoitetieto) {
+        if (OskariRPC.connect) {
+            console.log("CONNECT DEFINED!");
+        } else {
+            console.log("!! CONNECT MISSING");
+        }
         //var mapinfo = this.selectMapBasedOnLocation();
         console.log("Set map location: " +osoitetieto +", mapinfo: "+ this.state.mapinfo);
         var IFRAME_DOMAIN = this.state.mapinfo[0];
