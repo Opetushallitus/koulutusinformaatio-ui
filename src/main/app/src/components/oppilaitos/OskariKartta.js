@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import OskariRPC from '../../tools/rpc-client/rpc-client';
+//import OskariRPC from '../../tools/rpc-client/rpc-client';
 import { OsoiteParser as op } from '../../tools/Utils'
+import OskariRPC from 'oskari-rpc';
 
 class OskariKartta extends Component {
 
