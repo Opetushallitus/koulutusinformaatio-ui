@@ -87,13 +87,13 @@ class Oppilaitos extends Component {
         if(!this.state.result.kayntiosoite) {
             return null;
         }
-    return (<div><ul>
-        <li><i>Käyntiosoite</i></li>
-        <li>{this.state.result.kayntiosoite.osoite ? this.state.result.kayntiosoite.osoite : "???"}</li>
-        <li>{this.state.result.kayntiosoite.postinumeroUri ? this.state.result.kayntiosoite.postinumeroUri+" " : "??? "}
-            {this.state.result.kayntiosoite.postitoimipaikka ? this.state.result.kayntiosoite.postitoimipaikka : "???"}</li>
-    </ul>
-    </div>);
+        return (<div><ul>
+            <li><i>Käyntiosoite</i></li>
+            <li>{this.state.result.kayntiosoite.osoite ? this.state.result.kayntiosoite.osoite : "(ei käyntiosoitetta)"}</li>
+            <li>{this.state.result.kayntiosoite.postinumeroUri ? this.state.result.kayntiosoite.postinumeroUri+" " : "(ei postinumeroa) "}
+                {this.state.result.kayntiosoite.postitoimipaikka ? this.state.result.kayntiosoite.postitoimipaikka : "(ei postitoimipaikkaa)"}</li>
+        </ul>
+        </div>);
     }
 
     parsePostiOsoite() {
@@ -102,13 +102,14 @@ class Oppilaitos extends Component {
         }
         return (<div><ul>
             <li><i>Postiosoite</i></li>
-            <li>{this.state.result.postiosoite.osoite ? this.state.result.postiosoite.osoite : "???"}</li>
-            <li>{this.state.result.postiosoite.postinumeroUri ? this.state.result.postiosoite.postinumeroUri+" " : "??? "}
-            {this.state.result.postiosoite.postitoimipaikka ? this.state.result.postiosoite.postitoimipaikka : "???"}</li>
+            <li>{this.state.result.postiosoite.osoite ? this.state.result.postiosoite.osoite : "(ei postiosoitetta)"}</li>
+            <li>{this.state.result.postiosoite.postinumeroUri ? this.state.result.postiosoite.postinumeroUri+" " : "(ei postinumeroa)"}
+            {this.state.result.postiosoite.postitoimipaikka ? this.state.result.postiosoite.postitoimipaikka : "(ei postitoimipaikkaa)"}</li>
         </ul>
         </div>);
     }
 
+    //todo: Tämä vaatii vielä huomiota
     safeParseYleiskuvaus() {
         var data = this.state.result;
         var result = <div></div>;
@@ -118,6 +119,10 @@ class Oppilaitos extends Component {
     }
 
     parseSome() {
+        if (!this.state.result.metadata || !this.state.result.metadata.data)  {
+            console.log("Ei tarvittavia sometietoja saatavilla");
+            return <div className='social'></div>;
+        }
         var data = this.state.result.metadata.data;
         var fb = <li></li>;
         var twitter = <li></li>;
@@ -152,12 +157,20 @@ class Oppilaitos extends Component {
         //<img className='insta-icon' src={instaIcon} alt={"Facebook"}/>
     }
 
+    luoKarttaJosOsoiteTiedossa() {
+        var data = this.state.result.kayntiosoite;
+        if(data && data.osoite && data.postitoimipaikka) {
+            return <OskariKartta osoite={data.osoite} postitoimipaikka={data.postitoimipaikka} />;
+        }
+        return null;
+    }
+
     render() {
         if(!this.state.result) {
             console.log("Was going to render, but got no data.");
             return null;
         }
-        console.log("Rendering page, data: %O", this.state.result );
+        console.log("Rendering oppilaitos page, data: %O", this.state.result );
         return (
             <React.Fragment>
                 <Hakupalkki/>
@@ -166,7 +179,7 @@ class Oppilaitos extends Component {
                         <div className='col-xs-12 col-md-9 left-column'>
                             <h1><i className='fa fa-circle'></i>{this.state.result.nimi.fi}</h1>
                             <div className='oppilaitos-yleiskuvaus'>
-                                <p>{this.safeParseYleiskuvaus()}</p>
+                                <div>{this.safeParseYleiskuvaus()}</div>
                             </div>
                         </div>
 
@@ -191,7 +204,7 @@ class Oppilaitos extends Component {
                                     {this.parseSome()}
                                 </div>
                                 <div>
-                                    <OskariKartta/>
+                                    {this.luoKarttaJosOsoiteTiedossa()}
                                 </div>
                             </div>
 

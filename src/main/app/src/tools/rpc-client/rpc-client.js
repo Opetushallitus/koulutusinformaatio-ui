@@ -37,6 +37,7 @@
  */
 
 // Universal module definition //
+var define = undefined;
 (function (root, factory) {
     if (typeof exports === 'object') {
     // CommonJS
