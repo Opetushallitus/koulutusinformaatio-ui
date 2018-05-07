@@ -8,7 +8,8 @@ class OskariKartta extends Component {
         super(props);
         this.state = {
             result: undefined,
-            osoitetieto: [op.getCoreAddress(props.osoite), props.postitoimipaikka]
+            osoitetieto: [op.getCoreAddress(props.osoite), props.postitoimipaikka],
+            mapinfo: OskariKartta.selectMapBasedOnLocation()
         };
         console.log("Created component OskariKartta");
     }
@@ -24,9 +25,22 @@ class OskariKartta extends Component {
         //return false;
     }
 
+    static selectMapBasedOnLocation() {
+        var location = window.location.href;
+        console.log("Päätellään oikeat parametrit kartalle: " + location);
+        if(location.indexOf('localhost') !== -1 ) {
+            return ['https://hkp.maanmittauslaitos.fi', '277da693-ae10-4508-bc5a-d6ced2056fd0'];
+        } else if (location.indexOf('hahtuvaopintopolku') !== -1 ) {
+            return ['https://hahtuvaopintopolku.fi', '74aff82d-7c67-40ba-bd3f-893c8bdb4daa'];
+        }
+        return null; //fixme
+    }
+
+
     setMapLocation(osoitetieto) {
-        console.log("Set map location: " +osoitetieto);
-        var IFRAME_DOMAIN = "https://hahtuvaopintopolku.fi";
+        //var mapinfo = this.selectMapBasedOnLocation();
+        console.log("Set map location: " +osoitetieto +", mapinfo: "+ this.state.mapinfo);
+        var IFRAME_DOMAIN = this.state.mapinfo[0];
         var iFrame = document.getElementById('publishedMap');
         var channel = OskariRPC.connect(
             iFrame,
@@ -109,8 +123,7 @@ class OskariKartta extends Component {
         return (
             <React.Fragment>
                 <div>
-                <iframe id='publishedMap'
-                        src="https://hkp.maanmittauslaitos.fi/hkp/published/fi/74aff82d-7c67-40ba-bd3f-893c8bdb4daa"></iframe>
+                <iframe id='publishedMap' src={"https://hkp.maanmittauslaitos.fi/hkp/published/fi/"+this.state.mapinfo[1]}/>
                 </div>
             </React.Fragment>
         );
