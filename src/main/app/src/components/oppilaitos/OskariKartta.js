@@ -52,6 +52,11 @@ class OskariKartta extends Component {
             iFrame,
             IFRAME_DOMAIN);
 
+        //var data = ['Kaisaniemenkatu 2, Helsinki'];
+        var data = osoitetieto[0];
+        console.log("Triggering search!!" + data);
+        channel.postRequest('SearchRequest', data);
+
         channel.handleEvent(
             'SearchResultEvent',
             function(data) {
@@ -114,13 +119,6 @@ class OskariKartta extends Component {
                     channel.log('Client is supported by Oskari.');
                 }
             });
-
-            //var data = ['Kaisaniemenkatu 2, Helsinki'];
-            var data = osoitetieto[0];
-            console.log("Triggering search!" + data);
-            channel.postRequest('SearchRequest', data);
-            //console.log("searchResult: " + searchResult);
-
         });
     }
 
