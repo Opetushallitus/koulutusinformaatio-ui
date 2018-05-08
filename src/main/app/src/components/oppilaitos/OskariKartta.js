@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 //import OskariRPC from '../../tools/rpc-client/rpc-client';
 import { OsoiteParser as op } from '../../tools/Utils'
 import OskariRPC from 'oskari-rpc';
+import chan from 'jschannel';
 
 class OskariKartta extends Component {
 
@@ -17,8 +18,10 @@ class OskariKartta extends Component {
 
     componentDidMount() {
         console.log("did mount");
-        if(this.state.osoitetieto[0] && this.state.osoitetieto[1]) {
+        if(this.state.osoitetieto[0] && this.state.osoitetieto[1] && this.state.mapinfo) {
             this.setMapLocation(this.state.osoitetieto);
+        } else if (!this.state.mapinfo) {
+            console.log("Oskari-karttapalvelua ei ilmeisesti ole konfiguroitu tähän ympäristöön.")
         }
     }
 
@@ -32,7 +35,7 @@ class OskariKartta extends Component {
         if(location.indexOf('localhost') !== -1 ) {
             return ['https://hkp.maanmittauslaitos.fi', '277da693-ae10-4508-bc5a-d6ced2056fd0'];
         } else if (location.indexOf('hahtuvaopintopolku') !== -1 ) {
-            return ['https://hahtuvaopintopolku.fi', '74aff82d-7c67-40ba-bd3f-893c8bdb4daa'];
+            return ['https://hkp.maanmittauslaitos.fi', '74aff82d-7c67-40ba-bd3f-893c8bdb4daa'];
         }
         return null; //fixme
     }
@@ -51,11 +54,6 @@ class OskariKartta extends Component {
         var channel = OskariRPC.connect(
             iFrame,
             IFRAME_DOMAIN);
-
-        //var data = ['Kaisaniemenkatu 2, Helsinki'];
-        var data = osoitetieto[0];
-        console.log("Triggering search!!" + data);
-        channel.postRequest('SearchRequest', data);
 
         channel.handleEvent(
             'SearchResultEvent',
@@ -119,6 +117,12 @@ class OskariKartta extends Component {
                     channel.log('Client is supported by Oskari.');
                 }
             });
+
+            //var data = ['Kaisaniemenkatu 2, Helsinki'];
+            var data = osoitetieto[0];
+            console.log("Triggering search!!" + data);
+            channel.postRequest('SearchRequest', data);
+
         });
     }
 
