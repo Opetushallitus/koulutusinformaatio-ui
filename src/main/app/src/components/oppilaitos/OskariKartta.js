@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-//import OskariRPC from '../../tools/rpc-client/rpc-client';
 import { OsoiteParser as op } from '../../tools/Utils'
 import OskariRPC from 'oskari-rpc';
-import chan from 'jschannel';
 
 class OskariKartta extends Component {
 
@@ -13,7 +11,6 @@ class OskariKartta extends Component {
             osoitetieto: [op.getCoreAddress(props.osoite), props.postitoimipaikka],
             mapinfo: OskariKartta.selectMapBasedOnLocation()
         };
-        console.log("Created component OskariKartta");
     }
 
     componentDidMount() {
@@ -31,23 +28,16 @@ class OskariKartta extends Component {
 
     static selectMapBasedOnLocation() {
         var location = window.location.href;
-        console.log("Päätellään oikeat parametrit kartalle: " + location);
         if(location.indexOf('localhost') !== -1 ) {
             return ['https://hkp.maanmittauslaitos.fi', '277da693-ae10-4508-bc5a-d6ced2056fd0'];
         } else if (location.indexOf('hahtuvaopintopolku') !== -1 ) {
             return ['https://hkp.maanmittauslaitos.fi', '74aff82d-7c67-40ba-bd3f-893c8bdb4daa'];
         }
-        return null; //fixme
+        return null;
     }
 
 
     setMapLocation(osoitetieto) {
-        if (OskariRPC.connect) {
-            console.log("CONNECT DEFINED!");
-        } else {
-            console.log("!! CONNECT MISSING");
-        }
-        //var mapinfo = this.selectMapBasedOnLocation();
         console.log("Set map location: " +osoitetieto +", mapinfo: "+ this.state.mapinfo);
         var IFRAME_DOMAIN = this.state.mapinfo[0];
         var iFrame = document.getElementById('publishedMap');
@@ -58,13 +48,12 @@ class OskariKartta extends Component {
         channel.handleEvent(
             'SearchResultEvent',
             function(data) {
-                console.log('DATA: ' + JSON.stringify(data));
+                //console.log('DATA: ' + JSON.stringify(data));
                 if(data.success) {
-                    console.log('data.result.locations.length: ' + data.result.locations.length);
+                    //console.log('data.result.locations.length: ' + data.result.locations.length);
                     if(data.result && data.result.locations && data.result.locations.length > 0) {
                         var location = data.result.locations[0];
                         data.result.locations.map(loc => {
-                            //console.log("LOC: %O", loc);
                             if(loc.region.toLowerCase() === osoitetieto[1].toLowerCase() || loc.village.toLowerCase() === osoitetieto[1].toLowerCase()) {
                                 location = loc;
                             }
@@ -118,9 +107,8 @@ class OskariKartta extends Component {
                 }
             });
 
-            //var data = ['Kaisaniemenkatu 2, Helsinki'];
             var data = osoitetieto[0];
-            console.log("Triggering search!!" + data);
+            console.log("Triggering map location search for " + data);
             channel.postRequest('SearchRequest', data);
 
         });
