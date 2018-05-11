@@ -32,7 +32,7 @@ class Hakutulos extends Component {
             return koulutus.nimi.kieli_fi;
         } else if(koulutus.hakukohteet && (0 < koulutus.hakukohteet.length)) {
             //Avoimen yliopiston koulutuksen nimi näyttäisi olevan hakukohteen nimenä
-            return koulutus.hakukohteet[0].nimi.fi;
+            return koulutus.hakukohteet[0].nimi.kieli_fi;
         }
         return "Koulutus (ei nimeä)"
     }
@@ -47,12 +47,12 @@ class Hakutulos extends Component {
     }
 
     getOppilaitosNimi(oppilaitos) {
-        if(oppilaitos.nimi.fi) {
-            return oppilaitos.nimi.fi;
-        } else if (oppilaitos.nimi.sv) {
-            return oppilaitos.nimi.sv;
-        } else if (oppilaitos.nimi.en) {
-            return oppilaitos.nimi.en;
+        if(oppilaitos.nimi.kieli_fi) {
+            return oppilaitos.nimi.kieli_fi;
+        } else if (oppilaitos.nimi.kieli_sv) {
+            return oppilaitos.nimi.kieli_sv;
+        } else if (oppilaitos.nimi.kieli_en) {
+            return oppilaitos.nimi.kieli_en;
         }
         return "Oppilaitos (ei nimeä)"
     }
