@@ -6,6 +6,7 @@ import Ammatillinen from "./Ammatillinen";
 import qs from 'query-string';
 import Hakupalkki from "../haku/Hakupalkki";
 import Hakunavigaatio from './../haku/Hakunavigaatio';
+import AvoinYoKoulutus from "./AvoinYo";
 
 @inject("hakuStore")
 @inject("urlStore")
@@ -52,8 +53,8 @@ class Koulutus extends Component {
             if(koulutus.moduulityyppi === 'KORKEAKOULUTUS' && !(koulutus.isAvoimenYliopistonKoulutus)) {
                 return <Korkeakoulu name={this.state.nimi} oid={this.state.oid} result={koulutus}/>
             }
-            if(koulutus.isAvoimenYliopistonKoulutus) {
-                return <Korkeakoulu name={this.state.nimi} oid={this.state.oid} result={koulutus}/> //TODO
+            if(koulutus.moduulityyppi === 'KORKEAKOULUTUS' && koulutus.koulutusmoduuliTyyppi !== 'TUTKINTO') {
+                return <AvoinYoKoulutus name={this.state.nimi} oid={this.state.oid} result={koulutus}/> //TODO
             }
             return <Ammatillinen name={this.state.nimi} oid={this.state.oid} result={koulutus}/> //TODO
         }

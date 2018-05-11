@@ -34,7 +34,9 @@ class Parser {
 
 class OsoiteParser {
     static getCoreAddress(katuosoite) {
-        var regexp = '^.+? \\d+'; //Merkkejä ja välilyönnillä siitä erotettu numero, esim: Ratapiha 3, Hubert Hepolaisen Katu 888.
+        //Merkkejä ja välilyönnillä siitä erotettu numero, esim: Ratapiha 3, Hubert Hepolaisen Katu 888.
+        //Mahdollinen jatke leikataan pois.
+        var regexp = '^.+? \\d+';
         var coreAddress = katuosoite.match(regexp);
         if(coreAddress === null) {
             console.log("Warning: returning null for core address, input: " + katuosoite);
