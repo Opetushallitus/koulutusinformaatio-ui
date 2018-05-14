@@ -10,20 +10,20 @@ class KoulutusSidebar extends Component {
 
     render() {
         return (
-            <div class="col-xs-12 col-md-3 koulutusSidebar right-column">
-                <div class="row">
+            <div className="col-xs-12 col-md-3 koulutusSidebar right-column">
+                <div className="row">
                     
-                    <img class="hidden-xs" src={sidebarPic} alt=""/>
-                    <div class="col-md-12 hidden-xs">
-                        <p class="student-comment">
+                    <img className="hidden-xs" src={sidebarPic} alt=""/>
+                    <div className="col-md-12 hidden-xs">
+                        <p className="student-comment">
                             "Tuskin olen koskaan oppinut näin paljon näin lyhyessä ajassa. Parasta on myös loistavat luokkakaverit, jotka tekevät opiskelusta
                             vielä niin paljon antoisampaa."
                         </p>
                     </div>
-                    <div class="col-md-12">
+                    <div className="col-md-12">
                         <h4>Tähän koulutukseen liittyviä muita koulutuksia</h4>
                     </div>
-                    <div class="col-md-12">
+                    <div className="col-md-12">
                         <ul>
                             <li>
                                 <a href="#">Medialan perustutkinto</a>

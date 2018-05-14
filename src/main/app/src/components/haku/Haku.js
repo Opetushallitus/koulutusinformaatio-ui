@@ -82,8 +82,8 @@ class Haku extends Component {
             ]).then((result) => {
                 _this.props.hakuStore.koulutusResult = result[0] ? result[0].body.result : [];
                 _this.props.hakuStore.koulutusCount = result[0] ? result[0].body.count : 0;
-                _this.props.hakuStore.oppilaitosResult = result[1] ? result[1].body.result : [];
-                _this.props.hakuStore.oppilaitosCount = result[1] ? result[1].body.count : 0;
+                _this.props.hakuStore.oppilaitosResult = result[1] && result[1].body ? result[1].body.result : [];
+                _this.props.hakuStore.oppilaitosCount = result[1] && result[1].body ? result[1].body.count : 0;
                 if(toggle) {
                     _this.toggleAction(('oppilaitos' !== toggle));
                 } else {

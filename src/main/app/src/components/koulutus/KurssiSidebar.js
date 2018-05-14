@@ -10,10 +10,10 @@ class KurssiSidebar extends Component {
 
     render() {
         return (
-            <div class="col-xs-12 col-md-3 koulutusSidebar right-column">
-                <div class="row">
+            <div className="col-xs-12 col-md-3 koulutusSidebar right-column">
+                <div className="row">
                     
-                    <img class="hidden-xs" src={sidebarPic} alt=""/>
+                    <img className="hidden-xs" src={sidebarPic} alt=""/>
 
                 </div>
             </div>

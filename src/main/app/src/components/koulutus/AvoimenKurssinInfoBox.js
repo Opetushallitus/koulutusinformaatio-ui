@@ -10,12 +10,12 @@ class AvoinInfoBox extends Component {
             koulutusohjelma: props.result.koulutusohjelma,
             opettaja: props.result.opettaja,
             opetuskielet: props.result.opetuskielis, //array, voi olla monta
-            suoritustapa: "(TODO)",
-            toimipiste: "(TODO)",
-            luokka: "(TODO)",
-            ajoitus: "(TODO)",
-            opetusajat: "(TODO)",
-            ilmoittautuneet: "(TODO)",
+            opetusPaikkas: props.result.opetusPaikkas,
+            toimipiste: "-",
+            luokka: "-",
+            ajoitus: "-",
+            opetusaikas: props.result.opetusAikas,
+            ilmoittautuneet: "-",
 
         };
         console.log("Created element AvoinInfoBox, data: %O", props.result);
@@ -26,12 +26,15 @@ class AvoinInfoBox extends Component {
         const opintopisteet = this.state.opintopisteet ? this.state.opintopisteet : "not working";
         const koulutusohjelma = l.localize(this.state.koulutusohjelma);
         const opettaja = this.state.opettaja;
-        const opetuskielet = l.localize(this.state.opetuskielet); //Fixme: voi olla monta
-        const suoritustapa = this.state.suoritustapa;
+        const opetuskielet = [];
+        this.state.opetuskielet.map(kieli => {opetuskielet.push(l.localize(kieli))});
+        const suoritustapas = [];
+        this.state.opetusPaikkas.map(paikka => {suoritustapas.push(l.localize(paikka))});
         const toimipiste = this.state.toimipiste;
         const luokka = this.state.luokka;
         const ajoitus = this.state.ajoitus;
-        const opetusajat = this.state.opetusajat;
+        const opetusajat = [];
+        this.state.opetusaikas.map(aika => {opetusajat.push(l.localize(aika))});
         const ilmoittautuneet = this.state.ilmoittautuneet;
 
         return (
@@ -40,12 +43,11 @@ class AvoinInfoBox extends Component {
                     {opintopisteet && <li>Opintopisteet: {opintopisteet}</li>}
                     {koulutusohjelma && <li>Koulutusohjelma: {koulutusohjelma}</li>}
                     {opettaja && <li>Opettaja: {opettaja} </li>}
-                    {opetuskielet && <li>Opetuskielet: {opetuskielet} </li>}
-                    {suoritustapa && <li>Suoritustapa: {suoritustapa} </li>}
+                    {opetuskielet.length > 0 && <li>Opetuskielet: {opetuskielet.join(", ")} </li>}
+                    {suoritustapas.length > 0 && <li>Suoritustapa: {suoritustapas.join(", ")} </li>}
                     {toimipiste && luokka &&  <li>Toimipiste ja luokka: {toimipiste} {luokka}</li>}
-                    {}
                     {ajoitus && <li>Ajoitus: {ajoitus} </li>}
-                    {opetusajat && <li>Opetusajat: {opetusajat} </li>}
+                    {opetusajat.length > 0 && <li>Opetusajat: {opetusajat.join(", ")} </li>}
                     {ilmoittautuneet && <li>Ilmoittautuneet: {ilmoittautuneet} </li>}
                 </ul>
             </div>);

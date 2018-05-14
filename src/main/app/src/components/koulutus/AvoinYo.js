@@ -15,14 +15,13 @@ class AvoinYoKoulutus extends Component {
             result: props.result,
         };
         console.log("Created element AoinYoKoulutus. Data: %O", this.state.result);
-        console.log("props.nimi: " +  props.name);
     }
 
     parseNimi() {
         if(this.state.result && this.state.result.nimi) {
             return this.state.result.nimi; //Päättely konfo-indeksoijassa
         }
-        return "(Ei nimeä)";
+        return "(Tuntematon nimi)";
     }
 
     parseKuvaus() {
