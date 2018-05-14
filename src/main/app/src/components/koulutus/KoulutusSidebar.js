@@ -21,7 +21,7 @@ class KoulutusSidebar extends Component {
                         </p>
                     </div>
                     <div class="col-md-12">
-                        <h4>Tähän koulutikseen liittyviä muita koulutuksia</h4>
+                        <h4>Tähän koulutukseen liittyviä muita koulutuksia</h4>
                     </div>
                     <div class="col-md-12">
                         <ul>

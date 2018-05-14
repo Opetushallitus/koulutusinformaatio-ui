@@ -3,6 +3,8 @@ import KoulutusInfoBox from './KoulutusInfoBox';
 import KoulutusSidebar from './KoulutusSidebar';
 import {Localizer as l, Parser as p} from '../../tools/Utils';
 import AvoinInfoBox from "./AvoimenKurssinInfoBox";
+import KurssiSidebar from "./KurssiSidebar";
+import renderHTML from 'react-render-html';
 
 class AvoinYoKoulutus extends Component {
 
@@ -17,15 +19,19 @@ class AvoinYoKoulutus extends Component {
     }
 
     parseNimi() {
-        if(this.state.result && this.state.result.aihees.length === 1) {
-            return l.localize(this.state.result.aihees[0], "Tuntematon koulutus")
+        if(this.state.result && this.state.result.nimi) {
+            return this.state.result.nimi; //Päättely konfo-indeksoijassa
         }
-        return "";
+        return "(Ei nimeä)";
     }
 
     parseKuvaus() {
+        if(this.state.result && this.state.result.kuvausKomoto && this.state.result.kuvausKomoto.SISALTO) {
+            return renderHTML(l.localize(this.state.result.kuvausKomoto.SISALTO));
+        }
+
         if(this.state.result && this.state.result.kuvausKomo && this.state.result.kuvausKomo.TAVOITTEET) {
-            return p.removeHtmlTags(l.localize(this.state.result.kuvausKomo.TAVOITTEET));
+            return renderHTML(l.localize(this.state.result.kuvausKomo.TAVOITTEET));
         }
         return "";
     }
@@ -36,8 +42,8 @@ class AvoinYoKoulutus extends Component {
                 <div className="row info-page">
                     <div className="col-xs-12 col-md-9 left-column">
                         <h1>
-                            <i className="fa fa-circle korkeakoulu-hattu" aria-hidden="true"></i>
-                            <span>(Avoimen kurssi XYZ)</span>
+                            <i className="fa fa-circle avoin-hattu" aria-hidden="true"></i>
+                            <span>{this.parseNimi()}</span>
                         </h1>
                         <div className="row">
                             <div className="col-xs-12 left-column">
@@ -54,7 +60,7 @@ class AvoinYoKoulutus extends Component {
                             </div>
                         </div>
                     </div>
-                    <KoulutusSidebar/>
+                    <KurssiSidebar/>
                 </div>
             </div>
         );

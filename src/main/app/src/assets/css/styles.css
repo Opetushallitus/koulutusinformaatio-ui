@@ -105,7 +105,7 @@ button:focus {
 }
 
 .koulutusinfolaatikko {
-  width: 55%;
+  width: 80%;
   background-color: #4d92e3;
   border: solid 1px #979797;
   color: white;
@@ -824,6 +824,9 @@ ul.disc-list {
 }
 .korkeakoulu-hattu {
   color: #9c56b8;
+}
+.avoin-hattu {
+  color: #4d92e3;
 }
 .ammatillinen-hattu {
   color: #7ed222;

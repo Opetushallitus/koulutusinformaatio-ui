@@ -26,7 +26,7 @@ class AvoinInfoBox extends Component {
         const opintopisteet = this.state.opintopisteet ? this.state.opintopisteet : "not working";
         const koulutusohjelma = l.localize(this.state.koulutusohjelma);
         const opettaja = this.state.opettaja;
-        const opetuskielet = l.localize(this.state.opetuskielet[0]); //Fixme: voi olla monta
+        const opetuskielet = l.localize(this.state.opetuskielet); //Fixme: voi olla monta
         const suoritustapa = this.state.suoritustapa;
         const toimipiste = this.state.toimipiste;
         const luokka = this.state.luokka;
