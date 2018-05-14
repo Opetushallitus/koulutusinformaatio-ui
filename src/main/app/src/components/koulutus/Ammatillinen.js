@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import KoulutusInfoBox from './KoulutusInfoBox';
 import KoulutusSidebar from './KoulutusSidebar';
 import {Localizer as l, Parser as p} from '../../tools/Utils';
+import renderHTML from 'react-render-html';
 
 class Ammatillinen extends Component {
 
@@ -52,7 +53,7 @@ class Ammatillinen extends Component {
                         <div class="col-xs-12 col-md-9 left-column">
                             <h2 class="line_otsikko">Tutkinnon rakenne</h2>
                             <div class="">
-                                {p.removeHtmlTags(tutkinnonOsat)}
+                                {renderHTML(tutkinnonOsat)}
                             </div>
                         </div>}
 
@@ -60,7 +61,7 @@ class Ammatillinen extends Component {
                         <div class="col-xs-12 col-md-9 left-column">
                             <h2 class="line_otsikko">Jatko-opintomahdollisuudet</h2>
                             <div class="">
-                                {p.removeHtmlTags(jatkoOpinnot)}
+                                {renderHTML(jatkoOpinnot)}
                             </div>
                         </div>}
                     </div>

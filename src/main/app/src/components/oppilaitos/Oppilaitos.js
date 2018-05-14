@@ -6,6 +6,8 @@ import {observer, inject} from 'mobx-react';
 import qs from 'query-string';
 import {Localizer as l, Parser as p} from '../../tools/Utils';
 import OskariKartta from "./OskariKartta";
+import renderHTML from 'react-render-html';
+
 
 @inject("hakuStore")
 @inject("urlStore")
@@ -109,12 +111,11 @@ class Oppilaitos extends Component {
         </div>);
     }
 
-    //todo: Tämä vaatii vielä huomiota
     safeParseYleiskuvaus() {
         var data = this.state.result;
         var result = <div></div>;
         if(data && data.yleiskuvaus && data.yleiskuvaus["kieli_fi#1"])
-            result = <div>{p.removeHtmlTags(data.yleiskuvaus["kieli_fi#1"])}</div>
+            result = <div>{renderHTML(data.yleiskuvaus["kieli_fi#1"])}</div>
         return result;
     }
 
