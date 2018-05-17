@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Media from 'react-media';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import HakuStore from './stores/haku-store'
 import UrlStore from './stores/url-store'
@@ -7,6 +8,7 @@ import {Provider} from 'mobx-react';
 import Sidebar from "./components/Sidebar";
 import Header from './components/Header';
 import Footer from './components/Footer';
+import MobileFooter from './components/MobileFooter';
 import Haku from "./components/haku/Haku";
 import Etusivu from "./components/Etusivu";
 import Koulutus from "./components/koulutus/Koulutus";
@@ -40,7 +42,15 @@ class App extends Component {
                                 <Route path='/koulutus/:oid' component={Koulutus}/>
                                 <Route path='/oppilaitos/:oid' component={Oppilaitos}/>
                             </Switch>
-                            <Footer/>
+                            <Media query="(max-width: 768px)">
+                                {matches =>
+                                    matches ? (
+                                        <MobileFooter/>
+                                    ) : (
+                                        <Footer/>
+                                    )
+                                }
+                            </Media>
                         </div>
                     </React.Fragment>
                 </Provider>

@@ -1157,10 +1157,17 @@ footer.margin {
   margin-top: 2.5em;
 }
 ul.site-links {
-  padding: 0 15px;
+  padding: 0;
 }
+.site-links img {
+  max-width: 100%;
+}
+div.site-links {
+  margin-bottom: 1.5em;
+}
+
 ul.site-links li {
-  margin-bottom: 10px
+  margin-bottom: 0.5em;
 }
 footer .site-icons {
   display: flex;
@@ -1175,12 +1182,12 @@ footer .site-icons img {
 footer p {
   text-align: right;
   font-size: 1.2em;
-  padding: 5% 0;
+  padding-right: 4%;
   color: dimgrey;
 }
 .social-media {
   float: right;
-  padding-top: 1.1em;
+  padding-right: 4%;
 }
 .social-media li {
   display: inline;
@@ -1195,7 +1202,6 @@ footer p {
 
 .social-media img {
   width: 40px;
-  height: 40px;
 }
 
 .container-fluid .col-xs-12 {
@@ -2472,12 +2478,9 @@ a.titlelink {
     float: right;
     padding: 5.5%;
     width: 75%;
-}
+  }
   footer p {
     font-size: 1em;
-  }
-  .social-media li {
-    padding-left: .2em;
   }
   .filter-button {
     padding: 1.25% 2%;
@@ -2498,18 +2501,49 @@ a.titlelink {
 .box-container {
   margin-top: 30px;
 }
-@media (max-width: 992px) {
-  footer .site-icons {
-	  top:0!important;
-	  left:30px;
-  }
-  .social-media {
-	  float: none!important;
-  }
-  footer p {
-	  text-align: center;
-  }
+
+
+@media (max-width: 768px) {
+    div footer p {
+        padding: 4% 3%;
+        text-align: center;
+    }
+
+    /*.social-media {*/
+        /*padding: 0;*/
+        /*width: fit-content;*/
+        /*margin: 0 auto;*/
+    /*}*/
+
+    ul.social-media {
+        float: left;
+        margin: 0 auto;
+        padding: 0;
+    }
+    ul.social-media li {
+        padding-left: 0;
+        padding-right: 0.2em;
+    }
+
+    ul.social-media img {
+        max-width: 25%;
+    }
+
+    ul.site-links {
+        float: right;
+    }
+
+    div.site-icons {
+        top: 0;
+    }
 }
+
+@media (max-width: 400px) {
+    ul.site-links a {
+        font-size: 0.8em;
+    }
+}
+
 @media (max-width: 1500px) {
   .haut {
     width: 25%;
@@ -2684,11 +2718,8 @@ a.titlelink {
   .left-column, .right-column {
     margin-bottom: 0;
     padding-bottom: 0;
-}
-  .social-media li {
-    display: inline;
-    padding-left: 0.5em;
-}
+  }
+
 .filter-options.index {
   left: 0;
   width: 100%;
@@ -2700,23 +2731,12 @@ a.titlelink {
 .info-page .panel-body p {
   font-size: 1em;
 }
-footer p {
-  font-size: 1em;
-  padding: 4% 11%;
-  text-align: left;
-}
-footer .site-icons img {
-  height: 66px;
-}
+
 h1 {
   font-size: 22px;
   margin-top: 20px;
 }
-.social-media {
-  padding: 0;
-  width: fit-content;
-  margin: 0 auto;
-}
+
 .info-page.tutkinnonosat .left-column h1 i::after {
   left: 10px;
   top: 12px;
