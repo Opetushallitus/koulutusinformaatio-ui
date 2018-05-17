@@ -58,10 +58,12 @@ class Hakutulos extends Component {
     }
 
     toggleOppilaitos() {
+        console.log("toggleOppilaitos");
         this.props.toggleAction('oppilaitos');
     }
 
     toggleKoulutus() {
+        console.log("toggleKoulutus");
         this.props.toggleAction('koulutus');
     }
 
@@ -99,7 +101,7 @@ class Hakutulos extends Component {
                 const koulutusLinkString = '/koulutus/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
                 var tyyli = "col-xs-12 search-box " + this.getKoulutusStyle(r) + (r.haettavissa ? " haku" : "");
                 return (
-                    <div class="col-xs-12 col-md-6 box-container">
+                    <div key={r.oid} class="col-xs-12 col-md-6 box-container">
                         <div className={tyyli}>
                             {/*<div class="suosikkit">
                                 <i class="fa fa-heart-o" aria-hidden="true"></i>

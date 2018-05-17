@@ -5,6 +5,7 @@ import '../../assets/css/hakutulos.css'
 import {observer, inject} from 'mobx-react';
 import Hakupalkki from './Hakupalkki';
 import Hakutulos from './Hakutulos';
+import Sivutus from './Sivutus';
 
 @inject("hakuStore")
 @inject("urlStore")
@@ -15,15 +16,16 @@ class Haku extends Component {
         super(props);
         this.searchAction = this.searchAction.bind(this);
         this.toggleAction = this.toggleAction.bind(this);
+        this.handleRefresh = this.handleRefresh.bind(this);
     }
 
     componentDidMount() {
         this.handleRefresh();
     }
 
-    handleRefresh() {
+    handleRefresh(paginationEvent = false) {
         const queryParamToggle = qs.parse(this.props.location.search).toggle;
-        if(this.props.hakuStore.keyword != this.props.match.params.keyword) {
+        if(this.props.hakuStore.keyword !== this.props.match.params.keyword || paginationEvent) {
             this.props.hakuStore.keyword = this.props.match.params.keyword
             this.search(queryParamToggle)
         } else if(queryParamToggle) {
@@ -39,7 +41,7 @@ class Haku extends Component {
     handleHistory() {
         const queryParamToggle = qs.parse(this.props.location.search).toggle;
         if(this.props.hakuStore.keyword != this.props.match.params.keyword) {
-            this.props.hakuStore.keyword = this.props.match.params.keyword
+            this.props.hakuStore.keyword = this.props.match.params.keyword;
             this.search(queryParamToggle)
         } else {
             this.props.hakuStore.toggleKoulutus = ('oppilaitos' !== queryParamToggle)
@@ -55,7 +57,7 @@ class Haku extends Component {
     }
 
     searchAction(newKeyword) {
-        if(newKeyword != this.props.hakuStore.keyword) {
+        if(newKeyword !== this.props.hakuStore.keyword) {
             this.props.hakuStore.keyword = newKeyword;
             this.search();
         }
@@ -66,20 +68,33 @@ class Haku extends Component {
         this.changeUrl();
     }
 
+    //Todo: käytä näitä sivuja vaihdettaessa, ettei turhaan tehdä kahta rajapintakutsua kun yksi riittää. Refaktorointia voisi myös hieman siistiä.
+    static getKoulutuksetFromBackend(_this, _handleError) {
+        return (superagent
+            .get(_this.props.urlStore.urls.url('konfo-backend.search.koulutukset'))
+            .query({keyword: _this.props.hakuStore.keyword, page: _this.props.hakuStore.currentPageKoulutus, size: _this.props.hakuStore.pageSizeKoulutus})
+            .catch(_handleError))
+    }
+
+    //Todo: käytä näitä sivuja vaihdettaessa, ettei turhaan tehdä kahta rajapintakutsua kun yksi riittää. Refaktorointia voisi myös hieman siistiä.
+    static getOppilaitoksetFromBackend(_this, _handleError) {
+        return (superagent
+            .get(_this.props.urlStore.urls.url('konfo-backend.search.organisaatiot'))
+            .query({keyword: _this.props.hakuStore.keyword, page: _this.props.hakuStore.currentPageOppilaitos, size: _this.props.hakuStore.pageSizeOppilaitos})
+            .catch(_handleError))
+    }
+
     search(toggle) {
         const _this = this;
+        console.log("Search triggered. Page: " + _this.props.hakuStore.currentPageKoulutus +", size: " + _this.props.hakuStore.pageSizeKoulutus);
         const _handleError = (e) => { console.log(e); _this.setState({error: e})};
         if(this.props.hakuStore.keywordSet) {
             Promise.all([
-                superagent
-                    .get(_this.props.urlStore.urls.url('konfo-backend.search.koulutukset'))
-                    .query({keyword: _this.props.hakuStore.keyword})
-                    .catch(_handleError),
-                superagent
-                    .get(_this.props.urlStore.urls.url('konfo-backend.search.organisaatiot'))
-                    .query({keyword: _this.props.hakuStore.keyword})
-                    .catch(_handleError)
+                Haku.getKoulutuksetFromBackend(_this, _handleError()),
+                Haku.getOppilaitoksetFromBackend(_this, _handleError())
             ]).then((result) => {
+                _this.props.hakuStore.koulutusResult = [];
+                _this.props.hakuStore.oppilaitosResult = [];
                 _this.props.hakuStore.koulutusResult = result[0] ? result[0].body.result : [];
                 _this.props.hakuStore.koulutusCount = result[0] ? result[0].body.count : 0;
                 _this.props.hakuStore.oppilaitosResult = result[1] && result[1].body ? result[1].body.result : [];
@@ -98,6 +113,7 @@ class Haku extends Component {
             <React.Fragment>
                 <Hakupalkki searchAction={this.searchAction}/>
                 <Hakutulos toggleAction={this.toggleAction}/>
+                <Sivutus handleRefresh={this.handleRefresh}/>
             </React.Fragment>
         );
     }

@@ -79,6 +79,10 @@ button:focus {
   margin-left: 51px;
 }
 
+.pagination-control {
+  margin-left: 51px;
+}
+
 .organisaatiosivu h2 {
   width: 55%;
 }

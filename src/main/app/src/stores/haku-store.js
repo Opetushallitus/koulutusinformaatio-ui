@@ -2,6 +2,10 @@ import { observable, computed } from "mobx"
 
 class HakuStore {
     @observable keyword = '';
+    @observable currentPageKoulutus = 1;
+    @observable pageSizeKoulutus = 20;
+    @observable currentPageOppilaitos = 1;
+    @observable pageSizeOppilaitos = 20;
     @observable koulutusResult = [];
     @observable koulutusCount = 0;
     @observable oppilaitosResult = [];
