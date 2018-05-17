@@ -1192,6 +1192,12 @@ footer p {
 .social-media i {
   font-size: 1.7em;
 }
+
+.social-media img {
+  width: 40px;
+  height: 40px;
+}
+
 .container-fluid .col-xs-12 {
 	padding-right: 0;
 	padding-left: 0;

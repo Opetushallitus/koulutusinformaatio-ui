@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 class Footer extends Component {
     render() {
@@ -10,25 +10,35 @@ class Footer extends Component {
                         <div className="col-xs-12 col-md-4">
                             <ul className="site-links">
                                 <li>
-                                    <a href="#">
-                                        <img src="images/opintopolku_large-fi.png" alt=""/>
+                                    <a href="/">
+                                        <img src={require('../assets/images/opintopolku_large-fi.png')} alt=""/>
                                     </a>
                                 </li>
-                                <li>Oma Opintopolku</li>
-                                <li>Mikä on opintopolku</li>
-                                <li>Tietoturvaseloste</li>
                                 <li>
-                                    <a href="">Anna palautetta</a>
+                                    <a href="/oma-opintopolku">Oma Opintopolku</a>
+                                </li>
+                                <li>
+                                    <a href="/tietoa-palvelusta">Mikä on opintopolku</a>
+                                </li>
+                                <li>
+                                    <a href="/tietoturvaseloste">Tietoturvaseloste</a>
+                                </li>
+                                <li>
+                                    <a href="/palaute">Anna palautetta</a>
                                 </li>
                             </ul>
                         </div>
                         <div className="col-xs-12 col-md-4">
                             <div className="row site-icons">
                                 <div className="col-xs-6">
-                                    <img src="images/logo_fi.svg" alt=""/>
+                                    <a href="http://www.minedu.fi/OPM/">
+                                        <img src={require('../assets/images/logo_fi.svg')} alt=""/>
+                                    </a>
                                 </div>
                                 <div className="col-xs-6">
-                                    <img src="images/OPH_logo-fi.svg" alt=""/>
+                                    <a href="https://www.oph.fi">
+                                        <img src={require('../assets/images/OPH_logo-fi.svg')} alt=""/>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -40,18 +50,27 @@ class Footer extends Component {
                                 </div>
                                 <div className="col-xs-12">
                                     <ul className="social-media">
-                                        <li>Suomeksi</li>
-                                        <li>In English</li>
-                                        <li>På svenska</li>
+                                        {/*<li>Suomeksi</li>*/}
+                                        {/*<li>In English</li>*/}
+                                        {/*<li>På svenska</li>*/}
                                         <li className="separator">|</li>
                                         <li>
-                                            <i className="fa fa-twitter-square" aria-hidden="true"></i>
+                                            <a href="">
+                                                <img src={require('../assets/images/twitter-icon.png')} alt=""/>
+                                            </a>
+                                            {/*<i  className="fa fa-twitter-square" aria-hidden="true"></i>*/}
                                         </li>
                                         <li>
-                                            <i className="fa fa-facebook-square" aria-hidden="true"></i>
+                                            <a href="">
+                                                <img src={require('../assets/images/fb-icon.png')} alt=""/>
+                                            </a>
+                                            {/*<i href="" className="fa fa-facebook-square" aria-hidden="true"></i>*/}
                                         </li>
                                         <li>
-                                            <i className="fa fa-instagram" aria-hidden="true"></i>
+                                            <a href="">
+                                                <img src={require('../assets/images/insta-icon.png')} alt=""/>
+                                            </a>
+                                            {/*<i href="" className="fa fa-instagram" aria-hidden="true"></i>*/}
                                         </li>
                                     </ul>
                                 </div>
