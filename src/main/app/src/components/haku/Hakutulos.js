@@ -71,9 +71,9 @@ class Hakutulos extends Component {
         var resultSummary = <div/>
         if(this.props.hakuStore.keywordSet) {
             resultSummary =
-                <div class="col Etsinta">
+                <div className="col Etsinta">
                     <h1>Etsintäsi tuotti {this.props.hakuStore.totalCount} osumaa termillä
-                        <span class="highlight"> "{this.props.hakuStore.keyword}"</span>
+                        <span className="highlight"> "{this.props.hakuStore.keyword}"</span>
                     </h1>
                 </div>
         }
@@ -81,16 +81,16 @@ class Hakutulos extends Component {
         var koulutusOppilaitosToggle = <div/>
         if(this.props.hakuStore.keywordSet) {
             koulutusOppilaitosToggle =
-                <div class="row">
-                    <div class="col-md-2 col-xs-12">
-                        <h2 class="KoulutuksetOppilaitokset" onClick={this.toggleKoulutus}>
-                            <span class={this.props.hakuStore.toggleKoulutus ? "Valittu" : ""}>Koulutukset</span>&nbsp;
-                            <span class="Hakutulos_pallo">{this.props.hakuStore.koulutusCount}</span></h2>
+                <div className="row">
+                    <div className="col-md-2 col-xs-12">
+                        <h2 className="KoulutuksetOppilaitokset" onClick={this.toggleKoulutus}>
+                            <span className={this.props.hakuStore.toggleKoulutus ? "Valittu" : ""}>Koulutukset</span>&nbsp;
+                            <span className="Hakutulos_pallo">{this.props.hakuStore.koulutusCount}</span></h2>
                     </div>
-                    <div class="col-md-2 col-xs-12">
-                        <h2 class="KoulutuksetOppilaitokset" onClick={this.toggleOppilaitos}>
-                            <span class={this.props.hakuStore.toggleKoulutus ? "" : "Valittu"}>Oppilaitokset</span>&nbsp;
-                            <span class="Hakutulos_pallo">{this.props.hakuStore.oppilaitosCount}</span></h2>
+                    <div className="col-md-2 col-xs-12">
+                        <h2 className="KoulutuksetOppilaitokset" onClick={this.toggleOppilaitos}>
+                            <span className={this.props.hakuStore.toggleKoulutus ? "" : "Valittu"}>Oppilaitokset</span>&nbsp;
+                            <span className="Hakutulos_pallo">{this.props.hakuStore.oppilaitosCount}</span></h2>
                     </div>
                 </div>
         }
@@ -101,16 +101,16 @@ class Hakutulos extends Component {
                 const koulutusLinkString = '/koulutus/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
                 var tyyli = "col-xs-12 search-box " + this.getKoulutusStyle(r) + (r.haettavissa ? " haku" : "");
                 return (
-                    <div key={r.oid} class="col-xs-12 col-md-6 box-container">
+                    <div key={r.oid} className="col-xs-12 col-md-6 box-container">
                         <div className={tyyli}>
-                            {/*<div class="suosikkit">
-                                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                            {/*<div className="suosikkit">
+                                <i className="fa fa-heart-o" aria-hidden="true"></i>
                             </div>*/}
-                            <div class="text">
+                            <div className="text">
                                 <Link to={koulutusLinkString}>{this.getKoulutusNimi(r)}</Link>
                                 <p>{r.tarjoaja ? r.tarjoaja : ""}<br/>{this.getKoulutusAiheet(r)}</p>
                             </div>
-                            {/*<div class="compare-button">
+                            {/*<div className="compare-button">
                                 <span role="button"></span>
                             </div>*/}
                         </div>
@@ -120,16 +120,16 @@ class Hakutulos extends Component {
             resultList = this.props.hakuStore.oppilaitosResult.map((r) => {
                 const oppilaitosLinkString = '/oppilaitos/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
                 return (
-                    <div class="col-xs-12 col-md-6 box-container">
-                        <div class="col-xs-12 search-box">
-                            {/*<div class="suosikkit">
-                                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                    <div className="col-xs-12 col-md-6 box-container">
+                        <div className="col-xs-12 search-box">
+                            {/*<div className="suosikkit">
+                                <i className="fa fa-heart-o" aria-hidden="true"></i>
                             </div>*/}
-                            <div class="text">
+                            <div className="text">
                                 <Link to={oppilaitosLinkString}>{this.getOppilaitosNimi(r)}</Link>
                                 <p>{r.kayntiosoite ? r.kayntiosoite : ""}<br/>{r.postitoimipaikka ? r.postitoimipaikka : ""}</p>
                             </div>
-                            {/*<div class="compare-button">
+                            {/*<div className="compare-button">
                                 <span role="button"></span>
                             </div>*/}
                         </div>
@@ -140,14 +140,14 @@ class Hakutulos extends Component {
 
         return (
             <React.Fragment>
-                <div class="container">
-                    <div class="row">
+                <div className="container">
+                    <div className="row">
                         {resultSummary}
                     </div>
                     {koulutusOppilaitosToggle}
                 </div>
-                <div class="container search-results">
-                    <div class="row">
+                <div className="container search-results">
+                    <div className="row">
                         {resultList}
                     </div>
                 </div>

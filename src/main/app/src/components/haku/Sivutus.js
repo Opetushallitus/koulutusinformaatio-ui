@@ -23,7 +23,7 @@ class Sivutus extends Component {
 
     handleHistory() {
         const queryParamToggle = qs.parse(this.props.location.search).toggle;
-        if(this.props.hakuStore.keyword != this.props.match.params.keyword) {
+        if(this.props.hakuStore.keyword !== this.props.match.params.keyword) {
             this.props.hakuStore.keyword = this.props.match.params.keyword;
             this.search(queryParamToggle);
         } else {
@@ -40,7 +40,7 @@ class Sivutus extends Component {
     }
 
     searchAction(newKeyword) {
-        if(newKeyword != this.props.hakuStore.keyword) {
+        if(newKeyword !== this.props.hakuStore.keyword) {
             this.props.hakuStore.keyword = newKeyword;
             this.search();
         }
@@ -54,12 +54,16 @@ class Sivutus extends Component {
     }
 
     createPaginationItem(page, active) {
-        return <li class={active ? "page-item active" : "page-item"}><a class="page-link" onClick={() => this.handlePagination(page)} href="#">{page}</a></li>;
+        return <li className={active ? "page-item active" : "page-item"} key={page.toString()}><a className="page-link" onClick={() => this.handlePagination(page)} href="#">{page}</a></li>;
+    }
+
+    createPaginationSeparator(key) {
+        return <li className={"page-item"} key={key}><a>...</a></li>;
     }
 
     buildPaginationMenu(currentPage) {
 
-        const maxPage = this.getMaxPageNumber();
+        const maxPage = this.props.hakuStore.maxPageNumber;
         //console.log("Building pagination menu. Current page: " + currentPage)
 
         const currentOptions = [];
@@ -94,24 +98,17 @@ class Sivutus extends Component {
 
         currentOptions.sort((a, b) => a-b);
         //console.log("options: " + currentOptions);
-        return currentOptions.map(o => this.createPaginationItem(o, o === currentPage));
+        const paginationItems = currentOptions.map(o => this.createPaginationItem(o, o === currentPage));
 
-    }
-
-    getMaxPageNumber() {
-        if(this.props.hakuStore.toggleKoulutus) {
-            return parseInt(this.props.hakuStore.koulutusCount / this.props.hakuStore.pageSizeKoulutus) +1;
-        } else {
-            return parseInt(this.props.hakuStore.oppilaitosCount / this.props.hakuStore.pageSizeOppilaitos) +1;
+        if (currentPage > 5) {
+            paginationItems.splice(1, 0, this.createPaginationSeparator("start"))
         }
-    }
 
-    getCurrentPageNumber() {
-        if(this.props.hakuStore.toggleKoulutus) {
-            return this.props.hakuStore.currentPageKoulutus;
-        } else {
-            return this.props.hakuStore.currentPageOppilaitos;
+        if (maxPage > currentPage + 4) {
+            paginationItems.splice(paginationItems.length - 1, 0, this.createPaginationSeparator("end"))
         }
+
+        return paginationItems;
     }
 
     setDesiredPageSize(size) {
@@ -123,13 +120,13 @@ class Sivutus extends Component {
     }
 
     render() {
-        const currentPage = this.getCurrentPageNumber();
+        const currentPage = this.props.hakuStore.currentPageNumber;
 
         return (
             <React.Fragment>
                 <div className="pagination-control">
                     <nav aria-label="Search result navigation">
-                        <ul class="pagination">
+                        <ul className="pagination">
                             {this.buildPaginationMenu(currentPage)}
                         </ul>
                     </nav>

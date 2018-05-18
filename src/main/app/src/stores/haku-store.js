@@ -31,6 +31,22 @@ class HakuStore {
     @computed get createHakuUrl() {
         return '/haku/' + this.keyword + '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos')
     }
+
+    @computed get maxPageNumber() {
+        if(this.toggleKoulutus) {
+            return parseInt(this.koulutusCount / this.pageSizeKoulutus) +1;
+        } else {
+            return parseInt(this.oppilaitosCount / this.pageSizeOppilaitos) +1;
+        }
+    }
+
+    @computed get currentPageNumber() {
+        if(this.toggleKoulutus) {
+            return this.currentPageKoulutus;
+        } else {
+            return this.currentPageOppilaitos;
+        }
+    }
 }
 
 export default HakuStore;
