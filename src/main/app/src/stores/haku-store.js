@@ -34,9 +34,9 @@ class HakuStore {
 
     @computed get maxPageNumber() {
         if(this.toggleKoulutus) {
-            return parseInt(this.koulutusCount / this.pageSizeKoulutus) +1;
+            return Math.ceil(this.koulutusCount / this.pageSizeKoulutus);
         } else {
-            return parseInt(this.oppilaitosCount / this.pageSizeOppilaitos) +1;
+            return Math.ceil(this.oppilaitosCount / this.pageSizeOppilaitos);
         }
     }
 
@@ -45,6 +45,22 @@ class HakuStore {
             return this.currentPageKoulutus;
         } else {
             return this.currentPageOppilaitos;
+        }
+    }
+
+    @computed get pageSize() {
+        if(this.toggleKoulutus) {
+            return this.pageSizeKoulutus;
+        } else {
+            return this.pageSizeOppilaitos;
+        }
+    }
+
+    @computed get maxPageSize() {
+        if(this.toggleKoulutus) {
+            return this.koulutusCount;
+        } else {
+            return this.oppilaitosCount;
         }
     }
 }

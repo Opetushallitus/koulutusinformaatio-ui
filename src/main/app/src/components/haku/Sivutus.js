@@ -111,12 +111,13 @@ class Sivutus extends Component {
         return paginationItems;
     }
 
-    setDesiredPageSize(size) {
+    handlePageSizeChange(size) {
         if(this.props.hakuStore.toggleKoulutus) {
             this.props.hakuStore.pageSizeKoulutus = size;
         } else {
             this.props.hakuStore.pageSizeOppilaitos = size;
         }
+        this.props.handleRefresh(true);
     }
 
     render() {
@@ -124,12 +125,24 @@ class Sivutus extends Component {
 
         return (
             <React.Fragment>
-                <div className="pagination-control">
-                    <nav aria-label="Search result navigation">
-                        <ul className="pagination">
-                            {this.buildPaginationMenu(currentPage)}
-                        </ul>
-                    </nav>
+                <div className="pagination-control container-fluid">
+                    <div className="row">
+                        <div className="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                            <nav aria-label="Search result navigation">
+                                <ul className="pagination">
+                                    {this.buildPaginationMenu(currentPage)}
+                                </ul>
+                            </nav>
+                        </div>
+                        <div className="page-size-select">
+                            <select onChange={(e) => this.handlePageSizeChange(e.target.value)}>
+                                <option value={this.props.hakuStore.pageSize}>Näytä</option>
+                                <option value={20}>20</option>
+                                <option value={50}>50</option>
+                                <option value={this.props.hakuStore.maxPageSize}>Kaikki</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </React.Fragment>
         );

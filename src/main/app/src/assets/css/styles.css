@@ -293,6 +293,17 @@ button:focus {
     background-color: transparent;
 }
 
+
+.page-size-select select {
+    margin: 20px 0;
+    display: inline;
+    background: transparent;
+    overflow: hidden;
+    font-size: 1em;
+    width: 7em;
+    height: 2.5em;
+}
+
 .sidebar-nav > .sidebar-brand {
     height: 50px;
     font-size: 20px;
