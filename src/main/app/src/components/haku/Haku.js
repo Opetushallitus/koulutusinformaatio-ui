@@ -20,9 +20,9 @@ class Haku extends Component {
         const queryParamPage = Number(qs.parse(this.props.location.search).page);
 
         if (this.props.hakuStore.toggleKoulutus) {
-            this.props.hakuStore.currentPageKoulutus = queryParamPage;
+            this.props.hakuStore.currentPageKoulutus = queryParamPage ? queryParamPage : 1;
         } else {
-            this.props.hakuStore.currentPageOppilaitos = queryParamPage;
+            this.props.hakuStore.currentPageOppilaitos = queryParamPage ? queryParamPage : 1;
         }
     }
 
