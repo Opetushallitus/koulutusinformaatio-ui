@@ -17,6 +17,9 @@ class Haku extends Component {
         this.searchAction = this.searchAction.bind(this);
         this.toggleAction = this.toggleAction.bind(this);
         this.handleRefresh = this.handleRefresh.bind(this);
+    }
+
+    componentDidMount() {
         const queryParamPage = Number(qs.parse(this.props.location.search).page);
 
         if (this.props.hakuStore.toggleKoulutus) {
@@ -24,9 +27,6 @@ class Haku extends Component {
         } else {
             this.props.hakuStore.currentPageOppilaitos = queryParamPage ? queryParamPage : 1;
         }
-    }
-
-    componentDidMount() {
         this.handleRefresh();
     }
 
