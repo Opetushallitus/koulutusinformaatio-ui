@@ -8,10 +8,6 @@ import {observer, inject} from 'mobx-react';
 @observer
 class Sivutus extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
         //this.handleRefresh();
     }
@@ -47,7 +43,11 @@ class Sivutus extends Component {
     }
 
     handlePagination(page) {
-        this.props.hakuStore.currentPageKoulutus = page;
+        if (this.props.hakuStore.toggleKoulutus) {
+            this.props.hakuStore.currentPageKoulutus = page;
+        } else {
+            this.props.hakuStore.currentPageOppilaitos  = page;
+        }
         this.props.handleRefresh(true);
         //this.forceUpdate();
 
@@ -64,10 +64,13 @@ class Sivutus extends Component {
     buildPaginationMenu(currentPage) {
 
         const maxPage = this.props.hakuStore.maxPageNumber;
-        //console.log("Building pagination menu. Current page: " + currentPage)
+        // console.log("Building pagination menu. Current page: " + currentPage + ", max page: " +maxPage);
 
         const currentOptions = [];
         currentOptions.push(1); //ensimmäinen sivu aina
+        if (currentPage > 1) {
+            currentOptions.push(currentPage);
+        }
         if (currentPage > 2) {
             currentOptions.push(currentPage-1);
         }
@@ -86,24 +89,16 @@ class Sivutus extends Component {
         if (currentPage+3 < maxPage) {
             currentOptions.push(currentPage+3);
         }
-        if(maxPage > currentPage +3) {
-            currentOptions.push(maxPage);
-        }
-        if (currentOptions.indexOf(currentPage) === -1)  {
-            currentOptions.push(currentPage);
-        }
         if (currentOptions.indexOf(maxPage) === -1)  {
             currentOptions.push(maxPage);
         }
 
         currentOptions.sort((a, b) => a-b);
-        //console.log("options: " + currentOptions);
         const paginationItems = currentOptions.map(o => this.createPaginationItem(o, o === currentPage));
 
         if (currentPage > 5) {
             paginationItems.splice(1, 0, this.createPaginationSeparator("start"))
         }
-
         if (maxPage > currentPage + 4) {
             paginationItems.splice(paginationItems.length - 1, 0, this.createPaginationSeparator("end"))
         }
@@ -113,9 +108,15 @@ class Sivutus extends Component {
 
     handlePageSizeChange(size) {
         if(this.props.hakuStore.toggleKoulutus) {
-            this.props.hakuStore.pageSizeKoulutus = size;
+            if (this.props.hakuStore.pageSizeKoulutus !== size) {
+                this.props.hakuStore.pageSizeKoulutus = size;
+                this.props.hakuStore.currentPageKoulutus = 1;
+            }
         } else {
-            this.props.hakuStore.pageSizeOppilaitos = size;
+            if (this.props.hakuStore.pageSizeOppilaitos !== size) {
+                this.props.hakuStore.pageSizeOppilaitos = size;
+                this.props.hakuStore.currentPageOppilaitos = 1;
+            }
         }
         this.props.handleRefresh(true);
     }

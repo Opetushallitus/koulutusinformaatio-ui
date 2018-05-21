@@ -17,6 +17,13 @@ class Haku extends Component {
         this.searchAction = this.searchAction.bind(this);
         this.toggleAction = this.toggleAction.bind(this);
         this.handleRefresh = this.handleRefresh.bind(this);
+        const queryParamPage = Number(qs.parse(this.props.location.search).page);
+
+        if (this.props.hakuStore.toggleKoulutus) {
+            this.props.hakuStore.currentPageKoulutus = queryParamPage;
+        } else {
+            this.props.hakuStore.currentPageOppilaitos = queryParamPage;
+        }
     }
 
     componentDidMount() {
@@ -25,8 +32,10 @@ class Haku extends Component {
 
     handleRefresh(paginationEvent = false) {
         const queryParamToggle = qs.parse(this.props.location.search).toggle;
+
         if(this.props.hakuStore.keyword !== this.props.match.params.keyword || paginationEvent) {
-            this.props.hakuStore.keyword = this.props.match.params.keyword
+            this.props.hakuStore.keyword = this.props.match.params.keyword;
+
             this.search(queryParamToggle)
         } else if(queryParamToggle) {
             this.toggleAction(queryParamToggle)
@@ -40,11 +49,12 @@ class Haku extends Component {
 
     handleHistory() {
         const queryParamToggle = qs.parse(this.props.location.search).toggle;
-        if(this.props.hakuStore.keyword != this.props.match.params.keyword) {
+
+        if(this.props.hakuStore.keyword !== this.props.match.params.keyword) {
             this.props.hakuStore.keyword = this.props.match.params.keyword;
             this.search(queryParamToggle)
         } else {
-            this.props.hakuStore.toggleKoulutus = ('oppilaitos' !== queryParamToggle)
+            this.props.hakuStore.toggleKoulutus = ('oppilaitos' !== queryParamToggle);
         }
     }
 
@@ -99,6 +109,7 @@ class Haku extends Component {
                 _this.props.hakuStore.koulutusCount = result[0] ? result[0].body.count : 0;
                 _this.props.hakuStore.oppilaitosResult = result[1] && result[1].body ? result[1].body.result : [];
                 _this.props.hakuStore.oppilaitosCount = result[1] && result[1].body ? result[1].body.count : 0;
+
                 if(toggle) {
                     _this.toggleAction(toggle);
                 } else {

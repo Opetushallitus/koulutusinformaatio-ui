@@ -29,15 +29,23 @@ class HakuStore {
     }
 
     @computed get createHakuUrl() {
-        return '/haku/' + this.keyword + '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos')
+        return '/haku/' + this.keyword + '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos') + '&page=' + this.currentPageNumber
     }
 
     @computed get maxPageNumber() {
         if(this.toggleKoulutus) {
-            return Math.ceil(this.koulutusCount / this.pageSizeKoulutus);
+            return this.maxPageKoulutus;
         } else {
-            return Math.ceil(this.oppilaitosCount / this.pageSizeOppilaitos);
+            return this.maxPageOppilaitos;
         }
+    }
+
+    @computed get maxPageKoulutus() {
+        return Math.max(1, Math.ceil(this.koulutusCount / this.pageSizeKoulutus));
+    }
+
+    @computed get maxPageOppilaitos() {
+        return Math.max(1, Math.ceil(this.oppilaitosCount / this.pageSizeOppilaitos));
     }
 
     @computed get currentPageNumber() {
