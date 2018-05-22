@@ -79,6 +79,10 @@ button:focus {
     margin-left: 51px;
 }
 
+.pagination-control {
+  margin-left: 51px;
+}
+
 .organisaatiosivu h2 {
     width: 55%;
 }
@@ -287,6 +291,17 @@ button:focus {
     color: #fff;
     text-decoration: none;
     background-color: transparent;
+}
+
+
+.page-size-select select {
+    margin: 20px 0;
+    display: inline;
+    background: transparent;
+    overflow: hidden;
+    font-size: 1em;
+    width: 7em;
+    height: 2.5em;
 }
 
 .sidebar-nav > .sidebar-brand {
