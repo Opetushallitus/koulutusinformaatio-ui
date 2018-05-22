@@ -72,6 +72,8 @@ class Haku extends Component {
     searchAction(newKeyword) {
         if(newKeyword !== this.props.hakuStore.keyword) {
             this.props.hakuStore.keyword = newKeyword;
+            this.props.hakuStore.currentPageKoulutus = 1;
+            this.props.hakuStore.currentPageOppilaitos = 1;
             this.search();
         }
     }
