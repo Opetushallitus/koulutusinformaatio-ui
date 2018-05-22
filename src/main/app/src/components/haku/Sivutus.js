@@ -25,11 +25,9 @@ class Sivutus extends Component {
     }
 
     buildPaginationMenu(currentPage) {
-
         const maxPage = this.props.hakuStore.maxPageNumber;
-        // console.log("Building pagination menu. Current page: " + currentPage + ", max page: " +maxPage);
-
         const currentOptions = [];
+        
         currentOptions.push(1); //ensimmäinen sivu aina
         if (currentPage > 1) {
             currentOptions.push(currentPage);

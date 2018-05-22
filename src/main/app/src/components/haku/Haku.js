@@ -97,7 +97,6 @@ class Haku extends Component {
 
     search(toggle) {
         const _this = this;
-        //console.log("Search triggered. Page: " + _this.props.hakuStore.currentPageKoulutus +", size: " + _this.props.hakuStore.pageSizeKoulutus);
         const _handleError = (e) => { console.log(e); _this.setState({error: e})};
         if(this.props.hakuStore.keywordSet) {
             Promise.all([
