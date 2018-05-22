@@ -58,12 +58,10 @@ class Hakutulos extends Component {
     }
 
     toggleOppilaitos() {
-        console.log("toggleOppilaitos");
         this.props.toggleAction('oppilaitos');
     }
 
     toggleKoulutus() {
-        console.log("toggleKoulutus");
         this.props.toggleAction('koulutus');
     }
 

@@ -29,7 +29,9 @@ class HakuStore {
     }
 
     @computed get createHakuUrl() {
-        return '/haku/' + this.keyword + '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos') + '&page=' + this.currentPageNumber
+        return '/haku/' + this.keyword + '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos')
+            + '&page=' + this.currentPageNumber
+            + '&pagesize=' + this.pageSize
     }
 
     @computed get maxPageNumber() {

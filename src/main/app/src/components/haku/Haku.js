@@ -21,11 +21,14 @@ class Haku extends Component {
 
     componentDidMount() {
         const queryParamPage = Number(qs.parse(this.props.location.search).page);
+        const queryParamPageSize = Number(qs.parse(this.props.location.search).pagesize);
 
         if (this.props.hakuStore.toggleKoulutus) {
             this.props.hakuStore.currentPageKoulutus = queryParamPage ? queryParamPage : 1;
+            this.props.hakuStore.pageSizeKoulutus = queryParamPageSize ? queryParamPageSize : 20;
         } else {
             this.props.hakuStore.currentPageOppilaitos = queryParamPage ? queryParamPage : 1;
+            this.props.hakuStore.pageSizeOppilaitos = queryParamPageSize ? queryParamPageSize : 20;
         }
         this.handleRefresh();
     }
@@ -78,7 +81,6 @@ class Haku extends Component {
         this.changeUrl();
     }
 
-    //Todo: käytä näitä sivuja vaihdettaessa, ettei turhaan tehdä kahta rajapintakutsua kun yksi riittää. Refaktorointia voisi myös hieman siistiä.
     static getKoulutuksetFromBackend(_this, _handleError) {
         return (superagent
             .get(_this.props.urlStore.urls.url('konfo-backend.search.koulutukset'))
@@ -86,7 +88,6 @@ class Haku extends Component {
             .catch(_handleError))
     }
 
-    //Todo: käytä näitä sivuja vaihdettaessa, ettei turhaan tehdä kahta rajapintakutsua kun yksi riittää. Refaktorointia voisi myös hieman siistiä.
     static getOppilaitoksetFromBackend(_this, _handleError) {
         return (superagent
             .get(_this.props.urlStore.urls.url('konfo-backend.search.organisaatiot'))
@@ -96,7 +97,7 @@ class Haku extends Component {
 
     search(toggle) {
         const _this = this;
-        console.log("Search triggered. Page: " + _this.props.hakuStore.currentPageKoulutus +", size: " + _this.props.hakuStore.pageSizeKoulutus);
+        //console.log("Search triggered. Page: " + _this.props.hakuStore.currentPageKoulutus +", size: " + _this.props.hakuStore.pageSizeKoulutus);
         const _handleError = (e) => { console.log(e); _this.setState({error: e})};
         if(this.props.hakuStore.keywordSet) {
             Promise.all([
