@@ -21,6 +21,23 @@ class Ammatillinen extends Component {
         return ""
     }
 
+    parseInfoBoxFields() {
+        const fields = [];
+        // laajuus, kesto, maksullinen, tutkintonimike
+
+        const opintojenLaajuusarvo = l.localize(this.props.result.opintojenLaajuusarvo, '-');
+        const opintojenLaajuusyksikko = l.localize(this.props.result.opintojenLaajuusyksikko);
+        fields.push(["Koulutuksen laajuus", opintojenLaajuusarvo && (opintojenLaajuusarvo + " " + opintojenLaajuusyksikko)]);
+        const suunniteltuKesto = this.props.result.suunniteltuKestoArvo;
+        const suunniteltuKestoTyyppi = l.localize(this.props.result.suunniteltuKestoTyyppi);
+        fields.push(["Suunniteltu kesto", suunniteltuKesto + " " + suunniteltuKestoTyyppi]);
+
+        fields.push(["Maksullinen", this.props.result.opintojenMaksullisuus ? "Kyllä" : "Ei"]);
+        fields.push(["Tutkintonimikkeet", this.props.result.tutkintonimikes.map(t => l.localize(t) + " ")]);
+
+        return fields;
+    }
+
     render() {
         const osaamisalat = l.localize(this.state.result.koulutusohjelma, undefined);
         const tutkinnonOsat = l.localize(this.state.result.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
@@ -35,7 +52,7 @@ class Ammatillinen extends Component {
                         </h1>
                         <div className="row">
                             <div className="col-xs-12 left-column">
-                                <KoulutusInfoBox result={this.state.result}/>
+                                <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
                             </div>
                         </div>
 
