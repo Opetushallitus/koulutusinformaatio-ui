@@ -831,6 +831,7 @@ ul.disc-list {
     padding:15px;
 }
 .info-page {
+    padding-bottom: 4em;
     overflow: hidden;
 }
 .info-page .left-column h1 i {
@@ -845,6 +846,9 @@ ul.disc-list {
 }
 .ammatillinen-hattu {
     color: #7ed222;
+}
+.lukio-hattu {
+    color: #CD0B24;
 }
 .info-page.tutkinnonosat .left-column h1 i {
     color: #f5a623;
