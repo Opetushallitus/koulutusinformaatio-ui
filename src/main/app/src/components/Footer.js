@@ -45,30 +45,30 @@ class Footer extends Component {
                         <div className="row">
                             <p>Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja koulutuksistaan Opintopolussa. Tietojen oikeellisuuden
                                 voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.</p>
-                            <ul className="social-media">
-                                {/*<li>Suomeksi</li>*/}
-                                {/*<li>In English</li>*/}
-                                {/*<li>På svenska</li>*/}
+                            {/*<ul className="social-media">
+                                // <li>Suomeksi</li>
+                                // <li>In English</li>
+                                // <li>På svenska</li>
                                 <li className="separator">|</li>
                                 <li>
                                     <a href="">
                                         <img src={require('../assets/images/twitter-icon.png')} alt=""/>
                                     </a>
-                                    {/*<i  className="fa fa-twitter-square" aria-hidden="true"></i>*/}
+                                    // <i  className="fa fa-twitter-square" aria-hidden="true"></i>
                                 </li>
                                 <li>
                                     <a href="">
                                         <img src={require('../assets/images/fb-icon.png')} alt=""/>
                                     </a>
-                                    {/*<i href="" className="fa fa-facebook-square" aria-hidden="true"></i>*/}
+                                    // <i href="" className="fa fa-facebook-square" aria-hidden="true"></i>
                                 </li>
                                 <li>
                                     <a href="">
                                         <img src={require('../assets/images/insta-icon.png')} alt=""/>
                                     </a>
-                                    {/*<i href="" className="fa fa-instagram" aria-hidden="true"></i>*/}
+                                    // <i href="" className="fa fa-instagram" aria-hidden="true"></i>
                                 </li>
-                            </ul>
+                            </ul>*/}
                         </div>
                     </div>
                 </div>
