@@ -24,11 +24,11 @@ class Haku extends Component {
         const queryParamPageSize = Number(qs.parse(this.props.location.search).pagesize);
 
         if (this.props.hakuStore.toggleKoulutus) {
-            this.props.hakuStore.currentPageKoulutus = queryParamPage ? queryParamPage : 1;
-            this.props.hakuStore.pageSizeKoulutus = queryParamPageSize ? queryParamPageSize : 20;
+            this.props.hakuStore.currentPageKoulutus = queryParamPage > 0 ? queryParamPage : 1;
+            this.props.hakuStore.pageSizeKoulutus = queryParamPageSize > 0 ? queryParamPageSize : 20;
         } else {
-            this.props.hakuStore.currentPageOppilaitos = queryParamPage ? queryParamPage : 1;
-            this.props.hakuStore.pageSizeOppilaitos = queryParamPageSize ? queryParamPageSize : 20;
+            this.props.hakuStore.currentPageOppilaitos = queryParamPage > 0 ? queryParamPage : 1;
+            this.props.hakuStore.pageSizeOppilaitos = queryParamPageSize > 0 ? queryParamPageSize : 20;
         }
         this.handleRefresh();
     }
