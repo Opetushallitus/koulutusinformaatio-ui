@@ -12,9 +12,6 @@ class Header extends Component {
                         <span className="hamb-bottom"></span>
                     </button>
                     <Link to={{ pathname: '/'}} className="navbar-brand">Opintopolku</Link>
-                    <div className="wrapper">
-                        <input type="text" className="nabvar-search oph-input" placeholder="Etsi..."/>
-                    </div>
                 </div>
             </div>
         );
