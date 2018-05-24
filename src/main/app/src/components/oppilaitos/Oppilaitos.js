@@ -132,11 +132,11 @@ class Oppilaitos extends Component {
                 var k = data[key];
                 if(k["kieli_fi#1"]) {
                     if(k["kieli_fi#1"].indexOf('facebook') !== -1 ) {
-                        fb = <li><a className='fa fa-facebook-square fa-3x' href={k["kieli_fi#1"]}></a></li>
+                        fb = <li><a href={k["kieli_fi#1"]}><i className='fa fa-facebook-square fa-3x' /></a></li>
                     } else if (k["kieli_fi#1"].indexOf('twitter') !== -1) {
-                        twitter = <li><a className='fa fa-twitter-square fa-3x' href={k["kieli_fi#1"]}></a></li>
+                        twitter = <li><a href={k["kieli_fi#1"]}><i className='fa fa-twitter-square fa-3x' /></a></li>
                     } else if (k["kieli_fi#1"].indexOf('instagram') !== -1) {
-                        insta = <li><a className='fa fa-instagram fa-3x' href={k["kieli_fi#1"]}></a></li>
+                        insta = <li><a href={k["kieli_fi#1"]}><i className='fa fa-instagram fa-3x' /></a></li>
                     }
                 }
 

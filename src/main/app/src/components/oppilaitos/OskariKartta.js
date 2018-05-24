@@ -27,7 +27,7 @@ class OskariKartta extends Component {
     }
 
     static selectMapBasedOnLocation() {
-        var location = window.location.href;
+        const location = window.location.href;
         if(location.indexOf('localhost') !== -1 ) {
             return ['https://hkp.maanmittauslaitos.fi', '277da693-ae10-4508-bc5a-d6ced2056fd0'];
         } else if (location.indexOf('hahtuvaopintopolku') !== -1 ) {
@@ -39,9 +39,9 @@ class OskariKartta extends Component {
 
     setMapLocation(osoitetieto) {
         console.log("Set map location: " +osoitetieto +", mapinfo: "+ this.state.mapinfo);
-        var IFRAME_DOMAIN = this.state.mapinfo[0];
-        var iFrame = document.getElementById('publishedMap');
-        var channel = OskariRPC.connect(
+        const IFRAME_DOMAIN = this.state.mapinfo[0];
+        const iFrame = document.getElementById('publishedMap');
+        const channel = OskariRPC.connect(
             iFrame,
             IFRAME_DOMAIN);
 
@@ -52,24 +52,24 @@ class OskariKartta extends Component {
                 if(data.success) {
                     //console.log('data.result.locations.length: ' + data.result.locations.length);
                     if(data.result && data.result.locations && data.result.locations.length > 0) {
-                        var location = data.result.locations[0];
-                        data.result.locations.map(loc => {
+                        let location = data.result.locations[0];
+                        data.result.locations.forEach(loc => {
                             if(loc.region.toLowerCase() === osoitetieto[1].toLowerCase() || loc.village.toLowerCase() === osoitetieto[1].toLowerCase()) {
                                 location = loc;
                             }
                         });
 
-                        var x = location.lon;
-                        var y = location.lat;
-                        var name = location.name;
-                        var zoomLevel = 9;
+                        const x = location.lon;
+                        const y = location.lat;
+                        const name = location.name;
+                        const zoomLevel = 9;
 
                         channel.postRequest(
                             'MapMoveRequest', [x, y, zoomLevel]
                         );
 
-                        var MARKER_ID = 'OPPILAITOS';
-                        var data = {
+                        const MARKER_ID = 'OPPILAITOS';
+                        const requestData = {
                             x: x,
                             y: y,
                             color: 'ff0000',
@@ -77,7 +77,7 @@ class OskariKartta extends Component {
                             shape: 2, // icon number (0-6)
                             size: 4
                         };
-                        channel.postRequest('MapModulePlugin.AddMarkerRequest', [data, MARKER_ID]);
+                        channel.postRequest('MapModulePlugin.AddMarkerRequest', [requestData, MARKER_ID]);
                     }
                 }
             }
@@ -86,7 +86,7 @@ class OskariKartta extends Component {
         channel.onReady(function() {
             //channel is now ready and listening.
             channel.log('Map is now listening');
-            var expectedOskariVersion = '1.44.3';
+            const expectedOskariVersion = '1.44.3';
             channel.isSupported(expectedOskariVersion, function(blnSupported) {
                 if(blnSupported) {
                     channel.log('Client is supported and Oskari version is ' + expectedOskariVersion);
@@ -107,7 +107,7 @@ class OskariKartta extends Component {
                 }
             });
 
-            var data = osoitetieto[0];
+            const data = osoitetieto[0];
             console.log("Triggering map location search for " + data);
             channel.postRequest('SearchRequest', data);
 
@@ -119,7 +119,7 @@ class OskariKartta extends Component {
         return (
             <React.Fragment>
                 <div>
-                <iframe id='publishedMap' src={"https://hkp.maanmittauslaitos.fi/hkp/published/fi/"+this.state.mapinfo[1]}/>
+                <iframe title="kartta" id='publishedMap' src={"https://hkp.maanmittauslaitos.fi/hkp/published/fi/"+this.state.mapinfo[1]}/>
                 </div>
             </React.Fragment>
         );
