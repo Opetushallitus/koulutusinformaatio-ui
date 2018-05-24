@@ -3,10 +3,6 @@ import Hakupalkki from './haku/Hakupalkki'
 
 class Etusivu extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <Hakupalkki main={true}/>

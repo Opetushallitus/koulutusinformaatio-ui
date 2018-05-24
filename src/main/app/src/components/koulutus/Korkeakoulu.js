@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import KoulutusInfoBox from './KoulutusInfoBox';
 import KoulutusSidebar from './KoulutusSidebar';
-import {Localizer as l, Parser as p} from '../../tools/Utils';
+import { Localizer as l } from '../../tools/Utils';
 import renderHTML from 'react-render-html';
 
 
@@ -17,9 +17,9 @@ class Korkeakoulu extends Component {
 
     parseAineListaus() {
         if(this.state.result.oppiaineet.length > 0) {
-            return this.state.result.oppiaineet.map(o => <li class="osaamisalat_list_item">{o.oppiaine ? o.oppiaine : "Tuntematon"}</li>);
+            return this.state.result.oppiaineet.map(o => <li className="osaamisalat_list_item">{o.oppiaine ? o.oppiaine : "Tuntematon"}</li>);
         } else {
-            return this.state.result.aihees.map(a => <li class="osaamisalat_list_item">{l.localize(a.nimi)}</li>);
+            return this.state.result.aihees.map(a => <li className="osaamisalat_list_item">{l.localize(a.nimi)}</li>);
         }
     }
 
@@ -33,21 +33,21 @@ class Korkeakoulu extends Component {
     render() {
         const jatkoOpinnot = l.localize(this.state.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined);
         return (
-            <div class="container">
-                <div class="row info-page">
-                    <div class="col-xs-12 col-md-9 left-column">
+            <div className="container">
+                <div className="row info-page">
+                    <div className="col-xs-12 col-md-9 left-column">
                         <h1>
-                            <i class="fa fa-circle korkeakoulu-hattu" aria-hidden="true"></i>
+                            <i className="fa fa-circle korkeakoulu-hattu" aria-hidden="true"></i>
                             <span>{this.parseNimi()}</span>
                         </h1>
-                        <div class="row">
-                            <div class="col-xs-12 left-column">
+                        <div className="row">
+                            <div className="col-xs-12 left-column">
                                 <KoulutusInfoBox result={this.state.result}/>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-md-9 left-column">
-                            <h2 class="line_otsikko">Pääaineet tai erikoistumisalat</h2>
-                            <div class="">
+                        <div className="col-xs-12 col-md-9 left-column">
+                            <h2 className="line_otsikko">Pääaineet tai erikoistumisalat</h2>
+                            <div className="">
                                 <ul>
                                     {this.parseAineListaus()}
                                 </ul>
@@ -55,12 +55,12 @@ class Korkeakoulu extends Component {
 
                         </div>
 
-                        {/*<div class="col-xs-12 col-md-9 left-column oppilaitokset"> //TODO Toiseen demoversioon?
-                        <h2 class="line_otsikko">Oppilaitokset (n kpl)</h2>
-                        <div class="box-container">
-                            <div className="col-xs-12 oppilaitos-box">
+                        {/*<div className="col-xs-12 col-md-9 left-column oppilaitokset"> //TODO Toiseen demoversioon?
+                        <h2 className="line_otsikko">Oppilaitokset (n kpl)</h2>
+                        <div className="box-container">
+                            <div classNameName="col-xs-12 oppilaitos-box">
                                 <h3>Oppilaitoksen nimi</h3>
-                                <div class="text">
+                                <div className="text">
                                     <p>erikoistumisalat</p>
                                 </div>
                             </div>
@@ -68,9 +68,9 @@ class Korkeakoulu extends Component {
                     </div>*/}
 
                         {jatkoOpinnot &&
-                        <div class="col-xs-12 col-md-9 left-column">
-                            <h2 class="line_otsikko">Jatko-opintomahdollisuudet</h2>
-                            <div class="">
+                        <div className="col-xs-12 col-md-9 left-column">
+                            <h2 className="line_otsikko">Jatko-opintomahdollisuudet</h2>
+                            <div className="">
                                 {renderHTML(jatkoOpinnot)}
                             </div>
                         </div>}

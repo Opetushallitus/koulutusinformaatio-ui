@@ -4,7 +4,6 @@ import Hakupalkki from '../haku/Hakupalkki';
 import superagent from 'superagent';
 import {observer, inject} from 'mobx-react';
 import qs from 'query-string';
-import {Localizer as l, Parser as p} from '../../tools/Utils';
 import OskariKartta from "./OskariKartta";
 import renderHTML from 'react-render-html';
 
@@ -36,41 +35,39 @@ class Oppilaitos extends Component {
 
     //Todo: Selvitä, onko tämä ylipäänsä järkevää
     getEmailFromYhteystiedot() {
-        var data = this.state.result.yhteystiedot;
-        var foundEmail = "ei sähköpostiosoitetta";
-        data.map(y => {
-            if (y.email) {
-                foundEmail = y.email;
+        const data = this.state.result.yhteystiedot;
+
+        for (let i = 0; i < data.length; i++){
+            if (data[i].email) {
+                return data[i].email;
             }
-        });
-        return foundEmail;
+        }
+        return "ei sähköpostiosoitetta";
     }
 
     //Todo: Selvitä, onko tämä ylipäänsä järkevää
     getPuhelinFromYhteystiedot() {
-        var data = this.state.result.yhteystiedot;
-        var foundPuhelin = "";
-        data.map(y => {
-            if(y.tyyppi === "puhelin" && y.numero) {
-                foundPuhelin = "Puhelin: " + y.numero;
+        const data = this.state.result.yhteystiedot;
+
+        for (let i = 0; i < data.length; i++){
+            if(data[i].tyyppi === "puhelin" && data[i].numero) {
+                return "Puhelin: " + data[i].numero;
             }
-        });
-        return foundPuhelin;
+        }
+        return "";
     }
 
     getKotisivuFromYhteystiedot() {
-        var data = this.state.result.yhteystiedot;
-        var found = undefined;
-        data.map(y => {
-            if(y.www) {
-                found = y.www;
+        const data = this.state.result.yhteystiedot;
+
+        for (let i = 0; i < data.length; i++){
+            if(data[i].www) {
+                return (
+                    <a href={data[i].www}><i className='fa fa-external-link'> </i>Oppilaitoksen verkkosivu</a>
+                )
             }
-        });
-        if(found) {
-            return (
-                <a href={found}><i className='fa fa-external-link'> </i>Oppilaitoksen verkkosivu</a>
-            )
         }
+        return undefined;
     }
 
     getOppilaitosTiedot() {

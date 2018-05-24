@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import KoulutusInfoBox from './KoulutusInfoBox';
-import KoulutusSidebar from './KoulutusSidebar';
-import {Localizer as l, Parser as p} from '../../tools/Utils';
+import { Localizer as l } from '../../tools/Utils';
 import AvoinInfoBox from "./AvoimenKurssinInfoBox";
 import KurssiSidebar from "./KurssiSidebar";
 import renderHTML from 'react-render-html';

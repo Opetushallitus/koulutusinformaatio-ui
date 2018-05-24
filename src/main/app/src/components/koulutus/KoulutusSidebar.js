@@ -1,12 +1,7 @@
 import React, {Component} from 'react';
 import sidebarPic from '../../assets/images/student-success.jpg';
-import {Localizer as l} from '../../tools/Utils';
 
 class KoulutusSidebar extends Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
@@ -26,13 +21,13 @@ class KoulutusSidebar extends Component {
                     <div className="col-md-12">
                         <ul>
                             <li>
-                                <a href="#">Medialan perustutkinto</a>
+                                <a href="">Medialan perustutkinto</a>
                             </li>
                             <li>
-                                <a href="#">Medianomi AMK</a>
+                                <a href="">Medianomi AMK</a>
                             </li>
                             <li>
-                                <a href="#">Kulttuurialan ylempi AMK</a>
+                                <a href="">Kulttuurialan ylempi AMK</a>
                             </li>
                         </ul>
                     </div>
