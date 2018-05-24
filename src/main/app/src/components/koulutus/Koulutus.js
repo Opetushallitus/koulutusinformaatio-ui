@@ -49,10 +49,10 @@ class Koulutus extends Component {
     chooseKoulutus(koulutus) {
         if(koulutus) {
             switch(Koulutustyyppi.getKoulutustyyppi(koulutus)) {
-                case 'lk': return <Korkeakoulu name={this.state.nimi} oid={this.state.oid} result={koulutus}/>; break; //TODO
-                case 'kk': return <Korkeakoulu name={this.state.nimi} oid={this.state.oid} result={koulutus}/>; break;
-                case 'ako': return <AvoinYoKoulutus name={this.state.nimi} oid={this.state.oid} result={koulutus}/>; break;
-                default: return <Ammatillinen name={this.state.nimi} oid={this.state.oid} result={koulutus}/>; break;
+                case 'lk': return <Korkeakoulu name={this.state.nimi} oid={this.state.oid} result={koulutus}/>; //TODO
+                case 'kk': return <Korkeakoulu name={this.state.nimi} oid={this.state.oid} result={koulutus}/>;
+                case 'ako': return <AvoinYoKoulutus name={this.state.nimi} oid={this.state.oid} result={koulutus}/>;
+                default: return <Ammatillinen name={this.state.nimi} oid={this.state.oid} result={koulutus}/>;
             }
         }
         return <div/>
