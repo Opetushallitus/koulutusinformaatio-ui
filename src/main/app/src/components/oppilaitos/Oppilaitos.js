@@ -4,7 +4,6 @@ import Hakupalkki from '../haku/Hakupalkki';
 import superagent from 'superagent';
 import {observer, inject} from 'mobx-react';
 import qs from 'query-string';
-import {Localizer as l, Parser as p} from '../../tools/Utils';
 import OskariKartta from "./OskariKartta";
 import renderHTML from 'react-render-html';
 
@@ -36,41 +35,39 @@ class Oppilaitos extends Component {
 
     //Todo: Selvitä, onko tämä ylipäänsä järkevää
     getEmailFromYhteystiedot() {
-        var data = this.state.result.yhteystiedot;
-        var foundEmail = "ei sähköpostiosoitetta";
-        data.map(y => {
-            if (y.email) {
-                foundEmail = y.email;
+        const data = this.state.result.yhteystiedot;
+
+        for (let row in data){
+            if (row.email) {
+                return row.email;
             }
-        });
-        return foundEmail;
+        }
+        return "ei sähköpostiosoitetta";
     }
 
     //Todo: Selvitä, onko tämä ylipäänsä järkevää
     getPuhelinFromYhteystiedot() {
-        var data = this.state.result.yhteystiedot;
-        var foundPuhelin = "";
-        data.map(y => {
-            if(y.tyyppi === "puhelin" && y.numero) {
-                foundPuhelin = "Puhelin: " + y.numero;
+        const data = this.state.result.yhteystiedot;
+
+        for (let row in data){
+            if(row.tyyppi === "puhelin" && row.numero) {
+                return "Puhelin: " + row.numero;
             }
-        });
-        return foundPuhelin;
+        }
+        return "";
     }
 
     getKotisivuFromYhteystiedot() {
-        var data = this.state.result.yhteystiedot;
-        var found = undefined;
-        data.map(y => {
-            if(y.www) {
-                found = y.www;
+        const data = this.state.result.yhteystiedot;
+
+        for (let row in data){
+            if(row.www) {
+                return (
+                    <a href={row.www}><i className='fa fa-external-link'> </i>Oppilaitoksen verkkosivu</a>
+                )
             }
-        });
-        if(found) {
-            return (
-                <a href={found}><i className='fa fa-external-link'> </i>Oppilaitoksen verkkosivu</a>
-            )
         }
+        return undefined;
     }
 
     getOppilaitosTiedot() {
@@ -135,11 +132,11 @@ class Oppilaitos extends Component {
                 var k = data[key];
                 if(k["kieli_fi#1"]) {
                     if(k["kieli_fi#1"].indexOf('facebook') !== -1 ) {
-                        fb = <li><a className='fa fa-facebook-square fa-3x' href={k["kieli_fi#1"]}></a></li>
+                        fb = <li><a href={k["kieli_fi#1"]}><i className='fa fa-facebook-square fa-3x' /></a></li>
                     } else if (k["kieli_fi#1"].indexOf('twitter') !== -1) {
-                        twitter = <li><a className='fa fa-twitter-square fa-3x' href={k["kieli_fi#1"]}></a></li>
+                        twitter = <li><a href={k["kieli_fi#1"]}><i className='fa fa-twitter-square fa-3x' /></a></li>
                     } else if (k["kieli_fi#1"].indexOf('instagram') !== -1) {
-                        insta = <li><a className='fa fa-instagram fa-3x' href={k["kieli_fi#1"]}></a></li>
+                        insta = <li><a href={k["kieli_fi#1"]}><i className='fa fa-instagram fa-3x' /></a></li>
                     }
                 }
 
