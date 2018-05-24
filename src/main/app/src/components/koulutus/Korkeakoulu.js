@@ -58,7 +58,7 @@ class Korkeakoulu extends Component {
                         {/*<div className="col-xs-12 col-md-9 left-column oppilaitokset"> //TODO Toiseen demoversioon?
                         <h2 className="line_otsikko">Oppilaitokset (n kpl)</h2>
                         <div className="box-container">
-                            <div classNameName="col-xs-12 oppilaitos-box">
+                            <div className="col-xs-12 oppilaitos-box">
                                 <h3>Oppilaitoksen nimi</h3>
                                 <div className="text">
                                     <p>erikoistumisalat</p>

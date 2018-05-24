@@ -37,9 +37,9 @@ class Oppilaitos extends Component {
     getEmailFromYhteystiedot() {
         const data = this.state.result.yhteystiedot;
 
-        for (let i = 0; i < data.length; i++){
-            if (data[i].email) {
-                return data[i].email;
+        for (let row in data){
+            if (row.email) {
+                return row.email;
             }
         }
         return "ei sähköpostiosoitetta";
@@ -49,9 +49,9 @@ class Oppilaitos extends Component {
     getPuhelinFromYhteystiedot() {
         const data = this.state.result.yhteystiedot;
 
-        for (let i = 0; i < data.length; i++){
-            if(data[i].tyyppi === "puhelin" && data[i].numero) {
-                return "Puhelin: " + data[i].numero;
+        for (let row in data){
+            if(row.tyyppi === "puhelin" && row.numero) {
+                return "Puhelin: " + row.numero;
             }
         }
         return "";
@@ -60,10 +60,10 @@ class Oppilaitos extends Component {
     getKotisivuFromYhteystiedot() {
         const data = this.state.result.yhteystiedot;
 
-        for (let i = 0; i < data.length; i++){
-            if(data[i].www) {
+        for (let row in data){
+            if(row.www) {
                 return (
-                    <a href={data[i].www}><i className='fa fa-external-link'> </i>Oppilaitoksen verkkosivu</a>
+                    <a href={row.www}><i className='fa fa-external-link'> </i>Oppilaitoksen verkkosivu</a>
                 )
             }
         }
