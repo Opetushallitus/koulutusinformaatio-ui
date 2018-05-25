@@ -92,7 +92,7 @@ class Haku extends Component {
 
     static getOppilaitoksetFromBackend(_this, _handleError) {
         return (superagent
-            .get(_this.props.urlStore.urls.url('konfo-backend.search.organisaatiot'))
+            .get(_this.props.urlStore.urls.url('konfo-backend.search.oppilaitokset'))
             .query({keyword: _this.props.hakuStore.keyword, page: _this.props.hakuStore.currentPageOppilaitos, size: _this.props.hakuStore.pageSizeOppilaitos})
             .catch(_handleError))
     }

@@ -71,9 +71,8 @@ class Oppilaitos extends Component {
     }
 
     getOppilaitosTiedot() {
-        console.log("Getting organisaatio with url: " + this.props.urlStore.urls.url('konfo-backend.organisaatio') + this.state.oid);
         superagent
-            .get(this.props.urlStore.urls.url('konfo-backend.organisaatio')+this.state.oid)
+            .get(this.props.urlStore.urls.url('konfo-backend.oppilaitos')+this.state.oid)
             .end((err, res) => {
                 this.setState({
                     result: res ? res.body.result : undefined,
