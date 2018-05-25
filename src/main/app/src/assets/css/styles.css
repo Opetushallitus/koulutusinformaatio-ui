@@ -1516,7 +1516,7 @@ footer p {
     box-shadow: 1px 1px 4px 0px rgba(50, 50, 50, 0.5);
 }
 .filter-options.index {
-    left:10;
+    left:10px;
     top:-18px;
     width: 450px;
 }
@@ -1526,7 +1526,7 @@ footer p {
     box-shadow: none;
 }
 .filters-main {
-    margin-top: 40px;
+    padding: 1em;
 }
 .filters-main h5 {
     color: #9c9c9c;
