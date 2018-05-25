@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom';
+import Hakurajain from './Hakurajain';
 
 class Hakupalkki extends Component {
 
@@ -7,7 +8,8 @@ class Hakupalkki extends Component {
         super(props);
         this.state = {
             input: '',
-            redirect: false
+            redirect: false,
+            rajainOpen: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -33,6 +35,11 @@ class Hakupalkki extends Component {
         }
     }
 
+    openRajain() {
+        this.setState({rajainOpen: !this.state.rajainOpen});
+        console.log(this.state);
+    }
+
     render() {
         if(this.state.redirect) {
             return <Redirect push to={'/haku/' + this.state.input}/>
@@ -51,15 +58,14 @@ class Hakupalkki extends Component {
                             </div>
                         </div>
                     </div>
-                    {/*<div className="container"> //TODO rajaimet
-                        <div className="row">
-                            <div className="col-xs-12">
-                                <div className="filter-button" role="button">
-                                </div>
-                            </div>
+                    <div className="col-xs-12">
+                        <div className={"filter-button " + (this.state.rajainOpen ? "sulje" : "")} onClick={() => this.openRajain()} role="button">
                         </div>
-                    </div>*/}
+                    </div>
                 </div>
+                {this.state.rajainOpen &&
+                    <Hakurajain hakuStore={this.props.hakuStore}/>
+                }
             </div>
         );
     }
