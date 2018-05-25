@@ -16,10 +16,7 @@ class AvoinYoKoulutus extends Component {
     }
 
     parseNimi() {
-        if(this.state.result && this.state.result.nimi) {
-            return this.state.result.nimi; //Päättely konfo-indeksoijassa
-        }
-        return "(Tuntematon nimi)";
+        return l.localize(this.state.result.searchData, "(Tuntematon nimi)");
     }
 
     parseKuvaus() {

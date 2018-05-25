@@ -7,6 +7,12 @@ class Localizer {
             return nimi.kieli_sv;
         } else if(nimi.kieli_en) {
             return nimi.kieli_en;
+        } else if(nimi.fi) {
+            return nimi.fi;
+        } else if(nimi.sv) {
+            return nimi.sv;
+        } else if(nimi.en) {
+            return nimi.en;
         } else {
             return defaultValue;
         }

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import '../../assets/css/hakutulos.css'
 import {observer, inject} from 'mobx-react';
+import {Localizer as l} from '../../tools/Utils';
+import {Koulutustyyppi} from '../koulutus/Koulutustyyppi';
+import {Oppilaitostyyppi} from '../oppilaitos/Oppilaitostyyppi';
 
 @inject("hakuStore")
 @inject("urlStore")
@@ -14,47 +17,19 @@ class Hakutulos extends Component {
         this.toggleOppilaitos = this.toggleOppilaitos.bind(this);
     }
 
-    getKoulutusStyle(koulutus) {
-        if(koulutus.tyyppi === 'LUKIOKOULUTUS') {
-            return 'lk'
-        }
-        if(koulutus.tyyppi === 'KORKEAKOULUTUS' && !(koulutus.avoin)) {
-            return 'kk'
-        }
-        if(koulutus.avoin) {
-            return 'ako'
-        }
-        return 'amk'
-    }
-
     getKoulutusNimi(koulutus) {
-        if(koulutus.nimi) {
-            return koulutus.nimi.kieli_fi;
-        } else if(koulutus.hakukohteet && (0 < koulutus.hakukohteet.length)) {
-            //Avoimen yliopiston koulutuksen nimi näyttäisi olevan hakukohteen nimenä
-            return koulutus.hakukohteet[0].nimi.fi;
-        }
-        return "Koulutus (ei nimeä)"
+        return l.localize(koulutus, "Koulutus (ei nimeä)");
     }
 
     getKoulutusAiheet(koulutus) {
-        if (koulutus.opintoala) {
-            return koulutus.opintoala.kieli_fi;
-        } else if(koulutus.aiheet && (0 < koulutus.aiheet.length)) {
-            return koulutus.aiheet.map(a => a.nimi.kieli_fi).join(', ');
+        if(koulutus.aiheet && (0 < koulutus.aiheet.length)) {
+            return koulutus.aiheet.map(a => l.localize(a, null)).filter(a => a != null).join(', ');
         }
         return "";
     }
 
     getOppilaitosNimi(oppilaitos) {
-        if(oppilaitos.nimi.fi) {
-            return oppilaitos.nimi.fi;
-        } else if (oppilaitos.nimi.sv) {
-            return oppilaitos.nimi.sv;
-        } else if (oppilaitos.nimi.en) {
-            return oppilaitos.nimi.en;
-        }
-        return "Oppilaitos (ei nimeä)"
+        return l.localize(oppilaitos, "Oppilaitos (ei nimeä)");
     }
 
     toggleOppilaitos() {
@@ -97,7 +72,7 @@ class Hakutulos extends Component {
         if(this.props.hakuStore.hasKoulutusResult && this.props.hakuStore.toggleKoulutus) {
             resultList = this.props.hakuStore.koulutusResult.map((r) => {
                 const koulutusLinkString = '/koulutus/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
-                var tyyli = "col-xs-12 search-box " + this.getKoulutusStyle(r) + (r.haettavissa ? " haku" : "");
+                var tyyli = "col-xs-12 search-box " + Koulutustyyppi.getKoulutustyyppi(r) + (r.haettavissa ? " haku" : "");
                 return (
                     <div key={r.oid} className="col-xs-12 col-md-6 box-container">
                         <div className={tyyli}>
@@ -117,9 +92,10 @@ class Hakutulos extends Component {
         } else if(this.props.hakuStore.hasOppilaitosResult && !this.props.hakuStore.toggleKoulutus) {
             resultList = this.props.hakuStore.oppilaitosResult.map((r) => {
                 const oppilaitosLinkString = '/oppilaitos/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
+                var tyyli = "col-xs-12 search-box " + Oppilaitostyyppi.getOppilaitostyyppi(r);
                 return (
                     <div className="col-xs-12 col-md-6 box-container">
-                        <div className="col-xs-12 search-box">
+                        <div className={tyyli}>
                             {/*<div className="suosikkit">
                                 <i className="fa fa-heart-o" aria-hidden="true"></i>
                             </div>*/}
