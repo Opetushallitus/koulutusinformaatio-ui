@@ -14,7 +14,6 @@ class OskariKartta extends Component {
     }
 
     componentDidMount() {
-        console.log("did mount");
         if(this.state.osoitetieto[0] && this.state.osoitetieto[1] && this.state.mapinfo) {
             this.setMapLocation(this.state.osoitetieto);
         } else if (!this.state.mapinfo) {
@@ -115,14 +114,14 @@ class OskariKartta extends Component {
     }
 
     render() {
-        console.log("Render Kartta");
-        return (
-            <React.Fragment>
-                <div>
-                <iframe title="kartta" id='publishedMap' src={"https://hkp.maanmittauslaitos.fi/hkp/published/fi/"+this.state.mapinfo[1]}/>
-                </div>
-            </React.Fragment>
-        );
+        var kartta = <div/>
+        if(this.state.mapinfo && this.state.mapinfo.length > 1) {
+            kartta = <div><iframe title="kartta" id='publishedMap' src={"https://hkp.maanmittauslaitos.fi/hkp/published/fi/"+this.state.mapinfo[1]}/></div>
+        } else {
+            console.log("Oskari-karttapalvelua ei saada käyttöön...");
+            console.log(this.state.mapinfo);
+        }
+        return (<React.Fragment>{kartta}</React.Fragment>);
     }
 }
 
