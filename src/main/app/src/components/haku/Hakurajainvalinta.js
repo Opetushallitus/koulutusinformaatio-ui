@@ -7,10 +7,7 @@ class Hakurajainvalinta extends Component {
             <React.Fragment>
                 <div className="checkbox">
                     <label>
-                        <input type="checkbox" value={false} />
-                        <span className="cr">
-                            <i className="cr cr-icon fa-check"> </i>
-                        </span>
+                        <input type="checkbox" checked={this.props.checked} onChange={this.props.handleChange}/>
                         {this.props.text}
                     </label>
                     {this.props.color && <span className={"cr ch-" + this.props.color}> </span>}
