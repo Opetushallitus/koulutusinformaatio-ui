@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 import '../../assets/css/hakutulos.css'
 import {observer, inject} from 'mobx-react';
 import {Localizer as l} from '../../tools/Utils';
-import {Koulutustyyppi} from '../koulutus/Koulutustyyppi';
-import {Oppilaitostyyppi} from '../oppilaitos/Oppilaitostyyppi';
 
 @inject("hakuStore")
 @inject("urlStore")
@@ -72,7 +70,7 @@ class Hakutulos extends Component {
         if(this.props.hakuStore.hasKoulutusResult && this.props.hakuStore.toggleKoulutus) {
             resultList = this.props.hakuStore.koulutusResult.map((r) => {
                 const koulutusLinkString = '/koulutus/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
-                var tyyli = "col-xs-12 search-box " + Koulutustyyppi.getKoulutustyyppi(r) + (r.haettavissa ? " haku" : "");
+                var tyyli = "col-xs-12 search-box " + r.tyyppi + (r.haettavissa ? " haku" : "");
                 return (
                     <div key={r.oid} className="col-xs-12 col-md-6 box-container">
                         <div className={tyyli}>
@@ -92,7 +90,7 @@ class Hakutulos extends Component {
         } else if(this.props.hakuStore.hasOppilaitosResult && !this.props.hakuStore.toggleKoulutus) {
             resultList = this.props.hakuStore.oppilaitosResult.map((r) => {
                 const oppilaitosLinkString = '/oppilaitos/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
-                var tyyli = "col-xs-12 search-box " + Oppilaitostyyppi.getOppilaitostyyppi(r);
+                var tyyli = "col-xs-12 search-box " + r.tyyppi;
                 return (
                     <div className="col-xs-12 col-md-6 box-container">
                         <div className={tyyli}>

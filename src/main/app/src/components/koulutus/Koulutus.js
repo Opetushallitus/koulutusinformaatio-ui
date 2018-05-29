@@ -7,7 +7,6 @@ import qs from 'query-string';
 import Hakupalkki from "../haku/Hakupalkki";
 import Hakunavigaatio from './../haku/Hakunavigaatio';
 import AvoinYoKoulutus from "./AvoinYo";
-import {Koulutustyyppi} from './Koulutustyyppi'
 
 @inject("hakuStore")
 @inject("urlStore")
@@ -48,7 +47,7 @@ class Koulutus extends Component {
 
     chooseKoulutus(koulutus) {
         if(koulutus) {
-            switch(Koulutustyyppi.getKoulutustyyppi(koulutus)) {
+            switch(koulutus.searchData.tyyppi) {
                 case 'lk': return <Korkeakoulu name={this.state.nimi} oid={this.state.oid} result={koulutus}/>; //TODO
                 case 'kk': return <Korkeakoulu name={this.state.nimi} oid={this.state.oid} result={koulutus}/>;
                 case 'ako': return <AvoinYoKoulutus name={this.state.nimi} oid={this.state.oid} result={koulutus}/>;
