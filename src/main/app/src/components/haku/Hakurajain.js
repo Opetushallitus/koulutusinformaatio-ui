@@ -29,17 +29,22 @@ class Hakurajain extends Component {
         this.setState({filterChanged: true});
     }
 
-    handleSubmit(e) {
-        console.log("submit1");
+    handleSubmit() {
         this.props.handleRefresh(this.state.filterChanged);
-        this.setState({filterChanged: false});
+        this.setState({
+            filterChanged: false,
+            rajainOpen: false
+        });
     }
 
-    clearFilters(e) {
+    clearFilters() {
         this.props.hakuStore.filterOppilaitos = [];
         this.props.hakuStore.filterPaikkakunta = "";
+        this.setState({
+            filterChanged: false,
+            rajainOpen: false
+        });
         this.props.handleRefresh(true);
-        this.setState({filterChanged: false});
     }
 
     toggleRajain() {
@@ -76,8 +81,8 @@ class Hakurajain extends Component {
                                            value={this.props.hakuStore.filterPaikkakunta}/>
                                 </div>
                                 <div className="form-group action-buttons">
-                                    <a className="btn btn-primary" role="button" onClick={(e) => this.handleSubmit(e)}>HAE</a>
-                                    <a className="clear-compare" onClick={(e) => this.clearFilters(e)}>Poista rajaukset</a>
+                                    <a className="btn btn-primary" role="button" onClick={() => this.handleSubmit()}>HAE</a>
+                                    <a className="clear-compare" onClick={() => this.clearFilters()}>Poista rajaukset</a>
                                 </div>
                             </div>
                         </div>
