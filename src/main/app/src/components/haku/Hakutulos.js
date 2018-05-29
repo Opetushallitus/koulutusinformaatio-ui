@@ -94,7 +94,7 @@ class Hakutulos extends Component {
                 const oppilaitosLinkString = '/oppilaitos/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
                 var tyyli = "col-xs-12 search-box " + Oppilaitostyyppi.getOppilaitostyyppi(r);
                 return (
-                    <div className="col-xs-12 col-md-6 box-container">
+                    <div key={r.oid} className="col-xs-12 col-md-6 box-container">
                         <div className={tyyli}>
                             {/*<div className="suosikkit">
                                 <i className="fa fa-heart-o" aria-hidden="true"></i>

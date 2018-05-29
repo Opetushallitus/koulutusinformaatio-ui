@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import Hakurajain from './Hakurajain';
 
 class Hakupalkki extends Component {
 
@@ -9,7 +8,6 @@ class Hakupalkki extends Component {
         this.state = {
             input: '',
             redirect: false,
-            rajainOpen: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -23,21 +21,18 @@ class Hakupalkki extends Component {
         this.setState({input: event.target.value})
     }
 
-    handleSubmit(event) {
-        if(this.isValidKeyword()) {
+    handleSubmit(event, filterAction) {
+
+        console.log("submit2");
+        if(this.isValidKeyword() || filterAction) {
             if(this.props.searchAction) {
-                this.props.searchAction(this.state.input)
+                this.props.searchAction(this.state.input, filterAction)
             } else {
                 this.setState({redirect: true})
             }
        } else {
             event.preventDefault();
         }
-    }
-
-    openRajain() {
-        this.setState({rajainOpen: !this.state.rajainOpen});
-        console.log(this.state);
     }
 
     render() {
@@ -58,14 +53,7 @@ class Hakupalkki extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="col-xs-12">
-                        <div className={"filter-button " + (this.state.rajainOpen ? "sulje" : "")} onClick={() => this.openRajain()} role="button">
-                        </div>
-                    </div>
                 </div>
-                {this.state.rajainOpen &&
-                    <Hakurajain hakuStore={this.props.hakuStore}/>
-                }
             </div>
         );
     }

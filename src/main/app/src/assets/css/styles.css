@@ -930,7 +930,6 @@ ul.disc-list {
 .filter-options .action-buttons a {
     display: block;
     text-align: center;
-    margin-bottom: 30px!important;
     margin-top: -20px;
 }
 .filter-options .action-buttons a:nth-child(1) {
@@ -1237,8 +1236,8 @@ footer p {
     position: absolute;
     padding: .55% 1.4%;
     z-index: 999;
-    top: 55px;
     font-size: .95em;
+    top: -1.5em;
 }
 .filter-button::after {
     color: #ffffff;
@@ -1567,7 +1566,7 @@ footer p {
 .radio .cr .cr-icon {
     margin-left: 0.04em;
 }
-.checkbox label input[type="checkbox"],
+
 .radio label input[type="radio"] {
     display: none;
 }
@@ -2459,13 +2458,11 @@ a.titlelink {
 @media (max-width: 1700px) {
     .filter-button {
         padding: .7% 1.4%;
-        top:40px;
     }
 }
 @media (max-width: 1400px) {
     .filter-button {
         padding: .7% 1.4%;
-        top:28px;
     }
 }
 @media (max-width: 1200px) {
@@ -2479,7 +2476,6 @@ a.titlelink {
     }
     .filter-button {
         padding: 1% 2%;
-        top:18px;
     }
 }
 @media (max-width: 1024px) {
@@ -2499,7 +2495,6 @@ a.titlelink {
     }
     .filter-button {
         padding: 1.25% 2%;
-        top: 40px;
     }
     .filter-options.index {
         left: 5px;
@@ -2669,7 +2664,6 @@ a.titlelink {
         width: 165px;
         height: 40px;
         z-index: 998;
-        top: 35px;
     }
     .filter-button.sulje {
         z-index: 998;
@@ -2691,7 +2685,6 @@ a.titlelink {
     }
     .filter-button::after {
         position: relative;
-        top: 21%;
         left: 4%;
         font-size: .95em;
     }
@@ -2967,7 +2960,6 @@ a.titlelink {
         float: left;
     }
     .filter-button {
-        top: 16px;
         width: 140px;
         height: 35px;
     }
@@ -2975,7 +2967,6 @@ a.titlelink {
         margin: -.5em 1.3em .5em;
     }
     .filter-button::after {
-        top: 15%;
         left: 8%;
         width: 144px;
         height: 35px;
@@ -3007,7 +2998,6 @@ a.titlelink {
         font-size: .8em;
     }
     .filter-button::after {
-        top: 15%;
         left: 8%;
         font-size: .85em;
     }
