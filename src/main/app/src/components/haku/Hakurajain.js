@@ -11,13 +11,13 @@ class Hakurajain extends Component {
         }
     }
 
-    handleOppilaitosChange(filter) {
+    handleKoulutusChange(filter) {
         if (filter) {
-            if (this.props.hakuStore.filterOppilaitos.indexOf(filter) === -1) {
-                this.props.hakuStore.filterOppilaitos.push(filter);
+            if (this.props.hakuStore.filterKoulutus.indexOf(filter) === -1) {
+                this.props.hakuStore.filterKoulutus.push(filter);
             } else {
-                this.props.hakuStore.filterOppilaitos
-                    = this.props.hakuStore.filterOppilaitos.filter((i) => i !== filter);
+                this.props.hakuStore.filterKoulutus
+                    = this.props.hakuStore.filterKoulutus.filter((i) => i !== filter);
 
             }
             this.setState({filterChanged: true});
@@ -41,7 +41,7 @@ class Hakurajain extends Component {
     }
 
     clearFilters() {
-        this.props.hakuStore.filterOppilaitos = [];
+        this.props.hakuStore.filterKoulutus = [];
         this.props.hakuStore.filterPaikkakunta = "";
         this.setState({
             filterChanged: false,
@@ -68,14 +68,14 @@ class Hakurajain extends Component {
                             <div className="filters-main">
                                 <div className="form-group">
                                     <h5>Koulutustyyppi</h5>
-                                    <Hakurajainvalinta text="Lukio" checked={this.props.hakuStore.filterOppilaitos.indexOf('lk') !== -1}
-                                                       handleChange={() => this.handleOppilaitosChange('lk')} color="1"/>
-                                    <Hakurajainvalinta text="Ammatilliset tutkinnot" checked={this.props.hakuStore.filterOppilaitos.indexOf('amm') !== -1}
-                                                       handleChange={() => this.handleOppilaitosChange('amm')} color="2"/>
-                                    <Hakurajainvalinta text="Korkeakoulut (myös avoimet)" checked={this.props.hakuStore.filterOppilaitos.indexOf('kk') !== -1}
-                                                       handleChange={() => this.handleOppilaitosChange('kk')} color="3"/>
-                                    <Hakurajainvalinta text="Muut kurssit ja koulutukset" checked={this.props.hakuStore.filterOppilaitos.indexOf('muu') !== -1}
-                                                       handleChange={() => this.handleOppilaitosChange('muu')} color="5"/>
+                                    <Hakurajainvalinta text="Lukio" checked={this.props.hakuStore.filterKoulutus.indexOf('lk') !== -1}
+                                                       handleChange={() => this.handleKoulutusChange('lk')} color="1"/>
+                                    <Hakurajainvalinta text="Ammatilliset tutkinnot" checked={this.props.hakuStore.filterKoulutus.indexOf('amm') !== -1}
+                                                       handleChange={() => this.handleKoulutusChange('amm')} color="2"/>
+                                    <Hakurajainvalinta text="Korkeakoulut (myös avoimet)" checked={this.props.hakuStore.filterKoulutus.indexOf('kk') !== -1}
+                                                       handleChange={() => this.handleKoulutusChange('kk')} color="3"/>
+                                    <Hakurajainvalinta text="Muut kurssit ja koulutukset" checked={this.props.hakuStore.filterKoulutus.indexOf('muu') !== -1}
+                                                       handleChange={() => this.handleKoulutusChange('muu')} color="5"/>
                                 </div>
                                 <div className="form-group">
                                     <h5 className="filter-title">Paikkakunta</h5>

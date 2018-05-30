@@ -7,7 +7,7 @@ class Hakupalkki extends Component {
         super(props);
         this.state = {
             input: '',
-            redirect: false,
+            redirect: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -21,12 +21,10 @@ class Hakupalkki extends Component {
         this.setState({input: event.target.value})
     }
 
-    handleSubmit(event, filterAction) {
-
-        console.log("submit2");
-        if(this.isValidKeyword() || filterAction) {
+    handleSubmit(event) {
+        if(this.isValidKeyword()) {
             if(this.props.searchAction) {
-                this.props.searchAction(this.state.input, filterAction)
+                this.props.searchAction(this.state.input)
             } else {
                 this.setState({redirect: true})
             }
