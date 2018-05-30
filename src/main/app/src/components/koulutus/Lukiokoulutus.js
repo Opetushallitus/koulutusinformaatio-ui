@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import KoulutusInfoBox from './KoulutusInfoBox';
 import OppilaitoksetBox from './OppilaitoksetBox'
 import KoulutusSidebar from './KoulutusSidebar';
-import {Localizer as l, Parser as p} from '../../tools/Utils';
+import {Localizer as l} from '../../tools/Utils';
 import renderHTML from 'react-render-html';
 
 
