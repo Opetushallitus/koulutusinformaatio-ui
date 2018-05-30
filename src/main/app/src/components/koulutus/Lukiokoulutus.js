@@ -78,9 +78,9 @@ class Korkeakoulu extends Component {
                             </div>
                         </div>}
 
-                        <div className="col-xs-12 col-md-9 left-column ">
-                            <OppilaitoksetBox oppilaitokset={this.props.result.opetusTarjoajat}/>
-                        </div>
+                        {/*<div className="col-xs-12 col-md-9 left-column ">*/}
+                            {/*<OppilaitoksetBox oppilaitokset={this.props.result.opetusTarjoajat}/>*/}
+                        {/*</div>*/}
                     </div>
 
                     <KoulutusSidebar/>
