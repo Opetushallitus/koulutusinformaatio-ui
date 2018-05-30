@@ -23,7 +23,7 @@ class Haku extends Component {
     componentDidMount() {
         const queryParamPage = Number(qs.parse(this.props.location.search).page);
         const queryParamPageSize = Number(qs.parse(this.props.location.search).pagesize);
-        const queryParamFilterOppilaitos = qs.parse(this.props.location.search).oppilaitos;
+        const queryParamFilterKoulutus = qs.parse(this.props.location.search).koulutustyyppi;
         const queryParamFilterPaikkakunta = qs.parse(this.props.location.search).paikkakunta;
 
         if (this.props.hakuStore.toggleKoulutus) {
@@ -35,7 +35,7 @@ class Haku extends Component {
         }
 
         this.props.hakuStore.filterPaikkakunta = queryParamFilterPaikkakunta ? queryParamFilterPaikkakunta : '';
-        this.props.hakuStore.filterOppilaitos = queryParamFilterOppilaitos ? queryParamFilterOppilaitos.split(',') : [];
+        this.props.hakuStore.filterKoulutus = queryParamFilterKoulutus ? queryParamFilterKoulutus.split(',') : [];
         this.handleRefresh();
     }
 
@@ -96,7 +96,7 @@ class Haku extends Component {
                 page: _this.props.hakuStore.currentPageKoulutus,
                 size: _this.props.hakuStore.pageSizeKoulutus,
                 paikkakunta: _this.props.hakuStore.filterPaikkakunta,
-                oppilaitostyyppi: _this.props.hakuStore.filterOppilaitos.join(',')})
+                koulutustyyppi: _this.props.hakuStore.filterKoulutus.join(',')})
             .catch(_handleError))
     }
 
@@ -107,7 +107,7 @@ class Haku extends Component {
                 page: _this.props.hakuStore.currentPageOppilaitos,
                 size: _this.props.hakuStore.pageSizeOppilaitos,
                 paikkakunta: _this.props.hakuStore.filterPaikkakunta,
-                oppilaitostyyppi: _this.props.hakuStore.filterOppilaitos.join(',')})
+                koulutustyyppi: _this.props.hakuStore.filterKoulutus.join(',')})
             .catch(_handleError))
     }
 

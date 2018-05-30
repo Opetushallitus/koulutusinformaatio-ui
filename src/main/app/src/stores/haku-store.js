@@ -11,7 +11,7 @@ class HakuStore {
     @observable oppilaitosResult = [];
     @observable oppilaitosCount = 0;
     @observable toggleKoulutus = true;
-    @observable filterOppilaitos = [];
+    @observable filterKoulutus = [];
     @observable filterPaikkakunta = '';
 
     @computed get keywordSet() {
@@ -35,7 +35,7 @@ class HakuStore {
             + '&page=' + this.currentPageNumber
             + '&pagesize=' + this.pageSize
             + (this.filterPaikkakunta ? '&paikkakunta=' + this.filterPaikkakunta : '')
-            + (this.filterOppilaitos.length ? '&oppilaitostyyppi=' + this.filterOppilaitos.join(',') : '')
+            + (this.filterKoulutus.length ? '&koulutustyyppi=' + this.filterKoulutus.join(',') : '')
     }
 
     @computed get maxPageNumber() {
