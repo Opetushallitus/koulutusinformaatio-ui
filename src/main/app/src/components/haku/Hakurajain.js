@@ -81,7 +81,8 @@ class Hakurajain extends Component {
                                     <h5 className="filter-title">Paikkakunta</h5>
                                     <input className="oph-input" type="text" placeholder="Syötä paikkakunnan nimi"
                                            onChange={(e) =>this.handlePaikkakuntaChange(e.target.value)}
-                                           value={this.props.hakuStore.filterPaikkakunta}/>
+                                           value={this.props.hakuStore.filterPaikkakunta}
+                                           onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit()}}}/>
                                 </div>
                                 <div className="form-group action-buttons">
                                     <a className="btn btn-primary" role="button" onClick={() => this.handleSubmit()}>HAE</a>
