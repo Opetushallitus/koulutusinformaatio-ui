@@ -6,7 +6,6 @@ import {observer, inject} from 'mobx-react';
 import Hakupalkki from './Hakupalkki';
 import Hakutulos from './Hakutulos';
 import Sivutus from './Sivutus';
-import Hakurajain from "./Hakurajain";
 
 @inject("hakuStore")
 @inject("urlStore")
@@ -39,16 +38,10 @@ class Haku extends Component {
         this.handleRefresh();
     }
 
-    handleRefresh(paginationEvent = false) {
+    handleRefresh() {
         const queryParamToggle = qs.parse(this.props.location.search).toggle;
-
-        if(this.props.hakuStore.keyword !== this.props.match.params.keyword || paginationEvent) {
-            this.props.hakuStore.keyword = this.props.match.params.keyword;
-
-            this.search(queryParamToggle)
-        } else if(queryParamToggle) {
-            this.toggleAction(queryParamToggle)
-        }
+        this.props.hakuStore.keyword = this.props.match.params.keyword;
+        this.search(queryParamToggle)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -75,13 +68,10 @@ class Haku extends Component {
         }
     }
 
-    searchAction(newKeyword, filterAction) {
-        if(newKeyword !== this.props.hakuStore.keyword || filterAction) {
-            this.props.hakuStore.keyword = newKeyword;
-            this.props.hakuStore.currentPageKoulutus = 1;
-            this.props.hakuStore.currentPageOppilaitos = 1;
-            this.search();
-        }
+    searchAction() {
+        this.props.hakuStore.currentPageKoulutus = 1;
+        this.props.hakuStore.currentPageOppilaitos = 1;
+        this.search();
     }
 
     toggleAction(value) {
@@ -139,7 +129,6 @@ class Haku extends Component {
         return (
             <React.Fragment>
                 <Hakupalkki searchAction={this.searchAction}/>
-                <Hakurajain hakuStore={this.props.hakuStore} searchAction={this.searchAction}/>
                 <Hakutulos toggleAction={this.toggleAction}/>
                 <Sivutus handleRefresh={this.handleRefresh}/>
             </React.Fragment>

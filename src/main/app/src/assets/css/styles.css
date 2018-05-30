@@ -832,7 +832,7 @@ ul.disc-list {
 }
 .info-page {
     padding-bottom: 4em;
-    overflow: hidden;
+
 }
 .info-page .left-column h1 i {
     position: relative;
@@ -1295,7 +1295,7 @@ footer p {
 .text {
     width: 80%;
     margin: 30px auto;
-    height: 95px;
+    height: 90%;
     overflow: hidden;
 }
 .text a {
@@ -2475,7 +2475,7 @@ a.titlelink {
     }
     .text {
         width: 70%;
-        max-height: 92px;
+        max-height: 90%;
         height: auto;
     }
     .filter-button {

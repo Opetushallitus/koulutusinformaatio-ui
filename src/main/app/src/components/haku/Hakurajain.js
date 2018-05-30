@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Hakurajainvalinta from './Hakurajainvalinta';
+import {observer, inject} from 'mobx-react';
 
+@inject ("hakuStore")
+@observer
 class Hakurajain extends Component {
 
     constructor(props) {
@@ -18,7 +21,6 @@ class Hakurajain extends Component {
             } else {
                 this.props.hakuStore.filterKoulutus
                     = this.props.hakuStore.filterKoulutus.filter((i) => i !== filter);
-
             }
             this.setState({filterChanged: true});
         }
@@ -35,8 +37,7 @@ class Hakurajain extends Component {
                 filterChanged: false,
                 rajainOpen: false
             });
-
-            this.props.searchAction(this.props.hakuStore.keyword, true);
+            this.props.filterAction();
         }
     }
 
@@ -47,7 +48,7 @@ class Hakurajain extends Component {
             filterChanged: false,
             rajainOpen: false
         });
-        this.props.searchAction(this.props.hakuStore.keyword, true);
+        this.props.filterAction();
     }
 
     toggleRajain() {
@@ -85,7 +86,7 @@ class Hakurajain extends Component {
                                            onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit()}}}/>
                                 </div>
                                 <div className="form-group action-buttons">
-                                    <a className="btn btn-primary" role="button" onClick={() => this.handleSubmit()}>HAE</a>
+                                    <a className="btn btn-primary" onClick={() => this.handleSubmit()}>HAE</a>
                                     <a className="clear-compare" onClick={() => this.clearFilters()}>Poista rajaukset</a>
                                 </div>
                             </div>
