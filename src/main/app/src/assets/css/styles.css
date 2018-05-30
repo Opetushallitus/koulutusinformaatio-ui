@@ -1493,9 +1493,9 @@ footer p {
     left: 0;
     transition: all ease-in .5s;
 }
-.filter-container input {
-    width: 82%;
-    margin-left: 20px;
+.filter-container input[type=text] {
+    width: 90%;
+    margin-left: 5%;
 }
 .filter-options {
     z-index: 998;
@@ -2885,9 +2885,7 @@ a.titlelink {
         width: 50%;
         float: left;
     }
-    .filters-main .form-group:nth-child(1),
-    .filters-main .form-group:nth-last-child(1),
-    .filters-main .form-group:nth-child(8) {
+    .filters-main .form-group {
         width: 100%;
     }
 }

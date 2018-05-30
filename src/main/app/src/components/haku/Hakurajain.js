@@ -30,11 +30,14 @@ class Hakurajain extends Component {
     }
 
     handleSubmit() {
-        this.props.handleRefresh(this.state.filterChanged);
-        this.setState({
-            filterChanged: false,
-            rajainOpen: false
-        });
+        if (this.state.filterChanged) {
+            this.setState({
+                filterChanged: false,
+                rajainOpen: false
+            });
+
+            this.props.searchAction(this.props.hakuStore.keyword, true);
+        }
     }
 
     clearFilters() {
@@ -44,7 +47,7 @@ class Hakurajain extends Component {
             filterChanged: false,
             rajainOpen: false
         });
-        this.props.handleRefresh(true);
+        this.props.searchAction(this.props.hakuStore.keyword, true);
     }
 
     toggleRajain() {

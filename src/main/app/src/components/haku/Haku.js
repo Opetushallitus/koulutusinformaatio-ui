@@ -75,8 +75,8 @@ class Haku extends Component {
         }
     }
 
-    searchAction(newKeyword) {
-        if(newKeyword !== this.props.hakuStore.keyword) {
+    searchAction(newKeyword, filterAction) {
+        if(newKeyword !== this.props.hakuStore.keyword || filterAction) {
             this.props.hakuStore.keyword = newKeyword;
             this.props.hakuStore.currentPageKoulutus = 1;
             this.props.hakuStore.currentPageOppilaitos = 1;
@@ -139,7 +139,7 @@ class Haku extends Component {
         return (
             <React.Fragment>
                 <Hakupalkki searchAction={this.searchAction}/>
-                <Hakurajain hakuStore={this.props.hakuStore} handleRefresh={this.handleRefresh}/>
+                <Hakurajain hakuStore={this.props.hakuStore} searchAction={this.searchAction}/>
                 <Hakutulos toggleAction={this.toggleAction}/>
                 <Sivutus handleRefresh={this.handleRefresh}/>
             </React.Fragment>
