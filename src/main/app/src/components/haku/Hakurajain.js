@@ -72,7 +72,7 @@ class Hakurajain extends Component {
                                                        handleChange={() => this.handleKoulutusChange('lk')} color="1"/>
                                     <Hakurajainvalinta text="Ammatilliset tutkinnot" checked={this.props.hakuStore.filterKoulutus.indexOf('amm') !== -1}
                                                        handleChange={() => this.handleKoulutusChange('amm')} color="2"/>
-                                    <Hakurajainvalinta text="Korkeakoulut (myös avoimet)" checked={this.props.hakuStore.filterKoulutus.indexOf('kk') !== -1}
+                                    <Hakurajainvalinta text="Korkeakoulut" checked={this.props.hakuStore.filterKoulutus.indexOf('kk') !== -1}
                                                        handleChange={() => this.handleKoulutusChange('kk')} color="3"/>
                                     <Hakurajainvalinta text="Muut kurssit ja koulutukset" checked={this.props.hakuStore.filterKoulutus.indexOf('muu') !== -1}
                                                        handleChange={() => this.handleKoulutusChange('muu')} color="5"/>
