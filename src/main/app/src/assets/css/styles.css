@@ -16,7 +16,7 @@ a:focus {
     text-decoration: none;
     color: auto;    
 }
-a.search-button:focus {
+a.search-button:focus,a.navbar-brand:focus {
     color: #ffffff;
 }
 h1,
