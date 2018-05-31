@@ -42,13 +42,15 @@ class Hakurajain extends Component {
     }
 
     clearFilters() {
-        this.props.hakuStore.filterKoulutus = [];
-        this.props.hakuStore.filterPaikkakunta = "";
-        this.setState({
-            filterChanged: false,
-            rajainOpen: false
-        });
-        this.props.filterAction();
+        if (this.props.hakuStore.filterPaikkakunta || this.props.hakuStore.filterKoulutus.length) {
+            this.props.hakuStore.filterKoulutus = [];
+            this.props.hakuStore.filterPaikkakunta = "";
+            this.setState({
+                filterChanged: false,
+                rajainOpen: false
+            });
+            this.props.filterAction();
+        }
     }
 
     toggleRajain() {

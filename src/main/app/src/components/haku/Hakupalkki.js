@@ -27,7 +27,7 @@ class Hakupalkki extends Component {
     }
 
     handleSubmit(event) {
-        if(this.isValidKeyword() && this.state.input !== this.props.hakuStore.keyword) {
+        if(this.isValidKeyword() || this.props.hakuStore.filterSet) {
             this.props.hakuStore.keyword = this.state.input;
             if(this.props.searchAction) {
                 this.props.searchAction()

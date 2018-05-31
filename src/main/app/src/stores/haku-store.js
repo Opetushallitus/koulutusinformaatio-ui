@@ -15,7 +15,11 @@ class HakuStore {
     @observable filterPaikkakunta = '';
 
     @computed get keywordSet() {
-        return this.keyword && !(0 === this.keyword.length)
+        return this.keyword && !(0 === this.keyword.length);
+    }
+
+    @computed get filterSet() {
+        return this.filterPaikkakunta || this.filterKoulutus.length;
     }
 
     @computed get hasKoulutusResult() {
