@@ -11,6 +11,14 @@ body {
 body.no-scroll {
     overflow-y: hidden;
 }
+a:focus {
+    outline: none;
+    text-decoration: none;
+    color: auto;    
+}
+a.search-button:focus {
+    color: #ffffff;
+}
 h1,
 h2,
 h3,
@@ -404,16 +412,7 @@ button:focus {
     -webkit-transition: all .35s ease-in-out;
     transition: all .35s ease-in-out;
 }
-.menu.is-closed:hover .hamb-top {
-    top: 0;
-    -webkit-transition: all .35s ease-in-out;
-    transition: all .35s ease-in-out;
-}
-.menu.is-closed:hover .hamb-bottom {
-    bottom: 4px;
-    -webkit-transition: all .35s ease-in-out;
-    transition: all .35s ease-in-out;
-}
+
 .menu.is-open .hamb-top,
 .menu.is-open .hamb-middle,
 .menu.is-open .hamb-bottom {
