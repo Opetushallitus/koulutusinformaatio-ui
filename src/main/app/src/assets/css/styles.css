@@ -2221,7 +2221,7 @@ button.toggle-compare.closed::after {
 }
 .app-navigation-bar {
     position: -webkit-sticky;
-    position: fixed;
+    position: sticky;
     min-height: 20px;
     height: auto;
     padding: 5px 0;
