@@ -20,21 +20,22 @@ class Haku extends Component {
     }
 
     componentDidMount() {
-        const queryParamPage = Number(qs.parse(this.props.location.search).page);
-        const queryParamPageSize = Number(qs.parse(this.props.location.search).pagesize);
+        const queryParamKoulutusPage = Number(qs.parse(this.props.location.search).kpage);
+        const queryParamKoulutusPageSize = Number(qs.parse(this.props.location.search).kpagesize);
+        const queryParamOppilaitosPage = Number(qs.parse(this.props.location.search).opage);
+        const queryParamOppilaitosPageSize = Number(qs.parse(this.props.location.search).opagesize);
         const queryParamFilterKoulutus = qs.parse(this.props.location.search).koulutustyyppi;
         const queryParamFilterPaikkakunta = qs.parse(this.props.location.search).paikkakunta;
 
-        if (this.props.hakuStore.toggleKoulutus) {
-            this.props.hakuStore.currentPageKoulutus = queryParamPage > 0 ? queryParamPage : 1;
-            this.props.hakuStore.pageSizeKoulutus = queryParamPageSize > 0 ? queryParamPageSize : 20;
-        } else {
-            this.props.hakuStore.currentPageOppilaitos = queryParamPage > 0 ? queryParamPage : 1;
-            this.props.hakuStore.pageSizeOppilaitos = queryParamPageSize > 0 ? queryParamPageSize : 20;
-        }
+        this.props.hakuStore.currentPageOppilaitos = queryParamOppilaitosPage > 0 ? queryParamOppilaitosPage : 1;
+        this.props.hakuStore.pageSizeOppilaitos = queryParamOppilaitosPageSize > 0 ? queryParamOppilaitosPageSize : 20;
+        this.props.hakuStore.currentPageKoulutus = queryParamKoulutusPage > 0 ? queryParamKoulutusPage : 1;
+        this.props.hakuStore.pageSizeKoulutus = queryParamKoulutusPageSize > 0 ? queryParamKoulutusPageSize : 20;
+
 
         this.props.hakuStore.filterPaikkakunta = queryParamFilterPaikkakunta ? queryParamFilterPaikkakunta : '';
         this.props.hakuStore.filterKoulutus = queryParamFilterKoulutus ? queryParamFilterKoulutus.split(',') : [];
+        console.log(this.props.hakuStore);
         this.handleRefresh();
     }
 

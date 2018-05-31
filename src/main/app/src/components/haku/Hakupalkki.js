@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Hakurajain from './Hakurajain';
 import {observer, inject} from 'mobx-react';
 

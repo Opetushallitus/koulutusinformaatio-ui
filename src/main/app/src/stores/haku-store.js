@@ -32,8 +32,8 @@ class HakuStore {
 
     @computed get createHakuUrl() {
         return '/haku/' + this.keyword + '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos')
-            + '&page=' + this.currentPageNumber
-            + '&pagesize=' + this.pageSize
+            + '&kpage=' + this.currentPageKoulutus + '&opage=' + this.currentPageOppilaitos
+            + '&kpagesize=' + this.pageSizeKoulutus + '&opagesize=' + this.pageSizeOppilaitos
             + (this.filterPaikkakunta ? '&paikkakunta=' + this.filterPaikkakunta : '')
             + (this.filterKoulutus.length ? '&koulutustyyppi=' + this.filterKoulutus.join(',') : '')
     }
