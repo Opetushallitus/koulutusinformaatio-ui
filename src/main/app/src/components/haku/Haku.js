@@ -105,7 +105,7 @@ class Haku extends Component {
     search(toggle) {
         const _this = this;
         const _handleError = (e) => { console.log(e); _this.setState({error: e})};
-        if(this.props.hakuStore.keywordSet) {
+        if(this.props.hakuStore.keywordSet || this.props.hakuStore.filterSet) {
             Promise.all([
                 Haku.getKoulutuksetFromBackend(_this, _handleError()),
                 Haku.getOppilaitoksetFromBackend(_this, _handleError())
