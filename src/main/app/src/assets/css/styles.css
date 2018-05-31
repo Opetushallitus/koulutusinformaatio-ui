@@ -142,12 +142,6 @@ button:focus {
     margin-left: 51px;
 }
 
-.koulutusSidebar {
-    height: 100vh;
-    min-height: 650px;
-    margin-bottom: 0px !important;
-    padding-bottom: 0px !important;
-}
 
 .oppilaitokset {
     margin-left: 51px;
@@ -1666,8 +1660,8 @@ ul.tutkinnon-osat li {
 }
 .left-column,
 .right-column {
-    margin-bottom: -200px;
-    padding-bottom: 200px;
+    margin-bottom: -9999999px;
+    padding-bottom: 9999999px;
 }
 ul.ng-scope {
     list-style-type: disc;

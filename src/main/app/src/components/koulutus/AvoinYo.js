@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Localizer as l } from '../../tools/Utils';
 import AvoinInfoBox from "./AvoimenKurssinInfoBox";
-import KurssiSidebar from "./KurssiSidebar";
+import KoulutusSidebar from "./KoulutusSidebar";
 import renderHTML from 'react-render-html';
 
 class AvoinYoKoulutus extends Component {
@@ -54,7 +54,7 @@ class AvoinYoKoulutus extends Component {
                             </div>
                         </div>
                     </div>
-                    <KurssiSidebar/>
+                    <KoulutusSidebar/>
                 </div>
             </div>
         );
