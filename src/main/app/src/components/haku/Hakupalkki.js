@@ -61,7 +61,7 @@ class Hakupalkki extends Component {
                                     <div className="search">
                                         <input id="regular-input" className="oph-input" type="text"
                                                placeholder="Etsi ja vertaile koulutuksia ja oppilaitoksia"
-                                               defaultValue={this.props.main ? "" : this.props.hakuStore.keyword}
+                                               defaultValue={this.props.hakuStore.keyword}
                                                onChange={this.handleChange} onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit(e)}}}/>
                                         <a role="button" onClick={this.handleSubmit} className="search-button"/>
                                     </div>
