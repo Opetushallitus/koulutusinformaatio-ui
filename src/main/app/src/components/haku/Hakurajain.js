@@ -42,7 +42,7 @@ class Hakurajain extends Component {
     }
 
     clearFilters() {
-        if (this.props.hakuStore.filterPaikkakunta || this.props.hakuStore.filterKoulutus.length) {
+        if (this.props.hakuStore.filterSet) {
             this.props.hakuStore.filterKoulutus = [];
             this.props.hakuStore.filterPaikkakunta = "";
             this.setState({
