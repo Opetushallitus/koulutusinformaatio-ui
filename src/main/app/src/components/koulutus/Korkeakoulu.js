@@ -42,7 +42,7 @@ class Korkeakoulu extends Component {
         fields.push(["Suunniteltu kesto", suunniteltuKesto + " " + suunniteltuKestoTyyppi]);
 
         fields.push(["Maksullinen", this.props.result.opintojenMaksullisuus ? "Kyllä" : "Ei"]);
-        fields.push(["Tutkintonimikkeet", this.props.result.tutkintonimikes.map(t => l.localize(t) + " ")]);
+        fields.push(["Tutkintonimikkeet", this.props.result.tutkintonimikes ? this.props.result.tutkintonimikes.map(t => l.localize(t) + " ") : '-']);
 
         return fields;
     }
