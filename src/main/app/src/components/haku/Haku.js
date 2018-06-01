@@ -35,13 +35,13 @@ class Haku extends Component {
 
         this.props.hakuStore.filterPaikkakunta = queryParamFilterPaikkakunta ? queryParamFilterPaikkakunta : '';
         this.props.hakuStore.filterKoulutus = queryParamFilterKoulutus ? queryParamFilterKoulutus.split(',') : [];
-        console.log(this.props.hakuStore);
+
         this.handleRefresh();
     }
 
     handleRefresh() {
         const queryParamToggle = qs.parse(this.props.location.search).toggle;
-        this.props.hakuStore.keyword = this.props.match.params.keyword;
+        this.props.hakuStore.keyword = this.props.match.params.keyword ? this.props.match.params.keyword : '';
         this.search(queryParamToggle)
     }
 
@@ -105,6 +105,9 @@ class Haku extends Component {
     search(toggle) {
         const _this = this;
         const _handleError = (e) => { console.log(e); _this.setState({error: e})};
+        console.log(this.props.hakuStore.filterSet)
+        console.log(this.props.hakuStore.filterPaikkakunta)
+        console.log(this.props.hakuStore.filterKoulutus)
         if(this.props.hakuStore.keywordSet || this.props.hakuStore.filterSet) {
             Promise.all([
                 Haku.getKoulutuksetFromBackend(_this, _handleError()),

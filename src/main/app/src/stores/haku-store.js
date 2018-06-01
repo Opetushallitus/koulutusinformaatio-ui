@@ -11,15 +11,16 @@ class HakuStore {
     @observable oppilaitosResult = [];
     @observable oppilaitosCount = 0;
     @observable toggleKoulutus = true;
-    @observable filterKoulutus = [];
-    @observable filterPaikkakunta = '';
+    @observable testi = 1;
+    filterKoulutus = [];
+    filterPaikkakunta = '';
 
     @computed get keywordSet() {
         return this.keyword && !(0 === this.keyword.length);
     }
 
     @computed get filterSet() {
-        return this.filterPaikkakunta || this.filterKoulutus.length;
+        return (!!this.filterPaikkakunta || this.filterKoulutus.length > 0) && this.testi;
     }
 
     @computed get hasKoulutusResult() {
@@ -35,7 +36,7 @@ class HakuStore {
     }
 
     @computed get createHakuUrl() {
-        return '/haku/' + this.keyword + '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos')
+        return '/haku' + (this.keywordSet ? '/' + this.keyword : '') + '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos')
             + '&kpage=' + this.currentPageKoulutus + '&opage=' + this.currentPageOppilaitos
             + '&kpagesize=' + this.pageSizeKoulutus + '&opagesize=' + this.pageSizeOppilaitos
             + (this.filterPaikkakunta ? '&paikkakunta=' + this.filterPaikkakunta : '')

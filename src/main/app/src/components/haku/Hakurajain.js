@@ -28,11 +28,14 @@ class Hakurajain extends Component {
 
     handlePaikkakuntaChange(str) {
         this.props.hakuStore.filterPaikkakunta = str;
-        this.setState({filterChanged: true});
+        this.setState({
+            filterChanged: true,
+        });
     }
 
     handleSubmit() {
         if (this.state.filterChanged) {
+            this.props.hakuStore.testi = this.props.hakuStore.testi + 1;
             this.setState({
                 filterChanged: false,
                 rajainOpen: false
@@ -45,6 +48,7 @@ class Hakurajain extends Component {
         if (this.props.hakuStore.filterSet) {
             this.props.hakuStore.filterKoulutus = [];
             this.props.hakuStore.filterPaikkakunta = "";
+            this.props.hakuStore.testi = this.props.hakuStore.testi + 1;
             this.setState({
                 filterChanged: false,
                 rajainOpen: false
@@ -84,7 +88,7 @@ class Hakurajain extends Component {
                                     <h5 className="filter-title">Paikkakunta</h5>
                                     <input className="oph-input" type="text" placeholder="Syötä paikkakunnan nimi"
                                            onChange={(e) =>this.handlePaikkakuntaChange(e.target.value)}
-                                           value={this.props.hakuStore.filterPaikkakunta}
+                                           defaultValue={this.props.hakuStore.filterPaikkakunta}
                                            onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit()}}}/>
                                 </div>
                                 <div className="form-group action-buttons">

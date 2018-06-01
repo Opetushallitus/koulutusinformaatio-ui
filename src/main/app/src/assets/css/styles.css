@@ -1026,9 +1026,7 @@ nav.navbar-right li {
     margin-left: 40px;
     font-weight: bold;
 }
-.search-button::after {
-    content: "ETSI";
-}
+
 .search-button:hover {
     text-decoration: none;
     color: #ffffff;

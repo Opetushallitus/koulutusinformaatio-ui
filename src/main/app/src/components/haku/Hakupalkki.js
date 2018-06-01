@@ -63,7 +63,7 @@ class Hakupalkki extends Component {
                                                placeholder="Etsi ja vertaile koulutuksia ja oppilaitoksia"
                                                defaultValue={this.props.hakuStore.keyword}
                                                onChange={this.handleChange} onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit(e)}}}/>
-                                        <a role="button" onClick={this.handleSubmit} className="search-button"/>
+                                        <a role="button" onClick={this.handleSubmit} className="search-button">ETSI</a>
                                     </div>
                                 </div>
                             </div>
