@@ -11,7 +11,7 @@ class HakuStore {
     @observable oppilaitosResult = [];
     @observable oppilaitosCount = 0;
     @observable toggleKoulutus = true;
-    @observable testi = 1;
+    @observable filterSet = false;
     filterKoulutus = [];
     filterPaikkakunta = '';
 
@@ -19,8 +19,8 @@ class HakuStore {
         return this.keyword && !(0 === this.keyword.length);
     }
 
-    @computed get filterSet() {
-        return (!!this.filterPaikkakunta || this.filterKoulutus.length > 0) && this.testi;
+    updateFilterSet() {
+        this.filterSet = this.filterPaikkakunta || this.filterKoulutus.length > 0;
     }
 
     @computed get hasKoulutusResult() {

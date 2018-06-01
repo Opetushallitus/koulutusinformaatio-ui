@@ -35,7 +35,7 @@ class Hakurajain extends Component {
 
     handleSubmit() {
         if (this.state.filterChanged) {
-            this.props.hakuStore.testi = this.props.hakuStore.testi + 1;
+            this.props.hakuStore.updateFilterSet();
             this.setState({
                 filterChanged: false,
                 rajainOpen: false
@@ -48,7 +48,7 @@ class Hakurajain extends Component {
         if (this.props.hakuStore.filterSet) {
             this.props.hakuStore.filterKoulutus = [];
             this.props.hakuStore.filterPaikkakunta = "";
-            this.props.hakuStore.testi = this.props.hakuStore.testi + 1;
+            this.props.hakuStore.updateFilterSet();
             this.setState({
                 filterChanged: false,
                 rajainOpen: false
