@@ -63,7 +63,7 @@ class Hakutulos extends Component {
         return (
             <div className="col Etsinta">
                 <h1>{this.props.hakuStore.keywordSet ? 'ja' : 'Etsintäsi tuotti ' + this.props.hakuStore.totalCount + ' osumaa'}
-                    {koulutustyypit ? ' koulutustyypeillä ' : '' }
+                    {koulutustyypit ? (this.props.hakuStore.filterKoulutus.length > 1 ? ' koulutustyypeillä ' : ' koulutustyypillä ') : '' }
                     {koulutustyypit ? <span className="highlight">"{koulutustyypit}"</span> : '' }
                     {paikkakunta ? (koulutustyypit ? ' sekä' : '' ) + ' paikkakunnalla ' : '' }
                     {paikkakunta ? <span className="highlight"> "{paikkakunta}"</span> : '' }
@@ -130,6 +130,19 @@ class Hakutulos extends Component {
                         <span className="Hakutulos_pallo">{this.props.hakuStore.oppilaitosCount}</span></h2>
                 </div>
             </div>;
+
+        if(!this.props.hakuStore.keywordSet && !this.props.hakuStore.filterSet) {
+            return (
+                <React.Fragment>
+                    <div className="container">
+                        <div className="row">
+                            <h1>Lisää hakusana tai hakurajain
+                            </h1>
+                        </div>
+                    </div>
+                </React.Fragment>
+            )
+        }
 
         return (
             <React.Fragment>

@@ -43,7 +43,7 @@ class Hakupalkki extends Component {
     filterAction() {
         this.props.hakuStore.updateFilterSet();
         if(this.props.searchAction) {
-            this.props.searchAction(true)
+            this.props.searchAction()
         } else {
             this.setState({redirect: true})
         }

@@ -21,16 +21,14 @@ class Haku extends Component {
 
     componentDidMount() {
         const queryParamKoulutusPage = Number(qs.parse(this.props.location.search).kpage);
-        const queryParamKoulutusPageSize = Number(qs.parse(this.props.location.search).kpagesize);
         const queryParamOppilaitosPage = Number(qs.parse(this.props.location.search).opage);
-        const queryParamOppilaitosPageSize = Number(qs.parse(this.props.location.search).opagesize);
+        const queryParamPageSize = Number(qs.parse(this.props.location.search).pagesize);
         const queryParamFilterKoulutus = qs.parse(this.props.location.search).koulutustyyppi;
         const queryParamFilterPaikkakunta = qs.parse(this.props.location.search).paikkakunta;
 
         this.props.hakuStore.currentPageOppilaitos = queryParamOppilaitosPage > 0 ? queryParamOppilaitosPage : 1;
-        this.props.hakuStore.pageSizeOppilaitos = queryParamOppilaitosPageSize > 0 ? queryParamOppilaitosPageSize : 20;
+        this.props.hakuStore.pageSize = queryParamPageSize > 0 ? queryParamPageSize : 20;
         this.props.hakuStore.currentPageKoulutus = queryParamKoulutusPage > 0 ? queryParamKoulutusPage : 1;
-        this.props.hakuStore.pageSizeKoulutus = queryParamKoulutusPageSize > 0 ? queryParamKoulutusPageSize : 20;
 
 
         this.props.hakuStore.filterPaikkakunta = queryParamFilterPaikkakunta ? queryParamFilterPaikkakunta : '';
@@ -85,7 +83,7 @@ class Haku extends Component {
             .get(_this.props.urlStore.urls.url('konfo-backend.search.koulutukset'))
             .query({keyword: _this.props.hakuStore.keyword,
                 page: _this.props.hakuStore.currentPageKoulutus,
-                size: _this.props.hakuStore.pageSizeKoulutus,
+                size: _this.props.hakuStore.pageSize,
                 paikkakunta: _this.props.hakuStore.filterPaikkakunta,
                 koulutustyyppi: _this.props.hakuStore.filterKoulutus.join(',')})
             .catch(_handleError))
@@ -96,7 +94,7 @@ class Haku extends Component {
             .get(_this.props.urlStore.urls.url('konfo-backend.search.oppilaitokset'))
             .query({keyword: _this.props.hakuStore.keyword,
                 page: _this.props.hakuStore.currentPageOppilaitos,
-                size: _this.props.hakuStore.pageSizeOppilaitos,
+                size: _this.props.hakuStore.pageSize,
                 paikkakunta: _this.props.hakuStore.filterPaikkakunta,
                 koulutustyyppi: _this.props.hakuStore.filterKoulutus.join(',')})
             .catch(_handleError))
@@ -123,6 +121,8 @@ class Haku extends Component {
                     _this.toggleAction(this.props.hakuStore.koulutusCount >= this.props.hakuStore.oppilaitosCount ? 'koulutus' : 'oppilaitos');
                 }
             }).catch(_handleError);
+        } else {
+            this.changeUrl();
         }
     }
 
