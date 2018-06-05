@@ -12,6 +12,7 @@ class HakuStore {
     @observable toggleKoulutus = true;
     @observable filterSet = false;
     filterKoulutus = [];
+    filterKieli = [];
     filterPaikkakunta = '';
 
     @computed get keywordSet() {
@@ -19,7 +20,7 @@ class HakuStore {
     }
 
     updateFilterSet() {
-        this.filterSet = this.filterPaikkakunta || this.filterKoulutus.length > 0;
+        this.filterSet = this.filterPaikkakunta || this.filterKoulutus.length || this.filterKieli.length;
     }
 
     @computed get hasKoulutusResult() {
@@ -39,6 +40,7 @@ class HakuStore {
             + '&kpage=' + this.currentPageKoulutus + '&opage=' + this.currentPageOppilaitos + '&pagesize=' + this.pageSize
             + (this.filterSet && this.filterPaikkakunta ? '&paikkakunta=' + this.filterPaikkakunta : '')
             + (this.filterSet && this.filterKoulutus.length ? '&koulutustyyppi=' + this.filterKoulutus.join(',') : '')
+            + (this.filterSet && this.filterKieli.length ? '&kieli=' + this.filterKieli.join(',') : '')
     }
 
     @computed get maxPageNumber() {

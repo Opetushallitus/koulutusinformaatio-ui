@@ -26,6 +26,18 @@ class Hakurajain extends Component {
         }
     }
 
+    handleKieliChange(filter) {
+        if (filter) {
+            if (this.props.hakuStore.filterKieli.indexOf(filter) === -1) {
+                this.props.hakuStore.filterKieli.push(filter);
+            } else {
+                this.props.hakuStore.filterKieli
+                    = this.props.hakuStore.filterKieli.filter((i) => i !== filter);
+            }
+            this.setState({filterChanged: true});
+        }
+    }
+
     handlePaikkakuntaChange(str) {
         this.props.hakuStore.filterPaikkakunta = str;
         this.setState({
@@ -81,6 +93,15 @@ class Hakurajain extends Component {
                                                        handleChange={() => this.handleKoulutusChange('kk')} color="3"/>
                                     <Hakurajainvalinta text="Muut kurssit ja koulutukset" checked={this.props.hakuStore.filterKoulutus.indexOf('muu') !== -1}
                                                        handleChange={() => this.handleKoulutusChange('muu')} color="5"/>
+                                </div>
+                                <div className="form-group">
+                                    <h5>Opetuskieli</h5>
+                                    <Hakurajainvalinta text="Suomi" checked={this.props.hakuStore.filterKieli.indexOf('fi') !== -1}
+                                                       handleChange={() => this.handleKieliChange('fi')}/>
+                                    <Hakurajainvalinta text="Ruotsi" checked={this.props.hakuStore.filterKieli.indexOf('sv') !== -1}
+                                                       handleChange={() => this.handleKieliChange('sv')}/>
+                                    <Hakurajainvalinta text="Englanti" checked={this.props.hakuStore.filterKieli.indexOf('en') !== -1}
+                                                       handleChange={() => this.handleKieliChange('en')}/>
                                 </div>
                                 <div className="form-group">
                                     <h5 className="filter-title">Paikkakunta</h5>

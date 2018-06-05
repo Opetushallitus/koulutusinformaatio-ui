@@ -85,7 +85,8 @@ class Haku extends Component {
                 page: _this.props.hakuStore.currentPageKoulutus,
                 size: _this.props.hakuStore.pageSize,
                 paikkakunta: _this.props.hakuStore.filterPaikkakunta,
-                koulutustyyppi: _this.props.hakuStore.filterKoulutus.join(',')})
+                koulutustyyppi: _this.props.hakuStore.filterKoulutus.join(','),
+                kieli: _this.props.hakuStore.filterKieli.map((k) => 'kieli_' + k).join(',')})
             .catch(_handleError))
     }
 
@@ -96,7 +97,8 @@ class Haku extends Component {
                 page: _this.props.hakuStore.currentPageOppilaitos,
                 size: _this.props.hakuStore.pageSize,
                 paikkakunta: _this.props.hakuStore.filterPaikkakunta,
-                koulutustyyppi: _this.props.hakuStore.filterKoulutus.join(',')})
+                koulutustyyppi: _this.props.hakuStore.filterKoulutus.join(','),
+                kieli: _this.props.hakuStore.filterKieli.map((k) => 'kieli_' + k).join(',')})
             .catch(_handleError))
     }
 
