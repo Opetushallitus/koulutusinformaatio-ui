@@ -38,39 +38,45 @@ class Hakutulos extends Component {
         this.props.toggleAction('koulutus');
     }
 
-    render() {
-        var resultSummary = <div/>
-        if(this.props.hakuStore.keywordSet) {
-            resultSummary =
-                <div className="col Etsinta">
-                    <h1>Etsintäsi tuotti {this.props.hakuStore.totalCount} osumaa termillä
-                        <span className="highlight"> "{this.props.hakuStore.keyword}"</span>
-                    </h1>
-                </div>
-        }
+    renderKeywordResultSummary() {
+        return (
+            <div className="col Etsinta">
+                <h1>Etsintäsi tuotti {this.props.hakuStore.totalCount} osumaa termillä
+                    <span className="highlight"> "{this.props.hakuStore.keyword}"</span>
+                </h1>
+            </div>
+        )
+    }
 
-        var koulutusOppilaitosToggle = <div/>
-        if(this.props.hakuStore.keywordSet) {
-            koulutusOppilaitosToggle =
-                <div className="row">
-                    <div className="col-md-2 col-xs-12">
-                        <h2 className="KoulutuksetOppilaitokset" onClick={this.toggleKoulutus}>
-                            <span className={this.props.hakuStore.toggleKoulutus ? "Valittu" : ""}>Koulutukset</span>&nbsp;
-                            <span className="Hakutulos_pallo">{this.props.hakuStore.koulutusCount}</span></h2>
-                    </div>
-                    <div className="col-md-2 col-xs-12">
-                        <h2 className="KoulutuksetOppilaitokset" onClick={this.toggleOppilaitos}>
-                            <span className={this.props.hakuStore.toggleKoulutus ? "" : "Valittu"}>Oppilaitokset</span>&nbsp;
-                            <span className="Hakutulos_pallo">{this.props.hakuStore.oppilaitosCount}</span></h2>
-                    </div>
-                </div>
-        }
+    renderFilterResultSummary() {
+        const koulutustyypit = this.props.hakuStore.filterKoulutus.map((k) => {
+            switch (k) {
+                case 'lk': return 'lukiot';
+                case 'amm': return 'ammatilliset tutkinnot';
+                case 'kk': return 'korkeakoulut';
+                case 'muu': return 'muut koulutukset';
+                default: return '';
+            }
+        }).filter((k) => !!k).join(', ');
+        const paikkakunta = this.props.hakuStore.filterPaikkakunta;
 
-        var resultList = <div/>
-        if(this.props.hakuStore.hasKoulutusResult && this.props.hakuStore.toggleKoulutus) {
-            resultList = this.props.hakuStore.koulutusResult.map((r) => {
+        return (
+            <div className="col Etsinta">
+                <h1>{this.props.hakuStore.keywordSet ? 'ja' : 'Etsintäsi tuotti ' + this.props.hakuStore.totalCount + ' osumaa'}
+                    {koulutustyypit ? (this.props.hakuStore.filterKoulutus.length > 1 ? ' koulutustyypeillä ' : ' koulutustyypillä ') : '' }
+                    {koulutustyypit ? <span className="highlight">"{koulutustyypit}"</span> : '' }
+                    {paikkakunta ? (koulutustyypit ? ' sekä' : '' ) + ' paikkakunnalla ' : '' }
+                    {paikkakunta ? <span className="highlight"> "{paikkakunta}"</span> : '' }
+                </h1>
+            </div>
+        )
+    }
+
+    renderResultList() {
+        if(this.props.hakuStore.toggleKoulutus) {
+            return this.props.hakuStore.koulutusResult.map((r) => {
                 const koulutusLinkString = '/koulutus/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
-                var tyyli = "col-xs-12 search-box " + r.tyyppi + (r.haettavissa ? " haku" : "");
+                const tyyli = "col-xs-12 search-box " + r.tyyppi + (r.haettavissa ? " haku" : "");
                 return (
                     <div key={r.oid} className="col-xs-12 col-md-6 box-container">
                         <div className={tyyli}>
@@ -87,10 +93,10 @@ class Hakutulos extends Component {
                         </div>
                     </div>)
             });
-        } else if(this.props.hakuStore.hasOppilaitosResult && !this.props.hakuStore.toggleKoulutus) {
-            resultList = this.props.hakuStore.oppilaitosResult.map((r) => {
+        } else {
+            return this.props.hakuStore.oppilaitosResult.map((r) => {
                 const oppilaitosLinkString = '/oppilaitos/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
-                var tyyli = "col-xs-12 search-box " + r.tyyppi;
+                const tyyli = "col-xs-12 search-box " + r.tyyppi;
                 return (
                     <div key={r.oid} className="col-xs-12 col-md-6 box-container">
                         <div className={tyyli}>
@@ -106,21 +112,50 @@ class Hakutulos extends Component {
                             </div>*/}
                         </div>
                     </div>)
+            })
+        }
+    }
 
-            });
+    render() {
+        const koulutusOppilaitosToggle =
+            <div className="row">
+                <div className="col-md-2 col-xs-12">
+                    <h2 className="KoulutuksetOppilaitokset" onClick={this.toggleKoulutus}>
+                        <span className={this.props.hakuStore.toggleKoulutus ? "Valittu" : ""}>Koulutukset</span>&nbsp;
+                        <span className="Hakutulos_pallo">{this.props.hakuStore.koulutusCount}</span></h2>
+                </div>
+                <div className="col-md-2 col-xs-12">
+                    <h2 className="KoulutuksetOppilaitokset" onClick={this.toggleOppilaitos}>
+                        <span className={this.props.hakuStore.toggleKoulutus ? "" : "Valittu"}>Oppilaitokset</span>&nbsp;
+                        <span className="Hakutulos_pallo">{this.props.hakuStore.oppilaitosCount}</span></h2>
+                </div>
+            </div>;
+
+        if(!this.props.hakuStore.keywordSet && !this.props.hakuStore.filterSet) {
+            return (
+                <React.Fragment>
+                    <div className="container">
+                        <div className="row">
+                            <h1>Lisää hakusana tai hakurajain
+                            </h1>
+                        </div>
+                    </div>
+                </React.Fragment>
+            )
         }
 
         return (
             <React.Fragment>
                 <div className="container">
                     <div className="row">
-                        {resultSummary}
+                        {this.props.hakuStore.keywordSet ? this.renderKeywordResultSummary() : ''}
+                        {this.props.hakuStore.filterSet ? this.renderFilterResultSummary() : ''}
                     </div>
                     {koulutusOppilaitosToggle}
                 </div>
                 <div className="container search-results">
                     <div className="row">
-                        {resultList}
+                        {this.renderResultList()}
                     </div>
                 </div>
             </React.Fragment>

@@ -20,29 +20,27 @@ class Haku extends Component {
     }
 
     componentDidMount() {
-        const queryParamPage = Number(qs.parse(this.props.location.search).page);
+        const queryParamKoulutusPage = Number(qs.parse(this.props.location.search).kpage);
+        const queryParamOppilaitosPage = Number(qs.parse(this.props.location.search).opage);
         const queryParamPageSize = Number(qs.parse(this.props.location.search).pagesize);
+        const queryParamFilterKoulutus = qs.parse(this.props.location.search).koulutustyyppi;
+        const queryParamFilterPaikkakunta = qs.parse(this.props.location.search).paikkakunta;
 
-        if (this.props.hakuStore.toggleKoulutus) {
-            this.props.hakuStore.currentPageKoulutus = queryParamPage > 0 ? queryParamPage : 1;
-            this.props.hakuStore.pageSizeKoulutus = queryParamPageSize > 0 ? queryParamPageSize : 20;
-        } else {
-            this.props.hakuStore.currentPageOppilaitos = queryParamPage > 0 ? queryParamPage : 1;
-            this.props.hakuStore.pageSizeOppilaitos = queryParamPageSize > 0 ? queryParamPageSize : 20;
-        }
+        this.props.hakuStore.currentPageOppilaitos = queryParamOppilaitosPage > 0 ? queryParamOppilaitosPage : 1;
+        this.props.hakuStore.pageSize = queryParamPageSize > 0 ? queryParamPageSize : 20;
+        this.props.hakuStore.currentPageKoulutus = queryParamKoulutusPage > 0 ? queryParamKoulutusPage : 1;
+
+
+        this.props.hakuStore.filterPaikkakunta = queryParamFilterPaikkakunta ? queryParamFilterPaikkakunta : '';
+        this.props.hakuStore.filterKoulutus = queryParamFilterKoulutus ? queryParamFilterKoulutus.split(',') : [];
+
         this.handleRefresh();
     }
 
-    handleRefresh(paginationEvent = false) {
+    handleRefresh() {
         const queryParamToggle = qs.parse(this.props.location.search).toggle;
-
-        if(this.props.hakuStore.keyword !== this.props.match.params.keyword || paginationEvent) {
-            this.props.hakuStore.keyword = this.props.match.params.keyword;
-
-            this.search(queryParamToggle)
-        } else if(queryParamToggle) {
-            this.toggleAction(queryParamToggle)
-        }
+        this.props.hakuStore.keyword = this.props.match.params.keyword ? this.props.match.params.keyword : '';
+        this.search(queryParamToggle)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -69,13 +67,10 @@ class Haku extends Component {
         }
     }
 
-    searchAction(newKeyword) {
-        if(newKeyword !== this.props.hakuStore.keyword) {
-            this.props.hakuStore.keyword = newKeyword;
-            this.props.hakuStore.currentPageKoulutus = 1;
-            this.props.hakuStore.currentPageOppilaitos = 1;
-            this.search();
-        }
+    searchAction() {
+        this.props.hakuStore.currentPageKoulutus = 1;
+        this.props.hakuStore.currentPageOppilaitos = 1;
+        this.search();
     }
 
     toggleAction(value) {
@@ -86,21 +81,29 @@ class Haku extends Component {
     static getKoulutuksetFromBackend(_this, _handleError) {
         return (superagent
             .get(_this.props.urlStore.urls.url('konfo-backend.search.koulutukset'))
-            .query({keyword: _this.props.hakuStore.keyword, page: _this.props.hakuStore.currentPageKoulutus, size: _this.props.hakuStore.pageSizeKoulutus})
+            .query({keyword: _this.props.hakuStore.keyword,
+                page: _this.props.hakuStore.currentPageKoulutus,
+                size: _this.props.hakuStore.pageSize,
+                paikkakunta: _this.props.hakuStore.filterPaikkakunta,
+                koulutustyyppi: _this.props.hakuStore.filterKoulutus.join(',')})
             .catch(_handleError))
     }
 
     static getOppilaitoksetFromBackend(_this, _handleError) {
         return (superagent
             .get(_this.props.urlStore.urls.url('konfo-backend.search.oppilaitokset'))
-            .query({keyword: _this.props.hakuStore.keyword, page: _this.props.hakuStore.currentPageOppilaitos, size: _this.props.hakuStore.pageSizeOppilaitos})
+            .query({keyword: _this.props.hakuStore.keyword,
+                page: _this.props.hakuStore.currentPageOppilaitos,
+                size: _this.props.hakuStore.pageSize,
+                paikkakunta: _this.props.hakuStore.filterPaikkakunta,
+                koulutustyyppi: _this.props.hakuStore.filterKoulutus.join(',')})
             .catch(_handleError))
     }
 
     search(toggle) {
         const _this = this;
         const _handleError = (e) => { console.log(e); _this.setState({error: e})};
-        if(this.props.hakuStore.keywordSet) {
+        if(this.props.hakuStore.keywordSet || this.props.hakuStore.filterSet) {
             Promise.all([
                 Haku.getKoulutuksetFromBackend(_this, _handleError()),
                 Haku.getOppilaitoksetFromBackend(_this, _handleError())
@@ -118,6 +121,8 @@ class Haku extends Component {
                     _this.toggleAction(this.props.hakuStore.koulutusCount >= this.props.hakuStore.oppilaitosCount ? 'koulutus' : 'oppilaitos');
                 }
             }).catch(_handleError);
+        } else {
+            this.changeUrl();
         }
     }
 

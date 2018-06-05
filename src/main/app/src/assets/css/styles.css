@@ -825,7 +825,7 @@ ul.disc-list {
 }
 .info-page {
     padding-bottom: 4em;
-    overflow: hidden;
+
 }
 .info-page .left-column h1 i {
     position: relative;
@@ -927,7 +927,6 @@ ul.disc-list {
 .filter-options .action-buttons a {
     display: block;
     text-align: center;
-    margin-bottom: 30px!important;
     margin-top: -20px;
 }
 .filter-options .action-buttons a:nth-child(1) {
@@ -1027,9 +1026,7 @@ nav.navbar-right li {
     margin-left: 40px;
     font-weight: bold;
 }
-.search-button::after {
-    content: "ETSI";
-}
+
 .search-button:hover {
     text-decoration: none;
     color: #ffffff;
@@ -1234,8 +1231,8 @@ footer p {
     position: absolute;
     padding: .55% 1.4%;
     z-index: 999;
-    top: 55px;
     font-size: .95em;
+    top: -1.5em;
 }
 .filter-button::after {
     color: #ffffff;
@@ -1289,7 +1286,7 @@ footer p {
 .text {
     width: 80%;
     margin: 30px auto;
-    height: 95px;
+    height: 90%;
     overflow: hidden;
 }
 .text a {
@@ -1491,9 +1488,9 @@ footer p {
     left: 0;
     transition: all ease-in .5s;
 }
-.filter-container input {
-    width: 82%;
-    margin-left: 20px;
+.filter-container input[type=text] {
+    width: 90%;
+    margin-left: 5%;
 }
 .filter-options {
     z-index: 998;
@@ -1513,7 +1510,7 @@ footer p {
     box-shadow: 1px 1px 4px 0px rgba(50, 50, 50, 0.5);
 }
 .filter-options.index {
-    left:10;
+    left:10px;
     top:-18px;
     width: 450px;
 }
@@ -1523,7 +1520,7 @@ footer p {
     box-shadow: none;
 }
 .filters-main {
-    margin-top: 40px;
+    padding: 1em;
 }
 .filters-main h5 {
     color: #9c9c9c;
@@ -1564,7 +1561,7 @@ footer p {
 .radio .cr .cr-icon {
     margin-left: 0.04em;
 }
-.checkbox label input[type="checkbox"],
+
 .radio label input[type="radio"] {
     display: none;
 }
@@ -2456,13 +2453,11 @@ a.titlelink {
 @media (max-width: 1700px) {
     .filter-button {
         padding: .7% 1.4%;
-        top:40px;
     }
 }
 @media (max-width: 1400px) {
     .filter-button {
         padding: .7% 1.4%;
-        top:28px;
     }
 }
 @media (max-width: 1200px) {
@@ -2471,12 +2466,11 @@ a.titlelink {
     }
     .text {
         width: 70%;
-        max-height: 92px;
+        max-height: 90%;
         height: auto;
     }
     .filter-button {
         padding: 1% 2%;
-        top:18px;
     }
 }
 @media (max-width: 1024px) {
@@ -2496,7 +2490,6 @@ a.titlelink {
     }
     .filter-button {
         padding: 1.25% 2%;
-        top: 40px;
     }
     .filter-options.index {
         left: 5px;
@@ -2666,7 +2659,6 @@ a.titlelink {
         width: 165px;
         height: 40px;
         z-index: 998;
-        top: 35px;
     }
     .filter-button.sulje {
         z-index: 998;
@@ -2688,7 +2680,6 @@ a.titlelink {
     }
     .filter-button::after {
         position: relative;
-        top: 21%;
         left: 4%;
         font-size: .95em;
     }
@@ -2889,9 +2880,7 @@ a.titlelink {
         width: 50%;
         float: left;
     }
-    .filters-main .form-group:nth-child(1),
-    .filters-main .form-group:nth-last-child(1),
-    .filters-main .form-group:nth-child(8) {
+    .filters-main .form-group {
         width: 100%;
     }
 }
@@ -2964,7 +2953,6 @@ a.titlelink {
         float: left;
     }
     .filter-button {
-        top: 16px;
         width: 140px;
         height: 35px;
     }
@@ -2972,7 +2960,6 @@ a.titlelink {
         margin: -.5em 1.3em .5em;
     }
     .filter-button::after {
-        top: 15%;
         left: 8%;
         width: 144px;
         height: 35px;
@@ -3004,7 +2991,6 @@ a.titlelink {
         font-size: .8em;
     }
     .filter-button::after {
-        top: 15%;
         left: 8%;
         font-size: .85em;
     }

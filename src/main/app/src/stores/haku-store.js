@@ -3,17 +3,23 @@ import { observable, computed } from "mobx"
 class HakuStore {
     @observable keyword = '';
     @observable currentPageKoulutus = 1;
-    @observable pageSizeKoulutus = 20;
     @observable currentPageOppilaitos = 1;
-    @observable pageSizeOppilaitos = 20;
+    @observable pageSize = 20;
     @observable koulutusResult = [];
     @observable koulutusCount = 0;
     @observable oppilaitosResult = [];
     @observable oppilaitosCount = 0;
     @observable toggleKoulutus = true;
+    @observable filterSet = false;
+    filterKoulutus = [];
+    filterPaikkakunta = '';
 
     @computed get keywordSet() {
-        return this.keyword && !(0 === this.keyword.length)
+        return this.keyword && !(0 === this.keyword.length);
+    }
+
+    updateFilterSet() {
+        this.filterSet = this.filterPaikkakunta || this.filterKoulutus.length > 0;
     }
 
     @computed get hasKoulutusResult() {
@@ -29,9 +35,10 @@ class HakuStore {
     }
 
     @computed get createHakuUrl() {
-        return '/haku/' + this.keyword + '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos')
-            + '&page=' + this.currentPageNumber
-            + '&pagesize=' + this.pageSize
+        return '/haku' + (this.keywordSet ? '/' + this.keyword : '') + '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos')
+            + '&kpage=' + this.currentPageKoulutus + '&opage=' + this.currentPageOppilaitos + '&pagesize=' + this.pageSize
+            + (this.filterSet && this.filterPaikkakunta ? '&paikkakunta=' + this.filterPaikkakunta : '')
+            + (this.filterSet && this.filterKoulutus.length ? '&koulutustyyppi=' + this.filterKoulutus.join(',') : '')
     }
 
     @computed get maxPageNumber() {
@@ -43,11 +50,11 @@ class HakuStore {
     }
 
     @computed get maxPageKoulutus() {
-        return Math.max(1, Math.ceil(this.koulutusCount / this.pageSizeKoulutus));
+        return Math.max(1, Math.ceil(this.koulutusCount / this.pageSize));
     }
 
     @computed get maxPageOppilaitos() {
-        return Math.max(1, Math.ceil(this.oppilaitosCount / this.pageSizeOppilaitos));
+        return Math.max(1, Math.ceil(this.oppilaitosCount / this.pageSize));
     }
 
     @computed get currentPageNumber() {
@@ -55,14 +62,6 @@ class HakuStore {
             return this.currentPageKoulutus;
         } else {
             return this.currentPageOppilaitos;
-        }
-    }
-
-    @computed get pageSize() {
-        if(this.toggleKoulutus) {
-            return this.pageSizeKoulutus;
-        } else {
-            return this.pageSizeOppilaitos;
         }
     }
 
