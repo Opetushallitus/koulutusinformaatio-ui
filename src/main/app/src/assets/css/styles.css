@@ -1656,14 +1656,9 @@ ul.tutkinnon-osat li {
     padding-bottom: 9999999px;
 }
 .left-column {
-    overflow:hidden;
     margin-top: 30px;
 }
-/*.left-column,*/
-/*.right-column {*/
-    /*margin-bottom: -9999999px;*/
-    /*padding-bottom: 9999999px;*/
-/*}*/
+
 ul.ng-scope {
     list-style-type: disc;
 }
