@@ -1649,13 +1649,14 @@ ul.tutkinnon-osat li {
     top:-20px;
 }
 .right-column {
+    overflow: hidden;
     background-color: #ecf3fd;
     border-left: 1px solid #979797;
 }
 .left-column {
     margin-top: 30px;
 }
-.left-column,
+/*.left-column,*/
 .right-column {
     margin-bottom: -9999999px;
     padding-bottom: 9999999px;
