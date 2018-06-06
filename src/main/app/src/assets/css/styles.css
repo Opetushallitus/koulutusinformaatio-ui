@@ -825,7 +825,6 @@ ul.disc-list {
 }
 .info-page {
     padding-bottom: 4em;
-
 }
 .info-page .left-column h1 i {
     position: relative;
@@ -1160,6 +1159,7 @@ footer {
     background: #f8f8f8;
     border-top: 1px solid #bcbcbc;
     padding: 2em 0;
+    position: relative;
     /*margin-top: 2.5em; */
 }
 footer.margin {
@@ -1652,15 +1652,18 @@ ul.tutkinnon-osat li {
     overflow: hidden;
     background-color: #ecf3fd;
     border-left: 1px solid #979797;
-}
-.left-column {
-    margin-top: 30px;
-}
-/*.left-column,*/
-.right-column {
     margin-bottom: -9999999px;
     padding-bottom: 9999999px;
 }
+.left-column {
+    overflow:hidden;
+    margin-top: 30px;
+}
+/*.left-column,*/
+/*.right-column {*/
+    /*margin-bottom: -9999999px;*/
+    /*padding-bottom: 9999999px;*/
+/*}*/
 ul.ng-scope {
     list-style-type: disc;
 }
