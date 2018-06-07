@@ -1,6 +1,6 @@
 import { observable, computed } from "mobx"
 
-class HakuStore {
+class HakutulosStore {
     @observable keyword = '';
     @observable currentPageKoulutus = 1;
     @observable currentPageOppilaitos = 1;
@@ -10,6 +10,7 @@ class HakuStore {
     @observable oppilaitosResult = [];
     @observable oppilaitosCount = 0;
     @observable toggleKoulutus = true;
+    //@observable filterSet = false;
     @observable filterKoulutus = [];
     @observable filterKieli = [];
     @observable filterPaikkakunta = '';
@@ -17,6 +18,10 @@ class HakuStore {
     @computed get keywordSet() {
         return this.keyword && !(0 === this.keyword.length);
     }
+
+    /*updateFilterSet() {
+        this.filterSet = this.filterPaikkakunta || this.filterKoulutus.length || this.filterKieli.length;
+    }*/
 
     @computed get filterSet() {
         return this.filterPaikkakunta || this.filterKoulutus.length || this.filterKieli.length;
@@ -40,6 +45,9 @@ class HakuStore {
             + (this.filterPaikkakunta ? '&paikkakunta=' + this.filterPaikkakunta : '')
             + (this.filterKoulutus.length ? '&koulutustyyppi=' + this.filterKoulutus.join(',') : '')
             + (this.filterKieli.length ? '&kieli=' + this.filterKieli.join(',') : '')
+        /*+ (this.filterSet && this.filterPaikkakunta ? '&paikkakunta=' + this.filterPaikkakunta : '')
+        + (this.filterSet && this.filterKoulutus.length ? '&koulutustyyppi=' + this.filterKoulutus.join(',') : '')
+        + (this.filterSet && this.filterKieli.length ? '&kieli=' + this.filterKieli.join(',') : '')*/
     }
 
     @computed get search() {
@@ -47,7 +55,8 @@ class HakuStore {
             + '&kpage=' + this.currentPageKoulutus + '&opage=' + this.currentPageOppilaitos + '&pagesize=' + this.pageSize
             + (this.filterPaikkakunta ? '&paikkakunta=' + this.filterPaikkakunta : '')
             + (this.filterKoulutus.length ? '&koulutustyyppi=' + this.filterKoulutus.join(',') : '')
-            + (this.filterKieli.length ? '&kieli=' + this.filterKieli.join(',') : '')
+        /*+ (this.filterSet && this.filterPaikkakunta ? '&paikkakunta=' + this.filterPaikkakunta : '')
+        + (this.filterSet && this.filterKoulutus.length ? '&koulutustyyppi=' + this.filterKoulutus.join(',') : '')*/
     }
 
     @computed get maxPageNumber() {
@@ -83,4 +92,4 @@ class HakuStore {
     }
 }
 
-export default HakuStore;
+export default HakutulosStore;

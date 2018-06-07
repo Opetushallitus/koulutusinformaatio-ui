@@ -5,7 +5,6 @@ import {observer, inject} from 'mobx-react';
 import {Localizer as l} from '../../tools/Utils';
 
 @inject("hakuStore")
-@inject("urlStore")
 @observer
 class Hakutulos extends Component {
 

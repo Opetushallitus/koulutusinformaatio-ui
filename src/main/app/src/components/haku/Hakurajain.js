@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Hakurajainvalinta from './Hakurajainvalinta';
 import {observer, inject} from 'mobx-react';
+import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 @inject ("hakuStore")
 @observer
@@ -9,8 +11,7 @@ class Hakurajain extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            rajainOpen: false,
-            filterChanged: false
+            rajainOpen: false
         }
     }
 
@@ -22,7 +23,6 @@ class Hakurajain extends Component {
                 this.props.hakuStore.filterKoulutus
                     = this.props.hakuStore.filterKoulutus.filter((i) => i !== filter);
             }
-            this.setState({filterChanged: true});
         }
     }
 
@@ -34,37 +34,16 @@ class Hakurajain extends Component {
                 this.props.hakuStore.filterKieli
                     = this.props.hakuStore.filterKieli.filter((i) => i !== filter);
             }
-            this.setState({filterChanged: true});
         }
     }
 
     handlePaikkakuntaChange(str) {
         this.props.hakuStore.filterPaikkakunta = str;
-        this.setState({
-            filterChanged: true,
-        });
     }
 
-    handleSubmit() {
-        if (this.state.filterChanged) {
-            this.setState({
-                filterChanged: false,
-                rajainOpen: false
-            });
-            this.props.filterAction();
-        }
-    }
-
-    clearFilters() {
-        if (this.props.hakuStore.filterSet) {
-            this.props.hakuStore.filterKoulutus = [];
-            this.props.hakuStore.filterPaikkakunta = "";
-            this.setState({
-                filterChanged: false,
-                rajainOpen: false
-            });
-            this.props.filterAction();
-        }
+    handleSubmit(event) {
+        event.preventDefault();
+        this.props.history.push(this.props.hakuStore.createHakuUrl);
     }
 
     toggleRajain() {
@@ -72,6 +51,9 @@ class Hakurajain extends Component {
     }
 
     render() {
+        const link = '/haku/' + this.props.hakuStore.keyword;
+        const search = this.props.hakuStore.search;
+        const value = this.props.hakuStore.filterPaikkakunta ? this.props.hakuStore.filterPaikkakunta : '';
         return (
             <React.Fragment>
                 <div className="col-xs-12">
@@ -107,12 +89,18 @@ class Hakurajain extends Component {
                                     <h5 className="filter-title">Paikkakunta</h5>
                                     <input className="oph-input" type="text" placeholder="Syötä paikkakunnan nimi"
                                            onChange={(e) =>this.handlePaikkakuntaChange(e.target.value)}
-                                           defaultValue={this.props.hakuStore.filterPaikkakunta}
-                                           onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit()}}}/>
+                                           value={value}
+                                           onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit(e)}}}/>
                                 </div>
                                 <div className="form-group action-buttons">
-                                    <a className="btn btn-primary" onClick={() => this.handleSubmit()}>HAE</a>
-                                    <a className="clear-compare" onClick={() => this.clearFilters()}>Poista rajaukset</a>
+                                    <Link className="btn btn-primary" to={{
+                                        pathname: link,
+                                        search: search
+                                    }}>HAE</Link>
+                                    <Link className="clear-compare" to={{
+                                        pathname: link,
+                                        search: ''
+                                    }}>Poista rajaukset</Link>
                                 </div>
                             </div>
                         </div>
@@ -123,4 +111,4 @@ class Hakurajain extends Component {
     }
 }
 
-export default Hakurajain;
+export default withRouter(Hakurajain);

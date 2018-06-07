@@ -3,9 +3,9 @@ import superagent from 'superagent';
 import qs from 'query-string';
 import '../../assets/css/hakutulos.css'
 import {observer, inject} from 'mobx-react';
-import Hakupalkki from './Hakupalkki';
 import Hakutulos from './Hakutulos';
 import Sivutus from './Sivutus';
+import { withRouter, matchPath } from 'react-router'
 
 @inject("hakuStore")
 @inject("urlStore")
@@ -19,7 +19,7 @@ class Haku extends Component {
         this.handleRefresh = this.handleRefresh.bind(this);
     }
 
-    componentDidMount() {
+    updateStore() {
         const queryParamKoulutusPage = Number(qs.parse(this.props.location.search).kpage);
         const queryParamOppilaitosPage = Number(qs.parse(this.props.location.search).opage);
         const queryParamPageSize = Number(qs.parse(this.props.location.search).pagesize);
@@ -37,34 +37,26 @@ class Haku extends Component {
         this.handleRefresh();
     }
 
+    componentDidMount() {
+        this.updateStore()
+    }
+
     handleRefresh() {
         const queryParamToggle = qs.parse(this.props.location.search).toggle;
-        this.props.hakuStore.keyword = this.props.match.params.keyword ? this.props.match.params.keyword : '';
-        this.search(queryParamToggle)
+        const match = matchPath(this.props.history.location.pathname, {
+            path: '/haku/:keyword',
+            exact: true,
+            strict: false
+        });
+        if(match) {
+            this.props.hakuStore.keyword = match.params.keyword ? match.params.keyword : '';
+            this.search(queryParamToggle)
+        }
     }
 
     componentWillReceiveProps(nextProps) {
         this.props = nextProps;
-        this.handleHistory()
-    }
-
-    handleHistory() {
-        const queryParamToggle = qs.parse(this.props.location.search).toggle;
-
-        if(this.props.hakuStore.keyword !== this.props.match.params.keyword) {
-            this.props.hakuStore.keyword = this.props.match.params.keyword;
-            this.search(queryParamToggle)
-        } else {
-            this.props.hakuStore.toggleKoulutus = ('oppilaitos' !== queryParamToggle);
-        }
-    }
-
-    changeUrl() {
-        if(this.props.hakuStore.keyword === this.props.match.params.keyword) {
-            this.props.history.replace(this.props.hakuStore.createHakuUrl);
-        } else {
-            this.props.history.push(this.props.hakuStore.createHakuUrl);
-        }
+        this.updateStore()
     }
 
     searchAction() {
@@ -75,7 +67,6 @@ class Haku extends Component {
 
     toggleAction(value) {
         this.props.hakuStore.toggleKoulutus = ('oppilaitos' !== value);
-        this.changeUrl();
     }
 
     static getKoulutuksetFromBackend(_this, _handleError) {
@@ -123,16 +114,13 @@ class Haku extends Component {
                     _this.toggleAction(this.props.hakuStore.koulutusCount >= this.props.hakuStore.oppilaitosCount ? 'koulutus' : 'oppilaitos');
                 }
             }).catch(_handleError);
-        } else {
-            this.changeUrl();
         }
     }
 
     render() {
         return (
             <React.Fragment>
-                <Hakupalkki searchAction={this.searchAction}/>
-                <Hakutulos toggleAction={this.toggleAction}/>
+                <Hakutulos {...this.props} toggleAction={this.toggleAction}/>
                 <Sivutus handleRefresh={this.handleRefresh}/>
             </React.Fragment>
         );

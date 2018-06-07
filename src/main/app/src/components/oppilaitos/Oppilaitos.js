@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Hakunavigaatio from '../haku/Hakunavigaatio';
-import Hakupalkki from '../haku/Hakupalkki';
 import superagent from 'superagent';
 import {observer, inject} from 'mobx-react';
 import qs from 'query-string';
@@ -170,7 +169,6 @@ class Oppilaitos extends Component {
         console.log("Rendering oppilaitos page, data: %O", this.state.result );
         return (
             <React.Fragment>
-                <Hakupalkki/>
                 <div className='container'>
                     <div className='row info-page oppilaitos'>
                         <div className='col-xs-12 col-md-9 left-column'>

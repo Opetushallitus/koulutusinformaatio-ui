@@ -4,7 +4,6 @@ import {observer, inject} from 'mobx-react';
 import Korkeakoulu from "./Korkeakoulu";
 import Ammatillinen from "./Ammatillinen";
 import qs from 'query-string';
-import Hakupalkki from "../haku/Hakupalkki";
 import Hakunavigaatio from './../haku/Hakunavigaatio';
 import AvoinYoKoulutus from "./AvoinYo";
 import Lukiokoulutus from "./Lukiokoulutus";
@@ -65,7 +64,6 @@ class Koulutus extends Component {
         }
         return (
             <React.Fragment>
-                <Hakupalkki redirect={true}/>
                 {selectedKoulutus}
                 <Hakunavigaatio haku={this.getHakuUrl()} selected={this.state.oid}/>
             </React.Fragment>
