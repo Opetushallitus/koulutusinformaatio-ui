@@ -21,9 +21,9 @@ class HakuehtoStore {
     }
 
     @computed get searchParams() {
-        return (this.filter.paikkakunta ? '?paikkakunta=' + this.filter.paikkakunta : '')
-            + (this.filter.koulutus.length ? '&koulutustyyppi=' + this.filter.koulutus.join(',') : '')
-            + (this.filter.kieli.length ? '&kieli=' + this.filter.kieli.join(',') : '')
+        return '?paikkakunta=' + ( this.filter.paikkakunta ?  this.filter.paikkakunta : '')
+            + '&koulutustyyppi=' + ( this.filter.koulutus.length ? this.filter.koulutus.join(',') : '')
+            + '&kieli=' + ( this.filter.kieli.length ? this.filter.kieli.join(',') : '')
     }
 }
 
