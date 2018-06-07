@@ -50,10 +50,11 @@ class Hakurajain extends Component {
         this.setState({rajainOpen: !this.state.rajainOpen});
     }
 
-    clear(event) {
+    clear() {
         this.props.hakuehtoStore.filter.kieli = [];
         this.props.hakuehtoStore.filter.paikkakunta = "";
         this.props.hakuehtoStore.filter.koulutus = [];
+        this.toggleRajain();
     }
 
     render() {
@@ -102,11 +103,11 @@ class Hakurajain extends Component {
                                     <Link className="btn btn-primary" to={{
                                         pathname: link,
                                         search: search
-                                    }}>HAE</Link>
+                                    }} onClick={() => {this.toggleRajain()}}>HAE</Link>
                                     <Link className="clear-compare" to={{
                                         pathname: link,
                                         search: ''
-                                    }} onClick={(e) => {this.clear(e)}}>Poista rajaukset</Link>
+                                    }} onClick={() => {this.clear()}}>Poista rajaukset</Link>
                                 </div>
                             </div>
                         </div>
