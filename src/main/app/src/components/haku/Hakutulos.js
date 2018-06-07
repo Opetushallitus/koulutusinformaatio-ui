@@ -48,7 +48,7 @@ class Hakutulos extends Component {
     }
 
     renderFilterResultSummary() {
-        const koulutustyypit = this.props.hakuStore.filterKoulutus.map((k) => {
+        const koulutustyypit = this.props.hakuStore.filter.koulutus.map((k) => {
             switch (k) {
                 case 'lk': return 'lukiot';
                 case 'amm': return 'ammatilliset tutkinnot';
@@ -57,12 +57,12 @@ class Hakutulos extends Component {
                 default: return '';
             }
         }).filter((k) => !!k).join(', ');
-        const paikkakunta = this.props.hakuStore.filterPaikkakunta;
+        const paikkakunta = this.props.hakuStore.filter.paikkakunta;
 
         return (
             <div className="col Etsinta">
                 <h1>{this.props.hakuStore.keywordSet ? 'ja' : 'Etsintäsi tuotti ' + this.props.hakuStore.totalCount + ' osumaa'}
-                    {koulutustyypit ? (this.props.hakuStore.filterKoulutus.length > 1 ? ' koulutustyypeillä ' : ' koulutustyypillä ') : '' }
+                    {koulutustyypit ? (this.props.hakuStore.filter.koulutus.length > 1 ? ' koulutustyypeillä ' : ' koulutustyypillä ') : '' }
                     {koulutustyypit ? <span className="highlight">"{koulutustyypit}"</span> : '' }
                     {paikkakunta ? (koulutustyypit ? ' sekä' : '' ) + ' paikkakunnalla ' : '' }
                     {paikkakunta ? <span className="highlight"> "{paikkakunta}"</span> : '' }

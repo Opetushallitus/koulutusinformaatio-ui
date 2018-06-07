@@ -10,16 +10,18 @@ class HakuStore {
     @observable oppilaitosResult = [];
     @observable oppilaitosCount = 0;
     @observable toggleKoulutus = true;
-    @observable filterKoulutus = [];
-    @observable filterKieli = [];
-    @observable filterPaikkakunta = '';
+    @observable filter = {
+        koulutus: [],
+        kieli: [],
+        paikkakunta: ''
+    };
 
     @computed get keywordSet() {
         return this.keyword && !(0 === this.keyword.length);
     }
 
     @computed get filterSet() {
-        return this.filterPaikkakunta || this.filterKoulutus.length || this.filterKieli.length;
+        return this.filter.paikkakunta || this.filter.koulutus.length || this.filter.kieli.length;
     }
 
     @computed get hasKoulutusResult() {
@@ -37,17 +39,17 @@ class HakuStore {
     @computed get createHakuUrl() {
         return '/haku' + (this.keywordSet ? '/' + this.keyword : '') + '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos')
             + '&kpage=' + this.currentPageKoulutus + '&opage=' + this.currentPageOppilaitos + '&pagesize=' + this.pageSize
-            + (this.filterPaikkakunta ? '&paikkakunta=' + this.filterPaikkakunta : '')
-            + (this.filterKoulutus.length ? '&koulutustyyppi=' + this.filterKoulutus.join(',') : '')
-            + (this.filterKieli.length ? '&kieli=' + this.filterKieli.join(',') : '')
+            + (this.filter.paikkakunta ? '&paikkakunta=' + this.filter.paikkakunta : '')
+            + (this.filter.koulutus.length ? '&koulutustyyppi=' + this.filter.koulutus.join(',') : '')
+            + (this.filter.kieli.length ? '&kieli=' + this.filter.kieli.join(',') : '')
     }
 
     @computed get search() {
         return '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos')
             + '&kpage=' + this.currentPageKoulutus + '&opage=' + this.currentPageOppilaitos + '&pagesize=' + this.pageSize
-            + (this.filterPaikkakunta ? '&paikkakunta=' + this.filterPaikkakunta : '')
-            + (this.filterKoulutus.length ? '&koulutustyyppi=' + this.filterKoulutus.join(',') : '')
-            + (this.filterKieli.length ? '&kieli=' + this.filterKieli.join(',') : '')
+            + (this.filter.paikkakunta ? '&paikkakunta=' + this.filter.paikkakunta : '')
+            + (this.filter.koulutus.length ? '&koulutustyyppi=' + this.filter.koulutus.join(',') : '')
+            + (this.filter.kieli.length ? '&kieli=' + this.filter.kieli.join(',') : '')
     }
 
     @computed get maxPageNumber() {
