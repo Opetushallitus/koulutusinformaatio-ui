@@ -3,7 +3,7 @@ import Hakurajain from './Hakurajain';
 import {observer, inject} from 'mobx-react';
 import { Link, withRouter } from 'react-router-dom'
 
-@inject ("hakuStore")
+@inject ("hakuehtoStore")
 @observer
 class Hakupalkki extends Component {
 
@@ -15,22 +15,22 @@ class Hakupalkki extends Component {
 
     handleChange(event) {
         if(event.target.value) {
-            this.props.hakuStore.keyword = event.target.value
+            this.props.hakuehtoStore.keyword = event.target.value
         } else {
-            this.props.hakuStore.keyword = ''
+            this.props.hakuehtoStore.keyword = ''
         }
     }
 
     handleSubmit(event) {
         this.handleChange(event)
         event.preventDefault();
-        this.props.history.push(this.props.hakuStore.createHakuUrl);
+        this.props.history.push(this.props.hakuehtoStore.createHakuUrl);
     }
 
     render() {
-        const link = '/haku/' + this.props.hakuStore.keyword;
-        const search = this.props.hakuStore.search;
-        const value = this.props.hakuStore.keyword ? this.props.hakuStore.keyword : '';
+        const link = '/haku/' + this.props.hakuehtoStore.keyword;
+        const search = this.props.hakuehtoStore.searchParams;
+        const value = this.props.hakuehtoStore.keyword ? this.props.hakuehtoStore.keyword : '';
         return (
             <React.Fragment>
                 <div className="container-fluid" id={this.props.main ? "call-to-action" : "call-to-action-secondary"}>

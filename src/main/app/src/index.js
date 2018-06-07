@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import HakuStore from './stores/haku-store'
+import HakuehtoStore from './stores/hakuehto-store'
 import UrlStore from './stores/url-store'
 import {Provider} from 'mobx-react';
 import Sidebar from "./components/Sidebar";
@@ -19,13 +20,15 @@ class App extends Component {
 
     urlStore = new UrlStore();
     hakuStore = new HakuStore();
+    hakuehtoStore = new HakuehtoStore();
 
     render() {
         const hakuStore = this.hakuStore;
+        const hakuehtoStore = this.hakuehtoStore;
         const urlStore = this.urlStore;
         return (
 
-                <Provider hakuStore={hakuStore} urlStore={urlStore}>
+                <Provider hakuStore={hakuStore} urlStore={urlStore} hakuehtoStore={hakuehtoStore}>
                     <React.Fragment>
                         <div className="container-fluid navigation-bar"/>
                         <div className="overlay"></div>

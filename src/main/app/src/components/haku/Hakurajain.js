@@ -4,7 +4,7 @@ import {observer, inject} from 'mobx-react';
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 
-@inject ("hakuStore")
+@inject ("hakuehtoStore")
 @observer
 class Hakurajain extends Component {
 
@@ -17,43 +17,49 @@ class Hakurajain extends Component {
 
     handleKoulutusChange(filter) {
         if (filter) {
-            if (this.props.hakuStore.filterKoulutus.indexOf(filter) === -1) {
-                this.props.hakuStore.filterKoulutus.push(filter);
+            if (this.props.hakuehtoStore.filter.koulutus.indexOf(filter) === -1) {
+                this.props.hakuehtoStore.filter.koulutus.push(filter);
             } else {
-                this.props.hakuStore.filterKoulutus
-                    = this.props.hakuStore.filterKoulutus.filter((i) => i !== filter);
+                this.props.hakuehtoStore.filter.koulutus
+                    = this.props.hakuehtoStore.filter.koulutus.filter((i) => i !== filter);
             }
         }
     }
 
     handleKieliChange(filter) {
         if (filter) {
-            if (this.props.hakuStore.filterKieli.indexOf(filter) === -1) {
-                this.props.hakuStore.filterKieli.push(filter);
+            if (this.props.hakuehtoStore.filter.kieli.indexOf(filter) === -1) {
+                this.props.hakuehtoStore.filter.kieli.push(filter);
             } else {
-                this.props.hakuStore.filterKieli
-                    = this.props.hakuStore.filterKieli.filter((i) => i !== filter);
+                this.props.hakuehtoStore.filter.kieli
+                    = this.props.hakuehtoStore.filter.kieli.filter((i) => i !== filter);
             }
         }
     }
 
     handlePaikkakuntaChange(str) {
-        this.props.hakuStore.filterPaikkakunta = str;
+        this.props.hakuehtoStore.filter.paikkakunta = str;
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        this.props.history.push(this.props.hakuStore.createHakuUrl);
+        this.props.history.push(this.props.hakuehtoStore.createHakuUrl);
     }
 
     toggleRajain() {
         this.setState({rajainOpen: !this.state.rajainOpen});
     }
 
+    clear(event) {
+        this.props.hakuehtoStore.filter.kieli = [];
+        this.props.hakuehtoStore.filter.paikkakunta = "";
+        this.props.hakuehtoStore.filter.koulutus = [];
+    }
+
     render() {
-        const link = '/haku/' + this.props.hakuStore.keyword;
-        const search = this.props.hakuStore.search;
-        const value = this.props.hakuStore.filterPaikkakunta ? this.props.hakuStore.filterPaikkakunta : '';
+        const link = '/haku/' + this.props.hakuehtoStore.keyword;
+        const search = this.props.hakuehtoStore.searchParams;
+        const value = this.props.hakuehtoStore.filter.paikkakunta ? this.props.hakuehtoStore.filter.paikkakunta : '';
         return (
             <React.Fragment>
                 <div className="col-xs-12">
@@ -67,22 +73,22 @@ class Hakurajain extends Component {
                             <div className="filters-main">
                                 <div className="form-group">
                                     <h5>Koulutustyyppi</h5>
-                                    <Hakurajainvalinta text="Lukio" checked={this.props.hakuStore.filterKoulutus.indexOf('lk') !== -1}
+                                    <Hakurajainvalinta text="Lukio" checked={this.props.hakuehtoStore.filter.koulutus.indexOf('lk') !== -1}
                                                        handleChange={() => this.handleKoulutusChange('lk')} color="1"/>
-                                    <Hakurajainvalinta text="Ammatilliset tutkinnot" checked={this.props.hakuStore.filterKoulutus.indexOf('amm') !== -1}
+                                    <Hakurajainvalinta text="Ammatilliset tutkinnot" checked={this.props.hakuehtoStore.filter.koulutus.indexOf('amm') !== -1}
                                                        handleChange={() => this.handleKoulutusChange('amm')} color="2"/>
-                                    <Hakurajainvalinta text="Korkeakoulut" checked={this.props.hakuStore.filterKoulutus.indexOf('kk') !== -1}
+                                    <Hakurajainvalinta text="Korkeakoulut" checked={this.props.hakuehtoStore.filter.koulutus.indexOf('kk') !== -1}
                                                        handleChange={() => this.handleKoulutusChange('kk')} color="3"/>
-                                    <Hakurajainvalinta text="Muut kurssit ja koulutukset" checked={this.props.hakuStore.filterKoulutus.indexOf('muu') !== -1}
+                                    <Hakurajainvalinta text="Muut kurssit ja koulutukset" checked={this.props.hakuehtoStore.filter.koulutus.indexOf('muu') !== -1}
                                                        handleChange={() => this.handleKoulutusChange('muu')} color="5"/>
                                 </div>
                                 <div className="form-group">
                                     <h5>Opetuskieli</h5>
-                                    <Hakurajainvalinta text="Suomi" checked={this.props.hakuStore.filterKieli.indexOf('fi') !== -1}
+                                    <Hakurajainvalinta text="Suomi" checked={this.props.hakuehtoStore.filter.kieli.indexOf('fi') !== -1}
                                                        handleChange={() => this.handleKieliChange('fi')}/>
-                                    <Hakurajainvalinta text="Ruotsi" checked={this.props.hakuStore.filterKieli.indexOf('sv') !== -1}
+                                    <Hakurajainvalinta text="Ruotsi" checked={this.props.hakuehtoStore.filter.kieli.indexOf('sv') !== -1}
                                                        handleChange={() => this.handleKieliChange('sv')}/>
-                                    <Hakurajainvalinta text="Englanti" checked={this.props.hakuStore.filterKieli.indexOf('en') !== -1}
+                                    <Hakurajainvalinta text="Englanti" checked={this.props.hakuehtoStore.filter.kieli.indexOf('en') !== -1}
                                                        handleChange={() => this.handleKieliChange('en')}/>
                                 </div>
                                 <div className="form-group">
@@ -100,7 +106,7 @@ class Hakurajain extends Component {
                                     <Link className="clear-compare" to={{
                                         pathname: link,
                                         search: ''
-                                    }}>Poista rajaukset</Link>
+                                    }} onClick={(e) => {this.clear(e)}}>Poista rajaukset</Link>
                                 </div>
                             </div>
                         </div>
