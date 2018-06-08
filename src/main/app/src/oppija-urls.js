@@ -4,7 +4,7 @@ const production = {
     "konfo-backend.search.oppilaitokset" : "/konfo-backend/search/oppilaitokset",
     "konfo-backend.koulutus" : "/konfo-backend/koulutus/",
     "konfo-backend.oppilaitos" : "/konfo-backend/oppilaitos/",
-    "konfo-backend.palaute" : "/konfo-backend/palaute/"
+    "konfo-backend.palaute" : "/konfo-backend/palaute"
 };
 
 const development = {
