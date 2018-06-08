@@ -7,25 +7,25 @@ class MobileFooter extends Component {
                 <div className="col-xs-6">
                     <div className="site-links">
                         <a href="/">
-                            <img src={require('../assets/images/opintopolku_large-fi.png')} alt=""/>
+                            <img src={require('../../assets/images/opintopolku_large-fi.png')} alt=""/>
                         </a>
                     </div>
                     <ul className="social-media">
                         <li>
                             <a href="">
-                                <img src={require('../assets/images/twitter-icon.png')} alt=""/>
+                                <img src={require('../../assets/images/twitter-icon.png')} alt=""/>
                             </a>
                             {/*<i  className="fa fa-twitter-square" aria-hidden="true"></i>*/}
                         </li>
                         <li>
                             <a href="">
-                                <img src={require('../assets/images/fb-icon.png')} alt=""/>
+                                <img src={require('../../assets/images/fb-icon.png')} alt=""/>
                             </a>
                             {/*<i href="" className="fa fa-facebook-square" aria-hidden="true"></i>*/}
                         </li>
                         <li>
                             <a href="">
-                                <img src={require('../assets/images/insta-icon.png')} alt=""/>
+                                <img src={require('../../assets/images/insta-icon.png')} alt=""/>
                             </a>
                             {/*<i href="" className="fa fa-instagram" aria-hidden="true"></i>*/}
                         </li>
@@ -55,12 +55,12 @@ class MobileFooter extends Component {
                 <div className="col-xs-12 site-icons">
                     <div className="col-xs-6">
                         <a className="pull-right" href="http://www.minedu.fi/OPM/">
-                            <img src={require('../assets/images/logo_fi.svg')} alt=""/>
+                            <img src={require('../../assets/images/logo_fi.svg')} alt=""/>
                         </a>
                     </div>
                     <div className="col-xs-6">
                         <a href="https://www.oph.fi">
-                            <img src={require('../assets/images/OPH_logo-fi.svg')} alt=""/>
+                            <img src={require('../../assets/images/OPH_logo-fi.svg')} alt=""/>
                         </a>
                     </div>
                 </div>

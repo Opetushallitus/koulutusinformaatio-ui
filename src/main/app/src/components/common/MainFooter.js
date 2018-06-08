@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Palaute from "./Palaute";
 // import { Link } from 'react-router-dom'
 
-class Footer extends Component {
+class DefaultFooter extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -23,7 +24,7 @@ class Footer extends Component {
                         <ul className="site-links">
                             <li>
                                 <a href="/">
-                                    <img src={require('../assets/images/opintopolku_large-fi.png')} alt=""/>
+                                    <img src={require('../../assets/images/opintopolku_large-fi.png')} alt=""/>
                                 </a>
                             </li>
                             <li>
@@ -44,12 +45,12 @@ class Footer extends Component {
                         <div className="row site-icons">
                             <div className="col-xs-6">
                                 <a href="http://www.minedu.fi/OPM/">
-                                    <img src={require('../assets/images/logo_fi.svg')} alt=""/>
+                                    <img src={require('../../assets/images/logo_fi.svg')} alt=""/>
                                 </a>
                             </div>
                             <div className="col-xs-6">
                                 <a href="https://www.oph.fi">
-                                    <img src={require('../assets/images/OPH_logo-fi.svg')} alt=""/>
+                                    <img src={require('../../assets/images/OPH_logo-fi.svg')} alt=""/>
                                 </a>
                             </div>
                         </div>
@@ -90,15 +91,4 @@ class Footer extends Component {
     }
 }
 
-export default Footer;
-
-
-
-
-
-
-
-
-
-
-
+export default DefaultFooter;

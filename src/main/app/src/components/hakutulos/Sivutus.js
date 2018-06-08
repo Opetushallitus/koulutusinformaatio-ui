@@ -1,23 +1,35 @@
 import React, { Component } from 'react';
 import '../../assets/css/hakutulos.css'
 import {observer, inject} from 'mobx-react';
+import qs from 'query-string';
+import { withRouter } from 'react-router-dom'
 
 @inject("hakuStore")
-
 @observer
 class Sivutus extends Component {
 
-    handlePagination(page) {
+    handlePagination(event, page) {
+        const search = qs.parse(this.props.location.search);
         if (this.props.hakuStore.toggleKoulutus) {
-            this.props.hakuStore.currentPageKoulutus = page;
+            search.kpage = '' + page;
         } else {
-            this.props.hakuStore.currentPageOppilaitos  = page;
+            search.opage = '' + page;
         }
-        this.props.handleRefresh(true);
+        event.preventDefault();
+        this.props.history.replace({search: qs.stringify(search)});
+    }
+
+    handlePageSizeChange(event) {
+        const search = qs.parse(this.props.location.search);
+        search.kpage = '1';
+        search.opage = '1';
+        search.pagesize = '' + event.target.value;
+        event.preventDefault();
+        this.props.history.replace({search: qs.stringify(search)});
     }
 
     createPaginationItem(page, active) {
-        return <li className={active ? "page-item active" : "page-item"} key={page.toString()}><a className="page-link" onClick={() => this.handlePagination(page)} >{page}</a></li>;
+        return <li className={active ? "page-item active" : "page-item"} key={page.toString()}><a className="page-link" onClick={(e) => this.handlePagination(e, page)} >{page}</a></li>;
     }
 
     createPaginationSeparator(key) {
@@ -67,14 +79,6 @@ class Sivutus extends Component {
         return paginationItems;
     }
 
-    handlePageSizeChange(size) {
-        this.props.hakuStore.pageSize = size;
-        this.props.hakuStore.currentPageKoulutus = 1;
-        this.props.hakuStore.currentPageOppilaitos = 1;
-
-        this.props.handleRefresh(true);
-    }
-
     render() {
         const currentPage = this.props.hakuStore.currentPageNumber;
 
@@ -91,7 +95,7 @@ class Sivutus extends Component {
                                 </nav>
                             </div>
                             <div className="page-size-select">
-                                <select onChange={(e) => this.handlePageSizeChange(e.target.value)}>
+                                <select onChange={(e) => this.handlePageSizeChange(e)}>
                                     <option value={this.props.hakuStore.pageSize}>Näytä</option>
                                     <option value={20}>20</option>
                                     <option value={50}>50</option>
@@ -105,4 +109,4 @@ class Sivutus extends Component {
     }
 }
 
-export default Sivutus;
+export default withRouter(Sivutus);

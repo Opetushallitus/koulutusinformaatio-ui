@@ -1,59 +1,36 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import Hakurajain from './Hakurajain';
 import {observer, inject} from 'mobx-react';
+import { Link, withRouter } from 'react-router-dom'
 
-@inject ("hakuStore")
+@inject ("hakuehtoStore")
 @observer
 class Hakupalkki extends Component {
 
     constructor(props){
         super(props);
-        this.state = {
-            input: '',
-            redirect: false
-        };
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.filterAction = this.filterAction.bind(this);
-    }
-
-    isValidKeyword() {
-        return this.state.input && this.state.input.length > 2;
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event) {
-        this.setState({input: event.target.value})
+        if(event.target.value) {
+            this.props.hakuehtoStore.keyword = event.target.value
+        } else {
+            this.props.hakuehtoStore.keyword = ''
+        }
     }
 
     handleSubmit(event) {
-        this.props.hakuStore.updateFilterSet();
-
-        if(this.isValidKeyword() || this.props.hakuStore.filterSet) {
-            this.props.hakuStore.keyword = this.state.input;
-            if(this.props.searchAction) {
-                this.props.searchAction()
-            } else {
-                this.setState({redirect: true})
-            }
-       } else {
-            event.preventDefault();
-        }
-    }
-
-    filterAction() {
-        this.props.hakuStore.updateFilterSet();
-        if(this.props.searchAction) {
-            this.props.searchAction()
-        } else {
-            this.setState({redirect: true})
-        }
+        this.handleChange(event);
+        event.preventDefault();
+        this.props.history.push(this.props.hakuehtoStore.createHakuUrl);
     }
 
     render() {
-        if(this.state.redirect) {
-            return <Redirect push to={this.props.hakuStore.createHakuUrl}/>
-        }
+        const link = '/haku/' + this.props.hakuehtoStore.keyword;
+        const search = this.props.hakuehtoStore.searchParams;
+        const value = this.props.hakuehtoStore.keyword ? this.props.hakuehtoStore.keyword : '';
         return (
             <React.Fragment>
                 <div className="container-fluid" id={this.props.main ? "call-to-action" : "call-to-action-secondary"}>
@@ -64,19 +41,23 @@ class Hakupalkki extends Component {
                                     <div className="search">
                                         <input id="regular-input" className="oph-input" type="text"
                                                placeholder="Etsi ja vertaile koulutuksia ja oppilaitoksia"
-                                               defaultValue={this.props.hakuStore.keyword}
-                                               onChange={this.handleChange} onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit(e)}}}/>
-                                        <a role="button" onClick={this.handleSubmit} className="search-button">ETSI</a>
+                                               value={value}
+                                               onChange={this.handleChange}
+                                               onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit(e)}}}/>
+                                        <Link role="button" to={{
+                                            pathname: link,
+                                            search: search
+                                        }} className="search-button">ETSI</Link>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <Hakurajain filterAction={this.filterAction}/>
+                <Hakurajain/>
             </React.Fragment>
         );
     }
 }
 
-export default Hakupalkki;
+export default withRouter(Hakupalkki);
