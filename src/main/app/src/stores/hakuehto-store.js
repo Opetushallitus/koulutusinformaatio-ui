@@ -1,4 +1,4 @@
-import { observable, computed } from "mobx"
+import { observable, computed, action } from "mobx"
 
 class HakuehtoStore {
     @observable keyword = '';
@@ -12,9 +12,21 @@ class HakuehtoStore {
         return this.keyword && !(0 === this.keyword.length);
     }
 
+    @action
+    setKeyword = (keyword) => {
+        this.keyword = keyword ? keyword : '';
+    }
+
     @computed get filterSet() {
         return this.filter.paikkakunta || this.filter.koulutus.length || this.filter.kieli.length;
     }
+
+    @action
+    setFilter = (filter) => {
+        this.filter.koulutus = filter.koulutus ? filter.koulutus.split(',') : [];
+        this.filter.kieli = filter.kieli ? filter.kieli.split(',') : [];
+        this.filter.paikkakunta = filter.paikkakunta ? filter.paikkakunta.toLowerCase() : '';
+    };
 
     @computed get createHakuUrl() {
         return '/haku' + (this.keywordSet ? '/' + this.keyword : '') + this.searchParams;

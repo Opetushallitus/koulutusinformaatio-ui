@@ -18,53 +18,34 @@ class Haku extends Component {
     }
 
     updateStores() {
-        console.log("updateStores")
-        function pos (p, d) { return p > 0 ? p : d; }
-        function compare (a1, a2) { return a1.length == a2.length && a1.every((v,i)=> v == a2[i])}
-
-        const queryParams = qs.parse(this.props.location.search);
-
-        const queryParamKoulutusPage = pos(Number(queryParams.kpage), 1);
-        const queryParamOppilaitosPage = pos(Number(queryParams.opage), 1);
-        const queryParamPageSize = pos(Number(queryParams.pagesize), 20);
-        const queryParamFilterKoulutus = queryParams.koulutustyyppi ? queryParams.koulutustyyppi.split(',') : [];
-        const queryParamFilterKieli = queryParams.kieli ? queryParams.kieli.split(',') : [];
-        const queryParamFilterPaikkakunta = queryParams.paikkakunta ? queryParams.paikkakunta : '';
-        const queryParamToggleKoulutus = ('oppilaitos' !== queryParams.toggle);
-
+        const hakuStore = this.props.hakuStore;
+        const search = qs.parse(this.props.location.search);
         const match = matchPath(this.props.history.location.pathname, {
             path: '/haku/:keyword',
             exact: true,
             strict: false
         });
-        const keyword = match ? match.params.keyword : '';
+        const keywordChange = hakuStore.setKeyword(match.params.keyword);
+        const filterChange = hakuStore.setFilter({
+            koulutus: search.koulutustyyppi,
+            kieli: search.kieli,
+            paikkakunta: search.paikkakunta });
+        const pagingChange = hakuStore.setPaging({
+            pageOppilaitos: search.opage,
+            pageKoulutus: search.kpage,
+            pageSize: search.pagesize
+        });
 
-        const doSearch =
-            !(this.props.hakuStore.keyword == keyword &&
-            this.props.hakuStore.currentPageKoulutus == queryParamKoulutusPage &&
-            this.props.hakuStore.currentPageOppilaitos == queryParamOppilaitosPage &&
-            this.props.hakuStore.pageSize == queryParamPageSize &&
-            this.props.hakuStore.filter.paikkakunta == queryParamFilterPaikkakunta &&
-            compare(this.props.hakuStore.filter.koulutus, queryParamFilterKoulutus) &&
-            compare(this.props.hakuStore.filter.kieli, queryParamFilterKieli));
+        hakuStore.setToggle(search.toggle);
 
-        this.props.hakuStore.currentPageOppilaitos = queryParamOppilaitosPage;
-        this.props.hakuStore.pageSize = queryParamPageSize;
-        this.props.hakuStore.currentPageKoulutus = queryParamKoulutusPage;
-        this.props.hakuStore.filter.paikkakunta = queryParamFilterPaikkakunta;
-        this.props.hakuStore.filter.koulutus = queryParamFilterKoulutus;
-        this.props.hakuStore.filter.kieli = queryParamFilterKieli;
-        this.props.hakuStore.toggleKoulutus = queryParamToggleKoulutus;
-        this.props.hakuStore.keyword = keyword;
+        this.props.hakuehtoStore.setKeyword(match.params.keyword);
+        this.props.hakuehtoStore.setFilter({
+            koulutus: search.koulutustyyppi,
+            kieli: search.kieli,
+            paikkakunta: search.paikkakunta });
 
-        this.props.hakuehtoStore.keyword = keyword;
-        this.props.hakuehtoStore.filter.paikkakunta = queryParamFilterPaikkakunta;
-        this.props.hakuehtoStore.filter.koulutus = queryParamFilterKoulutus;
-        this.props.hakuehtoStore.filter.kieli = queryParamFilterKieli;
-
-        console.log(doSearch)
-        if(doSearch) {
-            this.search(queryParams.toggle)
+        if(keywordChange || filterChange || pagingChange) {
+            this.search(search.toggle)
         }
     }
 
@@ -78,7 +59,7 @@ class Haku extends Component {
     }
 
     toggleAction(value) {
-        this.props.hakuStore.toggleKoulutus = ('oppilaitos' !== value);
+        this.props.hakuStore.setToggle(value);
         this.props.history.replace(this.props.hakuStore.createHakuUrl);
     }
 
@@ -86,8 +67,8 @@ class Haku extends Component {
         return (superagent
             .get(_this.props.urlStore.urls.url('konfo-backend.search.koulutukset'))
             .query({keyword: _this.props.hakuStore.keyword,
-                page: _this.props.hakuStore.currentPageKoulutus,
-                size: _this.props.hakuStore.pageSize,
+                page: _this.props.hakuStore.paging.pageKoulutus,
+                size: _this.props.hakuStore.paging.pageSize,
                 paikkakunta: _this.props.hakuStore.filter.paikkakunta,
                 koulutustyyppi: _this.props.hakuStore.filter.koulutus.join(','),
                 kieli: _this.props.hakuStore.filter.kieli.map((k) => 'kieli_' + k).join(',')})
@@ -98,8 +79,8 @@ class Haku extends Component {
         return (superagent
             .get(_this.props.urlStore.urls.url('konfo-backend.search.oppilaitokset'))
             .query({keyword: _this.props.hakuStore.keyword,
-                page: _this.props.hakuStore.currentPageOppilaitos,
-                size: _this.props.hakuStore.pageSize,
+                page: _this.props.hakuStore.paging.pageOppilaitos,
+                size: _this.props.hakuStore.paging.pageSize,
                 paikkakunta: _this.props.hakuStore.filter.paikkakunta,
                 koulutustyyppi: _this.props.hakuStore.filter.koulutus.join(','),
                 kieli: _this.props.hakuStore.filter.kieli.map((k) => 'kieli_' + k).join(',')})
@@ -121,9 +102,7 @@ class Haku extends Component {
                 _this.props.hakuStore.oppilaitosResult = result[1] && result[1].body ? result[1].body.result : [];
                 _this.props.hakuStore.oppilaitosCount = result[1] && result[1].body ? result[1].body.count : 0;
 
-                if(toggle) {
-                    _this.toggleAction(toggle);
-                } else {
+                if(!toggle) {
                     _this.toggleAction(this.props.hakuStore.koulutusCount >= this.props.hakuStore.oppilaitosCount ? 'koulutus' : 'oppilaitos');
                 }
             }).catch(_handleError);
