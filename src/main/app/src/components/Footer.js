@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
+import Palaute from "./Palaute";
 // import { Link } from 'react-router-dom'
 
 class Footer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            togglePalaute: false
+        };
+        this.togglePalaute = this.togglePalaute.bind(this);
+    }
+
+    togglePalaute() {
+        this.setState({togglePalaute: !this.state.togglePalaute})
+    }
+
     render() {
         return (
             <footer className="container-fluid">
@@ -23,7 +36,7 @@ class Footer extends Component {
                                 <a href="/tietoturvaseloste">Tietoturvaseloste</a>
                             </li>
                             <li>
-                                <a href="/palaute">Anna palautetta</a>
+                                <a onClick={this.togglePalaute}>Anna palautetta</a>
                             </li>
                         </ul>
                     </div>
@@ -71,6 +84,7 @@ class Footer extends Component {
                             </ul>*/}
                         </div>
                     </div>
+                    {this.state.togglePalaute && <Palaute togglePalaute={this.togglePalaute}/>}
                 </div>
             </footer>);
     }

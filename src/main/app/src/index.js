@@ -13,6 +13,7 @@ import Haku from "./components/haku/Haku";
 import Etusivu from "./components/Etusivu";
 import Koulutus from "./components/koulutus/Koulutus";
 import Oppilaitos from "./components/oppilaitos/Oppilaitos";
+import './assets/css/font-awesome.min.css'
 import './assets/css/bootstrap.min.css'
 import './assets/css/oph-styles-min.css';
 import './assets/css/styles.css';

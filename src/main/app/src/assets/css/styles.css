@@ -826,6 +826,7 @@ ul.disc-list {
 .info-page {
     padding-bottom: 4em;
 }
+
 .info-page .left-column h1 i {
     position: relative;
     top: 10px;
@@ -3002,4 +3003,60 @@ a.titlelink {
         display: block;
     }
 
+}
+
+.palaute-form {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 4;
+    position: fixed;
+    padding: 20px;
+    background-color: #FFFFFF;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.3);
+}
+
+.palaute-form-close {
+    position: fixed;
+    right: 20px;
+}
+
+.palaute-form-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.palaute-form-header {
+    font-weight: 600;
+    margin: 0;
+}
+.palaute-form-rating {
+    flex-direction: row;
+}
+.palaute-form-star {
+    font-size: xx-large;
+    padding: 10px 5px;
+}
+.palaute-form-star.fa-star-o {
+    color: #e6e6e6;
+}
+.palaute-form-star.fa-star {
+    color: #f6a623;
+}
+.palaute-form-comment {
+    width: 40%;
+    padding-bottom: 10px;
+}
+.palaute-form-comment textarea {
+    height: 6em;
+    width: 100%;
+    padding: 10px;
+}
+
+.palaute-form .inactive {
+    background-color: #d6d6d6;
+    border-color: #b6b9b6;
 }
