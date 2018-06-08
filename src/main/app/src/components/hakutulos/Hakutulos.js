@@ -11,10 +11,6 @@ import Sivutus from './Sivutus';
 @observer
 class Hakutulos extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     getKoulutusNimi(koulutus) {
         return l.localize(koulutus, "Koulutus (ei nimeä)");
     }
@@ -35,7 +31,8 @@ class Hakutulos extends Component {
             return this.props.hakuStore.koulutusResult.map((r) => {
                 const link = '/koulutus/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
                 return (
-                    <HakutulosBox oid={r.oid}
+                    <HakutulosBox key={r.oid}
+                                  oid={r.oid}
                                   tyyppi={r.tyyppi}
                                   haettavissa={r.haettavissa}
                                   nimi={this.getKoulutusNimi(r)}
@@ -47,7 +44,8 @@ class Hakutulos extends Component {
             return this.props.hakuStore.oppilaitosResult.map((r) => {
                 const link = '/oppilaitos/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
                 return (
-                    <HakutulosBox oid={r.oid}
+                    <HakutulosBox key={r.oid}
+                                  oid={r.oid}
                                   tyyppi={r.tyyppi}
                                   haettavissa={false}
                                   nimi={this.getOppilaitosNimi(r)}

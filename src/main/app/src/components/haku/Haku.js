@@ -4,7 +4,7 @@ import qs from 'query-string';
 import '../../assets/css/hakutulos.css'
 import {observer, inject} from 'mobx-react';
 import Hakutulos from '../hakutulos/Hakutulos';
-import { withRouter, matchPath } from 'react-router'
+import { matchPath } from 'react-router'
 
 @inject("hakuStore")
 @inject("hakuehtoStore")
@@ -92,11 +92,9 @@ class Haku extends Component {
         const _handleError = (e) => { console.log(e); _this.setState({error: e})};
         if(this.props.hakuStore.keywordSet || this.props.hakuStore.filterSet) {
             Promise.all([
-                Haku.getKoulutuksetFromBackend(_this, _handleError()),
-                Haku.getOppilaitoksetFromBackend(_this, _handleError())
+                Haku.getKoulutuksetFromBackend(_this, _handleError),
+                Haku.getOppilaitoksetFromBackend(_this, _handleError)
             ]).then((result) => {
-                _this.props.hakuStore.koulutusResult = [];
-                _this.props.hakuStore.oppilaitosResult = [];
                 _this.props.hakuStore.koulutusResult = result[0] ? result[0].body.result : [];
                 _this.props.hakuStore.koulutusCount = result[0] ? result[0].body.count : 0;
                 _this.props.hakuStore.oppilaitosResult = result[1] && result[1].body ? result[1].body.result : [];

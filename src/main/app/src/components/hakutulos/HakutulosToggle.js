@@ -8,10 +8,6 @@ import qs from 'query-string';
 @observer
 class HakutulosToggle extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     toggle(event, toggle) {
         const search = qs.parse(this.props.location.search);
         search.toggle = toggle;

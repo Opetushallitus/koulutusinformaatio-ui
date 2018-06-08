@@ -5,10 +5,6 @@ import { withRouter } from 'react-router-dom'
 
 class HakutulosBox extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const tyyli = "col-xs-12 search-box " + this.props.tyyppi + (this.props.haettavissa ? " haku" : "");
         return (
