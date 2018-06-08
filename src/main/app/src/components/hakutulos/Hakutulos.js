@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../../assets/css/hakutulos.css'
 import {observer, inject} from 'mobx-react';
 import {Localizer as l} from '../../tools/Utils';
-import KoulutusOppilaitosToggle from "./KoulutusOppilaitosToggle";
+import HakutulosToggle from "./HakutulosToggle";
 import HakutulosSummary from "./HakutulosSummary";
 import HakutulosBox from "./HakutulosBox";
 
@@ -76,7 +76,7 @@ class Hakutulos extends Component {
             <React.Fragment>
                 <div className="container">
                     <HakutulosSummary/>
-                    <KoulutusOppilaitosToggle/>
+                    <HakutulosToggle/>
                 </div>
                 <div className="container search-results">
                     <div className="row">

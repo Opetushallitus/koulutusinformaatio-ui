@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 
 @inject("hakuStore")
 @observer
-class KoulutusOppilaitosToggle extends Component {
+class HakutulosToggle extends Component {
 
     constructor(props) {
         super(props);
@@ -37,4 +37,4 @@ class KoulutusOppilaitosToggle extends Component {
     }
 }
 
-export default withRouter(KoulutusOppilaitosToggle);
+export default withRouter(HakutulosToggle);
