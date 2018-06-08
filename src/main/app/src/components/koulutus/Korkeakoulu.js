@@ -13,6 +13,7 @@ class Korkeakoulu extends Component {
             oid: props.oid,
             result: props.result,
         };
+        console.log("Created element Korkeakoulu with data: {}", this.state.result)
     }
 
     parseAineListaus() {
@@ -25,7 +26,7 @@ class Korkeakoulu extends Component {
 
     parseNimi() {
         if(this.state.result) {
-            return l.localize(this.state.result.koulutuskoodi, "Tuntematon koulutus")
+            return l.localize(this.state.result.searchData, "Tuntematon koulutus")
         }
         return ""
     }
