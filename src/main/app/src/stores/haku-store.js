@@ -37,14 +37,10 @@ class HakuStore {
     }
 
     @computed get createHakuUrl() {
-        return '/haku' + (this.keywordSet ? '/' + this.keyword : '') + '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos')
-            + '&kpage=' + this.currentPageKoulutus + '&opage=' + this.currentPageOppilaitos + '&pagesize=' + this.pageSize
-            + (this.filter.paikkakunta ? '&paikkakunta=' + this.filter.paikkakunta : '')
-            + (this.filter.koulutus.length ? '&koulutustyyppi=' + this.filter.koulutus.join(',') : '')
-            + (this.filter.kieli.length ? '&kieli=' + this.filter.kieli.join(',') : '')
+        return '/haku' + (this.keywordSet ? '/' + this.keyword : '') + this.searchParams
     }
 
-    @computed get search() {
+    @computed get searchParams() {
         return '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos')
             + '&kpage=' + this.currentPageKoulutus + '&opage=' + this.currentPageOppilaitos + '&pagesize=' + this.pageSize
             + (this.filter.paikkakunta ? '&paikkakunta=' + this.filter.paikkakunta : '')
@@ -52,7 +48,7 @@ class HakuStore {
             + (this.filter.kieli.length ? '&kieli=' + this.filter.kieli.join(',') : '')
     }
 
-    @computed get searchNoToggle() {
+    @computed get searchParamsNoToggle() {
         return '?kpage=' + this.currentPageKoulutus + '&opage=' + this.currentPageOppilaitos + '&pagesize=' + this.pageSize
             + (this.filter.paikkakunta ? '&paikkakunta=' + this.filter.paikkakunta : '')
             + (this.filter.koulutus.length ? '&koulutustyyppi=' + this.filter.koulutus.join(',') : '')

@@ -4,7 +4,6 @@ import qs from 'query-string';
 import '../../assets/css/hakutulos.css'
 import {observer, inject} from 'mobx-react';
 import Hakutulos from '../hakutulos/Hakutulos';
-import Sivutus from './Sivutus';
 import { withRouter, matchPath } from 'react-router'
 
 @inject("hakuStore")
@@ -16,10 +15,10 @@ class Haku extends Component {
     constructor(props) {
         super(props);
         this.toggleAction = this.toggleAction.bind(this);
-        this.handleRefresh = this.handleRefresh.bind(this);
     }
 
     updateStores() {
+        console.log("updateStores")
         function pos (p, d) { return p > 0 ? p : d; }
         function compare (a1, a2) { return a1.length == a2.length && a1.every((v,i)=> v == a2[i])}
 
@@ -63,6 +62,7 @@ class Haku extends Component {
         this.props.hakuehtoStore.filter.koulutus = queryParamFilterKoulutus;
         this.props.hakuehtoStore.filter.kieli = queryParamFilterKieli;
 
+        console.log(doSearch)
         if(doSearch) {
             this.search(queryParams.toggle)
         }
@@ -70,19 +70,6 @@ class Haku extends Component {
 
     componentDidMount() {
         this.updateStores()
-    }
-
-    handleRefresh() {
-        const queryParamToggle = qs.parse(this.props.location.search).toggle;
-        const match = matchPath(this.props.history.location.pathname, {
-            path: '/haku/:keyword',
-            exact: true,
-            strict: false
-        });
-        if(match) {
-            this.props.hakuStore.keyword = match.params.keyword ? match.params.keyword : '';
-            this.search(queryParamToggle)
-        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -145,10 +132,7 @@ class Haku extends Component {
 
     render() {
         return (
-            <React.Fragment>
-                <Hakutulos {...this.props}/>
-                <Sivutus handleRefresh={this.handleRefresh}/>
-            </React.Fragment>
+            <Hakutulos {...this.props}/>
         );
     }
 }

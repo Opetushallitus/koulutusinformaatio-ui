@@ -5,6 +5,7 @@ import {Localizer as l} from '../../tools/Utils';
 import HakutulosToggle from "./HakutulosToggle";
 import HakutulosSummary from "./HakutulosSummary";
 import HakutulosBox from "./HakutulosBox";
+import Sivutus from './Sivutus';
 
 @inject("hakuStore")
 @observer
@@ -83,6 +84,7 @@ class Hakutulos extends Component {
                         {this.renderResultList()}
                     </div>
                 </div>
+                <Sivutus/>
             </React.Fragment>
         );
     }
