@@ -5,9 +5,9 @@ import HakuStore from './stores/haku-store'
 import HakuehtoStore from './stores/hakuehto-store'
 import UrlStore from './stores/url-store'
 import {Provider} from 'mobx-react';
-import Sidebar from "./components/Sidebar";
-import Header from './components/Header';
-import Footer from './components/footer/Footer';
+import Sidebar from "./components/common/Sidebar";
+import Header from './components/common/Header';
+import Footer from './components/common/Footer';
 import Hakusivu from "./components/Hakusivu";
 import Etusivu from "./components/Etusivu";
 import './assets/css/font-awesome.min.css'
