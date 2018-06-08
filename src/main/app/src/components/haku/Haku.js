@@ -3,7 +3,7 @@ import superagent from 'superagent';
 import qs from 'query-string';
 import '../../assets/css/hakutulos.css'
 import {observer, inject} from 'mobx-react';
-import Hakutulos from './Hakutulos';
+import Hakutulos from '../hakutulos/Hakutulos';
 import Sivutus from './Sivutus';
 import { withRouter, matchPath } from 'react-router'
 
