@@ -44,6 +44,7 @@ class Hakurajain extends Component {
     handleSubmit(event) {
         event.preventDefault();
         this.props.history.push(this.props.hakuehtoStore.createHakuUrl);
+        this.toggleRajain();
     }
 
     toggleRajain() {

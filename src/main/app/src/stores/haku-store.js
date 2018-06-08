@@ -52,6 +52,13 @@ class HakuStore {
             + (this.filter.kieli.length ? '&kieli=' + this.filter.kieli.join(',') : '')
     }
 
+    @computed get searchNoToggle() {
+        return '?kpage=' + this.currentPageKoulutus + '&opage=' + this.currentPageOppilaitos + '&pagesize=' + this.pageSize
+            + (this.filter.paikkakunta ? '&paikkakunta=' + this.filter.paikkakunta : '')
+            + (this.filter.koulutus.length ? '&koulutustyyppi=' + this.filter.koulutus.join(',') : '')
+            + (this.filter.kieli.length ? '&kieli=' + this.filter.kieli.join(',') : '')
+    }
+
     @computed get maxPageNumber() {
         if(this.toggleKoulutus) {
             return this.maxPageKoulutus;

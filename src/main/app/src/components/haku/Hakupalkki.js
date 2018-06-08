@@ -22,7 +22,7 @@ class Hakupalkki extends Component {
     }
 
     handleSubmit(event) {
-        this.handleChange(event)
+        this.handleChange(event);
         event.preventDefault();
         this.props.history.push(this.props.hakuehtoStore.createHakuUrl);
     }

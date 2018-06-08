@@ -28,6 +28,11 @@
     line-height: 0.50;
 }
 
+.Toggle{
+    color: #000000;
+    /*pointer-events:none;*/
+}
+
 .hakupalkki{
     width:100%
 }

@@ -146,7 +146,7 @@ class Haku extends Component {
     render() {
         return (
             <React.Fragment>
-                <Hakutulos {...this.props} toggleAction={this.toggleAction}/>
+                <Hakutulos {...this.props}/>
                 <Sivutus handleRefresh={this.handleRefresh}/>
             </React.Fragment>
         );
