@@ -140,6 +140,22 @@ class HakuStore {
             return this.oppilaitosCount;
         }
     }
+
+    @action
+    clearHaku = () => {
+        this.keyword = '';
+        this.filter.paikkakunta = '';
+        this.filter.koulutus = [];
+        this.filter.kieli = [];
+        this.paging.pageOppilaitos = 1;
+        this.paging.pageKoulutus = 1;
+        this.paging.pageSize = 20;
+        this.koulutusResult = [];
+        this.koulutusCount = 0;
+        this.oppilaitosResult = [];
+        this.oppilaitosCount = 0;
+        this.toggle = 'koulutus';
+    }
 }
 
 export default HakuStore;

@@ -48,6 +48,15 @@ class HakuehtoStore {
             + '&koulutustyyppi=' + ( this.filter.koulutus.length ? this.filter.koulutus.join(',') : '')
             + '&kieli=' + ( this.filter.kieli.length ? this.filter.kieli.join(',') : '')
     };
+
+    @action
+    clearHakuehdot = () => {
+        this.keyword = '';
+        this.filter.paikkakunta = '';
+        this.filter.koulutus = [];
+        this.filter.kieli = [];
+        this.rajainOpen = false;
+    }
 }
 
 export default HakuehtoStore;
