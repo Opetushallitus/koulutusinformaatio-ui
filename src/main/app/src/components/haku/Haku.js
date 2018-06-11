@@ -25,7 +25,8 @@ class Haku extends Component {
             exact: true,
             strict: false
         });
-        const keywordChange = hakuStore.setKeyword(match.params.keyword);
+        const keyword = match ? match.params.keyword : '';
+        const keywordChange = hakuStore.setKeyword(keyword);
         const filterChange = hakuStore.setFilter({
             koulutus: search.koulutustyyppi,
             kieli: search.kieli,
@@ -38,7 +39,7 @@ class Haku extends Component {
 
         hakuStore.setToggle(search.toggle);
 
-        this.props.hakuehtoStore.setKeyword(match.params.keyword);
+        this.props.hakuehtoStore.setKeyword(keyword);
         this.props.hakuehtoStore.setFilter({
             koulutus: search.koulutustyyppi,
             kieli: search.kieli,
