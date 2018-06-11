@@ -8,13 +8,6 @@ import { withRouter } from 'react-router-dom'
 @observer
 class Hakurajain extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            rajainOpen: false
-        }
-    }
-
     handleKoulutusChange(filter) {
         if (filter) {
             if (this.props.hakuehtoStore.filter.koulutus.indexOf(filter) === -1) {
@@ -44,18 +37,18 @@ class Hakurajain extends Component {
     handleSubmit(event) {
         event.preventDefault();
         this.props.history.push(this.props.hakuehtoStore.createHakuUrl);
-        this.toggleRajain();
+        this.props.hakuehtoStore.toggleRajain();
     }
 
     toggleRajain() {
-        this.setState({rajainOpen: !this.state.rajainOpen});
+        this.props.hakuehtoStore.toggleRajain();
     }
 
     clear() {
         this.props.hakuehtoStore.filter.kieli = [];
         this.props.hakuehtoStore.filter.paikkakunta = "";
         this.props.hakuehtoStore.filter.koulutus = [];
-        this.toggleRajain();
+        this.props.hakuehtoStore.toggleRajain();
     }
 
     render() {
@@ -65,10 +58,10 @@ class Hakurajain extends Component {
         return (
             <React.Fragment>
                 <div className="col-xs-12">
-                    <div className={"filter-button " + (this.state.rajainOpen ? "sulje" : "")} onClick={() => this.toggleRajain()} role="button">
+                    <div className={"filter-button " + (this.props.hakuehtoStore.rajainOpen ? "sulje" : "")} onClick={() => this.toggleRajain()} role="button">
                     </div>
                 </div>
-                {this.state.rajainOpen &&
+                {this.props.hakuehtoStore.rajainOpen &&
                 <div className="filters-layer">
                     <div className="filter-container open">
                         <div className="filter-options">

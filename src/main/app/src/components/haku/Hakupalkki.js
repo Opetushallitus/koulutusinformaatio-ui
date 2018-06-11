@@ -24,7 +24,12 @@ class Hakupalkki extends Component {
     handleSubmit(event) {
         this.handleChange(event);
         event.preventDefault();
+        this.props.hakuehtoStore.closeRajain();
         this.props.history.push(this.props.hakuehtoStore.createHakuUrl);
+    }
+
+    closeRajain() {
+        this.props.hakuehtoStore.closeRajain();
     }
 
     render() {
@@ -47,7 +52,7 @@ class Hakupalkki extends Component {
                                         <Link role="button" to={{
                                             pathname: link,
                                             search: search
-                                        }} className="search-button">ETSI</Link>
+                                        }} className="search-button" onClick={() => {this.closeRajain()}}>ETSI</Link>
                                     </div>
                                 </div>
                             </div>
