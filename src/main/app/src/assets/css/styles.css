@@ -1305,11 +1305,12 @@ footer p {
     top: .8em;
     right:15px;
     font-size: 1.35em;
+    color: #d6d6d6;
 }
-.suosikkit:hover {
+/*.suosikkit:hover {
     cursor: pointer;
     cursor: hand;
-}
+}*/
 .suosikkit i {
     transition: all ease-in .25s;
 }
@@ -1419,7 +1420,9 @@ footer p {
     background: #e7f2f6;
 }
 .compare-button span {
-    border: 1px solid #4d93d9;
+    /*border: 1px solid #4d93d9;*/
+    border: 1px solid #d6d6d6;
+    pointer-events:none;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;
@@ -1434,7 +1437,8 @@ footer p {
 }
 .compare-button span::after {
     content: "Ota vertailuun";
-    color: #4d93d9;
+    /*color: #4d93d9;*/
+    color: #d6d6d6;
     transition: all ease-in .5s;
 }
 .compare-button span.poista {
