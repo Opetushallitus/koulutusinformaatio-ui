@@ -843,6 +843,9 @@ ul.disc-list {
 .lukio-hattu {
     color: #CD0B24;
 }
+.muu-hattu {
+    color: #d8e00f;
+}
 .info-page.tutkinnonosat .left-column h1 i {
     color: #f5a623;
 }
@@ -1399,7 +1402,7 @@ footer p {
 .search-box.ako::after {
     background-color: #0ea4d7;
 }
-.search-box.tk::after {
+.search-box.muu::after {
     background-color: #d8e00f;
 }
 .separator {

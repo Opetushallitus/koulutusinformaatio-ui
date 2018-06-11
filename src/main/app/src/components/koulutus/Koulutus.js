@@ -51,7 +51,8 @@ class Koulutus extends Component {
                 case 'lk': return <Lukiokoulutus name={this.state.nimi} oid={this.state.oid} result={koulutus}/>; //TODO
                 case 'kk': return <Korkeakoulu name={this.state.nimi} oid={this.state.oid} result={koulutus}/>;
                 case 'ako': return <AvoinYoKoulutus name={this.state.nimi} oid={this.state.oid} result={koulutus}/>;
-                default: return <Ammatillinen name={this.state.nimi} oid={this.state.oid} result={koulutus}/>;
+                case 'amm' : return <Ammatillinen name={this.state.nimi} oid={this.state.oid} result={koulutus}/>;
+                default: return <Ammatillinen name={this.state.nimi} oid={this.state.oid} result={koulutus} muu={true}/>;
             }
         }
         return <div/>

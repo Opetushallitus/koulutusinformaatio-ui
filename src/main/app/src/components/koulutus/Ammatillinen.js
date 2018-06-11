@@ -42,12 +42,13 @@ class Ammatillinen extends Component {
         const osaamisalat = l.localize(this.state.result.koulutusohjelma, undefined);
         const tutkinnonOsat = l.localize(this.state.result.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
         const jatkoOpinnot = l.localize(this.state.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined);
+        const hattuClass = this.props.muu ? "fa fa-circle muu-hattu" : "fa fa-circle ammatillinen-hattu";
         return (
             <div className="container">
                 <div className="row info-page">
                     <div className="col-xs-12 col-md-9 left-column">
                         <h1>
-                            <i className="fa fa-circle ammatillinen-hattu" aria-hidden="true"></i>
+                            <i className={hattuClass} aria-hidden="true"></i>
                             <span>{this.parseNimi()}</span>
                         </h1>
                         <div className="row">
