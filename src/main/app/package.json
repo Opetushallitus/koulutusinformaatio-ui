@@ -5,6 +5,9 @@
   "private": true,
   "dependencies": {
     "ajv": "^6.4.0",
+    "i18next": "^11.3.2",
+    "i18next-browser-languagedetector": "^2.2.0",
+    "i18next-xhr-backend": "^1.5.1",
     "jschannel": "1.0.2",
     "mobx": "^4.1.1",
     "mobx-react": "^5.0.0",
@@ -14,6 +17,7 @@
     "react-app-rewire-mobx": "^1.0.8",
     "react-app-rewired": "^1.5.0",
     "react-dom": "^16.2.0",
+    "react-i18next": "^7.7.0",
     "react-media": "^1.8.0",
     "react-render-html": "0.6.0",
     "react-router-dom": "^4.2.2",

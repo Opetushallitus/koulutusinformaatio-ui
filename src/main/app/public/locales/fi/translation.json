@@ -1,0 +1,14 @@
+{
+  "footer": {
+    "vastuuvapauslauseke": "Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja koulutuksistaan Opintopolussa. Tietojen oikeellisuuden voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.",
+    "palaute": "Anna palautetta",
+    "oma-opintopolku": "Oma Opintopolku",
+    "mikä-opintopolku": "Mikä on Opintopolku",
+    "tietoturvaseloste": "Tietoturvaseloste"
+  },
+  "header": {
+    "opintopolku": "Opintopolku",
+    "valikko": "VALIKKO"
+  },
+  "palaute": {}
+}

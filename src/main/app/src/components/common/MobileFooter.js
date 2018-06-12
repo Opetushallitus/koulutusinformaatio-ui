@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { translate } from 'react-i18next';
 
+@translate()
 class MobileFooter extends Component {
     render() {
+        const {t} = this.props;
         return (
             <footer className="container-fluid">
                 <div className="col-xs-6">
@@ -34,23 +37,22 @@ class MobileFooter extends Component {
                 <div className="col-xs-6">
                     <ul className="site-links">
                         <li>
-                            <a href="/oma-opintopolku">Oma Opintopolku</a>
+                            <a href="/oma-opintopolku">{t('footer.oma-opintopolku')}</a>
                         </li>
                         <li>
-                            <a href="/tietoa-palvelusta">Mikä on opintopolku</a>
+                            <a href="/tietoa-palvelusta">{t('footer.mikä-opintopolku')}</a>
                         </li>
                         <li>
-                            <a href="/tietoturvaseloste">Tietoturvaseloste</a>
+                            <a href="/tietoturvaseloste">{t('footer.tietoturvaseloste')}</a>
                         </li>
                         <li>
-                            <a href="/palaute">Anna palautetta</a>
+                            <a onClick={this.togglePalaute}>{t('footer.palaute')}</a>
                         </li>
                     </ul>
                 </div>
                 <div className="col-xs-12">
                     <hr/>
-                    <p>Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja koulutuksistaan Opintopolussa. Tietojen oikeellisuuden
-                        voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.</p>
+                    <p>{t('footer.vastuuvapauslauseke')}</p>
                 </div>
                 <div className="col-xs-12 site-icons">
                     <div className="col-xs-6">

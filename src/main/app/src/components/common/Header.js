@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import { translate } from 'react-i18next';
 
+@translate()
 class Header extends Component {
     render() {
+        const {t} = this.props;
         return (
             <div className="container navigation">
                 <div className="row">
@@ -11,7 +14,7 @@ class Header extends Component {
                         <span className="hamb-middle"></span>
                         <span className="hamb-bottom"></span>
                     </button>
-                    <Link to={{ pathname: '/'}} className="navbar-brand">Opintopolku</Link>
+                    <Link to={{ pathname: '/'}} className="navbar-brand">{t('header.opintopolku')}</Link>
                 </div>
             </div>
         );

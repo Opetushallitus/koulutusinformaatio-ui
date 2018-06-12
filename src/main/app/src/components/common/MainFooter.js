@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import Palaute from "./Palaute";
 // import { Link } from 'react-router-dom'
+import { translate } from 'react-i18next';
+import i18n from '../../i18n';
 
+@translate()
 class DefaultFooter extends Component {
 
     constructor(props) {
@@ -17,6 +20,7 @@ class DefaultFooter extends Component {
     }
 
     render() {
+        const { t } = this.props;
         return (
             <footer className="container-fluid">
                 <div className="row">
@@ -28,16 +32,16 @@ class DefaultFooter extends Component {
                                 </a>
                             </li>
                             <li>
-                                <a href="/oma-opintopolku">Oma Opintopolku</a>
+                                <a href="/oma-opintopolku">{t('footer.oma-opintopolku')}</a>
                             </li>
                             <li>
-                                <a href="/tietoa-palvelusta">Mikä on opintopolku</a>
+                                <a href="/tietoa-palvelusta">{t('footer.mikä-opintopolku')}</a>
                             </li>
                             <li>
-                                <a href="/tietoturvaseloste">Tietoturvaseloste</a>
+                                <a href="/tietoturvaseloste">{t('footer.tietoturvaseloste')}</a>
                             </li>
                             <li>
-                                <a onClick={this.togglePalaute}>Anna palautetta</a>
+                                <a onClick={this.togglePalaute}>{t('footer.palaute')}</a>
                             </li>
                         </ul>
                     </div>
@@ -57,32 +61,31 @@ class DefaultFooter extends Component {
                     </div>
                     <div className="col-sm-4">
                         <div className="row">
-                            <p>Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja koulutuksistaan Opintopolussa. Tietojen oikeellisuuden
-                                voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.</p>
-                            {/*<ul className="social-media">
-                                // <li>Suomeksi</li>
-                                // <li>In English</li>
-                                // <li>På svenska</li>
-                                <li className="separator">|</li>
-                                <li>
-                                    <a href="">
-                                        <img src={require('../assets/images/twitter-icon.png')} alt=""/>
-                                    </a>
-                                    // <i  className="fa fa-twitter-square" aria-hidden="true"></i>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <img src={require('../assets/images/fb-icon.png')} alt=""/>
-                                    </a>
-                                    // <i href="" className="fa fa-facebook-square" aria-hidden="true"></i>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <img src={require('../assets/images/insta-icon.png')} alt=""/>
-                                    </a>
-                                    // <i href="" className="fa fa-instagram" aria-hidden="true"></i>
-                                </li>
-                            </ul>*/}
+                            <p>{t('footer.vastuuvapauslauseke')}</p>
+                            <ul className="social-media">
+                                <li><a onClick={() => i18n.changeLanguage('fi')}>Suomeksi</a></li>
+                                <li><a onClick={() => i18n.changeLanguage('en')}>In English</a></li>
+                                <li><a onClick={() => i18n.changeLanguage('sv')}>På svenska</a></li>
+                                {/*<li className="separator">|</li>*/}
+                                {/*<li>*/}
+                                    {/*<a href="">*/}
+                                        {/*<img src={require('../../assets/images/twitter-icon.png')} alt=""/>*/}
+                                    {/*</a>*/}
+                                     {/*/!*<i  className="fa fa-twitter-square" aria-hidden="true"></i>*!/*/}
+                                {/*</li>*/}
+                                {/*<li>*/}
+                                    {/*<a href="">*/}
+                                        {/*<img src={require('../../assets/images/fb-icon.png')} alt=""/>*/}
+                                    {/*</a>*/}
+                                     {/*/!*<i href="" className="fa fa-facebook-square" aria-hidden="true"></i>*!/*/}
+                                {/*</li>*/}
+                                {/*<li>*/}
+                                    {/*<a href="">*/}
+                                        {/*<img src={require('../../assets/images/insta-icon.png')} alt=""/>*/}
+                                    {/*</a>*/}
+                                     {/*/!*<i href="" className="fa fa-instagram" aria-hidden="true"></i>*!/*/}
+                                {/*</li>*/}
+                            </ul>
                         </div>
                     </div>
                     {this.state.togglePalaute && <Palaute togglePalaute={this.togglePalaute}/>}
