@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import superagent from "superagent";
 import {inject} from "mobx-react/index";
+import {translate} from 'react-i18next';
 
-
+@translate()
 @inject("urlStore")
 class Palaute extends Component {
 
@@ -10,7 +11,6 @@ class Palaute extends Component {
         super(props);
         this.state = {
             arvosana: 0,
-            // selected: false,
             palaute: ""
         }
     }
@@ -35,11 +35,12 @@ class Palaute extends Component {
     }
 
     render() {
+        const {t} = this.props;
         return (
             <div className="palaute-form">
                 <a className="palaute-form-close" onClick={this.props.togglePalaute}><i className="fa fa-times"/></a>
                 <div className="palaute-form-container">
-                    <h2 className="palaute-form-header">Mitä mieltä olit sivusta?</h2>
+                    <h2 className="palaute-form-header">{t('palaute.otsikko')}</h2>
                     <div className="palaute-form-rating">
                         <i className={"palaute-form-star fa " + (this.state.arvosana > 0 ? "fa-star" : "fa-star-o")}
                            aria-hidden={true} onClick={() => this.handleArvosanaChange(1)}/>
@@ -53,11 +54,11 @@ class Palaute extends Component {
                            aria-hidden={true} onClick={() => this.handleArvosanaChange(5)}/>
                     </div>
                     <div className="palaute-form-comment">
-                        <textarea placeholder="Anna halutessasi kommentteja sivusta"
+                        <textarea placeholder={t('palaute.kommentti')}
                                   onChange={(e) => this.handlePalauteChange(e.target.value)}/>
                     </div>
                     <div className="form-group action-buttons">
-                        <a className={"btn btn-primary " + (this.state.arvosana ? "" : "inactive")}  onClick={() => this.handleSubmit()}>Lähetä</a>
+                        <a className={"btn btn-primary " + (this.state.arvosana ? "" : "inactive")}  onClick={() => this.handleSubmit()}>{t('palaute.lähetä')}</a>
                     </div>
                 </div>
             </div>);

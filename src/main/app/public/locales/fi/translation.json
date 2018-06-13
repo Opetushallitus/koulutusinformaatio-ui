@@ -1,4 +1,11 @@
 {
+  "opintopolku": "Opintopolku",
+  "valikko": "Valikko",
+  "ja": "ja",
+  "sekä": "sekä",
+  "kyllä": "Kyllä",
+  "ei": "Ei",
+  "tuntematon": "Tuntematon",
   "footer": {
     "vastuuvapauslauseke": "Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja koulutuksistaan Opintopolussa. Tietojen oikeellisuuden voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.",
     "palaute": "Anna palautetta",
@@ -6,9 +13,71 @@
     "mikä-opintopolku": "Mikä on Opintopolku",
     "tietoturvaseloste": "Tietoturvaseloste"
   },
-  "header": {
-    "opintopolku": "Opintopolku",
-    "valikko": "VALIKKO"
+  "palaute": {
+    "otsikko": "Mitä mieltä olit sivusta?",
+    "kommentti": "Anna halutessasi kommentteja sivusta",
+    "lähetä": "Lähetä"
   },
-  "palaute": {}
+  "haku": {
+    "etsi": "Etsi",
+    "kehoite": "Etsi ja vertaile koulutuksia ja oppilaitoksia",
+    "ei-hakusanaa-tai-rajainta": "Lisää hakusana tai hakurajain",
+    "koulutukset": "Koulutukset",
+    "oppilaitokset": "Oppilaitokset",
+    "summary": "Etsintäsi tuotti {{count}} osuman",
+    "summary_plural" : "Etsintäsi tuotti {{count}} osumaa",
+    "hakusanalla": "hakusanalla",
+    "koulutustyypillä": "koulutustyypillä",
+    "koulutustyypillä_plural": "koulutustyypeillä",
+    "paikkakunnalla": "paikkakunnalla",
+    "paikkakunnalla_plural": "paikkakunnilla",
+    "kielellä": "kielellä",
+    "kielellä_plural": "kielillä",
+    "näytä": "Näytä",
+    "kaikki": "Kaikki",
+    "koulutustyyppi": "Koulutustyyppi",
+    "lukio": "Lukio",
+    "ammatillinen": "Ammatilliset tutkinnot",
+    "korkeakoulu": "Korkeakoulut",
+    "muut": "Muut kurssit ja koulutukset",
+    "opetuskieli": "Opetuskieli",
+    "suomi": "Suomi",
+    "ruotsi": "Ruotsi",
+    "englanti": "Englanti",
+    "paikkakunta": "Paikkakunta",
+    "paikkakunta-kehoite": "Syötä paikkakunnan nimi",
+    "hae": "Hae",
+    "poista-rajaukset": "Poista rajaukset"
+  },
+  "oppilaitos": {
+    "ei-sähköpostiosoitetta": "Ei sähköpostiosoitetta",
+    "puhelin": "Puhelin",
+    "verkkosivu": "Oppilaitoksen verkkosivu",
+    "käyntiosoite": "Käyntiosoite",
+    "ei-käyntiosoitetta": "(ei käyntiosoitetta)",
+    "postiosoite": "Postiosoite",
+    "ei-postiosoitetta": "(ei postiosoitetta)",
+    "ei-postinumeroa": "(ei postinumeroa)",
+    "ei-postitoimipaikkaa": "(ei postitoimipaikkaa)",
+    "ei-nimeä": "Oppilaitos (ei nimeä)"
+  },
+  "koulutus": {
+    "yleiskuvaus": "Yleiskuvaus",
+    "laajuus": "Laajuus",
+    "kesto": "Kesto",
+    "maksullinen": "Maksullinen",
+    "tutkintonimikkeet": "Tutkintonimikkeet",
+    "osaamisalat": "Osaamisalat",
+    "jatko-opinnot": "Jatko-opinto mahdollisuudet",
+    "tutkinnon-rakenne": "Tutkinnon rakenne",
+    "pääaineet": "Pääaineet tai erikoistumisalat",
+    "alkaa": "Koulutus alkaa",
+    "opetuskieli": "Opetuskieli",
+    "opiskelumuoto": "Opiskelumuoto",
+    "pohjakoulutus": "Pohjakoulutus",
+    "sisältö": "Koulutuksen sisältö",
+    "tuntematon": "Tuntematon koulutus",
+    "ei-nimeä": "Koulutus (ei nimeä)",
+    "tuntematon-nimi": "(Tuntematon nimi)"
+  }
 }

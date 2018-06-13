@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import '../../assets/css/hakutulos.css'
 import {observer, inject} from 'mobx-react';
 import qs from 'query-string';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import {translate} from 'react-i18next';
 
+@translate()
 @inject("hakuStore")
 @observer
 class Sivutus extends Component {
@@ -81,6 +83,7 @@ class Sivutus extends Component {
 
     render() {
         const currentPage = this.props.hakuStore.currentPageNumber;
+        const {t} = this.props;
 
         return (
             <React.Fragment>
@@ -96,10 +99,10 @@ class Sivutus extends Component {
                             </div>
                             <div className="page-size-select">
                                 <select onChange={(e) => this.handlePageSizeChange(e)}>
-                                    <option value={this.props.hakuStore.pageSize}>Näytä</option>
+                                    <option value={this.props.hakuStore.pageSize}>{t('haku.näytä')}</option>
                                     <option value={20}>20</option>
                                     <option value={50}>50</option>
-                                    <option value={this.props.hakuStore.maxPageSize}>Kaikki</option>
+                                    <option value={this.props.hakuStore.maxPageSize}>{t('haku.kaikki')}</option>
                                 </select>
                             </div>
                         </div>)}

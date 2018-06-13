@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import '../../assets/css/hakutulos.css'
 import {observer, inject} from 'mobx-react';
+import {translate} from 'react-i18next';
 
+@translate()
 @inject("hakuStore")
 @observer
 class HakutulosSummary extends Component {
 
     renderKeywordResultSummary() {
+        const {t} = this.props;
         return (
             <div className="col Etsinta">
-                <h1>Etsintäsi tuotti {this.props.hakuStore.totalCount} osumaa termillä
+                <h1>{t('haku.summary', {count: this.props.hakuStore.totalCount})}
                     <span className="highlight"> "{this.props.hakuStore.keyword}"</span>
                 </h1>
             </div>
@@ -17,6 +20,7 @@ class HakutulosSummary extends Component {
     }
 
     renderFilterResultSummary() {
+        const {t} = this.props;
         const koulutustyypit = this.props.hakuStore.filter.koulutus.map((k) => {
             switch (k) {
                 case 'lk': return 'lukiot';
@@ -38,12 +42,12 @@ class HakutulosSummary extends Component {
 
         return (
             <div className="col Etsinta">
-                <h1>{this.props.hakuStore.keywordSet ? 'ja' : 'Etsintäsi tuotti ' + this.props.hakuStore.totalCount + ' osumaa'}
-                    {koulutustyypit ? (this.props.hakuStore.filter.koulutus.length > 1 ? ' koulutustyypeillä ' : ' koulutustyypillä ') : '' }
+                <h1>{this.props.hakuStore.keywordSet ? t('ja') : t('haku.summary', {count: this.props.hakuStore.totalCount})}
+                    {koulutustyypit ? (' ' + t('haku.koulutustyypillä', {count: this.props.hakuStore.filter.koulutus.length})) + ' ' : '' }
                     {koulutustyypit ? <span className="highlight">"{koulutustyypit}"</span> : '' }
-                    {kielet ? (koulutustyypit ? ' ja' : '') + (this.props.hakuStore.filter.kieli.length > 1 ? ' kielillä ' : ' kielellä ') : '' }
+                    {kielet ? (koulutustyypit ? ' ' + t('ja') : '') + (' ' + t('haku.kielellä', {count: this.props.hakuStore.filter.kieli.length})) + ' ' : '' }
                     {kielet ? <span className="highlight">"{kielet}"</span> : '' }
-                    {paikkakunta ? ((koulutustyypit || kielet) ? ' sekä' : '' ) + ' paikkakunnalla ' : '' }
+                    {paikkakunta ? ((koulutustyypit || kielet) ? ' ' + t('sekä') : '' ) + (' ' + t('haku.paikkakunnalla') + ' ') : ''}
                     {paikkakunta ? <span className="highlight"> "{paikkakunta}"</span> : '' }
                 </h1>
             </div>

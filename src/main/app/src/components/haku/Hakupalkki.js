@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Hakurajain from './Hakurajain';
 import {observer, inject} from 'mobx-react';
-import { Link, withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom';
+import {translate} from 'react-i18next';
 
+@translate()
 @inject ("hakuehtoStore")
 @observer
 class Hakupalkki extends Component {
@@ -33,6 +35,7 @@ class Hakupalkki extends Component {
     }
 
     render() {
+        const {t} = this.props;
         const link = '/haku/' + this.props.hakuehtoStore.keyword;
         const search = this.props.hakuehtoStore.searchParams;
         const value = this.props.hakuehtoStore.keyword ? this.props.hakuehtoStore.keyword : '';
@@ -45,14 +48,14 @@ class Hakupalkki extends Component {
                                 <div className={"col-xs-12 col-md-8 header-search" + (this.props.main ? " main" : "")}>
                                     <div className="search">
                                         <input id="regular-input" className="oph-input" type="text"
-                                               placeholder="Etsi ja vertaile koulutuksia ja oppilaitoksia"
+                                               placeholder={t('haku.kehoite')}
                                                value={value}
                                                onChange={this.handleChange}
                                                onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit(e)}}}/>
                                         <Link role="button" to={{
                                             pathname: link,
                                             search: search
-                                        }} className="search-button" onClick={() => {this.closeRajain()}}>ETSI</Link>
+                                        }} className="search-button" onClick={() => {this.closeRajain()}}>{t('haku.etsi')}</Link>
                                     </div>
                                 </div>
                             </div>

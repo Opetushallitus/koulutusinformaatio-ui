@@ -3,9 +3,14 @@ import Hakunavigaatio from '../hakutulos/Hakunavigaatio';
 import {observer, inject} from 'mobx-react';
 import OskariKartta from "./OskariKartta";
 import renderHTML from 'react-render-html';
+import {translate} from 'react-i18next';
+
 
 @inject("restStore")
 @inject("navigaatioStore")
+@translate()
+@inject("hakuStore")
+@inject("urlStore")
 @observer
 class Oppilaitos extends Component {
 
@@ -43,7 +48,7 @@ class Oppilaitos extends Component {
                 return row.email;
             }
         }
-        return "ei sähköpostiosoitetta";
+        return this.props.t("oppilaitos.ei-sähköpostiosoitetta");
     }
 
     //Todo: Selvitä, onko tämä ylipäänsä järkevää
@@ -52,7 +57,7 @@ class Oppilaitos extends Component {
 
         for (let row in data){
             if(row.tyyppi === "puhelin" && row.numero) {
-                return "Puhelin: " + row.numero;
+                return this.props.t("oppilaitos.puhelin") + ": " + row.numero;
             }
         }
         return "";
@@ -64,35 +69,37 @@ class Oppilaitos extends Component {
         for (let row in data){
             if(row.www) {
                 return (
-                    <a href={row.www}><i className='fa fa-external-link'> </i>Oppilaitoksen verkkosivu</a>
+                    <a href={row.www}><i className='fa fa-external-link'> </i>{this.props.t('oppilaitos.verkkosivu')}</a>
                 )
             }
         }
-        return undefined;
+        return "";
     }
 
     parseKayntiOsoite() {
+        const t = this.props.t;
         if(!this.state.oppilaitos.kayntiosoite) {
             return null;
         }
         return (<div><ul>
-            <li><i>Käyntiosoite</i></li>
-            <li>{this.state.oppilaitos.kayntiosoite.osoite ? this.state.oppilaitos.kayntiosoite.osoite : "(ei käyntiosoitetta)"}</li>
-            <li>{this.state.oppilaitos.kayntiosoite.postinumeroUri ? this.state.oppilaitos.kayntiosoite.postinumeroUri+" " : "(ei postinumeroa) "}
-                {this.state.oppilaitos.kayntiosoite.postitoimipaikka ? this.state.oppilaitos.kayntiosoite.postitoimipaikka : "(ei postitoimipaikkaa)"}</li>
+            <li><i>{t("oppilaitos.käyntiosoite")}</i></li>
+            <li>{this.state.oppilaitos.kayntiosoite.osoite ? this.state.oppilaitos.kayntiosoite.osoite : t("oppilaitos.ei-käyntiosoitetta")}</li>
+            <li>{this.state.oppilaitos.kayntiosoite.postinumeroUri ? this.state.oppilaitos.kayntiosoite.postinumeroUri+" " : t("oppilaitos.ei-postinumeroa")}
+                {this.state.oppilaitos.kayntiosoite.postitoimipaikka ? this.state.oppilaitos.kayntiosoite.postitoimipaikka : t("oppilaitos.ei-postitoimipaikkaa")}</li>
         </ul>
         </div>);
     }
 
     parsePostiOsoite() {
+        const t = this.props.t;
         if(!this.state.oppilaitos.postiosoite) {
             return null;
         }
         return (<div><ul>
-            <li><i>Postiosoite</i></li>
-            <li>{this.state.oppilaitos.postiosoite.osoite ? this.state.oppilaitos.postiosoite.osoite : "(ei postiosoitetta)"}</li>
-            <li>{this.state.oppilaitos.postiosoite.postinumeroUri ? this.state.oppilaitos.postiosoite.postinumeroUri+" " : "(ei postinumeroa)"}
-            {this.state.oppilaitos.postiosoite.postitoimipaikka ? this.state.oppilaitos.postiosoite.postitoimipaikka : "(ei postitoimipaikkaa)"}</li>
+            <li><i>{t("oppilaitos.postiosoite")}</i></li>
+            <li>{this.state.oppilaitos.postiosoite.osoite ? this.state.oppilaitos.postiosoite.osoite : t("oppilaitos.ei-käyntiosoitetta")}</li>
+            <li>{this.state.oppilaitos.postiosoite.postinumeroUri ? this.state.oppilaitos.postiosoite.postinumeroUri+" " : t("oppilaitos.ei-postinumeroa")}
+            {this.state.oppilaitos.postiosoite.postitoimipaikka ? this.state.oppilaitos.postiosoite.postitoimipaikka : t("oppilaitos.ei-postitoimipaikkaa")}</li>
         </ul>
         </div>);
     }

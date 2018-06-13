@@ -6,13 +6,16 @@ import HakutulosToggle from "./HakutulosToggle";
 import HakutulosSummary from "./HakutulosSummary";
 import HakutulosBox from "./HakutulosBox";
 import Sivutus from './Sivutus';
+import { translate } from 'react-i18next';
+import i18n from '../../tools/i18n';
 
+@translate()
 @inject("hakuStore")
 @observer
 class Hakutulos extends Component {
 
     getKoulutusNimi(koulutus) {
-        return l.localize(koulutus, "Koulutus (ei nimeä)");
+        return l.localize(koulutus, this.props.t("koulutus.ei-nimeä"), 'fi');
     }
 
     getKoulutusAiheet(koulutus) {
@@ -23,13 +26,13 @@ class Hakutulos extends Component {
     }
 
     getOppilaitosNimi(oppilaitos) {
-        return l.localize(oppilaitos, "Oppilaitos (ei nimeä)");
+        return l.localize(oppilaitos, this.props.t("oppilaitos.ei-nimeä"), 'fi');
     }
 
     renderResultList() {
         if(this.props.hakuStore.toggleKoulutus) {
             return this.props.hakuStore.koulutusResult.map((r) => {
-                const link = '/koulutus/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
+                const link = '/koulutus/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl) + "&lng=" + i18n.language;
                 return (
                     <HakutulosBox key={r.oid}
                                   oid={r.oid}
@@ -42,7 +45,7 @@ class Hakutulos extends Component {
             });
         } else {
             return this.props.hakuStore.oppilaitosResult.map((r) => {
-                const link = '/oppilaitos/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
+                const link = '/oppilaitos/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl) + "&lng=" + i18n.language;;
                 return (
                     <HakutulosBox key={r.oid}
                                   oid={r.oid}
@@ -57,13 +60,13 @@ class Hakutulos extends Component {
     }
 
     render() {
-
+        const {t} = this.props;
         if(!this.props.hakuStore.keywordSet && !this.props.hakuStore.filterSet) {
             return (
                 <React.Fragment>
                     <div className="container">
                         <div className="row">
-                            <h1>Lisää hakusana tai hakurajain
+                            <h1>{t('haku.ei-hakusanaa-tai-rajainta')}
                             </h1>
                         </div>
                     </div>

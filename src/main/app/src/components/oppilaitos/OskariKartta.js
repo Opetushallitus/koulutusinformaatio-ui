@@ -127,14 +127,13 @@ class OskariKartta extends Component {
     }
 
     render() {
-        var kartta = <div/>
         if(this.state.mapinfo && this.state.mapinfo.length > 1) {
-            kartta = <div><iframe title="kartta" id='publishedMap' src={"https://hkp.maanmittauslaitos.fi/hkp/published/fi/"+this.state.mapinfo[1]}/></div>
+            return <div><iframe title="kartta" id='publishedMap' src={"https://hkp.maanmittauslaitos.fi/hkp/published/fi/"+this.state.mapinfo[1]}/></div>
         } else {
             console.log("Oskari-karttapalvelua ei saada käyttöön...");
             console.log(this.state.mapinfo);
         }
-        return (<React.Fragment>{kartta}</React.Fragment>);
+        return (<div/>);
     }
 }
 

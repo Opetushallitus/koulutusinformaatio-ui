@@ -3,7 +3,9 @@ import { Localizer as l } from '../../tools/Utils';
 import AvoinInfoBox from "./AvoimenKurssinInfoBox";
 import KoulutusSidebar from "./KoulutusSidebar";
 import renderHTML from 'react-render-html';
+import {translate} from 'react-i18next';
 
+@translate()
 class AvoinYoKoulutus extends Component {
 
     constructor(props) {
@@ -24,7 +26,7 @@ class AvoinYoKoulutus extends Component {
     }
 
     parseNimi() {
-        return l.localize(this.state.result.searchData, "(Tuntematon nimi)");
+        return l.localize(this.state.result.searchData, this.props.t("koulutus.tuntematon-nimi"), 'fi');
     }
 
     parseKuvaus() {
@@ -39,6 +41,7 @@ class AvoinYoKoulutus extends Component {
     }
 
     render() {
+        const {t} = this.props;
         return (
             <div className="container">
                 <div className="row info-page">
@@ -53,7 +56,7 @@ class AvoinYoKoulutus extends Component {
                             </div>
                         </div>
                         <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">Yleiskuvaus</h2>
+                            <h2 className="line_otsikko">{t("koulutus.yleiskuvaus")}</h2>
                             <div className="">
                                 {this.parseKuvaus()}
                                 <ul>

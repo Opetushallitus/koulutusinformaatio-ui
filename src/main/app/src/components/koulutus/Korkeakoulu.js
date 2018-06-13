@@ -3,8 +3,9 @@ import KoulutusInfoBox from './KoulutusInfoBox';
 import KoulutusSidebar from './KoulutusSidebar';
 import { Localizer as l } from '../../tools/Utils';
 import renderHTML from 'react-render-html';
+import {translate} from 'react-i18next'
 
-
+@translate()
 class Korkeakoulu extends Component {
 
     constructor(props) {
@@ -25,8 +26,10 @@ class Korkeakoulu extends Component {
     }
 
     parseAineListaus() {
+        const {t} = this.props;
+        let i = 0;
         if(this.state.result.oppiaineet.length > 0) {
-            return this.state.result.oppiaineet.map(o => <li key={o.oppiaine ? o.oppiaine : ''} className="osaamisalat_list_item">{o.oppiaine ? o.oppiaine : "Tuntematon"}</li>);
+            return this.state.result.oppiaineet.map(o => <li key={o.oppiaine ? o.oppiaine : ''} className="osaamisalat_list_item">{o.oppiaine ? o.oppiaine : t("tuntematon")}</li>);
         } else {
             return this.state.result.aihees.map(a => <li key={a.uri} className="osaamisalat_list_item">{l.localize(a.nimi)}</li>);
         }
@@ -34,29 +37,31 @@ class Korkeakoulu extends Component {
 
     parseNimi() {
         if(this.state.result) {
-            return l.localize(this.state.result.searchData, "Tuntematon koulutus")
+            return l.localize(this.state.result.searchData, this.props.t('koulutus.tuntematon'))
         }
         return ""
     }
 
     parseInfoBoxFields() {
+        const {t} = this.props;
         const fields = [];
         // laajuus, kesto, maksullinen, tutkintonimike
 
         const opintojenLaajuusarvo = l.localize(this.props.result.opintojenLaajuusarvo, '-');
         const opintojenLaajuusyksikko = l.localize(this.props.result.opintojenLaajuusyksikko);
-        fields.push(["Koulutuksen laajuus", opintojenLaajuusarvo && (opintojenLaajuusarvo + " " + opintojenLaajuusyksikko)]);
+        fields.push([t('koulutus.laajuus'), opintojenLaajuusarvo && (opintojenLaajuusarvo + " " + opintojenLaajuusyksikko)]);
         const suunniteltuKesto = this.props.result.suunniteltuKestoArvo;
         const suunniteltuKestoTyyppi = l.localize(this.props.result.suunniteltuKestoTyyppi);
-        fields.push(["Suunniteltu kesto", suunniteltuKesto + " " + suunniteltuKestoTyyppi]);
+        fields.push([t('koulutus.kesto'), suunniteltuKesto + " " + suunniteltuKestoTyyppi]);
 
-        fields.push(["Maksullinen", this.props.result.opintojenMaksullisuus ? "Kyllä" : "Ei"]);
-        fields.push(["Tutkintonimikkeet", this.props.result.tutkintonimikes ? this.props.result.tutkintonimikes.map(t => l.localize(t) + " ") : '-']);
+        fields.push([t('koulutus.maksullinen'), this.props.result.opintojenMaksullisuus ? t('kyllä') : t('ei')]);
+        fields.push([t('koulutus.tutkintonimikkeet'), this.props.result.tutkintonimikes ? this.props.result.tutkintonimikes.map(t => l.localize(t) + " ") : '-']);
 
         return fields;
     }
 
     render() {
+        const {t} = this.props;
         const jatkoOpinnot = l.localize(this.state.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined);
         return (
             <div className="container">
@@ -72,7 +77,7 @@ class Korkeakoulu extends Component {
                             </div>
                         </div>
                         <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">Pääaineet tai erikoistumisalat</h2>
+                            <h2 className="line_otsikko">{t('koulutus.pääaineet')}</h2>
                             <div className="">
                                 <ul>
                                     {this.parseAineListaus()}
@@ -95,7 +100,7 @@ class Korkeakoulu extends Component {
 
                         {jatkoOpinnot &&
                         <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">Jatko-opintomahdollisuudet</h2>
+                            <h2 className="line_otsikko">{t('koulutus.jatko-opinnot')}</h2>
                             <div className="">
                                 {renderHTML(jatkoOpinnot)}
                             </div>

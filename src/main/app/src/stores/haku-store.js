@@ -1,4 +1,5 @@
 import { observable, computed, action, runInAction } from "mobx"
+import i18n from "../tools/i18n";
 
 class HakuStore {
     @observable keyword = '';
@@ -142,6 +143,7 @@ class HakuStore {
             + (this.filter.paikkakunta ? '&paikkakunta=' + this.filter.paikkakunta : '')
             + (this.filter.koulutus.length ? '&koulutustyyppi=' + this.filter.koulutus.join(',') : '')
             + (this.filter.kieli.length ? '&kieli=' + this.filter.kieli.join(',') : '')
+            + "&lng=" + i18n.language;
     }
 
     @computed get maxPageNumber() {

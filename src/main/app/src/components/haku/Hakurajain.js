@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import Hakurajainvalinta from './Hakurajainvalinta';
 import {observer, inject} from 'mobx-react';
-import { Link } from 'react-router-dom'
-import { withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { translate } from 'react-i18next';
 
+@translate()
 @inject ("hakuehtoStore")
 @observer
 class Hakurajain extends Component {
@@ -52,6 +54,7 @@ class Hakurajain extends Component {
     }
 
     render() {
+        const {t} = this.props;
         const link = '/haku/' + this.props.hakuehtoStore.keyword;
         const search = this.props.hakuehtoStore.searchParams;
         const value = this.props.hakuehtoStore.filter.paikkakunta ? this.props.hakuehtoStore.filter.paikkakunta : '';
@@ -67,28 +70,28 @@ class Hakurajain extends Component {
                         <div className="filter-options">
                             <div className="filters-main">
                                 <div className="form-group">
-                                    <h5>Koulutustyyppi</h5>
-                                    <Hakurajainvalinta text="Lukio" checked={this.props.hakuehtoStore.filter.koulutus.indexOf('lk') !== -1}
+                                    <h5>{t('haku.koulutustyyppi')}</h5>
+                                    <Hakurajainvalinta text={t('haku.lukio')} checked={this.props.hakuehtoStore.filter.koulutus.indexOf('lk') !== -1}
                                                        handleChange={() => this.handleKoulutusChange('lk')} color="1"/>
-                                    <Hakurajainvalinta text="Ammatilliset tutkinnot" checked={this.props.hakuehtoStore.filter.koulutus.indexOf('amm') !== -1}
+                                    <Hakurajainvalinta text={t('haku.ammatillinen')} checked={this.props.hakuehtoStore.filter.koulutus.indexOf('amm') !== -1}
                                                        handleChange={() => this.handleKoulutusChange('amm')} color="2"/>
-                                    <Hakurajainvalinta text="Korkeakoulut" checked={this.props.hakuehtoStore.filter.koulutus.indexOf('kk') !== -1}
+                                    <Hakurajainvalinta text={t('haku.korkeakoulu')} checked={this.props.hakuehtoStore.filter.koulutus.indexOf('kk') !== -1}
                                                        handleChange={() => this.handleKoulutusChange('kk')} color="3"/>
-                                    <Hakurajainvalinta text="Muut kurssit ja koulutukset" checked={this.props.hakuehtoStore.filter.koulutus.indexOf('muu') !== -1}
+                                    <Hakurajainvalinta text={t('haku.muut')} checked={this.props.hakuehtoStore.filter.koulutus.indexOf('muu') !== -1}
                                                        handleChange={() => this.handleKoulutusChange('muu')} color="5"/>
                                 </div>
                                 <div className="form-group">
-                                    <h5>Opetuskieli</h5>
-                                    <Hakurajainvalinta text="Suomi" checked={this.props.hakuehtoStore.filter.kieli.indexOf('fi') !== -1}
+                                    <h5>{t('haku.opetuskieli')}</h5>
+                                    <Hakurajainvalinta text={t('haku.suomi')} checked={this.props.hakuehtoStore.filter.kieli.indexOf('fi') !== -1}
                                                        handleChange={() => this.handleKieliChange('fi')}/>
-                                    <Hakurajainvalinta text="Ruotsi" checked={this.props.hakuehtoStore.filter.kieli.indexOf('sv') !== -1}
+                                    <Hakurajainvalinta text={t('haku.ruotsi')} checked={this.props.hakuehtoStore.filter.kieli.indexOf('sv') !== -1}
                                                        handleChange={() => this.handleKieliChange('sv')}/>
-                                    <Hakurajainvalinta text="Englanti" checked={this.props.hakuehtoStore.filter.kieli.indexOf('en') !== -1}
+                                    <Hakurajainvalinta text={t('haku.englanti')} checked={this.props.hakuehtoStore.filter.kieli.indexOf('en') !== -1}
                                                        handleChange={() => this.handleKieliChange('en')}/>
                                 </div>
                                 <div className="form-group">
-                                    <h5 className="filter-title">Paikkakunta</h5>
-                                    <input className="oph-input" type="text" placeholder="Syötä paikkakunnan nimi"
+                                    <h5 className="filter-title">{t('haku.paikkakunta')}</h5>
+                                    <input className="oph-input" type="text" placeholder={t('haku.paikkakunta-kehoite')}
                                            onChange={(e) =>this.handlePaikkakuntaChange(e.target.value)}
                                            value={value}
                                            onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit(e)}}}/>
@@ -97,11 +100,11 @@ class Hakurajain extends Component {
                                     <Link className="btn btn-primary" to={{
                                         pathname: link,
                                         search: search
-                                    }} onClick={() => {this.toggleRajain()}}>HAE</Link>
+                                    }} onClick={() => {this.toggleRajain()}}>{t('haku.hae')}</Link>
                                     <Link className="clear-compare" to={{
                                         pathname: link,
                                         search: ''
-                                    }} onClick={() => {this.clear()}}>Poista rajaukset</Link>
+                                    }} onClick={() => {this.clear()}}>{t('haku.poista-rajaukset')}</Link>
                                 </div>
                             </div>
                         </div>

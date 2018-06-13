@@ -12,7 +12,7 @@ import './assets/css/font-awesome.min.css'
 import './assets/css/bootstrap.min.css'
 import './assets/css/oph-styles-min.css';
 import './assets/css/styles.css';
-import i18n from './i18n';
+import i18n from './tools/i18n';
 import { I18nextProvider } from 'react-i18next';
 //import registerServiceWorker from './registerServiceWorker';
 

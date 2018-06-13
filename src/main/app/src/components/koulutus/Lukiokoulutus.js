@@ -4,8 +4,9 @@ import KoulutusInfoBox from './KoulutusInfoBox';
 import KoulutusSidebar from './KoulutusSidebar';
 import {Localizer as l} from '../../tools/Utils';
 import renderHTML from 'react-render-html';
+import {translate} from 'react-i18next';
 
-
+@translate()
 class Korkeakoulu extends Component {
 
     constructor(props) {
@@ -26,34 +27,36 @@ class Korkeakoulu extends Component {
 
     parseNimi() {
         if(this.state.result) {
-            return l.localize(this.state.result.searchData.nimi, "Tuntematon koulutus") + ( this.state.result.organisaatio.nimi ? ", " + this.state.result.organisaatio.nimi : '')
+            return l.localize(this.state.result.searchData.nimi, this.props.t("koulutus.tuntematon")) + ( this.state.result.organisaatio.nimi ? ", " + this.state.result.organisaatio.nimi : '')
         }
         return ""
     }
 
     parseInfoBoxFields() {
+        const {t} = this.props;
         const fields = [];
         // alku, kieli, laajuus, kesto, muoto, pohja
         const aloitusPvm = new Date(Number(this.props.result.koulutuksenAlkamisPvms[0]));
-        fields.push(["Koulutus alkaa", aloitusPvm.getDate() + "." + (aloitusPvm.getMonth() + 1) + "." + aloitusPvm.getFullYear()]);
+        fields.push([t('koulutus.alkaa'), aloitusPvm.getDate() + "." + (aloitusPvm.getMonth() + 1) + "." + aloitusPvm.getFullYear()]);
 
-        fields.push(["Opetuskieli", l.localize(this.props.result.opetuskielis[0])]);
+        fields.push([t('koulutus.opetuskieli'), l.localize(this.props.result.opetuskielis[0])]);
 
         const opintojenLaajuusarvo = l.localize(this.props.result.opintojenLaajuusarvo, '-');
         const opintojenLaajuusyksikko = l.localize(this.props.result.opintojenLaajuusyksikko);
-        fields.push(["Koulutuksen laajuus", opintojenLaajuusarvo && (opintojenLaajuusarvo + " " + opintojenLaajuusyksikko)]);
+        fields.push([t('koulutus.laajuus'), opintojenLaajuusarvo && (opintojenLaajuusarvo + " " + opintojenLaajuusyksikko)]);
 
         const suunniteltuKesto = this.props.result.suunniteltuKestoArvo;
         const suunniteltuKestoTyyppi = l.localize(this.props.result.suunniteltuKestoTyyppi);
-        fields.push(["Suunniteltu kesto", suunniteltuKesto + " " + suunniteltuKestoTyyppi]);
+        fields.push([t('koulutus.kesto'), suunniteltuKesto + " " + suunniteltuKestoTyyppi]);
 
-        fields.push(["Opiskelumuoto", this.props.result.opetusmuodos.map(t => l.localize(t) + " ")]);
-        fields.push(["Pohjakoulutus", l.localize(this.props.result.pohjakoulutusvaatimus)]);
+        fields.push([t('koulutus.opiskelumuoto'), this.props.result.opetusmuodos.map(t => l.localize(t) + " ")]);
+        fields.push([t('koulutus.pohjakoulutus'), l.localize(this.props.result.pohjakoulutusvaatimus)]);
 
         return fields;
     }
 
     render() {
+        const {t} = this.props;
         const jatkoOpinnot = l.localize(this.state.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined);
         const koulutuksenSisalto = l.localize(this.state.result.kuvausKomo.TAVOITTEET, undefined);
 
@@ -72,7 +75,7 @@ class Korkeakoulu extends Component {
                         </div>
 
                         {koulutuksenSisalto && <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">Koulutuksen sisältö</h2>
+                            <h2 className="line_otsikko">{t('koulutus.sisältö')}</h2>
                             <div className="">
                                 {renderHTML(koulutuksenSisalto)}
                             </div>
@@ -80,7 +83,7 @@ class Korkeakoulu extends Component {
 
                         {jatkoOpinnot &&
                         <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">Jatko-opintomahdollisuudet</h2>
+                            <h2 className="line_otsikko">{t('koulutus.jatko-opinnot')}</h2>
                             <div className="">
                                 {renderHTML(jatkoOpinnot)}
                             </div>
