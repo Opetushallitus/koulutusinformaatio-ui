@@ -3,7 +3,7 @@ import superagent from 'superagent';
 import {observer, inject} from 'mobx-react';
 import Korkeakoulu from "./Korkeakoulu";
 import Ammatillinen from "./Ammatillinen";
-import Hakunavigaatio from './../haku/Hakunavigaatio';
+import Hakunavigaatio from './../hakutulos/Hakunavigaatio';
 import AvoinYoKoulutus from "./AvoinYo";
 import Lukiokoulutus from "./Lukiokoulutus";
 

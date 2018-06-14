@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Hakunavigaatio from '../haku/Hakunavigaatio';
+import Hakunavigaatio from '../hakutulos/Hakunavigaatio';
 import superagent from 'superagent';
 import {observer, inject} from 'mobx-react';
 import qs from 'query-string';
