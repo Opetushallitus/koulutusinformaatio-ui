@@ -1,6 +1,4 @@
 import { observable, computed, action, runInAction } from "mobx"
-import qs from 'query-string';
-import { matchPath } from 'react-router'
 
 class HakuStore {
     @observable keyword = '';

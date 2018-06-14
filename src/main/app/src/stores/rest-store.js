@@ -1,4 +1,4 @@
-import { observable, action, runInAction, configure } from "mobx"
+import { observable, action, /*configure*/ } from "mobx"
 import superagent from 'superagent';
 
 //configure({ enforceActions: true })
