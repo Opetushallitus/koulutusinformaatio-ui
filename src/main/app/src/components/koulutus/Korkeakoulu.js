@@ -27,7 +27,6 @@ class Korkeakoulu extends Component {
 
     parseAineListaus() {
         const {t} = this.props;
-        let i = 0;
         if(this.state.result.oppiaineet.length > 0) {
             return this.state.result.oppiaineet.map(o => <li key={o.oppiaine ? o.oppiaine : ''} className="osaamisalat_list_item">{o.oppiaine ? o.oppiaine : t("tuntematon")}</li>);
         } else {

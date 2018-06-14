@@ -4,13 +4,12 @@ import {observer, inject} from 'mobx-react';
 import OskariKartta from "./OskariKartta";
 import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next';
+import { Localizer as l } from "../../tools/Utils";
 
 
 @inject("restStore")
 @inject("navigaatioStore")
 @translate()
-@inject("hakuStore")
-@inject("urlStore")
 @observer
 class Oppilaitos extends Component {
 
@@ -105,34 +104,35 @@ class Oppilaitos extends Component {
     }
 
     safeParseYleiskuvaus() {
-        var data = this.state.oppilaitos;
-        var result = <div></div>;
-        if(data && data.yleiskuvaus && data.yleiskuvaus["kieli_fi#1"])
-            result = <div>{renderHTML(data.yleiskuvaus["kieli_fi#1"])}</div>
-        return result;
+        const data = this.state.oppilaitos;
+        const kieli = this.props.i18n.language;
+        if(data && data.yleiskuvaus && data.yleiskuvaus["kieli_" + kieli + "#1"])
+            return <div>{renderHTML(data.yleiskuvaus["kieli_" + kieli + "#1"])}</div>
+        return "";
     }
 
     parseSome() {
         if (!this.state.oppilaitos.metadata || !this.state.oppilaitos.metadata.data)  {
             console.log("Ei tarvittavia sometietoja saatavilla");
-            return <div className='social'></div>;
+            return <div className='social'/>;
         }
-        var data = this.state.oppilaitos.metadata.data;
-        var fb = <li></li>;
-        var twitter = <li></li>;
-        var insta = <li></li>;
+        const data = this.state.oppilaitos.metadata.data;
+        let fb = "";
+        let twitter = "";
+        let insta = "";
 
-        for (var i = 1; i < 10; i++) {
-            var key = "sosiaalinenmedia_"+i+"#1";
+        for (let i = 1; i < 10; i++) {
+            const key = "sosiaalinenmedia_"+i+"#1";
             if(data[key]) {
-                var k = data[key];
-                if(k["kieli_fi#1"]) {
-                    if(k["kieli_fi#1"].indexOf('facebook') !== -1 ) {
-                        fb = <li><a href={k["kieli_fi#1"]}><i className='fa fa-facebook-square fa-3x' /></a></li>
-                    } else if (k["kieli_fi#1"].indexOf('twitter') !== -1) {
-                        twitter = <li><a href={k["kieli_fi#1"]}><i className='fa fa-twitter-square fa-3x' /></a></li>
-                    } else if (k["kieli_fi#1"].indexOf('instagram') !== -1) {
-                        insta = <li><a href={k["kieli_fi#1"]}><i className='fa fa-instagram fa-3x' /></a></li>
+                const k = data[key];
+                const kieli = "kieli_" + this.props.i18n.language + "#1";
+                if(k[kieli]) {
+                    if(k[kieli].indexOf('facebook') !== -1 ) {
+                        fb = <li><a href={k[kieli]}><i className='fa fa-facebook-square fa-3x' /></a></li>
+                    } else if (k[kieli].indexOf('twitter') !== -1) {
+                        twitter = <li><a href={k[kieli]}><i className='fa fa-twitter-square fa-3x' /></a></li>
+                    } else if (k[kieli].indexOf('instagram') !== -1) {
+                        insta = <li><a href={k[kieli]}><i className='fa fa-instagram fa-3x' /></a></li>
                     }
                 }
 
@@ -152,7 +152,7 @@ class Oppilaitos extends Component {
     }
 
     luoKarttaJosOsoiteTiedossa() {
-        var data = this.state.oppilaitos.kayntiosoite;
+        const data = this.state.oppilaitos.kayntiosoite;
         if(data && data.osoite && data.postitoimipaikka) {
             return <OskariKartta osoite={data.osoite} postitoimipaikka={data.postitoimipaikka} />;
         }
@@ -170,7 +170,7 @@ class Oppilaitos extends Component {
                 <div className='container'>
                     <div className='row info-page oppilaitos'>
                         <div className='col-xs-12 col-md-9 left-column'>
-                            <h1><i className='fa fa-circle'></i>{this.state.oppilaitos.nimi.fi}</h1>
+                            <h1><i className='fa fa-circle'></i>{l.localize(this.state.oppilaitos.nimi, "", "fi")}</h1>
                             <div className='oppilaitos-yleiskuvaus'>
                                 <div>{this.safeParseYleiskuvaus()}</div>
                             </div>
