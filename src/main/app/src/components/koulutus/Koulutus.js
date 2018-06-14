@@ -37,7 +37,6 @@ class Koulutus extends Component {
     }
 
     chooseKoulutus() {
-        console.log(this.state.koulutus)
         if(this.state.koulutus) {
             switch(this.state.koulutus.searchData.tyyppi) {
                 case 'lk': return <Lukiokoulutus oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>; //TODO
