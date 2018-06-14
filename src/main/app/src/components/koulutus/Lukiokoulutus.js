@@ -16,9 +16,17 @@ class Korkeakoulu extends Component {
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.props = nextProps;
+        this.setState({
+            oid: this.props.oid,
+            result: this.props.result
+        });
+    }
+
     parseNimi() {
         if(this.state.result) {
-            return l.localize(this.state.result.koulutuskoodi, "Tuntematon koulutus")
+            return l.localize(this.state.result.searchData.nimi, "Tuntematon koulutus") + ( this.state.result.organisaatio.nimi ? ", " + this.state.result.organisaatio.nimi : '')
         }
         return ""
     }

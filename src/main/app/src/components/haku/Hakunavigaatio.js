@@ -1,26 +1,49 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import '../../assets/css/hakutulos.css'
+import {observer, inject} from 'mobx-react';
+import { withRouter } from 'react-router-dom'
+import qs from 'query-string';
 
+@inject("navigaatioStore")
+@observer
 class Hakunavigaatio extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
+        const search = qs.parse(this.props.location.search);
         this.state = {
-          selected: props.selected,
-          hakuUrl: props.haku ? props.haku : "/haku"
+            hakuUrl: search.haku ? search.haku : "/haku"
         };
     }
 
+    prev(event) {
+        this.props.navigaatioStore.withPrevOid((oid) => {this.navigate(event, oid)})
+    }
+
+    next(event) {
+        this.props.navigaatioStore.withNextOid((oid) => {this.navigate(event, oid)})
+    }
+
+    navigate(event, oid) {
+        event.preventDefault();
+        this.props.history.push({pathname: this.props.match.path.replace(':oid', oid), search: this.props.location.search});
+    }
+
     render() {
+        const prevLink = this.props.navigaatioStore.hasPrev ? <a onClick={(e) => {this.prev(e)}}>
+            <i className="fa fa-circle-thin" aria-hidden="true"/>
+        </a> : <span/>;
+        const nextLink = this.props.navigaatioStore.hasNext ? <a onClick={(e) => {this.next(e)}}>
+            <i className="fa fa-circle-thin" aria-hidden="true"/>
+        </a> : <span/>;
+
         return (
             <div className="container-fluid app-navigation-bar hakupalkki">
                 <div className="container">
                     <div className="row">
                         <div className="col-xs-4 previous">
-                            {/*<a href="#"> Poistettu 1. demoversiosta
-                                <i className="fa fa-circle-thin" aria-hidden="true"/>
-                            </a>*/}
+                            {prevLink}
                         </div>
                         <div className="col-xs-4 search">
                             <Link to={this.state.hakuUrl}>
@@ -28,9 +51,7 @@ class Hakunavigaatio extends Component {
                             </Link>
                         </div>
                         <div className="col-xs-4 next">
-                            {/*<a href="#"> Poistettu 1. demoversiosta
-                                <i className="fa fa-circle-thin" aria-hidden="true"/>
-                            </a>*/}
+                            {nextLink}
                         </div>
                     </div>
                 </div>
@@ -39,4 +60,4 @@ class Hakunavigaatio extends Component {
     }
 }
 
-export default Hakunavigaatio;
+export default withRouter(Hakunavigaatio);

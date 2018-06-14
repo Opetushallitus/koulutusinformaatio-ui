@@ -15,6 +15,14 @@ class AvoinYoKoulutus extends Component {
         console.log("Created element AoinYoKoulutus. Data: %O", this.state.result);
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.props = nextProps;
+        this.setState({
+            oid: this.props.oid,
+            result: this.props.result
+        });
+    }
+
     parseNimi() {
         return l.localize(this.state.result.searchData, "(Tuntematon nimi)");
     }

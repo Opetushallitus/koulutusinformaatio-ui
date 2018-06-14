@@ -16,6 +16,14 @@ class Korkeakoulu extends Component {
         console.log("Created element Korkeakoulu with data: {}", this.state.result)
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.props = nextProps;
+        this.setState({
+            oid: this.props.oid,
+            result: this.props.result
+        });
+    }
+
     parseAineListaus() {
         if(this.state.result.oppiaineet.length > 0) {
             return this.state.result.oppiaineet.map(o => <li className="osaamisalat_list_item">{o.oppiaine ? o.oppiaine : "Tuntematon"}</li>);
