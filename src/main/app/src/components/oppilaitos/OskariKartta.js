@@ -7,9 +7,9 @@ class OskariKartta extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            result: undefined,
             osoitetieto: [op.getCoreAddress(props.osoite), props.postitoimipaikka],
-            mapinfo: OskariKartta.selectMapBasedOnLocation()
+            mapinfo: OskariKartta.selectMapBasedOnLocation(),
+            channel: undefined
         };
     }
 
@@ -21,8 +21,19 @@ class OskariKartta extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.props = nextProps;
+        this.setState({
+            osoitetieto: [op.getCoreAddress(this.props.osoite), this.props.postitoimipaikka]
+        }, () => {
+            const data = this.state.osoitetieto[0];
+            console.log("Triggering map location search for " + data);
+            this.state.channel.postRequest('SearchRequest', data);
+        });
+    }
+
     shouldComponentUpdate() {
-        //return false;
+        return true;
     }
 
     static selectMapBasedOnLocation() {
@@ -43,6 +54,8 @@ class OskariKartta extends Component {
         const channel = OskariRPC.connect(
             iFrame,
             IFRAME_DOMAIN);
+
+        this.setState({channel: channel})
 
         channel.handleEvent(
             'SearchResultEvent',
