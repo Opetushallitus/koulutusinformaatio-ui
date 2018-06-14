@@ -1,5 +1,6 @@
 import { observable, action, /*configure*/ } from "mobx"
 import superagent from 'superagent';
+import i18n from '../tools/i18n';
 
 //configure({ enforceActions: true })
 
@@ -26,7 +27,8 @@ class RestStore {
                 size: paging.pageSize,
                 paikkakunta: filter.paikkakunta,
                 koulutustyyppi: filter.koulutus.join(','),
-                kieli: filter.kieli.map((k) => 'kieli_' + k).join(',')})
+                kieli: filter.kieli.map((k) => 'kieli_' + k).join(','),
+                lng: i18n.language})
             .catch(this.handleError))
     };
 
@@ -39,7 +41,8 @@ class RestStore {
                 size: paging.pageSize,
                 paikkakunta: filter.paikkakunta,
                 koulutustyyppi: filter.koulutus.join(','),
-                kieli: filter.kieli.map((k) => 'kieli_' + k).join(',')})
+                kieli: filter.kieli.map((k) => 'kieli_' + k).join(','),
+                lng: i18n.language})
             .catch(this.handleError))
     };
 

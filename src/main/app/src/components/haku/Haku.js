@@ -3,7 +3,7 @@ import qs from 'query-string';
 import '../../assets/css/hakutulos.css'
 import {observer, inject} from 'mobx-react';
 import Hakutulos from '../hakutulos/Hakutulos';
-import { matchPath } from 'react-router'
+import { matchPath } from 'react-router';
 
 @inject("hakuStore")
 @inject("hakuehtoStore")
