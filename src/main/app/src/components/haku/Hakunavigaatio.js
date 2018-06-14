@@ -9,12 +9,27 @@ import qs from 'query-string';
 @observer
 class Hakunavigaatio extends Component {
 
+    initHakuUrl() {
+        const search = qs.parse(this.props.location.search);
+        this.setState({
+            hakuUrl: search.haku ? search.haku : "/haku"
+        });
+        if(search.haku) {
+            this.props.navigaatioStore.load(search.haku)
+        }
+    }
+
     constructor(props) {
         super(props);
-        const search = qs.parse(this.props.location.search);
         this.state = {
-            hakuUrl: search.haku ? search.haku : "/haku"
+            hakuUrl: "/haku"
         };
+        this.initHakuUrl();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.props = nextProps;
+        this.initHakuUrl();
     }
 
     prev(event) {
@@ -27,7 +42,7 @@ class Hakunavigaatio extends Component {
 
     navigate(event, oid) {
         event.preventDefault();
-        this.props.history.push({pathname: this.props.match.path.replace(':oid', oid), search: this.props.location.search});
+        this.props.history.push({pathname: this.props.match.path.replace(':oid', oid), search: this.props.navigaatioStore.getSearchParams});
     }
 
     render() {

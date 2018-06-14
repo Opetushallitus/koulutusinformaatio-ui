@@ -37,6 +37,16 @@ class NavigaatioStore {
         return this.isFirstOid ? !this.hakuStore.isFirstPage : this.oids.length;
     }
 
+    @computed get getSearchParams() {
+        return '?haku=' + encodeURIComponent(this.hakuStore.createHakuUrl)
+    }
+
+    @action
+    load = (url) => {
+        const splitted = url.split('?');
+        this.hakuStore.loadFromUrl(splitted[0], splitted[1]);
+    }
+
     @action
     withNextOid = (action) => {
         if(this.isLastOid) {

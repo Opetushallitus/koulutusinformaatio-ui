@@ -1,4 +1,6 @@
 import { observable, computed, action, runInAction } from "mobx"
+import qs from 'query-string';
+import { matchPath } from 'react-router'
 
 class HakuStore {
     @observable keyword = '';
@@ -21,6 +23,36 @@ class HakuStore {
     constructor(rest) {
         this.rest = rest;
     }
+
+    @action
+    loadFromUrl = (pathname, searchString) => {
+        const search = qs.parse(searchString);
+        const match = matchPath(pathname, {
+            path: '/haku/:keyword',
+            exact: true,
+            strict: false
+        });
+        const keyword = match ? match.params.keyword : '';
+        const keywordChange = this.setKeyword(keyword);
+        const filterChange = this.setFilter({
+            koulutus: search.koulutustyyppi,
+            kieli: search.kieli,
+            paikkakunta: search.paikkakunta });
+        const pagingChange = this.setPaging({
+            pageOppilaitos: search.opage,
+            pageKoulutus: search.kpage,
+            pageSize: search.pagesize
+        });
+
+        this.setToggle(search.toggle);
+
+        if(keywordChange || filterChange || pagingChange) {
+            this.searchAll();
+            if(!search.toggle) {
+                this.setToggle(this.koulutusCount >= this.oppilaitosCount ? 'koulutus' : 'oppilaitos')
+            }
+        }
+    };
 
     @computed get keywordSet() {
         return this.keyword && !(0 === this.keyword.length);
