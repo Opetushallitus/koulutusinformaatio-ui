@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Palaute from "./Palaute";
-// import { Link } from 'react-router-dom'
 import { translate } from 'react-i18next';
-import i18n from '../../tools/i18n';
 
 @translate()
 class DefaultFooter extends Component {
@@ -63,28 +61,28 @@ class DefaultFooter extends Component {
                         <div className="row">
                             <p>{t('footer.vastuuvapauslauseke')}</p>
                             <ul className="social-media">
-                                <li><a onClick={() => i18n.changeLanguage('fi')}>Suomeksi</a></li>
-                                <li><a onClick={() => i18n.changeLanguage('en')}>In English</a></li>
-                                <li><a onClick={() => i18n.changeLanguage('sv')}>På svenska</a></li>
-                                {/*<li className="separator">|</li>*/}
-                                {/*<li>*/}
-                                    {/*<a href="">*/}
-                                        {/*<img src={require('../../assets/images/twitter-icon.png')} alt=""/>*/}
-                                    {/*</a>*/}
-                                     {/*/!*<i  className="fa fa-twitter-square" aria-hidden="true"></i>*!/*/}
-                                {/*</li>*/}
-                                {/*<li>*/}
-                                    {/*<a href="">*/}
-                                        {/*<img src={require('../../assets/images/fb-icon.png')} alt=""/>*/}
-                                    {/*</a>*/}
-                                     {/*/!*<i href="" className="fa fa-facebook-square" aria-hidden="true"></i>*!/*/}
-                                {/*</li>*/}
-                                {/*<li>*/}
-                                    {/*<a href="">*/}
-                                        {/*<img src={require('../../assets/images/insta-icon.png')} alt=""/>*/}
-                                    {/*</a>*/}
-                                     {/*/!*<i href="" className="fa fa-instagram" aria-hidden="true"></i>*!/*/}
-                                {/*</li>*/}
+                                <li><a onClick={() => this.props.i18n.changeLanguage('fi')}>Suomeksi</a></li>
+                                <li><a onClick={() => this.props.i18n.changeLanguage('en')}>In English</a></li>
+                                <li><a onClick={() => this.props.i18n.changeLanguage('sv')}>På svenska</a></li>
+                                {/*<li className="separator">|</li>
+                                <li>
+                                    <a href="">
+                                        <img src={require('../../assets/images/twitter-icon.png')} alt=""/>
+                                    </a>
+                                    //<i  className="fa fa-twitter-square" aria-hidden="true"></i>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <img src={require('../../assets/images/fb-icon.png')} alt=""/>
+                                    </a>
+                                     //<i href="" className="fa fa-facebook-square" aria-hidden="true"></i>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <img src={require('../../assets/images/insta-icon.png')} alt=""/>
+                                    </a>
+                                     //<i href="" className="fa fa-instagram" aria-hidden="true"></i>
+                                </li>*/}
                             </ul>
                         </div>
                     </div>

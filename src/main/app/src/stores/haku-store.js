@@ -135,6 +135,7 @@ class HakuStore {
             + (this.filter.paikkakunta ? '&paikkakunta=' + this.filter.paikkakunta : '')
             + (this.filter.koulutus.length ? '&koulutustyyppi=' + this.filter.koulutus.join(',') : '')
             + (this.filter.kieli.length ? '&kieli=' + this.filter.kieli.join(',') : '')
+            + "&lng=" + i18n.language;
     }
 
     @computed get searchParams() {
@@ -143,7 +144,7 @@ class HakuStore {
             + (this.filter.paikkakunta ? '&paikkakunta=' + this.filter.paikkakunta : '')
             + (this.filter.koulutus.length ? '&koulutustyyppi=' + this.filter.koulutus.join(',') : '')
             + (this.filter.kieli.length ? '&kieli=' + this.filter.kieli.join(',') : '')
-            + "&lng=" + i18n.language;
+            + "&lng=" + i18n.language
     }
 
     @computed get maxPageNumber() {

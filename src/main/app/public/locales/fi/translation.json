@@ -21,7 +21,7 @@
   "haku": {
     "etsi": "Etsi",
     "kehoite": "Etsi ja vertaile koulutuksia ja oppilaitoksia",
-    "ei-hakusanaa-tai-rajainta": "Lisää hakusana tai hakurajain",
+    "lisää-hakusana-tai-rajain": "Lisää hakusana tai hakurajain",
     "koulutukset": "Koulutukset",
     "oppilaitokset": "Oppilaitokset",
     "summary": "Etsintäsi tuotti {{count}} osuman",

@@ -51,7 +51,7 @@ class App extends Component {
 
 ReactDOM.render((
     <BrowserRouter basename={'/konfo'}>
-        <I18nextProvider i18n={ i18n } initialLanguage={"fi"}>
+        <I18nextProvider i18n={ i18n } >
             <App/>
         </I18nextProvider>
     </BrowserRouter>

@@ -7,7 +7,6 @@ import HakutulosSummary from "./HakutulosSummary";
 import HakutulosBox from "./HakutulosBox";
 import Sivutus from './Sivutus';
 import { translate } from 'react-i18next';
-import i18n from '../../tools/i18n';
 
 @translate()
 @inject("hakuStore")
@@ -32,7 +31,7 @@ class Hakutulos extends Component {
     renderResultList() {
         if(this.props.hakuStore.toggleKoulutus) {
             return this.props.hakuStore.koulutusResult.map((r) => {
-                const link = '/koulutus/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl) + "&lng=" + i18n.language;
+                const link = '/koulutus/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
                 return (
                     <HakutulosBox key={r.oid}
                                   oid={r.oid}
@@ -45,7 +44,7 @@ class Hakutulos extends Component {
             });
         } else {
             return this.props.hakuStore.oppilaitosResult.map((r) => {
-                const link = '/oppilaitos/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl) + "&lng=" + i18n.language;;
+                const link = '/oppilaitos/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
                 return (
                     <HakutulosBox key={r.oid}
                                   oid={r.oid}
@@ -66,7 +65,7 @@ class Hakutulos extends Component {
                 <React.Fragment>
                     <div className="container">
                         <div className="row">
-                            <h1>{t('haku.ei-hakusanaa-tai-rajainta')}
+                            <h1>{t('haku.lisää-hakusana-tai-rajain')}
                             </h1>
                         </div>
                     </div>
