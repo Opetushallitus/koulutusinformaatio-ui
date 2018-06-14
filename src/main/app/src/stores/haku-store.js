@@ -134,7 +134,12 @@ class HakuStore {
     }
 
     @computed get createHakuUrl() {
-        return '/haku' + (this.keywordSet ? '/' + this.keyword : '') + this.searchParams
+        /* Don't use searchParams() here, because in some cases it's not computed/updated correctly */
+        return '/haku' + (this.keywordSet ? '/' + this.keyword : '') + '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos')
+            + '&kpage=' + this.paging.pageKoulutus + '&opage=' + this.paging.pageOppilaitos + '&pagesize=' + this.paging.pageSize
+            + (this.filter.paikkakunta ? '&paikkakunta=' + this.filter.paikkakunta : '')
+            + (this.filter.koulutus.length ? '&koulutustyyppi=' + this.filter.koulutus.join(',') : '')
+            + (this.filter.kieli.length ? '&kieli=' + this.filter.kieli.join(',') : '')
     }
 
     @computed get searchParams() {
