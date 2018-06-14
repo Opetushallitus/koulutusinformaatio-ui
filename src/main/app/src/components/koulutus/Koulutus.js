@@ -29,17 +29,15 @@ class Koulutus extends Component {
     }
 
     getKoulutus() {
-        if(this.props.navigaatioStore.oid !== this.props.match.params.oid) {
-            this.props.navigaatioStore.setOid(this.props.match.params.oid);
-            superagent
-                .get(this.props.urlStore.urls.url('konfo-backend.koulutus') + this.props.navigaatioStore.oid)
-                .end((err, res) => {
-                    this.setState({
-                        koulutus: res ? res.body.result.koulutus[this.props.navigaatioStore.oid] : undefined,
-                        error: err
-                    });
+        this.props.navigaatioStore.setOid(this.props.match.params.oid);
+        superagent
+            .get(this.props.urlStore.urls.url('konfo-backend.koulutus') + this.props.navigaatioStore.oid)
+            .end((err, res) => {
+                this.setState({
+                    koulutus: res ? res.body.result.koulutus[this.props.navigaatioStore.oid] : undefined,
+                    error: err
                 });
-        }
+            });
     }
 
     chooseKoulutus() {

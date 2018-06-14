@@ -28,17 +28,15 @@ class Oppilaitos extends Component {
     }
 
     getOppilaitosTiedot() {
-        if(this.props.navigaatioStore.oid !== this.props.match.params.oid) {
-            this.props.navigaatioStore.setOid(this.props.match.params.oid);
-            superagent
-                .get(this.props.urlStore.urls.url('konfo-backend.oppilaitos') + this.props.navigaatioStore.oid)
-                .end((err, res) => {
-                    this.setState({
-                        oppilaitos: res ? res.body.result : undefined,
-                        error: err
-                    });
+        this.props.navigaatioStore.setOid(this.props.match.params.oid);
+        superagent
+            .get(this.props.urlStore.urls.url('konfo-backend.oppilaitos') + this.props.navigaatioStore.oid)
+            .end((err, res) => {
+                this.setState({
+                    oppilaitos: res ? res.body.result : undefined,
+                    error: err
                 });
-        }
+            });
     }
 
     //Todo: Selvitä, onko tämä ylipäänsä järkevää
