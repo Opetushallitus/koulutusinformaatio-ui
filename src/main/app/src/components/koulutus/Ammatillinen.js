@@ -14,9 +14,17 @@ class Ammatillinen extends Component {
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.props = nextProps;
+        this.setState({
+            oid: this.props.oid,
+            result: this.props.result
+        });
+    }
+
     parseNimi() {
-        if(this.state.result) {
-            return l.localize(this.state.result.koulutuskoodi, "Tuntematon koulutus")
+        if(this.props.result) {
+            return l.localize(this.props.result.searchData.nimi, "Tuntematon koulutus")
         }
         return ""
     }
@@ -39,17 +47,18 @@ class Ammatillinen extends Component {
     }
 
     render() {
-        const osaamisalat = l.localize(this.state.result.koulutusohjelma, undefined);
-        const tutkinnonOsat = l.localize(this.state.result.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
-        const jatkoOpinnot = l.localize(this.state.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined);
+        const osaamisalat = l.localize(this.props.result.koulutusohjelma, undefined);
+        const tutkinnonOsat = l.localize(this.props.result.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
+        const jatkoOpinnot = l.localize(this.props.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined);
         const hattuClass = this.props.muu ? "fa fa-circle muu-hattu" : "fa fa-circle ammatillinen-hattu";
+        const nimi = this.parseNimi();
         return (
             <div className="container">
                 <div className="row info-page">
                     <div className="col-xs-12 col-md-9 left-column">
                         <h1>
                             <i className={hattuClass} aria-hidden="true"></i>
-                            <span>{this.parseNimi()}</span>
+                            <span>{nimi}</span>
                         </h1>
                         <div className="row">
                             <div className="col-xs-12 left-column">

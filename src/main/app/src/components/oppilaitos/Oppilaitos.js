@@ -1,40 +1,42 @@
 import React, { Component } from 'react';
-import Hakunavigaatio from '../haku/Hakunavigaatio';
-import superagent from 'superagent';
+import Hakunavigaatio from '../hakutulos/Hakunavigaatio';
 import {observer, inject} from 'mobx-react';
-import qs from 'query-string';
 import OskariKartta from "./OskariKartta";
 import renderHTML from 'react-render-html';
 
-
-@inject("hakuStore")
-@inject("urlStore")
+@inject("restStore")
+@inject("navigaatioStore")
 @observer
 class Oppilaitos extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            oid: this.props.match.params.oid,
-            result: undefined
+            oppilaitos: undefined
         };
-        console.log("Created component Oppilaitos with oid: " + this.state.oid + ", result: " + this.state.result);
     }
 
     async componentDidMount() {
-        if(this.state.oid) {
-            this.getOppilaitosTiedot();
-        }
+        await this.getOppilaitosTiedot();
     }
 
-    getHakuUrl() {
-        const queryParams = qs.parse(this.props.location.search);
-        return queryParams.haku;
+    async componentWillReceiveProps(nextProps) {
+        this.props = nextProps;
+        await this.getOppilaitosTiedot();
+    }
+
+    getOppilaitosTiedot() {
+        this.props.navigaatioStore.setOid(this.props.match.params.oid);
+        this.props.restStore.getOppilaitos(this.props.navigaatioStore.oid, (o) => {
+            this.setState({
+                oppilaitos: o
+            })
+        });
     }
 
     //Todo: Selvitä, onko tämä ylipäänsä järkevää
     getEmailFromYhteystiedot() {
-        const data = this.state.result.yhteystiedot;
+        const data = this.state.oppilaitos.yhteystiedot;
 
         for (let row in data){
             if (row.email) {
@@ -46,7 +48,7 @@ class Oppilaitos extends Component {
 
     //Todo: Selvitä, onko tämä ylipäänsä järkevää
     getPuhelinFromYhteystiedot() {
-        const data = this.state.result.yhteystiedot;
+        const data = this.state.oppilaitos.yhteystiedot;
 
         for (let row in data){
             if(row.tyyppi === "puhelin" && row.numero) {
@@ -57,7 +59,7 @@ class Oppilaitos extends Component {
     }
 
     getKotisivuFromYhteystiedot() {
-        const data = this.state.result.yhteystiedot;
+        const data = this.state.oppilaitos.yhteystiedot;
 
         for (let row in data){
             if(row.www) {
@@ -69,45 +71,34 @@ class Oppilaitos extends Component {
         return undefined;
     }
 
-    getOppilaitosTiedot() {
-        superagent
-            .get(this.props.urlStore.urls.url('konfo-backend.oppilaitos')+this.state.oid)
-            .end((err, res) => {
-                this.setState({
-                    result: res ? res.body.result : undefined,
-                    error: err
-                });
-            });
-    }
-
     parseKayntiOsoite() {
-        if(!this.state.result.kayntiosoite) {
+        if(!this.state.oppilaitos.kayntiosoite) {
             return null;
         }
         return (<div><ul>
             <li><i>Käyntiosoite</i></li>
-            <li>{this.state.result.kayntiosoite.osoite ? this.state.result.kayntiosoite.osoite : "(ei käyntiosoitetta)"}</li>
-            <li>{this.state.result.kayntiosoite.postinumeroUri ? this.state.result.kayntiosoite.postinumeroUri+" " : "(ei postinumeroa) "}
-                {this.state.result.kayntiosoite.postitoimipaikka ? this.state.result.kayntiosoite.postitoimipaikka : "(ei postitoimipaikkaa)"}</li>
+            <li>{this.state.oppilaitos.kayntiosoite.osoite ? this.state.oppilaitos.kayntiosoite.osoite : "(ei käyntiosoitetta)"}</li>
+            <li>{this.state.oppilaitos.kayntiosoite.postinumeroUri ? this.state.oppilaitos.kayntiosoite.postinumeroUri+" " : "(ei postinumeroa) "}
+                {this.state.oppilaitos.kayntiosoite.postitoimipaikka ? this.state.oppilaitos.kayntiosoite.postitoimipaikka : "(ei postitoimipaikkaa)"}</li>
         </ul>
         </div>);
     }
 
     parsePostiOsoite() {
-        if(!this.state.result.postiosoite) {
+        if(!this.state.oppilaitos.postiosoite) {
             return null;
         }
         return (<div><ul>
             <li><i>Postiosoite</i></li>
-            <li>{this.state.result.postiosoite.osoite ? this.state.result.postiosoite.osoite : "(ei postiosoitetta)"}</li>
-            <li>{this.state.result.postiosoite.postinumeroUri ? this.state.result.postiosoite.postinumeroUri+" " : "(ei postinumeroa)"}
-            {this.state.result.postiosoite.postitoimipaikka ? this.state.result.postiosoite.postitoimipaikka : "(ei postitoimipaikkaa)"}</li>
+            <li>{this.state.oppilaitos.postiosoite.osoite ? this.state.oppilaitos.postiosoite.osoite : "(ei postiosoitetta)"}</li>
+            <li>{this.state.oppilaitos.postiosoite.postinumeroUri ? this.state.oppilaitos.postiosoite.postinumeroUri+" " : "(ei postinumeroa)"}
+            {this.state.oppilaitos.postiosoite.postitoimipaikka ? this.state.oppilaitos.postiosoite.postitoimipaikka : "(ei postitoimipaikkaa)"}</li>
         </ul>
         </div>);
     }
 
     safeParseYleiskuvaus() {
-        var data = this.state.result;
+        var data = this.state.oppilaitos;
         var result = <div></div>;
         if(data && data.yleiskuvaus && data.yleiskuvaus["kieli_fi#1"])
             result = <div>{renderHTML(data.yleiskuvaus["kieli_fi#1"])}</div>
@@ -115,11 +106,11 @@ class Oppilaitos extends Component {
     }
 
     parseSome() {
-        if (!this.state.result.metadata || !this.state.result.metadata.data)  {
+        if (!this.state.oppilaitos.metadata || !this.state.oppilaitos.metadata.data)  {
             console.log("Ei tarvittavia sometietoja saatavilla");
             return <div className='social'></div>;
         }
-        var data = this.state.result.metadata.data;
+        var data = this.state.oppilaitos.metadata.data;
         var fb = <li></li>;
         var twitter = <li></li>;
         var insta = <li></li>;
@@ -154,7 +145,7 @@ class Oppilaitos extends Component {
     }
 
     luoKarttaJosOsoiteTiedossa() {
-        var data = this.state.result.kayntiosoite;
+        var data = this.state.oppilaitos.kayntiosoite;
         if(data && data.osoite && data.postitoimipaikka) {
             return <OskariKartta osoite={data.osoite} postitoimipaikka={data.postitoimipaikka} />;
         }
@@ -162,17 +153,17 @@ class Oppilaitos extends Component {
     }
 
     render() {
-        if(!this.state.result) {
+        if(!this.state.oppilaitos) {
             console.log("Was going to render, but got no data.");
             return null;
         }
-        console.log("Rendering oppilaitos page, data: %O", this.state.result );
+        console.log("Rendering oppilaitos page, data: %O", this.state.oppilaitos );
         return (
             <React.Fragment>
                 <div className='container'>
                     <div className='row info-page oppilaitos'>
                         <div className='col-xs-12 col-md-9 left-column'>
-                            <h1><i className='fa fa-circle'></i>{this.state.result.nimi.fi}</h1>
+                            <h1><i className='fa fa-circle'></i>{this.state.oppilaitos.nimi.fi}</h1>
                             <div className='oppilaitos-yleiskuvaus'>
                                 <div>{this.safeParseYleiskuvaus()}</div>
                             </div>
@@ -207,7 +198,7 @@ class Oppilaitos extends Component {
 
                     </div>
                 </div>
-                <Hakunavigaatio haku={this.getHakuUrl()} selected={this.state.oid}/>
+                <Hakunavigaatio/>
             </React.Fragment>
         );
     }

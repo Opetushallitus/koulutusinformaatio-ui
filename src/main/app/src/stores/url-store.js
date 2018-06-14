@@ -9,7 +9,7 @@ class UrlStore {
         await this.urls.load({overrides: '/konfo/rest/config/frontProperties'}); //TODO: Poista "konfo" urlista?
     }
 
-    constructor() {
+    constructor(konfoStore) {
         console.log(process.env.NODE_ENV);
         if (process.env.NODE_ENV === 'development') {
             this.urls.addProperties(development);

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import HakuStore from './stores/haku-store'
-import HakuehtoStore from './stores/hakuehto-store'
-import UrlStore from './stores/url-store'
+import KonfoStore from './stores/konfo-store'
 import {Provider} from 'mobx-react';
 import Sidebar from "./components/common/Sidebar";
 import Header from './components/common/Header';
@@ -18,17 +16,17 @@ import './assets/css/styles.css';
 
 class App extends Component {
 
-    urlStore = new UrlStore();
-    hakuStore = new HakuStore();
-    hakuehtoStore = new HakuehtoStore();
+    konfoStore = new KonfoStore();
 
     render() {
-        const hakuStore = this.hakuStore;
-        const hakuehtoStore = this.hakuehtoStore;
-        const urlStore = this.urlStore;
+        const hakuStore = this.konfoStore.hakuStore;
+        const hakuehtoStore = this.konfoStore.hakuehtoStore;
+        const urlStore = this.konfoStore.urlStore;
+        const restStore = this.konfoStore.restStore;
+        const navigaatioStore = this.konfoStore.navigaatioStore;
         return (
 
-                <Provider hakuStore={hakuStore} urlStore={urlStore} hakuehtoStore={hakuehtoStore}>
+                <Provider hakuStore={hakuStore} urlStore={urlStore} hakuehtoStore={hakuehtoStore} restStore={restStore} navigaatioStore={navigaatioStore}>
                     <React.Fragment>
                         <div className="container-fluid navigation-bar"/>
                         <div className="overlay"></div>

@@ -9,6 +9,15 @@ class HakuehtoStore {
     };
     @observable rajainOpen = false;
 
+    @action
+    setAll = (keyword, search) => {
+        this.setKeyword(keyword);
+        this.setFilter({
+            koulutus: search.koulutustyyppi,
+            kieli: search.kieli,
+            paikkakunta: search.paikkakunta });
+    };
+
     @computed get keywordSet() {
         return this.keyword && !(0 === this.keyword.length);
     };

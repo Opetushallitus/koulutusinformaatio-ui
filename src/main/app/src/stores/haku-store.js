@@ -1,4 +1,4 @@
-import { observable, computed, action } from "mobx"
+import { observable, computed, action, runInAction } from "mobx"
 
 class HakuStore {
     @observable keyword = '';
@@ -16,6 +16,36 @@ class HakuStore {
         koulutus: [],
         kieli: [],
         paikkakunta: ''
+    };
+
+    constructor(rest) {
+        this.rest = rest;
+    }
+
+    @action
+    setAll = (keyword, search, toggleAction) => {
+        const keywordChange = this.setKeyword(keyword);
+        const filterChange = this.setFilter({
+            koulutus: search.koulutustyyppi,
+            kieli: search.kieli,
+            paikkakunta: search.paikkakunta });
+        const pagingChange = this.setPaging({
+            pageOppilaitos: search.opage,
+            pageKoulutus: search.kpage,
+            pageSize: search.pagesize
+        });
+
+        this.setToggle(search.toggle);
+
+        if(keywordChange || filterChange || pagingChange) {
+            this.searchAll();
+            if(!search.toggle) {
+                this.setToggle(this.koulutusCount >= this.oppilaitosCount ? 'koulutus' : 'oppilaitos')
+                if(toggleAction) {
+                    toggleAction(this.toggle);
+                }
+            }
+        }
     };
 
     @computed get keywordSet() {
@@ -98,7 +128,12 @@ class HakuStore {
     }
 
     @computed get createHakuUrl() {
-        return '/haku' + (this.keywordSet ? '/' + this.keyword : '') + this.searchParams
+        /* Don't use searchParams() here, because in some cases it's not computed/updated correctly */
+        return '/haku' + (this.keywordSet ? '/' + this.keyword : '') + '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos')
+            + '&kpage=' + this.paging.pageKoulutus + '&opage=' + this.paging.pageOppilaitos + '&pagesize=' + this.paging.pageSize
+            + (this.filter.paikkakunta ? '&paikkakunta=' + this.filter.paikkakunta : '')
+            + (this.filter.koulutus.length ? '&koulutustyyppi=' + this.filter.koulutus.join(',') : '')
+            + (this.filter.kieli.length ? '&kieli=' + this.filter.kieli.join(',') : '')
     }
 
     @computed get searchParams() {
@@ -155,6 +190,91 @@ class HakuStore {
         this.oppilaitosResult = [];
         this.oppilaitosCount = 0;
         this.toggle = 'koulutus';
+    };
+
+    @computed get canSearch() {
+        return this.keywordSet || this.filterSet;
+    }
+
+    @action
+    searchAll = () => {
+        if(this.canSearch) {
+            this.rest.search([
+                this.rest.searchKoulutuksetPromise(this.keyword, this.paging, this.filter),
+                this.rest.searchOppilaitoksetPromise(this.keyword, this.paging, this.filter)
+            ], (result) => { runInAction(() => {
+                this.koulutusResult = result[0] ? result[0].result : [];
+                this.koulutusCount = result[0] ? result[0].count : 0;
+                this.oppilaitosResult = result[1] ? result[1].result : [];
+                this.oppilaitosCount = result[1] ? result[1].count : 0;
+            })})
+        }
+    };
+
+    @action
+    searchKoulutukset = (onSuccess) => {
+        if(this.canSearch) {
+            this.rest.search([
+                this.rest.searchKoulutuksetPromise(this.keyword, this.paging, this.filter)
+            ], (result) => { runInAction(() => {
+                this.koulutusResult = result[0] ? result[0].result : [];
+                this.koulutusCount = result[0] ? result[0].count : 0;
+                if(onSuccess) {
+                    onSuccess()
+                }
+            })})
+        }
+    };
+
+    @action
+    searchOppilaitokset = (onSuccess) => {
+        if(this.canSearch) {
+            this.rest.search([
+                this.rest.searchOppilaitoksetPromise(this.keyword, this.paging, this.filter)
+            ], (result) => { runInAction(() => {
+                this.oppilaitosResult = result[0] ? result[0].result : [];
+                this.oppilaitosCount = result[0] ? result[0].count : 0;
+                if(onSuccess) {
+                    onSuccess()
+                }
+            })})
+        }
+    };
+
+    @action
+    loadNextPage = (onSuccess) => {
+        if(this.toggleKoulutus && !this.isLastPage) {
+            this.paging.pageKoulutus = this.paging.pageKoulutus + 1;
+            this.searchKoulutukset(onSuccess)
+        }
+        if(!this.toggleKoulutus && !this.isLastPage) {
+            this.paging.pageOppilaitos = this.paging.pageOppilaitos + 1;
+            this.searchOppilaitokset(onSuccess)
+        }
+    };
+
+    @action
+    loadPrevPage = (onSuccess) => {
+        if(this.toggleKoulutus && !this.isFirstPage) {
+            this.paging.pageKoulutus = this.paging.pageKoulutus - 1;
+            this.searchKoulutukset(onSuccess)
+        }
+        if(!this.toggleKoulutus && !this.isFirstPage) {
+            this.paging.pageOppilaitos = this.paging.pageOppilaitos - 1;
+            this.searchOppilaitokset(onSuccess)
+        }
+    };
+
+    @computed get isLastPage() {
+        return this.toggleKoulutus ?
+            this.maxPageKoulutus === this.paging.pageKoulutus :
+            this.maxPageOppilaitos === this.paging.pageKoulutus;
+    }
+
+    @computed get isFirstPage() {
+        return this.toggleKoulutus ?
+            1 === this.paging.pageKoulutus :
+            1 === this.paging.pageKoulutus;
     }
 }
 

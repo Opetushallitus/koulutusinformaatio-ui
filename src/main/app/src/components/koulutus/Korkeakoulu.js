@@ -16,11 +16,19 @@ class Korkeakoulu extends Component {
         console.log("Created element Korkeakoulu with data: {}", this.state.result)
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.props = nextProps;
+        this.setState({
+            oid: this.props.oid,
+            result: this.props.result
+        });
+    }
+
     parseAineListaus() {
         if(this.state.result.oppiaineet.length > 0) {
-            return this.state.result.oppiaineet.map(o => <li className="osaamisalat_list_item">{o.oppiaine ? o.oppiaine : "Tuntematon"}</li>);
+            return this.state.result.oppiaineet.map(o => <li key={o.oppiaine ? o.oppiaine : ''} className="osaamisalat_list_item">{o.oppiaine ? o.oppiaine : "Tuntematon"}</li>);
         } else {
-            return this.state.result.aihees.map(a => <li className="osaamisalat_list_item">{l.localize(a.nimi)}</li>);
+            return this.state.result.aihees.map(a => <li key={a.uri} className="osaamisalat_list_item">{l.localize(a.nimi)}</li>);
         }
     }
 
