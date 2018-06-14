@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import Hakunavigaatio from '../hakutulos/Hakunavigaatio';
-import superagent from 'superagent';
 import {observer, inject} from 'mobx-react';
-import qs from 'query-string';
 import OskariKartta from "./OskariKartta";
 import renderHTML from 'react-render-html';
 
-@inject("urlStore")
+@inject("restStore")
 @inject("navigaatioStore")
 @observer
 class Oppilaitos extends Component {
@@ -29,14 +27,11 @@ class Oppilaitos extends Component {
 
     getOppilaitosTiedot() {
         this.props.navigaatioStore.setOid(this.props.match.params.oid);
-        superagent
-            .get(this.props.urlStore.urls.url('konfo-backend.oppilaitos') + this.props.navigaatioStore.oid)
-            .end((err, res) => {
-                this.setState({
-                    oppilaitos: res ? res.body.result : undefined,
-                    error: err
-                });
-            });
+        this.props.restStore.getOppilaitos(this.props.navigaatioStore.oid, (o) => {
+            this.setState({
+                oppilaitos: o
+            })
+        });
     }
 
     //Todo: Selvitä, onko tämä ylipäänsä järkevää

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import superagent from 'superagent';
 import {observer, inject} from 'mobx-react';
 import Korkeakoulu from "./Korkeakoulu";
 import Ammatillinen from "./Ammatillinen";
@@ -7,7 +6,7 @@ import Hakunavigaatio from './../hakutulos/Hakunavigaatio';
 import AvoinYoKoulutus from "./AvoinYo";
 import Lukiokoulutus from "./Lukiokoulutus";
 
-@inject("urlStore")
+@inject("restStore")
 @inject("navigaatioStore")
 @observer
 class Koulutus extends Component {
@@ -30,14 +29,11 @@ class Koulutus extends Component {
 
     getKoulutus() {
         this.props.navigaatioStore.setOid(this.props.match.params.oid);
-        superagent
-            .get(this.props.urlStore.urls.url('konfo-backend.koulutus') + this.props.navigaatioStore.oid)
-            .end((err, res) => {
-                this.setState({
-                    koulutus: res ? res.body.result.koulutus[this.props.navigaatioStore.oid] : undefined,
-                    error: err
-                });
-            });
+        this.props.restStore.getKoulutus(this.props.navigaatioStore.oid, (k) => {
+            this.setState({
+                koulutus: k
+            })
+        });
     }
 
     chooseKoulutus() {

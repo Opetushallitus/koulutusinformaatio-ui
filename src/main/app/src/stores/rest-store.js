@@ -50,6 +50,33 @@ class RestStore {
             resultAction(result.map(r => r.body))
         }).catch(_this.handleError);
     };
+
+    @action
+    getKoulutus = (oid, onSuccess) => {
+        superagent
+            .get(this.urlStore.urls.url('konfo-backend.koulutus') + oid)
+            .end((err, res) => {
+                if(err) {
+                    this.handleError(err)
+                } else {
+                    const koulutus = ( res.body.result && res.body.result.koulutus ) ? res.body.result.koulutus[oid] : undefined;
+                    onSuccess(koulutus)
+                }
+            });
+    };
+
+    @action
+    getOppilaitos = (oid, onSuccess) => {
+        superagent
+            .get(this.urlStore.urls.url('konfo-backend.oppilaitos') + oid)
+            .end((err, res) => {
+                if(err) {
+                    this.handleError(err)
+                } else {
+                    onSuccess(res.body.result)
+                }
+            });
+    };
 }
 
 export default RestStore;
