@@ -3,8 +3,9 @@ import { observable, computed, action } from "mobx"
 class NavigaatioStore {
     @observable oid = '';
 
-    constructor(hakuStore) {
+    constructor(hakuStore, hakuehtoStore) {
         this.hakuStore = hakuStore;
+        this.hakuehtoStore = hakuehtoStore;
     }
 
     @action setOid(oid) {
@@ -42,10 +43,10 @@ class NavigaatioStore {
     }
 
     @action
-    load = (url) => {
-        const splitted = url.split('?');
-        this.hakuStore.loadFromUrl(splitted[0], splitted[1]);
-    }
+    load = (keyword, search) => {
+        this.hakuStore.setAll(keyword, search);
+        this.hakuehtoStore.setAll(keyword, search);
+    };
 
     @action
     withNextOid = (action) => {

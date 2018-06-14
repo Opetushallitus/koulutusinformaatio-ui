@@ -25,14 +25,7 @@ class HakuStore {
     }
 
     @action
-    loadFromUrl = (pathname, searchString) => {
-        const search = qs.parse(searchString);
-        const match = matchPath(pathname, {
-            path: '/haku/:keyword',
-            exact: true,
-            strict: false
-        });
-        const keyword = match ? match.params.keyword : '';
+    setAll = (keyword, search, toggleAction) => {
         const keywordChange = this.setKeyword(keyword);
         const filterChange = this.setFilter({
             koulutus: search.koulutustyyppi,
@@ -50,6 +43,9 @@ class HakuStore {
             this.searchAll();
             if(!search.toggle) {
                 this.setToggle(this.koulutusCount >= this.oppilaitosCount ? 'koulutus' : 'oppilaitos')
+                if(toggleAction) {
+                    toggleAction(this.toggle);
+                }
             }
         }
     };

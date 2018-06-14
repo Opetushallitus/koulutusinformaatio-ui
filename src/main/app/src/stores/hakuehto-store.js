@@ -1,4 +1,6 @@
 import { observable, computed, action } from "mobx"
+import qs from 'query-string';
+import { matchPath } from 'react-router'
 
 class HakuehtoStore {
     @observable keyword = '';
@@ -8,6 +10,15 @@ class HakuehtoStore {
         paikkakunta: ''
     };
     @observable rajainOpen = false;
+
+    @action
+    setAll = (keyword, search) => {
+        const keywordChange = this.setKeyword(keyword);
+        const filterChange = this.setFilter({
+            koulutus: search.koulutustyyppi,
+            kieli: search.kieli,
+            paikkakunta: search.paikkakunta });
+    };
 
     @computed get keywordSet() {
         return this.keyword && !(0 === this.keyword.length);

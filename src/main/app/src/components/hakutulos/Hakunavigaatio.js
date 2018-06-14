@@ -4,10 +4,22 @@ import '../../assets/css/hakutulos.css'
 import {observer, inject} from 'mobx-react';
 import { withRouter } from 'react-router-dom'
 import qs from 'query-string';
+import { matchPath } from 'react-router'
 
 @inject("navigaatioStore")
 @observer
 class Hakunavigaatio extends Component {
+
+    updateStores(haku) {
+        const splitted = haku.split('?');
+        const search = qs.parse(splitted[1]);
+        const match = matchPath(splitted[0], {
+            path: '/haku/:keyword',
+            exact: true,
+            strict: false
+        });
+        this.props.navigaatioStore.load(match.params.keyword, search);
+    }
 
     constructor(props) {
         super(props);
@@ -16,7 +28,7 @@ class Hakunavigaatio extends Component {
             hakuUrl: search.haku ? search.haku : "/haku"
         };
         if(search.haku) {
-            this.props.navigaatioStore.load(search.haku)
+            this.updateStores(search.haku)
         }
     }
 
@@ -27,7 +39,7 @@ class Hakunavigaatio extends Component {
             hakuUrl: search.haku ? search.haku : "/haku"
         });
         if(search.haku) {
-            this.props.navigaatioStore.load(search.haku)
+            this.updateStores(search.haku)
         }
     }
 
