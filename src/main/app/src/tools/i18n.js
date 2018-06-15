@@ -20,6 +20,9 @@ i18n
             bindI18n: 'languageChanged loaded',
             bindStore: 'added removed',
             nsMode: 'default'
+        },
+        backend: {
+            loadPath: (process.env.NODE_ENV === 'development' ? '' : '/konfo') + '/locales/{{lng}}/{{ns}}.json'
         }
     });
 
