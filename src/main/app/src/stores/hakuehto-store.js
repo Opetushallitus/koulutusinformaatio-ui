@@ -1,4 +1,5 @@
 import { observable, computed, action } from "mobx"
+import {Localizer as l} from "../tools/Utils";
 
 class HakuehtoStore {
     @observable keyword = '';
@@ -56,6 +57,7 @@ class HakuehtoStore {
         return '?paikkakunta=' + ( this.filter.paikkakunta ?  this.filter.paikkakunta : '')
             + '&koulutustyyppi=' + ( this.filter.koulutus.length ? this.filter.koulutus.join(',') : '')
             + '&kieli=' + ( this.filter.kieli.length ? this.filter.kieli.join(',') : '')
+            + '&lng=' + l.getLanguage();
     };
 
     @action
