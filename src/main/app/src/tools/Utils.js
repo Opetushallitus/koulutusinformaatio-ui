@@ -2,8 +2,12 @@ import i18n from './i18n';
 
 class Localizer {
 
-    static getKieli(nimi, defaultValue = "", fallbackLng) {
-        const lng = i18n.language;
+    static getLanguage() {
+        return (i18n.languages && i18n.languages[0] ? i18n.language.split('-')[0] : "fi");
+    }
+
+    static translate(nimi, defaultValue = "", fallbackLng) {
+        const lng = this.getLanguage();
         if(nimi['kieli_' + lng]) {
             return nimi['kieli_' + lng];
         } else if(nimi[lng]) {
@@ -21,7 +25,7 @@ class Localizer {
 
     static localize(obj, defaultValue = "", fallbackLng) {
         if(obj) {
-            return obj.nimi ? Localizer.getKieli(obj.nimi, defaultValue, fallbackLng) : Localizer.getKieli(obj, defaultValue, fallbackLng);
+            return obj.nimi ? Localizer.translate(obj.nimi, defaultValue, fallbackLng) : Localizer.translate(obj, defaultValue, fallbackLng);
         }
         return defaultValue;
     }
