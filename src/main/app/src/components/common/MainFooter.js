@@ -17,6 +17,10 @@ class DefaultFooter extends Component {
         this.setState({togglePalaute: !this.state.togglePalaute})
     }
 
+    changeLanguage(lng) {
+        this.props.i18n.changeLanguage(lng);
+    }
+
     render() {
         const { t } = this.props;
         return (
@@ -61,9 +65,9 @@ class DefaultFooter extends Component {
                         <div className="row">
                             <p>{t('footer.vastuuvapauslauseke')}</p>
                             <ul className="social-media">
-                                <li><a onClick={() => this.props.i18n.changeLanguage('fi')}>Suomeksi</a></li>
-                                <li><a onClick={() => this.props.i18n.changeLanguage('en')}>In English</a></li>
-                                <li><a onClick={() => this.props.i18n.changeLanguage('sv')}>På svenska</a></li>
+                                <li><a onClick={() => this.changeLanguage('fi')}>Suomeksi</a></li>
+                                <li><a onClick={() => this.changeLanguage('en')}>In English</a></li>
+                                <li><a onClick={() => this.changeLanguage('sv')}>På svenska</a></li>
                                 {/*<li className="separator">|</li>
                                 <li>
                                     <a href="">
