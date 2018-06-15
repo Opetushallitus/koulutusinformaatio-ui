@@ -22,8 +22,9 @@ class Haku extends Component {
             exact: true,
             strict: false
         });
-        this.props.hakuStore.setAll(match.params.keyword, search);
-        this.props.hakuehtoStore.setAll(match.params.keyword, search, this.toggleAction);
+        const keyword = (match && match.params) ? match.params.keyword : '';
+        this.props.hakuStore.setAll(keyword, search);
+        this.props.hakuehtoStore.setAll(keyword, search, this.toggleAction);
     }
 
     componentDidMount() {
