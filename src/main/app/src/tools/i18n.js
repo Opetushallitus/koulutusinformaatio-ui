@@ -7,7 +7,7 @@ i18n
     .use(XHR)
     .init({
         fallbackLng: ['fi'],
-        preload: ['fi'],
+        whitelist: ['fi', 'sv', 'en'],
         debug: process.env.NODE_ENV === 'development',
         // saveMissing: process.env.NODE_ENV === 'development',
         // saveMissingTo: 'all',
