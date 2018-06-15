@@ -1,6 +1,6 @@
 import { observable, action, /*configure*/ } from "mobx"
 import superagent from 'superagent';
-import i18n from '../tools/i18n';
+import {Localizer as l} from "../tools/Utils";
 
 //configure({ enforceActions: true })
 
@@ -28,7 +28,7 @@ class RestStore {
                 paikkakunta: filter.paikkakunta,
                 koulutustyyppi: filter.koulutus.join(','),
                 kieli: filter.kieli.map((k) => 'kieli_' + k).join(','),
-                lng: i18n.language})
+                lng: l.getLanguage()})
             .catch(this.handleError))
     };
 
@@ -42,7 +42,7 @@ class RestStore {
                 paikkakunta: filter.paikkakunta,
                 koulutustyyppi: filter.koulutus.join(','),
                 kieli: filter.kieli.map((k) => 'kieli_' + k).join(','),
-                lng: i18n.language})
+                lng: l.getLanguage()})
             .catch(this.handleError))
     };
 
