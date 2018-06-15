@@ -35,9 +35,6 @@ class HakuStore {
             pageKoulutus: search.kpage,
             pageSize: search.pagesize
         });
-
-        this.setToggle(search.toggle);
-
         if(keywordChange || filterChange || (pagingChange.koulutus && pagingChange.oppilaitos)) {
             this.searchAll(() => {
                 if(!search.toggle) {
@@ -46,12 +43,16 @@ class HakuStore {
                     if(toggleAction) {
                         toggleAction(toggle);
                     }
+                } else {
+                    this.setToggle(search.toggle);
                 }
             });
         } else if (pagingChange.koulutus) {
             this.searchKoulutukset();
         } else if (pagingChange.oppilaitos) {
             this.searchOppilaitokset();
+        } else {
+            this.setToggle(search.toggle);
         }
     };
 
