@@ -18,7 +18,8 @@ class Hakunavigaatio extends Component {
             exact: true,
             strict: false
         });
-        this.props.navigaatioStore.load(match.params.keyword, search);
+        const keyword = (match && match.params) ? match.params.keyword : '';
+        this.props.navigaatioStore.load(keyword, search);
     }
 
     constructor(props) {
