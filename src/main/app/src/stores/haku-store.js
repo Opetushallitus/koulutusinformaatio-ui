@@ -38,14 +38,20 @@ class HakuStore {
 
         this.setToggle(search.toggle);
 
-        if(keywordChange || filterChange || pagingChange) {
-            this.searchAll();
-            if(!search.toggle) {
-                this.setToggle(this.koulutusCount >= this.oppilaitosCount ? 'koulutus' : 'oppilaitos')
-                if(toggleAction) {
-                    toggleAction(this.toggle);
+        if(keywordChange || filterChange || (pagingChange.koulutus && pagingChange.oppilaitos)) {
+            this.searchAll(() => {
+                if(!search.toggle) {
+                    const toggle = this.koulutusCount >= this.oppilaitosCount ? 'koulutus' : 'oppilaitos';
+                    this.setToggle(toggle);
+                    if(toggleAction) {
+                        toggleAction(toggle);
+                    }
                 }
-            }
+            });
+        } else if (pagingChange.koulutus) {
+            this.searchKoulutukset();
+        } else if (pagingChange.oppilaitos) {
+            this.searchOppilaitokset();
         }
     };
 
@@ -93,15 +99,18 @@ class HakuStore {
         const pageKoulutus = pos(Number(paging.pageKoulutus), 1);
         const pageSize = pos(Number(paging.pageSize), 20);
 
-        const change = !(this.paging.pageOppilaitos === pageOppilaitos &&
-            this.paging.pageKoulutus === pageKoulutus &&
-            this.paging.pageSize === pageSize);
+        const oppilaitosChange = this.paging.pageOppilaitos !== pageOppilaitos;
+        const koulutusChange = this.paging.pageKoulutus !== pageKoulutus;
+        const pageChange = this.paging.pageSize !== pageSize;
 
         this.paging.pageOppilaitos = pageOppilaitos;
         this.paging.pageKoulutus = pageKoulutus;
         this.paging.pageSize = pageSize;
 
-        return change;
+        return {
+            koulutus: (pageChange || koulutusChange),
+            oppilaitos: (pageChange || oppilaitosChange)
+        };
     };
 
     @action
@@ -200,7 +209,7 @@ class HakuStore {
     }
 
     @action
-    searchAll = () => {
+    searchAll = (onSuccess) => {
         if(this.canSearch) {
             this.rest.search([
                 this.rest.searchKoulutuksetPromise(this.keyword, this.paging, this.filter),
@@ -210,6 +219,9 @@ class HakuStore {
                 this.koulutusCount = result[0] ? result[0].count : 0;
                 this.oppilaitosResult = result[1] ? result[1].result : [];
                 this.oppilaitosCount = result[1] ? result[1].count : 0;
+                if(onSuccess) {
+                    onSuccess()
+                }
             })})
         }
     };
