@@ -116,6 +116,42 @@ button:focus {
     margin-left: 51px;
 }
 
+
+/*<div className="koulutusinfo-2">*/
+/*<div className="koulutusinfo-2-left">*/
+/*<ul className="koulutusinfolaatikko-2-list-left">*/
+
+.koulutusinfo-2 {
+    display: table;
+    width: 80%;
+}
+
+.koulutusinfo-2-left {
+    display: table-cell;
+    width: 40%;
+    background-color: #4d92e3;
+    border: solid 1px #979797;
+    color: white;
+    padding: 1%;
+}
+
+.koulutusinfo-2 h2 {
+    margin-left: 31px;
+    border-bottom: 1px solid white;
+
+}
+
+.koulutusinfo-2-right {
+    display: table-cell;
+    width: 40%;
+    background-color: green;
+    border: solid 1px #979797;
+    color: white;
+    padding: 1%;
+}
+
+
+
 .koulutusinfolaatikko {
     width: 80%;
     background-color: #4d92e3;

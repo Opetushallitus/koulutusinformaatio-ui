@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import KoulutusInfoBox from './KoulutusInfoBox';
+import KoulutusInfoBoxTwoSided from './KoulutusInfoBoxTwoSided';
 import KoulutusSidebar from './KoulutusSidebar';
 import { Localizer as l } from '../../tools/Utils';
 import renderHTML from 'react-render-html';
@@ -41,7 +42,29 @@ class Korkeakoulu extends Component {
         return ""
     }
 
-    parseInfoBoxFields() {
+
+    parseInfoBoxFieldsTwoSided() {
+        const fields = {};
+        fields.left = this.parseInfoBoxFieldsLeft();
+        fields.right = this.parseInfoBoxFieldsRight();
+        return fields;
+    }
+
+    parseInfoBoxFieldsRight() {
+        const {t} = this.props;
+        const fields = [];
+        const haunNimi = l.localize("kissa", "kissa");
+        const hakuAika = l.localize("huomenissa", "huomenissa");
+        fields.push([t('haku.nimi'), haunNimi]);
+        fields.push([t('haku.hakuaika'), hakuAika]);
+
+        console.log("Returning fields right:" + fields);
+
+        return fields;
+
+    }
+
+    parseInfoBoxFieldsLeft() {
         const {t} = this.props;
         const fields = [];
         // laajuus, kesto, maksullinen, tutkintonimike
@@ -56,6 +79,7 @@ class Korkeakoulu extends Component {
         fields.push([t('koulutus.maksullinen'), this.props.result.opintojenMaksullisuus ? t('kyllä') : t('ei')]);
         fields.push([t('koulutus.tutkintonimikkeet'), this.props.result.tutkintonimikes ? this.props.result.tutkintonimikes.map(t => l.localize(t) + " ") : '-']);
 
+        console.log("Returning fields left:" + fields);
         return fields;
     }
 
@@ -72,7 +96,7 @@ class Korkeakoulu extends Component {
                         </h1>
                         <div className="row">
                             <div className="col-xs-12 left-column">
-                                <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
+                                <KoulutusInfoBoxTwoSided fields={this.parseInfoBoxFieldsTwoSided()}/>
                             </div>
                         </div>
                         <div className="col-xs-12 col-md-9 left-column">
