@@ -148,6 +148,7 @@ class HakuStore {
             + "&lng=" + l.getLanguage();
     }
 
+    // Ei käytössä missään?
     @computed get searchParams() {
         return '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos')
             + '&kpage=' + this.paging.pageKoulutus + '&opage=' + this.paging.pageOppilaitos + '&pagesize=' + this.paging.pageSize

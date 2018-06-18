@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Palaute from "./Palaute";
 import { translate } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
 
 @translate()
 class DefaultFooter extends Component {
@@ -19,6 +20,14 @@ class DefaultFooter extends Component {
 
     changeLanguage(lng) {
         this.props.i18n.changeLanguage(lng);
+
+        if (!this.props.history.location.search) {
+            this.props.history.replace(this.props.history.location.pathname + "?lng=" + lng);
+        } else if (this.props.history.location.search.indexOf('lng') !== -1) {
+            this.props.history.replace(this.props.history.location.pathname + this.props.history.location.search.replace(/lng=../g, "lng=" + lng));
+        } else {
+            this.props.history.replace(this.props.history.location.pathname + this.props.history.location.search + "&lng=" + lng);
+        }
     }
 
     render() {
@@ -96,4 +105,4 @@ class DefaultFooter extends Component {
     }
 }
 
-export default DefaultFooter;
+export default withRouter(DefaultFooter);

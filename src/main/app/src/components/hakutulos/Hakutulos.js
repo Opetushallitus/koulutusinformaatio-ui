@@ -31,7 +31,8 @@ class Hakutulos extends Component {
     renderResultList() {
         if(this.props.hakuStore.toggleKoulutus) {
             return this.props.hakuStore.koulutusResult.map((r) => {
-                const link = '/koulutus/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
+                const link = '/koulutus/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
+                                                    + '&lng=' + l.getLanguage();
                 return (
                     <HakutulosBox key={r.oid}
                                   oid={r.oid}
@@ -44,7 +45,8 @@ class Hakutulos extends Component {
             });
         } else {
             return this.props.hakuStore.oppilaitosResult.map((r) => {
-                const link = '/oppilaitos/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl);
+                const link = '/oppilaitos/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
+                                                    + '&lng=' + l.getLanguage();
                 return (
                     <HakutulosBox key={r.oid}
                                   oid={r.oid}

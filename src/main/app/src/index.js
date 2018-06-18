@@ -27,6 +27,8 @@ class App extends Component {
         const restStore = this.konfoStore.restStore;
         const navigaatioStore = this.konfoStore.navigaatioStore;
 
+        i18n.on('languageChanged', () => hakuStore.searchAll());
+
         return (
                 <Provider hakuStore={hakuStore} urlStore={urlStore} hakuehtoStore={hakuehtoStore} restStore={restStore} navigaatioStore={navigaatioStore}>
                     <I18nextProvider i18n={ i18n } initialLanguage={"fi"}>
