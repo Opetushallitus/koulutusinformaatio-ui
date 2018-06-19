@@ -1273,11 +1273,6 @@ footer p {
 .search-results .row {
     margin-top: 30px;
 }
-.search-box {
-    box-shadow: 0 0px 7px #6b6b6b;
-    height: 200px;
-    overflow: hidden;
-}
 .text {
     width: 80%;
     margin: 30px auto;
@@ -1348,13 +1343,27 @@ footer p {
     color: #8a6d3b;
 }
 .compare-button {
-    height: 50px;
-    margin-right: 15px;
+    position: absolute;
+    right: 30px;
+    bottom: 15px;
 }
-.search-box.haku::before {
+.search-box {
+    box-shadow: 0 0px 7px #6b6b6b;
+    height: 200px;
+    overflow: hidden;
+}
+.search-box .text {
+    height: 125px;
+    width: 85%;
+    margin: 25px auto;
+}
+.search-box .text a {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.search-box .haku {
     width: 81px;
     height: 44px;
-    content: "Haku";
     font-size: .91em;
     padding: 23px 19px 0;
     text-shadow: 0px 0px 2px rgba(150, 150, 150, 0.94);
@@ -1425,13 +1434,9 @@ footer p {
     -webkit-transition: all ease-in .25s;
     -moz-transition: all ease-in .25s;
     transition: all ease-in .25s;
-}
-.compare-button span::after {
-    content: "Ota vertailuun";
-    /*color: #4d93d9;*/
     color: #d6d6d6;
-    transition: all ease-in .5s;
 }
+
 .compare-button span.poista {
     border: 1px solid #7ed320;
     background: #7ed320;
@@ -2275,10 +2280,6 @@ button.toggle-compare.closed::after {
 p.just-info {
     font-weight: bold;
 }
-.search-box .text a {
-    font-weight: bold;
-    font-size: 1.1em;
-}
 .interest-boxes {
     margin-bottom: 40px;
 }
@@ -2442,11 +2443,6 @@ a.titlelink {
 @media (max-width: 1200px) {
     .globe i {
         font-size: 5.25em;
-    }
-    .text {
-        width: 70%;
-        max-height: 90%;
-        height: auto;
     }
     .filter-button {
         padding: 1% 2%;
@@ -2688,9 +2684,6 @@ a.titlelink {
         color: #ffffff;
         font-size: 1.6em;
         visibility: hidden;
-    }
-    .text {
-        width: 75%;
     }
     .right-column {
         min-height: 120px;

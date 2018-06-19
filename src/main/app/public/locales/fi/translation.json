@@ -49,7 +49,9 @@
     "paikkakunta": "Paikkakunta",
     "paikkakunta-kehoite": "Syötä paikkakunnan nimi",
     "hae": "Hae",
-    "poista-rajaukset": "Poista rajaukset"
+    "poista-rajaukset": "Poista rajaukset",
+    "ota-vertailuun": "Ota vertailuun",
+    "haku": "Haku"
   },
   "navigaatio": {
     "edellinen": "Edellinen",
