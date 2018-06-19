@@ -23,10 +23,6 @@ class OskariKartta extends Component {
         this.setLocation();
     }
 
-    shouldComponentUpdate() {
-        return true;
-    }
-
     setLocation() {
         const data = op.getCoreAddress(this.props.osoite);
         console.log("Triggering map location search for " + data);
