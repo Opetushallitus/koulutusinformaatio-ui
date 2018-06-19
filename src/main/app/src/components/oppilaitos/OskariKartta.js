@@ -112,7 +112,8 @@ class OskariKartta extends Component {
     }
 
     render() {
-        return <div><iframe title="kartta" id='publishedMap' src={this.props.urlStore.urls.url('kartta.publish-url')}/></div>
+        //TODO lokalisointi
+        return <div><iframe title="kartta" id='publishedMap' src={this.props.urlStore.urls.url('kartta.publish-url', 'fi')}/></div>
     }
 }
 

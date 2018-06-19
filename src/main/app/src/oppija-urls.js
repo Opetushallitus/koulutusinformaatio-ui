@@ -6,7 +6,7 @@ const production = {
     "konfo-backend.oppilaitos" : "/konfo-backend/oppilaitos/",
     "konfo-backend.palaute" : "/konfo-backend/palaute",
     "kartta.base-url" : "https://hkp.maanmittauslaitos.fi",
-    "kartta.publish-url" : "https://hkp.maanmittauslaitos.fi/hkp/published/fi/277da693-ae10-4508-bc5a-d6ced2056fd0"
+    "kartta.publish-url" : "https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0"
 };
 
 const development = {
@@ -17,7 +17,7 @@ const development = {
     "konfo-backend.oppilaitos" : "http://localhost:3006/konfo-backend/oppilaitos/",
     "konfo-backend.palaute" : "http://localhost:3006/konfo-backend/palaute",
     "kartta.base-url" : "https://hkp.maanmittauslaitos.fi",
-    "kartta.publish-url" : "https://hkp.maanmittauslaitos.fi/hkp/published/fi/277da693-ae10-4508-bc5a-d6ced2056fd0"
+    "kartta.publish-url" : "https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0"
 };
 
 export {production, development}
