@@ -13,6 +13,7 @@ class Header extends Component {
                         <span className="hamb-top"></span>
                         <span className="hamb-middle"></span>
                         <span className="hamb-bottom"></span>
+                        <span className="menu-text">{t('valikko')}</span>
                     </button>
                     <Link to={{ pathname: '/'}} className="navbar-brand">{t('opintopolku')}</Link>
                 </div>
