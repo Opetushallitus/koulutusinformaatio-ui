@@ -36,7 +36,7 @@ class Korkeakoulu extends Component {
 
     parseNimi() {
         if(this.state.result) {
-            return l.localize(this.state.result.searchData, this.props.t('koulutus.tuntematon'))
+            return l.localize(this.state.result.searchData, this.props.t('koulutus.tuntematon'), "fi")
         }
         return ""
     }

@@ -1237,17 +1237,8 @@ footer p {
     z-index: 999;
     font-size: .95em;
     top: -1.5em;
-}
-.filter-button::after {
     color: #ffffff;
     text-align: center;
-    content: "+ RAJAA ETSINTÄÄ";
-    transition: all ease-in .5s;
-}
-.filter-button.sulje::after {
-    color: #ffffff;
-    text-align: center;
-    content: "- SULJE RAJAIMET";
     transition: all ease-in .5s;
 }
 .filter-button.index-page {
