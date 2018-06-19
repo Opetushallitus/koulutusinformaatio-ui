@@ -51,6 +51,11 @@
     "hae": "Hae",
     "poista-rajaukset": "Poista rajaukset"
   },
+  "navigaatio": {
+    "edellinen": "Edellinen",
+    "etsintä-tulos": "Etsinnän tulos",
+    "seuraava": "Seuraava"
+  },
   "oppilaitos": {
     "ei-sähköpostiosoitetta": "Ei sähköpostiosoitetta",
     "puhelin": "Puhelin",
