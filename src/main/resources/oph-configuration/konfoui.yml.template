@@ -3,3 +3,6 @@ server:
     context-path: /konfo
 host:
   host-oppija: https://{{host_oppija}}
+kartta:
+  host: {{konfo_ui_kartta_host}}
+  pid: {{konfo_ui_kartta_pid}}

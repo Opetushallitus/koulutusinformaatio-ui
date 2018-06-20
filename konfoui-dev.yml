@@ -3,3 +3,6 @@ server:
     context-path: /konfo
 host:
   host-oppija: http://localhost:3006
+kartta:
+  host: https://hkp.maanmittauslaitos.fi
+  pid: 277da693-ae10-4508-bc5a-d6ced2056fd0
