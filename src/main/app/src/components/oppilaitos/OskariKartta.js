@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { OsoiteParser as op } from '../../tools/Utils'
+import { OsoiteParser as op, Localizer as l } from '../../tools/Utils'
 import OskariRPC from 'oskari-rpc';
 import {observer, inject} from 'mobx-react';
 
@@ -108,8 +108,7 @@ class OskariKartta extends Component {
     }
 
     render() {
-        //TODO lokalisointi
-        return <div><iframe title="kartta" id='publishedMap' src={this.props.urlStore.urls.url('kartta.publish-url', 'fi')}/></div>
+        return <div><iframe title="kartta" id='publishedMap' src={this.props.urlStore.urls.url('kartta.publish-url', l.getLanguage())}/></div>
     }
 }
 
