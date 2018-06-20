@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Palaute from "./Palaute";
 import { translate } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
 
 @translate()
 class DefaultFooter extends Component {
@@ -15,6 +16,18 @@ class DefaultFooter extends Component {
 
     togglePalaute() {
         this.setState({togglePalaute: !this.state.togglePalaute})
+    }
+
+    changeLanguage(lng) {
+        this.props.i18n.changeLanguage(lng);
+
+        if (!this.props.history.location.search) {
+            this.props.history.replace(this.props.history.location.pathname + "?lng=" + lng);
+        } else if (this.props.history.location.search.indexOf('lng') !== -1) {
+            this.props.history.replace(this.props.history.location.pathname + this.props.history.location.search.replace(/lng=../g, "lng=" + lng));
+        } else {
+            this.props.history.replace(this.props.history.location.pathname + this.props.history.location.search + "&lng=" + lng);
+        }
     }
 
     render() {
@@ -61,9 +74,9 @@ class DefaultFooter extends Component {
                         <div className="row">
                             <p>{t('footer.vastuuvapauslauseke')}</p>
                             <ul className="social-media">
-                                <li><a onClick={() => this.props.i18n.changeLanguage('fi')}>Suomeksi</a></li>
-                                <li><a onClick={() => this.props.i18n.changeLanguage('en')}>In English</a></li>
-                                <li><a onClick={() => this.props.i18n.changeLanguage('sv')}>På svenska</a></li>
+                                <li><a onClick={() => this.changeLanguage('fi')}>Suomeksi</a></li>
+                                <li><a onClick={() => this.changeLanguage('en')}>In English</a></li>
+                                <li><a onClick={() => this.changeLanguage('sv')}>På svenska</a></li>
                                 {/*<li className="separator">|</li>
                                 <li>
                                     <a href="">
@@ -92,4 +105,4 @@ class DefaultFooter extends Component {
     }
 }
 
-export default DefaultFooter;
+export default withRouter(DefaultFooter);

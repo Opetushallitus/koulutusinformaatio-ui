@@ -105,7 +105,7 @@ class Oppilaitos extends Component {
 
     safeParseYleiskuvaus() {
         const data = this.state.oppilaitos;
-        const kieli = this.props.i18n.language;
+        const kieli = l.getLanguage();
         if(data && data.yleiskuvaus && data.yleiskuvaus["kieli_" + kieli + "#1"])
             return <div>{renderHTML(data.yleiskuvaus["kieli_" + kieli + "#1"])}</div>
         return "";
@@ -125,7 +125,7 @@ class Oppilaitos extends Component {
             const key = "sosiaalinenmedia_"+i+"#1";
             if(data[key]) {
                 const k = data[key];
-                const kieli = "kieli_" + this.props.i18n.language + "#1";
+                const kieli = "kieli_" + l.getLanguage() + "#1";
                 if(k[kieli]) {
                     if(k[kieli].indexOf('facebook') !== -1 ) {
                         fb = <li><a href={k[kieli]}><i className='fa fa-facebook-square fa-3x' /></a></li>

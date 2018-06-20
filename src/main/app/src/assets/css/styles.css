@@ -337,8 +337,7 @@ button:focus {
 .menu:active {
     outline: none;
 }
-.menu::after {
-    content: "valikko";
+.menu .menu-text {
     text-transform: uppercase;
     font-size: 9px;
     color: #ffffff;
@@ -1237,17 +1236,8 @@ footer p {
     z-index: 999;
     font-size: .95em;
     top: -1.5em;
-}
-.filter-button::after {
     color: #ffffff;
     text-align: center;
-    content: "+ RAJAA ETSINTÄÄ";
-    transition: all ease-in .5s;
-}
-.filter-button.sulje::after {
-    color: #ffffff;
-    text-align: center;
-    content: "- SULJE RAJAIMET";
     transition: all ease-in .5s;
 }
 .filter-button.index-page {
@@ -1281,11 +1271,6 @@ footer p {
 }
 .search-results .row {
     margin-top: 30px;
-}
-.search-box {
-    box-shadow: 0 0px 7px #6b6b6b;
-    height: 200px;
-    overflow: hidden;
 }
 .text {
     width: 80%;
@@ -1357,13 +1342,27 @@ footer p {
     color: #8a6d3b;
 }
 .compare-button {
-    height: 50px;
-    margin-right: 15px;
+    position: absolute;
+    right: 30px;
+    bottom: 15px;
 }
-.search-box.haku::before {
+.search-box {
+    box-shadow: 0 0px 7px #6b6b6b;
+    height: 200px;
+    overflow: hidden;
+}
+.search-box .text {
+    height: 125px;
+    width: 85%;
+    margin: 25px auto;
+}
+.search-box .text a {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.search-box .haku {
     width: 81px;
     height: 44px;
-    content: "Haku";
     font-size: .91em;
     padding: 23px 19px 0;
     text-shadow: 0px 0px 2px rgba(150, 150, 150, 0.94);
@@ -1434,13 +1433,9 @@ footer p {
     -webkit-transition: all ease-in .25s;
     -moz-transition: all ease-in .25s;
     transition: all ease-in .25s;
-}
-.compare-button span::after {
-    content: "Ota vertailuun";
-    /*color: #4d93d9;*/
     color: #d6d6d6;
-    transition: all ease-in .5s;
 }
+
 .compare-button span.poista {
     border: 1px solid #7ed320;
     background: #7ed320;
@@ -2229,26 +2224,24 @@ button.toggle-compare.closed::after {
 }
 .app-navigation-bar a {
     color: #ffffff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 7em;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.app-navigation-bar a:hover span {
+    text-decoration: underline;
 }
 .app-navigation-bar .fa-circle-thin:before {
     font-size: 3em;
 }
-.app-navigation-bar .previous {
-    text-align: left;
-}
-.app-navigation-bar .previous i {
+.app-navigation-bar i {
     position: relative;
-    left: 1.5%;
-}
-.app-navigation-bar .next i {
-    position: relative;
-    right: 1%;
-}
-.app-navigation-bar .previous a::after {
-    content: "Edellinen";
-    position: relative;
-    display: block;
-    left: -5px;
+    left: 5%;
 }
 .app-navigation-bar .previous i::after {
     font-family: "FontAwesome";
@@ -2266,24 +2259,7 @@ button.toggle-compare.closed::after {
     top: -9px;
     font-size: 1.35em;
 }
-.app-navigation-bar .search {
-    text-align: center;
-}
-.app-navigation-bar .search a::after {
-    content: "Etsinnän tulos";
-    position: relative;
-    display: block;
-    left: -10px;
-}
-.app-navigation-bar .next {
-    text-align: right;
-}
-.app-navigation-bar .next a::after {
-    content: "Seuraava";
-    position: relative;
-    display: block;
-    left: -4px;
-}
+
 .app-navigation-bar .next i::after {
     font-family: "FontAwesome";
     content:"\f105";
@@ -2302,10 +2278,6 @@ button.toggle-compare.closed::after {
 }
 p.just-info {
     font-weight: bold;
-}
-.search-box .text a {
-    font-weight: bold;
-    font-size: 1.1em;
 }
 .interest-boxes {
     margin-bottom: 40px;
@@ -2470,11 +2442,6 @@ a.titlelink {
 @media (max-width: 1200px) {
     .globe i {
         font-size: 5.25em;
-    }
-    .text {
-        width: 70%;
-        max-height: 90%;
-        height: auto;
     }
     .filter-button {
         padding: 1% 2%;
@@ -2716,9 +2683,6 @@ a.titlelink {
         color: #ffffff;
         font-size: 1.6em;
         visibility: hidden;
-    }
-    .text {
-        width: 75%;
     }
     .right-column {
         min-height: 120px;

@@ -1,5 +1,5 @@
 import { observable, computed, action, runInAction } from "mobx"
-import i18n from "../tools/i18n";
+import {Localizer as l} from "../tools/Utils";
 
 class HakuStore {
     @observable keyword = '';
@@ -145,16 +145,17 @@ class HakuStore {
             + (this.filter.paikkakunta ? '&paikkakunta=' + this.filter.paikkakunta : '')
             + (this.filter.koulutus.length ? '&koulutustyyppi=' + this.filter.koulutus.join(',') : '')
             + (this.filter.kieli.length ? '&kieli=' + this.filter.kieli.join(',') : '')
-            + "&lng=" + i18n.language;
+            + "&lng=" + l.getLanguage();
     }
 
+    // Ei käytössä missään?
     @computed get searchParams() {
         return '?toggle=' + (this.toggleKoulutus ? 'koulutus' : 'oppilaitos')
             + '&kpage=' + this.paging.pageKoulutus + '&opage=' + this.paging.pageOppilaitos + '&pagesize=' + this.paging.pageSize
             + (this.filter.paikkakunta ? '&paikkakunta=' + this.filter.paikkakunta : '')
             + (this.filter.koulutus.length ? '&koulutustyyppi=' + this.filter.koulutus.join(',') : '')
             + (this.filter.kieli.length ? '&kieli=' + this.filter.kieli.join(',') : '')
-            + "&lng=" + i18n.language
+            + "&lng=" + l.getLanguage();
     }
 
     @computed get maxPageNumber() {

@@ -26,9 +26,10 @@ class App extends Component {
         const urlStore = this.konfoStore.urlStore;
         const restStore = this.konfoStore.restStore;
         const navigaatioStore = this.konfoStore.navigaatioStore;
-        return (
 
+        return (
                 <Provider hakuStore={hakuStore} urlStore={urlStore} hakuehtoStore={hakuehtoStore} restStore={restStore} navigaatioStore={navigaatioStore}>
+                    <I18nextProvider i18n={ i18n } initialLanguage={"fi"}>
                     <React.Fragment>
                         <div className="container-fluid navigation-bar"/>
                         <div className="overlay"></div>
@@ -42,18 +43,17 @@ class App extends Component {
                             <Footer/>
                         </div>
                     </React.Fragment>
+                    </I18nextProvider>
                 </Provider>
-
-
         );
     }
 }
 
 ReactDOM.render((
-    <BrowserRouter basename={'/konfo'} initialLanguage={'fi'}>
-        <I18nextProvider i18n={ i18n } >
+    <BrowserRouter basename={'/konfo'}>
+
             <App/>
-        </I18nextProvider>
+
     </BrowserRouter>
 ), document.getElementById('wrapper'));
 

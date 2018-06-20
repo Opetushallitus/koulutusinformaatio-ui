@@ -61,7 +61,8 @@ class Hakurajain extends Component {
         return (
             <React.Fragment>
                 <div className="col-xs-12">
-                    <div className={"filter-button " + (this.props.hakuehtoStore.rajainOpen ? "sulje" : "")} onClick={() => this.toggleRajain()} role="button">
+                    <div className={"filter-button"} onClick={() => this.toggleRajain()} role="button">
+                        {this.props.hakuehtoStore.rajainOpen ? t("haku.sulje-rajain") : t("haku.rajaa-etsintää")}
                     </div>
                 </div>
                 {this.props.hakuehtoStore.rajainOpen &&

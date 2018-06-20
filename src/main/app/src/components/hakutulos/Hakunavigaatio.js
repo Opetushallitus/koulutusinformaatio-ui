@@ -4,10 +4,12 @@ import '../../assets/css/hakutulos.css'
 import {observer, inject} from 'mobx-react';
 import { withRouter } from 'react-router-dom'
 import qs from 'query-string';
-import { matchPath } from 'react-router'
+import { matchPath } from 'react-router';
+import {translate} from 'react-i18next';
 
 @inject("navigaatioStore")
 @observer
+@translate()
 class Hakunavigaatio extends Component {
 
     updateStores(haku) {
@@ -58,11 +60,14 @@ class Hakunavigaatio extends Component {
     }
 
     render() {
+        const t = this.props.t;
         const prevLink = this.props.navigaatioStore.hasPrev ? <a onClick={(e) => {this.prev(e)}}>
             <i className="fa fa-circle-thin" aria-hidden="true"/>
+            <span>{t("navigaatio.edellinen")}</span>
         </a> : <span/>;
         const nextLink = this.props.navigaatioStore.hasNext ? <a onClick={(e) => {this.next(e)}}>
             <i className="fa fa-circle-thin" aria-hidden="true"/>
+            <span>{t("navigaatio.seuraava")}</span>
         </a> : <span/>;
 
         return (
@@ -75,6 +80,7 @@ class Hakunavigaatio extends Component {
                         <div className="col-xs-4 search">
                             <Link to={this.state.hakuUrl}>
                                 <i className="fa fa-circle-thin" aria-hidden="true"/>
+                                <span>{t("navigaatio.etsintä-tulos")}</span>
                             </Link>
                         </div>
                         <div className="col-xs-4 next">
