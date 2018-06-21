@@ -6,18 +6,6 @@ import { withRouter } from 'react-router-dom';
 @translate()
 class DefaultFooter extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            togglePalaute: false
-        };
-        this.togglePalaute = this.togglePalaute.bind(this);
-    }
-
-    togglePalaute() {
-        this.setState({togglePalaute: !this.state.togglePalaute})
-    }
-
     changeLanguage(lng) {
         this.props.i18n.changeLanguage(lng);
 
@@ -52,7 +40,7 @@ class DefaultFooter extends Component {
                                 <a href="/tietoturvaseloste">{t('footer.tietoturvaseloste')}</a>
                             </li>
                             <li>
-                                <a onClick={this.togglePalaute}>{t('footer.palaute')}</a>
+                                <a onClick={this.props.togglePalaute}>{t('footer.palaute')}</a>
                             </li>
                         </ul>
                     </div>
@@ -99,7 +87,6 @@ class DefaultFooter extends Component {
                             </ul>
                         </div>
                     </div>
-                    {this.state.togglePalaute && <Palaute togglePalaute={this.togglePalaute}/>}
                 </div>
             </footer>);
     }
