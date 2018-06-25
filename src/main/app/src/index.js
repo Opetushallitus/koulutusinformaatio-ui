@@ -28,7 +28,6 @@ class App extends Component {
     }
 
     togglePalaute(val) {
-        console.log(val);
         if (typeof val === "boolean") {
             this.setState({togglePalaute: val})
         } else {

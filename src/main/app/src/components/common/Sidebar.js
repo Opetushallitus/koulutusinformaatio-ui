@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
+import { Localizer as l } from "../../tools/Utils";
 import SidebarDropdown from "./SidebarDropdown";
 
 @translate()
@@ -68,13 +69,13 @@ class Sidebar extends Component {
                                 </li>
                                 <li>
                                     <ul className="languages">
-                                        <li className="selected">
+                                        <li className={l.getLanguage() === 'fi' ? 'selected' : ''}>
                                             <a onClick={() => this.changeLanguage('fi')}>SUOMEKSI</a>
                                         </li>
-                                        <li>
+                                        <li className={l.getLanguage() === 'sv' ? 'selected' : ''}>
                                             <a onClick={() => this.changeLanguage('sv')}>PÅ SVENSKA</a>
                                         </li>
-                                        <li>
+                                        <li className={l.getLanguage() === 'en' ? 'selected' : ''}>
                                             <a onClick={() => this.changeLanguage('en')}>IN ENGLISH</a>
                                         </li>
                                     </ul>
