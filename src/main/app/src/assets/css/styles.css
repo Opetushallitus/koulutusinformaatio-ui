@@ -731,6 +731,9 @@ ul.accordion {
 .home .panel-title a.collapsed::before {
     content: "\f271";
 }
+.info-page {
+    overflow: hidden;
+}
 .info-page .panel-body p {
     font-size: 1em;
 }
