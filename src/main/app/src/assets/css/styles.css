@@ -732,7 +732,7 @@ ul.accordion {
     content: "\f271";
 }
 .info-page {
-    display: inline;
+    display: table-cell;
     overflow: hidden;
 }
 .info-page .panel-body p {
