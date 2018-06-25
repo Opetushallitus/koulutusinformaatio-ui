@@ -15,7 +15,6 @@ class Etusivu extends Component {
                 <Route path={'/koulutus/:oid'} render={(props) => <Koulutus {...props} />}/>
                 <Route path={'/oppilaitos/:oid'} render={(props) => <Oppilaitos {...props} />}/>
             </React.Fragment>
-
         );
     }
 }

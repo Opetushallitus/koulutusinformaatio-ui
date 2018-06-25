@@ -3,6 +3,7 @@ import HakuStore from './haku-store';
 import HakuehtoStore from './hakuehto-store';
 import RestStore from './rest-store';
 import NavigaatioStore from './navigaatio-store';
+import VertailuStore from './vertailu-store';
 
 class KonfoStore {
     constructor() {
@@ -11,6 +12,7 @@ class KonfoStore {
         this.hakuStore = new HakuStore(this.restStore);
         this.hakuehtoStore = new HakuehtoStore();
         this.navigaatioStore = new NavigaatioStore(this.hakuStore, this.hakuehtoStore);
+        this.vertailuStore = new VertailuStore();
     }
 }
 

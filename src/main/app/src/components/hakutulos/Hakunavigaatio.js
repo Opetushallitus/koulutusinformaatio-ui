@@ -7,9 +7,9 @@ import qs from 'query-string';
 import { matchPath } from 'react-router';
 import {translate} from 'react-i18next';
 
+@translate()
 @inject("navigaatioStore")
 @observer
-@translate()
 class Hakunavigaatio extends Component {
 
     updateStores(haku) {

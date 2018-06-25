@@ -1443,9 +1443,6 @@ footer p {
 .compare-button span.poista {
     border: 1px solid #7ed320;
     background: #7ed320;
-}
-.compare-button span.poista::after {
-    content: "Poista vertailuun";
     color: #ffffff;
 }
 #koulutusModal .compare-button {
