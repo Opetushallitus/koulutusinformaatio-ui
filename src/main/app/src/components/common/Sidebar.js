@@ -67,17 +67,18 @@ class Sidebar extends Component {
                                 <a className="sidebar-close" onClick={this.closeMenu}><i className="fa fa-times"/></a>
                             </div>
                             <div className="sidebar-nav">
-                                <ul className="languages">
-                                    <li className={l.getLanguage() === 'fi' ? 'selected' : ''}>
-                                        <a onClick={() => this.changeLanguage('fi')}>SUOMEKSI</a>
-                                    </li>
-                                    <li className={l.getLanguage() === 'sv' ? 'selected' : ''}>
-                                        <a onClick={() => this.changeLanguage('sv')}>PÅ SVENSKA</a>
-                                    </li>
-                                    <li className={l.getLanguage() === 'en' ? 'selected' : ''}>
-                                        <a onClick={() => this.changeLanguage('en')}>IN ENGLISH</a>
-                                    </li>
-                                </ul>
+                                   <ul className="languages">
+                                        <li className={l.getLanguage() === 'fi' ? 'selected' : ''}>
+                                            <a onClick={() => this.changeLanguage('fi')}>SUOMEKSI</a>
+                                        </li>
+                                        <li className={l.getLanguage() === 'sv' ? 'selected' : ''}>
+                                            <a onClick={() => this.changeLanguage('sv')}>PÅ SVENSKA</a>
+                                        </li>
+                                        <li className={l.getLanguage() === 'en' ? 'selected' : ''}>
+                                            <a onClick={() => this.changeLanguage('en')}>IN ENGLISH</a>
+                                        </li>
+                                    </ul>
+
                                 <div className="sidebar-input">
                                     <input type="text" placeholder={t("sidebar.etsi-tietoa-opintopolusta")}/>
                                 </div>
@@ -190,7 +191,7 @@ class Sidebar extends Component {
                                                          {link: "", name: t("sidebar.yrittäjäksi")}
                                                      ]}
                                     />
-                                    <li>
+                                    <li className="open">
                                         <a onClick={this.props.togglePalaute}>{t("sidebar.palaute")}</a>
                                     </li>
                                 </ul>
