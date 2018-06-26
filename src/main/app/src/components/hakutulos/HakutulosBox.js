@@ -25,11 +25,11 @@ class HakutulosBox extends Component {
                         <p>{this.props.text1}<br/>{this.props.text2}</p>
                     </div>
                     {this.props.vertailuStore.vertailuList.findIndex((item) => item.oid === this.props.oid) !== -1 ?
-                        <div className="compare-button" onClick={() => this.props.vertailuStore.removeKoulutus(this.props.oid)}>
+                        <div className="compare-button" onClick={() => this.props.vertailuStore.removeItem(this.props.oid)}>
                             <span role="button" className="poista">{this.props.t("haku.poista-vertailusta")}</span>
                         </div>
                         :
-                        <div className="compare-button" onClick={() => this.props.vertailuStore.selectKoulutus(this.props.oid, this.props.nimi, this.props.link)}>
+                        <div className="compare-button" onClick={() => this.props.vertailuStore.selectItem(this.props.oid, this.props.nimi, this.props.link)}>
                             <span
                                   role="button">{this.props.t("haku.ota-vertailuun")}</span>
                         </div>

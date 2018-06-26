@@ -52,7 +52,10 @@
     "poista-rajaukset": "Poista rajaukset",
     "ota-vertailuun": "Ota vertailuun",
     "poista-vertailusta": "Poista vertailusta",
-    "haku": "Haku"
+    "haku": "Haku",
+    "vertaile": "Vertaile",
+    "olet-valinnut-vertailuun": "Olet valinnut vertailuun:",
+    "poista-kaikki": "Poista kaikki"
   },
   "navigaatio": {
     "edellinen": "Edellinen",

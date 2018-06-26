@@ -12,7 +12,7 @@ class KonfoStore {
         this.hakuStore = new HakuStore(this.restStore);
         this.hakuehtoStore = new HakuehtoStore();
         this.navigaatioStore = new NavigaatioStore(this.hakuStore, this.hakuehtoStore);
-        this.vertailuStore = new VertailuStore();
+        this.vertailuStore = new VertailuStore(this.hakuStore, this.restStore);
     }
 }
 

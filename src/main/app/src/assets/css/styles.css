@@ -2059,7 +2059,6 @@ li.hae a::after {
     display: block;
 }
 .compare-box .title {
-    height: 90px;
     overflow: hidden;
     display: inline-block;
     margin: 15px;
@@ -2154,7 +2153,6 @@ button.toggle-compare.closed::after {
     font-size: 1.123em;
     text-decoration: underline;
     line-height: 1.5em;
-    margin-top: 3em;
 }
 .compare-page .compare-box .title strong {
     position: relative;

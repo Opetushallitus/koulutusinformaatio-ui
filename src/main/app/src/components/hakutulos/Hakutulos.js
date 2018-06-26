@@ -7,6 +7,7 @@ import HakutulosSummary from "./HakutulosSummary";
 import HakutulosBox from "./HakutulosBox";
 import Sivutus from './Sivutus';
 import { translate } from 'react-i18next';
+import VertailuBox from "./VertailuBox";
 
 @translate()
 @inject("hakuStore")
@@ -78,6 +79,7 @@ class Hakutulos extends Component {
         return (
             <React.Fragment>
                 <div className="container">
+                    <VertailuBox/>
                     <HakutulosSummary/>
                     <HakutulosToggle/>
                 </div>
