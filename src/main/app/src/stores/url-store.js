@@ -1,6 +1,6 @@
 import { observable } from "mobx"
 import {urls as ophUrls} from 'oph-urls-js';
-import {production, development} from '../oppija-urls.js';
+import {production, development, test} from '../oppija-urls.js';
 
 class UrlStore {
     @observable urls = ophUrls;
@@ -13,6 +13,8 @@ class UrlStore {
         console.log(process.env.NODE_ENV);
         if (process.env.NODE_ENV === 'development') {
             this.urls.addProperties(development);
+        } else if (process.env.NODE_ENV === 'test') {
+            this.urls.addProperties(test);
         } else {
             this.urls.addProperties(production);
             this.loadFrontProperties();

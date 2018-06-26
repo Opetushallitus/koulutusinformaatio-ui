@@ -48,6 +48,24 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>reserve-browser-test-port</id>
+                        <goals>
+                            <goal>reserve-network-port</goal>
+                        </goals>
+                        <phase>test</phase>
+                        <configuration>
+                            <portNames>
+                                <portName>browser.test.http.port</portName>
+                            </portNames>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
@@ -88,13 +106,33 @@
                         </goals>
                     </execution>
                     <execution>
+                        <id>Configure test port</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>config set konfo-ui:testport ${browser.test.http.port}</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>Run tests</id>
                         <phase>test</phase>
                         <goals>
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>test</arguments>
+                            <arguments>run ci</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>Delete test port configuration</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>config delete konfo-ui:testport</arguments>
                         </configuration>
                     </execution>
                     <execution>

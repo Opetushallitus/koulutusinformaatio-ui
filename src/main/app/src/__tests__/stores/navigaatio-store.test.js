@@ -1,4 +1,4 @@
-import NavigaatioStore from '../stores/navigaatio-store';
+import NavigaatioStore from '../../stores/navigaatio-store';
 
 let empty_result = {
     toggleKoulutus: true,

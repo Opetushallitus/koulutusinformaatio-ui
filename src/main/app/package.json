@@ -24,9 +24,20 @@
     "react-scripts": "1.1.1",
     "superagent": "^3.8.2"
   },
+  "config": {
+    "port": "3005",
+    "testport": "3482"
+  },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "PORT=$npm_package_config_port react-app-rewired start",
+    "start-for-test": "PORT=$npm_package_config_testport BROWSER=none NODE_ENV=test react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "CI=true react-app-rewired test --env=jsdom"
+    "run-test": "react-app-rewired test --env=jsdom",
+    "test": "start-test start-for-test $npm_package_config_testport run-test",
+    "ci": "CI=true start-test start-for-test $npm_package_config_testport run-test"
+  },
+  "devDependencies": {
+    "puppeteer": "^1.5.0",
+    "start-server-and-test": "^1.4.1"
   }
 }
