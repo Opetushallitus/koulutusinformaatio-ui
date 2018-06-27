@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link, withRouter} from 'react-router-dom';
 
 class SidebarDropdown extends Component {
     render() {
@@ -7,8 +8,8 @@ class SidebarDropdown extends Component {
                 <a className="dropdown-toggle" onClick={() => this.props.selectDropdown()}>{this.props.name}</a>
                 <ul className="dropdown-menu" role="menu">
                     {this.props.links.map((i) =>
-                        <li key={i.name}>
-                            <a href={i.link}>{i.name}</a>
+                        <li key={i.name} className={i.link === this.props.location.pathname ? "current-page" : ""}>
+                            <Link to={i.link}>{i.name}</Link>
                         </li>
                     )}
                 </ul>
@@ -16,4 +17,4 @@ class SidebarDropdown extends Component {
     }
 }
 
-export default SidebarDropdown
+export default withRouter(SidebarDropdown);

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Palaute from "./Palaute";
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 

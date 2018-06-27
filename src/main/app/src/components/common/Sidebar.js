@@ -28,7 +28,7 @@ class Sidebar extends Component {
 
     changeLanguage(lng) {
         this.props.i18n.changeLanguage(lng);
-
+        console.log(this.props.history.location);
         if (!this.props.history.location.search) {
             this.props.history.replace(this.props.history.location.pathname + "?lng=" + lng);
         } else if (this.props.history.location.search.indexOf('lng') !== -1) {
@@ -66,7 +66,7 @@ class Sidebar extends Component {
                                 <span>Valikko</span>
                                 <a className="sidebar-close" onClick={this.closeMenu}><i className="fa fa-times"/></a>
                             </div>
-                            <div className="sidebar-nav">
+                            <ul className="sidebar-nav">
                                    <ul className="languages">
                                         <li className={l.getLanguage() === 'fi' ? 'selected' : ''}>
                                             <a onClick={() => this.changeLanguage('fi')}>SUOMEKSI</a>
@@ -83,9 +83,19 @@ class Sidebar extends Component {
                                     <input type="text" placeholder={t("sidebar.etsi-tietoa-opintopolusta")}/>
                                 </div>
                                 <ul className="nav">
-                                    <li className="open frontpage-link">
-                                        <Link to="/">ETUSIVULLE</Link>
+                                    <li className={"frontpage-link" + ("/" === this.props.location.pathname ? " current-page" : "")}>
+                                        <Link to="/">{t("sidebar.etusivulle")}</Link>
                                     </li>
+                                </ul>
+                                <ul className="nav">
+                                    <li className="">
+                                        <Link to="/">{t("sidebar.ajankohtaista")}</Link>
+                                    </li>
+                                    <li className="">
+                                        <Link to="/">{t("sidebar.häiriötiedotteet")}</Link>
+                                    </li>
+                                </ul>
+                                <ul className="nav">
                                     <SidebarDropdown selectDropdown={() => this.selectDropdown('lukio')}
                                                      name={t("sidebar.lukio")} selected={this.state.selected === "lukio"}
                                                      links={[
@@ -191,11 +201,13 @@ class Sidebar extends Component {
                                                          {link: "", name: t("sidebar.yrittäjäksi")}
                                                      ]}
                                     />
-                                    <li className="open">
+                                </ul>
+                                <ul className="nav">
+                                    <li className="palaute">
                                         <a onClick={this.props.togglePalaute}>{t("sidebar.palaute")}</a>
                                     </li>
                                 </ul>
-                            </div>
+                            </ul>
                         </nav>
                     </React.Fragment>
                 }

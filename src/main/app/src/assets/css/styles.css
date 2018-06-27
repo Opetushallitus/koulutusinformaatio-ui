@@ -279,37 +279,31 @@ button:focus {
     background-color: #313334;
     padding: 0;
 }
+.sidebar-nav ul.nav {
+    box-shadow: inset 0 -1px 0 0 #101011;
+}
+
+.sidebar-nav ul.nav li.open {
+    box-shadow: inset 0 -1px 0 0 #101011;
+}
 .sidebar-nav li {
     position: relative;
     line-height: 20px;
     display: inline-block;
     width: 100%;
 }
-.sidebar-nav li.open {
-    border-top: 1px solid #101011;
-    border-bottom: 1px solid #101011;
-}
 .sidebar-nav li a {
     display: inline-block;
-    color: #b9b9b9;
+    color: #FFFFFF;
     text-decoration: none;
     padding: 10px 15px 10px 30px;
     width: 100%;
 }
 .sidebar-nav li.open a.dropdown-toggle {
     text-transform: uppercase;
-    box-shadow: inset 0 -1px 0 0 #101011;
+    background-color: #4a4a4a;
 }
-.sidebar-nav li.open a.dropdown-toggle::before {
-    font-family: "FontAwesome";
-    display: inline-block;
-    position: relative;
-    content: '\f060';
-    font-size: smaller;
-    width: 30px;
-    margin-left: -5px;
-    top: -1px;
-}
+
 .sidebar-nav li a:hover,
 .sidebar-nav li a:active,
 .sidebar-nav li a:focus,
@@ -340,13 +334,17 @@ button:focus {
     position: relative;
     width: 100%;
     margin: 0;
-    padding-left: 8px;
     border-radius: 0;
     border: 0;
     background-color: #4a4a4a;
     box-shadow: none;
 }
-.sidebar-nav .frontpage-link::before {
+
+.sidebar-nav ul li.frontpage-link a, .sidebar-nav ul li.palaute a {
+    color: #b9b9b9;
+}
+
+.sidebar-nav .current-page::before {
     content: '\25CF';
     color: #f5a623;
     position: absolute;
@@ -356,6 +354,9 @@ button:focus {
 }
 .sidebar-nav .dropdown-menu a {
     color: #FFFFFF;
+}
+.sidebar-nav .dropdown-menu .current-page a {
+    color: #f5a623;
 }
 .menu {
     position: absolute;
