@@ -92,5 +92,20 @@
     "tuntematon": "Tuntematon koulutus",
     "ei-nimeä": "Koulutus (ei nimeä)",
     "tuntematon-nimi": "(Tuntematon nimi)"
+  },
+  "vertailu": {
+    "takaisin-edelliselle-sivulle": "Takaisin edelliselle sivulle",
+    "vertailuun-ottamasi-kohteet": "Vertailuun ottamasi kohteet",
+    "koulutus-alkaa": "Koulutus alkaa",
+    "opetuskieli": "Opetuskieli",
+    "koulutuksen-laajuus": "Koulutuksen laajuus",
+    "suunniteltu-kesto": "Suunniteltu kesto",
+    "osaamisalat": "Osaamisalat",
+    "opetusaika": "Opetusaika",
+    "opetustapa": "Opetustapa",
+    "opiskelumuoto": "Opiskelumuoto",
+    "pohjakoulutus": "Pohjakoulutus",
+    "maksullinen": "Maksullinen",
+    "maksuton": "Maksuton"
   }
 }
