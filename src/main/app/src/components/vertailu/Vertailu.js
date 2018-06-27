@@ -63,7 +63,7 @@ class Vertailu extends Component {
                         <p>{item.opetuskielis.map((k) => l.localize(k)).join(', ')}</p></li>
                     <li className="list-group-item">
                         <div className="inner"/>
-                        <p>{l.localize(item.opintojenLaajuusarvo) + " " + l.localize(item.opintojenLaajuusyksikko)}</p></li>
+                        <p>{l.localize(item.opintojenLaajuusarvo, "", "fi") + " " + l.localize(item.opintojenLaajuusyksikko)}</p></li>
                     <li className="list-group-item">
                         <div className="inner"/>
                         <p>{item.suunniteltuKestoArvo + " " + l.localize(item.suunniteltuKestoTyyppi)}</p></li>

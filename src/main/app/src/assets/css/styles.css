@@ -1423,21 +1423,26 @@ footer p {
     background: #e7f2f6;
 }
 .compare-button span {
-    /*border: 1px solid #4d93d9;*/
-    border: 1px solid #d6d6d6;
+    border: 1px solid #4d93d9;
     pointer-events:none;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;
     max-width: 200px;
-    width: auto;
+    /*width: auto;*/
+    width: 155px;
     padding: 5px 20px;
     float: right;
     text-align: center;
     -webkit-transition: all ease-in .25s;
     -moz-transition: all ease-in .25s;
     transition: all ease-in .25s;
+    color: #4d93d9;
+}
+
+.compare-button.inactive span {
     color: #d6d6d6;
+    border-color: #d6d6d6;
 }
 
 .compare-button span.poista {
@@ -2095,6 +2100,9 @@ button.toggle-compare::after {
 button.toggle-compare.closed::after {
     content: "Avaa vertailu";
 }
+.compared-items {
+    overflow: hidden;
+}
 .compared-items .compare-box {
     border: none;
     background: none;
@@ -2109,6 +2117,8 @@ button.toggle-compare.closed::after {
     border-top: 1px solid #ccd6df;
     border-left: 1px solid #ccd6df;
     border-right: 1px solid #ccd6df;
+    padding-bottom: 500px;
+    margin-bottom: -500px;
 }
 .compared-items .green .compare-box {
     background: #41b8bc;
