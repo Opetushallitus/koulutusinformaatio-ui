@@ -10,7 +10,7 @@ import { translate } from 'react-i18next';
 import VertailuBox from "./VertailuBox";
 
 @translate()
-@inject("hakuStore")
+@inject("hakuStore", "vertailuStore")
 @observer
 class Hakutulos extends Component {
 
@@ -30,6 +30,7 @@ class Hakutulos extends Component {
     }
 
     renderResultList() {
+        const vertailuActive = this.props.vertailuStore.size < 3;
         if(this.props.hakuStore.toggleKoulutus) {
             return this.props.hakuStore.koulutusResult.map((r) => {
                 const link = '/koulutus/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
@@ -42,7 +43,8 @@ class Hakutulos extends Component {
                                   nimi={this.getKoulutusNimi(r)}
                                   link={link}
                                   text1={r.tarjoaja ? r.tarjoaja : ""}
-                                  text2={this.getKoulutusAiheet(r)}/>)
+                                  text2={this.getKoulutusAiheet(r)}
+                                  vertailu={vertailuActive}/>)
             });
         } else {
             return this.props.hakuStore.oppilaitosResult.map((r) => {
@@ -56,7 +58,8 @@ class Hakutulos extends Component {
                                   nimi={this.getOppilaitosNimi(r)}
                                   link={link}
                                   text1={r.kayntiosoite ? r.kayntiosoite : ""}
-                                  text2={r.postitoimipaikka ? r.postitoimipaikka : ""}/>)
+                                  text2={r.postitoimipaikka ? r.postitoimipaikka : ""}
+                                  vertailu={false}/>)
             })
         }
     }
