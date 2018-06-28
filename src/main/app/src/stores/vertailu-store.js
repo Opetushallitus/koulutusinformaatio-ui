@@ -56,6 +56,9 @@ class VertailuStore {
             if (this.isOidSelected(oid)) {
                 this.vertailuListKoulutus = this.vertailuListKoulutus.filter((i) => i.oid !== oid);
             }
+            if (this.vertailuResults.findIndex((i) => i.oid === oid)) {
+                this.vertailuResults = this.vertailuResults.filter((i) => i.oid !== oid);
+            }
             this.sizeKoulutus = this.vertailuListKoulutus.length;
         } else {
             if (this.isOidSelected(oid)) {
@@ -80,7 +83,13 @@ class VertailuStore {
     loadVertailuItems = (oids) => {
         this.vertailuResults = [];
         const cbKoulutus = (results) => {this.vertailuResults = results.map((res, i) => {
-                return (res.result.koulutus) ? toJS(res.result.koulutus[oids[i]]) : undefined;
+                const item = (res.result.koulutus) ? toJS(res.result.koulutus[oids[i]]) : undefined;
+                if (item) {
+                    this.selectItem(item.oid, l.localize(item.searchData),
+                        "/koulutus/" + item.oid + '?haku=' + encodeURIComponent(this.hakuStore.createHakuUrl)
+                        + '&lng=' + l.getLanguage());
+                }
+                return item;
             }); console.log(results)
         };
 
