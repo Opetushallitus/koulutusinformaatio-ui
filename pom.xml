@@ -60,6 +60,7 @@
                         <configuration>
                             <portNames>
                                 <portName>browser.test.http.port</portName>
+                                <portName>browser.test.http.backend.port</portName>
                             </portNames>
                         </configuration>
                     </execution>
@@ -106,33 +107,18 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>Configure test port</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>config set konfo-ui:testport ${browser.test.http.port}</arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
                         <id>Run tests</id>
                         <phase>test</phase>
                         <goals>
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run ci</arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>Delete test port configuration</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>config delete konfo-ui:testport</arguments>
+                            <environmentVariables>
+                                <PORT>${browser.test.http.port}</PORT>
+                                <BACKEND_PORT>${browser.test.http.backend.port}</BACKEND_PORT>
+                                <CI>true</CI>
+                            </environmentVariables>
+                            <arguments>test</arguments>
                         </configuration>
                     </execution>
                     <execution>

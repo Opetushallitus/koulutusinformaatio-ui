@@ -26,18 +26,26 @@
   },
   "config": {
     "port": "3005",
-    "testport": "3482"
+    "backendport": "3006",
+    "testport": "3482",
+    "testbackendport": "4483"
   },
   "scripts": {
-    "start": "PORT=$npm_package_config_port react-app-rewired start",
-    "start-for-test": "PORT=$npm_package_config_testport BROWSER=none NODE_ENV=test react-app-rewired start",
     "build": "react-app-rewired build",
-    "run-test": "react-app-rewired test --env=jsdom",
-    "test": "start-test start-for-test $npm_package_config_testport run-test",
-    "ci": "CI=true start-test start-for-test $npm_package_config_testport run-test"
+    "test": "./scripts/test.sh $PORT $BACKEND_PORT",
+    "start-for-start": "react-app-rewired start",
+    "start": "./scripts/start.sh $PORT $BACKEND_PORT",
+    "start-for-test": "BROWSER=none NODE_ENV=test react-app-rewired start",
+    "start-and-test": "start-test start-for-test $PORT run-test",
+    "run-test": "react-app-rewired test --env=jsdom"
   },
   "devDependencies": {
     "puppeteer": "^1.5.0",
     "start-server-and-test": "^1.4.1"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/src/__tests__/mocks"
+    ]
   }
 }
