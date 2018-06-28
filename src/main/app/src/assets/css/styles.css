@@ -1832,10 +1832,11 @@ p.student-comment {
     color: #000000;
     padding: 0 1.5% 0 0;
 }
-.row.compare {
+.compare {
     margin-top: 30px;
+    margin-left: 30px;
 }
-.row.compare .light-font {
+.compare .light-font {
     font-size: 0.85em;
 }
 .compare a.header:before {
@@ -2044,17 +2045,17 @@ li.hae a::after {
     border-left: 1px solid #bfbfbf;
     padding-bottom: 2%;
 }
-.compare-box button.close {
+.compare-box .close {
     -webkit-transition: ease-in-out .3s;
     -moz-transition: ease-in-out .3s;
     transition: ease-in-out .3s;
-    width: 100%;
     text-align: right;
     margin: 5px 5px 0;
     color: #ffffff;
     opacity: .4;
+    float: right;
 }
-.compare-box button.close:hover {
+.compare-box .close:hover {
     -webkit-transition: ease-in-out .3s;
     -moz-transition: ease-in-out .3s;
     transition: ease-in-out .3s;
@@ -2065,8 +2066,7 @@ li.hae a::after {
 }
 .compare-box .title {
     overflow: hidden;
-    display: inline-block;
-    margin: 15px;
+    margin: 30px;
 }
 .compare-box .button {
     width: 65%;
@@ -2104,58 +2104,47 @@ button.toggle-compare.closed::after {
     overflow: hidden;
 }
 .compared-items .compare-box {
-    border: none;
-    background: none;
     min-height: 200px;
-    height: auto;
-    width: 96%;
-    margin-left: 3.55%;
-    left: 0;
-    top: 0;
-}
-.compared-items .compare-box {
+    height: 100%;
     border-top: 1px solid #ccd6df;
     border-left: 1px solid #ccd6df;
     border-right: 1px solid #ccd6df;
-    padding-bottom: 500px;
-    margin-bottom: -500px;
+    flex-grow: 1;
 }
-.compared-items .green .compare-box {
+.green .compared-items .compare-box {
     background: #41b8bc;
 }
-.compared-items .gold .compare-box {
+.gold .compared-items .compare-box {
     background: #d7b85e;
 }
-.compared-items .blue .compare-box {
+.blue .compared-items .compare-box {
     background: #67adce;
 }
-.compare-page .list-group-item .inner {
+.compare-page .compare-list-item .inner {
     margin: 0;
     display: block;
     height: 100%;
-    width: 96%;
+    width: 100%;
     position: absolute;
     top: 0;
-    left:3.5%;
     text-align: left;
 }
-.compare-page .list-group-item p {
+.compare-page .compare-list-item p {
     position: relative;
     margin-left: 25px;
+    color: #1c1c1c;
 }
-.compare-page .l-blue-bottom.right .inner,
-.compare-page .l-blue-bottom .inner,
-.compare-page .d-blue-bottom .inner {
+.compare-page .inner {
     border-left: 1px solid #ccd6df;
     border-right: 1px solid #ccd6df;
 }
-.compare-page .l-blue-bottom .inner {
+.compare-page .green .inner {
     background-color: #d9f1f3;
 }
-.compare-page .d-blue-bottom .inner {
+.compare-page .gold .inner {
     background-color: #f7eed1;
 }
-.compare-page .l-blue-bottom.right .inner {
+.compare-page .blue .inner {
     background-color: #e1eef6!important;
 }
 .compare-page .compare-box .title {
@@ -2167,10 +2156,6 @@ button.toggle-compare.closed::after {
 .compare-page .compare-box .title strong {
     position: relative;
     top: -5px;
-}
-.compare-page .col-md-3 {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
 }
 .row.compare-info .data-col p {
     margin: 5px 0;
@@ -2191,27 +2176,37 @@ button.toggle-compare.closed::after {
 }
 .compare-page {
     margin-top: 50px;
+    margin-right: 50px;
+    display: flex;
+    justify-content: left;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
 }
-.compare-page .list-group-item {
-    padding: 25px 15px;
+.compare-page .compare-list {
+    width: 300px;
+    align-self: flex-end;
+}
+.compare-page .compare-list-item {
+    padding: 25px 0;
     font-weight: bold;
-    height: 75px;
+    height: 100px;
     overflow: hidden;
-    margin-bottom: -1px;
     border-left: none;
     border-right: none;
     border-top: 1px solid #000000;
     border-bottom: none;
     background: transparent;
+    position: relative;
+    display: block;
 }
-.compare-page .list-group-item:first-child {
+.compare-page .compare-list-item:first-child {
     border: none;
 }
-.compare-page .list-group-item:last-child {
+.compare-page .compare-list-item:last-child {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
-.compare-page .list-group-item:last-child .inner {
+.compare-page .compare-list-item:last-child .inner {
     border-bottom: 1px solid #ccd6df;
 }
 .compare-mobile {
@@ -2750,9 +2745,6 @@ a.titlelink {
     }
     #compare-row .compare-box {
         margin-bottom: 0;
-    }
-    .compare-box a.button {
-        display: none;
     }
     .compare-box .close {
         font-size: 17px;
