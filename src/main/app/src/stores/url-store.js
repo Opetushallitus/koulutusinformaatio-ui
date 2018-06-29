@@ -1,6 +1,6 @@
 import { observable } from "mobx"
 import {urls as ophUrls} from 'oph-urls-js';
-import {production, development} from '../oppija-urls.js';
+import {production, development, test} from '../oppija-urls.js';
 
 class UrlStore {
     @observable urls = ophUrls;
@@ -10,14 +10,14 @@ class UrlStore {
     }
 
     constructor(konfoStore) {
-        console.log(process.env.NODE_ENV);
-        if (process.env.NODE_ENV === 'development') {
+        console.log('Ollaan ympäristössä ' + process.env.NODE_ENV);
+        if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
+            //console.log(JSON.stringify(process.env))
             this.urls.addProperties(development);
         } else {
             this.urls.addProperties(production);
             this.loadFrontProperties();
         }
-        console.log(this.urls.url('konfo-backend.search.koulutukset'));
     }
 }
 

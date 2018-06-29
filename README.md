@@ -8,6 +8,8 @@ Lokaalia ajoa varten Konfo-backendin pitää vastata osoitteessa:
 
 http://localhost:3006
 
+(Porttia voi myös vaihtaa, ks. käyttöliittymän kehittäminen)
+
 ## Buildaus ja käynnistys
 
 Projektin saa buildattua komennolla:
@@ -37,3 +39,25 @@ Kehityksen aikana käyttöliittymää kannattaa ajaa pelkästään nodella, joll
 Käyttöliittymä aukeaa osoitteeseen: 
 
 http://localhost:3005/
+
+Portteja voi vaihtaa ajamalla:
+
+`PORT=5555 BACKEND_PORT=5556 npm start`
+
+## Testit
+
+Testit löytyvät hakemistosta `src/main/app/src/__tests__`. 
+Nimetään yksikkötestit päätteellä `.test.js` ja laitetaan ne sopiviin hakemistoihin. 
+Lisäksi projektissa on headless-selaintestejä, jotka käyttävät Puppeteer-kirjastoa. Laitetaan ne hakemistoon 
+`src/main/app/src/__tests__/headless/`. Mock-datan luontiin tarvittavat javascript-luokat ja muut testityökalut
+voi laittaa hakemistoon `src/main/app/src/__tests__/mocks`, joka skipataan testejä ajettaessa.
+
+Testit voi ajaa default porteissa komennolla
+
+`npm test`
+
+tai tietyissä porteissa
+
+`PORT=5555 BACKEND_PORT=5556 npm test`
+
+Jos haluaa ajaa testit ilman watchia, annetaan lisäksi parametriksi `CI=true`.

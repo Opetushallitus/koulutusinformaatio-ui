@@ -24,9 +24,28 @@
     "react-scripts": "1.1.1",
     "superagent": "^3.8.2"
   },
+  "config": {
+    "port": "3005",
+    "backendport": "3006",
+    "testport": "3482",
+    "testbackendport": "4483"
+  },
   "scripts": {
-    "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-app-rewired test --env=jsdom"
+    "test": "./scripts/test.sh $PORT $BACKEND_PORT",
+    "start-for-start": "react-app-rewired start",
+    "start": "./scripts/start.sh $PORT $BACKEND_PORT",
+    "start-for-test": "BROWSER=none NODE_ENV=test react-app-rewired start",
+    "start-and-test": "start-test start-for-test $PORT run-test",
+    "run-test": "react-app-rewired test --env=jsdom"
+  },
+  "devDependencies": {
+    "puppeteer": "^1.5.0",
+    "start-server-and-test": "^1.4.1"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/src/__tests__/mocks"
+    ]
   }
 }
