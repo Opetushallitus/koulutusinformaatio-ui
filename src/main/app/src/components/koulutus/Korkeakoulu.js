@@ -3,6 +3,7 @@ import KoulutusInfoBox from './KoulutusInfoBox';
 import KoulutusInfoBoxTwoSided from './KoulutusInfoBoxTwoSided';
 import KoulutusSidebar from './KoulutusSidebar';
 import { Localizer as l } from '../../tools/Utils';
+import { TimeMillisParser as timeParser} from '../../tools/Utils';
 import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next'
 
@@ -42,26 +43,15 @@ class Korkeakoulu extends Component {
         return ""
     }
 
-
     parseInfoBoxFieldsTwoSided() {
+        const {t} = this.props;
         const fields = {};
         fields.left = this.parseInfoBoxFieldsLeft();
-        fields.right = this.parseInfoBoxFieldsRight();
+        fields.otsikkoLeft = t('koulutus.tiedot');
+        fields.hakuajat = this.props.result.hakuajatFromBackend;
+        fields.otsikkoRight = t('koulutus.hae-koulutukseen');
+        console.log("Returning fields: ", fields);
         return fields;
-    }
-
-    parseInfoBoxFieldsRight() {
-        const {t} = this.props;
-        const fields = [];
-        const haunNimi = l.localize("kissa", "kissa");
-        const hakuAika = l.localize("huomenissa", "huomenissa");
-        fields.push([t('haku.nimi'), haunNimi]);
-        fields.push([t('haku.hakuaika'), hakuAika]);
-
-        console.log("Returning fields right:" + fields);
-
-        return fields;
-
     }
 
     parseInfoBoxFieldsLeft() {
@@ -79,7 +69,6 @@ class Korkeakoulu extends Component {
         fields.push([t('koulutus.maksullinen'), this.props.result.opintojenMaksullisuus ? t('kyllä') : t('ei')]);
         fields.push([t('koulutus.tutkintonimikkeet'), this.props.result.tutkintonimikes ? this.props.result.tutkintonimikes.map(t => l.localize(t) + " ") : '-']);
 
-        console.log("Returning fields left:" + fields);
         return fields;
     }
 
@@ -96,7 +85,7 @@ class Korkeakoulu extends Component {
                         </h1>
                         <div className="row">
                             <div className="col-xs-12 left-column">
-                                <KoulutusInfoBoxTwoSided fields={this.parseInfoBoxFieldsTwoSided()}/>
+                                {<KoulutusInfoBoxTwoSided fields={this.parseInfoBoxFieldsTwoSided()}/>}
                             </div>
                         </div>
                         <div className="col-xs-12 col-md-9 left-column">

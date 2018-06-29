@@ -126,6 +126,10 @@ button:focus {
     width: 80%;
 }
 
+.koulutusinfo-2 button {
+    color: black;
+}
+
 .koulutusinfo-2-left {
     display: table-cell;
     width: 40%;

@@ -56,4 +56,11 @@ class OsoiteParser {
     }
 }
 
-export {Parser, Localizer, OsoiteParser};
+class TimeMillisParser {
+    static millisToReadable(timemillis) {
+        return new Date(timemillis).toLocaleString().replace(/\//g, ".").replace(",", " klo");
+    }
+
+}
+
+export {Parser, Localizer, OsoiteParser, TimeMillisParser};
