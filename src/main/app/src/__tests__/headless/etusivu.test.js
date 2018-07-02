@@ -18,6 +18,7 @@ function response(json) { return {
 
 beforeAll(async () => {
     browser = await puppeteer.launch(
+        {args: ['--no-sandbox']}
         /*{dumpio: true}*/ //Uncomment to see what happens
     );
     page = await browser.newPage();
