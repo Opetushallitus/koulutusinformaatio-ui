@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import KonfoStore from './stores/konfo-store'
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import KonfoStore from './stores/konfo-store';
 import {Provider} from 'mobx-react';
-import Sidebar from "./components/common/Sidebar";
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import Hakusivu from "./components/Hakusivu";
 import Etusivu from "./components/Etusivu";
-import './assets/css/font-awesome.min.css'
-import './assets/css/bootstrap.min.css'
+import Sidebar from "./components/common/Sidebar";
+import Palaute from "./components/common/Palaute";
+import './assets/css/font-awesome.min.css';
+import './assets/css/bootstrap.min.css';
 import './assets/css/oph-styles-min.css';
 import './assets/css/styles.css';
 import i18n from './tools/i18n';
@@ -17,6 +18,22 @@ import { I18nextProvider } from 'react-i18next';
 //import registerServiceWorker from './registerServiceWorker';
 
 class App extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            togglePalaute: false
+        };
+        this.togglePalaute = this.togglePalaute.bind(this);
+    }
+
+    togglePalaute(val) {
+        if (typeof val === "boolean") {
+            this.setState({togglePalaute: val})
+        } else {
+            this.setState({togglePalaute: !this.state.togglePalaute})
+        }
+    }
 
     konfoStore = new KonfoStore();
 
@@ -31,17 +48,16 @@ class App extends Component {
                 <Provider hakuStore={hakuStore} urlStore={urlStore} hakuehtoStore={hakuehtoStore} restStore={restStore} navigaatioStore={navigaatioStore}>
                     <I18nextProvider i18n={ i18n } initialLanguage={"fi"}>
                     <React.Fragment>
-                        <div className="container-fluid navigation-bar"/>
-                        <div className="overlay"></div>
-                        <Sidebar/>
                         <div id="page-content-wrapper">
                             <Header/>
+                            <Sidebar changeLanguage={this.changeLanguage} togglePalaute={this.togglePalaute}/>
                             <Switch>
                                 <Route exact path='/' component={Etusivu}/>
                                 <Route path='/' component={Hakusivu}/>
                             </Switch>
-                            <Footer/>
+                            <Footer changeLanguage={this.changeLanguage} togglePalaute={this.togglePalaute}/>
                         </div>
+                        {this.state.togglePalaute && <Palaute togglePalaute={this.togglePalaute}/>}
                     </React.Fragment>
                     </I18nextProvider>
                 </Provider>
