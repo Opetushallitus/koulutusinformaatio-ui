@@ -198,7 +198,6 @@ button:focus {
     font-size: inherit;
     box-sizing: border-box;
     width: 100%;
-    padding: 8px;
     padding: .5rem;
     border: 1px solid #aeaeae;
     border-radius: 2px;
@@ -221,10 +220,18 @@ button:focus {
 #wrapper.toggled {
     padding-left: 220px;
 }
+.sidebar-close {
+    position: relative;
+    float: right;
+    top: -8px;
+    color: #636769;
+    font-size: x-large;
+    z-index: 1001;
+}
 #sidebar-wrapper {
     z-index: 1000;
     left: 220px;
-    width: 0;
+    width: 350px;
     height: 100%;
     margin-left: -220px;
     overflow-y: auto;
@@ -246,16 +253,12 @@ button:focus {
     z-index: -1;
     height: 100%;
     width: 3px;
-    background-color: #1c1c1c;
+    background-color: #2a6dbb;
     -webkit-transition: width .2s ease-in;
     -moz-transition:  width .2s ease-in;
     -ms-transition:  width .2s ease-in;
     transition: width .2s ease-in;
     color: #fff;
-    background-color: #2a6dbb;
-}
-#wrapper.toggled #sidebar-wrapper {
-    width: 350px;
 }
 #page-content-wrapper {
     width: 100%;
@@ -265,12 +268,23 @@ button:focus {
     margin-right: -220px;
 }
 .sidebar-nav {
-    position: absolute;
+    position: relative;
     top: 0;
-    width: 220px;
+    width: 100%;
     margin: 0;
     padding: 0;
     list-style: none;
+}
+.sidebar-nav ul {
+    background-color: #313334;
+    padding: 0;
+}
+.sidebar-nav ul.nav {
+    box-shadow: inset 0 -1px 0 0 #101011;
+}
+
+.sidebar-nav ul.nav li.open {
+    box-shadow: inset 0 -1px 0 0 #101011;
 }
 .sidebar-nav li {
     position: relative;
@@ -279,11 +293,17 @@ button:focus {
     width: 100%;
 }
 .sidebar-nav li a {
-    display: block;
-    color: #b9b9b9;
+    display: inline-block;
+    color: #FFFFFF;
     text-decoration: none;
     padding: 10px 15px 10px 30px;
+    width: 100%;
 }
+.sidebar-nav li.open a.dropdown-toggle {
+    text-transform: uppercase;
+    background-color: #4a4a4a;
+}
+
 .sidebar-nav li a:hover,
 .sidebar-nav li a:active,
 .sidebar-nav li a:focus,
@@ -294,7 +314,6 @@ button:focus {
     text-decoration: none;
     background-color: transparent;
 }
-
 
 .page-size-select select {
     margin: 20px 0;
@@ -314,12 +333,30 @@ button:focus {
 .sidebar-nav .dropdown-menu {
     position: relative;
     width: 100%;
-    padding: 0;
     margin: 0;
     border-radius: 0;
-    border: none;
-    background-color: #222;
+    border: 0;
+    background-color: #4a4a4a;
     box-shadow: none;
+}
+
+.sidebar-nav ul li.frontpage-link a, .sidebar-nav ul li.palaute a {
+    color: #b9b9b9;
+}
+
+.sidebar-nav .current-page::before {
+    content: '\25CF';
+    color: #f5a623;
+    position: absolute;
+    font-size: 23px;
+    left: 10px;
+    top: 7px;
+}
+.sidebar-nav .dropdown-menu a {
+    color: #FFFFFF;
+}
+.sidebar-nav .dropdown-menu .current-page a {
+    color: #f5a623;
 }
 .menu {
     position: absolute;
@@ -461,29 +498,59 @@ button:focus {
     width: 25px;
 }
 ul.languages {
+    position: relative;
+    line-height: 20px;
+    width: 100%;
     font-size: .8em;
-    display: inline;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     padding: 0;
+    margin: auto;
+    background-color: #282828;
 }
 ul.languages li {
-    display: inline;
-    float: left;
     width: auto;
 }
-ul.languages .selected a {
-    color: #9da4aa;
+ul.languages li a {
+    padding: 10px 15px 0 15px;
 }
 ul.languages .selected a{
     color: #ffffff;
 }
-li.sidebar-brand {
-    font-size: 18px!important;
-    margin: 5px 30px;
+div.sidebar-brand {
+    width: 100%;
+    font-size: 16px;
+    padding: 15px 30px;
     color: #ffffff;
+    box-shadow: inset 0 -1px 0 0 #101011;
+}
+.sidebar-input {
+    display: block;
+    width: 80%;
+    padding: 2px;
+    margin: 2px auto 15px auto;
+    color: #FFFFFF;
+    box-shadow: inset 0 -1px 0 0 #ffffff;
+}
+.sidebar-input input {
+    background-color: #282828;
+    border: 0;
+    width:90%;
+}
+.sidebar-input input::placeholder {
+    font-style: italic;
+    font-weight: lighter;
+}
+.sidebar-input::before {
+    font-family: "FontAwesome";
+    content: "\f002";
+    position: relative;
+    font-size: 1em;
+    padding-right: 10px;
 }
 .overlay {
     position: fixed;
-    display: none;
     width: 100%;
     height: 100%;
     top: 0;
@@ -492,13 +559,6 @@ li.sidebar-brand {
     bottom: 0;
     background-color: rgba(250,250,250,.8);
     z-index: 1000;
-}
-.sidebar-nav {
-    width: 100%;
-}
-.sidebar-nav li:before {
-    background-color: 0;
-
 }
 .dropdown-menu li {
     margin: 0 5%;
@@ -2981,7 +3041,7 @@ a.titlelink {
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 4;
+    z-index: 1004;
     position: fixed;
     padding: 20px;
     background-color: #FFFFFF;

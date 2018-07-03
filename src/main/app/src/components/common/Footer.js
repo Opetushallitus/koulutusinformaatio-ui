@@ -13,7 +13,7 @@ class Footer extends Component {
                 matches ? (
                     <MobileFooter/>
                 ) : (
-                    <MainFooter/>
+                    <MainFooter togglePalaute={this.props.togglePalaute}/>
                 )
             }
         </Media>

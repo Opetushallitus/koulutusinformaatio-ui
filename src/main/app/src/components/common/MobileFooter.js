@@ -13,26 +13,26 @@ class MobileFooter extends Component {
                             <img src={require('../../assets/images/opintopolku_large-fi.png')} alt=""/>
                         </a>
                     </div>
-                    <ul className="social-media">
+                    {/*<ul className="social-media">
                         <li>
                             <a href="">
                                 <img src={require('../../assets/images/twitter-icon.png')} alt=""/>
                             </a>
-                            {/*<i  className="fa fa-twitter-square" aria-hidden="true"></i>*/}
+                            //<i  className="fa fa-twitter-square" aria-hidden="true"></i>
                         </li>
                         <li>
                             <a href="">
                                 <img src={require('../../assets/images/fb-icon.png')} alt=""/>
                             </a>
-                            {/*<i href="" className="fa fa-facebook-square" aria-hidden="true"></i>*/}
+                            //<i href="" className="fa fa-facebook-square" aria-hidden="true"></i>
                         </li>
                         <li>
                             <a href="">
                                 <img src={require('../../assets/images/insta-icon.png')} alt=""/>
                             </a>
-                            {/*<i href="" className="fa fa-instagram" aria-hidden="true"></i>*/}
+                            //<i href="" className="fa fa-instagram" aria-hidden="true"></i>
                         </li>
-                    </ul>
+                    </ul>*/}
                 </div>
                 <div className="col-xs-6">
                     <ul className="site-links">
