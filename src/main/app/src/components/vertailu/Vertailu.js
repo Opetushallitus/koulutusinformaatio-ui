@@ -30,18 +30,20 @@ class Vertailu extends Component {
         }
         const oids = search.oids;
         if (oids) {
-            this.props.vertailuStore.loadVertailuItems(oids.split(','));
+            oids.split(',')
+                .filter((oid) => !this.props.vertailuStore.isOidSelected(oid))
+                .forEach((oid) => this.props.vertailuStore.selectItem(oid));
         }
     }
     colors = ["green", "gold", "blue"];
 
     renderComparedItems() {
-        return this.props.vertailuStore.vertailuResults.map((item, i) => {
+        return this.props.vertailuStore.vertailuList.map((item, i) => {
             return (
                 <ul className={"compare-list " + this.colors[i]} key={item.oid}>
                     <li className={"compared-items"} >
                         <div className="compare-box">
-                            <Link to="/koulutus" className="title">
+                            <Link to={item.link} className="title">
                                 <strong>{item.organisaatio.nimi + ":"}<br/>{l.localize(item.searchData)}</strong>
                             </Link>
                         </div>

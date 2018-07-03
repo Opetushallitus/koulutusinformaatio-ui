@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {translate} from 'react-i18next';
 import { inject, observer } from 'mobx-react';
+import { Localizer as l} from "../../tools/Utils";
 
 @translate()
 @inject("vertailuStore")
@@ -15,7 +16,7 @@ class VertailuBox extends Component {
                         onClick={() => this.props.vertailuStore.removeItem(i.oid)}>
                     <i className="fa fa-times" aria-hidden="true"/>
                 </button>
-                <Link to={i.link} className="title"><strong>{i.nimi}</strong></Link>
+                <Link to={i.link} className="title"><strong>{l.localize(i.searchData)}</strong></Link>
             </div>)
     }
 

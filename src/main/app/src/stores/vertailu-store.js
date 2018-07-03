@@ -1,4 +1,4 @@
-import { observable, action, computed, toJS } from "mobx";
+import { observable, action, computed } from "mobx";
 import { Localizer as l } from "../tools/Utils";
 
 
@@ -10,16 +10,13 @@ class VertailuStore {
 
     @observable vertailuListKoulutus = [];
     @observable vertailuListOppilaitos = [];
-    @observable vertailuResults = [];
-    @observable sizeKoulutus = 0;
-    @observable sizeOppilaitos = 0;
 
     @computed get oids() {
         return this.vertailuList.map((i) => i.oid);
     }
 
     @computed get size() {
-        return this.hakuStore.toggleKoulutus ? this.sizeKoulutus : this.sizeOppilaitos;
+        return this.vertailuList.length;
     }
 
     @computed get vertailuList() {
@@ -36,18 +33,30 @@ class VertailuStore {
     };
 
     @action
-    selectItem = (oid, nimi, link) => {
+    selectItem = (oid) => {
         if (this.hakuStore.toggleKoulutus) {
             if (!this.isOidSelected(oid)) {
-                this.vertailuListKoulutus.push({oid: oid, nimi: nimi, link: link});
+                const link = '/koulutus/' + oid + '?haku=' + encodeURIComponent(this.hakuStore.createHakuUrl)
+                    + '&lng=' + l.getLanguage();
+                this.rest.getKoulutusPromise(oid)
+                    .then((result) => {
+                        if (result.body.result.koulutus[oid]) {
+                            this.vertailuListKoulutus.push(Object.assign(result.body.result.koulutus[oid], {link: link}));
+                        }
+                    }, (error) => console.log(error))
             }
-            this.sizeKoulutus = this.vertailuListKoulutus.length;
-        } else {
-            if (!this.isOidSelected(oid)) {
-                this.vertailuListOppilaitos.push({oid: oid, nimi: nimi, link: link});
-            }
-            this.sizeOppilaitos = this.vertailuListOppilaitos.length;
         }
+        // else {
+        //     if (!this.isOidSelected(oid)) {
+        //         const link = '/oppilaitos/' + oid + '?haku=' + encodeURIComponent(this.hakuStore.createHakuUrl)
+        //             + '&lng=' + l.getLanguage();
+        //         this.loadVertailuItem(oid, (result) => {
+        //             if (result) {
+        //                 this.vertailuListOppilaitos.push(Object.assign(result, {link: link}));
+        //             }
+        //         });
+        //     }
+        // }
     };
 
     @action
@@ -56,15 +65,10 @@ class VertailuStore {
             if (this.isOidSelected(oid)) {
                 this.vertailuListKoulutus = this.vertailuListKoulutus.filter((i) => i.oid !== oid);
             }
-            if (this.vertailuResults.findIndex((i) => i.oid === oid)) {
-                this.vertailuResults = this.vertailuResults.filter((i) => i.oid !== oid);
-            }
-            this.sizeKoulutus = this.vertailuListKoulutus.length;
         } else {
             if (this.isOidSelected(oid)) {
                 this.vertailuListOppilaitos = this.vertailuListOppilaitos.filter((i) => i.oid !== oid);
             }
-            this.sizeOppilaitos = this.vertailuListOppilaitos.length;
         }
     };
 
@@ -72,31 +76,8 @@ class VertailuStore {
     clearItems = () => {
         if (this.hakuStore.toggleKoulutus) {
             this.vertailuListKoulutus = [];
-            this.sizeKoulutus = 0;
         } else {
             this.vertailuListOppilaitos = [];
-            this.sizeOppilaitos = 0;
-        }
-    };
-
-    @action
-    loadVertailuItems = (oids) => {
-        this.vertailuResults = [];
-        const cbKoulutus = (results) => {this.vertailuResults = results.map((res, i) => {
-                const item = (res.result.koulutus) ? toJS(res.result.koulutus[oids[i]]) : undefined;
-                if (item) {
-                    this.selectItem(item.oid, l.localize(item.searchData),
-                        "/koulutus/" + item.oid + '?haku=' + encodeURIComponent(this.hakuStore.createHakuUrl)
-                        + '&lng=' + l.getLanguage());
-                }
-                return item;
-            }); console.log(results)
-        };
-
-        if (this.hakuStore.toggleKoulutus) {
-            this.rest.search(oids.map((i) => this.rest.getKoulutusPromise(i)), cbKoulutus)
-        } else {
-            this.rest.search(oids.map((i) => this.rest.getOppilaitosPromise(i)), () => (""))
         }
     };
 }

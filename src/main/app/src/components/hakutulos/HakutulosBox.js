@@ -30,7 +30,7 @@ class HakutulosBox extends Component {
                         </div>
                         :
                         (this.props.vertailu ?
-                            <div className="compare-button" onClick={() => this.props.vertailuStore.selectItem(this.props.oid, this.props.nimi, this.props.link)}>
+                            <div className="compare-button" onClick={() => this.props.vertailuStore.selectItem(this.props.oid)}>
                                 <span role="button">{this.props.t("haku.ota-vertailuun")}</span>
                             </div>
                             :
