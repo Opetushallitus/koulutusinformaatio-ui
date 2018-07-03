@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - node
+
+install:
+  - cd src/main/app
+  - npm install
+
+script:
+  - CI=true npm test
