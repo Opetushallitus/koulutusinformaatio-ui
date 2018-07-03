@@ -22,7 +22,7 @@ i18n
             nsMode: 'default'
         },
         backend: {
-            loadPath: (process.env.NODE_ENV === 'development' ? '' : '/konfo') + '/locales/{{lng}}/{{ns}}.json'
+            loadPath: ((process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') ? '' : '/konfo') + '/locales/{{lng}}/{{ns}}.json'
         }
     });
 

@@ -31,4 +31,6 @@ node/
 target/
 package-lock.json
 
+src/main/app/*.png
+
 

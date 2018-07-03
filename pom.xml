@@ -48,6 +48,25 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>reserve-browser-test-port</id>
+                        <goals>
+                            <goal>reserve-network-port</goal>
+                        </goals>
+                        <phase>test</phase>
+                        <configuration>
+                            <portNames>
+                                <portName>browser.test.http.port</portName>
+                                <portName>browser.test.http.backend.port</portName>
+                            </portNames>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
@@ -88,6 +107,21 @@
                         </goals>
                     </execution>
                     <execution>
+                        <id>Run tests</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <environmentVariables>
+                                <PORT>${browser.test.http.port}</PORT>
+                                <BACKEND_PORT>${browser.test.http.backend.port}</BACKEND_PORT>
+                                <CI>true</CI>
+                            </environmentVariables>
+                            <arguments>test</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>Build frontend</id>
                         <goals>
                             <goal>npm</goal>
@@ -100,7 +134,7 @@
                 <configuration>
                     <nodeVersion>v9.5.0</nodeVersion>
                     <npmVersion>5.6.0</npmVersion>
-                    <!--installDirectory>.mvn</installDirectory-->
+                    <failOnError>true</failOnError>
                     <workingDirectory>src/main/app</workingDirectory>
                 </configuration>
             </plugin>

@@ -31,11 +31,11 @@ class NavigaatioStore {
     }
 
     @computed get hasNext() {
-        return this.isLastOid ? !this.hakuStore.isLastPage : this.oids.length;
+        return this.isLastOid ? !this.hakuStore.isLastPage : this.oids.length > 0;
     }
 
     @computed get hasPrev() {
-        return this.isFirstOid ? !this.hakuStore.isFirstPage : this.oids.length;
+        return this.isFirstOid ? !this.hakuStore.isFirstPage : this.oids.length > 0;
     }
 
     @computed get getSearchParams() {
