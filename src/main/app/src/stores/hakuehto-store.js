@@ -20,7 +20,7 @@ class HakuehtoStore {
     };
 
     @computed get keywordSet() {
-        return this.keyword && !(0 === this.keyword.length);
+        return !!this.keyword && !(0 === this.keyword.length);
     };
 
     @action
@@ -39,7 +39,7 @@ class HakuehtoStore {
     };
 
     @computed get filterSet() {
-        return this.filter.paikkakunta || this.filter.koulutus.length || this.filter.kieli.length;
+        return !!(this.filter.paikkakunta || this.filter.koulutus.length || this.filter.kieli.length);
     };
 
     @action
