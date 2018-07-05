@@ -29,7 +29,8 @@ class HakuStore {
         const filterChange = this.setFilter({
             koulutus: search.koulutustyyppi,
             kieli: search.kieli,
-            paikkakunta: search.paikkakunta });
+            paikkakunta: search.paikkakunta
+        });
         const pagingChange = this.setPaging({
             pageOppilaitos: search.opage,
             pageKoulutus: search.kpage,
@@ -57,7 +58,7 @@ class HakuStore {
     };
 
     @computed get keywordSet() {
-        return this.keyword && !(0 === this.keyword.length);
+        return !!(this.keyword && !(0 === this.keyword.length));
     }
 
     @action
@@ -69,7 +70,7 @@ class HakuStore {
     };
 
     @computed get filterSet() {
-        return this.filter.paikkakunta || this.filter.koulutus.length || this.filter.kieli.length;
+        return !!(this.filter.paikkakunta || this.filter.koulutus.length || this.filter.kieli.length);
     }
 
     @action
@@ -285,13 +286,13 @@ class HakuStore {
     @computed get isLastPage() {
         return this.toggleKoulutus ?
             this.maxPageKoulutus === this.paging.pageKoulutus :
-            this.maxPageOppilaitos === this.paging.pageKoulutus;
+            this.maxPageOppilaitos === this.paging.pageOppilaitos;
     }
 
     @computed get isFirstPage() {
         return this.toggleKoulutus ?
             1 === this.paging.pageKoulutus :
-            1 === this.paging.pageKoulutus;
+            1 === this.paging.pageOppilaitos;
     }
 }
 
