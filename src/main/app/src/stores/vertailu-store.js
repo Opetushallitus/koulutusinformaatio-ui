@@ -32,16 +32,27 @@ class VertailuStore {
         return this.vertailuList.findIndex((item) => item.oid === oid) !== -1;
     };
 
+    isOidLoaded = (oid) => {
+        return this.vertailuList.findIndex((item) => item.oid === oid && item.loaded === true) !== -1;
+    };
+
     @action
-    selectItem = (oid) => {
+    selectItem = (oid, nimi, link) => {
         if (this.hakuStore.toggleKoulutus) {
             if (!this.isOidSelected(oid)) {
                 const link = '/koulutus/' + oid + '?haku=' + encodeURIComponent(this.hakuStore.createHakuUrl)
                     + '&lng=' + l.getLanguage();
+                this.vertailuListKoulutus.push({oid: oid, nimi: nimi, loaded: false, link: link});
+            }
+            if (!this.isOidLoaded(oid)) {
                 this.rest.getKoulutusPromise(oid)
                     .then((result) => {
+                        const i = this.vertailuListKoulutus.findIndex((item) => item.oid === oid);
                         if (result.body.result.koulutus[oid]) {
-                            this.vertailuListKoulutus.push(Object.assign(result.body.result.koulutus[oid], {link: link}));
+                            this.vertailuListKoulutus[i] = {
+                                ...this.vertailuListKoulutus[i],
+                                ...result.body.result.koulutus[oid],
+                                ...{loaded: true}};
                         }
                     }, (error) => console.log(error))
             }

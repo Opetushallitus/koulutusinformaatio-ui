@@ -16,7 +16,7 @@ class VertailuBox extends Component {
                         onClick={() => this.props.vertailuStore.removeItem(i.oid)}>
                     <i className="fa fa-times" aria-hidden="true"/>
                 </button>
-                <Link to={i.link} className="title"><strong>{l.localize(i.searchData)}</strong></Link>
+                <Link to={i.link} className="title"><strong>{l.localize(i.searchData, i.nimi)}</strong></Link>
             </div>)
     }
 

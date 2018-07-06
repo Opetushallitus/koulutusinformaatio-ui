@@ -31,7 +31,6 @@ class Vertailu extends Component {
         const oids = search.oids;
         if (oids) {
             oids.split(',')
-                .filter((oid) => !this.props.vertailuStore.isOidSelected(oid))
                 .forEach((oid) => this.props.vertailuStore.selectItem(oid));
         }
     }
@@ -44,7 +43,7 @@ class Vertailu extends Component {
                     <li className={"compared-items"} >
                         <div className="compare-box">
                             <Link to={item.link} className="title">
-                                <strong>{item.organisaatio.nimi + ":"}<br/>{l.localize(item.searchData)}</strong>
+                                <strong>{item.organisaatio.nimi + ":"}<br/>{l.localize(item.searchData, item.nimi)}</strong>
                             </Link>
                         </div>
                     </li>
