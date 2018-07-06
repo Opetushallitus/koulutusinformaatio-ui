@@ -513,7 +513,8 @@ describe('HakuStore.setAll', () => {
     it('should set filter, keyword, paging and toggle', () => {
         const hakuStore = new HakuStore(rest);
 
-        hakuStore.searchAll = (fn) => fn();
+        const mockSetToggle = jest.fn();
+        hakuStore.setToggle = mockSetToggle;
 
         const search = {
             koulutustyyppi: "kk,ako",
@@ -522,39 +523,87 @@ describe('HakuStore.setAll', () => {
             opage: 3,
             kpage: 2,
             pagesize: 25,
+            toggle: 'koulutus'
         };
         hakuStore.setAll("keyword", search, () => {
-            expect(hakuStore.filter).toEqual({
-                koulutus: ["kk", "ako"],
-                kieli: ["fi", "sv"],
-                paikkakunta: "espoo"
-            });
-            expect(hakuStore.paging).toEqual({
-                pageOppilaitos: 3,
-                pageKoulutus: 2,
-                pageSize: 25
-            });
-            expect(hakuStore.keyword).toEqual('keyword');
-            expect(hakuStore.toggle).toEqual('koulutus');
+
         });
+        expect(hakuStore.filter).toEqual({
+            koulutus: ["kk", "ako"],
+            kieli: ["fi", "sv"],
+            paikkakunta: "espoo"
+        });
+        expect(hakuStore.paging).toEqual({
+            pageOppilaitos: 3,
+            pageKoulutus: 2,
+            pageSize: 25
+        });
+        expect(hakuStore.keyword).toEqual('keyword');
+        expect(mockSetToggle.mock.calls.length).toEqual(1);
+        expect(mockSetToggle.mock.calls[0][0]).toEqual('koulutus');
     });
 
-    it('should set toggle to highest count', () => {
+    it('should set toggle to highest count if no toggle in parameters and call toggleAction', () => {
         const hakuStore = new HakuStore(rest);
-        hakuStore.searchAll = (fn) => fn();
+        const mockSetToggle = jest.fn();
+        hakuStore.setToggle = mockSetToggle;
 
         const search = {
             koulutustyyppi: "kk,ako",
             kieli: "fi,sv",
             paikkakunta: "espoo",
-            pageOppilaitos: 1,
-            pageKoulutus: 2,
-            pageSize: 25
+            opage: 1,
+            kpage: 2,
+            pagesize: 25
         };
         hakuStore.oppilaitosCount = 10;
         hakuStore.setAll("keyword", search, (toggle) => {
             expect(toggle).toEqual('oppilaitos');
         });
+        expect(mockSetToggle.mock.calls.length).toEqual(1);
+        expect(mockSetToggle.mock.calls[0][0]).toEqual('oppilaitos');
+    });
+
+    it('should call searchKoutukset if koulutus paging change', () => {
+        const hakuStore = new HakuStore(rest);
+        const mockSearchKoulutukset = jest.fn();
+
+        hakuStore.searchKoulutukset = mockSearchKoulutukset;
+
+        const search = {
+            opage: 1,
+            kpage: 2
+        };
+        hakuStore.setAll("", search, (toggle) => {
+            expect(toggle).toEqual('oppilaitos');
+        });
+        expect(mockSearchKoulutukset.mock.calls.length).toEqual(1);
+    });
+    it('should call searchOppilaitokset if oppilaitos paging change', () => {
+        const hakuStore = new HakuStore(rest);
+        const mockSearchOppilaitokset = jest.fn();
+
+        hakuStore.searchOppilaitokset = mockSearchOppilaitokset;
+
+        const search = {
+            opage: 2,
+            kpage: 1,
+        };
+        hakuStore.setAll("", search);
+        expect(mockSearchOppilaitokset.mock.calls.length).toEqual(1);
+    });
+
+    it('should call setToggle if no other changes', () => {
+        const hakuStore = new HakuStore(rest);
+        const mockSetToggle = jest.fn();
+        hakuStore.setToggle = mockSetToggle;
+
+        const search = {
+            toggle: 'oppilaitos'
+        };
+        hakuStore.setAll("", search);
+        expect(mockSetToggle.mock.calls.length).toEqual(1);
+        expect(mockSetToggle.mock.calls[0][0]).toEqual('oppilaitos');
     });
 });
 
@@ -637,16 +686,25 @@ describe('HakuStore.loadNextPage', () => {
 
     it('should change to next page if not last', () => {
         const hakuStore = new HakuStore(null);
+
+        const mockSearchKoulutukset = jest.fn();
+        const mockSearchOppilaitokset = jest.fn();
+
+        hakuStore.searchKoulutukset = mockSearchKoulutukset;
+        hakuStore.searchOppilaitokset = mockSearchOppilaitokset;
+
         hakuStore.koulutusCount = 40;
         hakuStore.paging.pageKoulutus = 1;
         hakuStore.loadNextPage();
         expect(hakuStore.paging.pageKoulutus).toEqual(2);
+        expect(mockSearchKoulutukset.mock.calls.length).toEqual(1);
 
         hakuStore.toggle = 'oppilaitos';
         hakuStore.oppilaitosCount = 60;
         hakuStore.paging.pageOppilaitos = 2;
         hakuStore.loadNextPage();
         expect(hakuStore.paging.pageOppilaitos).toEqual(3);
+        expect(mockSearchOppilaitokset.mock.calls.length).toEqual(1);
     });
 });
 
@@ -668,16 +726,25 @@ describe('HakuStore.loadPrevPage', () => {
 
     it('should change to previous page if not last', () => {
         const hakuStore = new HakuStore(null);
+
+        const mockSearchKoulutukset = jest.fn();
+        const mockSearchOppilaitokset = jest.fn();
+
+        hakuStore.searchKoulutukset = mockSearchKoulutukset;
+        hakuStore.searchOppilaitokset = mockSearchOppilaitokset;
+
         hakuStore.koulutusCount = 40;
         hakuStore.paging.pageKoulutus = 2;
         hakuStore.loadPrevPage();
         expect(hakuStore.paging.pageKoulutus).toEqual(1);
+        expect(mockSearchKoulutukset.mock.calls.length).toEqual(1);
 
         hakuStore.toggle = 'oppilaitos';
         hakuStore.oppilaitosCount = 60;
         hakuStore.paging.pageOppilaitos = 3;
         hakuStore.loadPrevPage();
         expect(hakuStore.paging.pageOppilaitos).toEqual(2);
+        expect(mockSearchOppilaitokset.mock.calls.length).toEqual(1);
     });
 });
 
