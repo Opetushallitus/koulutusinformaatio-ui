@@ -33,7 +33,7 @@ class VertailuBox extends Component {
                             </div>
                             <div className="col-xs-12 col-md-3 pull-right">
                                 {this.props.vertailuStore.size > 1 ?
-                                    <Link to={this.props.vertailuStore.createVertailuLink}
+                                    <Link to={this.props.vertailuStore.createVertailuLink} id={"vertaile"}
                                           role="button" className="btn btn-primary">{this.props.t("haku.vertaile")}</Link>
                                     :
                                     <a className="btn btn-primary disabled">{this.props.t("haku.vertaile")}</a>}

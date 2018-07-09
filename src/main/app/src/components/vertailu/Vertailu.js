@@ -43,7 +43,7 @@ class Vertailu extends Component {
                     <li className={"compared-items"} >
                         <div className="compare-box">
                             <Link to={item.link} className="title">
-                                <strong>{item.organisaatio.nimi + ":"}<br/>{l.localize(item.searchData, item.nimi)}</strong>
+                                <strong>{item.organisaatio ? item.organisaatio.nimi + ":" : ""}<br/>{l.localize(item.searchData, item.nimi)}</strong>
                             </Link>
                         </div>
                     </li>
@@ -60,7 +60,7 @@ class Vertailu extends Component {
                     <p>{l.localize(item.koulutuksenAlkamiskausi) + " " + item.koulutuksenAlkamisvuosi}</p></li>
                 <li className="compare-list-item">
                     <div className="inner"/>
-                    <p>{item.opetuskielis.map((k) => l.localize(k)).join(', ')}</p></li>
+                    <p>{item.opetuskielis && item.opetuskielis.map((k) => l.localize(k)).join(', ')}</p></li>
                 <li className="compare-list-item">
                     <div className="inner"/>
                     <p>{l.localize(item.opintojenLaajuusarvo, "", "fi") + " " + l.localize(item.opintojenLaajuusyksikko)}</p></li>
@@ -72,13 +72,13 @@ class Vertailu extends Component {
                     <p>{l.localize(item.opintoala)} </p></li>
                 <li className="compare-list-item">
                     <div className="inner"/>
-                    <p>{item.opetusAikas.map((i) => l.localize(i)).join(', ')}</p></li>
+                    <p>{item.opetusAikas && item.opetusAikas.map((i) => l.localize(i)).join(', ')}</p></li>
                 <li className="compare-list-item">
                     <div className="inner"/>
-                    <p>{item.opetusPaikkas.map((i) => l.localize(i)).join(', ')}</p></li>
+                    <p>{item.opetusPaikkas && item.opetusPaikkas.map((i) => l.localize(i)).join(', ')}</p></li>
                 <li className="compare-list-item">
                     <div className="inner"/>
-                    <p>{item.opetusmuodos.map((i) => l.localize(i)).join(', ')}</p></li>
+                    <p>{item.opetusmuodos && item.opetusmuodos.map((i) => l.localize(i)).join(', ')}</p></li>
                 <li className="compare-list-item">
                     <div className="inner"/>
                     <p>{l.localize(item.pohjakoulutusvaatimukset) || l.localize(item.pohjakoulutusvaatimus)}</p></li>
