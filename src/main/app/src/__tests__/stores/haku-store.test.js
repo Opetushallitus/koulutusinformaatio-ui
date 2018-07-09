@@ -17,17 +17,20 @@ const rest = {
 describe('HakuStore.setKeyword', () => {
 
     it('set keyword', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.setKeyword("keyword");
         expect(hakuStore.keyword).toEqual("keyword");
     });
 
     it('true when keyword changed', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         expect(hakuStore.setKeyword("keyword")).toEqual(true);
     });
 
     it('false when same keyword', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.setKeyword("keyword");
         expect(hakuStore.setKeyword("keyword")).toEqual(false);
@@ -37,11 +40,13 @@ describe('HakuStore.setKeyword', () => {
 describe('HakuStore.keywordSet', () => {
 
     it('false when no keyword', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         expect(hakuStore.keywordSet).toEqual(false);
     });
 
     it('true when keyword set', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.setKeyword("keyword");
         expect(hakuStore.keywordSet).toEqual(true);
@@ -57,6 +62,7 @@ describe('HakuStore.setFilter', () => {
     };
 
     it('set filter', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.setFilter(filter);
         expect(hakuStore.filter).toEqual({
@@ -67,6 +73,7 @@ describe('HakuStore.setFilter', () => {
     });
 
     it('true when koulutus change', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.setFilter(filter);
         const filter2 = {
@@ -78,6 +85,7 @@ describe('HakuStore.setFilter', () => {
     });
 
     it('true when kieli change', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.setFilter(filter);
         const filter2 = {
@@ -89,6 +97,7 @@ describe('HakuStore.setFilter', () => {
     });
 
     it('true when paikkakunta change', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.setFilter(filter);
         const filter2 = {
@@ -100,6 +109,7 @@ describe('HakuStore.setFilter', () => {
     });
 
     it('false when no change', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.setFilter(filter);
 
@@ -110,6 +120,7 @@ describe('HakuStore.setFilter', () => {
 describe('HakuStore.filterSet', () => {
 
     it('true when koulutus filter set', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         const filter = {
             koulutus: "kk,ako",
@@ -121,6 +132,7 @@ describe('HakuStore.filterSet', () => {
     });
 
     it('true when kieli filter set', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         const filter = {
             koulutus: "",
@@ -132,6 +144,7 @@ describe('HakuStore.filterSet', () => {
     });
 
     it('true when paikkakunta filter set', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         const filter = {
             koulutus: "",
@@ -143,6 +156,7 @@ describe('HakuStore.filterSet', () => {
     });
 
     it('false when no filter set', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         const filter = {
             koulutus: "",
@@ -157,6 +171,7 @@ describe('HakuStore.filterSet', () => {
 describe('HakuStore.setPaging', () => {
 
     it('set paging', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         const paging = {
             pageOppilaitos: 3,
@@ -172,6 +187,7 @@ describe('HakuStore.setPaging', () => {
     });
 
     it('{true, true} when pagesize change', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         const paging = {
             pageOppilaitos: 1,
@@ -185,6 +201,7 @@ describe('HakuStore.setPaging', () => {
     });
 
     it('{true, false} when koulutus page change', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         const paging = {
             pageOppilaitos: 1,
@@ -198,6 +215,7 @@ describe('HakuStore.setPaging', () => {
     });
 
     it('{false, true} when oppilaitos page change', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         const paging = {
             pageOppilaitos: 3,
@@ -211,6 +229,7 @@ describe('HakuStore.setPaging', () => {
     });
 
     it('{false, false} when no change', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         const paging = {
             pageOppilaitos: 1,
@@ -227,12 +246,14 @@ describe('HakuStore.setPaging', () => {
 describe('HakuStore.setToggle', () => {
 
     it('set toggle', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.setToggle('oppilaitos');
         expect(hakuStore.toggle).toEqual('oppilaitos');
     });
 
     it('default to oppilaitos for malformed parameters', () => {
+        expect.assertions(3);
         const hakuStore = new HakuStore(null);
         hakuStore.setToggle('aoiwfh');
         expect(hakuStore.toggle).toEqual('oppilaitos');
@@ -243,11 +264,13 @@ describe('HakuStore.setToggle', () => {
     });
 
     it('true when toggle change', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         expect(hakuStore.setToggle('oppilaitos')).toEqual(true);
     });
 
     it('false when no change', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         expect(hakuStore.setToggle('koulutus')).toEqual(false);
     });
@@ -256,12 +279,14 @@ describe('HakuStore.setToggle', () => {
 describe('HakuStore.toggleKoulutus', () => {
 
     it('true when "koulutus"', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.toggle = "koulutus";
         expect(hakuStore.toggleKoulutus).toEqual(true);
     });
 
     it('false when "oppilaitos"', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.toggle = "oppilaitos";
         expect(hakuStore.toggleKoulutus).toEqual(false);
@@ -271,11 +296,13 @@ describe('HakuStore.toggleKoulutus', () => {
 describe('HakuStore.hasKoulutusResult', () => {
 
     it('false when no result', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         expect(hakuStore.hasKoulutusResult).toEqual(false);
     });
 
     it('true when result', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.koulutusResult = [{oid: 1}];
         expect(hakuStore.hasKoulutusResult).toEqual(true);
@@ -285,11 +312,13 @@ describe('HakuStore.hasKoulutusResult', () => {
 describe('HakuStore.hasOppilaitosResult', () => {
 
     it('false when no result', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         expect(hakuStore.hasOppilaitosResult).toEqual(false);
     });
 
     it('true when result', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.oppilaitosResult = [{oid: 1}];
         expect(hakuStore.hasOppilaitosResult).toEqual(true);
@@ -299,6 +328,7 @@ describe('HakuStore.hasOppilaitosResult', () => {
 describe('HakuStore.totalCount', () => {
 
     it('sum of oppilaitosCount and koulutusCount', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
 
         hakuStore.oppilaitosCount = 10;
@@ -312,6 +342,7 @@ describe('HakuStore.totalCount', () => {
 describe('HakuStore.createHakuUrl', () => {
 
     it('create haku url when no keyword and filter set', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         const paging = {
             pageOppilaitos: 3,
@@ -324,6 +355,7 @@ describe('HakuStore.createHakuUrl', () => {
     });
 
     it('create haku url when only keyword set', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         const paging = {
             pageOppilaitos: 3,
@@ -337,6 +369,7 @@ describe('HakuStore.createHakuUrl', () => {
     });
 
     it('create haku url when only filter set', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         const paging = {
             pageOppilaitos: 3,
@@ -358,6 +391,7 @@ describe('HakuStore.createHakuUrl', () => {
 describe('HakuStore.searchParams', () => {
 
     it('create search params', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         const paging = {
             pageOppilaitos: 3,
@@ -379,6 +413,7 @@ describe('HakuStore.searchParams', () => {
 describe('HakuStore.maxPageKoulutus', () => {
 
     it('should return max number of pages', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.koulutusCount = 101;
         hakuStore.paging.pageSize = 25;
@@ -386,6 +421,7 @@ describe('HakuStore.maxPageKoulutus', () => {
     });
 
     it('should always be at least 1', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.koulutusCount = 0;
         hakuStore.paging.pageSize = 25;
@@ -396,6 +432,7 @@ describe('HakuStore.maxPageKoulutus', () => {
 describe('HakuStore.maxPageOppilaitos', () => {
 
     it('should return max number of pages', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.oppilaitosCount = 101;
         hakuStore.paging.pageSize = 25;
@@ -403,6 +440,7 @@ describe('HakuStore.maxPageOppilaitos', () => {
     });
 
     it('should always be at least 1', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.oppilaitosCount = 0;
         hakuStore.paging.pageSize = 25;
@@ -413,6 +451,7 @@ describe('HakuStore.maxPageOppilaitos', () => {
 describe('HakuStore.maxPageNumber', () => {
 
     it('maxPageKoulutus when toggle=koulutus', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.toggle = 'koulutus';
         hakuStore.koulutusCount = 60;
@@ -421,6 +460,7 @@ describe('HakuStore.maxPageNumber', () => {
     });
 
     it('maxPageOppilaitos when toggle=oppilaitos', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.toggle = 'oppilaitos';
         hakuStore.koulutusCount = 0;
@@ -432,6 +472,7 @@ describe('HakuStore.maxPageNumber', () => {
 describe('HakuStore.currentPageNumber', () => {
 
     it('current koulutus page when toggle=koulutus', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.toggle = 'koulutus';
         hakuStore.paging.pageKoulutus = 2;
@@ -440,6 +481,7 @@ describe('HakuStore.currentPageNumber', () => {
     });
 
     it('current koulutus page when toggle=oppilaitos', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.toggle = 'oppilaitos';
         hakuStore.paging.pageKoulutus = 2;
@@ -451,6 +493,7 @@ describe('HakuStore.currentPageNumber', () => {
 describe('HakuStore.maxPageSize', () => {
 
     it('koulutus count when toggle=koulutus', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.toggle = 'koulutus';
         hakuStore.koulutusCount = 2;
@@ -458,6 +501,7 @@ describe('HakuStore.maxPageSize', () => {
     });
 
     it('oppilaitos count when toggle=oppilaitos', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.toggle = 'oppilaitos';
         hakuStore.oppilaitosCount = 5;
@@ -468,6 +512,7 @@ describe('HakuStore.maxPageSize', () => {
 describe('HakuStore.clearHaku', () => {
 
     it('should clear haku-store', () => {
+        expect.assertions(8);
         const hakuStore = new HakuStore(null);
         const paging = {
             pageOppilaitos: 3,
@@ -511,6 +556,7 @@ describe('HakuStore.clearHaku', () => {
 describe('HakuStore.setAll', () => {
 
     it('should set filter, keyword, paging and toggle', () => {
+        expect.assertions(5);
         const hakuStore = new HakuStore(rest);
 
         const mockSetToggle = jest.fn();
@@ -544,6 +590,7 @@ describe('HakuStore.setAll', () => {
     });
 
     it('should set toggle to highest count if no toggle in parameters and call toggleAction', () => {
+        expect.assertions(3);
         const hakuStore = new HakuStore(rest);
         const mockSetToggle = jest.fn();
         hakuStore.setToggle = mockSetToggle;
@@ -565,6 +612,7 @@ describe('HakuStore.setAll', () => {
     });
 
     it('should call searchKoutukset if koulutus paging change', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(rest);
         const mockSearchKoulutukset = jest.fn();
 
@@ -574,12 +622,11 @@ describe('HakuStore.setAll', () => {
             opage: 1,
             kpage: 2
         };
-        hakuStore.setAll("", search, (toggle) => {
-            expect(toggle).toEqual('oppilaitos');
-        });
+        hakuStore.setAll("", search);
         expect(mockSearchKoulutukset.mock.calls.length).toEqual(1);
     });
     it('should call searchOppilaitokset if oppilaitos paging change', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(rest);
         const mockSearchOppilaitokset = jest.fn();
 
@@ -594,6 +641,7 @@ describe('HakuStore.setAll', () => {
     });
 
     it('should call setToggle if no other changes', () => {
+        expect.assertions(2);
         const hakuStore = new HakuStore(rest);
         const mockSetToggle = jest.fn();
         hakuStore.setToggle = mockSetToggle;
@@ -610,6 +658,7 @@ describe('HakuStore.setAll', () => {
 describe('HakuStore.canSearch', () => {
 
     it('true when keyword set', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         hakuStore.setKeyword("keyword");
 
@@ -617,6 +666,7 @@ describe('HakuStore.canSearch', () => {
     });
 
     it('true when filter set', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         const filter = {
             koulutustyyppi: "kk,ako",
@@ -629,6 +679,7 @@ describe('HakuStore.canSearch', () => {
     });
 
     it('false when no keyword or filter', () => {
+        expect.assertions(1);
         const hakuStore = new HakuStore(null);
         expect(hakuStore.canSearch).toEqual(false)
     });
@@ -636,6 +687,7 @@ describe('HakuStore.canSearch', () => {
 
 describe('HakuStore.searchKoulutukset', () => {
     it('should search koulutukset', () => {
+        expect.assertions(2);
         const hakuStore = new HakuStore(rest);
         hakuStore.setKeyword("keyword");
         hakuStore.searchKoulutukset(() => {
@@ -647,6 +699,7 @@ describe('HakuStore.searchKoulutukset', () => {
 
 describe('HakuStore.searchOppilaitokset', () => {
     it('should search oppilaitokset', () => {
+        expect.assertions(2);
         const hakuStore = new HakuStore(rest);
         hakuStore.setKeyword("keyword");
         hakuStore.searchOppilaitokset(() => {
@@ -658,6 +711,7 @@ describe('HakuStore.searchOppilaitokset', () => {
 
 describe('HakuStore.searchAll', () => {
     it('should search both', () => {
+        expect.assertions(4);
         const hakuStore = new HakuStore(rest);
         hakuStore.setKeyword("keyword");
         hakuStore.searchAll(() => {
@@ -671,6 +725,7 @@ describe('HakuStore.searchAll', () => {
 
 describe('HakuStore.loadNextPage', () => {
     it('should do nothing if last page', () => {
+        expect.assertions(2);
         const hakuStore = new HakuStore(null);
         hakuStore.koulutusCount = 40;
         hakuStore.paging.pageKoulutus = 2;
@@ -685,6 +740,7 @@ describe('HakuStore.loadNextPage', () => {
     });
 
     it('should change to next page if not last', () => {
+        expect.assertions(4);
         const hakuStore = new HakuStore(null);
 
         const mockSearchKoulutukset = jest.fn();
@@ -711,6 +767,7 @@ describe('HakuStore.loadNextPage', () => {
 describe('HakuStore.loadPrevPage', () => {
 
     it('should do nothing if first page', () => {
+        expect.assertions(2);
         const hakuStore = new HakuStore(null);
         hakuStore.koulutusCount = 40;
         hakuStore.paging.pageKoulutus = 1;
@@ -725,6 +782,7 @@ describe('HakuStore.loadPrevPage', () => {
     });
 
     it('should change to previous page if not last', () => {
+        expect.assertions(4);
         const hakuStore = new HakuStore(null);
 
         const mockSearchKoulutukset = jest.fn();
@@ -751,6 +809,7 @@ describe('HakuStore.loadPrevPage', () => {
 describe('HakuStore.isLastPage', () => {
 
     it('true when last page', () => {
+        expect.assertions(2);
         const hakuStore = new HakuStore(null);
         hakuStore.koulutusCount = 40;
         hakuStore.paging.pageKoulutus = 2;
@@ -766,6 +825,7 @@ describe('HakuStore.isLastPage', () => {
     });
 
     it('false when not last page', () => {
+        expect.assertions(2);
         const hakuStore = new HakuStore(null);
         hakuStore.koulutusCount = 60;
         hakuStore.paging.pageKoulutus = 2;
@@ -784,6 +844,7 @@ describe('HakuStore.isLastPage', () => {
 describe('HakuStore.isFirstPage', () => {
 
     it('true when first page', () => {
+        expect.assertions(2);
         const hakuStore = new HakuStore(null);
         hakuStore.paging.pageKoulutus = 1;
 
@@ -797,6 +858,7 @@ describe('HakuStore.isFirstPage', () => {
     });
 
     it('false when not first page', () => {
+        expect.assertions(2);
         const hakuStore = new HakuStore(null);
         hakuStore.paging.pageKoulutus = 2;
 

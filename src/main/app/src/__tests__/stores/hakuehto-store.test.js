@@ -3,6 +3,7 @@ import HakuehtoStore from '../../stores/hakuehto-store';
 describe('HakuehtoStore.setKeyword', () => {
 
     it('set keyword', () => {
+        expect.assertions(1);
         const hakuehtoStore = new HakuehtoStore();
         hakuehtoStore.setKeyword("keyword");
         expect(hakuehtoStore.keyword).toEqual("keyword");
@@ -11,11 +12,13 @@ describe('HakuehtoStore.setKeyword', () => {
 
 describe('HakuehtoStore.keywordSet', () => {
     it('false when no keyword', () => {
+        expect.assertions(1);
         const hakuehtoStore = new HakuehtoStore();
         expect(hakuehtoStore.keywordSet).toEqual(false);
     });
 
     it('true when keyword set', () => {
+        expect.assertions(1);
         const hakuehtoStore = new HakuehtoStore();
         hakuehtoStore.setKeyword("keyword");
         expect(hakuehtoStore.keywordSet).toEqual(true);
@@ -24,12 +27,14 @@ describe('HakuehtoStore.keywordSet', () => {
 
 describe('HakuehtoStore.closeRajain', () => {
     it('set to false when rajain closed', () => {
+        expect.assertions(1);
         const hakuehtoStore = new HakuehtoStore();
         hakuehtoStore.closeRajain();
         expect(hakuehtoStore.rajainOpen).toEqual(false);
     });
 
     it('set to false when rajain open', () => {
+        expect.assertions(1);
         const hakuehtoStore = new HakuehtoStore();
         hakuehtoStore.rajainOpen = true;
         hakuehtoStore.closeRajain();
@@ -39,12 +44,14 @@ describe('HakuehtoStore.closeRajain', () => {
 
 describe('HakuehtoStore.toggleRajain', () => {
     it('set to true when rajain closed', () => {
+        expect.assertions(1);
         const hakuehtoStore = new HakuehtoStore();
         hakuehtoStore.toggleRajain();
         expect(hakuehtoStore.rajainOpen).toEqual(true);
     });
 
     it('set to false when rajain open', () => {
+        expect.assertions(1);
         const hakuehtoStore = new HakuehtoStore();
         hakuehtoStore.rajainOpen = true;
         hakuehtoStore.toggleRajain();
@@ -54,6 +61,7 @@ describe('HakuehtoStore.toggleRajain', () => {
 
 describe('HakuehtoStore.setFilter', () => {
     it('set filter', () => {
+        expect.assertions(1);
         const hakuehtoStore = new HakuehtoStore();
         const filter = {
             koulutus: "kk,ako",
@@ -71,6 +79,7 @@ describe('HakuehtoStore.setFilter', () => {
 
 describe('HakuehtoStore.filterSet', () => {
     it('true when koulutus filter set', () => {
+        expect.assertions(1);
         const hakuehtoStore = new HakuehtoStore();
         const filter = {
             koulutus: "kk,ako",
@@ -81,6 +90,7 @@ describe('HakuehtoStore.filterSet', () => {
         expect(hakuehtoStore.filterSet).toEqual(true);
     });
     it('true when kieli filter set', () => {
+        expect.assertions(1);
         const hakuehtoStore = new HakuehtoStore();
         const filter = {
             koulutus: "",
@@ -91,6 +101,7 @@ describe('HakuehtoStore.filterSet', () => {
         expect(hakuehtoStore.filterSet).toEqual(true);
     });
     it('true when paikkakunta filter set', () => {
+        expect.assertions(1);
         const hakuehtoStore = new HakuehtoStore();
         const filter = {
             koulutus: "",
@@ -101,6 +112,7 @@ describe('HakuehtoStore.filterSet', () => {
         expect(hakuehtoStore.filterSet).toEqual(true);
     });
     it('false when no filter set', () => {
+        expect.assertions(1);
         const hakuehtoStore = new HakuehtoStore();
         const filter = {
             koulutus: "",
@@ -115,6 +127,7 @@ describe('HakuehtoStore.filterSet', () => {
 
 describe('HakuehtoStore.createHakuUrl', () => {
     it('create haku url without keyword when no keyword set', () => {
+        expect.assertions(1);
         const hakuehtoStore = new HakuehtoStore();
         const filter = {
             koulutus: "kk,ako",
@@ -126,6 +139,7 @@ describe('HakuehtoStore.createHakuUrl', () => {
             "/haku?paikkakunta=espoo&koulutustyyppi=kk,ako&kieli=fi,sv&lng=fi");
     });
     it('create haku url when keyword set', () => {
+        expect.assertions(1);
         const hakuehtoStore = new HakuehtoStore();
         const filter = {
             koulutus: "kk,ako",
@@ -141,6 +155,7 @@ describe('HakuehtoStore.createHakuUrl', () => {
 
 describe('HakuehtoStore.searchParams', () => {
     it('create search params', () => {
+        expect.assertions(1);
         const hakuehtoStore = new HakuehtoStore();
         const filter = {
             koulutus: "kk,ako",
@@ -155,6 +170,7 @@ describe('HakuehtoStore.searchParams', () => {
 
 describe('HakuehtoStore.clearHakuehdot', () => {
     it('should clear hakuehdot', () => {
+        expect.assertions(3);
         const hakuehtoStore = new HakuehtoStore();
         const filter = {
             koulutus: "kk,ako",
@@ -177,6 +193,7 @@ describe('HakuehtoStore.clearHakuehdot', () => {
 
 describe('HakuehtoStore.setAll', () => {
     it('should set filter and keyword', () => {
+        expect.assertions(2);
         const hakuehtoStore = new HakuehtoStore();
         const filter = {
             koulutustyyppi: "kk,ako",
