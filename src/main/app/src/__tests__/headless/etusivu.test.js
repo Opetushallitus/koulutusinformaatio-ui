@@ -45,12 +45,14 @@ describe('Etusivu', () => {
     }, timeout);
 
     it('localization', async () => {
+        expect.assertions(2);
         await page.waitForSelector('.navbar-brand');
         expect(await page.$eval('.navbar-brand', e => e.innerHTML)).toBe('Opintopolku');
         expect(await page.$eval('.search-button', e => e.innerHTML)).toBe('Etsi');
     }, timeout);
 
     it('keyword search', async () => {
+        expect.assertions(2);
         await page.type('.oph-input', 'datanomi');
         await page.click('.search-button');
         expect(await page.$eval('h1', e => e.innerHTML)).toMatch(new RegExp('Etsintäsi tuotti 0 osumaa.*'));
@@ -59,6 +61,7 @@ describe('Etusivu', () => {
     }, timeout);
 
     it('rajaimet search', async () => {
+        expect.assertions(2);
         await page.click('.filter-button');
         await page.type('#paikkakunta', 'kerava');
         await page.click('#rajain-search');
