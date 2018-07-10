@@ -19,7 +19,7 @@ function response(json) {
 
 beforeAll(async () => {
     browser = await puppeteer.launch(
-        {args: ['--no-sandbox'], headless: false}
+        {args: ['--no-sandbox']}
 
         /*{dumpio: true}*/ //Uncomment to see what happens
     );

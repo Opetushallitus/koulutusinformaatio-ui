@@ -69,4 +69,17 @@ describe('Etusivu', () => {
         expect(await page.url()).toMatch(host + '/haku?toggle=koulutus&kpage=1&opage=1&pagesize=20&paikkakunta=kerava&lng=fi');
         //await page.screenshot({ path: 'rajaimet.png' });
     }, timeout);
+
+    it('sidebar & palaute', async () => {
+        expect.assertions(6);
+        await page.click('.menu.is-closed');
+        await page.click('.palaute a');
+        expect(await page.$eval('.palaute-form-header', e => e.innerHTML)).toBe('Mitä mieltä olit sivusta?');
+        expect((await page.$$('.fa.fa-star-o')).length).toEqual(5);
+        expect(await page.$('.palaute-form-container .btn.inactive')).toBeDefined();
+        await page.click('.fa.fa-star-o');
+        expect((await page.$$('.fa.fa-star')).length).toEqual(1);
+        expect(await page.$('.palaute-form-container .btn.inactive')).toBeNull();
+        expect(await page.$eval('.search-button', e => e.innerHTML)).toBe('Etsi');
+    }, timeout);
 });
