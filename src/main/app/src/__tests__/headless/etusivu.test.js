@@ -45,10 +45,12 @@ describe('Etusivu', () => {
     }, timeout);
 
     it('localization', async () => {
-        expect.assertions(2);
+        expect.assertions(3);
         await page.waitForSelector('.navbar-brand');
         expect(await page.$eval('.navbar-brand', e => e.innerHTML)).toBe('Opintopolku');
         expect(await page.$eval('.search-button', e => e.innerHTML)).toBe('Etsi');
+        await page.click('#language-en');
+        expect(await page.url()).toMatch(new RegExp("\\?lng=en"));
     }, timeout);
 
     it('keyword search', async () => {
