@@ -28,23 +28,27 @@ let first_page = {
 describe('NavigaatioStore.hasNext', () => {
 
     it('false for empty result', () => {
+        expect.assertions(1);
         let navigaatioStore = new NavigaatioStore(empty_result, null);
         expect(navigaatioStore.hasNext).toEqual(false);
     });
 
     it('false for last result in last page', () => {
+        expect.assertions(1);
         let navigaatioStore = new NavigaatioStore(last_page, null);
         navigaatioStore.setOid("3");
         expect(navigaatioStore.hasNext).toEqual(false);
     });
 
     it('true for last result in not last page', () => {
+        expect.assertions(1);
         let navigaatioStore = new NavigaatioStore(first_page, null);
         navigaatioStore.setOid("3");
         expect(navigaatioStore.hasNext).toEqual(true);
     });
 
     it('true for not last result in last page', () => {
+        expect.assertions(1);
         let navigaatioStore = new NavigaatioStore(last_page, null);
         navigaatioStore.setOid("2");
         expect(navigaatioStore.hasNext).toEqual(true);
@@ -54,6 +58,7 @@ describe('NavigaatioStore.hasNext', () => {
 describe('NavigaatioStore.withNextOid', () => {
 
     it('get next oid for not last result on last page', () => {
+        expect.assertions(1);
         let navigaatioStore = new NavigaatioStore(last_page, null);
         navigaatioStore.setOid("2");
         let _result = null;
@@ -62,6 +67,7 @@ describe('NavigaatioStore.withNextOid', () => {
     });
 
     it('get next oid for last result on not last page', () => {
+        expect.assertions(1);
         let navigaatioStore = new NavigaatioStore(first_page, null);
         navigaatioStore.setOid("3");
         let _result = null;
@@ -74,23 +80,27 @@ describe('NavigaatioStore.withNextOid', () => {
 describe('NavigaatioStore.hasPrev', () => {
 
     it('false for empty result', () => {
+        expect.assertions(1);
         let navigaatioStore = new NavigaatioStore(empty_result, null);
         expect(navigaatioStore.hasPrev).toEqual(false);
     });
 
     it('false for first result in first page', () => {
+        expect.assertions(1);
         let navigaatioStore = new NavigaatioStore(first_page, null);
         navigaatioStore.setOid("1");
         expect(navigaatioStore.hasPrev).toEqual(false);
     });
 
     it('true for first result in not first page', () => {
+        expect.assertions(1);
         let navigaatioStore = new NavigaatioStore(last_page, null);
         navigaatioStore.setOid("1");
         expect(navigaatioStore.hasPrev).toEqual(true);
     });
 
     it('true for not first result in first page', () => {
+        expect.assertions(1);
         let navigaatioStore = new NavigaatioStore(first_page, null);
         navigaatioStore.setOid("2");
         expect(navigaatioStore.hasPrev).toEqual(true);
@@ -101,6 +111,7 @@ describe('NavigaatioStore.hasPrev', () => {
 describe('NavigaatioStore.withPrevOid', () => {
 
     it('get prev oid for not first result on first page', () => {
+        expect.assertions(1);
         let navigaatioStore = new NavigaatioStore(first_page, null);
         navigaatioStore.setOid("2");
         let _result = null;
@@ -109,6 +120,7 @@ describe('NavigaatioStore.withPrevOid', () => {
     });
 
     it('get prev oid for first result on not first page', () => {
+        expect.assertions(1);
         let navigaatioStore = new NavigaatioStore(last_page, null);
         navigaatioStore.setOid("1");
         let _result = null;
