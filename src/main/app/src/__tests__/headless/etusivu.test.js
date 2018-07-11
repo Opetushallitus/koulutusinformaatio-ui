@@ -27,6 +27,8 @@ beforeAll(async () => {
         //console.log(request.url())
         if (request.url().startsWith(backend + '/search/koulutukset?keyword=&')) {
             request.respond(response(Koulutukset.createKoulutuksetSearchResult(21)));
+        } else if (request.url().startsWith(backend + '/search/koulutukset?keyword=datanomi&')) {
+            request.respond(response(Koulutukset.createKoulutuksetSearchResult(0)));
         } else if (request.url().startsWith(backend + '/search/oppilaitokset?keyword=&')) {
             request.respond(response({count : 0}));
         } else {
@@ -58,7 +60,7 @@ describe('Etusivu', () => {
         await page.type('.oph-input', 'datanomi');
         await page.click('.search-button');
         expect(await page.$eval('h1', e => e.innerHTML)).toMatch(new RegExp('Etsintäsi tuotti 0 osumaa.*'));
-        expect(await page.url()).toMatch(host + '/haku/datanomi?paikkakunta=&koulutustyyppi=&kieli=&lng=fi');
+        expect(await page.url()).toMatch(new RegExp(host + '/haku/datanomi?.*'));
         //await page.screenshot({ path: 'keyword.png' });
     }, timeout);
 
