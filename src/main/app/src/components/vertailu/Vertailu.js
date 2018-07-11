@@ -117,7 +117,7 @@ class Vertailu extends Component {
                     </ul>
                     {this.renderComparedItems()}
                 </ul>
-                <Hakunavigaatio/>
+                <Hakunavigaatio vertailu={true}/>
             </React.Fragment>
         );
     }

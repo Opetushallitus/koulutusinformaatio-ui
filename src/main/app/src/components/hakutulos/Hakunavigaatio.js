@@ -61,11 +61,11 @@ class Hakunavigaatio extends Component {
 
     render() {
         const t = this.props.t;
-        const prevLink = this.props.navigaatioStore.hasPrev ? <a onClick={(e) => {this.prev(e)}}>
+        const prevLink = (this.props.navigaatioStore.hasPrev && !this.props.vertailu) ? <a onClick={(e) => {this.prev(e)}}>
             <i className="fa fa-circle-thin" aria-hidden="true"/>
             <span>{t("navigaatio.edellinen")}</span>
         </a> : <span/>;
-        const nextLink = this.props.navigaatioStore.hasNext ? <a onClick={(e) => {this.next(e)}}>
+        const nextLink = (this.props.navigaatioStore.hasNext && !this.props.vertailu) ? <a onClick={(e) => {this.next(e)}}>
             <i className="fa fa-circle-thin" aria-hidden="true"/>
             <span>{t("navigaatio.seuraava")}</span>
         </a> : <span/>;
@@ -74,18 +74,18 @@ class Hakunavigaatio extends Component {
             <div className="container-fluid app-navigation-bar hakupalkki">
                 <div className="container">
                     <div className="row">
-                        <div className="col-xs-4 previous">
+                        {<div className="col-xs-4 previous">
                             {prevLink}
-                        </div>
+                        </div>}
                         <div className="col-xs-4 search">
                             <Link to={this.state.hakuUrl}>
                                 <i className="fa fa-circle-thin" aria-hidden="true"/>
                                 <span>{t("navigaatio.etsintä-tulos")}</span>
                             </Link>
                         </div>
-                        <div className="col-xs-4 next">
+                        {<div className="col-xs-4 next">
                             {nextLink}
-                        </div>
+                        </div>}
                     </div>
                 </div>
             </div>
