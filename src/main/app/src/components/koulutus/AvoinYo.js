@@ -48,7 +48,7 @@ class AvoinYoKoulutus extends Component {
                     <div className="col-xs-12 col-md-9 left-column">
                         <h1>
                             <i className="fa fa-circle avoin-hattu" aria-hidden="true"></i>
-                            <span>{this.parseNimi()}</span>
+                            <span id={"koulutus-title"}>{this.parseNimi()}</span>
                         </h1>
                         <div className="row">
                             <div className="col-xs-12 left-column">

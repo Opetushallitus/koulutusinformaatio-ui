@@ -21,12 +21,12 @@ class HakutulosToggle extends Component {
         const {t} = this.props;
         return <div className="row">
             <div className="col-md-2 col-xs-12">
-                <h2 className="KoulutuksetOppilaitokset" onClick={(e) => {this.toggle(e, 'koulutus')}}>
+                <h2 className="KoulutuksetOppilaitokset" id={"koulutus-toggle"} onClick={(e) => {this.toggle(e, 'koulutus')}}>
                     <span className={this.props.hakuStore.toggleKoulutus ? "Valittu" : ""}>{t('haku.koulutukset')}</span>&nbsp;
                     <span className="Hakutulos_pallo">{this.props.hakuStore.koulutusCount}</span></h2>
             </div>
             <div className="col-md-2 col-xs-12">
-                <h2 className="KoulutuksetOppilaitokset" onClick={(e) => {this.toggle(e, 'oppilaitos')}}>
+                <h2 className="KoulutuksetOppilaitokset" id={"oppilaitos-toggle"} onClick={(e) => {this.toggle(e, 'oppilaitos')}}>
                     <span className={this.props.hakuStore.toggleKoulutus ? "" : "Valittu"}>{t('haku.oppilaitokset')}</span>&nbsp;
                     <span className="Hakutulos_pallo">{this.props.hakuStore.oppilaitosCount}</span></h2>
             </div>

@@ -63,7 +63,7 @@ class Ammatillinen extends Component {
                     <div className="col-xs-12 col-md-9 left-column">
                         <h1>
                             <i className={hattuClass} aria-hidden="true"></i>
-                            <span>{nimi}</span>
+                            <span id={"koulutus-title"}>{nimi}</span>
                         </h1>
                         <div className="row">
                             <div className="col-xs-12 left-column">

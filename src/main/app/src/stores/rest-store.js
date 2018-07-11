@@ -1,4 +1,4 @@
-import { observable, action, /*configure*/ } from "mobx"
+import { observable, action /*configure*/ } from "mobx"
 import superagent from 'superagent';
 import {Localizer as l} from "../tools/Utils";
 
@@ -79,6 +79,18 @@ class RestStore {
                     onSuccess(res.body.result)
                 }
             });
+    };
+
+    @action
+    getKoulutusPromise = (oid) => {
+        return (superagent
+            .get(this.urlStore.urls.url('konfo-backend.koulutus') + oid))
+    };
+
+    @action
+    getOppilaitosPromise = (oid) => {
+        return (superagent
+            .get(this.urlStore.urls.url('konfo-backend.oppilaitos') + oid))
     };
 }
 

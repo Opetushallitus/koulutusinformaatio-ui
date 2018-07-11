@@ -61,9 +61,9 @@ class DefaultFooter extends Component {
                         <div className="row">
                             <p>{t('footer.vastuuvapauslauseke')}</p>
                             <ul className="social-media">
-                                <li><a onClick={() => this.changeLanguage('fi')}>Suomeksi</a></li>
-                                <li><a onClick={() => this.changeLanguage('en')}>In English</a></li>
-                                <li><a onClick={() => this.changeLanguage('sv')}>På svenska</a></li>
+                                <li id={"language-fi"}><a onClick={() => this.changeLanguage('fi')}>Suomeksi</a></li>
+                                <li id={"language-en"}><a onClick={() => this.changeLanguage('en')}>In English</a></li>
+                                <li id={"language-sv"}><a onClick={() => this.changeLanguage('sv')}>På svenska</a></li>
                                 {/*<li className="separator">|</li>
                                 <li>
                                     <a href="">

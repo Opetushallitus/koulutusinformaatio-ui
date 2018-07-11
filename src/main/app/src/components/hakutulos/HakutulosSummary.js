@@ -12,7 +12,7 @@ class HakutulosSummary extends Component {
         const {t} = this.props;
         return (
             <div className="col Etsinta">
-                <h1>{t('haku.summary', {count: this.props.hakuStore.totalCount})}
+                <h1>{t('haku.summary', {count: this.props.hakuStore.totalCount}) + " " + t('haku.hakusanalla')}
                     <span className="highlight"> "{this.props.hakuStore.keyword}"</span>
                 </h1>
             </div>
