@@ -1,6 +1,6 @@
 import { observable } from "mobx"
 import {urls as ophUrls} from 'oph-urls-js';
-import {production, development, test} from '../oppija-urls.js';
+import {production, development} from '../oppija-urls.js';
 
 class UrlStore {
     @observable urls = ophUrls;

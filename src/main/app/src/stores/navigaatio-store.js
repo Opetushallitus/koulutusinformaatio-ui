@@ -31,11 +31,11 @@ class NavigaatioStore {
     }
 
     @computed get hasNext() {
-        return this.isLastOid ? !this.hakuStore.isLastPage : this.oids.length > 0;
+        return this.index !== -1 && (this.isLastOid ? !this.hakuStore.isLastPage : this.oids.length > 0);
     }
 
     @computed get hasPrev() {
-        return this.isFirstOid ? !this.hakuStore.isFirstPage : this.oids.length > 0;
+        return this.index !== -1 && (this.isFirstOid ? !this.hakuStore.isFirstPage : this.oids.length > 0);
     }
 
     @computed get getSearchParams() {
@@ -55,7 +55,7 @@ class NavigaatioStore {
         } else {
             action(this.oids[this.index + 1])
         }
-    }
+    };
 
     @action
     withPrevOid = (action) => {
@@ -64,7 +64,7 @@ class NavigaatioStore {
         } else {
             action(this.oids[this.index - 1])
         }
-    }
+    };
 }
 
 export default NavigaatioStore;
