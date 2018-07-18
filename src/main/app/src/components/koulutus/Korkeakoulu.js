@@ -50,7 +50,6 @@ class Korkeakoulu extends Component {
         fields.otsikkoLeft = t('koulutus.tiedot');
         fields.hakuajat = this.props.result.hakuajatFromBackend;
         fields.otsikkoRight = t('koulutus.hae-koulutukseen');
-        console.log("Returning fields: ", fields);
         return fields;
     }
 

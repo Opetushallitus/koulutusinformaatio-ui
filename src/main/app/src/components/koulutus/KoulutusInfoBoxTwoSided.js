@@ -16,7 +16,6 @@ class KoulutusInfoBoxTwoSided extends Component {
     }
 
     selectNonActiveHakuaikaToUse(hakuaikas) {
-        console.log("Select non active hakuaika");
         if(hakuaikas.tulevat.length > 0) {
             let seuraavaksiAlkava = hakuaikas.tulevat[0];
             hakuaikas.tulevat.forEach(aika => {
@@ -36,7 +35,6 @@ class KoulutusInfoBoxTwoSided extends Component {
             });
             return viimeksiPaattynyt;
         }*/
-        console.log("Ei hakuaikaa tiedossa");
         return [];
     }
 
@@ -51,7 +49,7 @@ class KoulutusInfoBoxTwoSided extends Component {
     }
 
     static parseFieldsAndButtonForSingleHakuaika(hakuaika) {
-        console.log("hakuaika in: ", hakuaika)
+        //console.log("hakuaika in: ", hakuaika)
         if(hakuaika && hakuaika.alkuPvm && hakuaika.loppuPvm && hakuaika.hakuNimi) {
             const now = new Date().getTime();
             const aktiivinen = hakuaika.alkuPvm < now && hakuaika.loppuPvm > now;
