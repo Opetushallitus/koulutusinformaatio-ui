@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import KoulutusInfoBox from './KoulutusInfoBox';
 import KoulutusInfoBoxTwoSided from './KoulutusInfoBoxTwoSided';
 import KoulutusSidebar from './KoulutusSidebar';
 import { Localizer as l } from '../../tools/Utils';

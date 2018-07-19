@@ -32,7 +32,7 @@ class KoulutusInfoBoxTwoSided extends Component {
         return toShow;
     }
 
-    static parseFieldsAndButtonForSingleHakuaika(hakuaika) {
+    static createFieldsAndButtonForSingleHakuaika(hakuaika) {
         if (hakuaika && hakuaika.alkuPvm) {
             const now = new Date().getTime();
             const aktiivinen = hakuaika.alkuPvm < now && hakuaika.loppuPvm ? hakuaika.loppuPvm > now : true; //Tulkitaan loppupäivämäärätön haku jatkuvaksi hauksi
@@ -60,7 +60,7 @@ class KoulutusInfoBoxTwoSided extends Component {
                 <div className="koulutusinfo-2-right">
                     {this.state.otsikkoRight ? <h2>{this.state.otsikkoRight}</h2> : ""}
                     <ul className="koulutusinfolaatikko-2-list-right">
-                        {this.state.hakuajatToShow.length > 0 ? this.state.hakuajatToShow.map(h => KoulutusInfoBoxTwoSided.parseFieldsAndButtonForSingleHakuaika(h)) : <p>Ei aktiivisia tai tulevia hakuja tällä hetkellä</p>}
+                        {this.state.hakuajatToShow.length > 0 ? this.state.hakuajatToShow.map(h => KoulutusInfoBoxTwoSided.createFieldsAndButtonForSingleHakuaika(h)) : <p>Ei aktiivisia tai tulevia hakuja tällä hetkellä</p>}
                     </ul>
                 </div>
             </div>
