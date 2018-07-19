@@ -6,9 +6,8 @@ class KoulutusInfoBoxTwoSided extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            fieldsLeft: props.fields.left,
-            fieldsRight: props.fields.right,
             otsikkoLeft: props.fields.otsikkoLeft,
+            fieldsLeft: props.fields.left,
             otsikkoRight: props.fields.otsikkoRight,
             hakuajatToShow: this.selectHakuaikasToShow(props.fields.hakuajat)
         };
@@ -34,7 +33,7 @@ class KoulutusInfoBoxTwoSided extends Component {
     static parseFieldsAndButtonForSingleHakuaika(hakuaika) {
         if (hakuaika && hakuaika.alkuPvm) {
             const now = new Date().getTime();
-            const aktiivinen = hakuaika.alkuPvm < now && hakuaika.loppuPvm > now;
+            const aktiivinen = hakuaika.alkuPvm < now && hakuaika.loppuPvm ? hakuaika.loppuPvm > now : true; //Tulkitaan loppupäivämäärätön haku jatkuvaksi hauksi
             const haunNimi = hakuaika.hakuNimi ? l.localize(hakuaika.hakuNimi) : "Haulla ei nimeä";
             const aikaReadable = timeParser.millisToReadable(hakuaika.alkuPvm ? hakuaika.alkuPvm : null) + " - " + timeParser.millisToReadable(hakuaika.loppuPvm ? hakuaika.loppuPvm : null);
             return (<div><p>{haunNimi}</p>
