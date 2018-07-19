@@ -58,9 +58,11 @@ class OsoiteParser {
 
 class TimeMillisParser {
     static millisToReadable(timemillis) {
+        if(timemillis === null) {
+            return "";
+        }
         return new Date(timemillis).toLocaleString().replace(/\//g, ".").replace(",", " klo");
     }
-
 }
 
 export {Parser, Localizer, OsoiteParser, TimeMillisParser};

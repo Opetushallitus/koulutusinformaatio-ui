@@ -32,12 +32,11 @@ class KoulutusInfoBoxTwoSided extends Component {
     }
 
     static parseFieldsAndButtonForSingleHakuaika(hakuaika) {
-        //console.log("hakuaika in: ", hakuaika)
-        if(hakuaika && hakuaika.alkuPvm && hakuaika.loppuPvm && hakuaika.hakuNimi) {
+        if (hakuaika && hakuaika.alkuPvm) {
             const now = new Date().getTime();
             const aktiivinen = hakuaika.alkuPvm < now && hakuaika.loppuPvm > now;
-            const haunNimi = hakuaika.hakuNimi ? l.localize(hakuaika.hakuNimi) : "Ei nimeä";
-            const aikaReadable = timeParser.millisToReadable(hakuaika.alkuPvm) + "-" + timeParser.millisToReadable(hakuaika.loppuPvm);
+            const haunNimi = hakuaika.hakuNimi ? l.localize(hakuaika.hakuNimi) : "Haulla ei nimeä";
+            const aikaReadable = timeParser.millisToReadable(hakuaika.alkuPvm ? hakuaika.alkuPvm : null) + " - " + timeParser.millisToReadable(hakuaika.loppuPvm ? hakuaika.loppuPvm : null);
             return (<div><p>{haunNimi}</p>
                         <p>{aikaReadable}</p>
                         <button class="haeKoulutukseen" key={"haku oidille " + hakuaika.hakuOid}>{aktiivinen ? "Jätä hakemus" : "Tilaa muistutus"}</button>
