@@ -15,35 +15,18 @@ class KoulutusInfoBoxTwoSided extends Component {
         console.log("Created element InfoBoxTwoSided with props: ", props);
     }
 
-    selectNonActiveHakuaikaToUse(hakuaikas) {
-        if(hakuaikas.tulevat.length > 0) {
-            let seuraavaksiAlkava = hakuaikas.tulevat[0];
-            hakuaikas.tulevat.forEach(aika => {
-                if(aika.alkuPvm < seuraavaksiAlkava.alkuPvm) {
-                    seuraavaksiAlkava = aika;
-                }
-            });
-            return [seuraavaksiAlkava];
-        }
-        //Päättyneitä hakuaikoja ei välttämättä haluta näyttää
-        /*if(hakuaikas.paattyneet.length > 0) {
-            let viimeksiPaattynyt = hakuaikas.paattyneet[0];
-            hakuaikas.paattyneet.forEach(aika => {
-                if(aika.loppuPvm > viimeksiPaattynyt.loppuPvm) {
-                    viimeksiPaattynyt = aika;
-                }
-            });
-            return viimeksiPaattynyt;
-        }*/
-        return [];
-    }
-
     selectHakuaikasToShow(hakuaikas) {
         if (hakuaikas && hakuaikas.aktiiviset && hakuaikas.tulevat) {
             if (hakuaikas.aktiiviset.length > 0) {
                 return hakuaikas.aktiiviset; //Aktiivisia hakuja voi olla monta samaan aikaan
-            } else {
-                return this.selectNonActiveHakuaikaToUse(hakuaikas); //Tulevista tai menneistä valitaan vain yksi näytettävä
+            } else if (hakuaikas.tulevat.length > 0) {
+                let seuraavaksiAlkava = hakuaikas.tulevat[0];
+                hakuaikas.tulevat.forEach(aika => {
+                    if(aika.alkuPvm < seuraavaksiAlkava.alkuPvm) {
+                        seuraavaksiAlkava = aika;
+                    }
+                });
+                return [seuraavaksiAlkava];
             }
         } else return [];
     }
