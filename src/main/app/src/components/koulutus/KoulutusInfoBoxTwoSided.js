@@ -15,9 +15,10 @@ class KoulutusInfoBoxTwoSided extends Component {
     }
 
     selectHakuaikasToShow(hakuaikas) {
-        if (hakuaikas && hakuaikas.aktiiviset && hakuaikas.tulevat) {
+        var toShow = [];
+        if (hakuaikas) {
             if (hakuaikas.aktiiviset.length > 0) {
-                return hakuaikas.aktiiviset; //Aktiivisia hakuja voi olla monta samaan aikaan
+                toShow = hakuaikas.aktiiviset; // Aktiivisia hakuja voi olla monta samaan aikaan
             } else if (hakuaikas.tulevat.length > 0) {
                 let seuraavaksiAlkava = hakuaikas.tulevat[0];
                 hakuaikas.tulevat.forEach(aika => {
@@ -25,9 +26,10 @@ class KoulutusInfoBoxTwoSided extends Component {
                         seuraavaksiAlkava = aika;
                     }
                 });
-                return [seuraavaksiAlkava];
+                toShow = [seuraavaksiAlkava]; // Tulevista hauista näytetään vain seuraavaksi alkava
             }
-        } else return [];
+        }
+        return toShow;
     }
 
     static parseFieldsAndButtonForSingleHakuaika(hakuaika) {
@@ -44,10 +46,9 @@ class KoulutusInfoBoxTwoSided extends Component {
     }
 
     render () {
-        if(!this.state.fieldsLeft || !this.state.hakuajatToShow) {
+        if(!this.state.fieldsLeft) {
             return null;
         }
-        console.log("to show: ", this.state.hakuajatToShow)
         return (
             <div className="koulutusinfo-2">
                 <div className="koulutusinfo-2-left">
@@ -59,7 +60,6 @@ class KoulutusInfoBoxTwoSided extends Component {
                 <div className="koulutusinfo-2-right">
                     {this.state.otsikkoRight ? <h2>{this.state.otsikkoRight}</h2> : ""}
                     <ul className="koulutusinfolaatikko-2-list-right">
-                        {/*{this.state.fieldsRight.map(row => row[1] && <li key={row[0]+row[1]}> {row[0] + (row[0].length === 0 ? "" : ": ") + row[1]}</li>)}*/}
                         {this.state.hakuajatToShow.length > 0 ? this.state.hakuajatToShow.map(h => KoulutusInfoBoxTwoSided.parseFieldsAndButtonForSingleHakuaika(h)) : <p>Ei aktiivisia tai tulevia hakuja tällä hetkellä</p>}
                     </ul>
                 </div>
