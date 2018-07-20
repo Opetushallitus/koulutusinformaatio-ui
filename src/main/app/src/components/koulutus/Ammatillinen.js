@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import KoulutusInfoBox from './KoulutusInfoBox';
+import KoulutusInfoBoxTwoSided from './KoulutusInfoBoxTwoSided';
 import KoulutusSidebar from './KoulutusSidebar';
 import { Localizer as l } from '../../tools/Utils';
 import renderHTML from 'react-render-html';
@@ -31,7 +31,17 @@ class Ammatillinen extends Component {
         return ""
     }
 
-    parseInfoBoxFields() {
+    parseInfoBoxFieldsTwoSided() {
+        const {t} = this.props;
+        const fields = {};
+        fields.left = this.parseInfoBoxFieldsLeft();
+        fields.otsikkoLeft = t('koulutus.tiedot');
+        fields.hakuajat = this.props.result.hakuajatFromBackend;
+        fields.otsikkoRight = t('koulutus.hae-koulutukseen');
+        return fields;
+    }
+
+    parseInfoBoxFieldsLeft() {
         const {t} = this.props;
         const fields = [];
         // laajuus, kesto, maksullinen, tutkintonimike
@@ -67,7 +77,7 @@ class Ammatillinen extends Component {
                         </h1>
                         <div className="row">
                             <div className="col-xs-12 left-column">
-                                <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
+                                <KoulutusInfoBoxTwoSided fields={this.parseInfoBoxFieldsTwoSided()}/>
                             </div>
                         </div>
 

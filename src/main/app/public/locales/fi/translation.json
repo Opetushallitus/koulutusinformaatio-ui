@@ -91,7 +91,16 @@
     "sisältö": "Koulutuksen sisältö",
     "tuntematon": "Tuntematon koulutus",
     "ei-nimeä": "Koulutus (ei nimeä)",
-    "tuntematon-nimi": "(Tuntematon nimi)"
+    "tuntematon-nimi": "(Tuntematon nimi)",
+    "hakuaika": "Hakuaika",
+    "tiedot": "Koulutuksen tiedot",
+    "hae-koulutukseen": "Hae koulutukseen",
+    "opettaja": "Opettaja",
+    "opintopisteet": "Opintopisteet",
+    "koulutusohjelma": "Koulutusohjelma",
+    "opetuskielet": "Opetuskielet",
+    "suoritustavat": "Suoritustavat",
+    "opetusajat": "Opetusajat"
   },
   "vertailu": {
     "takaisin-edelliselle-sivulle": "Takaisin edelliselle sivulle",

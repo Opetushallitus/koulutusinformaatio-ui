@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Localizer as l } from '../../tools/Utils';
-import AvoinInfoBox from "./AvoimenKurssinInfoBox";
+import KoulutusInfoBoxTwoSided from './KoulutusInfoBoxTwoSided';
 import KoulutusSidebar from "./KoulutusSidebar";
 import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next';
@@ -40,6 +40,32 @@ class AvoinYoKoulutus extends Component {
         return "";
     }
 
+    parseInfoBoxFieldsTwoSided() {
+        const {t} = this.props;
+        const fields = {};
+        fields.left = this.parseInfoBoxFieldsLeft();
+        fields.otsikkoLeft = t('koulutus.tiedot');
+        fields.hakuajat = this.props.result.hakuajatFromBackend;
+        fields.otsikkoRight = t('koulutus.hae-koulutukseen');
+        return fields;
+    }
+
+    parseInfoBoxFieldsLeft() {
+        const {t} = this.props;
+        const fields = [];
+        
+        fields.push([t('koulutus.opintopisteet'), this.state.result.opintopisteet ? this.state.result.opintopisteet : ""]);
+        fields.push([t('koulutus.koulutusohjelma'), l.localize(this.state.result.koulutusohjelma)]);
+        fields.push([t('koulutus.opetuskielet'), this.state.result.opetuskielis ? this.state.result.opetuskielis.map(kieli => l.localize(kieli)) : ""]);
+        fields.push([t('koulutus.suoritustavat'), this.state.result.opetusPaikkas ? this.state.result.opetusPaikkas.map(paikka => l.localize(paikka)): ""]);
+        fields.push([t('koulutus.toimipiste'), this.state.result.toimipiste ? this.state.result.toimipiste : ""]);
+        fields.push([t('koulutus.ajoitus'), this.state.result.ajoitus ? this.state.result.ajoitus : ""]);
+        fields.push([t('koulutus.opetusajat'), this.state.result.opetusAikas? this.state.result.opetusAikas.map(aika => l.localize(aika)) : ""]);
+
+        console.log("Kenttiä:" + fields.length)
+        return fields;
+    }
+
     render() {
         const {t} = this.props;
         return (
@@ -52,7 +78,7 @@ class AvoinYoKoulutus extends Component {
                         </h1>
                         <div className="row">
                             <div className="col-xs-12 left-column">
-                                <AvoinInfoBox result={this.state.result}/>
+                                {<KoulutusInfoBoxTwoSided fields={this.parseInfoBoxFieldsTwoSided()}/>}
                             </div>
                         </div>
                         <div className="col-xs-12 col-md-9 left-column">
