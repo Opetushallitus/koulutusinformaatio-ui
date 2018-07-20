@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import KoulutusInfoBoxTwoSided from './KoulutusInfoBoxTwoSided';
 import KoulutusSidebar from './KoulutusSidebar';
 import { Localizer as l } from '../../tools/Utils';
-import { TimeMillisParser as timeParser} from '../../tools/Utils';
 import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next'
 
