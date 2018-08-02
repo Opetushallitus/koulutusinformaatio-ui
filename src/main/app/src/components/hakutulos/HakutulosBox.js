@@ -24,13 +24,13 @@ class HakutulosBox extends Component {
                         <Link to={this.props.link} className={"hakutulosbox-link"}>{this.props.nimi}</Link>
                         <p>{this.props.text1}<br/>{this.props.text2}</p>
                     </div>
-                    {this.props.vertailuStore.vertailuList.findIndex((item) => item.oid === this.props.oid) !== -1 ?
-                        <div className="compare-button" onClick={() => this.props.vertailuStore.removeItem(this.props.oid)}>
+                    {this.props.vertailuStore.vertailuList.findIndex((item) => item.oid === this.props.vertailuOid) !== -1 ?
+                        <div className="compare-button" onClick={() => this.props.vertailuStore.removeItem(this.props.vertailuOid)}>
                             <span role="button" className="poista">{this.props.t("haku.poista-vertailusta")}</span>
                         </div>
                         :
                         (this.props.vertailu ?
-                            <div className="compare-button" onClick={() => this.props.vertailuStore.selectItem(this.props.oid, this.props.nimi)}>
+                            <div className="compare-button" onClick={() => this.props.vertailuStore.selectItem(this.props.vertailuOid, this.props.nimi)}>
                                 <span role="button">{this.props.t("haku.ota-vertailuun")}</span>
                             </div>
                             :
