@@ -29,6 +29,18 @@ class Hakutulos extends Component {
         return l.localize(oppilaitos, this.props.t("oppilaitos.ei-nimeä"), 'fi');
     }
 
+    getOsaamisala(koulutus) {
+        const osaamisala = l.localize(koulutus.osaamisala, undefined);
+        if(osaamisala) {
+            return osaamisala;
+        }
+        const koulutusohjelma = l.localize(koulutus.koulutusohjelma, undefined);
+        if(koulutusohjelma) {
+            return koulutusohjelma;
+        }
+        return "";
+    }
+
     renderResultList() {
         const vertailuActive = this.props.vertailuStore.size < 3;
         if(this.props.hakuStore.toggleKoulutus) {
@@ -43,8 +55,8 @@ class Hakutulos extends Component {
                                   haettavissa={r.haettavissa}
                                   nimi={this.getKoulutusNimi(r)}
                                   link={link}
-                                  text1={r.tarjoaja ? r.tarjoaja : ""}
-                                  text2={this.getKoulutusAiheet(r)}
+                                  text1={this.getOsaamisala(r)}
+                                  text2={""}
                                   vertailu={vertailuActive}/>)
             });
         } else {

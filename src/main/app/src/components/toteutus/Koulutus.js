@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
 import Korkeakoulu from "./Korkeakoulu";
-//import Ammatillinen from "./Ammatillinen";
+import Ammatillinen from "./Ammatillinen";
 import Hakunavigaatio from './../hakutulos/Hakunavigaatio';
-//import AvoinYoKoulutus from "./AvoinYo";
-//import Lukiokoulutus from "./Lukiokoulutus";
+import AvoinYoKoulutus from "./AvoinYo";
+import Lukiokoulutus from "./Lukiokoulutus";
 
 @inject("restStore")
 @inject("navigaatioStore")
@@ -14,7 +14,7 @@ class Koulutus extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            komo: undefined
+            koulutus: undefined
         }
     };
 
@@ -29,7 +29,7 @@ class Koulutus extends Component {
 
     getKoulutus() {
         this.props.navigaatioStore.setOid(this.props.match.params.oid);
-        this.props.restStore.getKoulutus(this.props.navigaatioStore.oid, (k) => {
+        this.props.restStore.getToteutus(this.props.navigaatioStore.oid, (k) => {
             this.setState({
                 koulutus: k
             })

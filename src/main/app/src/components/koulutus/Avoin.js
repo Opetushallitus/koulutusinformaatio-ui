@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Localizer as l } from '../../tools/Utils';
-import KoulutusInfoBoxTwoSided from './KoulutusInfoBoxTwoSided';
-import KoulutusSidebar from "./KoulutusSidebar";
+import KoulutusInfoBox from './KoulutusInfoBox';
+import KoulutusSidebar from "../toteutus/KoulutusSidebar";
 import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next';
+import OppilaitosList from "./OppilaitosList";
 
 @translate()
-class AvoinYoKoulutus extends Component {
+class Avoin extends Component {
 
     constructor(props) {
         super(props);
@@ -40,20 +41,10 @@ class AvoinYoKoulutus extends Component {
         return "";
     }
 
-    parseInfoBoxFieldsTwoSided() {
-        const {t} = this.props;
-        const fields = {};
-        fields.left = this.parseInfoBoxFieldsLeft();
-        fields.otsikkoLeft = t('koulutus.tiedot');
-        fields.hakuajat = this.props.result.hakuajatFromBackend;
-        fields.otsikkoRight = t('koulutus.hae-koulutukseen');
-        return fields;
-    }
-
-    parseInfoBoxFieldsLeft() {
+    parseInfoBoxFields() {
         const {t} = this.props;
         const fields = [];
-        
+
         fields.push([t('koulutus.opintopisteet'), this.state.result.opintopisteet ? this.state.result.opintopisteet : ""]);
         fields.push([t('koulutus.koulutusohjelma'), l.localize(this.state.result.koulutusohjelma)]);
         fields.push([t('koulutus.opetuskielet'), this.state.result.opetuskielis ? this.state.result.opetuskielis.map(kieli => l.localize(kieli)) : ""]);
@@ -68,6 +59,10 @@ class AvoinYoKoulutus extends Component {
 
     render() {
         const {t} = this.props;
+        const fields = this.parseInfoBoxFields();
+        const infoBox = fields > 0;
+        const kuvaus = this.parseKuvaus();
+        const oppilaitokset = this.props.result.toteutukset.length > 0;
         return (
             <div className="container">
                 <div className="row info-page">
@@ -76,12 +71,12 @@ class AvoinYoKoulutus extends Component {
                             <i className="fa fa-circle avoin-hattu" aria-hidden="true"></i>
                             <span id={"koulutus-title"}>{this.parseNimi()}</span>
                         </h1>
-                        <div className="row">
+                        {infoBox && <div className="row">
                             <div className="col-xs-12 left-column">
-                                {<KoulutusInfoBoxTwoSided fields={this.parseInfoBoxFieldsTwoSided()}/>}
+                                {<KoulutusInfoBox fields={fields}/>}
                             </div>
-                        </div>
-                        <div className="col-xs-12 col-md-9 left-column">
+                        </div>}
+                        {kuvaus && <div className="col-xs-12 col-md-9 left-column">
                             <h2 className="line_otsikko">{t("koulutus.yleiskuvaus")}</h2>
                             <div className="">
                                 {this.parseKuvaus()}
@@ -89,7 +84,12 @@ class AvoinYoKoulutus extends Component {
 
                                 </ul>
                             </div>
-                        </div>
+                        </div>}
+                        {oppilaitokset &&
+                        <div className="col-xs-12 col-md-9 left-column">
+                            <h2 className="line_otsikko">{t('koulutus.oppilaitokset')}</h2>
+                            <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
+                        </div>}
                     </div>
                     <KoulutusSidebar/>
                 </div>
@@ -98,4 +98,4 @@ class AvoinYoKoulutus extends Component {
     }
 }
 
-export default AvoinYoKoulutus;
+export default Avoin;

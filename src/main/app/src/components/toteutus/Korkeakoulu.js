@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import KoulutusInfoBox from './KoulutusInfoBox';
-import KoulutusSidebar from '../toteutus/KoulutusSidebar';
+import KoulutusInfoBoxTwoSided from './KoulutusInfoBoxTwoSided';
+import KoulutusSidebar from './KoulutusSidebar';
 import { Localizer as l } from '../../tools/Utils';
 import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next'
-import OppilaitosList from "./OppilaitosList";
+import {Link} from "react-router-dom";
+import {inject} from "mobx-react";
 
 @translate()
+@inject("hakuStore")
 class Korkeakoulu extends Component {
 
     constructor(props) {
@@ -26,6 +28,15 @@ class Korkeakoulu extends Component {
         });
     }
 
+    parseAineListaus() {
+        const {t} = this.props;
+        if(this.state.result.oppiaineet.length > 0) {
+            return this.state.result.oppiaineet.map(o => <li key={o.oppiaine ? o.oppiaine : ''} className="osaamisalat_list_item">{o.oppiaine ? o.oppiaine : t("tuntematon")}</li>);
+        } else {
+            return this.state.result.aihees.map(a => <li key={a.uri} className="osaamisalat_list_item">{l.localize(a.nimi)}</li>);
+        }
+    }
+
     parseNimi() {
         if(this.state.result) {
             return l.localize(this.state.result.searchData, this.props.t('koulutus.tuntematon'), "fi")
@@ -33,7 +44,17 @@ class Korkeakoulu extends Component {
         return ""
     }
 
-    parseInfoBoxFields() {
+    parseInfoBoxFieldsTwoSided() {
+        const {t} = this.props;
+        const fields = {};
+        fields.left = this.parseInfoBoxFieldsLeft();
+        fields.otsikkoLeft = t('koulutus.tiedot');
+        fields.hakuajat = this.props.result.hakuajatFromBackend;
+        fields.otsikkoRight = t('koulutus.hae-koulutukseen');
+        return fields;
+    }
+
+    parseInfoBoxFieldsLeft() {
         const {t} = this.props;
         const fields = [];
         // laajuus, kesto, maksullinen, tutkintonimike
@@ -53,46 +74,44 @@ class Korkeakoulu extends Component {
 
     render() {
         const {t} = this.props;
-        const erikoistumisalat = l.localize(this.props.result.kuvausKomo.TAVOITTEET, undefined);
-        const jatkoOpinnot = l.localize(this.state.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined);
-        const oppilaitokset = this.props.result.toteutukset.length > 0;
-
+        const sisalto = l.localize(this.state.result.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
+        const erikoistumisalat = l.localize(this.state.result.kuvausKomo.TAVOITTEET, undefined);
+        const link = '/koulutus/' + this.state.result.komoOid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
+            + '&lng=' + l.getLanguage();
         return (
             <div className="container">
                 <div className="row info-page">
                     <div className="col-xs-12 col-md-9 left-column">
-                        <h1>
-                            <i className="fa fa-circle korkeakoulu-hattu" aria-hidden="true"></i>
-                            <span id={"koulutus-title"}>{this.parseNimi()}</span>
-                        </h1>
+                        <div className="compare">
+                            <h1>
+                                <Link to={link} className="header" >
+                                    <span className="light-font">{this.state.result.organisaatio.nimi}</span>
+                                    <p>{this.parseNimi()}</p>
+                                </Link>
+                            </h1>
+                        </div>
                         <div className="row">
                             <div className="col-xs-12 left-column">
-                                {<KoulutusInfoBox fields={this.parseInfoBoxFields()}/>}
+                                {<KoulutusInfoBoxTwoSided fields={this.parseInfoBoxFieldsTwoSided()}/>}
                             </div>
                         </div>
+
+                        {sisalto &&
                         <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.pääaineet')}</h2>
+                            <h2 className="line_otsikko">{t('koulutus.sisältö')}</h2>
                             <div className="">
-                                <ul>
+                                {renderHTML(sisalto)}
+                            </div>
+                        </div>}
+
+                        {erikoistumisalat &&
+                            <div className="col-xs-12 col-md-9 left-column">
+                                <h2 className="line_otsikko">{t('koulutus.pääaineet')}</h2>
+                                <div className="">
                                     {renderHTML(erikoistumisalat)}
-                                </ul>
-                            </div>
+                                </div>
 
-                        </div>
-
-                        {oppilaitokset &&
-                        <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.oppilaitokset')}</h2>
-                            <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
-                        </div>}
-
-                        {jatkoOpinnot &&
-                        <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.jatko-opinnot')}</h2>
-                            <div className="">
-                                {renderHTML(jatkoOpinnot)}
-                            </div>
-                        </div>}
+                            </div>}
                     </div>
                     <KoulutusSidebar/>
                 </div>

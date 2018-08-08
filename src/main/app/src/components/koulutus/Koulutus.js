@@ -3,8 +3,8 @@ import {observer, inject} from 'mobx-react';
 import Korkeakoulu from "./Korkeakoulu";
 import Ammatillinen from "./Ammatillinen";
 import Hakunavigaatio from './../hakutulos/Hakunavigaatio';
-import AvoinYoKoulutus from "./AvoinYo";
-import Lukiokoulutus from "./Lukiokoulutus";
+import Avoin from "./Avoin";
+import Lukio from "./Lukio";
 
 @inject("restStore")
 @inject("navigaatioStore")
@@ -38,10 +38,11 @@ class Koulutus extends Component {
 
     chooseKoulutus() {
         if(this.state.koulutus) {
+            console.log(this.state.koulutus)
             switch(this.state.koulutus.searchData.tyyppi) {
-                case 'lk': return <Lukiokoulutus oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>; //TODO
+                case 'lk': return <Lukio oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>; //TODO
                 case 'kk': return <Korkeakoulu oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
-                case 'ako': return <AvoinYoKoulutus oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
+                case 'ako': return <Avoin oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
                 case 'amm' : return <Ammatillinen oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
                 default: return <Ammatillinen oid={this.props.navigaatioStore.oid} result={this.state.koulutus} muu={true}/>;
             }

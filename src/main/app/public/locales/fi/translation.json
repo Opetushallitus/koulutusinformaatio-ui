@@ -78,6 +78,7 @@
     "yleiskuvaus": "Yleiskuvaus",
     "laajuus": "Laajuus",
     "kesto": "Kesto",
+    "suunniteltu-kesto": "Suunniteltu kesto",
     "maksullinen": "Maksullinen",
     "tutkintonimikkeet": "Tutkintonimikkeet",
     "osaamisalat": "Osaamisalat",
@@ -100,7 +101,8 @@
     "koulutusohjelma": "Koulutusohjelma",
     "opetuskielet": "Opetuskielet",
     "suoritustavat": "Suoritustavat",
-    "opetusajat": "Opetusajat"
+    "opetusajat": "Opetusajat",
+    "oppilaitokset": "Oppilaitokset"
   },
   "vertailu": {
     "takaisin-edelliselle-sivulle": "Takaisin edelliselle sivulle",
