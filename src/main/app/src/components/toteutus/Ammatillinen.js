@@ -6,6 +6,7 @@ import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next'
 import {Link} from "react-router-dom";
 import {inject} from "mobx-react";
+import ToteutusHeader from "./ToteutusHeader";
 
 @translate()
 @inject("hakuStore")
@@ -25,13 +26,6 @@ class Ammatillinen extends Component {
             oid: this.props.oid,
             result: this.props.result
         });
-    }
-
-    parseNimi() {
-        if(this.props.result) {
-            return l.localize(this.props.result.searchData.nimi, this.props.t("koulutus.tuntematon"), 'fi')
-        }
-        return ""
     }
 
     parseInfoBoxFieldsTwoSided() {
@@ -67,23 +61,14 @@ class Ammatillinen extends Component {
         const osaamisalat = l.localize(this.props.result.koulutusohjelma, undefined);
         const tutkinnonOsat = l.localize(this.props.result.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
         const erikoistumisalat = l.localize(this.state.result.kuvausKomo.TAVOITTEET, undefined);
-        const link = '/koulutus/' + this.state.result.komoOid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
-            + '&lng=' + l.getLanguage();
 
-        const hattuClass = this.props.muu ? "fa fa-circle muu-hattu" : "fa fa-circle ammatillinen-hattu";
-        const nimi = this.parseNimi();
         return (
             <div className="container">
                 <div className="row info-page">
                     <div className="col-xs-12 col-md-9 left-column">
-                        <div className="compare">
-                            <h1>
-                                <Link to={link} className="header" >
-                                    <span className="light-font">{this.state.result.organisaatio.nimi}</span>
-                                    <p>{this.parseNimi()}</p>
-                                </Link>
-                            </h1>
-                        </div>
+                        <ToteutusHeader komoOid={this.state.result.komoOid}
+                                        nimi={this.props.result.searchData.nimi}
+                                        organisaatio={this.state.result.organisaatio.nimi}/>
                         <div className="row">
                             <div className="col-xs-12 left-column">
                                 <KoulutusInfoBoxTwoSided fields={this.parseInfoBoxFieldsTwoSided()}/>

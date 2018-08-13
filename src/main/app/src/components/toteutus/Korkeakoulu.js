@@ -6,6 +6,7 @@ import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next'
 import {Link} from "react-router-dom";
 import {inject} from "mobx-react";
+import ToteutusHeader from "./ToteutusHeader";
 
 @translate()
 @inject("hakuStore")
@@ -35,13 +36,6 @@ class Korkeakoulu extends Component {
         } else {
             return this.state.result.aihees.map(a => <li key={a.uri} className="osaamisalat_list_item">{l.localize(a.nimi)}</li>);
         }
-    }
-
-    parseNimi() {
-        if(this.state.result) {
-            return l.localize(this.state.result.searchData, this.props.t('koulutus.tuntematon'), "fi")
-        }
-        return ""
     }
 
     parseInfoBoxFieldsTwoSided() {
@@ -76,20 +70,13 @@ class Korkeakoulu extends Component {
         const {t} = this.props;
         const sisalto = l.localize(this.state.result.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
         const erikoistumisalat = l.localize(this.state.result.kuvausKomo.TAVOITTEET, undefined);
-        const link = '/koulutus/' + this.state.result.komoOid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
-            + '&lng=' + l.getLanguage();
         return (
             <div className="container">
                 <div className="row info-page">
                     <div className="col-xs-12 col-md-9 left-column">
-                        <div className="compare">
-                            <h1>
-                                <Link to={link} className="header" >
-                                    <span className="light-font">{this.state.result.organisaatio.nimi}</span>
-                                    <p>{this.parseNimi()}</p>
-                                </Link>
-                            </h1>
-                        </div>
+                        <ToteutusHeader komoOid={this.state.result.komoOid}
+                                        nimi={this.props.result.searchData.nimi}
+                                        organisaatio={this.state.result.organisaatio.nimi}/>
                         <div className="row">
                             <div className="col-xs-12 left-column">
                                 {<KoulutusInfoBoxTwoSided fields={this.parseInfoBoxFieldsTwoSided()}/>}
