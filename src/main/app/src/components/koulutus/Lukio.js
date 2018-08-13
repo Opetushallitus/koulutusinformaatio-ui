@@ -85,11 +85,7 @@ class Lukio extends Component {
                             </div>
                         </div>}
 
-                        {oppilaitokset &&
-                        <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.oppilaitokset')}</h2>
-                            <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
-                        </div>}
+                        <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
 
                         {jatkoOpinnot &&
                         <div className="col-xs-12 col-md-9 left-column">

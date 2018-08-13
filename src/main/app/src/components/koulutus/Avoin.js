@@ -62,7 +62,6 @@ class Avoin extends Component {
         const fields = this.parseInfoBoxFields();
         const infoBox = fields > 0;
         const kuvaus = this.parseKuvaus();
-        const oppilaitokset = this.props.result.toteutukset.length > 0;
         return (
             <div className="container">
                 <div className="row info-page">
@@ -85,11 +84,7 @@ class Avoin extends Component {
                                 </ul>
                             </div>
                         </div>}
-                        {oppilaitokset &&
-                        <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.oppilaitokset')}</h2>
-                            <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
-                        </div>}
+                        <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
                     </div>
                     <KoulutusSidebar/>
                 </div>

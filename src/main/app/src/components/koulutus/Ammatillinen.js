@@ -60,7 +60,6 @@ class Ammatillinen extends Component {
         const osaamisalat = koulutusohjelma ? koulutusohjelma : osaamisala;
         const tutkinnonOsat = l.localize(this.props.result.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
         const jatkoOpinnot = l.localize(this.props.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined);
-        const oppilaitokset = this.props.result.toteutukset.length > 0;
 
         const hattuClass = this.props.muu ? "fa fa-circle muu-hattu" : "fa fa-circle ammatillinen-hattu";
         const nimi = this.parseNimi();
@@ -96,11 +95,7 @@ class Ammatillinen extends Component {
                             </div>
                         </div>}
 
-                        {oppilaitokset &&
-                        <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.oppilaitokset')}</h2>
-                            <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
-                        </div>}
+                        <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
 
                         {jatkoOpinnot &&
                         <div className="col-xs-12 col-md-9 left-column">

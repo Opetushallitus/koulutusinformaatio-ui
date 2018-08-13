@@ -55,7 +55,6 @@ class Korkeakoulu extends Component {
         const {t} = this.props;
         const erikoistumisalat = l.localize(this.props.result.kuvausKomo.TAVOITTEET, undefined);
         const jatkoOpinnot = l.localize(this.state.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined);
-        const oppilaitokset = this.props.result.toteutukset.length > 0;
 
         return (
             <div className="container">
@@ -80,11 +79,7 @@ class Korkeakoulu extends Component {
 
                         </div>
 
-                        {oppilaitokset &&
-                        <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.oppilaitokset')}</h2>
-                            <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
-                        </div>}
+                        <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
 
                         {jatkoOpinnot &&
                         <div className="col-xs-12 col-md-9 left-column">
