@@ -7,6 +7,7 @@ import {translate} from 'react-i18next'
 import {Link} from "react-router-dom";
 import {inject} from "mobx-react";
 import ToteutusHeader from "./ToteutusHeader";
+import KoulutusSection from "../koulutus/KoulutusSection";
 
 @translate()
 @inject("hakuStore")
@@ -83,22 +84,9 @@ class Korkeakoulu extends Component {
                             </div>
                         </div>
 
-                        {sisalto &&
-                        <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.sisältö')}</h2>
-                            <div className="">
-                                {renderHTML(sisalto)}
-                            </div>
-                        </div>}
+                        <KoulutusSection content={sisalto} header="koulutus.sisältö"/>
 
-                        {erikoistumisalat &&
-                            <div className="col-xs-12 col-md-9 left-column">
-                                <h2 className="line_otsikko">{t('koulutus.pääaineet')}</h2>
-                                <div className="">
-                                    {renderHTML(erikoistumisalat)}
-                                </div>
-
-                            </div>}
+                        <KoulutusSection content={erikoistumisalat} header="koulutus.pääaineet"/>
                     </div>
                     <KoulutusSidebar/>
                 </div>

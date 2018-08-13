@@ -7,6 +7,7 @@ import {translate} from 'react-i18next'
 import {Link} from "react-router-dom";
 import {inject} from "mobx-react";
 import ToteutusHeader from "./ToteutusHeader";
+import KoulutusSection from "../koulutus/KoulutusSection";
 
 @translate()
 @inject("hakuStore")
@@ -74,33 +75,13 @@ class Ammatillinen extends Component {
                                 <KoulutusInfoBoxTwoSided fields={this.parseInfoBoxFieldsTwoSided()}/>
                             </div>
                         </div>
+                        {osaamisalat && <KoulutusSection
+                            content={<ul><li className="osaamisalat_list_item">{osaamisalat}</li></ul>}
+                            header="koulutus.osaamisalat"
+                            noRender={true}/>}
 
-                        {osaamisalat &&
-                        <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.osaamisalat')}</h2>
-                            <div className="">
-                                <ul>
-                                    <li className="osaamisalat_list_item">{osaamisalat}</li>
-                                </ul>
-                            </div>
-                        </div>}
-
-                        {tutkinnonOsat &&
-                        <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.sisältö')}</h2>
-                            <div className="">
-                                {renderHTML(tutkinnonOsat)}
-                            </div>
-                        </div>}
-
-                        {erikoistumisalat &&
-                        <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.pääaineet')}</h2>
-                            <div className="">
-                                {renderHTML(erikoistumisalat)}
-                            </div>
-
-                        </div>}
+                        <KoulutusSection content={tutkinnonOsat} header="koulutus.sisältö"/>
+                        <KoulutusSection content={erikoistumisalat} header="koulutus.pääaineet"/>
 
                     </div>
                     <KoulutusSidebar/>

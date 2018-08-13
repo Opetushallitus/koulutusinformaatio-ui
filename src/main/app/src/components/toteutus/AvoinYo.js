@@ -6,6 +6,7 @@ import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next';
 import {inject} from "mobx-react";
 import ToteutusHeader from "./ToteutusHeader";
+import KoulutusSection from "../koulutus/KoulutusSection";
 
 @translate()
 @inject("hakuStore")
@@ -30,11 +31,11 @@ class AvoinYoKoulutus extends Component {
 
     parseKuvaus() {
         if(this.state.result && this.state.result.kuvausKomoto && this.state.result.kuvausKomoto.SISALTO) {
-            return renderHTML(l.localize(this.state.result.kuvausKomoto.SISALTO));
+            return l.localize(this.state.result.kuvausKomoto.SISALTO);
         }
 
         if(this.state.result && this.state.result.kuvausKomo && this.state.result.kuvausKomo.TAVOITTEET) {
-            return renderHTML(l.localize(this.state.result.kuvausKomo.TAVOITTEET));
+            return l.localize(this.state.result.kuvausKomo.TAVOITTEET);
         }
         return "";
     }
@@ -67,6 +68,7 @@ class AvoinYoKoulutus extends Component {
 
     render() {
         const {t} = this.props;
+        const kuvaus = this.parseKuvaus();
         return (
             <div className="container">
                 <div className="row info-page">
@@ -79,15 +81,7 @@ class AvoinYoKoulutus extends Component {
                                 {<KoulutusInfoBoxTwoSided fields={this.parseInfoBoxFieldsTwoSided()}/>}
                             </div>
                         </div>
-                        <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t("koulutus.yleiskuvaus")}</h2>
-                            <div className="">
-                                {this.parseKuvaus()}
-                                <ul>
-
-                                </ul>
-                            </div>
-                        </div>
+                        <KoulutusSection content={kuvaus} header="koulutus.yleiskuvaus"/>
                     </div>
                     <KoulutusSidebar/>
                 </div>
