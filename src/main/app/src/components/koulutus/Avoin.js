@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Localizer as l } from '../../tools/Utils';
 import KoulutusInfoBox from './KoulutusInfoBox';
 import KoulutusSidebar from "../toteutus/KoulutusSidebar";
+import KoulutusSection from './KoulutusSection';
 import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next';
 import OppilaitosList from "./OppilaitosList";
@@ -32,11 +33,11 @@ class Avoin extends Component {
 
     parseKuvaus() {
         if(this.state.result && this.state.result.kuvausKomoto && this.state.result.kuvausKomoto.SISALTO) {
-            return renderHTML(l.localize(this.state.result.kuvausKomoto.SISALTO));
+            return l.localize(this.state.result.kuvausKomoto.SISALTO);
         }
 
         if(this.state.result && this.state.result.kuvausKomo && this.state.result.kuvausKomo.TAVOITTEET) {
-            return renderHTML(l.localize(this.state.result.kuvausKomo.TAVOITTEET));
+            return l.localize(this.state.result.kuvausKomo.TAVOITTEET);
         }
         return "";
     }
@@ -71,15 +72,7 @@ class Avoin extends Component {
                             <span id={"koulutus-title"}>{this.parseNimi()}</span>
                         </h1>
                         {infoBox && <KoulutusInfoBox fields={fields}/>}
-                        {kuvaus && <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t("koulutus.yleiskuvaus")}</h2>
-                            <div className="">
-                                {this.parseKuvaus()}
-                                <ul>
-
-                                </ul>
-                            </div>
-                        </div>}
+                        <KoulutusSection content={kuvaus} header="koulutus.yleiskuvaus"/>
                         <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
                     </div>
                     <KoulutusSidebar/>

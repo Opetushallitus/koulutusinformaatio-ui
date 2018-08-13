@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import KoulutusInfoBox from './KoulutusInfoBox';
 // import OppilaitoksetBox from './OppilaitoksetBox'
 import KoulutusSidebar from '../toteutus/KoulutusSidebar';
+import KoulutusSection from './KoulutusSection';
 import {Localizer as l} from '../../tools/Utils';
 import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next';
@@ -73,24 +74,9 @@ class Lukio extends Component {
                             <span id={"koulutus-title"}>{this.parseNimi()}</span>
                         </h1>
                         <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
-
-                        {koulutuksenSisalto && <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.sisältö')}</h2>
-                            <div className="">
-                                {renderHTML(koulutuksenSisalto)}
-                            </div>
-                        </div>}
-
+                        <KoulutusSection content={koulutuksenSisalto} header="koulutus.sisältö"/>
                         <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
-
-                        {jatkoOpinnot &&
-                        <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.jatko-opinnot')}</h2>
-                            <div className="">
-                                {renderHTML(jatkoOpinnot)}
-                            </div>
-                        </div>}
-
+                        <KoulutusSection content={jatkoOpinnot} header="koulutus.jatko-opinnot"/>
                     </div>
 
                     <KoulutusSidebar/>

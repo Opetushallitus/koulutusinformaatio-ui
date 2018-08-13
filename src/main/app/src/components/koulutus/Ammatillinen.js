@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import KoulutusInfoBox from './KoulutusInfoBox';
 import KoulutusSidebar from '../toteutus/KoulutusSidebar';
 import OppilaitosList from './OppilaitosList';
+import KoulutusSection from './KoulutusSection';
 import { Localizer as l } from '../../tools/Utils';
 import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next'
@@ -73,33 +74,17 @@ class Ammatillinen extends Component {
                         </h1>
                         <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
 
-                        {osaamisalat &&
-                        <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.osaamisalat')}</h2>
-                            <div className="">
-                                <ul>
-                                    <li className="osaamisalat_list_item">{osaamisalat}</li>
-                                </ul>
-                            </div>
-                        </div>}
+                        {osaamisalat && <KoulutusSection
+                            content={<ul><li className="osaamisalat_list_item">{osaamisalat}</li></ul>}
+                            header="koulutus.osaamisalat"
+                            noRender={true}/>}
 
-                        {tutkinnonOsat &&
-                        <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.tutkinnon-rakenne')}</h2>
-                            <div className="">
-                                {renderHTML(tutkinnonOsat)}
-                            </div>
-                        </div>}
+                        <KoulutusSection content={tutkinnonOsat} header="koulutus.tutkinnon-rakenne"/>
 
                         <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
 
-                        {jatkoOpinnot &&
-                        <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.jatko-opinnot')}</h2>
-                            <div className="">
-                                {renderHTML(jatkoOpinnot)}
-                            </div>
-                        </div>}
+                        <KoulutusSection content={jatkoOpinnot} header="koulutus.jatko-opinnot"/>
+
                     </div>
                     <KoulutusSidebar/>
                 </div>

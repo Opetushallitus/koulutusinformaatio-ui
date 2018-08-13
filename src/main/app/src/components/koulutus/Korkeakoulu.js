@@ -5,6 +5,7 @@ import { Localizer as l } from '../../tools/Utils';
 import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next'
 import OppilaitosList from "./OppilaitosList";
+import KoulutusSection from './KoulutusSection';
 
 @translate()
 class Korkeakoulu extends Component {
@@ -65,25 +66,12 @@ class Korkeakoulu extends Component {
                             <span id={"koulutus-title"}>{this.parseNimi()}</span>
                         </h1>
                         <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
-                        <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.pääaineet')}</h2>
-                            <div className="">
-                                <ul>
-                                    {renderHTML(erikoistumisalat)}
-                                </ul>
-                            </div>
 
-                        </div>
+                        <KoulutusSection content={erikoistumisalat} header="koulutus.pääaineet"/>
 
                         <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
 
-                        {jatkoOpinnot &&
-                        <div className="col-xs-12 col-md-9 left-column">
-                            <h2 className="line_otsikko">{t('koulutus.jatko-opinnot')}</h2>
-                            <div className="">
-                                {renderHTML(jatkoOpinnot)}
-                            </div>
-                        </div>}
+                        <KoulutusSection content={jatkoOpinnot} header="koulutus.jatko-opinnot"/>
                     </div>
                     <KoulutusSidebar/>
                 </div>
