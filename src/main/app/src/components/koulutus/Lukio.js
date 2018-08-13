@@ -72,11 +72,7 @@ class Lukio extends Component {
                             <i className="fa fa-circle lukio-hattu" aria-hidden="true"></i>
                             <span id={"koulutus-title"}>{this.parseNimi()}</span>
                         </h1>
-                        <div className="row">
-                            <div className="col-xs-12 left-column">
-                                <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
-                            </div>
-                        </div>
+                        <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
 
                         {koulutuksenSisalto && <div className="col-xs-12 col-md-9 left-column">
                             <h2 className="line_otsikko">{t('koulutus.sisältö')}</h2>

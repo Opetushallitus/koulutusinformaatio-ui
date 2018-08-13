@@ -71,11 +71,7 @@ class Ammatillinen extends Component {
                             <i className={hattuClass} aria-hidden="true"></i>
                             <span id={"koulutus-title"}>{nimi}</span>
                         </h1>
-                        <div className="row">
-                            <div className="col-xs-12 left-column">
-                                <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
-                            </div>
-                        </div>
+                        <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
 
                         {osaamisalat &&
                         <div className="col-xs-12 col-md-9 left-column">

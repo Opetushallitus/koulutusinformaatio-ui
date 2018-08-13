@@ -70,11 +70,7 @@ class Avoin extends Component {
                             <i className="fa fa-circle avoin-hattu" aria-hidden="true"></i>
                             <span id={"koulutus-title"}>{this.parseNimi()}</span>
                         </h1>
-                        {infoBox && <div className="row">
-                            <div className="col-xs-12 left-column">
-                                {<KoulutusInfoBox fields={fields}/>}
-                            </div>
-                        </div>}
+                        {infoBox && <KoulutusInfoBox fields={fields}/>}
                         {kuvaus && <div className="col-xs-12 col-md-9 left-column">
                             <h2 className="line_otsikko">{t("koulutus.yleiskuvaus")}</h2>
                             <div className="">
