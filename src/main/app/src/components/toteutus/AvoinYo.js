@@ -76,11 +76,7 @@ class AvoinYoKoulutus extends Component {
                         <ToteutusHeader komoOid={this.state.result.komoOid}
                                         nimi={this.props.result.searchData.nimi}
                                         organisaatio={this.state.result.organisaatio.nimi}/>
-                        <div className="row">
-                            <div className="col-xs-12 left-column">
-                                {<KoulutusInfoBoxTwoSided fields={this.parseInfoBoxFieldsTwoSided()}/>}
-                            </div>
-                        </div>
+                        <KoulutusInfoBoxTwoSided fields={this.parseInfoBoxFieldsTwoSided()}/>
                         <KoulutusSection content={kuvaus} header="koulutus.yleiskuvaus"/>
                     </div>
                     <KoulutusSidebar/>

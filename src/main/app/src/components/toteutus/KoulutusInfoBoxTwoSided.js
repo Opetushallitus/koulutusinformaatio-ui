@@ -50,18 +50,22 @@ class KoulutusInfoBoxTwoSided extends Component {
             return null;
         }
         return (
-            <div className="koulutusinfo-2">
-                <div className="koulutusinfo-2-left">
-                    {this.state.otsikkoLeft ? <h2>{this.state.otsikkoLeft}</h2> : ""}
-                    <ul className="koulutusinfolaatikko-2-list-left">
-                        {this.state.fieldsLeft.map(row => row[1] && <li key={row[0]+row[1]}>{row[0] + (row[0].length === 0 ? "" : ": ") + row[1]}</li>)}
-                    </ul>
-                </div>
-                <div className="koulutusinfo-2-right">
-                    {this.state.otsikkoRight ? <h2>{this.state.otsikkoRight}</h2> : ""}
-                    <ul className="koulutusinfolaatikko-2-list-right">
-                        {this.state.hakuajatToShow.length > 0 ? this.state.hakuajatToShow.map(h => KoulutusInfoBoxTwoSided.createFieldsAndButtonForSingleHakuaika(h)) : <p>Ei aktiivisia tai tulevia hakuja tällä hetkellä</p>}
-                    </ul>
+            <div className="row">
+                <div className="col-xs-12 left-column">
+                    <div className="koulutusinfo-2">
+                        <div className="koulutusinfo-2-left">
+                            {this.state.otsikkoLeft ? <h2>{this.state.otsikkoLeft}</h2> : ""}
+                            <ul className="koulutusinfolaatikko-2-list-left">
+                                {this.state.fieldsLeft.map(row => row[1] && <li key={row[0]+row[1]}>{row[0] + (row[0].length === 0 ? "" : ": ") + row[1]}</li>)}
+                            </ul>
+                        </div>
+                        <div className="koulutusinfo-2-right">
+                            {this.state.otsikkoRight ? <h2>{this.state.otsikkoRight}</h2> : ""}
+                            <ul className="koulutusinfolaatikko-2-list-right">
+                                {this.state.hakuajatToShow.length > 0 ? this.state.hakuajatToShow.map(h => KoulutusInfoBoxTwoSided.createFieldsAndButtonForSingleHakuaika(h)) : <p>Ei aktiivisia tai tulevia hakuja tällä hetkellä</p>}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
