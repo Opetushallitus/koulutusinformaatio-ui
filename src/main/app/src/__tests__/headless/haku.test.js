@@ -52,10 +52,12 @@ describe('Haku', () => {
 
     it('koulutus', async () => {
         expect.assertions(2);
+        //await page.screenshot({ path: 'hakutulos.png' });
         await Promise.all([
             page.click('.hakutulosbox-link'),
             page.waitForSelector('#koulutus-title')
-        ]);
+        ], timeout);
+        //await page.screenshot({ path: 'koulutus.png' });
         expect(await page.$eval('#koulutus-title', e => e.innerHTML)).toMatch(new RegExp('Koulutus fi'));
         expect(await page.url()).toMatch(new RegExp(host + '/koulutus/1.2.246.562.17.00000000\?.*'));
     }, timeout);
