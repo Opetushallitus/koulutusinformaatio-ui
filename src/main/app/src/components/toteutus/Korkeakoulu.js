@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import KoulutusInfoBoxTwoSided from './KoulutusInfoBoxTwoSided';
 import KoulutusSidebar from './KoulutusSidebar';
 import { Localizer as l } from '../../tools/Utils';
-import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next'
-import {Link} from "react-router-dom";
 import {inject} from "mobx-react";
 import ToteutusHeader from "./ToteutusHeader";
 import KoulutusSection from "../koulutus/KoulutusSection";
@@ -13,29 +11,16 @@ import KoulutusSection from "../koulutus/KoulutusSection";
 @inject("hakuStore")
 class Korkeakoulu extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            oid: props.oid,
-            result: props.result,
-        };
-        console.log("Created element Korkeakoulu with data: {}", this.state.result)
-    }
-
     componentWillReceiveProps(nextProps) {
         this.props = nextProps;
-        this.setState({
-            oid: this.props.oid,
-            result: this.props.result
-        });
     }
 
     parseAineListaus() {
         const {t} = this.props;
-        if(this.state.result.oppiaineet.length > 0) {
-            return this.state.result.oppiaineet.map(o => <li key={o.oppiaine ? o.oppiaine : ''} className="osaamisalat_list_item">{o.oppiaine ? o.oppiaine : t("tuntematon")}</li>);
+        if(this.props.result.oppiaineet.length > 0) {
+            return this.props.result.oppiaineet.map(o => <li key={o.oppiaine ? o.oppiaine : ''} className="osaamisalat_list_item">{o.oppiaine ? o.oppiaine : t("tuntematon")}</li>);
         } else {
-            return this.state.result.aihees.map(a => <li key={a.uri} className="osaamisalat_list_item">{l.localize(a.nimi)}</li>);
+            return this.props.result.aihees.map(a => <li key={a.uri} className="osaamisalat_list_item">{l.localize(a.nimi)}</li>);
         }
     }
 
@@ -68,16 +53,15 @@ class Korkeakoulu extends Component {
     }
 
     render() {
-        const {t} = this.props;
-        const sisalto = l.localize(this.state.result.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
-        const erikoistumisalat = l.localize(this.state.result.kuvausKomo.TAVOITTEET, undefined);
+        const sisalto = l.localize(this.props.result.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
+        const erikoistumisalat = l.localize(this.props.result.kuvausKomo.TAVOITTEET, undefined);
         return (
             <div className="container">
                 <div className="row info-page">
                     <div className="col-xs-12 col-md-9 left-column">
-                        <ToteutusHeader komoOid={this.state.result.komoOid}
+                        <ToteutusHeader komoOid={this.props.result.komoOid}
                                         nimi={this.props.result.searchData.nimi}
-                                        organisaatio={this.state.result.organisaatio.nimi}/>
+                                        organisaatio={this.props.result.organisaatio.nimi}/>
                         <KoulutusInfoBoxTwoSided fields={this.parseInfoBoxFieldsTwoSided()}/>
 
                         <KoulutusSection content={sisalto} header="koulutus.sisältö"/>

@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import KoulutusInfoBoxTwoSided from './KoulutusInfoBoxTwoSided';
 import KoulutusSidebar from './KoulutusSidebar';
 import { Localizer as l } from '../../tools/Utils';
-import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next'
-import {Link} from "react-router-dom";
 import {inject} from "mobx-react";
 import ToteutusHeader from "./ToteutusHeader";
 import KoulutusSection from "../koulutus/KoulutusSection";
@@ -13,20 +11,8 @@ import KoulutusSection from "../koulutus/KoulutusSection";
 @inject("hakuStore")
 class Ammatillinen extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            oid: props.oid,
-            result: props.result,
-        };
-    }
-
     componentWillReceiveProps(nextProps) {
         this.props = nextProps;
-        this.setState({
-            oid: this.props.oid,
-            result: this.props.result
-        });
     }
 
     parseInfoBoxFieldsTwoSided() {
@@ -58,18 +44,17 @@ class Ammatillinen extends Component {
     }
 
     render() {
-        const {t} = this.props;
         const osaamisalat = l.localize(this.props.result.koulutusohjelma, undefined);
         const tutkinnonOsat = l.localize(this.props.result.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
-        const erikoistumisalat = l.localize(this.state.result.kuvausKomo.TAVOITTEET, undefined);
+        const erikoistumisalat = l.localize(this.props.result.kuvausKomo.TAVOITTEET, undefined);
 
         return (
             <div className="container">
                 <div className="row info-page">
                     <div className="col-xs-12 col-md-9 left-column">
-                        <ToteutusHeader komoOid={this.state.result.komoOid}
+                        <ToteutusHeader komoOid={this.props.result.komoOid}
                                         nimi={this.props.result.searchData.nimi}
-                                        organisaatio={this.state.result.organisaatio.nimi}/>
+                                        organisaatio={this.props.result.organisaatio.nimi}/>
                         <KoulutusInfoBoxTwoSided fields={this.parseInfoBoxFieldsTwoSided()}/>
                         {osaamisalat && <KoulutusSection
                             content={<ul><li className="osaamisalat_list_item">{osaamisalat}</li></ul>}
