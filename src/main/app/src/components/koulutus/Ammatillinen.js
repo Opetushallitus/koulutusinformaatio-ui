@@ -1,36 +1,16 @@
 import React, { Component } from 'react';
 import KoulutusInfoBox from './KoulutusInfoBox';
-import KoulutusSidebar from '../toteutus/KoulutusSidebar';
 import OppilaitosList from './OppilaitosList';
 import KoulutusSection from './KoulutusSection';
+import KoulutusHeader from './KoulutusHeader';
 import { Localizer as l } from '../../tools/Utils';
-import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next'
 
 @translate()
 class Ammatillinen extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            oid: props.oid,
-            result: props.result,
-        };
-    }
-
     componentWillReceiveProps(nextProps) {
         this.props = nextProps;
-        this.setState({
-            oid: this.props.oid,
-            result: this.props.result
-        });
-    }
-
-    parseNimi() {
-        if(this.props.result) {
-            return l.localize(this.props.result.searchData.nimi, this.props.t("koulutus.tuntematon"))
-        }
-        return ""
     }
 
     parseInfoBoxFields() {
@@ -52,9 +32,6 @@ class Ammatillinen extends Component {
     }
 
     render() {
-
-        const {t} = this.props;
-
         const koulutusohjelma = l.localize(this.props.result.koulutusohjelma, undefined);
         const osaamisala = this.props.result.osaamisala ? l.localize(this.props.result.osaamisala.meta, undefined).nimi : undefined;
 
@@ -62,33 +39,23 @@ class Ammatillinen extends Component {
         const tutkinnonOsat = l.localize(this.props.result.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
         const jatkoOpinnot = l.localize(this.props.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined);
 
-        const hattuClass = this.props.muu ? "fa fa-circle muu-hattu" : "fa fa-circle ammatillinen-hattu";
-        const nimi = this.parseNimi();
+        const hattu = this.props.muu ? "muu-hattu" : "ammatillinen-hattu";
         return (
-            <div className="container">
-                <div className="row info-page">
-                    <div className="col-xs-12 col-md-9 left-column">
-                        <h1>
-                            <i className={hattuClass} aria-hidden="true"></i>
-                            <span id={"koulutus-title"}>{nimi}</span>
-                        </h1>
-                        <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
+            <React.Fragment>
+                <KoulutusHeader hattu={hattu} nimi={this.props.result.searchData.nimi}/>
+                <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
 
-                        {osaamisalat && <KoulutusSection
-                            content={<ul><li className="osaamisalat_list_item">{osaamisalat}</li></ul>}
-                            header="koulutus.osaamisalat"
-                            noRender={true}/>}
+                {osaamisalat && <KoulutusSection
+                    content={<ul><li className="osaamisalat_list_item">{osaamisalat}</li></ul>}
+                    header="koulutus.osaamisalat"
+                    noRender={true}/>}
 
-                        <KoulutusSection content={tutkinnonOsat} header="koulutus.tutkinnon-rakenne"/>
+                <KoulutusSection content={tutkinnonOsat} header="koulutus.tutkinnon-rakenne"/>
 
-                        <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
+                <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
 
-                        <KoulutusSection content={jatkoOpinnot} header="koulutus.jatko-opinnot"/>
-
-                    </div>
-                    <KoulutusSidebar/>
-                </div>
-            </div>);
+                <KoulutusSection content={jatkoOpinnot} header="koulutus.jatko-opinnot"/>
+            </React.Fragment>);
     }
 }
 

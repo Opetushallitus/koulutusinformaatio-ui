@@ -5,6 +5,7 @@ import Ammatillinen from "./Ammatillinen";
 import Hakunavigaatio from './../hakutulos/Hakunavigaatio';
 import Avoin from "./Avoin";
 import Lukio from "./Lukio";
+import KoulutusSidebar from "../toteutus/KoulutusSidebar";
 
 @inject("restStore")
 @inject("navigaatioStore")
@@ -54,7 +55,14 @@ class Koulutus extends Component {
         const selectedKoulutus = this.chooseKoulutus();
         return (
             <React.Fragment>
-                {selectedKoulutus}
+                <div className="container">
+                    <div className="row info-page">
+                        <div className="col-xs-12 col-md-9 left-column">
+                            {selectedKoulutus}
+                        </div>
+                        <KoulutusSidebar/>
+                    </div>
+                </div>
                 <Hakunavigaatio/>
             </React.Fragment>
         );
