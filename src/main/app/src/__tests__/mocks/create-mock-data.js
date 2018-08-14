@@ -38,7 +38,7 @@ class Koulutukset {
                 haettavissa: null,
                 oid: oid + "22",
                 score: 10,
-                tarjoaja: "Kiva ammattikorkeakoulu",
+                tarjoaja: {nimi: {kieli_fi: "Kiva ammattikorkeakoulu"}},
                 tyyppi: "koulutus",
                 koulutustyyppi: "koulutustyyppi_3",
                 searchData: {
@@ -49,6 +49,30 @@ class Koulutukset {
                 oppiaineet: [],
                 organisaatio: { nimi: "Oppilaitos fi" }
             }]
+        };
+        return res;
+    }
+
+    static createToteutusSearchResult(oid) {
+        const res = { result: {koulutus: {}}};
+
+        res.result.koulutus[oid] = {
+            aihees: [ {nimi: {kieli_fi: "Aihe_fi", kieli_sv: "Aihe_sv", kieli_en: "Aihe_en"}} ],
+            johtaaTutkintoon: true,
+            avoin: false,
+            haettavissa: null,
+            oid: oid,
+            komoOid: oid.substring(0, oid.length - 2),
+            score: 10,
+            tyyppi: "koulutus",
+            koulutustyyppi: "koulutustyyppi_3",
+            searchData: {
+                nimi: {kieli_fi: "Koulutus fi", kieli_sv: "Koulutus sv", kieli_en: "Koulutus en"},
+                tyyppi: "kk",
+            },
+            kuvausKomo: {},
+            oppiaineet: [],
+            organisaatio: { nimi: "Kiva ammattikorkeakoulu" }
         };
         return res;
     }

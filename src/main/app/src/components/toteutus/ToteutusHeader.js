@@ -21,10 +21,10 @@ class ToteutusHeader extends Component {
             + '&lng=' + l.getLanguage();
         return (
             <div className="compare">
-                <h1>
-                    <Link to={link} className="header" >
-                        <span className="light-font">{this.props.organisaatio}</span>
-                        <p>{this.parseNimi()}</p>
+                <h1 id="toteutus-header">
+                    <Link id="koulutus-link" to={link} className="header" >
+                        <span id="toteutus-header-organisaatio" className="light-font">{this.props.organisaatio}</span>
+                        <p id="toteutus-header-nimi">{this.parseNimi()}</p>
                     </Link>
                 </h1>
             </div>

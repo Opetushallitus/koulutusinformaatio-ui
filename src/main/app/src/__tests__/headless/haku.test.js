@@ -35,6 +35,8 @@ beforeAll(async () => {
             request.respond(response(Oppilaitokset.createOppilaitoksetSearchResult(15)));
         } else if (request.url().startsWith(backend + '/oppilaitos/')) {
             request.respond(response(Oppilaitokset.createOppilaitosSearchResult("3.2.246.562.17.00000000")));
+        } else if (request.url().startsWith(backend + '/toteutus/')) {
+                request.respond(response(Koulutukset.createToteutusSearchResult("1.2.246.562.17.0000000022")));
         } else {
             request.continue();
         }
@@ -59,6 +61,28 @@ describe('Haku', () => {
         ], timeout);
         //await page.screenshot({ path: 'koulutus.png' });
         expect(await page.$eval('#koulutus-title', e => e.innerHTML)).toMatch(new RegExp('Koulutus fi'));
+        expect(await page.url()).toMatch(new RegExp(host + '/koulutus/1.2.246.562.17.00000000\?.*'));
+    }, timeout);
+
+    it('toteutus', async () => {
+        expect.assertions(5);
+        await Promise.all([
+            page.click('.hakutulosbox-link'),
+            page.waitForSelector('#koulutus-title')
+        ], timeout);
+        expect(await page.$eval('.hakutulosbox-link', e => e.innerHTML)).toMatch('Kiva ammattikorkeakoulu');
+        await Promise.all([
+            page.click('.hakutulosbox-link'),
+            page.waitForSelector('#toteutus-header')
+        ], timeout);
+        //await page.screenshot({ path: 'toteutus.png' });
+        expect(await page.$eval('#toteutus-header-organisaatio', e => e.innerHTML)).toMatch(new RegExp('Kiva ammattikorkeakoulu'));
+        expect(await page.$eval('#toteutus-header-nimi', e => e.innerHTML)).toMatch(new RegExp('Koulutus fi'));
+        expect(await page.url()).toMatch(new RegExp(host + '/toteutus/1.2.246.562.17.0000000022\?.*'));
+        await Promise.all([
+            page.click('#koulutus-link'),
+            page.waitForSelector('#koulutus-title')
+        ], timeout);
         expect(await page.url()).toMatch(new RegExp(host + '/koulutus/1.2.246.562.17.00000000\?.*'));
     }, timeout);
 
