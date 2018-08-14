@@ -7,4 +7,6 @@ install:
   - npm install
 
 script:
-  - CI=true npm test
+  - npm test
+  - cd ../../..
+  - mvn clean install
