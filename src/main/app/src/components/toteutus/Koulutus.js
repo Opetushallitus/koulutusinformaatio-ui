@@ -5,7 +5,7 @@ import Ammatillinen from "./Ammatillinen";
 import Hakunavigaatio from './../hakutulos/Hakunavigaatio';
 import Avoin from "./Avoin";
 import Lukio from "./Lukio";
-import KoulutusSidebar from "./KoulutusSidebar";
+import ToteutusSidebar from "./ToteutusSidebar";
 
 @inject("restStore")
 @inject("navigaatioStore")
@@ -15,7 +15,8 @@ class Koulutus extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            koulutus: undefined
+            koulutus: undefined,
+            organisaatio: undefined
         }
     };
 
@@ -30,9 +31,10 @@ class Koulutus extends Component {
 
     getKoulutus() {
         this.props.navigaatioStore.setOid(this.props.match.params.oid);
-        this.props.restStore.getKoulutus(this.props.navigaatioStore.oid, (k) => {
+        this.props.restStore.getToteutus(this.props.navigaatioStore.oid, (k, o) => {
             this.setState({
-                koulutus: k
+                koulutus: k,
+                organisaatio: o
             })
         });
     }
@@ -40,11 +42,11 @@ class Koulutus extends Component {
     chooseKoulutus() {
         if(this.state.koulutus) {
             switch(this.state.koulutus.searchData.tyyppi) {
-                case 'lk': return <Lukio oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>; //TODO
-                case 'kk': return <Korkeakoulu oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
-                case 'ako': return <Avoin oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
-                case 'amm' : return <Ammatillinen oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
-                default: return <Ammatillinen oid={this.props.navigaatioStore.oid} result={this.state.koulutus} muu={true}/>;
+                case 'lk': return <Lukio oid={this.props.navigaatioStore.oid} koulutus={this.state.koulutus} />; //TODO
+                case 'kk': return <Korkeakoulu oid={this.props.navigaatioStore.oid} koulutus={this.state.koulutus} />;
+                case 'ako': return <Avoin oid={this.props.navigaatioStore.oid} koulutus={this.state.koulutus} />;
+                case 'amm' : return <Ammatillinen oid={this.props.navigaatioStore.oid} koulutus={this.state.koulutus} />;
+                default: return <Ammatillinen oid={this.props.navigaatioStore.oid} koulutus={this.state.koulutus} muu={true} />;
             }
         }
         return <div/>
@@ -55,11 +57,9 @@ class Koulutus extends Component {
         return (
             <React.Fragment>
                 <div className="container">
-                    <div className="row info-page">
-                        <div className="col-xs-12 col-md-9 left-column">
-                            {selectedKoulutus}
-                        </div>
-                        <KoulutusSidebar/>
+                    <div className="row info-page toteutus">
+                        {selectedKoulutus}
+                        <ToteutusSidebar organisaatio={this.state.organisaatio} koulutus={this.state.koulutus}/>
                     </div>
                 </div>
                 <Hakunavigaatio/>

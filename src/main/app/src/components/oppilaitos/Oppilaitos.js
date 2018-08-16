@@ -113,7 +113,6 @@ class Oppilaitos extends Component {
 
     parseSome() {
         if (!this.state.oppilaitos.metadata || !this.state.oppilaitos.metadata.data)  {
-            console.log("Ei tarvittavia sometietoja saatavilla");
             return <div className='social'/>;
         }
         const data = this.state.oppilaitos.metadata.data;
@@ -161,16 +160,14 @@ class Oppilaitos extends Component {
 
     render() {
         if(!this.state.oppilaitos) {
-            console.log("Was going to render, but got no data.");
             return null;
         }
-        console.log("Rendering oppilaitos page, data: %O", this.state.oppilaitos );
         return (
             <React.Fragment>
                 <div className='container'>
                     <div className='row info-page oppilaitos'>
                         <div className='col-xs-12 col-md-9 left-column'>
-                            <h1><i className='fa fa-circle'></i>{l.localize(this.state.oppilaitos.nimi, "", "fi")}</h1>
+                            <h1 className='header'><i className='fa fa-circle'></i>{l.localize(this.state.oppilaitos.nimi, "", "fi")}</h1>
                             <div className='oppilaitos-yleiskuvaus'>
                                 <div>{this.safeParseYleiskuvaus()}</div>
                             </div>

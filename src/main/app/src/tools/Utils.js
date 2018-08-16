@@ -6,26 +6,30 @@ class Localizer {
         return (i18n.languages && i18n.languages[0] ? i18n.language.split('-')[0] : "fi");
     }
 
-    static translate(nimi, defaultValue = "", fallbackLng) {
-        const lng = this.getLanguage();
+    static lng(nimi, lng) {
         if(nimi['kieli_' + lng]) {
             return nimi['kieli_' + lng];
         } else if(nimi[lng]) {
             return nimi[lng];
-        } else if (fallbackLng) {
-            if(nimi['kieli_' + fallbackLng]) {
-                return nimi['kieli_' + fallbackLng];
-            } else if(nimi[fallbackLng]) {
-                return nimi[fallbackLng];
-            }
         } else {
-            return defaultValue;
+            return false;
         }
     }
 
-    static localize(obj, defaultValue = "", fallbackLng) {
+    static translate(nimi, defaultValue = "") {
+        const lng = this.getLanguage();
+        if('en' === lng) {
+            return Localizer.lng(nimi, 'en') || Localizer.lng(nimi, 'fi') || Localizer.lng(nimi, 'sv') || defaultValue;
+        } else if('sv' === lng) {
+            return Localizer.lng(nimi, 'sv') || Localizer.lng(nimi, 'fi') || Localizer.lng(nimi, 'en') || defaultValue;
+        } else {
+            return Localizer.lng(nimi, 'fi') || Localizer.lng(nimi, 'sv') || Localizer.lng(nimi, 'en') || defaultValue;
+        }
+    }
+
+    static localize(obj, defaultValue = "") {
         if(obj) {
-            return obj.nimi ? Localizer.translate(obj.nimi, defaultValue, fallbackLng) : Localizer.translate(obj, defaultValue, fallbackLng);
+            return obj.nimi ? Localizer.translate(obj.nimi, defaultValue) : Localizer.translate(obj, defaultValue);
         }
         return defaultValue;
     }

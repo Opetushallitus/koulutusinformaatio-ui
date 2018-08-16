@@ -45,7 +45,7 @@ class VertailuStore {
                 this.vertailuListKoulutus.push({oid: oid, nimi: nimi, loaded: false, link: link});
             }
             if (!this.isOidLoaded(oid)) {
-                this.rest.getKoulutusPromise(oid)
+                this.rest.getToteutusPromise(oid)
                     .then((result) => {
                         const i = this.vertailuListKoulutus.findIndex((item) => item.oid === oid);
                         if (result.body.result.koulutus[oid]) {
