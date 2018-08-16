@@ -1,12 +1,33 @@
-language: node_js
-node_js:
-  - node
+sudo: required
+language: java
+jdk:
+  - oraclejdk8
+services:
+  - docker
+
+env:
+  global:
+    # AWS_ACCESS_KEY_ID
+    - secure: "mjfGbtNOd+7hzAlHl4TUcYnrCitAjAJKDpHFGd7rVZCNhO+cQbsZY0mr+Cp626sEbNvDaOqWgsfdcnnkeOtmrcnxtRb0sRLPvIClixYHkOCCRzCII+KoUobyybnedSLaO5zYlieTcz6A/KrpoInmWYMR3KNlVJxPH4gMuz/gZ5kN5mr6UIfVOyB6dAlRK9DQ3tmNRxvjPiCHLg+e26ypReHXOJ4iuMb0TeMtVmRWpPQb4XQI8YR6gA0Xu0SgPjjzKj2K3ol3qZuwXFRSc5XGVmmTlz8DLOr+ZMucNzO6tnSU7HBGy3vj3FkInHNP2WwnRQSxgvNllvtEw+841WPc1a/soBWd3U5XGNrTzrDBtNkQ1e5vvVnjGAAQe4D/x+E7HOfJwWcYQD5jZZ/eOu+HEqYzp2nig9zDyfbqvOmOa3DNhyn6UYcX75YIPSr+jvGtQuG3ByLzwXPBkw8Whz/NB4s+neVJxtJzJg6+LbxLB8ivDNia7JVFaGsZc+rXB8P9pDuTcbNEcCQucDI+oWE0hcK4sqk09dc0CIvMtLwbL1YTx+2A8fU/jx4XhmcuQfv3YJNtgwA1Jv6q6pbnXL70YGXf23SDHzqAKI5zQJVPws0sezXmrbBCQU+u7U9WsmpGolXYC73lDcbroSTR4hQKFj+nCs/AC26ZtTZOZ+P+zK8="
+    # AWS_SECRET_ACCESS_KEY
+    - secure: "htP6IWtwAs4kXM0clfDUPJm/AdV9vUx81LRQYkq7Kt/Gh+rog4oDCaRSzI8QoNujn/xbjQvhLKWdXmgtFrjxnLRmMshaiYvpc0abh53Z7sz8zsj8gldwSbDyCU2hY+s5cnE/FEtwSkJmX/vx2ekxI0+vCXNFdjBKrgA0Y5cRdkBejGO4e8f30hB8yf1BH16BM/e7jZARmPBJ9u3LurJX9rKwpvHETyxlsDAhXEaZKZIxnwTyReuqJjDKdQFkhaCx5MI6XgE3+ljegNyrLQLt//ofCmkWwZ/oW0RV/KJrmEeK0tS2riO9B+Bo9XAn1dhdkyFdI6aoZ0g0vUSo65Szw80+GOYyFCjpFTeWp+Z5RpXBySAGfz4VMwr0E3zFnr+wfWkyOKMwElIwXFnMsIZUJhXoUzw4rJOyq6LbaKMytgkj4UhZI/7knPd0dJZeReT1lg7UxwjDZ1QTeyKbFYXdwz8F/xT5JgkTDkyaCDsKEWCIr1R21QRhMeC2LBcRlb7JSI3iYllavc0FyYG6hEEZs4Ap1x4yNFELHgcoiGTT+/fpr9n6lauYMMWoYKAKN3YZUfuBwAhfI+Y/PACV5MJdYN+Ycg/TtK6dGiOgrW+5FhC1VSKxpBeiigRK7E2qJTqlO8khoNR9EYFAl3lpvkbxS566IrjPR6wSJk35+PP6jaU="
 
 install:
-  - cd src/main/app
-  - npm install
+  - git clone https://github.com/Opetushallitus/ci-tools.git
+  - source ci-tools/common/setup-tools.sh
 
 script:
+  - cd src/main/app
+  - npm install
   - npm test
   - cd ../../..
   - mvn clean install
+
+  - ls -la target
+  - mv target/konfo-ui-0.1.0-SNAPSHOT.jar $DOCKER_BUILD_DIR/artifact/konfo-ui.jar
+  - cp -vr src/main/resources/* $DOCKER_BUILD_DIR/config/
+  - find $DOCKER_BUILD_DIR
+
+  - export BASE_IMAGE="base-legacy:0.1"
+  - ./ci-tools/common/pull-image.sh
+  - ./ci-tools/build/build-fatjar.sh konfo-ui
