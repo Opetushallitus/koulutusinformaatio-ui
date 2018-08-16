@@ -18,7 +18,7 @@ class OppilaitosList extends Component {
                 <h2 className="line_otsikko">{t('koulutus.oppilaitokset')}</h2>
                 <div className="container search-results">
                     <div key={this.props.oid} className="col-xs-12 col-md-6 box-container">
-                        {oppilaitokset.map(t => <OppilaitosListItem toteutus={t}/>)}
+                        {oppilaitokset.map(t => <OppilaitosListItem key={t.oid} toteutus={t}/>)}
                     </div>
                 </div>
             </div>;

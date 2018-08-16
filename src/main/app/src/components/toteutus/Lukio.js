@@ -48,7 +48,6 @@ class Lukio extends Component {
     }
 
     render() {
-        const {t} = this.props;
         const sisalto = l.localize(this.props.koulutus.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
         const erikoistumisalat = l.localize(this.props.koulutus.kuvausKomo.TAVOITTEET, undefined);
         return (

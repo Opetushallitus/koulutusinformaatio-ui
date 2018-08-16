@@ -107,7 +107,7 @@ class ToteutusSidebar extends Component {
                         <div className='col-md-12'>
                             <dl>
                                 <dt><h2>{t('toteutus.tutkintonimikkeet')}</h2></dt>
-                                {tutkintonimikkeet.map(tn => <dd><span>{l.localize(tn, '')}</span></dd>)}
+                                {tutkintonimikkeet.map((tn, i) => <dd key={i}><span>{l.localize(tn, '')}</span></dd>)}
                             </dl>
                         </div>
                         {hae && <div className='col-md-12 hae'>

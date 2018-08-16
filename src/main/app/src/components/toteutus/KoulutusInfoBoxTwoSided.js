@@ -31,13 +31,13 @@ class KoulutusInfoBoxTwoSided extends Component {
         return toShow;
     }
 
-    static createFieldsAndButtonForSingleHakuaika(hakuaika) {
+    static createFieldsAndButtonForSingleHakuaika(hakuaika, i) {
         if (hakuaika && hakuaika.alkuPvm) {
             const now = new Date().getTime();
             const aktiivinen = hakuaika.alkuPvm < now && hakuaika.loppuPvm ? hakuaika.loppuPvm > now : !hakuaika.loppuPvm;
             const haunNimi = hakuaika.hakuNimi ? l.localize(hakuaika.hakuNimi) : "Haulla ei nimeä";
             const aikaReadable = timeParser.millisToReadable(hakuaika.alkuPvm ? hakuaika.alkuPvm : null) + " - " + timeParser.millisToReadable(hakuaika.loppuPvm ? hakuaika.loppuPvm : null);
-            return (<div><p className="Haun nimi">{haunNimi}</p>
+            return (<div key={i}><p className="Haun nimi">{haunNimi}</p>
                         <p className="Hakuaika">{aikaReadable}</p>
                         <button className="haeKoulutukseen" key={"haku oidille " + hakuaika.hakuOid}>{aktiivinen ? "Jätä hakemus" : "Tilaa muistutus"}</button>
                     </div>);
@@ -61,7 +61,7 @@ class KoulutusInfoBoxTwoSided extends Component {
                         <div className="koulutusinfo-2-right">
                             {this.state.otsikkoRight ? <h2>{this.state.otsikkoRight}</h2> : ""}
                             <ul className="koulutusinfolaatikko-2-list-right">
-                                {this.state.hakuajatToShow.length > 0 ? this.state.hakuajatToShow.map(h => KoulutusInfoBoxTwoSided.createFieldsAndButtonForSingleHakuaika(h)) : <p>Ei aktiivisia tai tulevia hakuja tällä hetkellä</p>}
+                                {this.state.hakuajatToShow.length > 0 ? this.state.hakuajatToShow.map((h, i) => KoulutusInfoBoxTwoSided.createFieldsAndButtonForSingleHakuaika(h, i)) : <p>Ei aktiivisia tai tulevia hakuja tällä hetkellä</p>}
                             </ul>
                         </div>
                     </div>

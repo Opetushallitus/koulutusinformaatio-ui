@@ -16,7 +16,7 @@ class OppilaitosListItem extends Component {
             + '&lng=' + l.getLanguage();
         return (
             <div className="row">
-                <div key={oppilaitos.oid} className={tyyli}>
+                <div className={tyyli}>
                     {oppilaitos.haettavissa && <div className="haku">{this.props.t("haku.haku")}</div>}
                     <div className="suosikkit">
                         <i className="fa fa-heart-o" aria-hidden="true"/>
