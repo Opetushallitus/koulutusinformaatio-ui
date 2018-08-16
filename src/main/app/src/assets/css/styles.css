@@ -1922,6 +1922,75 @@ p.student-comment {
     height: 100%;
     margin-top: 30px;
 }
+
+.toteutus-sidebar h1 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.75em;
+    font-weight: 400;
+    margin-top: 40px;
+}
+
+.toteutus-sidebar span {
+    display: block;
+    font-weight: 400;
+    margin-bottom: 10px;
+    font-size: 1.35em;
+}
+
+.toteutus-sidebar li {
+    padding: 0;
+}
+
+.toteutus .right-column {
+    background-color: #FFFFFF;
+    padding-left: 30px;
+}
+
+.toteutus .right-column h2 {
+    color: #9D9D9D;
+    display: block;
+    font-weight: 400;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.toteutus .right-column a.email {
+    color: #4E92DF;
+    cursor: pointer;
+    text-decoration: none;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #4E92DF;
+    display: inline-block;
+    line-height: 0.50;
+}
+
+.toteutus .right-column a.homepage {
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    color: #4A4A4A
+}
+
+.toteutus .right-column a.homepage span {
+    font-size: 22px;
+    text-decoration: underline;
+    margin: 15px 0;
+}
+
+.toteutus a.homepage:before {
+    font-family: "FontAwesome";
+    content: "\f08e";
+    font-size: 3em;
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 1px;
+}
+
+.toteutus .right-column br {
+    border: 1px;
+    color: #4A4A4A;
+}
+
 .toteutus a.header:before,
 .compare a.header:before {
     font-family: "FontAwesome";
@@ -2088,7 +2157,7 @@ strong {
 }
 a.btn.btn-primary.tutustu-button {
     display: block;
-    margin: 0;
+    margin: 20px 0;
 }
 .oppilaitos .right-column h1 a {
     color: #000000;
@@ -2102,11 +2171,25 @@ a.btn.btn-primary.tutustu-button {
 
 .right-column i.fa.fa-circle {
     color: #e77e22;
+    position: relative;
     font-size: 12em;
     -webkit-text-shadow: 1px 1px 13px rgba(150, 150, 150, 0.85);
     -moz-text-shadow: 1px 1px 13px rgba(150, 150, 150, 0.85);
     text-shadow: 1px 1px 13px rgba(150, 150, 150, 0.85);
 }
+
+.right-column div.hae::after {
+    content: "HAE TÄHÄN KOULUTUKSEEN!";
+    position: relative;
+    display: inline-block;
+    top: -50px;
+    left: -125px;
+    text-align: left;
+    width: 100px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
 li.hae {
     text-align: center;
 }

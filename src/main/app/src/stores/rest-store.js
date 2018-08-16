@@ -77,7 +77,8 @@ class RestStore {
                     this.handleError(err)
                 } else {
                     const koulutus = ( res.body.result && res.body.result.koulutus ) ? res.body.result.koulutus[oid] : undefined;
-                    onSuccess(koulutus)
+                    const organisaatio = (koulutus && koulutus.organisaatio.oid && res.body.result.organisaatiot) ? res.body.result.organisaatiot[koulutus.organisaatio.oid] : undefined;
+                    onSuccess(koulutus, organisaatio)
                 }
             });
     };

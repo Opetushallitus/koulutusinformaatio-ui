@@ -170,7 +170,7 @@ class Oppilaitos extends Component {
                 <div className='container'>
                     <div className='row info-page oppilaitos'>
                         <div className='col-xs-12 col-md-9 left-column'>
-                            <h1><i className='fa fa-circle'></i>{l.localize(this.state.oppilaitos.nimi, "", "fi")}</h1>
+                            <h1 className='header'><i className='fa fa-circle'></i>{l.localize(this.state.oppilaitos.nimi, "", "fi")}</h1>
                             <div className='oppilaitos-yleiskuvaus'>
                                 <div>{this.safeParseYleiskuvaus()}</div>
                             </div>

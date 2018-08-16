@@ -198,5 +198,15 @@
     "etusivulle": "ETUSIVULLE",
     "ajankohtaista": "Ajankohtaista",
     "häiriötiedotteet": "Häiriötiedotteet"
+  },
+  "toteutus": {
+    "tutustu": "Tutustu oppilaitokseen",
+    "yhteystiedot": "Yhteystiedot:",
+    "puhelin": "Puhelin:",
+    "kotisivu": "Oppilaitoksen kotisivu",
+    "tutkintonimikkeet": "Tutkintonimikkeet:",
+    "hae-koulutukseen": "Hae tähän koulutukseen!",
+    "ei-sähköpostia": "Ei sähköpostiosoitetta",
+    "ei-kotisivua": "Ei kotisivua"
   }
 }

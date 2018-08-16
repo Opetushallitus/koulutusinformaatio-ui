@@ -5,7 +5,7 @@ import Ammatillinen from "./Ammatillinen";
 import Hakunavigaatio from './../hakutulos/Hakunavigaatio';
 import Avoin from "./Avoin";
 import Lukio from "./Lukio";
-import KoulutusSidebar from "../toteutus/KoulutusSidebar";
+import KoulutusSidebar from "./KoulutusSidebar";
 
 @inject("restStore")
 @inject("navigaatioStore")
