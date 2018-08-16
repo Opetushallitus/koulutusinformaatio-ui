@@ -11,7 +11,6 @@ class OppilaitosListItem extends Component {
 
     render () {
         const oppilaitos = this.props.toteutus;
-        console.log(oppilaitos);
         const tyyli = "col-xs-12 search-box " + oppilaitos.tyyppi;
         const link = '/toteutus/' + oppilaitos.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
             + '&lng=' + l.getLanguage();

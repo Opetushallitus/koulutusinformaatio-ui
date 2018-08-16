@@ -47,7 +47,6 @@ class Avoin extends Component {
         fields.push([t('koulutus.ajoitus'), this.props.koulutus.ajoitus ? this.props.koulutus.ajoitus : ""]);
         fields.push([t('koulutus.opetusajat'), this.props.koulutus.opetusAikas? this.props.koulutus.opetusAikas.map(aika => l.localize(aika)) : ""]);
 
-        console.log("Kenttiä:" + fields.length)
         return fields;
     }
 

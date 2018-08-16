@@ -28,7 +28,6 @@ class Sidebar extends Component {
 
     changeLanguage(lng) {
         this.props.i18n.changeLanguage(lng);
-        console.log(this.props.history.location);
         if (!this.props.history.location.search) {
             this.props.history.replace(this.props.history.location.pathname + "?lng=" + lng);
         } else if (this.props.history.location.search.indexOf('lng') !== -1) {

@@ -46,7 +46,6 @@ class Ammatillinen extends Component {
         const osaamisalat = l.localize(this.props.koulutus.koulutusohjelma, undefined);
         const tutkinnonOsat = l.localize(this.props.koulutus.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
         const erikoistumisalat = l.localize(this.props.koulutus.kuvausKomo.TAVOITTEET, undefined);
-        console.log(this.props.koulutus)
 
         return (
             <div className="col-xs-12 col-md-9 left-column">

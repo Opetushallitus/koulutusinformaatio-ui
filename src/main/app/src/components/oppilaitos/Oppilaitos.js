@@ -113,7 +113,6 @@ class Oppilaitos extends Component {
 
     parseSome() {
         if (!this.state.oppilaitos.metadata || !this.state.oppilaitos.metadata.data)  {
-            console.log("Ei tarvittavia sometietoja saatavilla");
             return <div className='social'/>;
         }
         const data = this.state.oppilaitos.metadata.data;
@@ -161,10 +160,8 @@ class Oppilaitos extends Component {
 
     render() {
         if(!this.state.oppilaitos) {
-            console.log("Was going to render, but got no data.");
             return null;
         }
-        console.log("Rendering oppilaitos page, data: %O", this.state.oppilaitos );
         return (
             <React.Fragment>
                 <div className='container'>

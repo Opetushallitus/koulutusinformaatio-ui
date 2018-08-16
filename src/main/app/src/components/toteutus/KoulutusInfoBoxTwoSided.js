@@ -11,7 +11,6 @@ class KoulutusInfoBoxTwoSided extends Component {
             otsikkoRight: props.fields.otsikkoRight,
             hakuajatToShow: this.selectHakuaikasToShow(props.fields.hakuajat)
         };
-        console.log("Created element InfoBoxTwoSided with props: ", props);
     }
 
     selectHakuaikasToShow(hakuaikas) {
