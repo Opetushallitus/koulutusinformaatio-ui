@@ -48,7 +48,6 @@ class VertailuStore {
                 this.rest.getToteutusPromise(oid)
                     .then((result) => {
                         const i = this.vertailuListKoulutus.findIndex((item) => item.oid === oid);
-                        console.log(result.body.result)
                         if (result.body.result.koulutus[oid]) {
                             this.vertailuListKoulutus[i] = {
                                 ...this.vertailuListKoulutus[i],

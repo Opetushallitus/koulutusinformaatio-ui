@@ -7,7 +7,7 @@ class KoulutusSection extends Component {
 
     render () {
         const {t} = this.props;
-        const isContent = this.props.content;
+        const isContent = !!this.props.content;
         const content = this.props.noRender ? this.props.content : renderHTML(this.props.content);
         return (
             <React.Fragment>
