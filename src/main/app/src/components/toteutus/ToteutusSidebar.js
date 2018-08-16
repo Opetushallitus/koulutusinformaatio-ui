@@ -111,13 +111,17 @@ class ToteutusSidebar extends Component {
                             </dl>
                         </div>
                         {hae && <div className='col-md-12 hae'>
-                            <i className='fa fa-circle'/>
+                            <span className='hae-koulutukseen'>{t('toteutus.hae-koulutukseen')}</span>
                         </div>}
                     </div>
                 </div>
             </div>
         );
     }
+
+    /*
+    <i className='fa fa-circle'/>
+     */
 }
 
 export default ToteutusSidebar;

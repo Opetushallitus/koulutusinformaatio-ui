@@ -1923,6 +1923,25 @@ p.student-comment {
     margin-top: 30px;
 }
 
+.hae-koulutukseen {
+    background-color: #f3a636;
+    border-radius: 50%;
+    color: #ffffff;
+    text-align: center;
+    width: 200px;
+    height: 200px;
+    border: 0px;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 0px 7px #6b6b6b;
+    margin-left: 40px;
+    font-weight: bold;
+    text-shadow: 1px 1px 13px rgba(150, 150, 150, 0.85);
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 1.35em;
+}
+
 .toteutus-sidebar h1 {
     font-family: "Open Sans", sans-serif;
     font-size: 1.75em;
@@ -1930,7 +1949,7 @@ p.student-comment {
     margin-top: 40px;
 }
 
-.toteutus-sidebar span {
+.toteutus-sidebar span:not(.hae-koulutukseen) {
     display: block;
     font-weight: 400;
     margin-bottom: 10px;
@@ -2167,27 +2186,6 @@ a.btn.btn-primary.tutustu-button {
 }
 .oppilaitos .right-column h1 a span {
     color: #000000;
-}
-
-.right-column i.fa.fa-circle {
-    color: #e77e22;
-    position: relative;
-    font-size: 12em;
-    -webkit-text-shadow: 1px 1px 13px rgba(150, 150, 150, 0.85);
-    -moz-text-shadow: 1px 1px 13px rgba(150, 150, 150, 0.85);
-    text-shadow: 1px 1px 13px rgba(150, 150, 150, 0.85);
-}
-
-.right-column div.hae::after {
-    content: "HAE TÄHÄN KOULUTUKSEEN!";
-    position: relative;
-    display: inline-block;
-    top: -50px;
-    left: -125px;
-    text-align: left;
-    width: 100px;
-    color: #ffffff;
-    font-weight: bold;
 }
 
 li.hae {
