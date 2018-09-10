@@ -17,10 +17,6 @@ install:
   - source ci-tools/common/setup-tools.sh
 
 script:
-  - cd src/main/app
-  - npm install
-  - npm test
-  - cd ../../..
   - mvn clean install
 
   - mv target/konfo-ui-*.jar $DOCKER_BUILD_DIR/artifact/konfo-ui.jar
