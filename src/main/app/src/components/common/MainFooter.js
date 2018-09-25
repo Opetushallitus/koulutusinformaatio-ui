@@ -21,6 +21,7 @@ class DefaultFooter extends Component {
         const { t } = this.props;
         return (
             <footer className="container-fluid">
+                <div className="container">
                 <div className="row">
                     <div className="col-sm-4">
                         <ul className="site-links">
@@ -86,6 +87,7 @@ class DefaultFooter extends Component {
                             </ul>
                         </div>
                     </div>
+                </div>
                 </div>
             </footer>);
     }
