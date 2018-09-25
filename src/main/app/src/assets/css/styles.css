@@ -702,7 +702,7 @@ button.navbar-toggle.collapsed:hover .icon-bar:nth-child(3){
 }
 .navbar-brand {
     font-size: 28px;
-    font-weight: bold;
+    font-weight: 600;
     position: absolute;
     z-index: 1;
     margin-left: 65px;
