@@ -51,7 +51,6 @@ class App extends Component {
                     <React.Fragment>
                         <div id="page-content-wrapper">
                             <Header/>
-                            <Sidebar changeLanguage={this.changeLanguage} togglePalaute={this.togglePalaute}/>
                             <Switch>
                                 <Route exact path='/' component={Etusivu}/>
                                 <Route path='/' component={Hakusivu}/>

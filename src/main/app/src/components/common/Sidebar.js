@@ -23,7 +23,7 @@ class Sidebar extends Component {
 
     closeMenu() {
         this.setState({open: false});
-        this.props.togglePalaute(false);
+        // this.props.togglePalaute(false);
     }
 
     changeLanguage(lng) {

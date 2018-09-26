@@ -60,12 +60,16 @@ class Hakurajain extends Component {
         const value = this.props.hakuehtoStore.filter.paikkakunta ? this.props.hakuehtoStore.filter.paikkakunta : '';
         return (
             <React.Fragment>
-                <div className="col-xs-12">
-                    <div className={"filter-button"} onClick={() => this.toggleRajain()} role="button">
-                        {this.props.hakuehtoStore.rajainOpen ? t("haku.sulje-rajain") : t("haku.rajaa-etsintää")}
+                <div className="container">
+                    <div className="col-xs-12">
+                        <div className={"filter-button"} onClick={() => this.toggleRajain()} role="button">
+                            {this.props.hakuehtoStore.rajainOpen ? t("haku.sulje-rajain") : t("haku.rajaa-etsintää")}
+                        </div>
                     </div>
                 </div>
                 {this.props.hakuehtoStore.rajainOpen &&
+                <div className="container">
+                <div className="col-xs-12">
                 <div className="filters-layer">
                     <div className="filter-container open">
                         <div className="filter-options">
@@ -110,6 +114,8 @@ class Hakurajain extends Component {
                             </div>
                         </div>
                     </div>
+                </div>
+                </div>
                 </div>}
             </React.Fragment>
         );

@@ -87,7 +87,7 @@ class Sivutus extends Component {
 
         return (
             <React.Fragment>
-                <div className="pagination-control container-fluid">
+                <div className="pagination-control container">
                     {!this.props.hakuStore.filterSet && !this.props.hakuStore.keywordSet ? '' :
                         (<div className="row">
                             <div className="col-xs-12 col-sm-8 col-md-6 col-lg-4">
