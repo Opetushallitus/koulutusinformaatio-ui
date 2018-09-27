@@ -84,8 +84,9 @@ class Hakutulos extends Component {
                 <React.Fragment>
                     <div className="container">
                         <div className="row">
-                            <h1>{t('haku.lisää-hakusana-tai-rajain')}
-                            </h1>
+                            <div className="col-xs-12">
+                                <h1>{t('haku.lisää-hakusana-tai-rajain')}</h1>
+                            </div>
                         </div>
                     </div>
                 </React.Fragment>

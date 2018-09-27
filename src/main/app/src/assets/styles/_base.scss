@@ -4,7 +4,7 @@ html, body {
     height: 100%;
 }
 body {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Source Sans Pro";
     position: relative;
     overflow-x: hidden;
 }
@@ -24,30 +24,36 @@ h2,
 h3,
 h4,
 h5 {
-    font-weight: bold;
+    font-weight: 500;
+    color: $font-color;
 }
 h1 {
     font-size: 28px;
-    margin-top: 40px;
+    line-height: 36px;
 }
 h2 {
-    font-size: 1.35em;
+    font-size: 20px;
+    line-height: 25px;
+}
+h3 {
+    font-size: 18px;
+    line-height: 30px;
 }
 .red {
-    color: $theme-red;
+    color: $brick;
 }
 .dark-blue {
-    color: $dark-blue;
+    color: $flat-blue;
 }
 .light-blue {
-    color: $light-blue;
+    color: $water-blue;
 }
 .green {
-    color: $menu-bar-green;
+    color: $mid-green;
 }
 .purple {
-    color: $light-purple;
+    color: $amethist;
 }
 .brown {
-    color: $light-brown;
+    color: $greyish-brown;
 }

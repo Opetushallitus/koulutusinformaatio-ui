@@ -79,11 +79,6 @@ button:focus {
     margin-left: 51px;
 }
 
-
-/*<div className="koulutusinfo-2">*/
-/*<div className="koulutusinfo-2-left">*/
-/*<ul className="koulutusinfolaatikko-2-list-left">*/
-
 .koulutusinfo-2 {
     display: table;
     width: 80%;
@@ -144,7 +139,6 @@ button:focus {
     padding-bottom: 5px;
     margin-left: 51px;
 }
-
 
 .oppilaitokset {
     margin-left: 51px;
@@ -605,12 +599,13 @@ button.navbar-toggle.collapsed:hover .icon-bar:nth-child(3){
     transition: all ease-in .5s;
 }
 .navbar-brand {
-    font-size: 28px;
-    font-weight: 600;
+    font-size: 30px;
+    font-weight: 500;
     position: absolute;
     z-index: 1;
     margin-left: 65px;
-    color: #ffffff;
+    letter-spacing: 1.25px;
+    color: white;
 }
 .navbar-brand:hover {
     text-decoration: none!important;
@@ -998,9 +993,7 @@ nav.navbar-right li {
     background-size:cover;
     background-position:center;
 }
-#call-to-action-secondary .jumbotron {
-    padding: 6% 0 4%;
-}
+
 #call-to-action-secondary .search-button {
     font-size: 1.5em;
     padding: 34px 28px
@@ -1010,7 +1003,7 @@ nav.navbar-right li {
     position: relative;
 }
 .header-search.main {
-    padding: 7% 0;
+    padding: 100px 0 40px 0;
 }
 .header-search input {
     box-shadow: 0 0px 7px #6b6b6b;
@@ -1019,22 +1012,23 @@ nav.navbar-right li {
     height: 50px;
     margin-left: 15px;
 }
-#call-to-action-secondary .header-search input {
-    margin-left: 0;
+#call-to-action-secondary .header-search {
+    padding: 80px 0 20px 0;
 }
 .search-button {
     background-color: #e77e22;
     border-radius: 50%;
     color: #ffffff;
     text-align: center;
-    font-size: 1.75em;
-    padding: 44px 36px;
+    font-size: 24px;
+    font-weight: 400;
+    padding: 44px 30px;
     border: 5px solid #ffffff;
     text-transform: uppercase;
     text-decoration: none;
-    box-shadow: 0 0px 7px #6b6b6b;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
     margin-left: 40px;
-    font-weight: bold;
+    letter-spacing: 1px;
 }
 
 .search-button:hover {
@@ -1238,9 +1232,8 @@ footer p {
     float: left;
     border-radius: 5px;
     width: 165px;
-    height: 39px;
     position: absolute;
-    padding: .55% 1.4%;
+    padding: 11px 0;
     z-index: 999;
     font-size: .95em;
     top: -1.5em;
@@ -1329,7 +1322,7 @@ footer p {
     font-weight: 600;
     font-size: 0.25em;
     text-align: center;
-    font-family: "Open Sans", sans-serif;
+    font-family: "SourceSansPro", sans-serif;
 }
 .compare-button {
     position: absolute;
@@ -1415,7 +1408,6 @@ footer p {
     -moz-border-radius: 20px;
     border-radius: 20px;
     max-width: 200px;
-    /*width: auto;*/
     width: 155px;
     padding: 5px 20px;
     float: right;
@@ -1829,7 +1821,7 @@ p.student-comment {
 }
 
 .toteutus-sidebar h1 {
-    font-family: "Open Sans", sans-serif;
+    font-family: "SourceSansPro", sans-serif;
     font-size: 1.75em;
     font-weight: 400;
     margin-top: 40px;
@@ -2059,6 +2051,13 @@ strong {
     background-image: -webkit-linear-gradient(bottom, #5B9AE2 0%, #4584CC 100%);
     background-image: -ms-linear-gradient(bottom, #5B9AE2 0%, #4584CC 100%);
     background-image: linear-gradient(to bottom, #5B9AE2 0%, #4584CC 100%);
+}
+.btn-primary{
+    color: white;
+}
+.btn-primary:hover{
+    text-decoration: none;
+    color: white;
 }
 a.btn.btn-primary.tutustu-button {
     display: block;
@@ -2500,22 +2499,9 @@ a.titlelink {
     font-weight: 100;
     font-size: 1.15em;
 }
-@media (max-width: 1700px) {
-    .filter-button {
-        padding: .7% 1.4%;
-    }
-}
-@media (max-width: 1400px) {
-    .filter-button {
-        padding: .7% 1.4%;
-    }
-}
 @media (max-width: 1200px) {
     .globe i {
         font-size: 5.25em;
-    }
-    .filter-button {
-        padding: 1% 2%;
     }
 }
 @media (max-width: 1024px) {
@@ -2533,20 +2519,11 @@ a.titlelink {
     footer p {
         font-size: 1em;
     }
-    .filter-button {
-        padding: 1.25% 2%;
-    }
     .filter-options.index {
         left: 5px;
     }
-    #call-to-action-secondary .jumbotron {
-        padding: 12% 0 7% 5%;    }
 }
-/*@media (max-width: 991px) {
-  .box-container {
-    margin-top: 30px;
-  }
-}*/
+
 .box-container {
     margin-top: 30px;
 }
@@ -2557,13 +2534,6 @@ a.titlelink {
         padding: 4% 3%;
         text-align: center;
     }
-
-    /*.social-media {*/
-    /*padding: 0;*/
-    /*width: fit-content;*/
-    /*margin: 0 auto;*/
-    /*}*/
-
     ul.social-media {
         float: left;
         margin: 0 auto;
@@ -2661,9 +2631,7 @@ a.titlelink {
     .info-page .left-column h1 i {
         top: 0;
     }
-    #call-to-action-secondary .jumbotron {
-        padding: 13% 0 7.5%;
-    }
+  
     .haut .date {
         font-size: 4.5em;
         position: relative;
@@ -2699,25 +2667,8 @@ a.titlelink {
     ul.right-links li a {
         margin: 0;
     }
-    .filter-button {
-        padding: .5%;
-        width: 165px;
-        height: 40px;
-        z-index: 998;
-    }
     .filter-button.sulje {
         z-index: 998;
-    }
-    .filter-button.index-page.sulje {
-        transition: all ease-in 1.8s;
-        background: #ffffff;
-        width: 85%;
-    }
-    .filter-button.index-page {
-        top: 2px;
-        background: transparent;
-        width: 85%;
-        transition: all ease-in .2s;
     }
     .panel-body .info {
         max-height: fit-content;
@@ -2991,22 +2942,10 @@ a.titlelink {
     .info-page .left-column h1 i {
         float: left;
     }
-    .filter-button {
-        width: 140px;
-        height: 35px;
-    }
     .toteutus .header span:not(.light-font) {
         margin: -.5em 1.3em .5em;
     }
-    .filter-button::after {
-        left: 8%;
-        width: 144px;
-        height: 35px;
-        font-size: .85em;
-    }
-    #call-to-action-secondary .jumbotron {
-        padding: 22% 0 10%;
-    }
+    
 }
 @media (max-width: 375px) {
     .haut .appointment {
@@ -3032,9 +2971,6 @@ a.titlelink {
     .filter-button::after {
         left: 8%;
         font-size: .85em;
-    }
-    #call-to-action-secondary .jumbotron {
-        padding: 29% 0 10%;
     }
 }
 @media (min-width: 768px) {
