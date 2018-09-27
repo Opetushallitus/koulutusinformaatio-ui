@@ -13,6 +13,11 @@ class Hakupalkki extends Component {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = { 
+            height: window.innerHeight, 
+            width: window.innerWidth
+          };
+        this.updateDimensions = this.updateDimensions.bind(this);
     }
 
     handleChange(event) {
@@ -29,7 +34,15 @@ class Hakupalkki extends Component {
         this.props.hakuehtoStore.closeRajain();
         this.props.history.push(this.props.hakuehtoStore.createHakuUrl);
     }
-
+    componentDidMount() {
+        window.addEventListener("resize", this.updateDimensions);
+      }
+    updateDimensions() {
+        this.setState({
+          height: window.innerHeight, 
+          width: window.innerWidth
+        });
+      }
     closeRajain() {
         this.props.hakuehtoStore.closeRajain();
     }
@@ -39,6 +52,7 @@ class Hakupalkki extends Component {
         const link = '/haku/' + this.props.hakuehtoStore.keyword;
         const search = this.props.hakuehtoStore.searchParams;
         const value = this.props.hakuehtoStore.keyword ? this.props.hakuehtoStore.keyword : '';
+        let buttonContent = this.state.width > 768 ? t('haku.etsi') : "";
         return (
             <React.Fragment>
                 <div className="container-fluid" id={this.props.main ? "call-to-action" : "call-to-action-secondary"}>
@@ -55,7 +69,7 @@ class Hakupalkki extends Component {
                                         <Link role="button" to={{
                                             pathname: link,
                                             search: search
-                                        }} className="search-button" onClick={() => {this.closeRajain()}}>{t('haku.etsi')}</Link>
+                                        }} className="search-button" onClick={() => {this.closeRajain()}}>{ buttonContent }</Link>
                                     </div>
                                 </div>
                             </div>

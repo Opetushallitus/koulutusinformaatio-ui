@@ -1,0 +1,53 @@
+html, body {
+    width: auto !important;
+    overflow-x: hidden !important;
+    height: 100%;
+}
+body {
+    font-family: "Open Sans", sans-serif;
+    position: relative;
+    overflow-x: hidden;
+}
+body.no-scroll {
+    overflow-y: hidden;
+}
+a:focus {
+    outline: none;
+    text-decoration: none;
+    color: auto;    
+}
+a.search-button:focus,a.navbar-brand:focus {
+    color: #ffffff;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-weight: bold;
+}
+h1 {
+    font-size: 28px;
+    margin-top: 40px;
+}
+h2 {
+    font-size: 1.35em;
+}
+.red {
+    color: $theme-red;
+}
+.dark-blue {
+    color: $dark-blue;
+}
+.light-blue {
+    color: $light-blue;
+}
+.green {
+    color: $menu-bar-green;
+}
+.purple {
+    color: $light-purple;
+}
+.brown {
+    color: $light-brown;
+}

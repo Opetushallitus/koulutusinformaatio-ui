@@ -1,38 +1,4 @@
-html, body {
-    width: auto !important;
-    overflow-x: hidden !important;
-    height: 100%;
-}
-body {
-    font-family: "Open Sans", sans-serif;
-    position: relative;
-    overflow-x: hidden;
-}
-body.no-scroll {
-    overflow-y: hidden;
-}
-a:focus {
-    outline: none;
-    text-decoration: none;
-    color: auto;    
-}
-a.search-button:focus,a.navbar-brand:focus {
-    color: #ffffff;
-}
-h1,
-h2,
-h3,
-h4,
-h5 {
-    font-weight: bold;
-}
-h1 {
-    font-size: 28px;
-    margin-top: 40px;
-}
-h2 {
-    font-size: 1.35em;
-}
+
 h3.ng-scope {
     font-size: 17px;
 }
@@ -603,66 +569,7 @@ div.sidebar-brand {
 .header-search input {
     margin-left: 0;
 }
-@font-face {
-    font-family: "Open Sans", arial, sans-serif;
-    font-style: normal;
-    font-weight: 300;
-    src: url("../fonts/OpenSans-Light.ttf") format("truetype");
-}
-@font-face {
-    font-family: "Open Sans", arial, sans-serif;
-    font-style: italic;
-    font-weight: 300;
-    src: url("../fonts/OpenSans-LightItalic.ttf") format("truetype");
-}
-@font-face {
-    font-family: "Open Sans", arial, sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    src: url("../fonts/OpenSans-Regular.ttf") format("truetype");
-}
-@font-face {
-    font-family: "Open Sans", arial, sans-serif;
-    font-style: italic;
-    font-weight: 400;
-    src: url("../fonts/OpenSans-Italic.ttf") format("truetype");
-}
-@font-face {
-    font-family: "Open Sans", arial, sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    src: url("../fonts/OpenSans-Semibold.ttf") format("truetype");
-}
-@font-face {
-    font-family: "Open Sans", arial, sans-serif;
-    font-style: italic;
-    font-weight: 500;
-    src: url("../fonts/OpenSans-SemiboldItalic.ttf") format("truetype");
-}
-@font-face {
-    font-family: "Open Sans", arial, sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    src: url("../fonts/OpenSans-Bold.ttf") format("truetype");
-}
-@font-face {
-    font-family: "Open Sans", arial, sans-serif;
-    font-style: italic;
-    font-weight: 600;
-    src: url("../fonts/OpenSans-BoldItalic.ttf") format("truetype");
-}
-@font-face {
-    font-family: "Open Sans", arial, sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    src: url("../fonts/OpenSans-ExtraBold.ttf") format("truetype");
-}
-@font-face {
-    font-family: "Open Sans", arial, sans-serif;
-    font-style: italic;
-    font-weight: 600;
-    src: url("../fonts/OpenSans-ExtraBoldItalic.ttf") format("truetype");
-}
+
 a {
     -webkit-transition: all ease-in .5s;
     -moz-transition: all ease-in .5s;
@@ -1423,24 +1330,6 @@ footer p {
     font-size: 0.25em;
     text-align: center;
     font-family: "Open Sans", sans-serif;
-}
-.red {
-    color: #e24a3c;
-}
-.dark-blue {
-    color: #2c97dd;
-}
-.light-blue {
-    color: #00b5f0;
-}
-.green {
-    color: #17bc9c;
-}
-.purple {
-    color: #9c56b8;
-}
-.brown {
-    color: #8a6d3b;
 }
 .compare-button {
     position: absolute;
