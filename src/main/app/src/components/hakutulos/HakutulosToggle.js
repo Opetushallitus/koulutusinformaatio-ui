@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../assets/css/hakutulos.css'
+import '../../assets/styles/hakutulos.css'
 import {observer, inject} from 'mobx-react';
 import { withRouter } from 'react-router-dom'
 import qs from 'query-string';

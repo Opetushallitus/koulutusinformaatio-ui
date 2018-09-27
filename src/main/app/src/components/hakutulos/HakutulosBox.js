@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import '../../assets/css/hakutulos.css';
+import '../../assets/styles/hakutulos.css';
 import { withRouter } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import { inject, observer } from 'mobx-react';
