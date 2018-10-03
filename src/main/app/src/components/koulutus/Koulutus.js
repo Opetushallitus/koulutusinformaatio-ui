@@ -56,7 +56,7 @@ class Koulutus extends Component {
             <React.Fragment>
                 <div className="container">
                     <div className="row info-page">
-                        <div className="col-xs-12 col-md-9 left-column">
+                        <div className="col-12 col-md-9 left-column">
                             {selectedKoulutus}
                         </div>
                         <KoulutusSidebar/>

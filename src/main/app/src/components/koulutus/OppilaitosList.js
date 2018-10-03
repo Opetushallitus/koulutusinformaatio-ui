@@ -14,10 +14,10 @@ class OppilaitosList extends Component {
         });
         var oppilaitosList = <div/>;
         if(oppilaitokset.length > 0) {
-            oppilaitosList = <div className="col-xs-12 col-md-9 left-column">
+            oppilaitosList = <div className="col-12 left-column">
                 <h2 className="line_otsikko">{t('koulutus.oppilaitokset')}</h2>
                 <div className="container search-results">
-                    <div key={this.props.oid} className="col-xs-12 col-md-6 box-container">
+                    <div key={this.props.oid} className="col-12 col-md-6 box-container">
                         {oppilaitokset.map(t => <OppilaitosListItem key={t.oid} toteutus={t}/>)}
                     </div>
                 </div>

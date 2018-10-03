@@ -5,10 +5,10 @@ class KoulutusSidebar extends Component {
 
     render() {
         return (
-            <div className="col-xs-12 col-md-3 right-column">
+            <div className="col-12 col-md-3 right-column">
                 <div className="row">
                     
-                    <img className="hidden-xs" src={sidebarPic} alt=""/>
+                    <img className="hidden-xs-down" src={sidebarPic} alt=""/>
 
                 </div>
             </div>

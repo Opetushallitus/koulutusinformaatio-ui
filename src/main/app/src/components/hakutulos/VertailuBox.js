@@ -11,7 +11,7 @@ class VertailuBox extends Component {
 
     renderVertailuList() {
         return this.props.vertailuStore.vertailuList.map((i) =>
-            <div className="col-xs-12 col-md-3 compare-box" id="box-0" key={i.oid}>
+            <div className="col-12 col-md-3 compare-box" id="box-0" key={i.oid}>
                 <button type="button" className="close" aria-label="Close"
                         onClick={() => this.props.vertailuStore.removeItem(i.oid)}>
                     <i className="fa fa-times" aria-hidden="true"/>
@@ -28,10 +28,10 @@ class VertailuBox extends Component {
                     <div className="container">
                         <div className="row">
                             <div id="compared-subjects">
-                                <div className="col-xs-12 col-md-3 compared-subjects-title">{this.props.t("haku.olet-valinnut-vertailuun")}</div>
+                                <div className="col-12 col-md-3 compared-subjects-title">{this.props.t("haku.olet-valinnut-vertailuun")}</div>
                                 {this.renderVertailuList()}
                             </div>
-                            <div className="col-xs-12 col-md-3 pull-right">
+                            <div className="col-12 col-md-3 pull-right">
                                 {this.props.vertailuStore.size > 1 ?
                                     <Link to={this.props.vertailuStore.createVertailuLink} id={"vertaile"}
                                           role="button" className="btn btn-primary">{this.props.t("haku.vertaile")}</Link>

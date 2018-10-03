@@ -1,0 +1,13 @@
+@import '../grid/variables';
+@import '../grid/mixins/breakpoints';
+
+.jumbotron {
+  padding: $jumbotron-padding ($jumbotron-padding / 2);
+  @include media-breakpoint-up(sm) {
+    padding: ($jumbotron-padding * 2) $jumbotron-padding;
+  }
+}
+.jumbotron-fluid {
+  padding-right: 0;
+  padding-left: 0;
+}

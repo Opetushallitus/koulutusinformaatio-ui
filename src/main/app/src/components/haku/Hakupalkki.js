@@ -59,7 +59,7 @@ class Hakupalkki extends Component {
                     <div className="jumbotron">
                         <div className="container">
                             <div className="row">
-                                <div className={"col-xs-12 col-md-8 header-search" + (this.props.main ? " main" : "")}>
+                                <div className={"col-12 col-md-8 header-search" + (this.props.main ? " main" : "")}>
                                     <div className="search">
                                         <input id="regular-input" className="oph-input" type="text"
                                                placeholder={t('haku.kehoite')}

@@ -55,7 +55,7 @@ class Korkeakoulu extends Component {
         const sisalto = l.localize(this.props.koulutus.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
         const erikoistumisalat = l.localize(this.props.koulutus.kuvausKomo.TAVOITTEET, undefined);
         return (
-            <div className="col-xs-12 col-md-9 left-column">
+            <div className="col-12 col-md-9 left-column">
                 <ToteutusHeader komoOid={this.props.koulutus.komoOid}
                                 nimi={this.props.koulutus.searchData.nimi}
                                 organisaatio={this.props.koulutus.organisaatio.nimi}/>

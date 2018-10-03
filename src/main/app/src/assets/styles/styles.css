@@ -115,7 +115,6 @@ button:focus {
 
 
 .koulutusinfolaatikko {
-    width: 80%;
     background-color: #4d92e3;
     border: solid 1px #979797;
     color: white;
@@ -124,7 +123,7 @@ button:focus {
 }
 
 .koulutusinfolaatikko > ul {
-    font-family: SourceSansPro;
+    font-family: 'SourceSansPro', sans-serif;
     font-size: 20px;
     font-weight: normal;
     font-style: normal;
@@ -310,16 +309,6 @@ button:focus {
     color: #fff;
     text-decoration: none;
     background-color: transparent;
-}
-
-.page-size-select select {
-    margin: 20px 0;
-    display: inline;
-    background: transparent;
-    overflow: hidden;
-    font-size: 1em;
-    width: 7em;
-    height: 2.5em;
 }
 
 .sidebar-nav > .sidebar-brand {
@@ -555,7 +544,7 @@ div.sidebar-brand {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(250,250,250,.8);
+    background-color: rgba(35, 35, 35, 0.8);
     z-index: 1000;
 }
 .dropdown-menu li {
@@ -604,8 +593,9 @@ button.navbar-toggle.collapsed:hover .icon-bar:nth-child(3){
     font-weight: 600;
     position: absolute;
     z-index: 1;
-    margin-left: 65px;
+    margin: 3px 0 0 65px;
     color: white;
+    text-decoration: none;
 }
 .navbar-brand:hover {
     text-decoration: none!important;
@@ -1161,7 +1151,7 @@ ul.right-links li a:hover {
     height: auto;
 }
 footer {
-    background: #f8f8f8;
+    background: white;
     border-top: 1px solid #bcbcbc;
     padding: 2em 0;
     position: relative;
@@ -1217,7 +1207,7 @@ footer p {
     width: 40px;
 }
 
-.container-fluid .col-xs-12 {
+.container-fluid .col-12 {
     padding-right: 0;
     padding-left: 0;
 }
@@ -1260,8 +1250,7 @@ footer p {
     content: "- Sulje rajaimet";
 }
 .highlight {
-    color: #f5aa01;
-    font-weight: 600;
+    text-transform: capitalize;
 }
 .box-container a {
     text-decoration: underline;
@@ -1269,9 +1258,7 @@ footer p {
 .search-results {
     padding-bottom: 30px;
 }
-.search-results .row {
-    margin-top: 30px;
-}
+
 .text {
     width: 80%;
     margin: 30px auto;
@@ -1327,65 +1314,6 @@ footer p {
     position: absolute;
     right: 30px;
     bottom: 15px;
-}
-.search-box {
-    box-shadow: 0 0px 7px #6b6b6b;
-    height: 200px;
-    overflow: hidden;
-}
-.search-box .text {
-    height: 125px;
-    width: 85%;
-    margin: 25px auto;
-}
-.search-box .text a {
-    font-weight: bold;
-    font-size: 1.1em;
-}
-.search-box .haku {
-    width: 81px;
-    height: 44px;
-    font-size: .91em;
-    padding: 23px 19px 0;
-    text-shadow: 0px 0px 2px rgba(150, 150, 150, 0.94);
-    position: absolute;
-    background: #7ed320;
-    left: -24px;
-    top: -19px;
-    color: #fff;
-    display: inline-block;
-    transform: rotate(-40deg);
-    -webkit-box-shadow: 3px 0px 10px 0px rgba(50, 50, 50, 0.69);
-    -moz-box-shadow: 3px 0px 10px 0px rgba(50, 50, 50, 0.69);
-    box-shadow: 3px 0px 10px 0px rgba(50, 50, 50, 0.69);
-}
-.search-box::after {
-    display: inline-block;
-    margin: 0 0 8px 20px;
-    min-height: 237px;
-    height: auto;
-    content: " ";
-    position: absolute;
-    text-shadow: none;
-    width: 15px;
-    top: 0px;
-    bottom: 0;
-    right: 0;
-}
-.search-box.amm::after {
-    background-color: #17bc9c;
-}
-.search-box.lk::after {
-    background-color: #e24a3c;
-}
-.search-box.kk::after {
-    background-color: #9c56b8;
-}
-.search-box.ako::after {
-    background-color: #0ea4d7;
-}
-.search-box.muu::after {
-    background-color: #d8e00f;
 }
 .separator {
     margin-top: 60px;
@@ -2293,8 +2221,6 @@ button.toggle-compare.closed::after {
 .app-navigation-bar a {
     color: #ffffff;
     text-align: center;
-    display: flex;
-    flex-direction: column;
     margin: auto;
     width: 7em;
     text-decoration: none;
@@ -2304,38 +2230,12 @@ button.toggle-compare.closed::after {
 .app-navigation-bar a:hover span {
     text-decoration: underline;
 }
-.app-navigation-bar .fa-circle-thin:before {
-    font-size: 3em;
-}
+
 .app-navigation-bar i {
     position: relative;
     left: 5%;
 }
-.app-navigation-bar .previous i::after {
-    font-family: "FontAwesome";
-    content:"\f104";
-    position: relative;
-    font-size: 2.2em;
-    left: -26px;
-    top: -5px;
-}
-.app-navigation-bar .search i::after {
-    font-family: "FontAwesome";
-    content: "\f002";
-    position: relative;
-    left: -27px;
-    top: -9px;
-    font-size: 1.35em;
-}
 
-.app-navigation-bar .next i::after {
-    font-family: "FontAwesome";
-    content:"\f105";
-    position: relative;
-    font-size: 2.2em;
-    left: -22px;
-    top: -5px;
-}
 .toteutus .header span:not(.light-font) {
     color: #000000;
     font-weight: bold;
@@ -3010,13 +2910,13 @@ a.titlelink {
     flex-direction: row;
 }
 .palaute-form-star {
-    font-size: xx-large;
+    font-size: 30px;
     padding: 10px 5px;
 }
-.palaute-form-star.fa-star-o {
+.palaute-form-star.icon-ic_star_border {
     color: #e6e6e6;
 }
-.palaute-form-star.fa-star {
+.palaute-form-star.icon-ic_star {
     color: #f6a623;
 }
 .palaute-form-comment {

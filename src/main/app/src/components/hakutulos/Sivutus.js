@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import '../../assets/styles/hakutulos.css'
 import {observer, inject} from 'mobx-react';
 import qs from 'query-string';
 import { withRouter } from 'react-router-dom';
 import {translate} from 'react-i18next';
+import '../../assets/styles/components/_sivutus.scss'
 
 @translate()
 @inject("hakuStore")
@@ -31,11 +31,11 @@ class Sivutus extends Component {
     }
 
     createPaginationItem(page, active) {
-        return <li className={active ? "page-item active" : "page-item"} key={page.toString()}><a className="page-link" onClick={(e) => this.handlePagination(e, page)} >{page}</a></li>;
+        return <li className={active ? "active" : ""} key={page.toString()}><a className="page-link" onClick={(e) => this.handlePagination(e, page)} >{page}</a></li>;
     }
 
     createPaginationSeparator(key) {
-        return <li className={"page-item"} key={key}><a>...</a></li>;
+        return <li className={"item-separator"} key={key}><a>...</a></li>;
     }
 
     buildPaginationMenu(currentPage) {
@@ -90,20 +90,22 @@ class Sivutus extends Component {
                 <div className="pagination-control container">
                     {!this.props.hakuStore.filterSet && !this.props.hakuStore.keywordSet ? '' :
                         (<div className="row">
-                            <div className="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+                            <div className="col-12">
                                 <nav aria-label="Search result navigation">
-                                    <ul className="pagination">
-                                        {this.buildPaginationMenu(currentPage)}
-                                    </ul>
+                                    <div className="row">
+                                        <ul className="pagination">
+                                            {this.buildPaginationMenu(currentPage)}
+                                        </ul>
+                                        <div className="page-size-select">
+                                            <select onChange={(e) => this.handlePageSizeChange(e)}>
+                                                <option value={this.props.hakuStore.pageSize}>{t('haku.näytä')}</option>
+                                                <option value={20}>20</option>
+                                                <option value={50}>50</option>
+                                                <option value={this.props.hakuStore.maxPageSize}>{t('haku.kaikki')}</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </nav>
-                            </div>
-                            <div className="page-size-select">
-                                <select onChange={(e) => this.handlePageSizeChange(e)}>
-                                    <option value={this.props.hakuStore.pageSize}>{t('haku.näytä')}</option>
-                                    <option value={20}>20</option>
-                                    <option value={50}>50</option>
-                                    <option value={this.props.hakuStore.maxPageSize}>{t('haku.kaikki')}</option>
-                                </select>
                             </div>
                         </div>)}
                 </div>

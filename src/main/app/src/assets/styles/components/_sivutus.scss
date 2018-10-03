@@ -1,0 +1,44 @@
+@import '../settings';
+
+nav[aria-label="Search result navigation"]{
+    ul{
+        &.pagination{
+            display: flex;
+            padding: 0 15px 15px 15px;
+            position: relative;
+            top: -10px;
+            li{
+                width: 24px;
+                height: 24px;
+                margin-right: 5px;
+                text-align: center;
+                background: $light-blue;
+                &.item-separator{
+                    background: transparent;
+                    letter-spacing: 1px;
+                }
+                a{
+                    color: $black;
+                }
+                &.active{
+                    background: $opaque-blue;
+                    a{
+                        color: white;
+                    }
+                }
+                &:hover{
+                    cursor: pointer;
+                }
+            }
+        }
+        
+    }
+    .page-size-select{
+        select{
+            border: 1px solid $soft-grey;
+            font-size: 16px;
+            width: 120px;
+            height: 30px;
+        }
+    }
+}

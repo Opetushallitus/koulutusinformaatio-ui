@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../../assets/styles/hakutulos.css'
 import {observer, inject} from 'mobx-react';
 import {translate} from 'react-i18next';
 
@@ -11,7 +10,7 @@ class HakutulosSummary extends Component {
     renderKeywordResultSummary() {
         const {t} = this.props;
         return (
-            <div className="col-xs-12 Etsinta">
+            <div className="col-12 Etsinta">
                 <h1>{t('haku.summary', {count: this.props.hakuStore.totalCount}) + " " + t('haku.hakusanalla')}
                     <span className="highlight"> "{this.props.hakuStore.keyword}"</span>
                 </h1>
@@ -41,7 +40,7 @@ class HakutulosSummary extends Component {
         const paikkakunta = this.props.hakuStore.filter.paikkakunta;
 
         return (
-            <div className="col-xs-12 Etsinta">
+            <div className="col-12 Etsinta">
                 <h1>{this.props.hakuStore.keywordSet ? t('ja') : t('haku.summary', {count: this.props.hakuStore.totalCount})}
                     {koulutustyypit ? (' ' + t('haku.koulutustyypillä', {count: this.props.hakuStore.filter.koulutus.length})) + ' ' : '' }
                     {koulutustyypit ? <span className="highlight">"{koulutustyypit}"</span> : '' }
@@ -56,7 +55,7 @@ class HakutulosSummary extends Component {
 
     render() {
         return (
-            <div className="row">
+            <div className="row result-count">
                 {this.props.hakuStore.keywordSet ? this.renderKeywordResultSummary() : ''}
                 {this.props.hakuStore.filterSet ? this.renderFilterResultSummary() : ''}
             </div>

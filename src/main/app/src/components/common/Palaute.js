@@ -42,15 +42,15 @@ class Palaute extends Component {
                 <div className="palaute-form-container">
                     <h2 className="palaute-form-header">{t('palaute.otsikko')}</h2>
                     <div className="palaute-form-rating">
-                        <i className={"palaute-form-star fa " + (this.state.arvosana > 0 ? "fa-star" : "fa-star-o")}
+                        <i className={"palaute-form-star fa " + (this.state.arvosana > 0 ? "icon-ic_star" : "icon-ic_star_border" )}
                            aria-hidden={true} onClick={() => this.handleArvosanaChange(1)}/>
-                        <i className={"palaute-form-star fa " + (this.state.arvosana > 1 ? "fa-star" : "fa-star-o")}
+                        <i className={"palaute-form-star fa " + (this.state.arvosana > 1 ? "icon-ic_star" : "icon-ic_star_border" )}
                            aria-hidden={true} onClick={() => this.handleArvosanaChange(2)}/>
-                        <i className={"palaute-form-star fa " + (this.state.arvosana > 2 ? "fa-star" : "fa-star-o")}
+                        <i className={"palaute-form-star fa " + (this.state.arvosana > 2 ? "icon-ic_star" : "icon-ic_star_border" )}
                            aria-hidden={true} onClick={() => this.handleArvosanaChange(3)}/>
-                        <i className={"palaute-form-star fa " + (this.state.arvosana > 3 ? "fa-star" : "fa-star-o")}
+                        <i className={"palaute-form-star fa " + (this.state.arvosana > 3 ? "icon-ic_star" : "icon-ic_star_border" )}
                            aria-hidden={true} onClick={() => this.handleArvosanaChange(4)}/>
-                        <i className={"palaute-form-star fa " + (this.state.arvosana > 4 ? "fa-star" : "fa-star-o")}
+                        <i className={"palaute-form-star fa " + (this.state.arvosana > 4 ? "icon-ic_star" : "icon-ic_star_border" )}
                            aria-hidden={true} onClick={() => this.handleArvosanaChange(5)}/>
                     </div>
                     <div className="palaute-form-comment">

@@ -1,0 +1,70 @@
+@import '../settings';
+
+.search-box {
+    box-shadow: 0 0px 1px $pinkish-grey;
+    height: 200px;
+    overflow: hidden;
+    background: white;
+    .text {
+        height: 125px;
+        width: 85%;
+        margin: 25px auto;
+        a {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+    }
+    .haku {
+        width: 81px;
+        height: 44px;
+        font-size: .91em;
+        padding: 23px 19px 0;
+        text-shadow: 0px 0px 2px rgba(150, 150, 150, 0.94);
+        position: absolute;
+        background: $mid-green;
+        left: -24px;
+        top: -19px;
+        z-index: 1;
+        color: #fff;
+        display: inline-block;
+        transform: rotate(-40deg);
+    }
+    &::after{
+        display: inline-block;
+        margin: 0 0 8px 20px;
+        height: 4px;
+        width: 100%;
+        content: " ";
+        position: absolute;
+        text-shadow: none;
+        top: 0px;
+        bottom: 0;
+        right: 0;
+        z-index: 0;
+    }
+    &.amm{
+        &::after {
+            background-color: $mid-green;
+        }
+    } 
+    &.lk{
+        &::after {
+            background-color: $brick;
+        }
+    }
+    &.kk{
+        &::after {
+            background-color: $amethyst;
+        } 
+    }
+    &.ako{
+        &::after {
+            background-color: $water-blue;
+        }
+    }
+    &.muu{
+        &::after {
+            background-color: $yellow-ochre;
+        }
+    }
+}

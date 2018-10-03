@@ -7,7 +7,7 @@ class MobileFooter extends Component {
         const {t} = this.props;
         return (
             <footer className="container-fluid">
-                <div className="col-xs-6">
+                <div className="col-6">
                     <div className="site-links">
                         <a href="/">
                             <img src={require('../../assets/images/opintopolku_large-fi.png')} alt=""/>
@@ -34,7 +34,7 @@ class MobileFooter extends Component {
                         </li>
                     </ul>*/}
                 </div>
-                <div className="col-xs-6">
+                <div className="col-6">
                     <ul className="site-links">
                         <li>
                             <a href="/oma-opintopolku">{t('footer.oma-opintopolku')}</a>
@@ -50,17 +50,17 @@ class MobileFooter extends Component {
                         </li>
                     </ul>
                 </div>
-                <div className="col-xs-12">
+                <div className="col-12">
                     <hr/>
                     <p>{t('footer.vastuuvapauslauseke')}</p>
                 </div>
-                <div className="col-xs-12 site-icons">
-                    <div className="col-xs-6">
+                <div className="col-12 site-icons">
+                    <div className="col-6">
                         <a className="pull-right" href="http://www.minedu.fi/OPM/">
                             <img src={require('../../assets/images/logo_fi.svg')} alt=""/>
                         </a>
                     </div>
-                    <div className="col-xs-6">
+                    <div className="col-6">
                         <a href="https://www.oph.fi">
                             <img src={require('../../assets/images/OPH_logo-fi.svg')} alt=""/>
                         </a>

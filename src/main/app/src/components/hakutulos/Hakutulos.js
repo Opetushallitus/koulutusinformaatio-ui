@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../../assets/styles/hakutulos.css'
 import {observer, inject} from 'mobx-react';
 import {Localizer as l} from '../../tools/Utils';
 import HakutulosToggle from "./HakutulosToggle";
@@ -84,7 +83,7 @@ class Hakutulos extends Component {
                 <React.Fragment>
                     <div className="container">
                         <div className="row">
-                            <div className="col-xs-12">
+                            <div className="col-12">
                                 <h1>{t('haku.lisää-hakusana-tai-rajain')}</h1>
                             </div>
                         </div>

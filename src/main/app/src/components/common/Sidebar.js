@@ -63,7 +63,7 @@ class Sidebar extends Component {
                         <nav className="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper">
                             <div className="sidebar-brand">
                                 <span>Valikko</span>
-                                <a className="sidebar-close" onClick={this.closeMenu}><i className="fa fa-times"/></a>
+                                <a className="sidebar-close" onClick={this.closeMenu}><i className="icon-outline-close"/></a>
                             </div>
                             <ul className="sidebar-nav">
                                    <ul className="languages">

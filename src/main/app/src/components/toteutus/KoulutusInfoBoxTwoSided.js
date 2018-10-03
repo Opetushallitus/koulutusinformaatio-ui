@@ -50,7 +50,7 @@ class KoulutusInfoBoxTwoSided extends Component {
         }
         return (
             <div className="row">
-                <div className="col-xs-12 left-column">
+                <div className="col-12 left-column">
                     <div className="koulutusinfo-2">
                         <div className="koulutusinfo-2-left">
                             {this.state.otsikkoLeft ? <h2>{this.state.otsikkoLeft}</h2> : ""}

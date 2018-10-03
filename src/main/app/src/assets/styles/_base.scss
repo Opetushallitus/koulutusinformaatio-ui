@@ -1,16 +1,43 @@
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box
+}
+
+*:before,
+*:after {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box
+}
+
+[tabindex="-1"]:focus {
+    outline: 0 !important;
+}
+
 html, body {
     width: auto !important;
     overflow-x: hidden !important;
     height: 100%;
 }
+html {
+	font-family: sans-serif;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%
+}
+
 body {
-    font-family: "Source Sans Pro";
+    margin: 0;
+    font-family: "Source Sans Pro",sans-serif;
     position: relative;
     overflow-x: hidden;
+    line-height: 1.42857143;
+	background-color: #fff
 }
 body.no-scroll {
     overflow-y: hidden;
 }
+
 a:focus {
     outline: none;
     text-decoration: none;
@@ -56,8 +83,12 @@ a {
     color: $mid-green;
 }
 .purple {
-    color: $amethist;
+    color: $amethyst;
 }
 .brown {
     color: $greyish-brown;
+}
+#page-content-wrapper {
+    width: 100%;
+    background: $main-bg;
 }

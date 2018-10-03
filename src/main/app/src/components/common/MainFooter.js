@@ -46,12 +46,12 @@ class DefaultFooter extends Component {
                     </div>
                     <div className="col-sm-4">
                         <div className="row site-icons">
-                            <div className="col-xs-6">
+                            <div className="col-6">
                                 <a href="http://www.minedu.fi/OPM/">
                                     <img src={require('../../assets/images/logo_fi.svg')} alt=""/>
                                 </a>
                             </div>
-                            <div className="col-xs-6">
+                            <div className="col-6">
                                 <a href="https://www.oph.fi">
                                     <img src={require('../../assets/images/OPH_logo-fi.svg')} alt=""/>
                                 </a>

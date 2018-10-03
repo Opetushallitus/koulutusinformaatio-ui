@@ -11,7 +11,7 @@ class KoulutusSection extends Component {
         const content = this.props.noRender ? this.props.content : renderHTML(this.props.content);
         return (
             <React.Fragment>
-                {isContent && <div className="col-xs-12 col-md-9 left-column">
+                {isContent && <div className="col-12 left-column">
                     <h2 className="line_otsikko">{t(this.props.header)}</h2>
                     <div className="">
                         {content}

@@ -166,14 +166,14 @@ class Oppilaitos extends Component {
             <React.Fragment>
                 <div className='container'>
                     <div className='row info-page oppilaitos'>
-                        <div className='col-xs-12 col-md-9 left-column'>
+                        <div className='col-12 col-md-9 left-column'>
                             <h1 className='header'><i className='fa fa-circle'></i>{l.localize(this.state.oppilaitos.nimi, "", "fi")}</h1>
                             <div className='oppilaitos-yleiskuvaus'>
                                 <div>{this.safeParseYleiskuvaus()}</div>
                             </div>
                         </div>
 
-                        <div className="col-xs-12 col-md-3 right-column row-eq-height">
+                        <div className="col-12 col-md-3 right-column row-eq-height">
                             <div className='orgaanisaatio-yhteystiedot'>
                                 <div className='col-md-12'>
                                     {this.parseKayntiOsoite()}

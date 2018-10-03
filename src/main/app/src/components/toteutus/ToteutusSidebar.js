@@ -84,7 +84,7 @@ class ToteutusSidebar extends Component {
         }
         const hae = this.props.koulutus && this.props.koulutus.hakuajatFromBackend ? this.props.koulutus.hakuajatFromBackend.aktiiviset.length > 0 : false;
         return (
-            <div className="col-xs-12 col-md-3 right-column">
+            <div className="col-12 col-md-3 right-column">
                 <div className="row">
                     <div className="toteutus-sidebar">
                         <div className='col-md-12'>

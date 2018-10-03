@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import '../../assets/styles/hakutulos.css';
 import { withRouter } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import { inject, observer } from 'mobx-react';
-
+import '../../assets/styles/components/_hakutulos-box.scss';
 
 @translate()
 @inject("vertailuStore")
@@ -12,9 +11,9 @@ import { inject, observer } from 'mobx-react';
 class HakutulosBox extends Component {
 
     render() {
-        const tyyli = "col-xs-12 search-box " + this.props.tyyppi;
+        const tyyli = "col-12 search-box " + this.props.tyyppi;
         return (
-            <div key={this.props.oid} className="col-xs-12 col-md-6 box-container">
+            <div key={this.props.oid} className="col-12 col-md-6 box-container">
                 <div className={tyyli}>
                     {this.props.haettavissa && <div className="haku">{this.props.t("haku.haku")}</div>}
                     <div className="suosikkit">

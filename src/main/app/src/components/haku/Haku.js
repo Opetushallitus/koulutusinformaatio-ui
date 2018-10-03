@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import qs from 'query-string';
-import '../../assets/styles/hakutulos.css'
 import {observer, inject} from 'mobx-react';
 import Hakutulos from '../hakutulos/Hakutulos';
 import { matchPath } from 'react-router';
