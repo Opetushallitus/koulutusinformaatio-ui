@@ -228,11 +228,12 @@ button:focus {
     z-index: 1000;
     left: 220px;
     width: 320px;
-    height: 100%;
+    height: 100vh;
     margin-left: -220px;
     overflow-y: auto;
     overflow-x: hidden;
     background: #282828;
+    position: absolute;
     -webkit-transition: all 0.25s ease;
     -moz-transition: all 0.25s ease;
     -o-transition: all 0.25s ease;
@@ -818,40 +819,8 @@ ul.disc-list {
 .info-page {
     padding-bottom: 4em;
 }
-
-.info-page .left-column h1 i {
-    position: relative;
-    top: 10px;
-}
-.korkeakoulu-hattu {
-    color: #9c56b8;
-}
-.avoin-hattu {
-    color: #4d92e3;
-}
-.ammatillinen-hattu {
-    color: #7ed222;
-}
-.lukio-hattu {
-    color: #CD0B24;
-}
-.muu-hattu {
-    color: #d8e00f;
-}
 .info-page.tutkinnonosat .left-column h1 i {
     color: #f5a623;
-}
-.info-page .left-column h1 i::before {
-    font-size: 2.65em;
-}
-.info-page .left-column h1 i::after {
-    font-family: "FontAwesome";
-    content: "\f19d";
-    color: #ffffff;
-    position: absolute;
-    left: 7px;
-    font-size: 1.44em;
-    top: 15px;
 }
 .info-page.tutkinnonosat .left-column h1 i::after {
     content: "\f233";
@@ -2208,33 +2177,6 @@ button.toggle-compare.closed::after {
 .compare-table {
     font-weight: bold;
 }
-.app-navigation-bar {
-    position: -webkit-sticky;
-    position: sticky;
-    min-height: 20px;
-    height: auto;
-    padding: 5px 0;
-    bottom: 0;
-    z-index: 99;
-    background: #159ecc;
-}
-.app-navigation-bar a {
-    color: #ffffff;
-    text-align: center;
-    margin: auto;
-    width: 7em;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.app-navigation-bar a:hover span {
-    text-decoration: underline;
-}
-
-.app-navigation-bar i {
-    position: relative;
-    left: 5%;
-}
 
 .toteutus .header span:not(.light-font) {
     color: #000000;
@@ -2723,29 +2665,7 @@ a.titlelink {
     .filter-options {
         z-index: 995;
     }
-    .app-navigation-bar {
-        margin-top: 0;
-        padding: 1px 0;
-        z-index: 994;
-    }
-    .app-navigation-bar .fa-circle-thin:before {
-        font-size: 2.95em;
-    }
-    .app-navigation-bar .search i::after {
-        left: -27px;
-        top: -9px;
-        font-size: 19px;
-    }
-    .app-navigation-bar .next i::after {
-        font-size: 32px;
-        left: -22px;
-        top: -4px;
-    }
-    .app-navigation-bar .previous i::after {
-        font-size: 32px;
-        left: -26px;
-        top: -4px;
-    }
+  
     .courses h1 {
         color: #898989;
     }

@@ -1,0 +1,74 @@
+@import '../settings';
+
+.app-navigation-bar {
+    position: -webkit-sticky;
+    position: sticky;
+    min-height: 20px;
+    height: auto;
+    padding: 18px 0;
+    bottom: 0;
+    z-index: 99;
+    background: $greyish-brown;
+    .container{
+        padding: 0;
+    }
+    a{
+        position: relative;
+        padding: 20px 0;
+        &::before{
+            font-family: $material-icons-font-family; 
+            color: white;
+            display: block;
+            height: 13px;
+            font-size: 35px;
+            position: absolute;
+            top: -3px;
+            width: 10px;
+            left: 24%; 
+        }
+        span{
+            position: relative;
+            top: 18px;
+            padding: 5px 0;
+        }
+    }
+    .previous{
+        text-align: left;
+        a{
+            &::before {
+                content: "\E90B";           
+            }
+        }
+    }
+    .search{
+        text-align: center;
+        a{
+            &::before{
+                content:"\e90c";
+            }
+        }
+    }
+    .next{
+        text-align: right;
+        a{
+            &::before{
+                content:"\e90a";
+            }
+        }
+    }
+    a {
+    color: #ffffff;
+    text-align: center;
+    margin: auto;
+    width: 7em;
+    text-decoration: none;
+    cursor: pointer;
+        &:hover span {
+            text-decoration: underline;
+        }
+    }
+    i {
+        position: relative;
+        left: 5%;
+    }
+}

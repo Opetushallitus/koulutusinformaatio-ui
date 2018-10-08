@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import './assets/styles/styles.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import KonfoStore from './stores/konfo-store';
 import {Provider} from 'mobx-react';
@@ -8,7 +9,6 @@ import Footer from './components/common/Footer';
 import Hakusivu from "./components/Hakusivu";
 import Etusivu from "./components/Etusivu";
 import Palaute from "./components/common/Palaute";
-import './assets/styles/styles.scss';
 import i18n from './tools/i18n';
 import { I18nextProvider } from 'react-i18next';
 //import registerServiceWorker from './registerServiceWorker';
@@ -63,7 +63,7 @@ class App extends Component {
 }
 
 ReactDOM.render((
-    <BrowserRouter basename={'/konfo'}>
+    <BrowserRouter basename={'/'}>
 
             <App/>
 

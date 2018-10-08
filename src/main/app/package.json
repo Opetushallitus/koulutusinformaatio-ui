@@ -1,7 +1,7 @@
 {
   "name": "konfo-ui",
   "version": "0.1.0",
-  "homepage": "/konfo",
+  "homepage": "/",
   "private": true,
   "dependencies": {
     "ajv": "^6.5.2",
@@ -14,8 +14,6 @@
     "oph-urls-js": "github:Opetushallitus/oph-urls-js#master",
     "oskari-rpc": "2.0.5",
     "react": "^16.4.2",
-    "react-app-rewire-mobx": "^1.0.8",
-    "react-app-rewired": "^1.5.2",
     "react-dom": "^16.4.2",
     "react-i18next": "^7.10.1",
     "react-media": "^1.8.0",
@@ -40,9 +38,15 @@
     "run-test": "react-app-rewired test --env=jsdom"
   },
   "devDependencies": {
+    "babel-plugin-emotion": "^9.2.11",
     "node-sass": "^4.9.3",
+    "preact": "^8.3.1",
+    "preact-compat": "^3.18.4",
     "puppeteer": "^1.7.0",
     "react-app-rewire-css-modules": "github:codebandits/react-app-rewire-css-modules",
+    "react-app-rewire-mobx": "^1.0.8",
+    "react-app-rewire-preact": "^1.0.1",
+    "react-app-rewired": "^1.5.2",
     "sass-loader": "^7.1.0",
     "start-server-and-test": "^1.7.0"
   },

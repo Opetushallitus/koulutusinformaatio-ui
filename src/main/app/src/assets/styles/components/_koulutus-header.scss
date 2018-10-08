@@ -1,0 +1,39 @@
+@import '../settings';
+
+.info-page {
+    .left-column {
+            h1 {
+                i{
+                    width: 65px;
+                    height: 65px;
+                    display: inline-block;
+                    border-radius: 50%;
+                    &.muu-hattu {
+                        background-color: $yellow-ochre;  
+                    }
+                    &.korkeakoulu-hattu {
+                        background-color: $amethyst;
+                    }
+                    &.avoin-hattu {
+                        background-color: $water-blue;
+                    }
+                    &.ammatillinen-hattu {
+                        background-color: $mid-green;
+                    }
+                    &.lukio-hattu {
+                        background-color: $brick;
+                    }    
+                    &::after{
+                        font-family: $material-icons-font-family;
+                        content: "\e91e";
+                        color: white;
+                        position: relative;
+                        font-style: initial;
+                        left: 12px;
+                        font-size: 40px;
+                        top: 15px;
+                    }
+                }
+            }
+    }
+}

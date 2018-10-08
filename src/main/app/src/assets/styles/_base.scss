@@ -1,3 +1,5 @@
+@import './settings';
+
 * {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -28,7 +30,7 @@ html {
 
 body {
     margin: 0;
-    font-family: "Source Sans Pro",sans-serif;
+    font-family: $theme-font-family;
     position: relative;
     overflow-x: hidden;
     line-height: 1.42857143;
@@ -91,4 +93,11 @@ a {
 #page-content-wrapper {
     width: 100%;
     background: $main-bg;
+}
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    &::before{
+        font-family: $material-icons-font-family;
+        content: "\e901";
+    }
 }

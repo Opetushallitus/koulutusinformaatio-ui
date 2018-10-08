@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import qs from 'query-string';
 import { matchPath } from 'react-router';
 import {translate} from 'react-i18next';
+import '../../assets/styles/components/_hakunavigatio.scss';
 
 @translate()
 @inject("navigaatioStore")
@@ -61,11 +62,9 @@ class Hakunavigaatio extends Component {
     render() {
         const t = this.props.t;
         const prevLink = (this.props.navigaatioStore.hasPrev && !this.props.vertailu) ? <a onClick={(e) => {this.prev(e)}}>
-            <i className="icon-ic-previous-result" aria-hidden="true"/>
             <span>{t("navigaatio.edellinen")}</span>
         </a> : <span/>;
         const nextLink = (this.props.navigaatioStore.hasNext && !this.props.vertailu) ? <a onClick={(e) => {this.next(e)}}>
-            <i className="icon-ic-previous-result" aria-hidden="true"/>
             <span>{t("navigaatio.seuraava")}</span>
         </a> : <span/>;
 
@@ -78,7 +77,6 @@ class Hakunavigaatio extends Component {
                         </div>}
                         <div className="col-4 search">
                             <Link to={this.state.hakuUrl}>
-                                <i className="icon-ic-search-result" aria-hidden="true"/>
                                 <span>{t("navigaatio.etsintä-tulos")}</span>
                             </Link>
                         </div>
