@@ -1,0 +1,153 @@
+@import '../settings';
+
+#compare-row {
+    #compared-subjects {
+        padding: 40px 0;
+        .compare-object{
+            .compare-box {
+                border: 2px solid white;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+                min-height: 160px;
+                width: 90%;
+                height: 100%;
+                .close {
+                    border: none;
+                    background-color: transparent;
+                    -webkit-transition: ease-in-out .3s;
+                    -moz-transition: ease-in-out .3s;
+                    transition: ease-in-out .3s;
+                    text-align: right;
+                    margin: 5px 5px 0;
+                    color: white;
+                    float: right;
+                    opacity: 1;
+                    font-size: 20px;
+                    &:hover {
+                        -webkit-transition: ease-in-out .3s;
+                        -moz-transition: ease-in-out .3s;
+                        transition: ease-in-out .3s;
+                        cursor: pointer;
+                        opacity: .75;
+                    }
+                }
+                a {
+                    display: block;
+                }
+            }
+            &:nth-child(2) .compare-box {
+                background: #41b8bc;
+            }
+            &:nth-child(3) .compare-box {
+                background: #d7b85e;
+            }
+            &:nth-child(4) .compare-box{
+                background: #67adce;
+            }
+        }    
+    }
+    
+    .compared-subjects-title {
+        width: 14%;
+        text-align: center;
+        font-size: 1.35em;
+    }
+    .pull-right {
+        border-left: 1px solid #bfbfbf;
+        padding-bottom: 2%;
+    }
+}
+.compare-box .title {
+    overflow: hidden;
+    margin: 30px;
+}
+.compare-box .button {
+    width: 65%;
+    margin: 5% auto;
+    padding: 7px;
+    border: 2px solid #b2cce7;
+    text-align: center;
+    border-radius: 15px;
+    font-size: 13px;
+}
+#compare-row.hidden {
+    -webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+    height: 0;
+}
+#compare-row {
+    -webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+    min-height: 200px;
+    height: auto;
+    background: #e7f2f6;
+}
+#compare-row.closed {
+    background: #ffffff;
+    min-height: 25px;
+    height: auto;
+}
+#compare-row.closed .container {
+    visibility: hidden;
+    display: none;
+}
+#compare-row .pull-right a {
+    display: table;
+    margin: 0 auto;
+}
+#compare-row .compare-box a{
+    color:#ffffff;
+    text-decoration: underline;
+    position: relative;
+    top:-5px;
+}
+#compare-row .compare-object:nth-child(2) .compare-box {
+    background: #41b8bc;
+}
+#compare-row .compare-object:nth-child(3) .compare-box {
+    background: #d7b85e;
+}
+#compare-row .compare-object:nth-child(4) .compare-box{
+    background: #67adce;
+}
+#compare-row .pull-right a:nth-child(1)
+{
+    margin: 85px auto 20px;
+    padding: 20px 40px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    border: none;
+    background: $dark-flat-blue;
+}
+@media (max-width: 768px) {
+    #compare-row {
+        #compared-subjects {
+            padding: 0;
+            .compare-object{
+                .compare-box {
+                    width: 100%;
+                    margin-top: 15px;
+                }
+            }            
+            .compared-subjects-title {
+
+            }
+        }
+        .pull-right {
+            padding-bottom: 30px;
+            border-left: none; 
+            a{
+                &:nth-child(1) {
+                    margin: 50px auto 30px;
+                }
+            }
+        }
+    }
+}

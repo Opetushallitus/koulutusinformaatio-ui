@@ -5,6 +5,7 @@ import { translate } from 'react-i18next';
 import { inject, observer } from 'mobx-react';
 import { Localizer as l } from "../../tools/Utils";
 import qs from 'querystring';
+import '../../assets/styles/components/_vertailu.scss';
 
 @translate()
 @inject("vertailuStore", "hakuStore")
@@ -39,16 +40,18 @@ class Vertailu extends Component {
     renderComparedItems() {
         return this.props.vertailuStore.vertailuList.map((item, i) => {
             return (
-                <ul className={"compare-list " + this.colors[i]} key={item.oid}>
-                    <li className={"compared-items"} >
-                        <div className="compare-box">
-                            <Link to={item.link} className="title">
-                                <strong>{item.organisaatio ? item.organisaatio.nimi + ":" : ""}<br/>{l.localize(item.searchData, item.nimi)}</strong>
-                            </Link>
-                        </div>
-                    </li>
-                    {this.renderCompareItemFields(item)}
-                </ul>
+                <div className="col-md-3">
+                    <ul className={"compare-list " + this.colors[i]} key={item.oid}>
+                        <li className={"compared-items"} >
+                            <div className="compare-box">
+                                <Link to={item.link} className="title">
+                                    <strong>{item.organisaatio ? item.organisaatio.nimi + ":" : ""}<br/>{l.localize(item.searchData, item.nimi)}</strong>
+                                </Link>
+                            </div>
+                        </li>
+                        {this.renderCompareItemFields(item)}
+                    </ul>
+                </div>
             )
         })
     }
@@ -94,29 +97,42 @@ class Vertailu extends Component {
         const t = this.props.t;
         return (
             <React.Fragment>
-                <div className="compare">
-                    <h1>
-                        <Link to={this.state.hakuUrl} className="header" >
-                            <span className="light-font">{t("vertailu.takaisin-edelliselle-sivulle")}</span>
-                            <p>{t("vertailu.vertailuun-ottamasi-kohteet")}</p>
-                        </Link>
-                    </h1>
+                <div className="container">
+                    <div className="row">
+                        <div className="compare">
+                            <h1>
+                                <Link to={this.state.hakuUrl} className="header" >
+                                    <span className="light-font">{t("vertailu.takaisin-edelliselle-sivulle")}</span>
+                                    <p>{t("vertailu.vertailuun-ottamasi-kohteet")}</p>
+                                </Link>
+                            </h1>
+                        </div>
+                    </div>
                 </div>
-                <ul className="compare-page">
-                    <ul className="compare-list">
-                        <li className="compare-list-item">{t("vertailu.koulutus-alkaa")}</li>
-                        <li className="compare-list-item">{t("vertailu.opetuskieli")}</li>
-                        <li className="compare-list-item">{t("vertailu.koulutuksen-laajuus")}</li>
-                        <li className="compare-list-item">{t("vertailu.suunniteltu-kesto")}</li>
-                        <li className="compare-list-item">{t("vertailu.osaamisalat")}</li>
-                        <li className="compare-list-item">{t("vertailu.opetusaika")}</li>
-                        <li className="compare-list-item">{t("vertailu.opetustapa")}</li>
-                        <li className="compare-list-item">{t("vertailu.opiskelumuoto")}</li>
-                        <li className="compare-list-item">{t("vertailu.pohjakoulutus")}</li>
-                        <li className="compare-list-item">{t("vertailu.maksullinen")}</li>
-                    </ul>
-                    {this.renderComparedItems()}
-                </ul>
+                <div className="container">
+                    <div className="row compare-page">
+                        <div className="col-md-3">
+                            <ul className="compare-list subject-titles">
+                                <li class="compared-items">
+                                    <div class="compare-box no-content"></div>
+                                </li>
+                                <li className="compare-list-item"><p>{t("vertailu.koulutus-alkaa")}</p></li>
+                                <li className="compare-list-item"><p>{t("vertailu.opetuskieli")}</p></li>
+                                <li className="compare-list-item"><p>{t("vertailu.koulutuksen-laajuus")}</p></li>
+                                <li className="compare-list-item"><p>{t("vertailu.suunniteltu-kesto")}</p></li>
+                                <li className="compare-list-item"><p>{t("vertailu.osaamisalat")}</p></li>
+                                <li className="compare-list-item"><p>{t("vertailu.opetusaika")}</p></li>
+                                <li className="compare-list-item"><p>{t("vertailu.opetustapa")}</p></li>
+                                <li className="compare-list-item"><p>{t("vertailu.opiskelumuoto")}</p></li>
+                                <li className="compare-list-item"><p>{t("vertailu.pohjakoulutus")}</p></li>
+                                <li className="compare-list-item"><p>{t("vertailu.maksullinen")}</p></li>
+                            </ul>
+                        </div>
+                            
+                        {this.renderComparedItems()}
+                        </div>
+                </div>
+                
                 <Hakunavigaatio vertailu={true}/>
             </React.Fragment>
         );

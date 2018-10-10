@@ -555,11 +555,6 @@ div.sidebar-brand {
     margin-left: 0;
 }
 
-a {
-    -webkit-transition: all ease-in .5s;
-    -moz-transition: all ease-in .5s;
-    transition: all ease-in .5s;
-}
 a:hover {
     -webkit-transition: all ease-in .5s;
     -moz-transition: all ease-in .5s;
@@ -1279,11 +1274,7 @@ footer p {
     text-align: center;
     font-family: "SourceSansPro", sans-serif;
 }
-.compare-button {
-    position: absolute;
-    right: 30px;
-    bottom: 15px;
-}
+
 .separator {
     margin-top: 60px;
 }
@@ -1297,33 +1288,7 @@ footer p {
 .container-fluid.courses {
     background: #e7f2f6;
 }
-.compare-button span {
-    border: 1px solid #4d93d9;
-    pointer-events:none;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
-    max-width: 200px;
-    width: 155px;
-    padding: 5px 20px;
-    float: right;
-    text-align: center;
-    -webkit-transition: all ease-in .25s;
-    -moz-transition: all ease-in .25s;
-    transition: all ease-in .25s;
-    color: #4d93d9;
-}
 
-.compare-button.inactive span {
-    color: #d6d6d6;
-    border-color: #d6d6d6;
-}
-
-.compare-button span.poista {
-    border: 1px solid #7ed320;
-    background: #7ed320;
-    color: #ffffff;
-}
 #koulutusModal .compare-button {
     border: 1px solid #ffffff;
     color: transparent;
@@ -1879,74 +1844,7 @@ p.btn-education .btn-default{
 strong {
     font-weight: bold;
 }
-#compare-row.hidden {
-    -webkit-transition: all 0.25s ease;
-    -moz-transition: all 0.25s ease;
-    -o-transition: all 0.25s ease;
-    transition: all 0.25s ease;
-    height: 0;
-}
-#compare-row {
-    -webkit-transition: all 0.25s ease;
-    -moz-transition: all 0.25s ease;
-    -o-transition: all 0.25s ease;
-    transition: all 0.25s ease;
-    min-height: 200px;
-    height: auto;
-    background: #e7f2f6;
-}
-#compare-row.closed {
-    background: #ffffff;
-    min-height: 25px;
-    height: auto;
-}
-#compare-row.closed .container {
-    visibility: hidden;
-    display: none;
-}
-#compare-row .pull-right a {
-    display: table;
-    margin: 0 auto;
-}
-#compare-row .compare-box a{
-    color:#ffffff;
-    text-decoration: underline;
-    position: relative;
-    top:-5px;
-}
-#compare-row .compare-box:nth-child(2) {
-    background: #41b8bc;
-}
-#compare-row .compare-box:nth-child(3) {
-    background: #d7b85e;
-}
-#compare-row .compare-box:nth-child(4) {
-    background: #67adce;
-}
-#compare-row .pull-right a:nth-child(1),
-.filter-options .action-buttons a:nth-child(1),
-.tutustu-button
-{
-    margin: 85px auto 20px;
-    padding: 20px 40px;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    text-transform: uppercase;
-    border: none;
-    background-image: -webkit-gradient(
-            linear,
-            left top,
-            left bottom,
-            color-stop(0, #5B9AE2),
-            color-stop(1, #4584CC)
-    );
-    background-image: -o-linear-gradient(bottom, #5B9AE2 0%, #4584CC 100%);
-    background-image: -moz-linear-gradient(bottom, #5B9AE2 0%, #4584CC 100%);
-    background-image: -webkit-linear-gradient(bottom, #5B9AE2 0%, #4584CC 100%);
-    background-image: -ms-linear-gradient(bottom, #5B9AE2 0%, #4584CC 100%);
-    background-image: linear-gradient(to bottom, #5B9AE2 0%, #4584CC 100%);
-}
+
 .btn-primary{
     color: white;
 }
@@ -1986,58 +1884,7 @@ li.hae a::after {
     color: #ffffff;
     font-weight: bold;
 }
-#compare-row .compare-box {
-    border: 2px solid #ffffff;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    min-height: 160px;
-    height: auto;
-    margin: 30px 30px 30px 0;
-    width: 16%;
-}
-.compared-subjects-title {
-    width: 14%;
-    margin: 5% 1%;
-    text-align: center;
-    font-size: 1.35em;
-}
-#compare-row .pull-right {
-    border-left: 1px solid #bfbfbf;
-    padding-bottom: 2%;
-}
-.compare-box .close {
-    -webkit-transition: ease-in-out .3s;
-    -moz-transition: ease-in-out .3s;
-    transition: ease-in-out .3s;
-    text-align: right;
-    margin: 5px 5px 0;
-    color: #ffffff;
-    opacity: .4;
-    float: right;
-}
-.compare-box .close:hover {
-    -webkit-transition: ease-in-out .3s;
-    -moz-transition: ease-in-out .3s;
-    transition: ease-in-out .3s;
-    opacity: .9;
-}
-.compare-box a {
-    display: block;
-}
-.compare-box .title {
-    overflow: hidden;
-    margin: 30px;
-}
-.compare-box .button {
-    width: 65%;
-    margin: 5% auto;
-    padding: 7px;
-    border: 2px solid #b2cce7;
-    text-align: center;
-    border-radius: 15px;
-    font-size: 13px;
-}
+
 button.toggle-compare {
     position: relative;
     right: 130px;
@@ -2061,122 +1908,7 @@ button.toggle-compare::after {
 button.toggle-compare.closed::after {
     content: "Avaa vertailu";
 }
-.compared-items {
-    overflow: hidden;
-}
-.compared-items .compare-box {
-    min-height: 200px;
-    height: 100%;
-    border-top: 1px solid #ccd6df;
-    border-left: 1px solid #ccd6df;
-    border-right: 1px solid #ccd6df;
-    flex-grow: 1;
-}
-.green .compared-items .compare-box {
-    background: #41b8bc;
-}
-.gold .compared-items .compare-box {
-    background: #d7b85e;
-}
-.blue .compared-items .compare-box {
-    background: #67adce;
-}
-.compare-page .compare-list-item .inner {
-    margin: 0;
-    display: block;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    text-align: left;
-}
-.compare-page .compare-list-item p {
-    position: relative;
-    margin-left: 25px;
-    color: #1c1c1c;
-}
-.compare-page .inner {
-    border-left: 1px solid #ccd6df;
-    border-right: 1px solid #ccd6df;
-}
-.compare-page .green .inner {
-    background-color: #d9f1f3;
-}
-.compare-page .gold .inner {
-    background-color: #f7eed1;
-}
-.compare-page .blue .inner {
-    background-color: #e1eef6!important;
-}
-.compare-page .compare-box .title {
-    color: #ffffff;
-    font-size: 1.123em;
-    text-decoration: underline;
-    line-height: 1.5em;
-}
-.compare-page .compare-box .title strong {
-    position: relative;
-    top: -5px;
-}
-.row.compare-info .data-col p {
-    margin: 5px 0;
-}
-.row.compare-info .data-col {
-    float: right;
-    margin-bottom: 3px;
-}
-.row.compare-info .data-col:nth-child(1) {
-    background: #d9f1f1;
-}
-.row.compare-info .data-col:nth-child(2) {
-    background: #f6edd0;
-}
-.row.compare-info .data-col:nth-child(3) {
-    background: #e1eef5;
-    margin-bottom: 15px;
-}
-.compare-page {
-    margin-top: 50px;
-    margin-right: 50px;
-    display: flex;
-    justify-content: left;
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-}
-.compare-page .compare-list {
-    width: 300px;
-    align-self: flex-end;
-}
-.compare-page .compare-list-item {
-    padding: 25px 0;
-    font-weight: bold;
-    height: 100px;
-    overflow: hidden;
-    border-left: none;
-    border-right: none;
-    border-top: 1px solid #000000;
-    border-bottom: none;
-    background: transparent;
-    position: relative;
-    display: block;
-}
-.compare-page .compare-list-item:first-child {
-    border: none;
-}
-.compare-page .compare-list-item:last-child {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-}
-.compare-page .compare-list-item:last-child .inner {
-    border-bottom: 1px solid #ccd6df;
-}
-.compare-mobile {
-    padding-bottom: 70px;
 
-}
-.compare-table {
-    font-weight: bold;
-}
 
 .toteutus .header span:not(.light-font) {
     color: #000000;
@@ -2604,11 +2336,7 @@ a.titlelink {
     #compare-row .compare-box {
         margin-bottom: 0;
     }
-    .compare-box .close {
-        font-size: 17px;
-        margin: 2px 5px 0;
-        color: #ffffff !important;
-    }
+    
     .compare-box .close:focus, .compare-box .close:hover {
         color: #ffffff !important;
         opacity: .9 !important;

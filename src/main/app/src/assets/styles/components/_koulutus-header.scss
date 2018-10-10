@@ -9,19 +9,19 @@
                     display: inline-block;
                     border-radius: 50%;
                     &.muu-hattu {
-                        background-color: $yellow-ochre;  
+                        background-color: $light-orange;  
                     }
                     &.korkeakoulu-hattu {
                         background-color: $amethyst;
                     }
                     &.avoin-hattu {
-                        background-color: $water-blue;
+                        background-color: $dark-flat-blue;
                     }
                     &.ammatillinen-hattu {
-                        background-color: $mid-green;
+                        background-color: $dark-flat-green;
                     }
                     &.lukio-hattu {
-                        background-color: $brick;
+                        background-color: $dark-red;
                     }    
                     &::after{
                         font-family: $material-icons-font-family;

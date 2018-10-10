@@ -94,8 +94,8 @@ class Hakutulos extends Component {
 
         return (
             <React.Fragment>
+                <VertailuBox/>
                 <div className="container">
-                    <VertailuBox/>
                     <HakutulosSummary/>
                     <HakutulosToggle/>
                 </div>

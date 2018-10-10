@@ -4,23 +4,74 @@ $main-bg: #f8f8f8;
 $pinkish-grey: #cecece;
 $soft-grey: #979797;
 $battleship-grey: #6e6e7e;
-$greyish-brown: #4a4a4a;
+
 $dark-grey: #313334;
 $black: #282828;
 $font-color: #222222;
 $light-blue: #e0f2fd;
 $opaque-blue: #1e7998;
 $flat-blue: #316fa0;
-$water-blue: #1976D2;
+$dark-flat-blue: #1976D2;
 $duck-egg-blue: #ecf3fc;
 $beige: #F1F8E9;
-$mid-green: #43A047;
+
 $amethyst: #9c56b8;
-$brick: #c62828;
+$dark-red: #c62828;
 $pumpkin: #eb6f02;
-$yellow-ochre: #DE9A06;
+$light-orange: #DE9A06;
+
+
+// @mixin rgba-background ussage:
+// @include rgba-background(#333333, 0.5); 
+// ==> will compile into: 
+// background-color: #333333; background-color: rgba(51, 51, 51, 0.5);
+
+@mixin rgba-background($hexcolor, $opacity) {
+    background-color: $hexcolor;
+    background-color: rgba($hexcolor, $opacity); 
+}
+
+// Dark colors
+$dark-brown: #663300;
+$dark-deep-blue:#000066;
+$dark-green: #254905;
+$dark-red: #993300;
+$dark-pink: #660066;
+$dark-purple:#660099;
+$dark-grey: #4c4c4c;
+$dark-flat-blue: #006699;
+$dark-blue: #0033cc;
+$dark-flat-green: #378703;
+$dark-flat-red: #cc3300;
+$dark-magenta: #990066;
+$dark-flat-pink: #c126b8;
+
+// Base colors
+$base-blue: #82d4ff;
+$base-deep-blue: #0041dc;
+$base-green: #5bca13;
+$base-yellow: #ffd900;
+$base-orange: #ff5000;
+$base-pink: #e60895;
+$base-magenta: #c126b8;
+$base-black: #000000;
+
+// Light colors
+$light-turquoise: #66cccc;
+$light-green: #9cff5a;
+$light-orange: #ffcc33;
+$light-pink: #ff66cc;
+$light-purple: #cc99ff;
+$light-grey: #b2b2b2;
+$light-deep-turquoise: #99ffff;
+$ligh-blue: #c0e9ff;
+$light-lime:#ccffcc;
+$light-deep-yellow: #ffff33;
+$light-khaki: #cccc99;
+$light-deep-pink: #ffccff;
+
 //fonts
 $material-icons-font-family: "material-icons-font" !default;
 $font-path: "../fonts" !default;
-$theme-font-family:"'Source Sans Pro', sans-serif";
-$theme-font-path:"#{$font-path}/source-sans-pro";
+$theme-font-family:'Open Sans', sans-serif;
+$theme-font-path:"#{$font-path}/open-sans";

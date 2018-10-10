@@ -23,6 +23,8 @@ html, body {
     height: 100%;
 }
 html {
+    box-sizing: border-box;
+    -ms-overflow-style: scrollbar;
 	font-family: sans-serif;
 	-ms-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%
@@ -69,26 +71,26 @@ h3 {
     line-height: 30px;
 }
 a {
-    color: $water-blue;
+    color: $dark-flat-blue;
     font-size: 16px;
 }
 .red {
-    color: $brick;
+    color: $dark-red;
 }
 .dark-blue {
     color: $flat-blue;
 }
 .light-blue {
-    color: $water-blue;
+    color: $dark-flat-blue;
 }
 .green {
-    color: $mid-green;
+    color: $dark-flat-green;
 }
 .purple {
     color: $amethyst;
 }
 .brown {
-    color: $greyish-brown;
+    color: $dark-grey;
 }
 #page-content-wrapper {
     width: 100%;

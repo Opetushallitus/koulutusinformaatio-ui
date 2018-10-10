@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {translate} from 'react-i18next';
 import { inject, observer } from 'mobx-react';
 import { Localizer as l} from "../../tools/Utils";
+import '../../assets/styles/components/_vertailu-box.scss';
 
 @translate()
 @inject("vertailuStore")
@@ -11,12 +12,14 @@ class VertailuBox extends Component {
 
     renderVertailuList() {
         return this.props.vertailuStore.vertailuList.map((i) =>
-            <div className="col-12 col-md-3 compare-box" id="box-0" key={i.oid}>
+            <div className="col-12 col-md-4 col-xl-3 compare-object" key={i.oid}>
+                <div className="col-12 compare-box">
                 <button type="button" className="close" aria-label="Close"
                         onClick={() => this.props.vertailuStore.removeItem(i.oid)}>
-                    <i className="fa fa-times" aria-hidden="true"/>
+                    <i className="icon-outline-close" aria-hidden="true"/>
                 </button>
                 <Link to={i.link} className="title"><strong>{l.localize(i.searchData, i.nimi)}</strong></Link>
+                </div>
             </div>)
     }
 
@@ -27,9 +30,11 @@ class VertailuBox extends Component {
                 <div className="container-fluid" id="compare-row">
                     <div className="container">
                         <div className="row">
-                            <div id="compared-subjects">
-                                <div className="col-12 col-md-3 compared-subjects-title">{this.props.t("haku.olet-valinnut-vertailuun")}</div>
+                            <div id="compared-subjects" className="col-12 col-md-9">
+                            <div className="row">
+                                <div className="col-12 col-md-12 col-xl-3 compared-subjects-title">{this.props.t("haku.olet-valinnut-vertailuun")}</div>
                                 {this.renderVertailuList()}
+                            </div>    
                             </div>
                             <div className="col-12 col-md-3 pull-right">
                                 {this.props.vertailuStore.size > 1 ?
