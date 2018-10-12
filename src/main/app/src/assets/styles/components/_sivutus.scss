@@ -9,10 +9,9 @@ nav[aria-label="Search result navigation"]{
             top: -10px;
             li{
                 width: 24px;
-                height: 24px;
                 margin-right: 5px;
                 text-align: center;
-                background: $light-blue;
+                background: $lighter-blue;
                 &.item-separator{
                     background: transparent;
                     letter-spacing: 1px;

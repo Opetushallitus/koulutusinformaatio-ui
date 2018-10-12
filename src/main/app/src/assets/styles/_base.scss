@@ -16,6 +16,21 @@
 [tabindex="-1"]:focus {
     outline: 0 !important;
 }
+@mixin smoothFonts(){
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@mixin transitions($value: 0.2s, $ease: ease-in-out){
+
+	@if $ease == bezier{
+		$ease: cubic-bezier(0.86, 0, 0.07, 1)
+	}
+	-webkit-transition: all $value $ease;
+	-moz-transition: all $value $ease;
+	-o-transition: all $value $ease;
+	transition: all $value $ease;
+}
 
 html, body {
     width: auto !important;
@@ -35,7 +50,6 @@ body {
     font-family: $theme-font-family;
     position: relative;
     overflow-x: hidden;
-    line-height: 1.42857143;
 	background-color: #fff
 }
 body.no-scroll {
@@ -48,7 +62,7 @@ a:focus {
     color: auto;    
 }
 a.search-button:focus,a.navbar-brand:focus {
-    color: #ffffff;
+    color: white;
 }
 h1,
 h2,
@@ -59,20 +73,44 @@ h5 {
     color: $font-color;
 }
 h1 {
-    font-size: 28px;
-    line-height: 36px;
+    @include fluid-sizing('font-size', $h1-font-size-map);
+    @include fluid-sizing('line-height', $h1-line-height-map);
 }
 h2 {
-    font-size: 20px;
-    line-height: 25px;
+    @include fluid-sizing('font-size', $h2-font-size-map);
+    @include fluid-sizing('line-height', $h2-line-height-map);
 }
 h3 {
-    font-size: 18px;
-    line-height: 30px;
+    @include fluid-sizing('font-size', $h3-font-size-map);
+    @include fluid-sizing('line-height', $h3-line-height-map);
+}
+h1 a,
+h1 p,
+h1 span{
+    @include fluid-sizing('font-size', $h1-font-size-map);
+    @include fluid-sizing('line-height', $h1-line-height-map);
+}
+h2 a,
+h2 p,
+h2 span{
+    @include fluid-sizing('font-size', $h2-font-size-map);
+    @include fluid-sizing('line-height', $h2-line-height-map);
+}
+h3 a,
+h3 p,
+h3 span{
+    @include fluid-sizing('font-size', $h3-font-size-map);
+    @include fluid-sizing('line-height', $h3-line-height-map);
 }
 a {
     color: $dark-flat-blue;
-    font-size: 16px;
+    @include fluid-sizing('font-size', $text-font-size-map);
+    @include fluid-sizing('line-height', $text-line-height-map);
+}
+p,
+span{
+    @include fluid-sizing('font-size', $text-font-size-map);
+    @include fluid-sizing('line-height', $text-line-height-map);
 }
 .red {
     color: $dark-red;

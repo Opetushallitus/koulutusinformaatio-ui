@@ -586,12 +586,16 @@ button.navbar-toggle.collapsed:hover .icon-bar:nth-child(3){
 }
 .navbar-brand {
     font-size: 30px;
+    line-height: 1.3;
     font-weight: 600;
     position: absolute;
     z-index: 1;
     margin: 3px 0 0 65px;
     color: white;
     text-decoration: none;
+}
+.navbar-brand a{
+    line-height: normal!important;
 }
 .navbar-brand:hover {
     text-decoration: none!important;
@@ -964,10 +968,9 @@ nav.navbar-right li {
     max-width: 450px;
     width: 100%;
     height: 50px;
-    margin-left: 15px;
 }
 #call-to-action-secondary .header-search {
-    padding: 80px 0 20px 0;
+    padding: 80px 0 20px 15px;
 }
 .search-button {
     background-color: #e77e22;
@@ -1114,16 +1117,7 @@ ul.right-links li a:hover {
     min-height: 181px;
     height: auto;
 }
-footer {
-    background: white;
-    border-top: 1px solid #bcbcbc;
-    padding: 2em 0;
-    position: relative;
-    /*margin-top: 2.5em; */
-}
-footer.margin {
-    margin-top: 2.5em;
-}
+
 ul.site-links {
     padding: 0;
 }
@@ -1136,21 +1130,6 @@ div.site-links {
 
 ul.site-links li {
     margin-bottom: 0.5em;
-}
-footer .site-icons {
-    display: flex;
-    position: relative;
-    top: 7em;
-}
-footer .site-icons img {
-    height: 75px;
-    width: initial;
-    margin: 0 auto;
-}
-footer p {
-    font-size: 16px;
-    color: black;
-    line-height: 30px;
 }
 .social-media {
     float: right;
@@ -1223,18 +1202,6 @@ footer p {
     padding-bottom: 30px;
 }
 
-.text {
-    width: 80%;
-    margin: 30px auto;
-    height: 95px;
-    overflow: hidden;
-}
-.text a {
-    color: #4d93d9;
-    font-weight: 500;
-    margin-bottom: 30px;
-    font-size: 1.125em;
-}
 .suosikkit {
     position: relative;
     float: right;
@@ -1243,10 +1210,7 @@ footer p {
     font-size: 1.35em;
     color: #d6d6d6;
 }
-/*.suosikkit:hover {
-    cursor: pointer;
-    cursor: hand;
-}*/
+
 .suosikkit i {
     transition: all ease-in .25s;
 }
@@ -1456,13 +1420,6 @@ span.cr.ch-5 {
     position: absolute;
     right: 27px;
     border: 1px solid #d8e00f;
-}
-.navigation-bar {
-    background-color: #27ae61;
-    position: absolute;
-    height: 55px;
-    width: 100%;
-    z-index: 1;
 }
 
 .osaamisalat {
@@ -2088,9 +2045,7 @@ a.titlelink {
         padding: 5.5%;
         width: 75%;
     }
-    footer p {
-        font-size: 1em;
-    }
+
     .filter-options.index {
         left: 5px;
     }
@@ -2101,33 +2056,7 @@ a.titlelink {
 }
 
 
-@media (max-width: 768px) {
-    div footer p {
-        padding: 4% 3%;
-        text-align: center;
-    }
-    ul.social-media {
-        float: left;
-        margin: 0 auto;
-        padding: 0;
-    }
-    ul.social-media li {
-        padding-left: 0;
-        padding-right: 0.2em;
-    }
 
-    ul.social-media img {
-        max-width: 25%;
-    }
-
-    ul.site-links {
-        float: right;
-    }
-
-    div.site-icons {
-        top: 0;
-    }
-}
 
 @media (max-width: 400px) {
     ul.site-links a {

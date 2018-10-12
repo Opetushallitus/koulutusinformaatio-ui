@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { translate } from 'react-i18next';
 import Sidebar from '../common/Sidebar';
+import '../../assets/styles/components/_header.scss';
 @translate()
 class Header extends Component {
     render() {

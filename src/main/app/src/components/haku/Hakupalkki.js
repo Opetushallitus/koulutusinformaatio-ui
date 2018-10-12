@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Hakurajain from './Hakurajain';
 import {observer, inject} from 'mobx-react';
+import Media from 'react-media';
 import { Link, withRouter } from 'react-router-dom';
 import {translate} from 'react-i18next';
 
@@ -13,11 +14,6 @@ class Hakupalkki extends Component {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = { 
-            height: window.innerHeight, 
-            width: window.innerWidth
-          };
-        this.updateDimensions = this.updateDimensions.bind(this);
     }
 
     handleChange(event) {
@@ -37,12 +33,6 @@ class Hakupalkki extends Component {
     componentDidMount() {
         window.addEventListener("resize", this.updateDimensions);
       }
-    updateDimensions() {
-        this.setState({
-          height: window.innerHeight, 
-          width: window.innerWidth
-        });
-      }
     closeRajain() {
         this.props.hakuehtoStore.closeRajain();
     }
@@ -52,14 +42,13 @@ class Hakupalkki extends Component {
         const link = '/haku/' + this.props.hakuehtoStore.keyword;
         const search = this.props.hakuehtoStore.searchParams;
         const value = this.props.hakuehtoStore.keyword ? this.props.hakuehtoStore.keyword : '';
-        let buttonContent = this.state.width > 768 ? t('haku.etsi') : "";
         return (
             <React.Fragment>
                 <div className="container-fluid" id={this.props.main ? "call-to-action" : "call-to-action-secondary"}>
                     <div className="jumbotron">
                         <div className="container">
                             <div className="row">
-                                <div className={"col-12 col-md-8 header-search" + (this.props.main ? " main" : "")}>
+                                <div className={"col-12 col-md-12 header-search" + (this.props.main ? " main" : "")}>
                                     <div className="search">
                                         <input id="regular-input" className="oph-input" type="text"
                                                placeholder={t('haku.kehoite')}
@@ -69,7 +58,14 @@ class Hakupalkki extends Component {
                                         <Link role="button" to={{
                                             pathname: link,
                                             search: search
-                                        }} className="search-button" onClick={() => {this.closeRajain()}}>{ buttonContent }</Link>
+                                        }} className="search-button" onClick={() => {this.closeRajain()}}>{
+                                             <Media query="(max-width: 768px)">
+                                             {
+                                                 matches => matches ? ("") : (t('haku.etsi'))
+                                             }
+                                            </Media> 
+                                        }
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
