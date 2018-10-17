@@ -7,22 +7,25 @@
     background: white;
     .text {
         height: 125px;
-        width: 85%;
+        width: 95%;
         margin: 25px auto;
         a {
             font-weight: bold;
+        }
+        p{
+            margin: 0;
         }
     }
     .haku {
         width: 81px;
         height: 44px;
-        font-size: .91em;
-        padding: 23px 19px 0;
+        font-size: .75em;
+        padding: 23px 23px 0;
         text-shadow: 0px 0px 2px rgba(150, 150, 150, 0.94);
         position: absolute;
         background: $dark-flat-green;
-        left: -24px;
-        top: -19px;
+        left: -25px;
+        top: -15px;
         z-index: 1;
         color: #fff;
         display: inline-block;
@@ -33,22 +36,22 @@
         right: 30px;
         bottom: 15px;
         span {
-            border: 1px solid $dark-flat-blue;
+            border: 1px solid $water-blue;
             pointer-events:none;
             -webkit-border-radius: 20px;
             -moz-border-radius: 20px;
-            border-radius: 20px;
+            border-radius: 13px;
             max-width: 200px;
-            padding: 5px 20px;
+            padding: 1px 20px;
             float: right;
             text-align: center;
             font-size: 14px;
             -webkit-transition: all ease-in .25s;
             -moz-transition: all ease-in .25s;
             transition: all ease-in .25s;
-            color: $dark-flat-blue;
+            color: $water-blue;
             &.poista {
-                background: $dark-flat-blue;
+                background: $water-blue;
                 color: white;
             }
         }
@@ -74,12 +77,12 @@
     }
     &.amm{
         &::after {
-            background-color: $dark-flat-green;
+            background-color: $mid-green;
         }
     } 
     &.lk{
         &::after {
-            background-color: $dark-red;
+            background-color: $brick;
         }
     }
     &.kk{
@@ -89,12 +92,12 @@
     }
     &.ako{
         &::after {
-            background-color: $dark-flat-blue;
+            background-color: $water-blue;
         }
     }
     &.muu{
         &::after {
-            background-color: $light-orange;
+            background-color: $yellow-ochre;
         }
     }
 }

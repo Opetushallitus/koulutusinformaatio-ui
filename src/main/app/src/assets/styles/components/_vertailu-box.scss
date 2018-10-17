@@ -12,6 +12,19 @@
                 min-height: 160px;
                 width: 90%;
                 height: 100%;
+                .title {
+                    overflow: hidden;
+                    margin: 30px;
+                }
+                .button {
+                    width: 65%;
+                    margin: 5% auto;
+                    padding: 7px;
+                    border: 2px solid #b2cce7;
+                    text-align: center;
+                    border-radius: 15px;
+                    font-size: 13px;
+                }
                 .close {
                     border: none;
                     background-color: transparent;
@@ -47,7 +60,6 @@
             }
         }    
     }
-    
     .compared-subjects-title {
         width: 14%;
         text-align: center;
@@ -58,19 +70,8 @@
         padding-bottom: 2%;
     }
 }
-.compare-box .title {
-    overflow: hidden;
-    margin: 30px;
-}
-.compare-box .button {
-    width: 65%;
-    margin: 5% auto;
-    padding: 7px;
-    border: 2px solid #b2cce7;
-    text-align: center;
-    border-radius: 15px;
-    font-size: 13px;
-}
+.compare-box 
+.compare-box 
 #compare-row.hidden {
     -webkit-transition: all 0.25s ease;
     -moz-transition: all 0.25s ease;
@@ -96,9 +97,14 @@
     visibility: hidden;
     display: none;
 }
-#compare-row .pull-right a {
-    display: table;
-    margin: 0 auto;
+#compare-row {
+    .pull-right {
+        a{
+            &:nth-child(1) {
+                margin: 50px auto 25px;
+            }
+        }
+    }
 }
 #compare-row .compare-box a{
     color:#ffffff;
@@ -115,17 +121,7 @@
 #compare-row .compare-object:nth-child(4) .compare-box{
     background: #67adce;
 }
-#compare-row .pull-right a:nth-child(1)
-{
-    margin: 85px auto 20px;
-    padding: 20px 40px;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    text-transform: uppercase;
-    border: none;
-    background: $dark-flat-blue;
-}
+
 @media (max-width: 768px) {
     #compare-row {
         #compared-subjects {
@@ -143,11 +139,6 @@
         .pull-right {
             padding-bottom: 30px;
             border-left: none; 
-            a{
-                &:nth-child(1) {
-                    margin: 50px auto 30px;
-                }
-            }
         }
     }
 }

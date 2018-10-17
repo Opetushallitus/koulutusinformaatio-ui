@@ -1,0 +1,50 @@
+
+.menu {
+    position: absolute;
+    top: 8px;
+    z-index: 999;
+    display: block;
+    width: 32px;
+    height: 32px;
+    margin-left: 15px;
+    background: transparent;
+    border: none;
+    &:hover,
+    &:focus,
+    &:active{
+        outline: none;
+    }
+    &:hover{
+        cursor: pointer;
+    }
+    &.is-closed {
+        .hamb-top,
+        .hamb-middle,
+        .hamb-bottom,
+        {
+            position: absolute;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            background-color: #ffffff;
+        }
+        .hamb-top {
+            top: 4px;
+        }
+        .hamb-middle {
+            top: 50%;
+            margin-top: -3px;
+        }
+        .hamb-bottom {
+            bottom: 7px;
+        }
+    }
+    .menu-text {
+        text-transform: uppercase;
+        font-size: 9px;
+        color: #ffffff;
+        position: relative;
+        top: 19px;
+        left: -8px;
+    }
+}

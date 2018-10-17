@@ -36,7 +36,7 @@ class VertailuBox extends Component {
                                 {this.renderVertailuList()}
                             </div>    
                             </div>
-                            <div className="col-12 col-md-3 pull-right">
+                            <div className="col-12 col-md-3 pull-right d-flex justify-content-center align-items-center flex-column">
                                 {this.props.vertailuStore.size > 1 ?
                                     <Link to={this.props.vertailuStore.createVertailuLink} id={"vertaile"}
                                           role="button" className="btn btn-primary">{this.props.t("haku.vertaile")}</Link>

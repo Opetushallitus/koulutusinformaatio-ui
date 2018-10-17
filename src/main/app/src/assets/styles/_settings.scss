@@ -1,3 +1,4 @@
+@import './animations';
 // Colors
 $main-bg: #f8f8f8;
 $pinkish-grey: #cecece;
@@ -61,17 +62,17 @@ $light-khaki: #cccc99;
 $light-deep-pink: #ffccff;
 
 /// rgba-background
-/// Generates rgba background color from an hexadecimal color value
+/// Generates rgba color for a given property from an hexadecimal color value
 /// @param $hexcolor - hexadecimal color value - (#333333)
 /// @param $opacity - value from 0 to 1 to set the alpha opacity
 /// @example
-/// @include rgba-background(#333333, 0.5); 
+/// @include rgba-color(#333333, 0.5); 
 /// ==> will compile into: 
 /// background-color: #333333; background-color: rgba(51, 51, 51, 0.5);
 
-@mixin rgba-background($hexcolor, $opacity) {
-    background-color: $hexcolor;
-    background-color: rgba($hexcolor, $opacity); 
+@mixin rgba-color ($hexcolor, $opacity, $property: "background-color") {
+    #{$property}: $hexcolor;
+    #{$property}: rgba($hexcolor, $opacity); 
 }
 
 //fonts
@@ -208,3 +209,36 @@ $text-line-height-map: (576px: 26px, 992px: 30px);
     @return $newList;
   }
   
+// Checkbox
+$checkbox-border-color: rgba(0, 0, 0, 0.25);
+$checkbox-border-color-disabled: rgba(0, 0, 0, 0.26);
+$checkbox-checked-color-disabled: rgba(0, 0, 0, 0.26);
+$checkbox-margin: 16px 0;
+$checkbox-size: 20px;
+$checkbox-padding: 5px;
+$checkbox-border-width: 1px;
+$checkbox-border-radius: 2px;
+$checkbox-checkmark-width: 2px;
+$checkbox-checkmark-color: white;
+$checkbox-label-padding: 12px;
+
+// Transitions
+@mixin transitions($value: 0.2s, $ease: ease-in-out){
+
+	@if $ease == bezier{
+		$ease: cubic-bezier(0.86, 0, 0.07, 1)
+	}
+	-webkit-transition: all $value $ease;
+	-moz-transition: all $value $ease;
+	-o-transition: all $value $ease;
+	transition: all $value $ease;
+}
+
+// Animations 
+$countDefault: 1 !default;
+$durationDefault: 1s !default;
+$delayDefault: 0s !default;
+$functionDefault: ease !default;
+$fillDefault: both;
+$visibilityDefault: hidden !default;
+

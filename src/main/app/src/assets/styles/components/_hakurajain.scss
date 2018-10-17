@@ -1,0 +1,51 @@
+.filter-container {
+    position: absolute;
+    left: -100.8vw;
+    width: 355px;
+    transition: all ease-in .5s;
+    &.index {
+        max-width: 450px;
+        width: 100%;
+    }
+    &.open {
+        left: 0;
+        transition: all ease-in .5s;
+    }
+    input[type=text] {
+        width: 90%;
+        margin-left: 5%;
+    }
+    .filter-options {
+        z-index: 998;
+        left: 0;
+        width: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background: #ffffff;
+        position: absolute;
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+        -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+        &.index {
+            left:10px;
+            top:-18px;
+            width: 450px;
+            .oph-input {
+                -webkit-box-shadow: none;
+                -moz-box-shadow: none;
+                box-shadow: none;
+            }
+        }
+    }
+    .filters-main {
+        padding: 1em;
+        h5{
+            color: #9c9c9c;
+        }
+    }
+    
+}

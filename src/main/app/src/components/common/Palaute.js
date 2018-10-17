@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import superagent from "superagent";
 import {inject} from "mobx-react/index";
 import {translate} from 'react-i18next';
-
+import '../../assets/styles/components/_palaute.scss';
 @translate()
 @inject("urlStore")
 class Palaute extends Component {
@@ -38,7 +38,7 @@ class Palaute extends Component {
         const {t} = this.props;
         return (
             <div className="palaute-form">
-                <a className="palaute-form-close" onClick={this.props.togglePalaute}><i className="fa fa-times"/></a>
+                <a className="palaute-form-close" onClick={this.props.togglePalaute}><i className="icon-outline-close"/></a>
                 <div className="palaute-form-container">
                     <h2 className="palaute-form-header">{t('palaute.otsikko')}</h2>
                     <div className="palaute-form-rating">
@@ -57,9 +57,7 @@ class Palaute extends Component {
                         <textarea placeholder={t('palaute.kommentti')}
                                   onChange={(e) => this.handlePalauteChange(e.target.value)}/>
                     </div>
-                    <div className="form-group action-buttons">
-                        <a className={"btn btn-primary " + (this.state.arvosana ? "" : "inactive")}  onClick={() => this.handleSubmit()}>{t('palaute.lähetä')}</a>
-                    </div>
+                        <a className={"btn btn-primary " + (this.state.arvosana ? "" : "disabled")}  onClick={() => this.handleSubmit()}>{t('palaute.lähetä')}</a>
                 </div>
             </div>);
     }

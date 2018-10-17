@@ -23,7 +23,7 @@ footer {
     .row{
         &.d-block{
             border-top: 1px solid $light-grey;
-            @include rgba-background($light-grey, 0.1);
+            @include rgba-color($light-grey, 0.1);
             padding-bottom: 4em;
         }
     }

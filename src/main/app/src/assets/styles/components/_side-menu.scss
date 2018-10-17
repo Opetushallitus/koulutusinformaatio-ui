@@ -1,0 +1,204 @@
+@import '../settings';
+
+#sidebar-wrapper {
+    z-index: 1000;
+    left: 220px;
+    width: 320px;
+    height: 100vh;
+    margin-left: -220px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #282828;
+    position: absolute;
+    @include slideInLeft(
+        $duration: .3s,
+        $delay: 0s,
+        $function: ease
+    );
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    &.is-closing-true{
+        @include slideOutLeft(
+            $duration: .3s,
+            $delay: 0s,
+            $function: ease
+        );
+    }
+}
+.overlay{
+    &.displayed-true{
+        @include fadeInLeft(
+            $duration: .3s,
+            $delay: 0s,
+            $function: ease
+        );
+    }
+    &.displayed-false{
+        @include fadeOutLeft(
+            $duration: .3s,
+            $delay: 0s,
+            $function: ease
+        );
+    }
+}
+div.sidebar-brand {
+    width: 100%;
+    font-size: 16px;
+    padding: 15px 30px;
+    color: #ffffff;
+    -webkit-box-shadow: inset 0 -1px 0 0 #101011;
+    box-shadow: inset 0 -1px 0 0 #101011;
+}
+.sidebar-close {
+    position: relative;
+    float: right;
+    top: -8px;
+    color: #636769;
+    font-size: x-large;
+    z-index: 1001;
+    i{
+        color: white;
+        opacity: 1;
+        @include transitions();
+        &:hover{
+            cursor: pointer;
+            opacity: .5;
+            @include transitions();
+        }
+    }
+}
+.sidebar-nav {
+    position: relative;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    ul {
+        background-color: #313334;
+        padding: 0;
+        &.nav {
+            box-shadow: inset 0 -1px 0 0 #101011;
+            li{
+                .open {
+                    box-shadow: inset 0 -1px 0 0 #101011;
+                    a{
+                        &.dropdown-toggle {
+                            text-transform: uppercase;
+                            background-color: #4a4a4a;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    li {
+        position: relative;
+        line-height: 20px;
+        display: inline-block;
+        a {
+            display: inline-block;
+            color: #FFFFFF;
+            text-decoration: none;
+            padding: 10px 15px 10px 30px;
+            width: 100%;
+        }
+    }
+    li.dropdown.open::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        height: 100%;
+        width: 3px;
+        background-color: #2a6dbb;
+        -webkit-transition: width .2s ease-in;
+        -moz-transition:  width .2s ease-in;
+        -ms-transition:  width .2s ease-in;
+        transition: width .2s ease-in;
+        color: #fff;
+    }
+}
+ul.languages {
+    position: relative;
+    line-height: 20px;
+    width: 100%;
+    font-size: .8em;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-pack: center;
+    justify-content: center;
+    padding: 0;
+    margin: auto;
+    background-color: #282828;
+    li {
+        width: auto;
+        &.selected {
+            a {
+            color: #ffffff;
+            }
+         }
+        a {
+            padding: 10px 15px 0 15px;
+            font-size: 14px;
+        }
+
+    }
+}
+.sidebar-nav li a:hover,
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus,
+.sidebar-nav li.open a:hover,
+.sidebar-nav li.open a:active,
+.sidebar-nav li.open a:focus{
+    color: #fff;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 50px;
+    font-size: 20px;
+    line-height: 44px;
+}
+.sidebar-nav .dropdown-menu {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    border: 0;
+    background-color: #4a4a4a;
+    box-shadow: none;
+}
+
+.sidebar-nav ul li.frontpage-link a, .sidebar-nav ul li.palaute a {
+    color: #b9b9b9;
+}
+
+.sidebar-nav .current-page::before {
+    content: '\25CF';
+    color: #f5a623;
+    position: absolute;
+    font-size: 23px;
+    left: 10px;
+    top: 7px;
+}
+.sidebar-nav .dropdown-menu a {
+    color: #FFFFFF;
+}
+.sidebar-nav .dropdown-menu .current-page a {
+    color: #f5a623;
+}
+.sidebar-close {
+    position: relative;
+    float: right;
+    top: -8px;
+    color: #636769;
+    font-size: x-large;
+    z-index: 1001;
+}

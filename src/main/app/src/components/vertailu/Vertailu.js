@@ -113,8 +113,8 @@ class Vertailu extends Component {
                     <div className="row compare-page">
                         <div className="col-md-3">
                             <ul className="compare-list subject-titles">
-                                <li class="compared-items">
-                                    <div class="compare-box no-content"></div>
+                                <li className="compared-items">
+                                    <div className="compare-box no-content"></div>
                                 </li>
                                 <li className="compare-list-item"><p>{t("vertailu.koulutus-alkaa")}</p></li>
                                 <li className="compare-list-item"><p>{t("vertailu.opetuskieli")}</p></li>

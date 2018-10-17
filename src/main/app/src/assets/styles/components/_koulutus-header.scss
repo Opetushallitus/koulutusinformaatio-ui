@@ -9,20 +9,20 @@
                     display: inline-block;
                     border-radius: 50%;
                     &.muu-hattu {
-                        background-color: $light-orange;  
+                        background-color: $yellow-ochre;  
                     }
                     &.korkeakoulu-hattu {
                         background-color: $amethyst;
                     }
                     &.avoin-hattu {
-                        background-color: $dark-flat-blue;
+                        background-color: $water-blue;
                     }
                     &.ammatillinen-hattu {
-                        background-color: $dark-flat-green;
+                        background-color: $mid-green;
                     }
                     &.lukio-hattu {
-                        background-color: $dark-red;
-                    }    
+                        background-color: $brick;
+                    }        
                     &::after{
                         font-family: $material-icons-font-family;
                         content: "\e91e";

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { translate } from 'react-i18next';
-import Sidebar from '../common/Sidebar';
+import MenuButton from './MenuButton';
 import '../../assets/styles/components/_header.scss';
 @translate()
 class Header extends Component {
@@ -12,7 +12,7 @@ class Header extends Component {
                 <div className="container-fluid navigation-bar"/>
                 <div className="container navigation">
                     <div className="row">
-                        <Sidebar changeLanguage={this.changeLanguage} togglePalaute={this.togglePalaute}/>
+                        <MenuButton changeLanguage={this.changeLanguage} togglePalaute={this.togglePalaute}/>
                         <Link to={{ pathname: '/'}} className="navbar-brand">{t('opintopolku')}</Link>
                     </div>
                 </div>

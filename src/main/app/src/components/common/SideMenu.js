@@ -3,27 +3,27 @@ import { translate } from 'react-i18next';
 import { withRouter, Link } from 'react-router-dom';
 import { Localizer as l } from "../../tools/Utils";
 import SidebarDropdown from "./SidebarDropdown";
+import '../../assets/styles/components/_side-menu.scss';
 
 @translate()
-class Sidebar extends Component {
+class SideMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: false,
+            closing: false,
             selected: ""
         };
-        this.openMenu = this.openMenu.bind(this);
         this.closeMenu = this.closeMenu.bind(this);
         this.selectDropdown = this.selectDropdown.bind(this);
+        
     }
-
-    openMenu() {
-        this.setState({open: true});
-    }
-
     closeMenu() {
-        this.setState({open: false});
-        // this.props.togglePalaute(false);
+        this.setState({
+            closing: true
+        });      
+        setTimeout(() => {
+          this.props.unmountMe();          
+        }, 250);
     }
 
     changeLanguage(lng) {
@@ -45,22 +45,14 @@ class Sidebar extends Component {
             this.setState({selected: ""});
         }
     }
-
+ 
     render() {
         const {t} = this.props;
+
         return (
             <React.Fragment>
-                {!this.state.open ?
-                    <button type="button" className={"menu is-closed"} onClick={this.openMenu}>
-                        <span className="hamb-top"/>
-                        <span className="hamb-middle"/>
-                        <span className="hamb-bottom"/>
-                        <span className="menu-text">{t('valikko')}</span>
-                    </button>
-                :
-                    <React.Fragment>
-                        <div className="overlay"/>
-                        <nav className="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper">
+                <div className={"overlay displayed-" + !this.state.closing} onClick={this.closeMenu}></div>
+                        <nav className={"navbar navbar-inverse navbar-fixed-top is-closing-" + this.state.closing} id="sidebar-wrapper">
                             <div className="sidebar-brand">
                                 <span>Valikko</span>
                                 <a className="sidebar-close" onClick={this.closeMenu}><i className="icon-outline-close"/></a>
@@ -208,11 +200,9 @@ class Sidebar extends Component {
                                 </ul>
                             </ul>
                         </nav>
-                    </React.Fragment>
-                }
             </React.Fragment>
         );
     }
 }
 
-export default withRouter(Sidebar);
+export default withRouter(SideMenu);

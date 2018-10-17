@@ -1,18 +1,12 @@
 @import './settings';
 
-* {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box
-}
-
+*,
 *:before,
 *:after {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box
 }
-
 [tabindex="-1"]:focus {
     outline: 0 !important;
 }
@@ -20,7 +14,6 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
-
 @mixin transitions($value: 0.2s, $ease: ease-in-out){
 
 	@if $ease == bezier{
@@ -31,7 +24,6 @@
 	-o-transition: all $value $ease;
 	transition: all $value $ease;
 }
-
 html, body {
     width: auto !important;
     overflow-x: hidden !important;
@@ -44,7 +36,6 @@ html {
 	-ms-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%
 }
-
 body {
     margin: 0;
     font-family: $theme-font-family;
@@ -131,13 +122,22 @@ span{
     color: $dark-grey;
 }
 #page-content-wrapper {
+    position: absolute;
+    margin-right: -220px;
     width: 100%;
     background: $main-bg;
 }
-input[type="checkbox"] {
-    -webkit-appearance: none;
-    &::before{
-        font-family: $material-icons-font-family;
-        content: "\e901";
+
+.btn{
+    &.btn-primary{
+        @include rgba-color($water-blue, 1);
+        width: 180px;
+        height: 40px;
+        padding: 5px 0;
+        text-align: center;
+        text-decoration: none;
+        &.disabled{
+            @include rgba-color($water-blue, .5);
+        }
     }
 }
