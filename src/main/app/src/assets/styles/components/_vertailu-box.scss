@@ -70,8 +70,7 @@
         padding-bottom: 2%;
     }
 }
-.compare-box 
-.compare-box 
+
 #compare-row.hidden {
     -webkit-transition: all 0.25s ease;
     -moz-transition: all 0.25s ease;
@@ -125,20 +124,24 @@
 @media (max-width: 768px) {
     #compare-row {
         #compared-subjects {
-            padding: 0;
+            padding: 0 0 40px;
             .compare-object{
+                margin-bottom: 15px;
                 .compare-box {
                     width: 100%;
-                    margin-top: 15px;
+                    margin-bottom: 15px;
                 }
             }            
             .compared-subjects-title {
-
+                padding: 30px 0 15px;
             }
         }
         .pull-right {
             padding-bottom: 30px;
             border-left: none; 
+            a:nth-child(1) {
+                margin: 0 auto 25px;
+            }
         }
     }
 }

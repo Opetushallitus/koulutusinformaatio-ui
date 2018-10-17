@@ -1,103 +1,105 @@
 @import '../settings';
-
-.search-box {
-    box-shadow: 0 0px 1px $pinkish-grey;
-    height: 200px;
-    overflow: hidden;
-    background: white;
-    .text {
-        height: 125px;
-        width: 95%;
-        margin: 25px auto;
-        a {
-            font-weight: bold;
-        }
-        p{
-            margin: 0;
-        }
-    }
-    .haku {
-        width: 81px;
-        height: 44px;
-        font-size: .75em;
-        padding: 23px 23px 0;
-        text-shadow: 0px 0px 2px rgba(150, 150, 150, 0.94);
-        position: absolute;
-        background: $dark-flat-green;
-        left: -25px;
-        top: -15px;
-        z-index: 1;
-        color: #fff;
-        display: inline-block;
-        transform: rotate(-40deg);
-    }
-    .compare-button {
-        position: absolute;
-        right: 30px;
-        bottom: 15px;
-        span {
-            border: 1px solid $water-blue;
-            pointer-events:none;
-            -webkit-border-radius: 20px;
-            -moz-border-radius: 20px;
-            border-radius: 13px;
-            max-width: 200px;
-            padding: 1px 20px;
-            float: right;
-            text-align: center;
-            font-size: 14px;
-            -webkit-transition: all ease-in .25s;
-            -moz-transition: all ease-in .25s;
-            transition: all ease-in .25s;
-            color: $water-blue;
-            &.poista {
-                background: $water-blue;
-                color: white;
+.box-container{
+    padding: 15px;
+    .search-box {
+        box-shadow: 0 0px 1px $pinkish-grey;
+        height: 200px;
+        overflow: hidden;
+        background: white;
+        .text {
+            height: 125px;
+            width: 95%;
+            margin: 25px auto;
+            a {
+                font-weight: bold;
+            }
+            p{
+                margin: 0;
             }
         }
-        &.inactive {
+        .haku {
+            width: 81px;
+            height: 44px;
+            font-size: .75em;
+            padding: 23px 23px 0;
+            text-shadow: 0px 0px 2px rgba(150, 150, 150, 0.94);
+            position: absolute;
+            background: $dark-flat-green;
+            left: -25px;
+            top: -15px;
+            z-index: 1;
+            color: #fff;
+            display: inline-block;
+            transform: rotate(-40deg);
+        }
+        .compare-button {
+            position: absolute;
+            right: 30px;
+            bottom: 15px;
             span {
-                color: #d6d6d6;
-                border-color: #d6d6d6;
+                border: 1px solid $water-blue;
+                pointer-events:none;
+                -webkit-border-radius: 20px;
+                -moz-border-radius: 20px;
+                border-radius: 13px;
+                max-width: 200px;
+                padding: 1px 20px;
+                float: right;
+                text-align: center;
+                font-size: 14px;
+                -webkit-transition: all ease-in .25s;
+                -moz-transition: all ease-in .25s;
+                transition: all ease-in .25s;
+                color: $water-blue;
+                &.poista {
+                    background: $water-blue;
+                    color: white;
+                }
+            }
+            &.inactive {
+                span {
+                    color: #d6d6d6;
+                    border-color: #d6d6d6;
+                }
             }
         }
-    }
-    &::after{
-        display: inline-block;
-        margin: 0 0 8px 20px;
-        height: 4px;
-        width: 100%;
-        content: " ";
-        position: absolute;
-        text-shadow: none;
-        top: 0px;
-        bottom: 0;
-        right: 0;
-        z-index: 0;
-    }
-    &.amm{
-        &::after {
-            background-color: $mid-green;
+        &::after{
+            display: inline-block;
+            margin: 0 0 8px 20px;
+            height: 4px;
+            width: 100%;
+            content: " ";
+            position: absolute;
+            text-shadow: none;
+            top: 0px;
+            bottom: 0;
+            right: 0;
+            z-index: 0;
         }
-    } 
-    &.lk{
-        &::after {
-            background-color: $brick;
-        }
-    }
-    &.kk{
-        &::after {
-            background-color: $amethyst;
+        &.amm{
+            &::after {
+                background-color: $mid-green;
+            }
         } 
-    }
-    &.ako{
-        &::after {
-            background-color: $water-blue;
+        &.lk{
+            &::after {
+                background-color: $brick;
+            }
         }
-    }
-    &.muu{
-        &::after {
-            background-color: $yellow-ochre;
+        &.kk{
+            &::after {
+                background-color: $amethyst;
+            } 
+        }
+        &.ako{
+            &::after {
+                background-color: $water-blue;
+            }
+        }
+        &.muu{
+            &::after {
+                background-color: $yellow-ochre;
+            }
         }
     }
 }

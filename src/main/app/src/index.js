@@ -63,7 +63,7 @@ class App extends Component {
 }
 
 ReactDOM.render((
-    <BrowserRouter basename={'/'}>
+    <BrowserRouter basename={'/konfo'}>
 
             <App/>
 

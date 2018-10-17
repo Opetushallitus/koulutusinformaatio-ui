@@ -25,6 +25,29 @@
             $function: ease
         );
     }
+    .sidebar-input {
+        display: block;
+        width: 80%;
+        padding: 2px;
+        margin: 2px auto 15px auto;
+        color: #FFFFFF;
+        box-shadow: inset 0 -1px 0 0 #ffffff;
+        &::before {
+            content: "\ECAD";
+            font-family: "material-icons-font";
+            font-size: 16px;
+        }
+        input {
+            background-color: #282828;
+            border: 0;
+            color: white;
+            width:90%;
+            &::placeholder {
+                font-style: italic;
+                font-weight: lighter;
+            }
+        }
+    }
 }
 .overlay{
     &.displayed-true{

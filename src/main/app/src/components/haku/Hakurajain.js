@@ -64,7 +64,7 @@ class Hakurajain extends Component {
                 <div className="container">
                     <div className="col-12">
                         <div className={"filter-button"} onClick={() => this.toggleRajain()} role="button">
-                            {this.props.hakuehtoStore.rajainOpen ? t("haku.sulje-rajain") : t("haku.rajaa-etsintää")}
+                            <span>{this.props.hakuehtoStore.rajainOpen ? t("haku.sulje-rajain") : t("haku.rajaa-etsintää")}</span>
                         </div>
                     </div>
                 </div>

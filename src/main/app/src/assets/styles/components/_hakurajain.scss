@@ -1,6 +1,25 @@
+.filter-button{
+    background-image: -webkit-gradient( linear, left top, left bottom, color-stop(0, #5B5B5B), color-stop(0.47, #464646));
+    background-image: -o-linear-gradient(bottom, #5B5B5B 0%, #464646 47%);
+    background-image: -webkit-linear-gradient(bottom, #5B5B5B 0%, #464646 47%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#5B5B5B), color-stop(47%, #464646));
+    background-image: -webkit-linear-gradient(top, #5B5B5B 0%, #464646 47%);
+    background-image: -o-linear-gradient(top, #5B5B5B 0%, #464646 47%);
+    background-image: linear-gradient(to bottom, #5B5B5B 0%, #464646 47%);
+    float: left;
+    border-radius: 5px;
+    width: 165px;
+    position: absolute;
+    min-height: 30px;
+    height: auto;
+    padding: 2px 0;
+    z-index: 999;
+    top: -1em;
+    color: #ffffff;
+    text-align: center;
+}
 .filter-container {
     position: absolute;
-    left: -100.8vw;
     width: 355px;
     transition: all ease-in .5s;
     &.index {
