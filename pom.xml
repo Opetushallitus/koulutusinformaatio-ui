@@ -106,7 +106,7 @@
                             <goal>npm</goal>
                         </goals>
                     </execution>
-                    <execution>
+                    <!--execution>
                         <id>Run tests</id>
                         <phase>test</phase>
                         <goals>
@@ -120,7 +120,7 @@
                             </environmentVariables>
                             <arguments>test</arguments>
                         </configuration>
-                    </execution>
+                    </execution-->
                     <execution>
                         <id>Build frontend</id>
                         <goals>
