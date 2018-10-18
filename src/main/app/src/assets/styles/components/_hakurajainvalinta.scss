@@ -7,6 +7,10 @@ $channels: (
   ch-4: $water-blue,
   ch-5: $yellow-ochre
 );
+.filter-options .action-buttons a:first-child {
+  margin: 30px auto!important;
+  padding: 5px!important;
+}
 .checkbox {
   position: relative;
   margin: $checkbox-margin;

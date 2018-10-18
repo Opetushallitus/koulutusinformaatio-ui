@@ -81,9 +81,12 @@ $font-path: "../fonts" !default;
 $theme-font-family:'Open Sans', sans-serif;
 $theme-font-path:"#{$font-path}/open-sans";
 
-// font size
+// font size maps
+/// At least 2 different breakpoins and sizes should be provided
+/// font-map:(breakpoint: size, breakpoint: size)
 $h1-font-size-map: (576px: 18px, 992px: 30px);
 $h1-line-height-map: (576px: 24px, 992px: 36px);
+$h1-icon-font-size-map: (576px:28px, 992px: 40px);
 $h2-font-size-map: (576px: 16px, 992px: 20px);
 $h2-line-height-map: (576px: 26px, 992px: 30px);
 $h3-font-size-map: (576px: 16px, 992px: 18px);

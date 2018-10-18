@@ -139,6 +139,7 @@ span{
         padding: 5px 0;
         text-align: center;
         text-decoration: none;
+        color: white;
         &.disabled{
             @include rgba-color($water-blue, .5);
         }

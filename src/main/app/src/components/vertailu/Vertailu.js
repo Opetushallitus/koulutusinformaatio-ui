@@ -99,18 +99,19 @@ class Vertailu extends Component {
             <React.Fragment>
                 <div className="container">
                     <div className="row">
-                        <div className="compare">
+                        <div className="col-12 compare">
                             <h1>
                                 <Link to={this.state.hakuUrl} className="header" >
+                                <span className="icon-ic-back-button"></span>
                                     <span className="light-font">{t("vertailu.takaisin-edelliselle-sivulle")}</span>
-                                    <p>{t("vertailu.vertailuun-ottamasi-kohteet")}</p>
+                                  {/*t("vertailu.vertailuun-ottamasi-kohteet")*/}
                                 </Link>
                             </h1>
                         </div>
                     </div>
                 </div>
                 <div className="container">
-                    <div className="row compare-page">
+                    <div className="compare-page row">
                         <div className="col-md-3">
                             <ul className="compare-list subject-titles">
                                 <li className="compared-items">

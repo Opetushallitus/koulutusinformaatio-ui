@@ -26,13 +26,13 @@ class VertailuBox extends Component {
     render() {
         return (
             <React.Fragment>
-                {this.props.vertailuStore.size &&
+                {!!this.props.vertailuStore.size &&
                 <div className="container-fluid" id="compare-row">
                     <div className="container">
                         <div className="row">
                             <div id="compared-subjects" className="col-12 col-md-9">
                             <div className="row">
-                                <div className="col-12 col-md-12 col-xl-3 compared-subjects-title">{this.props.t("haku.olet-valinnut-vertailuun")}</div>
+                                <div className="col-12 col-lg-12 col-xl-3 compared-subjects-title"><h3>{this.props.t("haku.olet-valinnut-vertailuun")}</h3></div>
                                 {this.renderVertailuList()}
                             </div>    
                             </div>

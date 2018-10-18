@@ -10,11 +10,16 @@
                 -moz-border-radius: 5px;
                 border-radius: 5px;
                 min-height: 160px;
-                width: 90%;
+                width: 97%;
                 height: 100%;
+                a{
+                    color:#ffffff;
+                    text-decoration: underline;
+                    position: relative;
+                }
                 .title {
                     overflow: hidden;
-                    margin: 30px;
+                    margin: 15px 0;
                 }
                 .button {
                     width: 65%;
@@ -32,9 +37,10 @@
                     -moz-transition: ease-in-out .3s;
                     transition: ease-in-out .3s;
                     text-align: right;
-                    margin: 5px 5px 0;
+                    margin: 5px 0;
                     color: white;
-                    float: right;
+                    position: absolute;
+                    right: 0;
                     opacity: 1;
                     font-size: 20px;
                     &:hover {
@@ -50,20 +56,20 @@
                 }
             }
             &:nth-child(2) .compare-box {
-                background: #41b8bc;
+                background: $opaque-blue;
             }
             &:nth-child(3) .compare-box {
-                background: #d7b85e;
+                background: $yellow-ochre;
             }
             &:nth-child(4) .compare-box{
-                background: #67adce;
+                background: $flat-blue;
             }
         }    
     }
     .compared-subjects-title {
         width: 14%;
         text-align: center;
-        font-size: 1.35em;
+        
     }
     .pull-right {
         border-left: 1px solid #bfbfbf;
@@ -104,21 +110,6 @@
             }
         }
     }
-}
-#compare-row .compare-box a{
-    color:#ffffff;
-    text-decoration: underline;
-    position: relative;
-    top:-5px;
-}
-#compare-row .compare-object:nth-child(2) .compare-box {
-    background: #41b8bc;
-}
-#compare-row .compare-object:nth-child(3) .compare-box {
-    background: #d7b85e;
-}
-#compare-row .compare-object:nth-child(4) .compare-box{
-    background: #67adce;
 }
 
 @media (max-width: 768px) {
