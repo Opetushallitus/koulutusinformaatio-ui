@@ -10,6 +10,9 @@
     overflow-x: hidden;
     background: #282828;
     position: absolute;
+    -webkit-box-shadow: 9px 4px 42px -16px rgba(0,0,0,0.5);
+    -moz-box-shadow: 9px 4px 42px -16px rgba(0,0,0,0.5);
+    box-shadow: 9px 4px 42px -16px rgba(0,0,0,0.5);
     @include slideInLeft(
         $duration: .3s,
         $delay: 0s,
@@ -31,6 +34,8 @@
         padding: 2px;
         margin: 2px auto 15px auto;
         color: #FFFFFF;
+        -webkit-box-shadow: inset 0 -1px 0 0 #ffffff;
+        -moz-box-shadow: inset 0 -1px 0 0 #ffffff;
         box-shadow: inset 0 -1px 0 0 #ffffff;
         &::before {
             content: "\ECAD";
@@ -42,6 +47,8 @@
             border: 0;
             color: white;
             width:90%;
+            font-size: 14px;
+            padding-left: 5px;
             &::placeholder {
                 font-style: italic;
                 font-weight: lighter;
@@ -80,6 +87,7 @@ div.sidebar-brand {
     padding: 15px 30px;
     color: #ffffff;
     -webkit-box-shadow: inset 0 -1px 0 0 #101011;
+    -moz-box-shadow: inset 0 -1px 0 0 #101011;
     box-shadow: inset 0 -1px 0 0 #101011;
 }
 .sidebar-close {
@@ -107,18 +115,89 @@ div.sidebar-brand {
     margin: 0;
     padding: 0;
     list-style: none;
+    z-index: 100;
+    .sidebar-brand {
+        height: 50px;
+        font-size: 20px;
+        line-height: 44px;
+    }
+    .dropdown{
+        &.current-page{
+            max-height: 100%;
+            opacity: 1;
+            @include transitions(.35s);
+            &::before {
+            content: '\25CF';
+            color: $yellow-ochre;
+            position: absolute;
+            font-size: 23px;
+            left: 10px;
+            top: 7px;
+            }
+        }
+    }
     ul {
         background-color: #313334;
         padding: 0;
+        &.dropdown-menu{
+            position: relative;
+            top: 0;
+            width: 100%;
+            margin: 0;
+            -webkit-border-radius: 0;
+            -moz-border-radius: 0;
+            border-radius: 0;
+            border: 0;
+            background-color: #4a4a4a;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            font-weight: 100;
+            &.collapsed{
+               display: none;
+            }
+            &.expanded{
+                @include fadeInDown(
+                    $duration: .2s,
+                    $count: 1,
+                    $delay: 0,
+                    $function: ease, 
+                    $fill: both 
+                );
+            }
+            &.collapsing{ 
+                @include fadeOutUp(
+                    $duration: .2s,
+                    $count: 1,
+                    $delay: 0,
+                    $function: ease, 
+                    $fill: both,
+                    $visibility: hidden              
+                );
+            }
+        }
         &.nav {
             box-shadow: inset 0 -1px 0 0 #101011;
             li{
+                a{
+                    &.dropdown-toggle{
+                        -webkit-box-shadow: inset 0 -1px 0 0 #101011;
+                        -moz-box-shadow: inset 0 -1px 0 0 #101011;
+                        box-shadow: inset 0 -1px 0 0 #101011;
+                        &:hover{
+                            cursor: pointer;
+                        }
+                    }
+                }
                 .open {
                     box-shadow: inset 0 -1px 0 0 #101011;
                     a{
                         &.dropdown-toggle {
                             text-transform: uppercase;
-                            background-color: #4a4a4a;
+                            background-color: $darker-grey;
+                            -webkit-box-shadow: inset 0 -1px 0 0 #101011;
+                            -moz-box-shadow: inset 0 -1px 0 0 #101011;
+                            box-shadow: inset 0 -1px 0 0 #101011;
                         }
                     }
                 }
@@ -137,21 +216,10 @@ div.sidebar-brand {
             padding: 10px 15px 10px 30px;
             width: 100%;
         }
-    }
-    li.dropdown.open::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        height: 100%;
-        width: 3px;
-        background-color: #2a6dbb;
-        -webkit-transition: width .2s ease-in;
-        -moz-transition:  width .2s ease-in;
-        -ms-transition:  width .2s ease-in;
-        transition: width .2s ease-in;
-        color: #fff;
+        &.dropdown{
+            border-bottom: 1px solid $darker-grey; 
+            
+        }
     }
 }
 ul.languages {
@@ -204,8 +272,9 @@ ul.languages {
     margin: 0;
     border-radius: 0;
     border: 0;
-    background-color: #4a4a4a;
+    background-color: $greyish-brown;
     box-shadow: none;
+    font-weight: 100;
 }
 
 .sidebar-nav ul li.frontpage-link a, .sidebar-nav ul li.palaute a {
@@ -214,7 +283,7 @@ ul.languages {
 
 .sidebar-nav .current-page::before {
     content: '\25CF';
-    color: #f5a623;
+    color: $yellow-ochre;
     position: absolute;
     font-size: 23px;
     left: 10px;

@@ -111,7 +111,49 @@
         }
     }
 }
+.compare-mobile{
+    .compare-list{
+        padding: 15px;
+        height: 80px;
+        overflow: hidden;
+        margin-bottom: 10px;
+        a{
+            color: white;
+            font-weight: bold;
+            text-shadow: 0.5px 0.5px rgba(0,0,0,.35);
+        }
+        &.green{
+            background: $opaque-blue;
+        }
+        &.gold{
+            background: $yellow-ochre;
+        }
+        &.blue{
+            background: $flat-blue;
+        }
+    }
+    .compare-info{
+        .info-col{
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }       
+        p{
+            font-weight: bold;
+            line-height: 15px;
+        }
+        .green{
+            color: black;
+            @include rgba-color($opaque-blue, 0.25);
+        }
+        .gold{
+            @include rgba-color($yellow-ochre, 0.25);
+        }
+        .blue{
+            @include rgba-color($flat-blue, 0.25);
+        }
+    }
 
+}
 @media (max-width: 768px) {
     #compare-row {
         #compared-subjects {

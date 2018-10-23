@@ -5,7 +5,7 @@ $pinkish-grey: #cecece;
 $soft-grey: #979797;
 $battleship-grey: #6e6e7e;
 $greyish-brown: #4a4a4a;
-$dark-grey: #313334;
+$darker-grey: #313334;
 $black: #282828;
 $font-color: #222222;
 $lighter-blue: #e0f2fd;
@@ -30,7 +30,7 @@ $dark-red: #993300;
 $dark-pink: #660066;
 $dark-purple:#660099;
 $dark-grey: #4c4c4c;
-$dark-flat-blue: #006699;
+$dark-deep-blue: #006699;
 $dark-blue: #0033cc;
 $dark-flat-green: #378703;
 $dark-flat-red: #cc3300;
@@ -226,15 +226,15 @@ $checkbox-checkmark-color: white;
 $checkbox-label-padding: 12px;
 
 // Transitions
-@mixin transitions($value: 0.2s, $ease: ease-in-out){
+@mixin transitions($value: 0.2s, $ease: ease-in-out, $property: all){
 
 	@if $ease == bezier{
 		$ease: cubic-bezier(0.86, 0, 0.07, 1)
 	}
-	-webkit-transition: all $value $ease;
-	-moz-transition: all $value $ease;
-	-o-transition: all $value $ease;
-	transition: all $value $ease;
+	-webkit-transition: $property $value $ease;
+	-moz-transition: $property $value $ease;
+	-o-transition: $property $value $ease;
+	transition: $property $value $ease;
 }
 
 // Animations 
@@ -244,4 +244,5 @@ $delayDefault: 0s !default;
 $functionDefault: ease !default;
 $fillDefault: both;
 $visibilityDefault: hidden !default;
+$displayDefault: none !default;
 
