@@ -123,7 +123,7 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex" item={item} itemNum={x}>
+                                <div className="col-12 info-col d-flex">
                                     <div className={"col-11 " + this.colors[x]}>
                                         <p>{(l.localize(item.koulutuksenAlkamiskausi) + " " + item.koulutuksenAlkamisvuosi)}</p>
                                     </div>
