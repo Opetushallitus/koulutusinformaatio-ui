@@ -3,6 +3,7 @@ import KoulutusInfoBox from './KoulutusInfoBox';
 import OppilaitosList from './OppilaitosList';
 import KoulutusSection from './KoulutusSection';
 import KoulutusHeader from './KoulutusHeader';
+import SlideDropDown from '../common/SlideDropdown';
 import { Localizer as l } from '../../tools/Utils';
 import {translate} from 'react-i18next'
 
@@ -51,7 +52,10 @@ class Ammatillinen extends Component {
                     noRender={true}/>}
 
                 <KoulutusSection content={tutkinnonOsat} header="koulutus.tutkinnon-rakenne"/>
-
+                <SlideDropDown title="Mihin koulutus antaa valmiudet?" text={true}></SlideDropDown>
+                <SlideDropDown title="Mitä voin opiskella?" text={true}></SlideDropDown>
+                <SlideDropDown title="Mitä tutkintoja voin suorittaa?" text={true}></SlideDropDown>
+                <SlideDropDown title="Mitä jatko-opintomahdollisuuksia on?" text={true}></SlideDropDown>
                 <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
 
                 <KoulutusSection content={jatkoOpinnot} header="koulutus.jatko-opinnot"/>

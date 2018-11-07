@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { OsoiteParser as op, Localizer as l } from '../../tools/Utils'
 import OskariRPC from 'oskari-rpc';
 import {observer, inject} from 'mobx-react';
+import '../../assets/styles/components/_oskari-kartta.scss';
 
 @inject("urlStore")
 @observer
@@ -108,7 +109,7 @@ class OskariKartta extends Component {
     }
 
     render() {
-        return <div><iframe title="kartta" id='publishedMap' src={this.props.urlStore.urls.url('kartta.publish-url', l.getLanguage())}/></div>
+        return <div className="iframe-container"><iframe title="kartta" id='publishedMap' src={this.props.urlStore.urls.url('kartta.publish-url', l.getLanguage())}/></div>
     }
 }
 

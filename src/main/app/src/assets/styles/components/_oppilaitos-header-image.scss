@@ -1,0 +1,18 @@
+#oppilaitos-container{
+    margin: 15px auto 30px;
+    .header-image{
+        margin-top: 15px;
+        img{
+            width: 100%;
+        }
+    }  
+}
+@media (max-width:992px) {
+    #oppilaitos-container{
+        .header-image{
+            padding-left: 0;
+            padding-right: 0;
+            margin: -1px;
+        }
+    }
+}

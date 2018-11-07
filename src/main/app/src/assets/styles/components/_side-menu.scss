@@ -1,7 +1,7 @@
 @import '../settings';
 
 #sidebar-wrapper {
-    z-index: 1000;
+    z-index: 10002;
     left: 220px;
     width: 320px;
     height: 100vh;
@@ -65,7 +65,7 @@
         right: 0;
         bottom: 0;
         background-color: rgba(35, 35, 35, 0.8);
-        z-index: 1000;
+        z-index: 10001;
     &.displayed-true{
         @include fadeInLeft(
             $duration: .3s,

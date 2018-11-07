@@ -16,10 +16,13 @@ class KoulutusHeader extends Component {
     render () {
         const hattuClass = "fa fa-circle " + this.props.hattu;
         return (
-            <h1>
-                <i className={hattuClass} aria-hidden="true"></i>
-                <span id={"koulutus-title"}>{this.parseNimi()}</span>
-            </h1>
+            <div className="col-12">
+                <h1>
+                    <i className={hattuClass} aria-hidden="true"></i>
+                    <span id={"koulutus-title"}>{this.parseNimi()}</span>
+                </h1>
+            </div>
+            
         );
     }
 }

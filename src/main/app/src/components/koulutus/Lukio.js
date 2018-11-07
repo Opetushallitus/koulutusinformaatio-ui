@@ -5,6 +5,7 @@ import {Localizer as l} from '../../tools/Utils';
 import {translate} from 'react-i18next';
 import OppilaitosList from "./OppilaitosList";
 import KoulutusHeader from "./KoulutusHeader";
+import SlideDropDown from '../common/SlideDropdown';
 
 @translate()
 class Lukio extends Component {
@@ -45,11 +46,18 @@ class Lukio extends Component {
 
         return (
             <React.Fragment>
+             
                 <KoulutusHeader hattu="lukio-hattu" nimi={this.props.result.searchData.nimi}/>
                 <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
                 <KoulutusSection content={koulutuksenSisalto} header="koulutus.sisältö"/>
-                <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
+                <SlideDropDown title="Mihin koulutus antaa valmiudet?" text={true}></SlideDropDown>
+                <SlideDropDown title="Mitä voin opiskella?" text={true}></SlideDropDown>
+                <SlideDropDown title="Mitä tutkintoja voin suorittaa?" text={true}></SlideDropDown>
+                <SlideDropDown title="Mitä jatko-opintomahdollisuuksia on?" text={true}></SlideDropDown>
+                <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset} nimi={this.props.result.searchData.nimi}/>
                 <KoulutusSection content={jatkoOpinnot} header="koulutus.jatko-opinnot"/>
+
+                
             </React.Fragment>
         );
     }

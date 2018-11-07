@@ -4,6 +4,7 @@ import KoulutusInfoBox from './KoulutusInfoBox';
 import KoulutusSection from './KoulutusSection';
 import {translate} from 'react-i18next';
 import OppilaitosList from "./OppilaitosList";
+import SlideDropDown from '../common/SlideDropdown';
 import KoulutusHeader from "./KoulutusHeader";
 
 @translate()
@@ -49,7 +50,11 @@ class Avoin extends Component {
                 <KoulutusHeader hattu="avoin-hattu" nimi={this.props.result.searchData.nimi}/>
                 {infoBox && <KoulutusInfoBox fields={fields}/>}
                 <KoulutusSection content={kuvaus} header="koulutus.yleiskuvaus"/>
-                <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
+                <SlideDropDown title="Mihin koulutus antaa valmiudet?" text={true}></SlideDropDown>
+                <SlideDropDown title="Mitä voin opiskella?" text={true}></SlideDropDown>
+                <SlideDropDown title="Mitä tutkintoja voin suorittaa?" text={true}></SlideDropDown>
+                <SlideDropDown title="Mitä jatko-opintomahdollisuuksia on?" text={true}></SlideDropDown>
+                <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset} nimi={this.props.result.searchData.nimi}/>
             </React.Fragment>
         );
     }

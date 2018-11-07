@@ -1,0 +1,10 @@
+@import '../settings';
+
+#like-box{
+    border: 1px solid $soft-grey;
+    padding: 15px ;
+    margin-top: 10px;
+    background: white;
+    @include flexbox();
+    justify-content: space-between;  
+}

@@ -1,0 +1,70 @@
+@import '../settings';
+
+.dropdown-component{
+    .slide-dropdown{
+        border-top: 1px solid $soft-grey;
+        border-left: 1px solid $soft-grey;
+        border-right: 1px solid $soft-grey;
+        padding: 0 15px 10px;
+        margin-top: 10px;
+        background: white;
+        &.collapsed{
+            border-bottom: 1px solid $soft-grey;
+        }
+            
+        .slide-dropdown-header {
+            width: 100%;
+            h2 {
+                font-weight: bolder;
+                margin-left: 15px;
+            }
+            span {
+                font-size: 35px;
+                position: relative;
+                top: 5px;
+            }
+        }
+    }
+    .dropdown-content{
+        border-bottom: 1px solid $soft-grey;
+        border-left: 1px solid $soft-grey;
+        border-right: 1px solid $soft-grey;
+        background: white;
+        &.collapsed {
+            display: none;
+        }       
+        &.expanded{
+            @include fadeInDown(
+                $duration: .25s,
+                $count: 1,
+                $delay: 0,
+                $function: ease, 
+                $fill: both 
+            );
+            max-height: 100%;
+            @include transitions(.25s, ease, max-height);
+            .col-11 {
+                -ms-flex: 0 0 91.66667%;
+                flex: 1 0 91.66667%;
+                max-width: 92%;
+                &.text-block,
+                .item-box{
+                    right: -2.35%;
+                    padding: 1px 0 0 0;
+                }
+            }
+            &.collapsing{ 
+                @include fadeOutUp(
+                    $duration: .2s,
+                    $count: 1,
+                    $delay: 0,
+                    $function: ease, 
+                    $fill: both,
+                    $visibility: hidden              
+                );  
+                max-height: 0;
+                @include transitions(.2s, ease, max-height);          
+            }
+        }
+    }
+}

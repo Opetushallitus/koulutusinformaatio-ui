@@ -1,0 +1,77 @@
+@import '../settings'; 
+
+
+
+#side-bar{
+    .sidebar-menu{
+        font-size: 20px;
+        font-weight: 600;
+        width: 100%;
+        margin-top: 30px; 
+        li{
+            padding: 5px 10px;
+            color: black;
+            &:hover{
+                cursor: pointer;
+            }
+            &.active{
+                background: white;
+                color: $pumpkin;
+            }
+        }
+        
+    }
+}
+
+@media (max-width: 992px){
+    .sidebar-menu{
+        background: white;     
+        padding: 0 2%; 
+        display: flex;
+        flex: 1 0 100%;
+        li{
+            margin-right:5px; 
+            flex: 1;
+            text-align: center;
+            display: block;
+            @include fluid-sizing('font-size', $text-font-size-map);
+            line-height: 50px;
+            span{
+                position: relative;
+                &:before {
+                    content: "";
+                    width: 100%;
+                    height: 3px;
+                    display: inline;
+                    top: calc(100%);
+                    left: 0;
+                    position: absolute;
+                    background: $pumpkin;
+                    visibility: hidden;
+                    opacity: 0;
+                    border-radius: 5px;
+                    transform: scaleX(0);
+                    @include transitions(.2s,linear);
+                    border-bottom: 3px solid $pumpkin;
+                  }
+            }
+            
+            &:hover{
+                cursor: pointer;
+            }
+            &.active{
+                span{
+                    background: white;
+                color: $pumpkin;
+                @include transitions(.2s,linear);
+                &:before {
+                    visibility: visible;
+                    transform: scaleX(1);
+                    opacity: 1;
+                  }
+                }
+                
+            }
+        }
+    }
+}

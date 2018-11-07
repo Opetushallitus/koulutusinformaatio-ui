@@ -1,0 +1,29 @@
+@import '../settings';
+
+$channels: (
+  lk: $brick,
+  amm: $mid-green,
+  kk: $amethyst,
+  ako: $water-blue,
+  muu: $yellow-ochre
+);
+#side-bar{
+    @each $channel, $color in $channels{
+        .type-#{$channel} {
+          background: $color;
+          height: 100px;
+          h2{
+              color: white;
+              padding-top: 10px;
+              &::before{
+                  font-family: $material-icons-font-family;
+                  content: "\e91e";
+                  font-size: 2.2rem;
+                  position: relative;
+                  top: 5px;
+                  margin-right: 15px;
+              }
+          }
+        }
+      }
+}

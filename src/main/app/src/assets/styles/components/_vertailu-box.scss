@@ -2,7 +2,7 @@
 
 #compare-row {
     #compared-subjects {
-        padding: 40px 0;
+        padding: 40px 15px 40px 0;
         .compare-object{
             .compare-box {
                 border: 2px solid white;
@@ -154,6 +154,21 @@
     }
 
 }
+@media (max-width: 1200px) {
+    #compare-row #compared-subjects {
+        padding: 15px 15px 40px 0;
+    }
+}
+
+@media (max-width: 992px) {
+    .pull-right {
+        border-left: none !important;
+    }
+    #compare-row #compared-subjects {
+        padding: 15px 15px 0 0;
+    }
+}
+
 @media (max-width: 768px) {
     #compare-row {
         #compared-subjects {
@@ -171,7 +186,6 @@
         }
         .pull-right {
             padding-bottom: 30px;
-            border-left: none; 
             a:nth-child(1) {
                 margin: 0 auto 25px;
             }

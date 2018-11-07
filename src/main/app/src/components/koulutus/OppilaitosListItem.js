@@ -2,6 +2,8 @@ import {Component} from "react";
 import React from "react";
 import { translate } from 'react-i18next';
 import {Link} from "react-router-dom";
+import LikeButton from '../common/LikeButton';
+import '../../assets/styles/components/_oppilaitos-list-item.scss';
 import { Localizer as l } from '../../tools/Utils';
 import {inject} from "mobx-react";
 
@@ -11,22 +13,25 @@ class OppilaitosListItem extends Component {
 
     render () {
         const oppilaitos = this.props.toteutus;
-        const tyyli = "col-12 search-box box-container " + oppilaitos.tyyppi;
         const link = '/toteutus/' + oppilaitos.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
             + '&lng=' + l.getLanguage();
+        const educationName = this.props.education ? l.localize(this.props.education, this.props.t("koulutus.tuntematon")) : ""; 
         return (
-            <div className="row">
-                <div className={tyyli}>
-                    {oppilaitos.haettavissa && <div className="haku">{this.props.t("haku.haku")}</div>}
-                    <div className="suosikkit">
-                        <i className="icon-ic_favorite_border" aria-hidden="true"/>
+            <div className="row justify-content-end">
+                <div className="col-11 item-box">         
+                    <div className="text d-flex justify-content-between">
+                        <div>
+                            <Link to={link} className={"hakutulosbox-link"}>{l.localize(oppilaitos.tarjoaja, this.props.t("koulutus.tuntematon"))}</Link>
+                            <p>{l.localize(oppilaitos.osaamisala, "")}</p>
+                        </div>
+                        <LikeButton></LikeButton>
+                        
                     </div>
-                    <div className="text">
-                        <Link to={link} className={"hakutulosbox-link"}>{l.localize(oppilaitos.tarjoaja, this.props.t("koulutus.tuntematon"))}</Link>
-                        <p>{l.localize(oppilaitos.osaamisala, "")}</p>
+                    <div className="education-name">
+                        <Link to={link} className="hakutulosbox-link">{educationName}</Link>  
                     </div>
                 </div>
-            </div>
+            </div>    
         );
     }
 }

@@ -81,9 +81,7 @@ $channels: (
         border:none;
       }
       + label:after {
-        
         $checkbox-checkmark-size: $checkbox-size - 2 * $checkbox-padding;
-
         transform: translate($checkbox-padding, ($checkbox-size / 2) - ($checkbox-checkmark-size / 2.6)) rotate(-45deg);
         width: $checkbox-checkmark-size;
         height: $checkbox-checkmark-size / 2;

@@ -1,0 +1,21 @@
+.services-button{
+    position: absolute;
+    top: 5px;
+    z-index: 999;
+    display: block;
+    right:6%;
+    color: white;
+    text-align: center;
+    &:hover{
+        cursor: pointer;
+    }
+    i{
+        font-size: 33px;
+        display: block;
+    }
+    span{
+        position: relative;
+        font-size: 11px;
+        top:-10px;
+    }
+}

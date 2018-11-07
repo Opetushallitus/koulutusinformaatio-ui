@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import Hakunavigaatio from '../hakutulos/Hakunavigaatio';
+import Media from 'react-media';
 import {observer, inject} from 'mobx-react';
-import OskariKartta from "./OskariKartta";
+import OppilaitosHeaderImage from './OppilaitosHeaderImage';
+import PageLikeBox from '../common/PageLikeBox';
 import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next';
 import { Localizer as l } from "../../tools/Utils";
-
+import OppilaitosSidebar from './OppilaitosSidebar';
+import SlideDropDown from '../common/SlideDropdown';
 
 @inject("restStore")
 @inject("navigaatioStore")
@@ -41,10 +44,11 @@ class Oppilaitos extends Component {
     //Todo: Selvitä, onko tämä ylipäänsä järkevää
     getEmailFromYhteystiedot() {
         const data = this.state.oppilaitos.yhteystiedot;
-
-        for (let row in data){
-            if (row.email) {
-                return row.email;
+        let emailValue = "";
+        for(let i = 0; i<data.length; i++){
+            if(data[i].email){
+                emailValue = data[i].email;
+                return emailValue;
             }
         }
         return this.props.t("oppilaitos.ei-sähköpostiosoitetta");
@@ -144,62 +148,40 @@ class Oppilaitos extends Component {
                 {insta}
             </ul>
         )
-
-        //<img className='fb-icon' src={fbIcon} alt={"Facebook"}/>
-        //<img className='twitter-icon' src={twitterIcon} alt={"Facebook"}/>
-        //<img className='insta-icon' src={instaIcon} alt={"Facebook"}/>
-    }
-
-    luoKarttaJosOsoiteTiedossa() {
-        const data = this.state.oppilaitos.kayntiosoite;
-        if(data && data.osoite && data.postitoimipaikka) {
-            return <OskariKartta osoite={data.osoite} postitoimipaikka={data.postitoimipaikka} />;
-        }
-        return null;
     }
 
     render() {
+        const actualOppilaitos = this.state.oppilaitos !== undefined ?  l.localize(this.state.oppilaitos.nimi, "", "fi") : "Nimi";
+        const emailAddress = this.state.oppilaitos !== undefined ? this.getEmailFromYhteystiedot() : "";
         if(!this.state.oppilaitos) {
             return null;
         }
         return (
-            <React.Fragment>
-                <div className='container'>
-                    <div className='row info-page oppilaitos'>
-                        <div className='col-12 col-md-9 left-column'>
-                            <h1 className='header'><i className='fa fa-circle'></i>{l.localize(this.state.oppilaitos.nimi, "", "fi")}</h1>
-                            <div className='oppilaitos-yleiskuvaus'>
-                                <div>{this.safeParseYleiskuvaus()}</div>
+            <React.Fragment>                
+                <div className="container" id="oppilaitos-container">
+                    <div className="row">   
+                        <Media query="(min-width: 992px)">
+                                {
+                                    matches => matches ? (
+                                        <OppilaitosSidebar name={actualOppilaitos}></OppilaitosSidebar>
+                                    ):("")
+                                }
+                        </Media> 
+                        <div className="col-12 col-md-12 col-lg-8 col-xl-9">
+                            <div className="header-image">
+                                <OppilaitosHeaderImage></OppilaitosHeaderImage>
                             </div>
+                            <PageLikeBox type="link" text="Lähetä sähköpostia" address={emailAddress}></PageLikeBox>
+                            <Media query="(max-width: 992px)">
+                                {
+                                    matches => matches ? (
+                                        <OppilaitosSidebar name={actualOppilaitos}></OppilaitosSidebar>
+                                    ):("")
+                                }
+                            </Media> 
+                            <SlideDropDown title="Esittely" text={true}></SlideDropDown>
+                            <SlideDropDown title="Yhteystiedot"  name={actualOppilaitos} yhteystiedot={true} data={this.state.oppilaitos || ""}></SlideDropDown>
                         </div>
-
-                        <div className="col-12 col-md-3 right-column row-eq-height">
-                            <div className='orgaanisaatio-yhteystiedot'>
-                                <div className='col-md-12'>
-                                    {this.parseKayntiOsoite()}
-                                </div>
-                                <div className='col-md-12'>
-                                    {this.parsePostiOsoite()}
-                                </div>
-                                <div className='col-md-12'>
-                                    <ul>
-                                        <li>{this.getEmailFromYhteystiedot()}</li>
-                                        <li>{this.getPuhelinFromYhteystiedot()}</li>
-                                    </ul>
-                                </div>
-                                <div className='col-md-12'>
-                                    {this.getKotisivuFromYhteystiedot()}
-                                </div>
-                                <div className='sosiaalinen-media col-md-12'>
-                                    {this.parseSome()}
-                                </div>
-                                <div>
-                                    {this.luoKarttaJosOsoiteTiedossa()}
-                                </div>
-                            </div>
-
-                        </div>
-
                     </div>
                 </div>
                 <Hakunavigaatio/>

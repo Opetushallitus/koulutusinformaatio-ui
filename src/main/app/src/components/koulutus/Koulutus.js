@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
+import '../../assets/styles/components/_koulutus.scss';
 import Korkeakoulu from "./Korkeakoulu";
 import Ammatillinen from "./Ammatillinen";
 import Hakunavigaatio from './../hakutulos/Hakunavigaatio';
+import Media from 'react-media';
+import KoulutusHeaderImage from './KoulutusHeaderImage';
+import KoulutusSidebar from './KoulutusSidebar';
+import PageVertailuBox from '../common/PageLikeBox';
 import Avoin from "./Avoin";
 import Lukio from "./Lukio";
-import KoulutusSidebar from "./KoulutusSidebar";
 
 @inject("restStore")
 @inject("navigaatioStore")
@@ -50,10 +54,17 @@ class Koulutus extends Component {
         return <div/>
     }
 
+    koulutusType() {
+        if(this.state.koulutus){
+            return this.state.koulutus.searchData.tyyppi;
+        }
+    }
+
     render() {
         const selectedKoulutus = this.chooseKoulutus();
+        const actualKoulutus = this.koulutusType();
         return (
-            <React.Fragment>
+            /*<React.Fragment>
                 <div className="container">
                     <div className="row info-page">
                         <div className="col-12 col-md-9 left-column">
@@ -61,9 +72,30 @@ class Koulutus extends Component {
                         </div>
                         <KoulutusSidebar/>
                     </div>
+                    
                 </div>
                 <Hakunavigaatio/>
-            </React.Fragment>
+            </React.Fragment>*/
+            <React.Fragment>
+                <div className="container" id="koulutus-container">
+                    <div className="row">
+                        <Media query="(min-width: 992px)">
+                                {
+                                    matches => matches ? (
+                                        <KoulutusSidebar type={actualKoulutus}></KoulutusSidebar>
+                            ):("")}
+                        </Media>   
+                        <div className="col-12 col-md-12 col-lg-8 col-xl-9">
+                                <div className="header-image">
+                                    <KoulutusHeaderImage></KoulutusHeaderImage>
+                                </div>
+                                <PageVertailuBox text="Ota vertailuun"></PageVertailuBox>
+                                {selectedKoulutus}
+                        </div>
+                    </div>                
+                </div>
+            <Hakunavigaatio/>
+            </React.Fragment>  
         );
     }
 }

@@ -65,6 +65,7 @@ $light-deep-pink: #ffccff;
 /// Generates rgba color for a given property from an hexadecimal color value
 /// @param $hexcolor - hexadecimal color value - (#333333)
 /// @param $opacity - value from 0 to 1 to set the alpha opacity
+/// @param $property - CSS property that will be returned
 /// @example
 /// @include rgba-color(#333333, 0.5); 
 /// ==> will compile into: 
@@ -93,6 +94,145 @@ $h3-font-size-map: (576px: 16px, 992px: 18px);
 $h3-line-height-map: (576px: 32px, 992px: 36px);
 $text-font-size-map: (576px: 14px, 992px: 16px);
 $text-line-height-map: (576px: 26px, 992px: 30px);
+
+// --------------------------------------------------
+// Flexbox SASS mixins
+// The spec: http://www.w3.org/TR/css3-flexbox
+// --------------------------------------------------
+
+/// Flexbox display
+@mixin flexbox() {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+/// The 'flex' shorthand
+/// - applies to: flex items
+/// <positive-number>, 
+/// @param initial auto, or none
+@mixin flex($values) {
+  -webkit-box-flex: $values;
+     -moz-box-flex: $values;
+      -webkit-flex: $values;
+  	  -ms-flex: $values;
+  	      flex: $values;
+}
+
+/// Flex Flow Direction
+/// - applies to: flex containers
+/// @param row | row-reverse | column | column-reverse
+@mixin flex-direction($direction) {
+  -webkit-flex-direction: $direction;
+     -moz-flex-direction: $direction;
+      -ms-flex-direction: $direction;
+          flex-direction: $direction;
+}
+
+/// Flex Line Wrapping
+/// - applies to: flex containers
+/// @param nowrap | wrap | wrap-reverse
+@mixin flex-wrap($wrap) {
+  -webkit-flex-wrap: $wrap;
+     -moz-flex-wrap: $wrap;
+      -ms-flex-wrap: $wrap;
+          flex-wrap: $wrap;
+}
+
+/// Flex Direction and Wrap
+/// - applies to: flex containers
+/// @param <flex-direction> || <flex-wrap>
+@mixin flex-flow($flow) {
+  -webkit-flex-flow: $flow;
+     -moz-flex-flow: $flow;
+      -ms-flex-flow: $flow;
+          flex-flow: $flow;
+}
+
+/// Display Order
+/// - applies to: flex items
+/// @param <integer>
+@mixin order($val) {
+  -webkit-box-ordinal-group: $val;  
+     -moz-box-ordinal-group: $val;     
+  	     -ms-flex-order: $val;     
+  	      -webkit-order: $val;  
+  		      order: $val;
+}
+
+/// Flex grow factor
+/// - applies to: flex items
+/// @param <number>
+@mixin flex-grow($grow) {
+  -webkit-flex-grow: $grow;
+     -moz-flex-grow: $grow;
+      -ms-flex-grow: $grow;
+          flex-grow: $grow;
+}
+
+/// Flex shrink
+/// - applies to: flex item shrink factor
+/// @param <number> 
+@mixin flex-shrink($shrink) {
+  -webkit-flex-shrink: $shrink;
+     -moz-flex-shrink: $shrink;
+      -ms-flex-shrink: $shrink;
+          flex-shrink: $shrink;
+}
+
+/// Flex basis
+/// - the initial main size of the flex item
+/// - applies to: flex itemsnitial main size of the flex item
+/// @param <width> 
+@mixin flex-basis($width) {
+  -webkit-flex-basis: $width;
+     -moz-flex-basis: $width;
+      -ms-flex-basis: $width;
+          flex-basis: $width;
+}
+
+/// Axis Alignment
+/// - applies to: flex containers
+/// @param flex-start | flex-end | center | space-between | space-around 
+@mixin justify-content($justify) {
+  -webkit-justify-content: $justify;
+     -moz-justify-content: $justify;
+      -ms-justify-content: $justify;
+          justify-content: $justify;
+            -ms-flex-pack: $justify;
+}
+
+/// Packing Flex Lines
+/// - applies to: multi-line flex containers
+/// @param flex-start | flex-end | center | space-between | space-around | stretch 
+@mixin align-content($align) {
+  -webkit-align-content: $align;
+     -moz-align-content: $align;
+      -ms-align-content: $align;
+          align-content: $align;
+}
+
+/// Cross-axis Alignment
+/// - applies to: flex containers
+/// @param flex-start | flex-end | center | baseline | stretch 
+@mixin align-items($align) {
+  -webkit-align-items: $align;
+     -moz-align-items: $align;
+      -ms-align-items: $align;
+          align-items: $align;
+}
+
+/// Cross-axis Alignment
+/// - applies to: flex items
+/// @param auto | flex-start | flex-end | center | baseline | stretch 
+@mixin align-self($align) {
+  -webkit-align-self: $align;
+     -moz-align-self: $align;
+      -ms-align-self: $align;
+          align-self: $align;
+}
 
 /// fluid-sizing
 /// Generate linear interpolated size values through multiple break points

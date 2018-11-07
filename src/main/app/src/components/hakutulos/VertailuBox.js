@@ -30,13 +30,13 @@ class VertailuBox extends Component {
                 <div className="container-fluid" id="compare-row">
                     <div className="container">
                         <div className="row">
-                            <div id="compared-subjects" className="col-12 col-md-9">
+                            <div id="compared-subjects" className="col-12 col-md-12 col-lg-9">
                             <div className="row">
                                 <div className="col-12 col-lg-12 col-xl-3 compared-subjects-title"><h3>{this.props.t("haku.olet-valinnut-vertailuun")}</h3></div>
                                 {this.renderVertailuList()}
                             </div>    
                             </div>
-                            <div className="col-12 col-md-3 pull-right d-flex justify-content-center align-items-center flex-column">
+                            <div className="col-12 col-md-12 col-lg-3 pull-right d-flex justify-content-center align-items-center flex-column">
                                 {this.props.vertailuStore.size > 1 ?
                                     <Link to={this.props.vertailuStore.createVertailuLink} id={"vertaile"}
                                           role="button" className="btn btn-primary">{this.props.t("haku.vertaile")}</Link>
