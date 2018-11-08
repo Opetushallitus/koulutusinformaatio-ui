@@ -14,14 +14,17 @@ class KoulutusHeader extends Component {
     }
 
     render () {
-        const hattuClass = "fa fa-circle " + this.props.hattu;
+        const hattuClass = this.props.hattu;
         return (
-            <div className="col-12">
-                <h1>
-                    <i className={hattuClass} aria-hidden="true"></i>
-                    <span id={"koulutus-title"}>{this.parseNimi()}</span>
-                </h1>
+            <div className="row" id="header">
+                <div className="col-12">
+                    <h1 className="d-flex justify-content-between">
+                        <span className={hattuClass}></span>
+                        <span className="title">{this.parseNimi()}</span>
+                    </h1>
+                </div>
             </div>
+            
             
         );
     }

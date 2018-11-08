@@ -19,10 +19,18 @@ class Koulutus extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            koulutus: undefined
+            koulutus: undefined,
+            selectedMenuItem: 0,
+            menuElements: [
+                "Koulutuksen esittely",
+                "Oppilaitokset"
+            ]
         }
+        this.getSelectedItem=this.getSelectedItem.bind(this);
+        this.setSelectedItem=this.setSelectedItem.bind(this);
+        this.resetSelectedItem=this.resetSelectedItem.bind(this);
     };
-
+    
     async componentDidMount() {
         await this.getKoulutus();
     }
@@ -41,15 +49,29 @@ class Koulutus extends Component {
         });
     }
 
+    getSelectedItem(i){
+        this.setState({
+            selectedMenuItem: i
+        })
+    }
+    setSelectedItem(){
+        return this.state.selectedMenuItem;
+    }
+    resetSelectedItem(){
+        this.setState({
+            selectedMenuItem: 0
+        })
+    }
     chooseKoulutus() {
+        let selectedItem= this.setSelectedItem();
         if(this.state.koulutus) {
             switch(this.state.koulutus.searchData.tyyppi) {
-                case 'lk': return <Lukio oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>; //TODO
-                case 'kk': return <Korkeakoulu oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
-                case 'ako': return <Avoin oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
-                case 'amm' : return <Ammatillinen oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
-                default: return <Ammatillinen oid={this.props.navigaatioStore.oid} result={this.state.koulutus} muu={true}/>;
-            }
+                case 'lk': return <Lukio items={this.state.menuElements} selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>; //TODO
+                case 'kk': return <Korkeakoulu items={this.state.menuElements} selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
+                case 'ako': return <Avoin items={this.state.menuElements} selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
+                case 'amm' : return <Ammatillinen items={this.state.menuElements} selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
+                default: return <Ammatillinen items={this.state.menuElements} selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus} muu={true}/>;
+            } 
         }
         return <div/>
     }
@@ -63,6 +85,7 @@ class Koulutus extends Component {
     render() {
         const selectedKoulutus = this.chooseKoulutus();
         const actualKoulutus = this.koulutusType();
+        let selectedItem= this.setSelectedItem();
         return (
             /*<React.Fragment>
                 <div className="container">
@@ -82,8 +105,8 @@ class Koulutus extends Component {
                         <Media query="(min-width: 992px)">
                                 {
                                     matches => matches ? (
-                                        <KoulutusSidebar type={actualKoulutus}></KoulutusSidebar>
-                            ):("")}
+                                        <KoulutusSidebar items={this.state.menuElements} type={actualKoulutus} selected={selectedItem} item={this.getSelectedItem}></KoulutusSidebar>
+                            ):null}
                         </Media>   
                         <div className="col-12 col-md-12 col-lg-8 col-xl-9">
                                 <div className="header-image">

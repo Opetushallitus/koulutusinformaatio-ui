@@ -61,10 +61,10 @@ class Hakunavigaatio extends Component {
 
     render() {
         const t = this.props.t;
-        const prevLink = (this.props.navigaatioStore.hasPrev && !this.props.vertailu) ? <a onClick={(e) => {this.prev(e)}}>
+        const prevLink = (this.props.navigaatioStore.hasPrev && !this.props.vertailu) ? <a onClick={(e) => {this.prev(e);}}>
             <span>{t("navigaatio.edellinen")}</span>
         </a> : <span/>;
-        const nextLink = (this.props.navigaatioStore.hasNext && !this.props.vertailu) ? <a onClick={(e) => {this.next(e)}}>
+        const nextLink = (this.props.navigaatioStore.hasNext && !this.props.vertailu) ? <a onClick={(e) => {this.next(e);}}>
             <span>{t("navigaatio.seuraava")}</span>
         </a> : <span/>;
 

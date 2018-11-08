@@ -1,39 +1,60 @@
 @import '../settings';
 
-.info-page {
-    .left-column {
-            h1 {
-                i{
-                    width: 65px;
-                    height: 65px;
-                    display: inline-block;
-                    border-radius: 50%;
-                    &.muu-hattu {
-                        background-color: $yellow-ochre;  
-                    }
-                    &.korkeakoulu-hattu {
-                        background-color: $amethyst;
-                    }
-                    &.avoin-hattu {
-                        background-color: $water-blue;
-                    }
-                    &.ammatillinen-hattu {
-                        background-color: $mid-green;
-                    }
-                    &.lukio-hattu {
-                        background-color: $brick;
-                    }        
-                    &::after{
+$channels: (
+  lukio: $brick,
+  ammatilinen: $mid-green,
+  korkeakoulu: $amethyst,
+  avoin: $water-blue,
+  muu: $yellow-ochre
+);
+
+
+#header{
+    h1{
+        span{
+            &:nth-child(1){
+                display: none;
+            }
+        }
+    }
+}
+@media (max-width: 992px){
+    #header{
+        h1{
+            span{
+                &.title{
+                    flex: 1 0 92%;
+                    max-width: 92%;
+                    word-break: break-word;
+                }
+                &:nth-child(1){
+                    display: block;
+                    position: relative;
+                    top: -10px;
+                    margin-right: 20px;
+                    flex: 1 0 40px;
+                    max-width: 40px;
+                    @each $channel, $color in $channels{
+                        &.#{$channel}-hattu{
+                            &::before{
+                                background-color: $color;
+                            }
+                        }
+                    } 
+                    &::before{
+                        @include border-radius(500px);
+                        padding: 5px;
                         font-family: $material-icons-font-family;
                         content: "\e91e";
                         color: white;
                         position: relative;
                         font-style: initial;
-                        left: 12px;
-                        font-size: 40px;
-                        top: 15px;
+                        font-size: 2.5rem;
+                        top: 10px;
                     }
                 }
             }
-    }
+            
+        }
+    }      
 }

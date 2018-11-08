@@ -51,7 +51,10 @@ render(){
             <div className="col-12">
             <div className={"col-12 slide-dropdown " + dropDownContent}>
                 <div className="slide-dropdown-header" onClick={this.toggleClass}>
-                    <h2><span className={"icon-ic-block-" + dropDownContent}></span> {this.props.title} {this.props.oppilaitos ? `(${this.props.oppilaitos.length})` : ""}</h2>
+                    <h2 className="d-flex justify-content-between">
+                        <span className={"collapse-button icon-ic-block-" + dropDownContent}></span>
+                        <span className="header-title">{this.props.title} {this.props.oppilaitos ? `(${this.props.oppilaitos.length})` : ""}</span>
+                    </h2>
                 </div>    
             </div> 
             <div className={"dropdown-content " + dropDownContent + " " + isComponentCollapsing}>

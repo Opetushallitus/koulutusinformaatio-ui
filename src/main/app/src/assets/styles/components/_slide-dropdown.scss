@@ -10,19 +10,31 @@
         background: white;
         &.collapsed{
             border-bottom: 1px solid $soft-grey;
-        }
-            
+        }           
         .slide-dropdown-header {
             width: 100%;
             h2 {
                 font-weight: bolder;
                 margin-left: 15px;
+                span {
+                    &.collapse-button{
+                        font-size: 35px;
+                        position: relative;
+                        top: 5px;
+                        flex: 1 0 40px;
+                        max-width: 40px;
+                    }
+                    &.header-title{
+                        flex: 1 0 95%;
+                        max-width: 95%;
+                        word-break: break-word;
+                        position: relative;
+                        right: 0;
+                        top: 10px;
+                    }
+                }
             }
-            span {
-                font-size: 35px;
-                position: relative;
-                top: 5px;
-            }
+            
         }
     }
     .dropdown-content{
@@ -49,7 +61,8 @@
                 max-width: 92%;
                 &.text-block,
                 .item-box{
-                    right: -2.35%;
+                    position: relative;
+                    right: -40px;
                     padding: 1px 0 0 0;
                 }
             }

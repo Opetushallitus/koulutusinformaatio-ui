@@ -6,6 +6,8 @@ import KoulutusHeader from './KoulutusHeader';
 import SlideDropDown from '../common/SlideDropdown';
 import { Localizer as l } from '../../tools/Utils';
 import {translate} from 'react-i18next'
+import Media from 'react-media';
+import SideBarMenu from '../common/SideBarMenu';
 
 @translate()
 class Ammatillinen extends Component {
@@ -44,8 +46,14 @@ class Ammatillinen extends Component {
         return (
             <React.Fragment>
                 <KoulutusHeader hattu={hattu} nimi={this.props.result.searchData.nimi}/>
+                <Media query="(max-width: 992px)">
+                                {
+                                    matches => matches ? (
+                                        <SideBarMenu items={this.props.items} item={this.props.item}/>    
+                            ):null}
+                        </Media> 
                 <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
-
+                
                 {osaamisalat && <KoulutusSection
                     content={<ul><li className="osaamisalat_list_item">{osaamisalat}</li></ul>}
                     header="koulutus.osaamisalat"

@@ -6,6 +6,8 @@ import OppilaitosList from "./OppilaitosList";
 import KoulutusSection from './KoulutusSection';
 import KoulutusHeader from "./KoulutusHeader";
 import SlideDropDown from '../common/SlideDropdown';
+import Media from 'react-media';
+import SideBarMenu from '../common/SideBarMenu';
 
 @translate()
 class Korkeakoulu extends Component {
@@ -39,6 +41,12 @@ class Korkeakoulu extends Component {
         return (
             <React.Fragment>
                 <KoulutusHeader hattu="korkeakoulu-hattu" nimi={this.props.result.searchData.nimi}/>
+                <Media query="(max-width: 992px)">
+                                {
+                                    matches => matches ? (
+                                        <SideBarMenu items={this.props.items} item={this.props.item}/>    
+                            ):null}
+                        </Media>
                 <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
 
                 <KoulutusSection content={erikoistumisalat} header="koulutus.pääaineet"/>

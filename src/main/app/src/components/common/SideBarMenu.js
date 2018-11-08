@@ -5,14 +5,15 @@ class SideBarMenu extends Component {
     constructor(props) {
         super(props)   
         this.state = {
-          activeIndex: 0
+          activeIndex: this.props.selected || 0
         }
         this.toggleClass= this.toggleClass.bind(this); 
         this.selectedMenuItem = this.selectedMenuItem.bind(this);
     }
     
     toggleClass(index, e) {
-        this.setState({ activeIndex: index });
+        this.setState({ activeIndex: index});
+        this.props.item(index);
     };
     selectedMenuItem(){
         this.setState({

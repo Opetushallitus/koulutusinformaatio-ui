@@ -13,17 +13,15 @@ class KoulutusSidebar extends Component {
         }
     } 
     render() {
-        const menuElements = [
-            "Koulutuksen esittely",
-            "Oppilaitokset"
-        ];
+        const menuElements = this.props.items;
+        const selectedItem =  this.props.selected || 0; 
         const koulutusType = this.getName();
         return (
             <div className="col-md-4 col-lg-4 col-xl-3" id="side-bar" >                        
                 <div className={"col-12 type-" + this.props.type}>
                     <h2>{koulutusType}</h2>
                 </div>
-                <SideBarMenu items={menuElements}/>
+                <SideBarMenu items={menuElements} item={this.props.item} selected={selectedItem}/>
             </div>
             
         );

@@ -9,6 +9,7 @@ import {translate} from 'react-i18next';
 import { Localizer as l } from "../../tools/Utils";
 import OppilaitosSidebar from './OppilaitosSidebar';
 import SlideDropDown from '../common/SlideDropdown';
+import SideBarMenu from '../common/SideBarMenu';
 
 @inject("restStore")
 @inject("navigaatioStore")
@@ -19,8 +20,11 @@ class Oppilaitos extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            oppilaitos: undefined
+            oppilaitos: undefined,
+            selectedMenuItem: 0
         };
+        this.getSelectedItem=this.getSelectedItem.bind(this);
+        this.setSelectedItem=this.setSelectedItem.bind(this);
     }
 
     async componentDidMount() {
@@ -40,7 +44,14 @@ class Oppilaitos extends Component {
             })
         });
     }
-
+    getSelectedItem(i){
+        this.setState({
+            selectedMenuItem: i
+        })
+    }
+    setSelectedItem(){
+        return this.state.selectedMenuItem;
+    }
     //Todo: Selvitä, onko tämä ylipäänsä järkevää
     getEmailFromYhteystiedot() {
         const data = this.state.oppilaitos.yhteystiedot;
@@ -138,7 +149,6 @@ class Oppilaitos extends Component {
                         insta = <li><a href={k[kieli]}><i className='fa fa-instagram fa-3x' /></a></li>
                     }
                 }
-
             }
         }
         return (
@@ -151,6 +161,13 @@ class Oppilaitos extends Component {
     }
 
     render() {
+        let selectedItem= this.setSelectedItem();
+        const menuElements = [
+            "Esittely",
+            "Yhteystiedot",
+            "Koulutukset",
+            "Oppilaitokset"
+        ];
         const actualOppilaitos = this.state.oppilaitos !== undefined ?  l.localize(this.state.oppilaitos.nimi, "", "fi") : "Nimi";
         const emailAddress = this.state.oppilaitos !== undefined ? this.getEmailFromYhteystiedot() : "";
         if(!this.state.oppilaitos) {
@@ -163,7 +180,7 @@ class Oppilaitos extends Component {
                         <Media query="(min-width: 992px)">
                                 {
                                     matches => matches ? (
-                                        <OppilaitosSidebar name={actualOppilaitos}></OppilaitosSidebar>
+                                        <OppilaitosSidebar items={menuElements} name={actualOppilaitos} selected={selectedItem} item={this.getSelectedItem}></OppilaitosSidebar>
                                     ):("")
                                 }
                         </Media> 
@@ -175,7 +192,7 @@ class Oppilaitos extends Component {
                             <Media query="(max-width: 992px)">
                                 {
                                     matches => matches ? (
-                                        <OppilaitosSidebar name={actualOppilaitos}></OppilaitosSidebar>
+                                        <SideBarMenu items={menuElements} selected={selectedItem} item={this.getSelectedItem}/>
                                     ):("")
                                 }
                             </Media> 

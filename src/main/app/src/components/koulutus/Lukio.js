@@ -3,17 +3,18 @@ import KoulutusInfoBox from './KoulutusInfoBox';
 import KoulutusSection from './KoulutusSection';
 import {Localizer as l} from '../../tools/Utils';
 import {translate} from 'react-i18next';
+import Media from 'react-media';
+import SideBarMenu from '../common/SideBarMenu';
 import OppilaitosList from "./OppilaitosList";
 import KoulutusHeader from "./KoulutusHeader";
 import SlideDropDown from '../common/SlideDropdown';
 
 @translate()
 class Lukio extends Component {
-
     componentWillReceiveProps(nextProps) {
         this.props = nextProps;
     }
-
+   
     parseInfoBoxFields() {
         const {t} = this.props;
         const fields = [];
@@ -43,11 +44,20 @@ class Lukio extends Component {
     render() {
         const jatkoOpinnot = l.localize(this.props.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined);
         const koulutuksenSisalto = l.localize(this.props.result.kuvausKomo.TAVOITTEET, undefined);
-
+       
         return (
             <React.Fragment>
              
                 <KoulutusHeader hattu="lukio-hattu" nimi={this.props.result.searchData.nimi}/>
+                <Media query="(max-width: 992px)" >
+                    {
+                        matches => matches ? (
+                            <SideBarMenu items={this.props.items} item={this.props.item}/>    
+                        )
+                        :
+                        null
+                    }
+                </Media>
                 <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
                 <KoulutusSection content={koulutuksenSisalto} header="koulutus.sisältö"/>
                 <SlideDropDown title="Mihin koulutus antaa valmiudet?" text={true}></SlideDropDown>

@@ -3,20 +3,10 @@ import SideBarMenu from '../common/SideBarMenu';
 import Media from 'react-media';
 
 class OppilaitosSidebar extends Component {
-   state = {
-       selectedMenuItem: 0
-   }
-   selectedMenuState(){
 
-   }
     render() {
-        const menuElements = [
-            "Esittely",
-            "Yhteystiedot",
-            "Koulutukset",
-            "Oppilaitokset"
-        ];
-        const selectedItem = this.state.selectedMenuItem; 
+        const menuElements = this.props.items;
+        const selectedItem =  this.props.selected || 0; 
         return (
 
             <Media query="(min-width: 992px)">
@@ -26,10 +16,10 @@ class OppilaitosSidebar extends Component {
                         <div className={"col-12 type-" + this.props.name}>
                             <h2>{this.props.name}</h2>
                         </div>
-                        <SideBarMenu items={menuElements} item={selectedItem}/>
+                        <SideBarMenu items={menuElements} item={this.props.item} selected={selectedItem}/>
                     </div>
                                             
-                    ):(<SideBarMenu items={menuElements} item={selectedItem}/>)
+                    ):(null)
                 }
             </Media>   
         );

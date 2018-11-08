@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { Localizer as l } from '../../tools/Utils';
 import KoulutusInfoBox from './KoulutusInfoBox';
 import KoulutusSection from './KoulutusSection';
+import Media from 'react-media';
 import {translate} from 'react-i18next';
 import OppilaitosList from "./OppilaitosList";
 import SlideDropDown from '../common/SlideDropdown';
 import KoulutusHeader from "./KoulutusHeader";
-
+import SideBarMenu from '../common/SideBarMenu';
 @translate()
 class Avoin extends Component {
 
@@ -48,6 +49,12 @@ class Avoin extends Component {
             
             <React.Fragment>
                 <KoulutusHeader hattu="avoin-hattu" nimi={this.props.result.searchData.nimi}/>
+                <Media query="(max-width: 992px)">
+                                {
+                                    matches => matches ? (
+                                        <SideBarMenu items={this.props.items} item={this.props.item}/>    
+                            ):null}
+                        </Media> 
                 {infoBox && <KoulutusInfoBox fields={fields}/>}
                 <KoulutusSection content={kuvaus} header="koulutus.yleiskuvaus"/>
                 <SlideDropDown title="Mihin koulutus antaa valmiudet?" text={true}></SlideDropDown>
