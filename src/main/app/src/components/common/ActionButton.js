@@ -26,7 +26,7 @@ class ActionButton extends Component{
     getLinkTypeAddress(){
         if(this.getButtonType() === 'link'){
             const linkAdddress = this.props.address;
-            const isValidEmail = new RegExp(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(linkAdddress);
+            const isValidEmail = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(linkAdddress);
             const isValidUrl = new RegExp(/^(http|https):\/\/[^ "]+$/).test(linkAdddress);
             if(isValidEmail){
                 const emailAddress =`mailto:${linkAdddress}`;
