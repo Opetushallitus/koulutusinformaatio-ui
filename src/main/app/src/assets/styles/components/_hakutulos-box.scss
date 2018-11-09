@@ -1,4 +1,14 @@
 @import '../settings';
+
+$channels: (
+  lk: $brick,
+  amm: $mid-green,
+  kk: $amethyst,
+  ako: $water-blue,
+  muu: $yellow-ochre
+);
+
+
 .box-container{
     padding: 0 15px 15px;
     .search-box {
@@ -79,30 +89,12 @@
             right: 0;
             z-index: 0;
         }
-        &.amm{
-            &::after {
-                background-color: $mid-green;
+        @each $channel, $color in $channels{
+            &.#{$channel}{
+                &::after{
+                    background-color: $color;
+                } 
             }
         } 
-        &.lk{
-            &::after {
-                background-color: $brick;
-            }
-        }
-        &.kk{
-            &::after {
-                background-color: $amethyst;
-            } 
-        }
-        &.ako{
-            &::after {
-                background-color: $water-blue;
-            }
-        }
-        &.muu{
-            &::after {
-                background-color: $yellow-ochre;
-            }
-        }
     }
 }

@@ -113,9 +113,6 @@
                 &::before{
                     background: $water-blue;
                     content: "\ea96";
-                    -webkit-border-radius: 15px;
-                    -moz-border-radius: 15px;
-                    border-radius: 15px;
                 }
             }
             &.hakemus{
@@ -145,3 +142,23 @@
         right: 0;
     }
 }
+@media (max-width: 320px){
+    .services-menu{
+       ul{
+           padding: 25px;
+            li{ 
+                &::before{
+                    font-size: 25px;
+                }
+                p{
+                    padding: 0px 35px;
+                    &.small{
+                        position: relative;
+                        top: -10px;
+                        font-size: 11px !important;
+                    }
+                }
+            }   
+       }
+    }
+} 

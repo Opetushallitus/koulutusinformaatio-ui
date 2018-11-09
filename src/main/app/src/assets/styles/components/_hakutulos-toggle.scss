@@ -29,3 +29,12 @@
         }
     }
 }
+@media (max-width: 320px){
+    .tabs-result {
+        ul{
+            li{
+                max-width: 145px;
+            }
+        }
+    }
+}

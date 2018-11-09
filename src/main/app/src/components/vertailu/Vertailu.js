@@ -41,8 +41,8 @@ class Vertailu extends Component {
     renderComparedItems() {
         return this.props.vertailuStore.vertailuList.map((item, i) => {
             return (
-                <div className="col-sm-12 col-md-3">
-                    <ul className={"compare-list " + this.colors[i]} key={item.oid}>
+                <div className="col-sm-12 col-md-3" key={item.oid}>
+                    <ul className={"compare-list " + this.colors[i]}>
                         <li className={"compared-items"} >
                             <div className="compare-box">
                                 <Link to={item.link} className="title">
@@ -296,9 +296,9 @@ class Vertailu extends Component {
                     <div className="row">
                         <div className="col-12 compare">
                             <h1>
-                                <Link to={this.state.hakuUrl} className="header" >
+                                <Link to={this.state.hakuUrl} className="header d-flex" >
                                 <span className="icon-ic-back-button"></span>
-                                    <span className="light-font">{t("vertailu.takaisin-edelliselle-sivulle")}<br /><strong>{t("vertailu.vertailuun-ottamasi-kohteet")}</strong></span>
+                                <span className="light-font">{t("vertailu.takaisin-edelliselle-sivulle")}<br /><strong>{t("vertailu.vertailuun-ottamasi-kohteet")}</strong></span>
                                   {/*t("vertailu.vertailuun-ottamasi-kohteet")*/}
                                 </Link>
                             </h1>
@@ -340,11 +340,7 @@ class Vertailu extends Component {
                                 </div>
                             )
                         }
-                    </Media>    
-
-                
-                
-                
+                    </Media>
                 <Hakunavigaatio vertailu={true}/>
             </React.Fragment>
         );

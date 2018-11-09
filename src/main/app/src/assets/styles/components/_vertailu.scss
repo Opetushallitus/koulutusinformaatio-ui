@@ -1,5 +1,11 @@
 @import '../settings';
 
+$compared-items: (
+    green: $opaque-blue,
+    gold: $yellow-ochre,
+    blue: $flat-blue
+);
+
 h1 {
     margin-top: 40px;
     a{
@@ -15,7 +21,12 @@ h1 {
             }
         }
         &:hover{
-            text-decoration: underline;
+            text-decoration: none;
+            span{
+                &.light-font{
+                    text-decoration: underline;
+                }
+            }
         }
     }
 }
@@ -87,39 +98,23 @@ h1 {
                     .title {
                         color: white;
                         text-decoration: underline;
+                        position: relative;
+                        top: 15px;
                     }
                 }
             }
-            &.green{
-                .compared-items{
-                    .compare-box{
-                        background: $opaque-blue;
+            @each $item, $color in $compared-items{
+                &.#{$item}{
+                    .compared-items{
+                        .compare-box{
+                            background: $color;
+                        }
+                    }
+                    .inner {
+                        @include rgba-color($color, 0.25);
                     }
                 }
-                .inner {
-                    @include rgba-color($opaque-blue, 0.25);
-                }
-            }
-            &.gold{
-                .compared-items{
-                    .compare-box{
-                        background: $yellow-ochre;
-                    }
-                }
-                .inner {
-                   @include rgba-color($yellow-ochre, 0.25);
-                }
-            }
-            &.blue{
-                .compared-items{
-                    .compare-box{
-                        background: $flat-blue;
-                    }
-                }
-                .inner {
-                    @include rgba-color($flat-blue, 0.25);
-                }
-            }
+            } 
         }
     }   
 }
