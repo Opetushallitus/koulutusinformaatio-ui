@@ -31,9 +31,11 @@ class Hakupalkki extends Component {
         this.props.hakuehtoStore.closeRajain();
         this.props.history.push(this.props.hakuehtoStore.createHakuUrl);
     }
+    
     componentDidMount() {
         window.addEventListener("resize", this.updateDimensions);
       }
+
     closeRajain() {
         this.props.hakuehtoStore.closeRajain();
     }

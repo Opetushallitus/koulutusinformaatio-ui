@@ -4,6 +4,11 @@
     height: 0;
     &:hover{
         cursor: pointer;
+        i{
+            &.icon-ic_favorite_border{
+                color: black!important;
+            }
+        }
     }
     i{
         font-size: 25px;
@@ -13,7 +18,7 @@
             color: $soft-grey;
         }
         &.icon-ic_favorite{
-            color: $brick;
+            color: $brick!important;
         }
     }
     span{

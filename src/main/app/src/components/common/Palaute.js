@@ -59,7 +59,8 @@ class Palaute extends Component {
                     </div>
                         <a className={"btn btn-primary " + (this.state.arvosana ? "" : "disabled")}  onClick={() => this.handleSubmit()}>{t('palaute.lähetä')}</a>
                 </div>
-            </div>);
+            </div>
+        );
     }
 }
 

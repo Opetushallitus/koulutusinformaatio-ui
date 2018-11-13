@@ -18,6 +18,9 @@
                 background: white;
                 color: $pumpkin;
             }
+            span{
+                @include fluid-sizing('font-size', $h2-font-size-map);
+            }
         }
         
     }
@@ -34,11 +37,11 @@
             flex: 1;
             text-align: center;
             display: block;
-            @include fluid-sizing('font-size', $text-font-size-map);
             span{
                 position: relative;
                 line-height: 40px !important; 
                 padding: 0 3px;
+                @include fluid-sizing('font-size', $text-font-size-map);
                 &:before {
                     content: "";
                     width: 100%;

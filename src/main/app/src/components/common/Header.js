@@ -4,8 +4,10 @@ import { translate } from 'react-i18next';
 import MenuButton from './MenuButton';
 import ServicesButton from './ServicesButton';
 import '../../assets/styles/components/_header.scss';
+
 @translate()
 class Header extends Component {
+    
     render() {
         const {t} = this.props;
         return (

@@ -7,6 +7,7 @@ import HakutulosBox from "./HakutulosBox";
 import Sivutus from './Sivutus';
 import { translate } from 'react-i18next';
 import VertailuBox from "./VertailuBox";
+import '../../assets/styles/components/_hakutulos.scss';
 
 @translate()
 @inject("hakuStore", "vertailuStore")
@@ -97,9 +98,11 @@ class Hakutulos extends Component {
                 <VertailuBox/>
                 <div className="container">
                     <HakutulosSummary/>
+                </div>
+                <div className="container" id="toggle-tabs">
                     <HakutulosToggle/>
                 </div>
-                <div className="container search-results">
+                <div className="container search-results" id="search-results">
                     <div className="row">
                         {this.renderResultList()}
                     </div>

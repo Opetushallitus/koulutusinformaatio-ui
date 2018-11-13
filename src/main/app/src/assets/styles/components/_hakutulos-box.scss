@@ -8,9 +8,8 @@ $channels: (
   muu: $yellow-ochre
 );
 
-
 .box-container{
-    padding: 0 15px 15px;
+    padding: 15px 15px;
     .search-box {
         box-shadow: 0 0px 1px $pinkish-grey;
         height: 200px;
@@ -19,7 +18,7 @@ $channels: (
         .text {
             height: 125px;
             width: 95%;
-            margin: 25px auto;
+            margin: 25px 15px;
             a {
                 font-weight: bold;
             }

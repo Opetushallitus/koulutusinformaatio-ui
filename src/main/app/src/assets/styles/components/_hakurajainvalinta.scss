@@ -43,6 +43,7 @@ $channels: (
     vertical-align: top;
     clear: both;
     padding-left: 1px;
+    color: $greyish-brown;
     &:not(:empty) {
       padding-left: $checkbox-label-padding;
     }
@@ -103,5 +104,4 @@ $channels: (
       }
     }
   }
- 
 }

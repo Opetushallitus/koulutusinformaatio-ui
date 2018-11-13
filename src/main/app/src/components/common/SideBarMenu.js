@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import '../../assets/styles/components/_sidebar-menu.scss';
 
 class SideBarMenu extends Component {
+    
     constructor(props) {
         super(props)   
         this.state = {
@@ -15,26 +16,29 @@ class SideBarMenu extends Component {
         this.setState({ activeIndex: index});
         this.props.item(index);
     };
+    
     selectedMenuItem(){
         this.setState({
             activeIndex: this.props.item
-        })
+        });
     } 
-render() {
-    const menuItems = this.props.items;
-    return(
-        <div className="col-12">
-            <div className="row">
-                <ul className="sidebar-menu">
-                    {
-                        menuItems &&
-                        menuItems.map((t,i) => <li key={i} className={this.state.activeIndex === i ? 'active': null}  onClick={this.toggleClass.bind(this, i)}><span>{t}</span></li>)
-                    }                   
-                </ul>
-            </div>            
-        </div>
-    );
-}
+
+    render() {
+        const menuItems = this.props.items;
+
+        return(
+            <div className="col-12">
+                <div className="row">
+                    <ul className="sidebar-menu">
+                        {
+                            menuItems &&
+                            menuItems.map((t,i) => <li key={i} className={this.state.activeIndex === i ? 'active': null}  onClick={this.toggleClass.bind(this, i)}><span>{t}</span></li>)
+                        }                   
+                    </ul>
+                </div>            
+            </div>
+        );
+    }
 }
 
 export default SideBarMenu;

@@ -18,22 +18,27 @@
             }
             span{
                 &:first-child{
-                margin-right: 5px;}
+                    margin-right: 5px;
+                }
             }
         }
         li:first-child{
+            -webkit-border-radius: 4px 0 0 4px;
+            -moz-border-radius: 4px 0 0 4px;
             border-radius: 4px 0 0 4px;  
         }
         li:last-child{
+            -webkit-border-radius: 4px 0 0 4px;
+            -moz-border-radius: 4px 0 0 4px;
             border-radius: 0 4px 4px 0;  
         }
     }
 }
-@media (max-width: 320px){
+@media (max-width: 900px){
     .tabs-result {
         ul{
             li{
-                max-width: 145px;
+                max-width: 50%;
             }
         }
     }

@@ -46,7 +46,7 @@
         position: absolute;
         top: -6px;
         z-index: 0;
-        right: 27px;
+        right: 20px;
         transform: rotate(134deg); 
     }
     .menu-close{
@@ -136,7 +136,12 @@
         }
     }
 }
-@media (max-width:768px) {
+@media (max-width: 992px) {
+    .services-menu{
+        right: 0;
+    }
+}
+@media (max-width: 768px) {
     .services-menu{
         max-width: 100%;
         right: 0;

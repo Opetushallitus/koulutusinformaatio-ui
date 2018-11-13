@@ -4,18 +4,19 @@ import ActionButton from './ActionButton';
 import LikeButton from './LikeButton';
 
 class PageLikeBox extends Component{
-render(){
-    return(
-            <div className="col-12" id="like-box">
-                <ActionButton 
-                    type={this.props.type}
-                    address={this.props.address}
-                    text={this.props.text}
-                />
-                <LikeButton></LikeButton>
-            </div>
-    )
-}
+        
+    render(){
+        return(
+                <div className="col-12" id="like-box">
+                    <ActionButton 
+                        type={this.props.type}
+                        address={this.props.address}
+                        text={this.props.text}
+                    />
+                    <LikeButton></LikeButton>
+                </div>
+        )
+    }
 }
 
 export default PageLikeBox;

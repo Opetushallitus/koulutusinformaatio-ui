@@ -14,7 +14,7 @@ class HakutulosBox extends Component {
     render() {
         const tyyli = "col-12 search-box " + this.props.tyyppi;
         return (
-            <div key={this.props.oid} className="col-12 col-md-6 box-container">
+            <div key={this.props.oid} className="col-12 col-md-12 col-lg-6 box-container">
                 <div className={tyyli}>
                     {this.props.haettavissa && <div className="haku">{this.props.t("haku.haku")}</div>}
                     <div className="d-flex justify-content-between">

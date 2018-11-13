@@ -7,6 +7,7 @@ import '../../assets/styles/components/_side-menu.scss';
 
 @translate()
 class SideMenu extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -17,6 +18,7 @@ class SideMenu extends Component {
         this.selectDropdown = this.selectDropdown.bind(this);
         
     }
+    
     closeMenu() {
         this.setState({
             closing: true
@@ -37,7 +39,6 @@ class SideMenu extends Component {
         }
     }
 
-
     selectDropdown(dropdown) {
         if (dropdown !== this.state.selected){
             this.setState({selected: dropdown});
@@ -48,7 +49,6 @@ class SideMenu extends Component {
  
     render() {
         const {t} = this.props;
-
         return (
             <React.Fragment>
                 <div className={"overlay displayed-" + !this.state.closing} onClick={this.closeMenu}></div>

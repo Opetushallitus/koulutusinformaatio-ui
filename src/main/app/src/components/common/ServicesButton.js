@@ -3,6 +3,7 @@ import ServicesMenu from './ServicesMenu';
 import '../../assets/styles/components/_services-button.scss';
 
 class ServicesButton extends Component{
+    
     constructor(props) {
         super(props)
         this.openServices= this.openServices.bind(this);
@@ -11,6 +12,7 @@ class ServicesButton extends Component{
           showMenu: false
         }
     }
+
     openServices() {
         this.setState({
             componentState: !this.state.componentState
@@ -30,7 +32,6 @@ class ServicesButton extends Component{
                     <ServicesMenu open={this.state.componentState} unmountMe={this.openServices}></ServicesMenu>
                 }
             </React.Fragment>
-        
         )
     }
 }

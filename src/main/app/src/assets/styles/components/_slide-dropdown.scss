@@ -15,7 +15,9 @@
             width: 100%;
             h2 {
                 font-weight: bolder;
-                margin-left: 15px;
+                &:hover{
+                    cursor: pointer;
+                }
                 span {
                     &.collapse-button{
                         font-size: 35px;

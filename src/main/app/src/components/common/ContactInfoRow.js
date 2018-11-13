@@ -61,9 +61,8 @@ class ContactInfoRow extends Component{
                         <li>{`${contactData.address}, ${contactData.postNo} ${contactData.city}`}</li>
                         <li>{`Puhelin: ${contactData.phoneNumber}`}</li>
                     </ul>
-                </div>
-                
-                <div className="d-flex flex-column justify-content-center">
+                </div>                
+                <div className="d-none d-lg-flex flex-column justify-content-center">
                     <ActionButton type="link" address={contactData.email} text="Lähetä sähköpostia"/>
                 </div>
             </div>

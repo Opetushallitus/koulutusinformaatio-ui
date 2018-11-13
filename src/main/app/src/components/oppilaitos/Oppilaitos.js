@@ -10,6 +10,7 @@ import { Localizer as l } from "../../tools/Utils";
 import OppilaitosSidebar from './OppilaitosSidebar';
 import SlideDropDown from '../common/SlideDropdown';
 import SideBarMenu from '../common/SideBarMenu';
+import '../../assets/styles/components/_oppilaitos.scss';
 
 @inject("restStore")
 @inject("navigaatioStore")
@@ -36,47 +37,6 @@ class Oppilaitos extends Component {
         await this.getOppilaitosTiedot();
     }
 
-    getOppilaitosTiedot() {
-        this.props.navigaatioStore.setOid(this.props.match.params.oid);
-        this.props.restStore.getOppilaitos(this.props.navigaatioStore.oid, (o) => {
-            this.setState({
-                oppilaitos: o
-            })
-        });
-    }
-    getSelectedItem(i){
-        this.setState({
-            selectedMenuItem: i
-        })
-    }
-    setSelectedItem(){
-        return this.state.selectedMenuItem;
-    }
-    //Todo: Selvitä, onko tämä ylipäänsä järkevää
-    getEmailFromYhteystiedot() {
-        const data = this.state.oppilaitos.yhteystiedot;
-        let emailValue = "";
-        for(let i = 0; i<data.length; i++){
-            if(data[i].email){
-                emailValue = data[i].email;
-                return emailValue;
-            }
-        }
-        return this.props.t("oppilaitos.ei-sähköpostiosoitetta");
-    }
-
-    //Todo: Selvitä, onko tämä ylipäänsä järkevää
-    getPuhelinFromYhteystiedot() {
-        const data = this.state.oppilaitos.yhteystiedot;
-
-        for (let row in data){
-            if(row.tyyppi === "puhelin" && row.numero) {
-                return this.props.t("oppilaitos.puhelin") + ": " + row.numero;
-            }
-        }
-        return "";
-    }
-
     getKotisivuFromYhteystiedot() {
         const data = this.state.oppilaitos.yhteystiedot;
 
@@ -90,34 +50,38 @@ class Oppilaitos extends Component {
         return "";
     }
 
-    parseKayntiOsoite() {
-        const t = this.props.t;
-        if(!this.state.oppilaitos.kayntiosoite) {
-            return null;
-        }
-        return (<div><ul>
-            <li><i>{t("oppilaitos.käyntiosoite")}</i></li>
-            <li>{this.state.oppilaitos.kayntiosoite.osoite ? this.state.oppilaitos.kayntiosoite.osoite : t("oppilaitos.ei-käyntiosoitetta")}</li>
-            <li>{this.state.oppilaitos.kayntiosoite.postinumeroUri ? this.state.oppilaitos.kayntiosoite.postinumeroUri+" " : t("oppilaitos.ei-postinumeroa")}
-                {this.state.oppilaitos.kayntiosoite.postitoimipaikka ? this.state.oppilaitos.kayntiosoite.postitoimipaikka : t("oppilaitos.ei-postitoimipaikkaa")}</li>
-        </ul>
-        </div>);
+    getOppilaitosTiedot() {
+        this.props.navigaatioStore.setOid(this.props.match.params.oid);
+        this.props.restStore.getOppilaitos(this.props.navigaatioStore.oid, (o) => {
+            this.setState({
+                oppilaitos: o
+            })
+        });
     }
 
-    parsePostiOsoite() {
-        const t = this.props.t;
-        if(!this.state.oppilaitos.postiosoite) {
-            return null;
-        }
-        return (<div><ul>
-            <li><i>{t("oppilaitos.postiosoite")}</i></li>
-            <li>{this.state.oppilaitos.postiosoite.osoite ? this.state.oppilaitos.postiosoite.osoite : t("oppilaitos.ei-käyntiosoitetta")}</li>
-            <li>{this.state.oppilaitos.postiosoite.postinumeroUri ? this.state.oppilaitos.postiosoite.postinumeroUri+" " : t("oppilaitos.ei-postinumeroa")}
-            {this.state.oppilaitos.postiosoite.postitoimipaikka ? this.state.oppilaitos.postiosoite.postitoimipaikka : t("oppilaitos.ei-postitoimipaikkaa")}</li>
-        </ul>
-        </div>);
+    getSelectedItem(i){
+        this.setState({
+            selectedMenuItem: i
+        })
     }
 
+    setSelectedItem(){
+        return this.state.selectedMenuItem;
+    }
+
+    //Todo: Selvitä, onko tämä ylipäänsä järkevää
+    getEmailFromYhteystiedot() {
+        const data = this.state.oppilaitos.yhteystiedot;
+        let emailValue = "";
+        for(let i = 0; i<data.length; i++){
+            if(data[i].email){
+                emailValue = data[i].email;
+                return emailValue;
+            }
+        }
+        return this.props.t("oppilaitos.ei-sähköpostiosoitetta");
+    }
+    
     safeParseYleiskuvaus() {
         const data = this.state.oppilaitos;
         const kieli = l.getLanguage();
@@ -166,10 +130,11 @@ class Oppilaitos extends Component {
             "Esittely",
             "Yhteystiedot",
             "Koulutukset",
-            "Oppilaitokset"
+            "Arvostelut"
         ];
         const actualOppilaitos = this.state.oppilaitos !== undefined ?  l.localize(this.state.oppilaitos.nimi, "", "fi") : "Nimi";
         const emailAddress = this.state.oppilaitos !== undefined ? this.getEmailFromYhteystiedot() : "";
+        console.log(this.state.oppilaitos)
         if(!this.state.oppilaitos) {
             return null;
         }

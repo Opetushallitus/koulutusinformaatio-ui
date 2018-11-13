@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import '../../assets/styles/components/_like-button.scss';
 
 class LikeButton extends Component{
+    
     constructor(props) {
         super(props)
         this.toggleClass= this.toggleClass.bind(this);
