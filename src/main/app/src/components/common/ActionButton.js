@@ -44,8 +44,7 @@ class ActionButton extends Component{
             if(isValidUrl){
                 const urlAddress = `${linkAdddress}`;
                 return urlAddress;
-            }
-            else{
+            }else{
                 return false;
             }
         }       

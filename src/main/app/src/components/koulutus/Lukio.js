@@ -11,6 +11,7 @@ import SlideDropDown from '../common/SlideDropdown';
 
 @translate()
 class Lukio extends Component {
+
     componentWillReceiveProps(nextProps) {
         this.props = nextProps;
     }
@@ -47,7 +48,6 @@ class Lukio extends Component {
        
         return (
             <React.Fragment>
-             
                 <KoulutusHeader hattu="lukio-hattu" nimi={this.props.result.searchData.nimi}/>
                 <Media query="(max-width: 992px)" >
                     {
@@ -66,8 +66,6 @@ class Lukio extends Component {
                 <SlideDropDown title="Mitä jatko-opintomahdollisuuksia on?" text={true}></SlideDropDown>
                 <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset} nimi={this.props.result.searchData.nimi}/>
                 <KoulutusSection content={jatkoOpinnot} header="koulutus.jatko-opinnot"/>
-
-                
             </React.Fragment>
         );
     }

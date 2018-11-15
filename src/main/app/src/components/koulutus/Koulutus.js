@@ -106,13 +106,20 @@ class Koulutus extends Component {
                                 {
                                     matches => matches ? (
                                         <KoulutusSidebar items={this.state.menuElements} type={actualKoulutus} selected={selectedItem} item={this.getSelectedItem}></KoulutusSidebar>
-                            ):null}
+                                    ):null
+                                }
                         </Media>   
                         <div className="col-12 col-md-12 col-lg-8 col-xl-9">
                                 <div className="header-image">
                                     <KoulutusHeaderImage></KoulutusHeaderImage>
                                 </div>
-                                <PageVertailuBox text="Ota vertailuun"></PageVertailuBox>
+                                <Media query="(min-width: 992px)">
+                                {
+                                    matches => matches ? (
+                                        <PageVertailuBox text="Ota vertailuun"></PageVertailuBox>
+                                    ):null
+                                }
+                                </Media>
                                 {selectedKoulutus}
                         </div>
                     </div>                

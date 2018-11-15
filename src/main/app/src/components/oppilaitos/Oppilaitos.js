@@ -7,6 +7,8 @@ import PageLikeBox from '../common/PageLikeBox';
 import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next';
 import { Localizer as l } from "../../tools/Utils";
+import OppilaitosArvostelut from './OppilaitosArvostelut';
+import OppilaitosKoulutukset from './OppilaitosKoulutukset';
 import OppilaitosSidebar from './OppilaitosSidebar';
 import SlideDropDown from '../common/SlideDropdown';
 import SideBarMenu from '../common/SideBarMenu';
@@ -134,7 +136,7 @@ class Oppilaitos extends Component {
         ];
         const actualOppilaitos = this.state.oppilaitos !== undefined ?  l.localize(this.state.oppilaitos.nimi, "", "fi") : "Nimi";
         const emailAddress = this.state.oppilaitos !== undefined ? this.getEmailFromYhteystiedot() : "";
-        console.log(this.state.oppilaitos)
+        const ratingStars = [{"star": 1},{"star": 1},{"star": 1},{"star": 0.5},{"star": 0}];
         if(!this.state.oppilaitos) {
             return null;
         }
@@ -145,24 +147,34 @@ class Oppilaitos extends Component {
                         <Media query="(min-width: 992px)">
                                 {
                                     matches => matches ? (
-                                        <OppilaitosSidebar items={menuElements} name={actualOppilaitos} selected={selectedItem} item={this.getSelectedItem}></OppilaitosSidebar>
-                                    ):("")
+                                        <OppilaitosSidebar items={menuElements} name={actualOppilaitos} selected={selectedItem} item={this.getSelectedItem} ratingStars={ratingStars}></OppilaitosSidebar>
+                                    ): null
                                 }
                         </Media> 
                         <div className="col-12 col-md-12 col-lg-8 col-xl-9">
                             <div className="header-image">
-                                <OppilaitosHeaderImage></OppilaitosHeaderImage>
+                                <OppilaitosHeaderImage />
                             </div>
-                            <PageLikeBox type="link" text="Lähetä sähköpostia" address={emailAddress}></PageLikeBox>
+                            <PageLikeBox type="link" text="Lähetä sähköpostia" name={actualOppilaitos} address={emailAddress}></PageLikeBox>
                             <Media query="(max-width: 992px)">
                                 {
                                     matches => matches ? (
-                                        <SideBarMenu items={menuElements} selected={selectedItem} item={this.getSelectedItem}/>
-                                    ):("")
+                                        <React.Fragment>
+                                            <OppilaitosArvostelut ratingStars={ratingStars}/>
+                                            <SideBarMenu items={menuElements} selected={selectedItem} item={this.getSelectedItem} />
+                                        </React.Fragment>
+                                    ): null
                                 }
                             </Media> 
-                            <SlideDropDown title="Esittely" text={true}></SlideDropDown>
-                            <SlideDropDown title="Yhteystiedot"  name={actualOppilaitos} yhteystiedot={true} data={this.state.oppilaitos || ""}></SlideDropDown>
+                            { selectedItem !==2 &&
+                                <div className="esittely">
+                                    <SlideDropDown title="Esittely" text={true}></SlideDropDown>
+                                    <SlideDropDown title="Yhteystiedot"  name={actualOppilaitos} yhteystiedot={true} data={this.state.oppilaitos || ""}></SlideDropDown>
+                                </div>
+                            }
+                            { selectedItem === 2 &&
+                                <OppilaitosKoulutukset/>
+                            }
                         </div>
                     </div>
                 </div>

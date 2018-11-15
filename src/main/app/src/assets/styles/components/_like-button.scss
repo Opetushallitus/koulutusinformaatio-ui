@@ -2,6 +2,7 @@
 
 .like-button{
     height: 0;
+    text-align: center;
     &:hover{
         cursor: pointer;
         i{
@@ -23,7 +24,7 @@
     }
     span{
         position: relative;
-        top: -5px;
+        top: -10px;
         font-size: 10px;
     }
 }

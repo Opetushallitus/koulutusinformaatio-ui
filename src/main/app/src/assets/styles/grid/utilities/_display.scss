@@ -15,13 +15,14 @@
     .d#{$infix}-table        { display: table !important; }
     .d#{$infix}-table-row    { display: table-row !important; }
     .d#{$infix}-table-cell   { display: table-cell !important; }
-    .d#{$infix}-flex { 
-      display: -webkit-box;
-      display: -moz-box !important;
+    .d#{$infix}-flex {
       display: -ms-flexbox !important;
       display: -webkit-flex !important;
       display: flex !important;}
-    .d#{$infix}-inline-flex  { display: inline-flex !important; }
+    .d#{$infix}-inline-flex  { 
+      -webkit-display: inline-flex !important;
+      -ms-display: inline-flex !important;
+      display: inline-flex !important; }
   }
 }
 

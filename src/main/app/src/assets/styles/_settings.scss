@@ -1,4 +1,5 @@
 @import './animations';
+
 // Colors
 $main-bg: #f8f8f8;
 $pinkish-grey: #cecece;
@@ -94,12 +95,12 @@ $theme-font-path:"#{$font-path}/open-sans";
 /// --------------------------------------------------
 /// Flexbox SASS @mixins
 /// The spec: http://www.w3.org/TR/css3-flexbox
+/// https://caniuse.com/#feat=flexbox
 /// --------------------------------------------------
 
 /// Flexbox display
 @mixin flexbox() {
   display: -webkit-box;
-  display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
@@ -111,7 +112,6 @@ $theme-font-path:"#{$font-path}/open-sans";
 /// @param initial auto, or none
 @mixin flex($values) {
   -webkit-box-flex: $values;
-     -moz-box-flex: $values;
       -webkit-flex: $values;
   	  -ms-flex: $values;
   	      flex: $values;
@@ -122,7 +122,6 @@ $theme-font-path:"#{$font-path}/open-sans";
 /// @param row | row-reverse | column | column-reverse
 @mixin flex-direction($direction) {
   -webkit-flex-direction: $direction;
-     -moz-flex-direction: $direction;
       -ms-flex-direction: $direction;
           flex-direction: $direction;
 }
@@ -132,7 +131,6 @@ $theme-font-path:"#{$font-path}/open-sans";
 /// @param nowrap | wrap | wrap-reverse
 @mixin flex-wrap($wrap) {
   -webkit-flex-wrap: $wrap;
-     -moz-flex-wrap: $wrap;
       -ms-flex-wrap: $wrap;
           flex-wrap: $wrap;
 }
@@ -142,7 +140,6 @@ $theme-font-path:"#{$font-path}/open-sans";
 /// @param <flex-direction> || <flex-wrap>
 @mixin flex-flow($flow) {
   -webkit-flex-flow: $flow;
-     -moz-flex-flow: $flow;
       -ms-flex-flow: $flow;
           flex-flow: $flow;
 }
@@ -152,7 +149,6 @@ $theme-font-path:"#{$font-path}/open-sans";
 /// @param <integer>
 @mixin order($val) {
   -webkit-box-ordinal-group: $val;  
-     -moz-box-ordinal-group: $val;     
   	     -ms-flex-order: $val;     
   	      -webkit-order: $val;  
   		      order: $val;
@@ -163,7 +159,6 @@ $theme-font-path:"#{$font-path}/open-sans";
 /// @param <number>
 @mixin flex-grow($grow) {
   -webkit-flex-grow: $grow;
-     -moz-flex-grow: $grow;
       -ms-flex-grow: $grow;
           flex-grow: $grow;
 }
@@ -172,8 +167,7 @@ $theme-font-path:"#{$font-path}/open-sans";
 /// - applies to: flex item shrink factor
 /// @param <number> 
 @mixin flex-shrink($shrink) {
-  -webkit-flex-shrink: $shrink;
-     -moz-flex-shrink: $shrink;
+  -webkit-flex-shrink: $shrink;;
       -ms-flex-shrink: $shrink;
           flex-shrink: $shrink;
 }
@@ -184,7 +178,6 @@ $theme-font-path:"#{$font-path}/open-sans";
 /// @param <width> 
 @mixin flex-basis($width) {
   -webkit-flex-basis: $width;
-     -moz-flex-basis: $width;
       -ms-flex-basis: $width;
           flex-basis: $width;
 }
@@ -194,8 +187,6 @@ $theme-font-path:"#{$font-path}/open-sans";
 /// @param flex-start | flex-end | center | space-between | space-around 
 @mixin justify-content($justify) {
   -webkit-justify-content: $justify;
-     -moz-justify-content: $justify;
-      -ms-justify-content: $justify;
           justify-content: $justify;
             -ms-flex-pack: $justify;
 }
@@ -205,7 +196,6 @@ $theme-font-path:"#{$font-path}/open-sans";
 /// @param flex-start | flex-end | center | space-between | space-around | stretch 
 @mixin align-content($align) {
   -webkit-align-content: $align;
-     -moz-align-content: $align;
       -ms-align-content: $align;
           align-content: $align;
 }
@@ -215,7 +205,6 @@ $theme-font-path:"#{$font-path}/open-sans";
 /// @param flex-start | flex-end | center | baseline | stretch 
 @mixin align-items($align) {
   -webkit-align-items: $align;
-     -moz-align-items: $align;
       -ms-align-items: $align;
           align-items: $align;
 }
@@ -225,14 +214,14 @@ $theme-font-path:"#{$font-path}/open-sans";
 /// @param auto | flex-start | flex-end | center | baseline | stretch 
 @mixin align-self($align) {
   -webkit-align-self: $align;
-     -moz-align-self: $align;
       -ms-align-self: $align;
           align-self: $align;
 }
 
-// font size maps
+// font size maps for fluid sizing 
 /// At least 2 different breakpoins and sizes should be provided
 /// font-map:(breakpoint: size, breakpoint: size)
+
 $h1-font-size-map: (576px: 18px, 992px: 30px);
 $h1-line-height-map: (576px: 24px, 992px: 36px);
 $h1-icon-font-size-map: (576px:28px, 992px: 40px);
@@ -240,7 +229,7 @@ $h2-font-size-map: (576px: 16px, 992px: 20px);
 $h2-line-height-map: (576px: 26px, 992px: 30px);
 $h3-font-size-map: (576px: 16px, 992px: 18px);
 $h3-line-height-map: (576px: 32px, 992px: 36px);
-$text-font-size-map: (320px: 13px, 576px: 14px, 992px: 16px);
+$text-font-size-map: (320px: 12px, 576px: 14px, 992px: 16px);
 $text-line-height-map: (576px: 26px, 992px: 30px);
 
 /// fluid-sizing
