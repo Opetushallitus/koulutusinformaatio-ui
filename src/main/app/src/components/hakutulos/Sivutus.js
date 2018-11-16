@@ -3,7 +3,6 @@ import {observer, inject} from 'mobx-react';
 import qs from 'query-string';
 import { withRouter } from 'react-router-dom';
 import {translate} from 'react-i18next';
-import '../../assets/styles/components/_sivutus.scss'
 
 @translate()
 @inject("hakuStore")

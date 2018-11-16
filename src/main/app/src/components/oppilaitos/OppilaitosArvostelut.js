@@ -1,16 +1,7 @@
 import React, {Component} from 'react';
 import Media from 'react-media';
-import '../../assets/styles/components/_oppilaitos-arvostelut.scss';
 
 class OppilaitosArvostelut extends Component{
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            rating: undefined,
-        };
-        this.setRating=this.setRating.bind(this);
-    }
 
     setRating(){
         const totalRating = this.props.ratingStars && this.props.ratingStars.reduce((rating,value) => rating +  value.star, 0);
@@ -39,7 +30,7 @@ class OppilaitosArvostelut extends Component{
                     :
                     (
                         <div className="col-12">
-                            <p><span>{totalRating}</span> {` ${totalRating} \\ 88 ihmistä suositellut`}</p>
+                            <p><span>{totalRating}</span> {`${totalRating} \\ 88 ihmistä suositellut`}</p>
                         </div>
                     )
                 }

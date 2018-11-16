@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import ActionButton from './ActionButton';
 import SchoolImage from '../../assets/images/school.jpg';
-import '../../assets/styles/components/_contact-info-row.scss';
 
 class ContactInfoRow extends Component{
     

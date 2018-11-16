@@ -4,7 +4,6 @@ import {observer, inject} from 'mobx-react';
 import Media from 'react-media';
 import { Link, withRouter } from 'react-router-dom';
 import {translate} from 'react-i18next';
-import '../../assets/styles/components/_hakupalkki.scss';
 
 @translate()
 @inject ("hakuehtoStore")

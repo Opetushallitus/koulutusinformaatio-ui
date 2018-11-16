@@ -1,4 +1,3 @@
-@import '../settings';
 
 #like-box{
     border: 1px solid $soft-grey;
@@ -31,6 +30,11 @@
                         position: relative;
                         top: 5px;
                         margin-right: 10px
+                    }
+                    span{
+                        position: relative;
+                        top: 20px;
+                        @include fluid-sizing('font-size', $h1-font-size-map)
                     }
                 }
             }

@@ -1,9 +1,10 @@
 const rewireMobX = require('react-app-rewire-mobx');
-const rewireCssModules = require('react-app-rewire-css-modules');
+const rewireSass = require('react-app-rewire-scss');
 
 /* config-overrides.js */
 module.exports = function override(config, env) {
-    config = rewireCssModules(config, env);
+    
+    config = rewireSass(config, env);
     config = rewireMobX(config, env);
 
     return config;

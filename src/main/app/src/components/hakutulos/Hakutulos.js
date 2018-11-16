@@ -7,7 +7,6 @@ import HakutulosBox from "./HakutulosBox";
 import Sivutus from './Sivutus';
 import { translate } from 'react-i18next';
 import VertailuBox from "./VertailuBox";
-import '../../assets/styles/components/_hakutulos.scss';
 
 @translate()
 @inject("hakuStore", "vertailuStore")

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import SideMenu from './SideMenu';
-import '../../assets/styles/components/_menu-button.scss';
 
 @translate()
 class MenuButton extends Component {

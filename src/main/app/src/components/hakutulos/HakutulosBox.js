@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import { inject, observer } from 'mobx-react';
 import LikeButton from '../common/LikeButton';
-import '../../assets/styles/components/_hakutulos-box.scss';
 
 @translate()
 @inject("vertailuStore")

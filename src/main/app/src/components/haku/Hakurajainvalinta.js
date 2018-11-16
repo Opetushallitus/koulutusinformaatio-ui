@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../assets/styles/components/_hakurajainvalinta.scss';
+
 class Hakurajainvalinta extends Component {
 
     render() {

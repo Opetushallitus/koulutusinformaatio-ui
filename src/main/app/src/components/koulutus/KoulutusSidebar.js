@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import '../../assets/styles/components/_koulutus-side-bar.scss';
 import SideBarMenu from '../common/SideBarMenu';
 
 class KoulutusSidebar extends Component {

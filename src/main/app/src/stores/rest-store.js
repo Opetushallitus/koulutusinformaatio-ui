@@ -33,6 +33,20 @@ class RestStore {
     };
 
     @action
+    searchToteutuksetPromise = (keyword, paging, filter) => {
+        return (superagent
+            .get(this.urlStore.urls.url('konfo-backend.search.toteutukset'))
+            .query({keyword: keyword,
+                page: paging.pageOppilaitos,
+                size: paging.pageSize,
+                paikkakunta: filter.paikkakunta,
+                koulutustyyppi: filter.koulutus.join(','),
+                kieli: filter.kieli.map((k) => 'kieli_' + k).join(','),
+                lng: l.getLanguage()})
+            .catch(this.handleError))
+    };
+
+    @action
     searchOppilaitoksetPromise = (keyword, paging, filter) => {
         return (superagent
             .get(this.urlStore.urls.url('konfo-backend.search.oppilaitokset'))
@@ -95,7 +109,7 @@ class RestStore {
                 }
             });
     };
-
+    
     @action
     getToteutusPromise = (oid) => {
         return (superagent

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import '../../assets/styles/components/_services-menu.scss';
 
 class ServicesMenu extends Component{
     

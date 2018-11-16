@@ -6,7 +6,6 @@ import { inject, observer } from 'mobx-react';
 import { Localizer as l } from "../../tools/Utils";
 import qs from 'querystring';
 import Media from 'react-media';
-import '../../assets/styles/components/_vertailu.scss';
 
 @translate()
 @inject("vertailuStore", "hakuStore")

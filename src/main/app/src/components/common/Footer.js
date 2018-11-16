@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../../assets/styles/components/_footer.scss';
 import Media from 'react-media';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';

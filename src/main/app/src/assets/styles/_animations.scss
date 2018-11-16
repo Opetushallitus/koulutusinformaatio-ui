@@ -239,13 +239,13 @@
 }
 
 @mixin fadeIn($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-@include animation-name(fadeIn);
-@include count($count);
-@include duration($duration);
-@include delay($delay);
-@include function($function);
-@include fill-mode($fill);
-@include visibility($visibility);
+  @include animation-name(fadeIn);
+  @include count($count);
+  @include duration($duration);
+  @include delay($delay);
+  @include function($function);
+  @include fill-mode($fill);
+  @include visibility($visibility);
 }
 
 
@@ -255,13 +255,13 @@
 }
 
 @mixin fadeOut($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-@include animation-name(fadeOut);
-@include count($count);
-@include duration($duration);
-@include delay($delay);
-@include function($function);
-@include fill-mode($fill);
-@include visibility($visibility);
+  @include animation-name(fadeOut);
+  @include count($count);
+  @include duration($duration);
+  @include delay($delay);
+  @include function($function);
+  @include fill-mode($fill);
+  @include visibility($visibility);
 }
 
 @mixin fadeInDown($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {

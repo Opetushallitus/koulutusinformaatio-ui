@@ -85,6 +85,11 @@ $font-path: "../fonts" !default;
 $theme-font-family:'Open Sans', sans-serif;
 $theme-font-path:"#{$font-path}/open-sans";
 
+@mixin smoothFonts(){
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 /// Border radius
 @mixin border-radius($radius) {
 	-webkit-border-radius: $radius;
@@ -276,7 +281,7 @@ $text-line-height-map: (576px: 26px, 992px: 30px);
   /// @returns A linear equation as a calc() function
   /// @example
   ///   font-size: linear-interpolation((320px: 18px, 768px: 26px));
-
+ 
   @function linear-interpolation($map) {
     $keys: map-keys($map);
     @if (length($keys) != 2) {
@@ -365,7 +370,6 @@ $checkbox-label-padding: 12px;
 
 // Transitions
 @mixin transitions($value: 0.2s, $ease: ease-in-out, $property: all){
-
 	@if $ease == bezier{
 		$ease: cubic-bezier(0.86, 0, 0.07, 1)
 	}

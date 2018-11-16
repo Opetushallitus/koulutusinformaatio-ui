@@ -3,7 +3,6 @@ import React from "react";
 import { translate } from 'react-i18next';
 import {Link} from "react-router-dom";
 import LikeButton from '../common/LikeButton';
-import '../../assets/styles/components/_oppilaitos-list-item.scss';
 import { Localizer as l } from '../../tools/Utils';
 import {inject} from "mobx-react";
 

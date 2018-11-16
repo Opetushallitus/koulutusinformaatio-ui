@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {translate} from 'react-i18next';
 import {Localizer as l} from "../../tools/Utils";
-import '../../assets/styles/components/_koulutus-header.scss';
 
 @translate()
 class KoulutusHeader extends Component {
@@ -24,8 +23,6 @@ class KoulutusHeader extends Component {
                     </h1>
                 </div>
             </div>
-            
-            
         );
     }
 }

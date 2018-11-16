@@ -118,10 +118,6 @@ class ToteutusSidebar extends Component {
             </div>
         );
     }
-
-    /*
-    <i className='fa fa-circle'/>
-     */
 }
 
 export default ToteutusSidebar;

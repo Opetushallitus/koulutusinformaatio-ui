@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import ServicesMenu from './ServicesMenu';
-import '../../assets/styles/components/_services-button.scss';
 
 class ServicesButton extends Component{
     

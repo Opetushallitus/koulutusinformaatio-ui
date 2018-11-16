@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import CheckBox from '../common/CheckBox';
 import ActionButton from '../common/ActionButton';
-import '../../assets/styles/components/_koulutukset-filter.scss';
 
 class KoulutuksetFilter extends Component{
 

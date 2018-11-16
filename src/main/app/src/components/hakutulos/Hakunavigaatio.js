@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom'
 import qs from 'query-string';
 import { matchPath } from 'react-router';
 import {translate} from 'react-i18next';
-import '../../assets/styles/components/_hakunavigatio.scss';
 
 @translate()
 @inject("navigaatioStore")

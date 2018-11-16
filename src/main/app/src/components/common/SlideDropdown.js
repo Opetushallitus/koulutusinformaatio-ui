@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import OppilaitosListItem from '../koulutus/OppilaitosListItem';
 import OskariKartta from "../oppilaitos/OskariKartta";
 import ContactInfoRow from '../common/ContactInfoRow';
-import '../../assets/styles/components/_slide-dropdown.scss';
 
 class SlideDropdown extends Component{
     

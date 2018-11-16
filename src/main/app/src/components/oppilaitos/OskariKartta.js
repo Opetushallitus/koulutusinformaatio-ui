@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { OsoiteParser as op, Localizer as l } from '../../tools/Utils'
 import OskariRPC from 'oskari-rpc';
 import {observer, inject} from 'mobx-react';
-import '../../assets/styles/components/_oskari-kartta.scss';
 
 @inject("urlStore")
 @observer

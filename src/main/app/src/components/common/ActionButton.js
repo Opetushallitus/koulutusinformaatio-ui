@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import '../../assets/styles/components/_action-button.scss';
 
 class ActionButton extends Component{
     
