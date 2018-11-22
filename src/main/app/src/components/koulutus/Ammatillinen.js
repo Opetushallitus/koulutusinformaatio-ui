@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import KoulutusInfoBox from './KoulutusInfoBox';
 import OppilaitosList from './OppilaitosList';
-import KoulutusSection from './KoulutusSection';
 import KoulutusHeader from './KoulutusHeader';
 import SlideDropDown from '../common/SlideDropdown';
 import { Localizer as l } from '../../tools/Utils';
@@ -35,6 +34,7 @@ class Ammatillinen extends Component {
     }
 
     render() {
+        const {t} = this.props;
         const koulutusohjelma = l.localize(this.props.result.koulutusohjelma, undefined);
         const osaamisala = this.props.result.osaamisala ? l.localize(this.props.result.osaamisala.meta, undefined).nimi : undefined;
 
@@ -54,19 +54,18 @@ class Ammatillinen extends Component {
                         </Media> 
                 <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
                 
-                {osaamisalat && <KoulutusSection
-                    content={<ul><li className="osaamisalat_list_item">{osaamisalat}</li></ul>}
-                    header="koulutus.osaamisalat"
-                    noRender={true}/>}
+                {osaamisalat && 
+                    <SlideDropDown toteutus={true} content={osaamisalat} title={t('koulutus.osaamisalat')}/>
+                }
 
-                <KoulutusSection content={tutkinnonOsat} header="koulutus.tutkinnon-rakenne"/>
-                <SlideDropDown title="Mihin koulutus antaa valmiudet?" text={true}></SlideDropDown>
-                <SlideDropDown title="Mitä voin opiskella?" text={true}></SlideDropDown>
-                <SlideDropDown title="Mitä tutkintoja voin suorittaa?" text={true}></SlideDropDown>
-                <SlideDropDown title="Mitä jatko-opintomahdollisuuksia on?" text={true}></SlideDropDown>
+                {tutkinnonOsat &&
+                    <SlideDropDown toteutus={true} content={tutkinnonOsat} title={t('koulutus.tutkinnon-rakenne')}/>
+                }  
+
+                {jatkoOpinnot &&
+                    <SlideDropDown title={t('koulutus.jatko-opinnot')} toteutus={true} content={jatkoOpinnot} />
+                }
                 <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
-
-                <KoulutusSection content={jatkoOpinnot} header="koulutus.jatko-opinnot"/>
             </React.Fragment>);
     }
 }

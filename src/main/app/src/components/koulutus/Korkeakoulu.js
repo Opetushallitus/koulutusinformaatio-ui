@@ -3,7 +3,6 @@ import KoulutusInfoBox from './KoulutusInfoBox';
 import { Localizer as l } from '../../tools/Utils';
 import {translate} from 'react-i18next'
 import OppilaitosList from "./OppilaitosList";
-import KoulutusSection from './KoulutusSection';
 import KoulutusHeader from "./KoulutusHeader";
 import SlideDropDown from '../common/SlideDropdown';
 import Media from 'react-media';
@@ -35,6 +34,7 @@ class Korkeakoulu extends Component {
     }
 
     render() {
+        const {t} = this.props;
         const erikoistumisalat = l.localize(this.props.result.kuvausKomo.TAVOITTEET, undefined);
         const jatkoOpinnot = l.localize(this.props.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined);
 
@@ -48,15 +48,13 @@ class Korkeakoulu extends Component {
                             ):null}
                         </Media>
                 <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
-
-                <KoulutusSection content={erikoistumisalat} header="koulutus.pääaineet"/>
-                <SlideDropDown title="Mihin koulutus antaa valmiudet?" text={true}></SlideDropDown>
-                <SlideDropDown title="Mitä voin opiskella?" text={true}></SlideDropDown>
-                <SlideDropDown title="Mitä tutkintoja voin suorittaa?" text={true}></SlideDropDown>
-                <SlideDropDown title="Mitä jatko-opintomahdollisuuksia on?" text={true}></SlideDropDown>
+                {erikoistumisalat &&
+                    <SlideDropDown title={t('oulutus.pääaineet')} toteutus={true} content={erikoistumisalat} />
+                }                               
+                {jatkoOpinnot &&
+                    <SlideDropDown title={t('koulutus.jatko-opinnot')} toteutus={true} content={jatkoOpinnot} />
+                }
                 <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset} nimi={this.props.result.searchData.nimi}/>
-
-                <KoulutusSection content={jatkoOpinnot} header="koulutus.jatko-opinnot"/>
             </React.Fragment>
         );
     }

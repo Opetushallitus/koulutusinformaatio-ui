@@ -4,7 +4,6 @@ import { Localizer as l } from '../../tools/Utils';
 import {translate} from 'react-i18next'
 import {inject} from "mobx-react";
 import ToteutusHeader from "./ToteutusHeader";
-import KoulutusSection from "../koulutus/KoulutusSection";
 import SlideDropdown from '../common/SlideDropdown';
 
 @translate()
@@ -47,18 +46,16 @@ class Ammatillinen extends Component {
         const osaamisalat = l.localize(this.props.koulutus.koulutusohjelma, undefined);
         const tutkinnonOsat = l.localize(this.props.koulutus.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
         const erikoistumisalat = l.localize(this.props.koulutus.kuvausKomo.TAVOITTEET, undefined);
-
+        const {t} = this.props;
         return (
             <div className="col-12 col-md-8 col-xl-9 left-column">
                 <ToteutusHeader komoOid={this.props.koulutus.komoOid}
                                 nimi={this.props.koulutus.searchData.nimi}
                                 organisaatio={this.props.koulutus.organisaatio.nimi}/>
                 <ToteutusInfoBox fields={this.parseInfoBoxFieldsTwoSided()}/>
-                {osaamisalat && <KoulutusSection
-                    content={<ul><li className="osaamisalat_list_item">{osaamisalat}</li></ul>}
-                    header="koulutus.osaamisalat"
-                    noRender={true}/>}
-
+                {osaamisalat && 
+                    <SlideDropdown toteutus={true} content={osaamisalat} title={t('koulutus.osaamisalat')}/>
+                }
                 {tutkinnonOsat &&
                     <SlideDropdown toteutus={true} content={tutkinnonOsat} title="Koulutuksen sisältö ja tavoitteet"/>
                 }

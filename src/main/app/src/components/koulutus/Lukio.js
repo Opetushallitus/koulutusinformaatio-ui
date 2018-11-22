@@ -45,7 +45,7 @@ class Lukio extends Component {
     render() {
         const jatkoOpinnot = l.localize(this.props.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined);
         const koulutuksenSisalto = l.localize(this.props.result.kuvausKomo.TAVOITTEET, undefined);
-       
+        const {t} = this.props;
         return (
             <React.Fragment>
                 <KoulutusHeader hattu="lukio-hattu" nimi={this.props.result.searchData.nimi}/>
@@ -59,13 +59,14 @@ class Lukio extends Component {
                     }
                 </Media>
                 <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
+                {koulutuksenSisalto &&
+                    <SlideDropDown title={t('oulutus.pääaineet')} toteutus={true} content={koulutuksenSisalto} />
+                } 
                 <KoulutusSection content={koulutuksenSisalto} header="koulutus.sisältö"/>
-                <SlideDropDown title="Mihin koulutus antaa valmiudet?" text={true}></SlideDropDown>
-                <SlideDropDown title="Mitä voin opiskella?" text={true}></SlideDropDown>
-                <SlideDropDown title="Mitä tutkintoja voin suorittaa?" text={true}></SlideDropDown>
-                <SlideDropDown title="Mitä jatko-opintomahdollisuuksia on?" text={true}></SlideDropDown>
+                {jatkoOpinnot &&
+                    <SlideDropDown title={t('koulutus.jatko-opinnot')} toteutus={true} content={jatkoOpinnot} />
+                }
                 <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset} nimi={this.props.result.searchData.nimi}/>
-                <KoulutusSection content={jatkoOpinnot} header="koulutus.jatko-opinnot"/>
             </React.Fragment>
         );
     }

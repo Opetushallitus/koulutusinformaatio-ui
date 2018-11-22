@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Localizer as l } from '../../tools/Utils';
 import KoulutusInfoBox from './KoulutusInfoBox';
-import KoulutusSection from './KoulutusSection';
 import Media from 'react-media';
 import {translate} from 'react-i18next';
 import OppilaitosList from "./OppilaitosList";
@@ -45,6 +44,7 @@ class Avoin extends Component {
         const fields = this.parseInfoBoxFields();
         const infoBox = fields > 0;
         const kuvaus = this.parseKuvaus();
+        const {t} = this.props;
         return (
             
             <React.Fragment>
@@ -56,7 +56,9 @@ class Avoin extends Component {
                             ):null}
                         </Media> 
                 {infoBox && <KoulutusInfoBox fields={fields}/>}
-                <KoulutusSection content={kuvaus} header="koulutus.yleiskuvaus"/>
+                {kuvaus &&
+                    <SlideDropDown title={t('koulutus.yleiskuvaus')} toteutus={true} content={kuvaus} />
+                }
                 <SlideDropDown title="Mihin koulutus antaa valmiudet?" text={true}></SlideDropDown>
                 <SlideDropDown title="Mitä voin opiskella?" text={true}></SlideDropDown>
                 <SlideDropDown title="Mitä tutkintoja voin suorittaa?" text={true}></SlideDropDown>
