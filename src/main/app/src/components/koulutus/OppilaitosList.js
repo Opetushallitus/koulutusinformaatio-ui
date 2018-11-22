@@ -16,11 +16,8 @@ class OppilaitosList extends Component {
         return (
     
             <React.Fragment>            
-                <SlideDropdown 
-                    title={t('koulutus.oppilaitokset')}
-                    oppilaitos={oppilaitokset.length > 0 ? oppilaitokset : false}
-                    education={educationTitle} 
-                />                      
+                <SlideDropdown title={t('koulutus.oppilaitokset')} oppilaitos={oppilaitokset.length > 0 ? oppilaitokset : false} education={educationTitle}>
+               </SlideDropdown>                       
             </React.Fragment>
         );
     }

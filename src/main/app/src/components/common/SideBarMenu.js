@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import '../../assets/styles/components/_sidebar-menu.scss';
 
 class SideBarMenu extends Component {
     

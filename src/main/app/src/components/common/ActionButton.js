@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
+import {Link} from "react-router-dom";
+import {translate} from "react-i18next";
+import '../../assets/styles/components/_action-button.scss';
 
+@translate()
 class ActionButton extends Component{
     
     constructor(props) {
@@ -33,9 +37,10 @@ class ActionButton extends Component{
 
     getLinkTypeAddress(){
         if(this.getButtonType() === 'link'){
-            const linkAdddress = this.props.address;
+            const linkAdddress = this.props.address ? this.props.address : undefined ;
             const isValidEmail = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(linkAdddress);
             const isValidUrl = new RegExp(/^(http|https):\/\/[^ "]+$/).test(linkAdddress);
+           
             if(isValidEmail){
                 const emailAddress =`mailto:${linkAdddress}`;
                 return emailAddress;
@@ -43,13 +48,15 @@ class ActionButton extends Component{
             if(isValidUrl){
                 const urlAddress = `${linkAdddress}`;
                 return urlAddress;
-            }else{
+            }
+            else{
                 return false;
             }
         }       
     }; 
 
     render(){
+        const {t} = this.props;
         const isSelected = this.state.selected ? "on" : "off";
         const isSwitched = this.state.switched ? "on" : "off";
         const buttonType = this.getButtonType();
@@ -73,12 +80,21 @@ class ActionButton extends Component{
                         </div>
                     </div>
                 }
-                { buttonType === "link" &&
+                { buttonType === "link" && 
                     <a className={isValidLinkType ? "enabled" : "disabled"} href={isValidLinkType || ""}>
                         <div className="link-button">
                             <span>{this.props.text}</span>
                         </div>
                     </a>
+                }
+                { buttonType === "react-link" &&
+                    <Link role="button" to={{
+                        pathname: this.props.address
+                    }}>
+                        <div className="link-button big">
+                            <span>{t('toteutus.tutustu')}</span>
+                        </div>
+                    </Link>
                 }
                 { buttonType === "transparent" &&
                     <a className="transparent-button">

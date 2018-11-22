@@ -3,6 +3,7 @@ import { translate } from 'react-i18next';
 import { withRouter, Link } from 'react-router-dom';
 import { Localizer as l } from "../../tools/Utils";
 import SidebarDropdown from "./SidebarDropdown";
+import '../../assets/styles/components/_side-menu.scss';
 
 @translate()
 class SideMenu extends Component {

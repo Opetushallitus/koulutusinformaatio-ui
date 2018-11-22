@@ -12,6 +12,7 @@ import OppilaitosKoulutukset from './OppilaitosKoulutukset';
 import OppilaitosSidebar from './OppilaitosSidebar';
 import SlideDropDown from '../common/SlideDropdown';
 import SideBarMenu from '../common/SideBarMenu';
+import '../../assets/styles/components/_oppilaitos.scss';
 
 @inject("restStore")
 @inject("navigaatioStore")
@@ -57,7 +58,7 @@ class Oppilaitos extends Component {
             this.setState({
                 oppilaitos: o
             })
-        }); 
+        });
     }
 
     getSelectedItem(i){
@@ -92,7 +93,6 @@ class Oppilaitos extends Component {
     }
 
     parseSome() {
-        
         if (!this.state.oppilaitos.metadata || !this.state.oppilaitos.metadata.data)  {
             return <div className='social'/>;
         }

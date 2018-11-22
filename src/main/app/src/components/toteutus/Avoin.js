@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Localizer as l } from '../../tools/Utils';
-import KoulutusInfoBoxTwoSided from './KoulutusInfoBoxTwoSided';
+import ToteutusInfoBox from './ToteutusInfoBox';
 import {translate} from 'react-i18next';
 import {inject} from "mobx-react";
 import ToteutusHeader from "./ToteutusHeader";
-import KoulutusSection from "../koulutus/KoulutusSection";
+import SlideDropdown from '../common/SlideDropdown';
 
 @translate()
 @inject("hakuStore")
@@ -52,13 +52,17 @@ class Avoin extends Component {
 
     render() {
         const kuvaus = this.parseKuvaus();
+        const {t} = this.props;
         return (
             <div className="col-12 col-md-9 left-column">
                 <ToteutusHeader komoOid={this.props.koulutus.komoOid}
                                 nimi={this.props.koulutus.searchData.nimi}
                                 organisaatio={this.props.koulutus.organisaatio.nimi}/>
-                <KoulutusInfoBoxTwoSided fields={this.parseInfoBoxFieldsTwoSided()}/>
-                <KoulutusSection content={kuvaus} header="koulutus.yleiskuvaus"/>
+                <ToteutusInfoBox fields={this.parseInfoBoxFieldsTwoSided()}/>
+                { kuvaus &&
+                    <SlideDropdown toteutus={true} content={kuvaus} title={t('koulutus.yleiskuvaus')}/>
+                }   
+           
             </div>);
     }
 }

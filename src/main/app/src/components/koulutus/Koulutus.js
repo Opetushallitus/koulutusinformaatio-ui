@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
+import '../../assets/styles/components/_koulutus.scss';
 import Korkeakoulu from "./Korkeakoulu";
 import Ammatillinen from "./Ammatillinen";
 import Hakunavigaatio from './../hakutulos/Hakunavigaatio';

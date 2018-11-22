@@ -1,0 +1,19 @@
+@import '../settings';
+
+.info-page{
+    &.toteutus{
+        .left-column{
+            border-right: 1px solid $soft-grey;
+            padding-bottom: 30px;
+        }
+        #toteutus-header{
+            margin-top: 0;
+            #toteutus-header-nimi{
+                margin-top: 5px;
+            }
+            .like-button{
+               margin-top: 40px;
+            }
+        }
+    }
+}

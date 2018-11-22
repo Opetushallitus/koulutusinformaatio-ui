@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
+import renderHTML from 'react-render-html';
+import '../../assets/styles/components/_slide-dropdown.scss';
 import OppilaitosListItem from '../koulutus/OppilaitosListItem';
 import OskariKartta from "../oppilaitos/OskariKartta";
 import ContactInfoRow from '../common/ContactInfoRow';
+
 
 class SlideDropdown extends Component{
     
@@ -60,7 +63,6 @@ class SlideDropdown extends Component{
                     </div> 
                     <div className={"dropdown-content " + dropDownContent + " " + isComponentCollapsing}>
                         <div className="col-12">                  
-                            <div>
                                 {
                                     this.props.oppilaitos && 
                                     <div key={this.props.oid} className="col-12 box-container">
@@ -76,19 +78,20 @@ class SlideDropdown extends Component{
                                 {
                                     this.props.yhteystiedot &&
                                     <div>
-                                            {
-                                                this.luoKarttaJosOsoiteTiedossa()
-                                            }
-                                            <ContactInfoRow data={this.props.data} name={this.props.name}/>
+                                        {this.luoKarttaJosOsoiteTiedossa()}
+                                        <ContactInfoRow type="oppilaitos" data={this.props.data} name={this.props.name}/>
                                     </div>
                                 }
-                            </div>
+                                {
+                                    this.props.toteutus &&
+                                    <div className="col-11 text-block">
+                                        {renderHTML(this.props.content)}
+                                    </div>
+                                }
                         </div>
                     </div>
                 </div>
             </div>
-            
-                    
         );
     }
 }

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {translate} from 'react-i18next';
 import { inject, observer } from 'mobx-react';
 import { Localizer as l} from "../../tools/Utils";
+import '../../assets/styles/components/_vertailu-box.scss';
 
 @translate()
 @inject("vertailuStore")

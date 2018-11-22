@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
+import '../../assets/styles/components/_toteutus-koulutus.scss';
 import Korkeakoulu from "./Korkeakoulu";
 import Ammatillinen from "./Ammatillinen";
 import Hakunavigaatio from './../hakutulos/Hakunavigaatio';
@@ -59,7 +60,7 @@ class Koulutus extends Component {
                 <div className="container">
                     <div className="row info-page toteutus">
                         {selectedKoulutus}
-                        <ToteutusSidebar organisaatio={this.state.organisaatio} koulutus={this.state.koulutus}/>
+                        <ToteutusSidebar organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.searchData.tyyppi}/>
                     </div>
                 </div>
                 <Hakunavigaatio/>

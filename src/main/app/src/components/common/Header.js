@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { translate } from 'react-i18next';
 import MenuButton from './MenuButton';
 import ServicesButton from './ServicesButton';
+import '../../assets/styles/components/_header.scss';
 
 @translate()
 class Header extends Component {

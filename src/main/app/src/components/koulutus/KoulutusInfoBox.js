@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import '../../assets/styles/components/_koulutus-info-box.scss';
 
 class KoulutusInfoBox extends Component {
 

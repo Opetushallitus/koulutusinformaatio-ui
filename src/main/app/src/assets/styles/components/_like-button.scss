@@ -1,27 +1,35 @@
+@import '../settings';
 
-.like-button{
+.like-button {
     height: 0;
     text-align: center;
-    &:hover{
+    line-height: 0;
+
+    &:hover {
         cursor: pointer;
-        i{
-            &.icon-ic_favorite_border{
-                color: black!important;
+
+        i {
+            &.icon-ic_favorite_border {
+                color: black !important;
             }
         }
     }
-    i{
+
+    i {
         font-size: 25px;
         display: block;
         @include transitions();
-        &.icon-ic_favorite_border{
+
+        &.icon-ic_favorite_border {
             color: $soft-grey;
         }
-        &.icon-ic_favorite{
-            color: $brick!important;
+
+        &.icon-ic_favorite {
+            color: $brick !important;
         }
     }
-    span{
+
+    span {
         position: relative;
         top: -10px;
         font-size: 10px;

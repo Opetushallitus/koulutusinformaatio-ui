@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import superagent from "superagent";
 import {inject} from "mobx-react/index";
 import {translate} from 'react-i18next';
-
+import '../../assets/styles/components/_palaute.scss';
 @translate()
 @inject("urlStore")
 class Palaute extends Component {

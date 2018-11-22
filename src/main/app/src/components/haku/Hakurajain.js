@@ -4,6 +4,7 @@ import {observer, inject} from 'mobx-react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { translate } from 'react-i18next';
+import '../../assets/styles/components/_hakurajain.scss';
 
 @translate()
 @inject ("hakuehtoStore")

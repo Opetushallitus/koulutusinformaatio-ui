@@ -95,7 +95,7 @@ class RestStore {
                 }
             });
     };
-    
+
     @action
     getToteutusPromise = (oid) => {
         return (superagent
