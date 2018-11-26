@@ -92,40 +92,6 @@ class Oppilaitos extends Component {
         return "";
     }
 
-    parseSome() {
-        if (!this.state.oppilaitos.metadata || !this.state.oppilaitos.metadata.data)  {
-            return <div className='social'/>;
-        }
-        const data = this.state.oppilaitos.metadata.data;
-        let fb = "";
-        let twitter = "";
-        let insta = "";
-
-        for (let i = 1; i < 10; i++) {
-            const key = "sosiaalinenmedia_"+i+"#1";
-            if(data[key]) {
-                const k = data[key];
-                const kieli = "kieli_" + l.getLanguage() + "#1";
-                if(k[kieli]) {
-                    if(k[kieli].indexOf('facebook') !== -1 ) {
-                        fb = <li><a href={k[kieli]}><i className='fa fa-facebook-square fa-3x' /></a></li>
-                    } else if (k[kieli].indexOf('twitter') !== -1) {
-                        twitter = <li><a href={k[kieli]}><i className='fa fa-twitter-square fa-3x' /></a></li>
-                    } else if (k[kieli].indexOf('instagram') !== -1) {
-                        insta = <li><a href={k[kieli]}><i className='fa fa-instagram fa-3x' /></a></li>
-                    }
-                }
-            }
-        }
-        return (
-            <ul className='social'>
-                {fb}
-                {twitter}
-                {insta}
-            </ul>
-        )
-    }
-
     render() {
         let selectedItem= this.setSelectedItem();
         const menuElements = [
@@ -173,7 +139,7 @@ class Oppilaitos extends Component {
                                 </div>
                             }
                             { selectedItem === 2 &&
-                                <OppilaitosKoulutukset/>
+                                <OppilaitosKoulutukset oid={this.props.navigaatioStore.oid}/>
                             }
                         </div>
                     </div>

@@ -5,6 +5,7 @@ import {translate} from 'react-i18next';
 import {inject} from "mobx-react";
 import ToteutusHeader from "./ToteutusHeader";
 import SlideDropdown from '../common/SlideDropdown';
+import ToteutusSidebar from "./ToteutusSidebar";
 
 @translate()
 @inject("hakuStore")
@@ -53,17 +54,21 @@ class Avoin extends Component {
     render() {
         const kuvaus = this.parseKuvaus();
         const {t} = this.props;
+        console.log()
         return (
-            <div className="col-12 col-md-9 left-column">
-                <ToteutusHeader komoOid={this.props.koulutus.komoOid}
-                                nimi={this.props.koulutus.searchData.nimi}
-                                organisaatio={this.props.koulutus.organisaatio.nimi}/>
-                <ToteutusInfoBox fields={this.parseInfoBoxFieldsTwoSided()}/>
-                { kuvaus &&
-                    <SlideDropdown toteutus={true} content={kuvaus} title={t('koulutus.yleiskuvaus')}/>
-                }   
-           
-            </div>);
+            <React.Fragment>
+                <div className="col-12 col-md-12 col-lg-8 col-xl-9 left-column">
+                    <ToteutusHeader komoOid={this.props.koulutus.komoOid}
+                                    nimi={this.props.koulutus.searchData.nimi}
+                                    organisaatio={this.props.koulutus.organisaatio.nimi}/>
+                    <ToteutusInfoBox fields={this.parseInfoBoxFieldsTwoSided()}/>
+                    { kuvaus &&
+                        <SlideDropdown toteutus={true} content={kuvaus} title={t('koulutus.yleiskuvaus')}/>
+                    }
+                </div>
+                <ToteutusSidebar organisaatio={this.props.organisaatio} koulutus={this.props.koulutus} educationType={this.educationType}/>
+            </React.Fragment>
+            );
     }
 }
 

@@ -6,7 +6,6 @@ import Ammatillinen from "./Ammatillinen";
 import Hakunavigaatio from './../hakutulos/Hakunavigaatio';
 import Avoin from "./Avoin";
 import Lukio from "./Lukio";
-import ToteutusSidebar from "./ToteutusSidebar";
 
 @inject("restStore")
 @inject("navigaatioStore")
@@ -43,11 +42,11 @@ class Koulutus extends Component {
     chooseKoulutus() {
         if(this.state.koulutus) {
             switch(this.state.koulutus.searchData.tyyppi) {
-                case 'lk': return <Lukio oid={this.props.navigaatioStore.oid} koulutus={this.state.koulutus} />; //TODO
-                case 'kk': return <Korkeakoulu oid={this.props.navigaatioStore.oid} koulutus={this.state.koulutus} />;
-                case 'ako': return <Avoin oid={this.props.navigaatioStore.oid} koulutus={this.state.koulutus} />;
-                case 'amm' : return <Ammatillinen oid={this.props.navigaatioStore.oid} koulutus={this.state.koulutus} />;
-                default: return <Ammatillinen oid={this.props.navigaatioStore.oid} koulutus={this.state.koulutus} muu={true} />;
+                case 'lk': return <Lukio organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.searchData.tyyppi} oid={this.props.navigaatioStore.oid} />; //TODO
+                case 'kk': return <Korkeakoulu organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.searchData.tyyppi} oid={this.props.navigaatioStore.oid} />;
+                case 'ako': return <Avoin organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.searchData.tyyppi} oid={this.props.navigaatioStore.oid} />;
+                case 'amm' : return <Ammatillinen organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.searchData.tyyppi} oid={this.props.navigaatioStore.oid} />;
+                default: return <Ammatillinen organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.searchData.tyyppi} oid={this.props.navigaatioStore.oid} muu={true} />;
             }
         }
         return <div/>
@@ -60,7 +59,6 @@ class Koulutus extends Component {
                 <div className="container">
                     <div className="row info-page toteutus">
                         {selectedKoulutus}
-                        <ToteutusSidebar organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.searchData.tyyppi}/>
                     </div>
                 </div>
                 <Hakunavigaatio/>

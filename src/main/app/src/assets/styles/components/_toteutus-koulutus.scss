@@ -17,3 +17,19 @@
         }
     }
 }
+
+@media (max-width: 992px) {
+    .info-page{
+        &.toteutus{
+            .left-column{
+                border-right: none;
+                padding-left: 0;
+                padding-right: 0; 
+            }
+            .right-column{
+                padding-left: 0;
+                padding-right: 0; 
+            }
+        }
+    }
+}

@@ -20,7 +20,7 @@ class LikeButton extends Component{
     render(){
         const iconClass = this.state.likedState ? "ic_favorite" : "ic_favorite_border";
         const buttonClass = !this.state.likedState ? "" : "liked";
-        const buttonText = !this.state.likedState ? "Tykää" : "Tykätty";
+        const buttonText = !this.state.likedState ? "Tykkää" : "Tykätty";
         return(
         <div className = {`like-button ${buttonClass}`} onClick={this.toggleClass}>
             <i className={"icon-" + iconClass}></i>

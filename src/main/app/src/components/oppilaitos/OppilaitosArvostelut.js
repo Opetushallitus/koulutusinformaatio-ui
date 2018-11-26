@@ -39,7 +39,7 @@ class OppilaitosArvostelut extends Component{
                     :
                     (
                         <div className="col-12">
-                            <p><span>{totalRating}</span> {` ${totalRating} \\ 88 ihmistä suositellut`}</p>
+                            <p><span>{totalRating}</span> {`${totalRating} \\ 88 ihmistä suositellut`}</p>
                         </div>
                     )
                 }

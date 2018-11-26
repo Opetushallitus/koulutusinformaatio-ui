@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import '../../assets/styles/components/_koulutus-side-bar.scss';
 import SideBarMenu from '../common/SideBarMenu';
+import KoulutusType from './KoulutusType';
 
 class KoulutusSidebar extends Component {
 
@@ -17,15 +18,11 @@ class KoulutusSidebar extends Component {
     render() {
         const menuElements = this.props.items;
         const selectedItem =  this.props.selected || 0; 
-        const koulutusType = this.getName();
+        const koulutusName = this.getName();
+        const koulutusType = this.props.type;
         return (
             <div className="col-md-4 col-lg-4 col-xl-3" id="side-bar" >                        
-                <div className={`col-12 type-${this.props.type}`}>
-                    <h2 className="d-flex justify-content-between">
-                        <span className="icon-ic_school"></span>
-                        <span>{koulutusType}</span>
-                    </h2>
-                </div>
+                <KoulutusType  type={koulutusType} name={koulutusName} />
                 <SideBarMenu items={menuElements} item={this.props.item} selected={selectedItem}/>
             </div>
         );

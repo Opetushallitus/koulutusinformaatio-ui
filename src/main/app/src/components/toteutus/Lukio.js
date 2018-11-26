@@ -5,6 +5,7 @@ import {translate} from 'react-i18next';
 import {inject} from "mobx-react";
 import ToteutusHeader from "./ToteutusHeader";
 import SlideDropdown from '../common/SlideDropdown';
+import ToteutusSidebar from "./ToteutusSidebar";
 
 @translate()
 @inject("hakuStore")
@@ -52,18 +53,21 @@ class Lukio extends Component {
         const sisalto = l.localize(this.props.koulutus.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
         const erikoistumisalat = l.localize(this.props.koulutus.kuvausKomo.TAVOITTEET, undefined);
         return (
-            <div className="col-12 col-md-9 left-column">
-                <ToteutusHeader komoOid={this.props.koulutus.komoOid}
-                                nimi={this.props.koulutus.searchData.nimi}
-                                organisaatio={this.props.koulutus.organisaatio.nimi}/>
-                <ToteutusInfoBox fields={this.parseInfoBoxFieldsTwoSided()}/>
-                { sisalto &&
-                    <SlideDropdown toteutus={true} content={sisalto} title={t('koulutus.sisältö')}/>
-                }
-                { erikoistumisalat &&
-                    <SlideDropdown toteutus={true} content={erikoistumisalat} title={t('koulutus.pääaineet')}/>
-                }
-            </div>
+            <React.Fragment>
+                <div className="col-12 col-md-12 col-lg-8 col-xl-9 left-column">
+                    <ToteutusHeader komoOid={this.props.koulutus.komoOid}
+                                    nimi={this.props.koulutus.searchData.nimi}
+                                    organisaatio={this.props.koulutus.organisaatio.nimi}/>
+                    <ToteutusInfoBox fields={this.parseInfoBoxFieldsTwoSided()}/>
+                    { sisalto &&
+                        <SlideDropdown toteutus={true} content={sisalto} title={t('koulutus.sisältö')}/>
+                    }
+                    { erikoistumisalat &&
+                        <SlideDropdown toteutus={true} content={erikoistumisalat} title={t('koulutus.pääaineet')}/>
+                    }
+                </div>
+                <ToteutusSidebar organisaatio={this.props.organisaatio} koulutus={this.props.koulutus} educationType={this.educationType}/>
+            </React.Fragment>
         );
     }
 }

@@ -6,7 +6,7 @@ class OppilaitosKoulutukset extends Component{
             
         return(
             <div className="col-12" id="koulutukset-filter">
-
+                <p>{this.props.oid}</p>
             </div>
         )
     }

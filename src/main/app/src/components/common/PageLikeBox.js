@@ -25,7 +25,7 @@ class PageLikeBox extends Component{
                         <div id="like-box">
                             <div className="row">
                                 <div className="col-12 d-flex justify-content-between header"> 
-                                    <span className="title">
+                                    <span className="title d-flex">
                                         <i className="icon-ic_account_balance" />
                                         {this.props.name}
                                     </span>

@@ -49,7 +49,7 @@ class Korkeakoulu extends Component {
                         </Media>
                 <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
                 {erikoistumisalat &&
-                    <SlideDropDown title={t('oulutus.pääaineet')} toteutus={true} content={erikoistumisalat} />
+                    <SlideDropDown title={t('koulutus.pääaineet')} toteutus={true} content={erikoistumisalat} />
                 }                               
                 {jatkoOpinnot &&
                     <SlideDropDown title={t('koulutus.jatko-opinnot')} toteutus={true} content={jatkoOpinnot} />
