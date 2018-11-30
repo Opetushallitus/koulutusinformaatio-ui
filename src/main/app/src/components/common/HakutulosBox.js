@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import { inject, observer } from 'mobx-react';
-import LikeButton from '../common/LikeButton';
+import LikeButton from './LikeButton';
 import '../../assets/styles/components/_hakutulos-box.scss';
 
 @translate()
@@ -14,7 +14,7 @@ class HakutulosBox extends Component {
     render() {
         
         return (
-            <div key={this.props.oid} className="col-12 col-md-12 col-lg-6 box-container">
+            <div key={this.props.oid} className={`col-12 col-md-12 ${this.props.oppilaitos ? "col-lg-12": "col-lg-6"} box-container`}>
                 <div className={`col-12 search-box ${this.props.tyyppi}`}>
                     {this.props.haettavissa && <div className="haku">{this.props.t("haku.haku")}</div>}
                     <div className="d-flex justify-content-between">

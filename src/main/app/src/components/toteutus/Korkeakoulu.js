@@ -59,6 +59,7 @@ class Korkeakoulu extends Component {
             <React.Fragment>
                 <div className="col-12 col-md-12 col-lg-8 col-xl-9 left-column">
                     <ToteutusHeader komoOid={this.props.koulutus.komoOid}
+                                    organisaatioOid={this.props.organisaatio.oid}
                                     nimi={this.props.koulutus.searchData.nimi}
                                     organisaatio={this.props.koulutus.organisaatio.nimi}/>
                     <ToteutusInfoBox fields={this.parseInfoBoxFieldsTwoSided()}/>

@@ -40,7 +40,7 @@ class ToteutusSidebar extends Component {
         }
         const hae = this.props.koulutus && this.props.koulutus.hakuajatFromBackend ? this.props.koulutus.hakuajatFromBackend.aktiiviset.length > 0 : false;
         return (
-            <div className="col-12 col-md-4 col-xl-3 right-column">
+            <div className="col-12 col-md-12 col-lg-4 col-xl-3 right-column">
                 <div className="toteutus-sidebar">
                     <div className='col-md-12'>
                         <h2 id="toteutus-side-header">{l.localize(this.props.organisaatio, "", "Tuntematon oppilaitos")}</h2>

@@ -17,7 +17,7 @@ class OppilaitosSidebar extends Component {
                     matches => matches ? (
                         <div className="col-md-4 col-lg-4 col-xl-3" id="side-bar">                        
                             <div className={"col-12 type-" + this.props.name}>
-                                <h2>{this.props.name}</h2>
+                                <h1>{this.props.name}</h1>
                             </div>
                             <SideBarMenu items={menuElements} item={this.props.item} selected={selectedItem}/>
                             {

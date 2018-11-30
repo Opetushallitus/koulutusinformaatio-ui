@@ -8,7 +8,7 @@ import renderHTML from 'react-render-html';
 import {translate} from 'react-i18next';
 import { Localizer as l } from "../../tools/Utils";
 import OppilaitosArvostelut from './OppilaitosArvostelut';
-import OppilaitosKoulutukset from './OppilaitosKoulutukset';
+import OppilaitosKoulutuksetList from './OppilaitosKoulutuksetList';
 import OppilaitosSidebar from './OppilaitosSidebar';
 import SlideDropDown from '../common/SlideDropdown';
 import SideBarMenu from '../common/SideBarMenu';
@@ -24,6 +24,7 @@ class Oppilaitos extends Component {
         super(props);
         this.state = {
             oppilaitos: undefined,
+            koulutukset: undefined,
             selectedMenuItem: 0
         };
         this.getSelectedItem=this.getSelectedItem.bind(this);
@@ -41,7 +42,6 @@ class Oppilaitos extends Component {
 
     getKotisivuFromYhteystiedot() {
         const data = this.state.oppilaitos.yhteystiedot;
-
         for (let row in data){
             if(row.www) {
                 return (
@@ -92,6 +92,7 @@ class Oppilaitos extends Component {
         return "";
     }
 
+    
     render() {
         let selectedItem= this.setSelectedItem();
         const menuElements = [
@@ -139,7 +140,7 @@ class Oppilaitos extends Component {
                                 </div>
                             }
                             { selectedItem === 2 &&
-                                <OppilaitosKoulutukset oid={this.props.navigaatioStore.oid}/>
+                                <OppilaitosKoulutuksetList oid={this.props.navigaatioStore.oid} name={actualOppilaitos}/>
                             }
                         </div>
                     </div>

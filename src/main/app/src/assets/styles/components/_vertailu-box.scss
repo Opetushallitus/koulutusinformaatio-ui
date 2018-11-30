@@ -1,6 +1,7 @@
 @import '../settings';
 
 #compare-row {
+    position: sticky;
     #compared-subjects {
         padding: 40px 15px 40px 0;
         .compare-object{

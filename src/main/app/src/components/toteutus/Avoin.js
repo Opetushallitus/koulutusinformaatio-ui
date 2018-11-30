@@ -54,7 +54,6 @@ class Avoin extends Component {
     render() {
         const kuvaus = this.parseKuvaus();
         const {t} = this.props;
-        console.log()
         return (
             <React.Fragment>
                 <div className="col-12 col-md-12 col-lg-8 col-xl-9 left-column">

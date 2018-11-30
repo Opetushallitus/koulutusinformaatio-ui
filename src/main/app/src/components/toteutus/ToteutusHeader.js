@@ -17,9 +17,7 @@ class ToteutusHeader extends Component {
     }
 
     render () {
-        const link = '/koulutus/' + this.props.komoOid + '?haku=' +
-            encodeURIComponent(this.props.hakuStore.createHakuUrl)
-            + '&lng=' + l.getLanguage();
+        const link = `/koulutus/${this.props.komoOid}?haku=${encodeURIComponent(this.props.hakuStore.createHakuUrl)}&lng=${l.getLanguage()}`;
         return (
             <div className="compare ">
                 <h1 id="toteutus-header" className="d-flex justify-content-between">

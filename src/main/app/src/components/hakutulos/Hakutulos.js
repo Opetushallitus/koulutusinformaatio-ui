@@ -3,7 +3,7 @@ import {observer, inject} from 'mobx-react';
 import {Localizer as l} from '../../tools/Utils';
 import HakutulosToggle from "./HakutulosToggle";
 import HakutulosSummary from "./HakutulosSummary";
-import HakutulosBox from "./HakutulosBox";
+import HakutulosBox from "../common/HakutulosBox";
 import Sivutus from './Sivutus';
 import { translate } from 'react-i18next';
 import VertailuBox from "./VertailuBox";

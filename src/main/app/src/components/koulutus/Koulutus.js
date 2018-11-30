@@ -87,18 +87,6 @@ class Koulutus extends Component {
         const actualKoulutus = this.koulutusType();
         let selectedItem= this.setSelectedItem();
         return (
-            /*<React.Fragment>
-                <div className="container">
-                    <div className="row info-page">
-                        <div className="col-12 col-md-9 left-column">
-                            {selectedKoulutus}
-                        </div>
-                        <KoulutusSidebar/>
-                    </div>
-                    
-                </div>
-                <Hakunavigaatio/>
-            </React.Fragment>*/
             <React.Fragment>
                 <div className="container" id="koulutus-container">
                     <div className="row">

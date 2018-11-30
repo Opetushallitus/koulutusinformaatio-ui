@@ -12,11 +12,12 @@ $channels: (
     padding: 15px 15px;
     .search-box {
         box-shadow: 0 0px 1px $pinkish-grey;
-        height: 200px;
+        height: 165px;
         overflow: hidden;
         background: white;
         .text {
             height: 125px;
+            overflow: hidden;
             width: 95%;
             margin: 25px 15px;
             a {
@@ -55,13 +56,11 @@ $channels: (
                 -moz-border-radius: 20px;
                 border-radius: 13px;
                 max-width: 200px;
-                padding: 1px 20px;
+                padding: 0 10px;
                 float: right;
                 text-align: center;
                 font-size: 14px;
-                -webkit-transition: all ease-in .25s;
-                -moz-transition: all ease-in .25s;
-                transition: all ease-in .25s;
+                @include transitions();
                 color: $water-blue;
                 &.poista {
                     background: $water-blue;
@@ -72,6 +71,7 @@ $channels: (
                 span {
                     color: #d6d6d6;
                     border-color: #d6d6d6;
+                    opacity: 0;
                 }
             }
         }

@@ -23,14 +23,12 @@ class PageLikeBox extends Component{
                     :
                     (
                         <div id="like-box">
-                            <div className="row">
-                                <div className="col-12 d-flex justify-content-between header"> 
-                                    <span className="title d-flex">
-                                        <i className="icon-ic_account_balance" />
-                                        {this.props.name}
-                                    </span>
+                            <div className="row" id="header">
+                                <h1 className="col-12 d-flex justify-content-between"> 
+                                    <span></span>
+                                        <span className="title">{this.props.name}</span>
                                     <LikeButton />
-                                </div>
+                                </h1>
                             </div>
                             <div className="row">    
                                 <div className="col-12">
