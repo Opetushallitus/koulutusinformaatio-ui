@@ -16,7 +16,7 @@ $channels: (
         overflow: hidden;
         background: white;
         .text {
-            height: 125px;
+            height: 85px;
             overflow: hidden;
             width: 95%;
             margin: 25px 15px;
@@ -49,17 +49,20 @@ $channels: (
             position: absolute;
             right: 30px;
             bottom: 15px;
+            &:hover{
+                cursor: pointer;
+            }
             span {
                 border: 1px solid $water-blue;
                 pointer-events:none;
                 -webkit-border-radius: 20px;
                 -moz-border-radius: 20px;
-                border-radius: 13px;
+                border-radius: 15px;
                 max-width: 200px;
-                padding: 0 10px;
+                padding: 0 15px;
                 float: right;
                 text-align: center;
-                font-size: 14px;
+                @include fluid-sizing('font-size',$text-font-size-map);
                 @include transitions();
                 color: $water-blue;
                 &.poista {
@@ -95,5 +98,18 @@ $channels: (
                 } 
             }
         } 
+    }
+}
+
+@media (max-width: 992px) {
+    .box-container{
+        .search-box{
+            height: 145px;
+            overflow: hidden;
+            .text{
+                height: 75px;
+                overflow: hidden;
+            }
+        }
     }
 }

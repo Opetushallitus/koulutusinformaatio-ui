@@ -1,17 +1,23 @@
 @import '../settings';
 
-.contact-data{
-    img{
-        max-width: 100px;
-        width: 100%;
-        margin-right: 15px;
-    }
-    ul{
-        li{
-            &:first-child{
-                color: $battleship-grey;
-                padding: 0 0 5px;
+#contact-info-row{
+    .contact-data{
+        img{
+            max-width: 100px;
+            width: 100%;
+            margin-right: 15px;
+        }
+        ul{
+            li{
+                &:first-child{
+                    color: $battleship-grey;
+                    padding: 0 0 5px;
+                }
             }
         }
     }
+    .action-button{
+        min-width: 200px;
+    }
 }
+

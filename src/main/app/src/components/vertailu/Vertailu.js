@@ -36,6 +36,7 @@ class Vertailu extends Component {
                 .forEach((oid) => this.props.vertailuStore.selectItem(oid));
         }
     }
+    
     colors = ["green", "gold", "blue"];
 
     renderComparedItems() {
@@ -61,16 +62,16 @@ class Vertailu extends Component {
             <React.Fragment>
                 <li className="compare-list-item">
                     <div className="inner"/>
-                    <p>{l.localize(item.koulutuksenAlkamiskausi) + " " + item.koulutuksenAlkamisvuosi}</p></li>
+                    <p>{`${l.localize(item.koulutuksenAlkamiskausi)} ${item.koulutuksenAlkamisvuosi}`}</p></li>
                 <li className="compare-list-item">
                     <div className="inner"/>
                     <p>{item.opetuskielis && item.opetuskielis.map((k) => l.localize(k)).join(', ')}</p></li>
                 <li className="compare-list-item">
                     <div className="inner"/>
-                    <p>{l.localize(item.opintojenLaajuusarvo, "", "fi") + " " + l.localize(item.opintojenLaajuusyksikko)}</p></li>
+                    <p>{`${l.localize(item.opintojenLaajuusarvo, "", "fi")} ${l.localize(item.opintojenLaajuusyksikko)}`}</p></li>
                 <li className="compare-list-item">
                     <div className="inner"/>
-                    <p>{item.suunniteltuKestoArvo + " " + l.localize(item.suunniteltuKestoTyyppi)}</p></li>
+                    <p>{`${item.suunniteltuKestoArvo} ${l.localize(item.suunniteltuKestoTyyppi)}`}</p></li>
                 <li className="compare-list-item">
                     <div className="inner"/>
                     <p>{l.localize(item.opintoala)} </p></li>
@@ -98,8 +99,8 @@ class Vertailu extends Component {
 
         return this.props.vertailuStore.vertailuList.map((item, i) => {
             return ( 
-                <div className="compare-items">
-                        <div className={"compare-list " + this.colors[i]} key={item.oid}>
+                <div className="compare-items" key={item.oid}>
+                        <div className={"compare-list " + this.colors[i]}>
                             <div className={"compared-items"} >
                                 <div className="compare-box">
                                     <Link to={item.link} className="title">
@@ -123,9 +124,9 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex">
+                                <div className="col-12 info-col d-flex" key={x}>
                                     <div className={"col-11 " + this.colors[x]}>
-                                        <p>{(l.localize(item.koulutuksenAlkamiskausi) + " " + item.koulutuksenAlkamisvuosi)}</p>
+                                        <p>{`${l.localize(item.koulutuksenAlkamiskausi)} ${item.koulutuksenAlkamisvuosi}`}</p>
                                     </div>
                                 </div>
                             );
@@ -140,7 +141,7 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex">
+                                <div className="col-12 info-col d-flex" key={x}>
                                     <div className={"col-11 " + this.colors[x]}>
                                         <p>{(item.opetuskielis && item.opetuskielis.map((k) => l.localize(k)).join(', '))}</p>
                                     </div>
@@ -157,9 +158,9 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex">
+                                <div className="col-12 info-col d-flex" key={x}>
                                     <div className={"col-11 " + this.colors[x]} >
-                                        <p>{(l.localize(item.opintojenLaajuusarvo, "", "fi") + " " + l.localize(item.opintojenLaajuusyksikko))}</p>
+                                        <p>{`${l.localize(item.opintojenLaajuusarvo, "", "fi")} ${l.localize(item.opintojenLaajuusyksikko)}`}</p>
                                     </div>
                                 </div>
                             );
@@ -174,9 +175,9 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex">
+                                <div className="col-12 info-col d-flex" key={x}>
                                     <div className={"col-11 " + this.colors[x]} >
-                                        <p>{(item.suunniteltuKestoArvo + " " + l.localize(item.suunniteltuKestoTyyppi))}</p>
+                                        <p>{`${item.suunniteltuKestoArvo} ${l.localize(item.suunniteltuKestoTyyppi)}`}</p>
                                     </div>
                                 </div>
                             );
@@ -191,7 +192,7 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex">
+                                <div className="col-12 info-col d-flex" key={x}>
                                     <div className={"col-11 " + this.colors[x]} >
                                         <p>{l.localize(item.opintoala)} </p>
                                     </div>
@@ -208,7 +209,7 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex">
+                                <div className="col-12 info-col d-flex" key={x}>
                                     <div className={"col-11 " + this.colors[x]} >
                                         <p>{(item.opetusAikas && item.opetusAikas.map((i) => l.localize(i)).join(', '))}</p>
                                     </div>
@@ -225,7 +226,7 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex">
+                                <div className="col-12 info-col d-flex" key={x}>
                                     <div className={"col-11 " + this.colors[x]} >
                                         <p>{(item.opetusPaikkas && item.opetusPaikkas.map((i) => l.localize(i)).join(', ')) }</p>
                                     </div>
@@ -242,7 +243,7 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex">
+                                <div className="col-12 info-col d-flex" key={x}>
                                     <div className={"col-11 " + this.colors[x]} >
                                         <p>{(item.opetusmuodos && item.opetusmuodos.map((i) => l.localize(i)).join(', '))}</p>
                                     </div>
@@ -259,9 +260,9 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex">
+                                <div className="col-12 info-col d-flex" key={x}>
                                     <div className={"col-11 " + this.colors[x]} >
-                                        <p>{(l.localize(item.pohjakoulutusvaatimukset) || l.localize(item.pohjakoulutusvaatimus))}</p>
+                                        <p>{(l.localize(item.pohjakoulutusvaatimukset) || l.localize(item.pohjakoulutusvaatimus)) || "---"}</p>
                                     </div>
                                 </div>
                             );
@@ -276,7 +277,7 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex">
+                                <div className="col-12 info-col d-flex" key={x}>
                                     <div className={"col-11 " + this.colors[x]} >
                                         <p>{(item.opintojenMaksullisuus ? this.props.t("vertailu.maksullinen") : this.props.t("vertailu.maksuton"))}</p>
                                     </div>
@@ -299,7 +300,6 @@ class Vertailu extends Component {
                                 <Link to={this.state.hakuUrl} className="header d-flex" >
                                 <span className="icon-ic-back-button"></span>
                                 <span className="light-font">{t("vertailu.takaisin-edelliselle-sivulle")}<br /><strong>{t("vertailu.vertailuun-ottamasi-kohteet")}</strong></span>
-                                  {/*t("vertailu.vertailuun-ottamasi-kohteet")*/}
                                 </Link>
                             </h1>
                         </div>

@@ -2,21 +2,30 @@
 
 #compare-row {
     position: sticky;
+    top: 0;
+    z-index: 100;
     #compared-subjects {
-        padding: 40px 15px 40px 0;
+        padding: 30px 15px 0 0;
         .compare-object{
             .compare-box {
                 border: 2px solid white;
                 -webkit-border-radius: 5px;
                 -moz-border-radius: 5px;
                 border-radius: 5px;
-                min-height: 160px;
+                max-height: 120px;
+                overflow: hidden;
                 width: 97%;
                 height: 100%;
+                .item-text{
+                    max-height: 110px;
+                    overflow: hidden;
+                }
                 a{
                     color:#ffffff;
                     text-decoration: underline;
                     position: relative;
+                    @include fluid-sizing('font-size', $text-font-size-map);
+                    display: inline;
                 }
                 .title {
                     overflow: hidden;
@@ -41,13 +50,12 @@
                     margin: 5px 0;
                     color: white;
                     position: absolute;
-                    right: 0;
+                    right: -5px;
+                    top: -5px;
                     opacity: 1;
                     font-size: 20px;
                     &:hover {
-                        -webkit-transition: ease-in-out .3s;
-                        -moz-transition: ease-in-out .3s;
-                        transition: ease-in-out .3s;
+                        @include transitions();
                         cursor: pointer;
                         opacity: .75;
                     }
@@ -75,22 +83,20 @@
     .pull-right {
         border-left: 1px solid #bfbfbf;
         padding-bottom: 2%;
+        a{
+            &:nth-child(1) {
+                margin: 50px auto 25px;
+            }
+        }
     }
 }
 
 #compare-row.hidden {
-    -webkit-transition: all 0.25s ease;
-    -moz-transition: all 0.25s ease;
-    -o-transition: all 0.25s ease;
-    transition: all 0.25s ease;
+    @include transitions();
     height: 0;
 }
 #compare-row {
-    -webkit-transition: all 0.25s ease;
-    -moz-transition: all 0.25s ease;
-    -o-transition: all 0.25s ease;
-    transition: all 0.25s ease;
-    min-height: 200px;
+    @include transitions();
     height: auto;
     background: #e7f2f6;
 }
@@ -99,19 +105,7 @@
     min-height: 25px;
     height: auto;
 }
-#compare-row.closed .container {
-    visibility: hidden;
-    display: none;
-}
-#compare-row {
-    .pull-right {
-        a{
-            &:nth-child(1) {
-                margin: 50px auto 25px;
-            }
-        }
-    }
-}
+
 .compare-mobile{
     .compare-list{
         padding: 15px;
@@ -165,15 +159,42 @@
     .pull-right {
         border-left: none !important;
     }
-    #compare-row #compared-subjects {
+    #compare-row {
+        #compared-subjects {
         padding: 15px 15px 0 0;
+            .compare-object{
+                height: 65px;
+                .compare-box{
+                    height: 75px;
+                }
+            }
+        }
     }
+}
+
+@media (max-width: 992px) and (orientation: landscape) {
+    #compare-row {
+        #compared-subjects{
+            justify-content: center;
+            .compare-object{
+                margin: 0 -15px;
+            }
+        .pull-right{
+            padding-bottom: 5px;
+            a{
+                &:nth-child(1){
+                    margin: 20px auto 15px
+                }
+            }
+        }
+    }}
 }
 
 @media (max-width: 768px) {
     #compare-row {
         #compared-subjects {
-            padding: 0 0 40px;
+            padding: 0 0 20px;
+            justify-content: center;
             .compare-object{
                 margin-bottom: 15px;
                 .compare-box {
@@ -182,13 +203,32 @@
                 }
             }            
             .compared-subjects-title {
-                padding: 30px 0 15px;
+                padding: 15px 0 0;
             }
         }
         .pull-right {
-            padding-bottom: 30px;
             a:nth-child(1) {
-                margin: 0 auto 25px;
+                margin: 0 auto 10px;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+    #compare-row {
+        #compared-subjects {
+            padding: 0;
+            .compared-subjects-title {
+                padding: 5px 0 0;
+            }
+            .compare-object {
+                margin-bottom: 5px;
+                .compare-box {
+                    height: 55px;
+                    .item-text {
+                        max-height: 45px;
+                    }
+                }
             }
         }
     }

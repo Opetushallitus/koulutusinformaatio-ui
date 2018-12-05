@@ -43,9 +43,8 @@ $compared-items: (
                 }
             }
             .compare-list-item {
-                padding: 25px 0;
                 font-weight: bold;
-                height: 100px;
+                height: 65px;
                 overflow: hidden;
                 border-left: none;
                 border-right: none;
@@ -85,7 +84,8 @@ $compared-items: (
             .compared-items{
                 overflow: hidden;
                 .compare-box{
-                    min-height: 200px;
+                    height: 145px !important;
+                    overflow: hidden;
                     height: 100%;
                     border-top: 1px solid #ccd6df;
                     border-left: 1px solid #ccd6df;

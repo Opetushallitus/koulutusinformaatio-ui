@@ -21,13 +21,15 @@
     }
 }
 @media (max-width: 992px){
-    p{
-        span{
-            @include border-radius(50%);
-            background: $dark-opaque-blue;
-            color: white;
-            padding: 10px;
-            margin-right: 10px;
-        } 
+    #oppilaitos-container{
+        p{
+            span{
+                @include border-radius(50%);
+                background: $dark-opaque-blue;
+                color: white;
+                padding: 10px;
+                margin-right: 10px;
+            } 
+        }
     }
 }

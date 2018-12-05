@@ -42,9 +42,8 @@
                     }
                     &.title{
                         @include fluid-sizing('font-size', $h1-font-size-map);
-                        -ms-flex: 1 0 80%;
-                        flex: 1 0 80%;
-                        max-width: 80%;
+                        -ms-flex: 1 0 70%;
+                        flex: 1 0 70%;
                         word-break: break-word;
                         span{
                             position: relative;
@@ -58,8 +57,6 @@
                 -ms-flex: 1 0 35px;
                 flex: 1 0 35px;
                 max-width: 35px;
-                position: relative;
-                left: -15px;
             }
         }
         .action-button{

@@ -12,13 +12,15 @@ class VertailuBox extends Component {
 
     renderVertailuList() {
         return this.props.vertailuStore.vertailuList.map((i) =>
-            <div className="col-12 col-md-4 col-xl-3 compare-object" key={i.oid}>
+            <div className="col-4 col-md-4 col-xl-3 compare-object" key={i.oid}>
                 <div className="col-12 compare-box">
                 <button type="button" className="close" aria-label="Close"
                         onClick={() => this.props.vertailuStore.removeItem(i.oid)}>
                     <i className="icon-outline-close" aria-hidden="true"/>
                 </button>
-                <Link to={i.link} className="title"><strong>{l.localize(i.searchData, i.nimi)}</strong></Link>
+                    <div className="item-text">
+                        <Link to={i.link} className="title"><strong>{l.localize(i.searchData, i.nimi)}</strong></Link>
+                    </div>
                 </div>
             </div>)
     }
@@ -30,8 +32,8 @@ class VertailuBox extends Component {
                 <div className="container-fluid" id="compare-row">
                     <div className="container">
                         <div className="row">
-                            <div id="compared-subjects" className="col-12 col-md-12 col-lg-9">
-                            <div className="row">
+                            <div className="col-12 col-md-12 col-lg-9">
+                            <div className="row" id="compared-subjects">
                                 <div className="col-12 col-lg-12 col-xl-3 compared-subjects-title"><h3>{this.props.t("haku.olet-valinnut-vertailuun")}</h3></div>
                                 {this.renderVertailuList()}
                             </div>    
