@@ -12,7 +12,7 @@ class VertailuBox extends Component {
 
     renderVertailuList() {
         return this.props.vertailuStore.vertailuList.map((i) =>
-            <div className="col-4 col-md-4 col-xl-3 compare-object" key={i.oid}>
+            <div className="col-12 col-lg-4 col-xl-3 compare-object" key={i.oid}>
                 <div className="col-12 compare-box">
                 <button type="button" className="close" aria-label="Close"
                         onClick={() => this.props.vertailuStore.removeItem(i.oid)}>

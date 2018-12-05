@@ -1,6 +1,7 @@
 @import '../settings';
 
 #compare-row {
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -8,10 +9,7 @@
         padding: 30px 15px 0 0;
         .compare-object{
             .compare-box {
-                border: 2px solid white;
-                -webkit-border-radius: 5px;
-                -moz-border-radius: 5px;
-                border-radius: 5px;
+                border: 1px solid white;
                 max-height: 120px;
                 overflow: hidden;
                 width: 97%;
@@ -160,12 +158,21 @@
         border-left: none !important;
     }
     #compare-row {
+        @include rgba-color($main-bg, .8);
+        .compared-subjects-title,
+        .clear-compare{
+            display: none;
+        }
         #compared-subjects {
         padding: 15px 15px 0 0;
+        margin-top: 20px;
             .compare-object{
-                height: 65px;
+                height: 55px;
                 .compare-box{
-                    height: 75px;
+                    height: 50px;
+                    -webkit-border-radius: 0;
+                    -moz-border-radius: 0;
+                    border-radius: 0;
                 }
             }
         }
@@ -193,10 +200,11 @@
 @media (max-width: 768px) {
     #compare-row {
         #compared-subjects {
-            padding: 0 0 20px;
+            padding: 0 0 5px;
             justify-content: center;
             .compare-object{
-                margin-bottom: 15px;
+                margin-bottom: 5px;
+                padding: 0;
                 .compare-box {
                     width: 100%;
                     margin-bottom: 15px;
@@ -222,7 +230,6 @@
                 padding: 5px 0 0;
             }
             .compare-object {
-                margin-bottom: 5px;
                 .compare-box {
                     height: 55px;
                     .item-text {

@@ -64,7 +64,7 @@ class Koulutus extends Component {
     }
     chooseKoulutus() {
         let selectedItem= this.setSelectedItem();
-        if(this.state.koulutus) {
+        if(this.state.koulutus && this.state.koulutus.searchData.tyyppi) {
             switch(this.state.koulutus.searchData.tyyppi) {
                 case 'lk': return <Lukio items={this.state.menuElements} selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>; //TODO
                 case 'kk': return <Korkeakoulu items={this.state.menuElements} selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
@@ -83,6 +83,7 @@ class Koulutus extends Component {
     }
 
     render() {
+        console.log(this.state.koulutus)
         const selectedKoulutus = this.chooseKoulutus();
         const actualKoulutus = this.koulutusType();
         let selectedItem= this.setSelectedItem();
