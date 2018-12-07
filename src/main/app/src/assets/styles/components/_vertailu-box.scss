@@ -158,7 +158,7 @@
         border-left: none !important;
     }
     #compare-row {
-        @include rgba-color($main-bg, .8);
+        @include rgba-color($main-bg, .85);
         .compared-subjects-title,
         .clear-compare{
             display: none;

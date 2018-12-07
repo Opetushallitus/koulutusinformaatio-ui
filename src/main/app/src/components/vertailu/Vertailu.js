@@ -42,11 +42,12 @@ class Vertailu extends Component {
     renderComparedItems() {
         return this.props.vertailuStore.vertailuList.map((item, i) => {
             return (
+                console.log(item.komoOid),
                 <div className="col-sm-12 col-md-3" key={item.oid}>
                     <ul className={"compare-list " + this.colors[i]}>
                         <li className={"compared-items"} >
                             <div className="compare-box">
-                                <Link to={item.link} className="title">
+                                <Link to={`/koulutus/${item.komoOid}?haku=${encodeURIComponent(this.props.hakuStore.createHakuUrl)}&lng='${l.getLanguage()}`} className="title">
                                     <strong>{item.organisaatio ? item.organisaatio.nimi + ":" : ""}<br/>{l.localize(item.searchData, item.nimi)}</strong>
                                 </Link>
                             </div>
