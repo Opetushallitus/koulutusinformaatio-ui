@@ -6,11 +6,12 @@ import { Localizer as l} from "../../tools/Utils";
 import '../../assets/styles/components/_vertailu-box.scss';
 
 @translate()
-@inject("vertailuStore")
+@inject("hakuStore", "vertailuStore")
 @observer
 class VertailuBox extends Component {
 
-    renderVertailuList() {
+    renderVertailuList() {     
+        
         return this.props.vertailuStore.vertailuList.map((i) =>
             <div className="col-12 col-lg-4 col-xl-3 compare-object" key={i.oid}>
                 <div className="col-12 compare-box">
@@ -19,7 +20,7 @@ class VertailuBox extends Component {
                     <i className="icon-outline-close" aria-hidden="true"/>
                 </button>
                     <div className="item-text">
-                        <Link to={i.link} className="title"><strong>{l.localize(i.searchData, i.nimi)}</strong></Link>
+                        <Link to={`/koulutus/${i.komoOid}?haku=${encodeURIComponent(this.props.hakuStore.createHakuUrl)}&lng='${l.getLanguage()}`} className="title"><strong>{l.localize(i.searchData, i.nimi)}</strong></Link>
                     </div>
                 </div>
             </div>)
