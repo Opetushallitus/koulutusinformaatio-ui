@@ -14,6 +14,10 @@ import '../../assets/styles/components/_hakutulos.scss';
 @observer
 class Hakutulos extends Component {
 
+    componentWillReceiveProps(nextProps) {
+        this.props = nextProps;
+    }
+
     getKoulutusNimi(koulutus) {
         return l.localize(koulutus, this.props.t("koulutus.ei-nimeä"), 'fi');
     }
@@ -96,18 +100,21 @@ class Hakutulos extends Component {
         return (
             <React.Fragment>
                 <VertailuBox/>
-                <div className="container">
-                    <HakutulosSummary/>
-                </div>
-                <div className="container" id="toggle-tabs">
-                    <HakutulosToggle/>
-                </div>
-                <div className="container search-results" id="search-results">
-                    <div className="row">
-                        {this.renderResultList()}
+                <div id="hakutulos-content">
+                    <div className="container">
+                        <HakutulosSummary/>
                     </div>
+                    <div className="container" id="toggle-tabs">
+                        <HakutulosToggle/>
+                    </div>
+                    <div className="container search-results" id="search-results">
+                        <div className="row">
+                            {this.renderResultList()}
+                        </div>
+                    </div>
+                    <Sivutus/>
                 </div>
-                <Sivutus/>
+                
             </React.Fragment>
         );
     }

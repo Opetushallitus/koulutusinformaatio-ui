@@ -13,22 +13,21 @@
     min-height: 30px;
     height: auto;
     padding: 2px 0;
-    z-index: 999;
+    z-index: 10002;
     top: -1em;
     color: #ffffff;
     text-align: center;
 }
 .filter-container {
     position: absolute;
-    width: 355px;
-    transition: all ease-in .5s;
+    max-width: 355px;
+    width: 100%;
     &.index {
         max-width: 450px;
         width: 100%;
     }
     &.open {
         left: 0;
-        transition: all ease-in .5s;
     }
     input[type=text] {
         width: 90%;
@@ -58,8 +57,6 @@
         z-index: 998;
         left: 0;
         width: 100%;
-        overflow-y: auto;
-        overflow-x: hidden;
         background: #ffffff;
         position: absolute;
         -webkit-transition: all 0.5s ease;
@@ -94,9 +91,37 @@
     }
     .filters-main {
         padding: 1em;
+        overflow-y: auto;
+        overflow-x: hidden;
         h5{
             color: #9c9c9c;
         }
     }
     
+}
+
+@media (max-width: 768px){
+    .search-filter{
+        padding: 0;
+        width: 100%;
+        .filter-container{
+            max-width: 100%;
+            position: fixed;
+            z-index: 10001;
+        }
+    }
+}
+@media (max-width: 768px) and (orientation: landscape){
+    .search-filter{
+        padding: 0;
+        width: 100%;
+        .filter-container{
+            max-width: 100%;
+            position: fixed;
+            z-index: 10001;
+            .filter-options{
+                height: 70vh;
+            }
+        }
+    }
 }

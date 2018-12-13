@@ -9,7 +9,7 @@
     right: 0;
     bottom: 0;
     background-color: rgba(35, 35, 35, 0.8);
-    z-index: 10001;
+    z-index: 10003;
 &.displayed-true{
     @include fadeInLeft(
         $duration: .3s,
@@ -34,7 +34,7 @@
     top: 60px;
     right: 5%;
     background-color: white;
-    z-index: 10002;
+    z-index: 10003;
     -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);

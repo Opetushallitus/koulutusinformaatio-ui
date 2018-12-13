@@ -30,8 +30,8 @@ $channels: (
         &.#{$channel} {
           background: $color;
           position: absolute;
-          right: 27px;
-          border: 1px solid $color;
+          right: 0;
+          border: 5px solid $color;
         }
       }
   }

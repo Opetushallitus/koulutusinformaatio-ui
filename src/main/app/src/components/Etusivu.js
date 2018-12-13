@@ -7,16 +7,34 @@ import {observer, inject} from 'mobx-react';
 @inject("hakuehtoStore")
 @observer
 class Etusivu extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isFilterDisplayed: false
+        };
+        this.moveMainContent = this.moveMainContent.bind(this);
+    }
 
     componentDidMount() {
         this.props.hakuehtoStore.clearHakuehdot();
         this.props.hakuStore.clearHaku();
     }
+    
+    moveMainContent() {
+        this.setState({
+            isFilterDisplayed: !this.state.isFilterDisplayed            
+        })
+    }
 
     render() {
+        let moveMainContent =  this.state.isFilterDisplayed; 
         return (
-            <Route exact path='/' render={() => <Hakupalkki main={true}/>}/>
-        );
+            <React.Fragment>
+                <Route exact path='/' render={() => <Hakupalkki isRajainVisible={this.moveMainContent} main={true}/>}/>
+                <div id="main-content" className={moveMainContent ? "move-right" : "center-content"}>
+                </div>
+            </React.Fragment>
+        );  
     }
 }
 

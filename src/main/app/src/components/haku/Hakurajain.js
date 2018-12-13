@@ -10,6 +10,74 @@ import '../../assets/styles/components/_hakurajain.scss';
 @inject ("hakuehtoStore")
 @observer
 class Hakurajain extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            filtersHeight: 0,
+            isVisible: false,
+        };
+        this.setWrapperRef = this.setWrapperRef.bind(this);
+        this.handleClickOutside = this.handleClickOutside.bind(this);
+        this.handleWindowLoad = this.handleWindowLoad.bind(this);
+        this.handleWindowResize = this.handleWindowResize.bind(this);
+    }
+
+    componentDidMount () {
+        window.addEventListener('load', this.handleWindowLoad);
+        window.addEventListener('resize', this.handleWindowResize); 
+        document.addEventListener('mousedown', this.handleClickOutside);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('load', this.handleWindowLoad);
+        window.removeEventListener('resize', this.handleWindowResize);
+        document.removeEventListener('mousedown', this.handleClickOutside);
+    }
+
+    getBoundingClientRect() {
+        const rect = document.getElementById("main-content").getBoundingClientRect();
+        return {
+          height: rect.height
+        };
+    }
+
+    setWrapperRef(node) {
+        this.wrapperRef = node;
+    }
+
+    calculateLayerHeight(){
+        const element = this.getBoundingClientRect();
+        const filtersForm = document.getElementById('filters-form');
+        const layerHeight = filtersForm && filtersForm.clientHeight <= window.innerHeight - 175 ? element.height : window.innerHeight - 175;
+        return layerHeight;
+    }
+
+    handleWindowLoad () {  
+        setTimeout(() => {
+            const layerHeight = this.calculateLayerHeight();
+            this.setState({
+                containerHeight: layerHeight
+              });
+        },300)        
+    }
+
+    handleWindowResize() {
+        setTimeout(() => {
+            const layerHeight = this.calculateLayerHeight();
+            this.setState({
+                containerHeight: layerHeight
+              });
+        },500) 
+    }
+
+    handleClickOutside(event) {   
+        const clickedElementId = event.target && event.target.offsetParent ? event.target.offsetParent.id : "no-id";
+        const isFiltersButton = clickedElementId === "filters-button";
+        const isToggleTabs = event.target.parentElement.className === "KoulutuksetOppilaitokset";
+        if ((this.wrapperRef && !this.wrapperRef.contains(event.target)) && !isToggleTabs && !isFiltersButton) {
+            this.toggleRajain();
+        }
+    }
 
     handleKoulutusChange(filter) {
         if (filter) {
@@ -45,13 +113,21 @@ class Hakurajain extends Component {
 
     toggleRajain() {
         this.props.hakuehtoStore.toggleRajain();
+        this.props.shareVisibility();
+        setTimeout(() => {
+            const layerHeight = this.calculateLayerHeight();
+            this.setState({
+                filtersHeight: layerHeight,
+                isVisible: !this.state.isVisible
+        })
+        },250)
     }
 
     clear() {
         this.props.hakuehtoStore.filter.kieli = [];
         this.props.hakuehtoStore.filter.paikkakunta = "";
         this.props.hakuehtoStore.filter.koulutus = [];
-        this.props.hakuehtoStore.toggleRajain();
+        this.toggleRajain();
     }
 
     render() {
@@ -63,18 +139,18 @@ class Hakurajain extends Component {
             <React.Fragment>
                 <div className="container">
                     <div className="col-12">
-                        <div className={"filter-button"} onClick={() => this.toggleRajain()} role="button">
+                        <div id="filters-button" className="filter-button" onClick={() => this.toggleRajain(this)} role="button">
                             <span>{this.props.hakuehtoStore.rajainOpen ? t("haku.sulje-rajain") : t("haku.rajaa-etsintää")}</span>
                         </div>
                     </div>
                 </div>
                 {this.props.hakuehtoStore.rajainOpen &&
-                <div className="container">
+                <div className="container search-filter">
                 <div className="col-12">
-                <div className="filters-layer">
+                <div className="filters-layer" ref={this.setWrapperRef}>
                     <div className="filter-container open">
-                        <div className="filter-options">
-                            <div className="filters-main">
+                        <div className="filter-options" style={{height: this.state.filtersHeight, overflowX: "scroll"}}>
+                            <div className="filters-main" id="filters-form">
                                 <div className="form-group">
                                     <h5>{t('haku.koulutustyyppi')}</h5>
                                     <Hakurajainvalinta text={t('haku.lukio')} checked={this.props.hakuehtoStore.filter.koulutus.indexOf('lk') !== -1}

@@ -42,7 +42,6 @@ class Vertailu extends Component {
     renderComparedItems() {
         return this.props.vertailuStore.vertailuList.map((item, i) => {
             return (
-                console.log(item.komoOid),
                 <div className="col-sm-12 col-md-3" key={item.oid}>
                     <ul className={"compare-list " + this.colors[i]}>
                         <li className={"compared-items"} >
@@ -125,7 +124,7 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex" key={x}>
+                                <div className="col-12 info-col d-flex" key={item.oid}>
                                     <div className={"col-11 " + this.colors[x]}>
                                         <p>{`${l.localize(item.koulutuksenAlkamiskausi)} ${item.koulutuksenAlkamisvuosi}`}</p>
                                     </div>
@@ -142,9 +141,9 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex" key={x}>
+                                <div className="col-12 info-col d-flex" key={item.oid}>
                                     <div className={"col-11 " + this.colors[x]}>
-                                        <p>{(item.opetuskielis && item.opetuskielis.map((k) => l.localize(k)).join(', '))}</p>
+                                        <p>{(item.opetuskielis && item.opetuskielis.map((k) => l.localize(k)).join(', ')) || "---"}</p>
                                     </div>
                                 </div>
                             );
@@ -159,9 +158,9 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex" key={x}>
+                                <div className="col-12 info-col d-flex" key={item.oid}>
                                     <div className={"col-11 " + this.colors[x]} >
-                                        <p>{`${l.localize(item.opintojenLaajuusarvo, "", "fi")} ${l.localize(item.opintojenLaajuusyksikko)}`}</p>
+                                        <p>{`${l.localize(item.opintojenLaajuusarvo, "", "fi")} ${l.localize(item.opintojenLaajuusyksikko) || "---"}`}</p>
                                     </div>
                                 </div>
                             );
@@ -176,9 +175,9 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex" key={x}>
+                                <div className="col-12 info-col d-flex" key={item.oid}>
                                     <div className={"col-11 " + this.colors[x]} >
-                                        <p>{`${item.suunniteltuKestoArvo} ${l.localize(item.suunniteltuKestoTyyppi)}`}</p>
+                                        <p>{`${item.suunniteltuKestoArvo} ${l.localize(item.suunniteltuKestoTyyppi) || "---"}`}</p>
                                     </div>
                                 </div>
                             );
@@ -193,9 +192,9 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex" key={x}>
+                                <div className="col-12 info-col d-flex" key={item.oid}>
                                     <div className={"col-11 " + this.colors[x]} >
-                                        <p>{l.localize(item.opintoala)} </p>
+                                        <p>{(l.localize(item.opintoala)) || "---"}</p>
                                     </div>
                                 </div>
                             );
@@ -210,9 +209,9 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex" key={x}>
+                                <div className="col-12 info-col d-flex" key={item.oid}>
                                     <div className={"col-11 " + this.colors[x]} >
-                                        <p>{(item.opetusAikas && item.opetusAikas.map((i) => l.localize(i)).join(', '))}</p>
+                                        <p>{(item.opetusAikas && item.opetusAikas.map((i) => l.localize(i)).join(', ')) || "---"}</p>
                                     </div>
                                 </div>
                             );
@@ -227,9 +226,9 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex" key={x}>
+                                <div className="col-12 info-col d-flex" key={item.oid}>
                                     <div className={"col-11 " + this.colors[x]} >
-                                        <p>{(item.opetusPaikkas && item.opetusPaikkas.map((i) => l.localize(i)).join(', ')) }</p>
+                                        <p>{(item.opetusPaikkas && item.opetusPaikkas.map((i) => l.localize(i)).join(', ')) || "---"}</p>
                                     </div>
                                 </div>
                             );
@@ -244,7 +243,7 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex" key={x}>
+                                <div className="col-12 info-col d-flex" key={item.oid}>
                                     <div className={"col-11 " + this.colors[x]} >
                                         <p>{(item.opetusmuodos && item.opetusmuodos.map((i) => l.localize(i)).join(', '))}</p>
                                     </div>
@@ -261,7 +260,7 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex" key={x}>
+                                <div className="col-12 info-col d-flex" key={item.oid}>
                                     <div className={"col-11 " + this.colors[x]} >
                                         <p>{(l.localize(item.pohjakoulutusvaatimukset) || l.localize(item.pohjakoulutusvaatimus)) || "---"}</p>
                                     </div>
@@ -278,9 +277,9 @@ class Vertailu extends Component {
                     {
                         this.props.vertailuStore.vertailuList.map((item, x) => {
                             return(
-                                <div className="col-12 info-col d-flex" key={x}>
+                                <div className="col-12 info-col d-flex" key={item.oid}>
                                     <div className={"col-11 " + this.colors[x]} >
-                                        <p>{(item.opintojenMaksullisuus ? this.props.t("vertailu.maksullinen") : this.props.t("vertailu.maksuton"))}</p>
+                                        <p>{(item.opintojenMaksullisuus ? this.props.t("vertailu.maksullinen") : this.props.t("vertailu.maksuton")) || "---"}</p>
                                     </div>
                                 </div>
                             ); 
@@ -294,6 +293,7 @@ class Vertailu extends Component {
         const t = this.props.t;
         return (
             <React.Fragment>
+                <div id="vertailu-container">
                 <div className="container">
                     <div className="row">
                         <div className="col-12 compare">
@@ -342,8 +342,10 @@ class Vertailu extends Component {
                             )
                         }
                     </Media>
+                    </div>
                 <Hakunavigaatio vertailu={true}/>
             </React.Fragment>
+
         );
     }
 }

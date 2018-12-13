@@ -21,6 +21,7 @@ class Koulutus extends Component {
         this.state = {
             koulutus: undefined,
             selectedMenuItem: 0,
+            isMobile: false,
             menuElements: [
                 "Koulutuksen esittely",
                 "Oppilaitokset"
@@ -29,6 +30,7 @@ class Koulutus extends Component {
         this.getSelectedItem=this.getSelectedItem.bind(this);
         this.setSelectedItem=this.setSelectedItem.bind(this);
         this.resetSelectedItem=this.resetSelectedItem.bind(this);
+        this.toggleMobileState = this.toggleMobileState.bind(this);
     };
     
     async componentDidMount() {
@@ -81,9 +83,10 @@ class Koulutus extends Component {
             return this.state.koulutus.searchData.tyyppi;
         }
     }
+    toggleMobileState() {
 
+    }
     render() {
-        console.log(this.state.koulutus)
         const selectedKoulutus = this.chooseKoulutus();
         const actualKoulutus = this.koulutusType();
         let selectedItem= this.setSelectedItem();
@@ -92,10 +95,11 @@ class Koulutus extends Component {
                 <div className="container" id="koulutus-container">
                     <div className="row">
                         <Media query="(min-width: 992px)">
-                                {
+                                { 
                                     matches => matches ? (
+                                        this.toggleMobileState(false),
                                         <KoulutusSidebar items={this.state.menuElements} type={actualKoulutus} selected={selectedItem} item={this.getSelectedItem}></KoulutusSidebar>
-                                    ):null
+                                    ): (this.toggleMobileState(true), null)
                                 }
                         </Media>   
                         <div className="col-12 col-md-12 col-lg-8 col-xl-9">
@@ -106,7 +110,7 @@ class Koulutus extends Component {
                                 {
                                     matches => matches ? (
                                         <PageVertailuBox text="Ota vertailuun"></PageVertailuBox>
-                                    ):null
+                                    ): null
                                 }
                                 </Media>
                                 {selectedKoulutus}

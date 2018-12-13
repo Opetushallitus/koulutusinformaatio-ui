@@ -13,8 +13,18 @@ class Hakupalkki extends Component {
 
     constructor(props){
         super(props);
+        this.state = {
+            filtersHeight: 0
+        }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.props = nextProps;
+        this.props.filtersHeight && this.setState({
+            filtersHeight: this.props.filtersHeight
+        })
     }
 
     handleChange(event) {
@@ -75,7 +85,7 @@ class Hakupalkki extends Component {
                         </div>
                     </div>
                 </div>
-                <Hakurajain/>
+                <Hakurajain shareVisibility={this.props.isRajainVisible} filtersHeight={this.state.filtersHeight}/>
             </React.Fragment>
         );
     }
