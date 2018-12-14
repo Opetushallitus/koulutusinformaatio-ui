@@ -50,7 +50,8 @@
         #hakutulos-content,
         #koulutus-container,
         #vertailu-container,
-        #oppilaitos-container{
+        #oppilaitos-container,
+        #toteutus-container{
             position: relative;
             left: 0;
             @include transitions();
@@ -59,7 +60,8 @@
             #hakutulos-content,
             #koulutus-container,
             #vertailu-container,
-            #oppilaitos-container{
+            #oppilaitos-container,
+            #toteutus-container{
                 left: 390px;
                 @include transitions();
                 overflow-y: scroll; 

@@ -18,18 +18,15 @@ class Hakurajain extends Component {
         };
         this.setWrapperRef = this.setWrapperRef.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
-        this.handleWindowLoad = this.handleWindowLoad.bind(this);
         this.handleWindowResize = this.handleWindowResize.bind(this);
     }
 
     componentDidMount () {
-        window.addEventListener('load', this.handleWindowLoad);
         window.addEventListener('resize', this.handleWindowResize); 
         document.addEventListener('mousedown', this.handleClickOutside);
     }
 
     componentWillUnmount() {
-        window.removeEventListener('load', this.handleWindowLoad);
         window.removeEventListener('resize', this.handleWindowResize);
         document.removeEventListener('mousedown', this.handleClickOutside);
     }
@@ -52,22 +49,13 @@ class Hakurajain extends Component {
         return layerHeight;
     }
 
-    handleWindowLoad () {  
-        setTimeout(() => {
-            const layerHeight = this.calculateLayerHeight();
-            this.setState({
-                containerHeight: layerHeight
-              });
-        },300)        
-    }
-
     handleWindowResize() {
         setTimeout(() => {
             const layerHeight = this.calculateLayerHeight();
             this.setState({
-                containerHeight: layerHeight
+                filtersHeight: layerHeight
               });
-        },500) 
+        },100) 
     }
 
     handleClickOutside(event) {   
@@ -117,7 +105,7 @@ class Hakurajain extends Component {
         setTimeout(() => {
             const layerHeight = this.calculateLayerHeight();
             this.setState({
-                filtersHeight: layerHeight,
+                filtersHeight: this.state.isVisible ? 0 : layerHeight,
                 isVisible: !this.state.isVisible
         })
         },250)
@@ -148,7 +136,7 @@ class Hakurajain extends Component {
                 <div className="container search-filter">
                 <div className="col-12">
                 <div className="filters-layer" ref={this.setWrapperRef}>
-                    <div className="filter-container open">
+                    <div className={`filter-container ${this.state.isVisible ? "open" : "collapsed"}`}>
                         <div className="filter-options" style={{height: this.state.filtersHeight, overflowX: "scroll"}}>
                             <div className="filters-main" id="filters-form">
                                 <div className="form-group">

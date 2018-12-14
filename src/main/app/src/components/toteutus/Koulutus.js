@@ -56,7 +56,7 @@ class Koulutus extends Component {
         const selectedKoulutus = this.chooseKoulutus();
         return (
             <React.Fragment>
-                <div className="container">
+                <div className="container" id="toteutus-container">
                     <div className="row info-page toteutus">
                         {selectedKoulutus}
                     </div>
