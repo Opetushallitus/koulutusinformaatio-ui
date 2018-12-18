@@ -1,3 +1,5 @@
+@import '../settings';
+
 #call-to-action-secondary {
     background-image:url('../../images/greybg.png');
     background-repeat: repeat;
@@ -30,8 +32,8 @@
         padding: 100px 0 40px 0;
     }
     input {
-        -webkit-box-shadow: 0 0px 7px #6b6b6b;
-        box-shadow: 0 0px 7px #6b6b6b;
+        -webkit-box-shadow: 0 0px 7px $battleship-grey;
+        box-shadow: 0 0px 7px $battleship-grey;
         max-width: 450px;
         width: 100%;
         height: 50px;
@@ -59,7 +61,7 @@
         }
     }
     .search-button {
-        background-color: #e77e22;
+        background-color: $base-orange;
         border-radius: 50%;
         color: #ffffff;
         text-align: center;
@@ -80,8 +82,8 @@
     .header-search{ 
         input {
             &.oph-input{
-                -webkit-box-shadow: 0 0px 7px #6b6b6b;
-                box-shadow: 0 0px 7px #6b6b6b;
+                -webkit-box-shadow: 0 0px 7px $battleship-grey;
+                box-shadow: 0 0px 7px $battleship-grey;
                 max-width: 554px;
                 width: 75%;
                 height: 43px;
@@ -89,7 +91,7 @@
             }
         }
         .search-button {
-            border: 4px solid #ffffff;
+            border: 4px solid white;
             padding: 10px 10px !important;
             margin-left: 10px;
             &::after {

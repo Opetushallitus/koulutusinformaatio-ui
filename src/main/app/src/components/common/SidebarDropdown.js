@@ -20,12 +20,12 @@ class SidebarDropdown extends Component {
 
     render() {
         return (
-            <li className={"dropdown " + (this.props.selected ? "current-page"  : this.state.collapsing)}>
-                <a className="dropdown-toggle" onClick={ () => {this.props.selectDropdown(); this.collapseMenu()}}>{this.props.name}</a>
-                <ul className={"dropdown-menu " + (this.props.selected ? "expanded" : this.state.collapsing)} role="menu">
+            <li className={"dropdown " + (this.props.selected ? "current-page"  : this.state.collapsing)} aria-haspopup="true" aria-expanded={this.props.selected ? true : false }>
+                <a className="dropdown-toggle" role="button" aria-label={this.props.name} onClick={ () => {this.props.selectDropdown(); this.collapseMenu()}}>{this.props.name}</a>
+                <ul className={"dropdown-menu " + (this.props.selected ? "expanded" : this.state.collapsing)} >
                     {
-                        this.props.links.map((i) =>
-                            <li key={i.name} className={i.link === this.props.location.pathname ? "current-page" : ""}>
+                        this.props.links.map((i,index) =>
+                            <li role="menuitem" tabindex={index} key={i.name} className={i.link === this.props.location.pathname ? "current-page" : ""}>
                                 <Link to={i.link}>{i.name}</Link>
                             </li>
                         )

@@ -161,17 +161,17 @@ class Hakurajain extends Component {
                                 </div>
                                 <div className="form-group">
                                     <h5 className="filter-title">{t('haku.paikkakunta')}</h5>
-                                    <input id="paikkakunta" className="oph-input" type="text" placeholder={t('haku.paikkakunta-kehoite')}
+                                    <input id="paikkakunta" className="oph-input" type="text" aria-label={t('haku.paikkakunta-kehoite')} placeholder={t('haku.paikkakunta-kehoite')}
                                            onChange={(e) =>this.handlePaikkakuntaChange(e.target.value)}
                                            value={value}
                                            onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit(e)}}}/>
                                 </div>
                                 <div className="form-group action-buttons">
-                                    <Link id="rajain-search" className="btn btn-primary" to={{
+                                    <Link id="rajain-search" role="button" aria-label={t('haku.hae')} className="btn btn-primary" to={{
                                         pathname: link,
                                         search: search
                                     }} onClick={() => {this.toggleRajain()}}>{t('haku.hae')}</Link>
-                                    <Link id="rajain-clear" className="clear-compare" to={{
+                                    <Link id="rajain-clear" role="button" aria-label={t('haku.poista-rajaukset')} className="clear-compare" to={{
                                         pathname: link,
                                         search: ''
                                     }} onClick={() => {this.clear()}}>{t('haku.poista-rajaukset')}</Link>

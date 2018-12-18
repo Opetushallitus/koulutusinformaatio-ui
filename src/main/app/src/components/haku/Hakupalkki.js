@@ -65,10 +65,11 @@ class Hakupalkki extends Component {
                                     <div className="search">
                                         <input id="regular-input" className="oph-input" type="text"
                                                placeholder={t('haku.kehoite')}
+                                               aria-label={t('haku.kehoite')}
                                                value={value}
                                                onChange={this.handleChange}
                                                onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit(e)}}}/>
-                                        <Link role="button" to={{
+                                        <Link role="button" aria-label={t('haku.etsi')} to={{
                                             pathname: link,
                                             search: search
                                         }} className="search-button" onClick={() => {this.closeRajain()}}>{

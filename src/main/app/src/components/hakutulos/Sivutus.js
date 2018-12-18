@@ -91,13 +91,13 @@ class Sivutus extends Component {
                     {!this.props.hakuStore.filterSet && !this.props.hakuStore.keywordSet ? '' :
                         (<div className="row">
                             <div className="col-12">
-                                <nav aria-label="Search result navigation">
+                                <nav aria-label="Search result navigation" id="pagination">
                                     <div className="row">
                                         <ul className="pagination">
                                             {this.buildPaginationMenu(currentPage)}
                                         </ul>
                                         <div className="page-size-select">
-                                            <select onChange={(e) => this.handlePageSizeChange(e)}>
+                                            <select onChange={(e) => this.handlePageSizeChange(e)} aria-labelledby="pagination">
                                                 <option value={this.props.hakuStore.pageSize}>{t('haku.näytä')}</option>
                                                 <option value={20}>20</option>
                                                 <option value={50}>50</option>

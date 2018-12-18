@@ -10,6 +10,7 @@ $channels: (
 
 .box-container{
     padding: 15px 15px;
+    @include fadeInDown(1, .75s);
     .search-box {
         box-shadow: 0 0px 1px $pinkish-grey;
         height: 165px;

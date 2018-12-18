@@ -30,7 +30,7 @@ class Footer extends Component {
                                 <ul className="site-links">
                                     <li>
                                         <a href="/">
-                                            <img src={require('../../assets/images/opintopolku_large-fi.png')} alt=""/>
+                                            <img src={require('../../assets/images/opintopolku_large-fi.png')} alt="Opintopolku logo"/>
                                         </a>
                                     </li>
                                     <li>
@@ -51,11 +51,11 @@ class Footer extends Component {
                         <div className="col-6 col-sm-5 col-lg-4 d-flex align-items-md-end flex-lg-row justify-content-end justify-content-md-center">
                             <div className="row site-icons d-flex flex-column flex-lg-row flex-md-col">
                                 <a href="http://www.minedu.fi/OPM/">
-                                    <img src={require('../../assets/images/logo_fi.svg')} alt=""/>
+                                    <img src={require('../../assets/images/logo_fi.svg')} alt="Opetus ja kulttuuriministeriö"/>
                                 </a>
 
                                 <a href="https://www.oph.fi">
-                                    <img src={require('../../assets/images/OPH_logo-fi.svg')} alt=""/>
+                                    <img src={require('../../assets/images/OPH_logo-fi.svg')} alt="Opetushallitus"/>
                                 </a>
                             </div>
                         </div>

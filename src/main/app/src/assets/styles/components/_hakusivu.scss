@@ -73,6 +73,7 @@
 
 @media (max-width: 768px) {
     #main-content{
+        min-height: 30vh;
         #hakutulos-content,
         #koulutus-container{
             position: relative;

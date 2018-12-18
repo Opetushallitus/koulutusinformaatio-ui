@@ -55,18 +55,18 @@ class SideMenu extends Component {
                         <nav className={"navbar navbar-inverse navbar-fixed-top is-closing-" + this.state.closing} id="sidebar-wrapper">
                             <div className="sidebar-brand">
                                 <span>Valikko</span>
-                                <a className="sidebar-close" onClick={this.closeMenu}><i className="icon-outline-close"/></a>
+                                <a role="button" aria-label="close menu" className="sidebar-close" onClick={this.closeMenu}><i className="icon-outline-close"/></a>
                             </div>
                             <ul className="sidebar-nav">
-                                   <ul className="languages">
-                                        <li className={l.getLanguage() === 'fi' ? 'selected' : ''}>
-                                            <a onClick={() => this.changeLanguage('fi')}>SUOMEKSI</a>
+                                   <ul role="menu" className="languages">
+                                        <li role="menuitem" className={l.getLanguage() === 'fi' ? 'selected' : ''}>
+                                            <a role="button" onClick={() => this.changeLanguage('fi')}>SUOMEKSI</a>
                                         </li>
-                                        <li className={l.getLanguage() === 'sv' ? 'selected' : ''}>
-                                            <a onClick={() => this.changeLanguage('sv')}>PÅ SVENSKA</a>
+                                        <li role="menuitem" className={l.getLanguage() === 'sv' ? 'selected' : ''}>
+                                            <a role="button" onClick={() => this.changeLanguage('sv')}>PÅ SVENSKA</a>
                                         </li>
-                                        <li className={l.getLanguage() === 'en' ? 'selected' : ''}>
-                                            <a onClick={() => this.changeLanguage('en')}>IN ENGLISH</a>
+                                        <li role="menuitem" className={l.getLanguage() === 'en' ? 'selected' : ''}>
+                                            <a role="button" onClick={() => this.changeLanguage('en')}>IN ENGLISH</a>
                                         </li>
                                     </ul>
 

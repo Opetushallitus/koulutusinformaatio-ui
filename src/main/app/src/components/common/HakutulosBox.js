@@ -10,7 +10,7 @@ import '../../assets/styles/components/_hakutulos-box.scss';
 @inject("vertailuStore")
 @observer
 class HakutulosBox extends Component {
-
+   
     render() {
         
         return (
@@ -41,7 +41,8 @@ class HakutulosBox extends Component {
                             </div>)
                     }
                 </div>
-            </div>)
+            </div>
+        )
     }
 }
 

@@ -15,8 +15,8 @@ class Header extends Component {
                 <div className="container-fluid navigation-bar"/>
                 <div className="container navigation">
                     <div className="row">
-                        <MenuButton changeLanguage={this.changeLanguage} togglePalaute={this.togglePalaute}/>
-                        <Link to={{ pathname: '/'}} className="navbar-brand">{t('opintopolku')}</Link>
+                        <MenuButton changeLanguage={this.changeLanguage} togglePalaute={this.togglePalaute}/>       
+                        <Link to={{ pathname: '/'}} className="navbar-brand" aria-label="Link to home page">{t('opintopolku')}</Link>
                     </div>
                     <div>
                         <ServicesButton></ServicesButton>

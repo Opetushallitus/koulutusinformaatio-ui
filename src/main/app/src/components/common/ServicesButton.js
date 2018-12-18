@@ -23,7 +23,7 @@ class ServicesButton extends Component{
 
         return(
             <React.Fragment>
-                <div className = "services-button" onClick={this.openServices}>
+                <div role="button" tabindex="3" aria-label="Palvelut" className = "services-button" onClick={this.openServices}>
                     <i className="icon-ic_apps"></i>
                     <span>Palvelut</span>
                 </div>

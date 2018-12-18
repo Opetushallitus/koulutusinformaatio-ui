@@ -52,6 +52,7 @@ class Hakutulos extends Component {
                 const link = '/koulutus/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
                                                     + '&lng=' + l.getLanguage();
                 return (
+                    
                     <HakutulosBox key={r.oid}
                                   oid={r.oid}
                                   vertailuOid={r.toteutusOid}
@@ -87,7 +88,7 @@ class Hakutulos extends Component {
             return (
                 <React.Fragment>
                     <div className="container">
-                        <div className="row">
+                        <div className="row result-count">
                             <div className="col-12">
                                 <h1>{t('haku.lisää-hakusana-tai-rajain')}</h1>
                             </div>

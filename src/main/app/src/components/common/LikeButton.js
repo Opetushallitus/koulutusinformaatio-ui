@@ -22,8 +22,8 @@ class LikeButton extends Component{
         const buttonClass = !this.state.likedState ? "" : "liked";
         const buttonText = !this.state.likedState ? "Tykkää" : "Tykätty";
         return(
-        <div className = {`like-button ${buttonClass}`} onClick={this.toggleClass}>
-            <i className={"icon-" + iconClass}></i>
+        <div role="button" aria-label={buttonText} className = {`like-button ${buttonClass}`} onClick={this.toggleClass}>
+            <i aria-label={buttonText} className={"icon-" + iconClass}></i>
             <span>{buttonText}</span>
         </div>
         )
