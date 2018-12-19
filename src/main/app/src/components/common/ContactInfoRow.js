@@ -66,8 +66,8 @@ class ContactInfoRow extends Component{
                     <ul>
                         <li>{contactData.name}</li>
                         <li>{`${contactData.address}, ${contactData.postNo} ${contactData.city}`}</li>
-                        {sectionType === "toteutus" && 
-                            <li>{contactData.email}</li>
+                        {sectionType === "toteutus" && contactData.email !== "---" &&
+                            <li><a href={`mailto:${contactData.email}`}>{contactData.email}</a></li>
                         }
                         <li>{`Puhelin: ${contactData.phoneNumber}`}</li>
                     </ul>

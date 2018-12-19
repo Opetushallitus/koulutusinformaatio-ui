@@ -24,8 +24,8 @@ class SidebarDropdown extends Component {
                 <a className="dropdown-toggle" role="button" aria-label={this.props.name} onClick={ () => {this.props.selectDropdown(); this.collapseMenu()}}>{this.props.name}</a>
                 <ul className={"dropdown-menu " + (this.props.selected ? "expanded" : this.state.collapsing)} >
                     {
-                        this.props.links.map((i,index) =>
-                            <li role="menuitem" tabindex={index} key={i.name} className={i.link === this.props.location.pathname ? "current-page" : ""}>
+                        this.props.links.map((i) =>
+                            <li role="menuitem" key={i.name} className={i.link === this.props.location.pathname ? "current-page" : ""}>
                                 <Link to={i.link}>{i.name}</Link>
                             </li>
                         )

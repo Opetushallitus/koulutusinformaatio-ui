@@ -1,22 +1,23 @@
 .filter-button{
-    background-image: -webkit-gradient( linear, left top, left bottom, color-stop(0, #5B5B5B), color-stop(0.47, #464646));
-    background-image: -o-linear-gradient(bottom, #5B5B5B 0%, #464646 47%);
-    background-image: -webkit-linear-gradient(bottom, #5B5B5B 0%, #464646 47%);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#5B5B5B), color-stop(47%, #464646));
-    background-image: -webkit-linear-gradient(top, #5B5B5B 0%, #464646 47%);
-    background-image: -o-linear-gradient(top, #5B5B5B 0%, #464646 47%);
-    background-image: linear-gradient(to bottom, #5B5B5B 0%, #464646 47%);
-    float: left;
-    border-radius: 5px;
-    width: 165px;
     position: absolute;
-    min-height: 30px;
-    height: auto;
-    padding: 2px 0;
     z-index: 10002;
     top: -1em;
     color: #ffffff;
     text-align: center;
+    span{
+        background-image: -webkit-gradient( linear, left top, left bottom, color-stop(0, #5B5B5B), color-stop(0.47, #464646));
+        background-image: -o-linear-gradient(bottom, #5B5B5B 0%, #464646 47%);
+        background-image: -webkit-linear-gradient(bottom, #5B5B5B 0%, #464646 47%);
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#5B5B5B), color-stop(47%, #464646));
+        background-image: -webkit-linear-gradient(top, #5B5B5B 0%, #464646 47%);
+        background-image: -o-linear-gradient(top, #5B5B5B 0%, #464646 47%);
+        background-image: linear-gradient(to bottom, #5B5B5B 0%, #464646 47%);
+        float: left;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        width: 165px;
+    }
 }
 .filter-container {
     position: absolute;
