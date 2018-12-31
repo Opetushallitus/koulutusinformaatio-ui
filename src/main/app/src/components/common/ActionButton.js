@@ -64,12 +64,12 @@ class ActionButton extends Component{
         return(
             <div className={`action-button ${this.props.className || ""}`}>
                 { buttonType === "compare" &&
-                    <div className={`compare-button ${isSelected}`} onClick={this.toggleSelected}>
+                    <div className={`compare-button ${isSelected}`} tabIndex="0" onClick={this.toggleSelected}>
                         <span>{this.props.text}</span>
                     </div>
                 }
                 { buttonType === "switch" &&
-                    <div className="switch-button" onClick={this.toggleSwitch}>
+                    <div className="switch-button" onClick={this.toggleSwitch} tabIndex="0">
                         <div className={`switched ${isSwitched} d-flex justify-content-around`}>
                             <div className="switch">
                                 Kyllä
@@ -81,14 +81,14 @@ class ActionButton extends Component{
                     </div>
                 }
                 { buttonType === "link" && 
-                    <a className={isValidLinkType ? "enabled" : "disabled"} href={isValidLinkType || ""}>
+                    <a className={isValidLinkType ? "enabled" : "disabled"} tabIndex="0" href={isValidLinkType || ""}>
                         <div className="link-button">
                             <span>{this.props.text}</span>
                         </div>
                     </a>
                 }
                 { buttonType === "react-link" &&
-                    <Link role="button" to={{
+                    <Link role="button" tabIndex="0" to={{
                         pathname: this.props.address
                     }}>
                         <div className="link-button big">
@@ -97,7 +97,7 @@ class ActionButton extends Component{
                     </Link>
                 }
                 { buttonType === "transparent" &&
-                    <a className="transparent-button">
+                    <a className="transparent-button" tabIndex="0">
                         <div className="link-button">
                             <span>{this.props.text}</span>
                         </div>

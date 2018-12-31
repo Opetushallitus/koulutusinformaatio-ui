@@ -90,7 +90,7 @@ class Hakutulos extends Component {
                     <div className="container">
                         <div className="row result-count">
                             <div className="col-12">
-                                <h1>{t('haku.lisää-hakusana-tai-rajain')}</h1>
+                                <h1 aria-live="assertive">{t('haku.lisää-hakusana-tai-rajain')}</h1>
                             </div>
                         </div>
                     </div>

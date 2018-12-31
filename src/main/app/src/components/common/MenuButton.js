@@ -68,7 +68,7 @@ class MenuButton extends Component {
         const {t} = this.props;
         return (
             <React.Fragment>
-                <button type="button" className="menu is-closed" onClick={this.openMenu} aria-label={t('valikko')}>
+                <button type="button" tabIndex="0" className="menu is-closed" onClick={this.openMenu} aria-label={t('valikko')}>
                         <span className="hamb-top"/>
                         <span className="hamb-middle"/>
                         <span className="hamb-bottom"/>

@@ -6,24 +6,30 @@ class ServicesButton extends Component{
     
     constructor(props) {
         super(props)
-        this.openServices= this.openServices.bind(this);
         this.state = {
           componentState: false,
           showMenu: false
         }
+        this.openServices= this.openServices.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
-    openServices() {
+    openServices() {        
         this.setState({
             componentState: !this.state.componentState
         })
     };
 
+    handleKeyPress(e) {
+        e.key === "Enter" &&
+        this.openServices();
+    }
+
     render(){
 
         return(
             <React.Fragment>
-                <div role="button" aria-label="Palvelut" className = "services-button" onClick={this.openServices}>
+                <div role="button" aria-label="Palvelut" tabIndex="0" className = "services-button" onClick={this.openServices} onKeyPress={this.handleKeyPress}>
                     <i className="icon-ic_apps"></i>
                     <span>Palvelut</span>
                 </div>

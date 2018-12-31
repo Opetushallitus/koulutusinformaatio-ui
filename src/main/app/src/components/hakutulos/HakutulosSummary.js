@@ -11,8 +11,8 @@ class HakutulosSummary extends Component {
         const {t} = this.props;
         return (
             <div className="col-12 Etsinta">
-                <h1>{t('haku.summary', {count: this.props.hakuStore.totalCount}) + " " + t('haku.hakusanalla')}
-                    <span className="highlight"> "{this.props.hakuStore.keyword}"</span>
+                <h1 aria-live="assertive">{`${t('haku.summary', {count: this.props.hakuStore.totalCount})} ${t('haku.hakusanalla')}`}
+                    <span className="highlight">{this.props.hakuStore.keyword}</span>
                 </h1>
             </div>
         )
@@ -41,13 +41,13 @@ class HakutulosSummary extends Component {
 
         return (
             <div className="col-12 Etsinta">
-                <h1>{this.props.hakuStore.keywordSet ? t('ja') : t('haku.summary', {count: this.props.hakuStore.totalCount})}
+                <h1 aria-live="assertive">{this.props.hakuStore.keywordSet ? t('ja') : t('haku.summary', {count: this.props.hakuStore.totalCount})}
                     {koulutustyypit ? (' ' + t('haku.koulutustyypillä', {count: this.props.hakuStore.filter.koulutus.length})) + ' ' : '' }
-                    {koulutustyypit ? <span className="highlight">"{koulutustyypit}"</span> : '' }
+                    {koulutustyypit ? <span className="highlight">{koulutustyypit}</span> : '' }
                     {kielet ? (koulutustyypit ? ' ' + t('ja') : '') + (' ' + t('haku.kielellä', {count: this.props.hakuStore.filter.kieli.length})) + ' ' : '' }
                     {kielet ? <span className="highlight">"{kielet}"</span> : '' }
                     {paikkakunta ? ((koulutustyypit || kielet) ? ' ' + t('sekä') : '' ) + (' ' + t('haku.paikkakunnalla') + ' ') : ''}
-                    {paikkakunta ? <span className="highlight"> "{paikkakunta}"</span> : '' }
+                    {paikkakunta ? <span className="highlight">{paikkakunta}</span> : '' }
                 </h1>
             </div>
         )

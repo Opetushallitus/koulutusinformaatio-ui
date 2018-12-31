@@ -16,7 +16,7 @@ class SideMenu extends Component {
         };
         this.closeMenu = this.closeMenu.bind(this);
         this.selectDropdown = this.selectDropdown.bind(this);
-        
+        this.handleKeyPress = this.handleKeyPress.bind(this);    
     }
     
     closeMenu() {
@@ -46,48 +46,53 @@ class SideMenu extends Component {
             this.setState({selected: ""});
         }
     }
- 
+    
+    handleKeyPress(e) {
+        e.key === "Enter" &&
+        this.closeMenu();
+    }
+
     render() {
         const {t} = this.props;
         return (
             <React.Fragment>
                 <div className={"overlay displayed-" + !this.state.closing} onClick={this.closeMenu}></div>
-                        <nav className={"navbar navbar-inverse navbar-fixed-top is-closing-" + this.state.closing} id="sidebar-wrapper">
+                        <nav role="menubar" className={"navbar navbar-inverse navbar-fixed-top is-closing-" + this.state.closing} id="sidebar-wrapper">
                             <div className="sidebar-brand">
                                 <span>Valikko</span>
-                                <a role="button" aria-label="close menu" className="sidebar-close" onClick={this.closeMenu}><i className="icon-outline-close"/></a>
+                                <a tabIndex="0" role="button" aria-label="close menu" className="sidebar-close" onClick={this.closeMenu} onKeyPress={this.handleKeyPress}><i className="icon-outline-close"/></a>
                             </div>
                             <ul className="sidebar-nav">
-                                   <ul role="menu" className="languages">
-                                        <li role="menuitem" className={l.getLanguage() === 'fi' ? 'selected' : ''}>
-                                            <a role="button" onClick={() => this.changeLanguage('fi')}>SUOMEKSI</a>
+                                   <ul role="menu" aria-haspopup="false" className="languages" aria-label="select language">
+                                        <li role="none" className={l.getLanguage() === 'fi' ? 'selected' : ''}>
+                                            <a tabIndex="0" role="menuitem" onClick={() => this.changeLanguage('fi')}>SUOMEKSI</a>
                                         </li>
-                                        <li role="menuitem" className={l.getLanguage() === 'sv' ? 'selected' : ''}>
-                                            <a role="button" onClick={() => this.changeLanguage('sv')}>PÅ SVENSKA</a>
+                                        <li role="none" className={l.getLanguage() === 'sv' ? 'selected' : ''}>
+                                            <a tabIndex="0" role="menuitem" onClick={() => this.changeLanguage('sv')}>PÅ SVENSKA</a>
                                         </li>
-                                        <li role="menuitem" className={l.getLanguage() === 'en' ? 'selected' : ''}>
-                                            <a role="button" onClick={() => this.changeLanguage('en')}>IN ENGLISH</a>
+                                        <li role="none" className={l.getLanguage() === 'en' ? 'selected' : ''}>
+                                            <a tabIndex="0" role="menuitem" onClick={() => this.changeLanguage('en')}>IN ENGLISH</a>
                                         </li>
                                     </ul>
 
                                 <div className="sidebar-input">
                                     <input type="text" placeholder={t("sidebar.etsi-tietoa-opintopolusta")}/>
                                 </div>
-                                <ul className="nav">
-                                    <li className={"frontpage-link" + ("/" === this.props.location.pathname ? " current-page" : "")}>
-                                        <Link to="/">{t("sidebar.etusivulle")}</Link>
+                                <ul className="nav" role="menu">
+                                    <li role="none" className={"frontpage-link" + ("/" === this.props.location.pathname ? " current-page" : "")}>
+                                        <Link tabIndex="0" role="menuitem" to="/">{t("sidebar.etusivulle")}</Link>
+                                    </li>
+                                </ul>
+                                <ul className="nav" role="menu">
+                                    <li className="" role="none">
+                                        <Link tabIndex="0" role="menuitem" to="/">{t("sidebar.ajankohtaista")}</Link>
+                                    </li>
+                                    <li className="" role="none">
+                                        <Link tabIndex="0" role="menuitem" to="/">{t("sidebar.häiriötiedotteet")}</Link>
                                     </li>
                                 </ul>
                                 <ul className="nav">
-                                    <li className="">
-                                        <Link to="/">{t("sidebar.ajankohtaista")}</Link>
-                                    </li>
-                                    <li className="">
-                                        <Link to="/">{t("sidebar.häiriötiedotteet")}</Link>
-                                    </li>
-                                </ul>
-                                <ul className="nav">
-                                    <SidebarDropdown selectDropdown={() => this.selectDropdown('lukio')}
+                                    <SidebarDropdown role="menu" selectDropdown={() => this.selectDropdown('lukio')}
                                                      name={t("sidebar.lukio")} selected={this.state.selected === "lukio"}
                                                      links={[
                                                          {link: "", name: t("sidebar.opinnot-lukiossa")},
@@ -100,7 +105,7 @@ class SideMenu extends Component {
                                                          {link: "", name: t("sidebar.vaihto-opiskelijaksi")}
                                                      ]}
                                     />
-                                    <SidebarDropdown selectDropdown={() => this.selectDropdown('amm')}
+                                    <SidebarDropdown role="menu" selectDropdown={() => this.selectDropdown('amm')}
                                                      name={t("sidebar.ammatillinen-koulutus")} selected={this.state.selected === "amm"}
                                                      links={[
                                                          {link: "", name: t("sidebar.mitä-ammatillisessa-ovi-opiskella")},
@@ -114,7 +119,7 @@ class SideMenu extends Component {
                                                          {link: "", name: t("sidebar.hakijan-terveyden-tila")}
                                                      ]}
                                     />
-                                    <SidebarDropdown selectDropdown={() => this.selectDropdown('ako')}
+                                    <SidebarDropdown role="menu" selectDropdown={() => this.selectDropdown('ako')}
                                                      name={t("sidebar.ammattikorkeakoulu")} selected={this.state.selected === "ako"}
                                                      links={[
                                                          {link: "", name: t("sidebar.ammattikorkeakouluopintojen-rakenne")},
@@ -132,7 +137,7 @@ class SideMenu extends Component {
                                                          {link: "", name: t("sidebar.täydennyskoulutus")}
                                                      ]}
                                     />
-                                    <SidebarDropdown selectDropdown={() => this.selectDropdown('yliopisto')}
+                                    <SidebarDropdown role="menu" selectDropdown={() => this.selectDropdown('yliopisto')}
                                                      name={t("sidebar.yliopisto")} selected={this.state.selected === "yliopisto"}
                                                      links={[
                                                          {link: "", name: t("sidebar.yliopistotutkintojen-rakenne")},
@@ -195,7 +200,7 @@ class SideMenu extends Component {
                                 </ul>
                                 <ul className="nav">
                                     <li className="palaute">
-                                        <a onClick={this.props.togglePalaute}>{t("sidebar.palaute")}</a>
+                                        <a tabIndex="0" onClick={this.props.togglePalaute}>{t("sidebar.palaute")}</a>
                                     </li>
                                 </ul>
                             </ul>

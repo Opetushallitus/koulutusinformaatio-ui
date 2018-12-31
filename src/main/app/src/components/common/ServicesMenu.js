@@ -5,11 +5,12 @@ class ServicesMenu extends Component{
     
     constructor(props) {
         super(props)
-        this.closeMenu= this.closeMenu.bind(this);
         this.state = {
           componentState: false,
           closing: false
         }
+        this.closeMenu= this.closeMenu.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     closeMenu() {
@@ -21,13 +22,19 @@ class ServicesMenu extends Component{
         }, 250);
     }
 
+    handleKeyPress(e) {
+        console.log(e.key);
+        e.key === "Enter" && 
+        this.closeMenu();
+    }
+    
     render(){
         const isClosing = !!this.state.closing ? "closing" : "open";
         return(
             <React.Fragment>
                 <div className={"overlay displayed-" + !this.state.closing} onClick={this.closeMenu}></div>
                 <div className={"services-menu " + isClosing }>
-                <a className="menu-close" onClick={this.closeMenu}><i className="icon-outline-close"/></a>
+                <a className="menu-close" aria-label="close palvelut menu" tabIndex="0" onClick={this.closeMenu} onKeyPress={this.handleKeyPress}><i className="icon-outline-close"/></a>
                     <ul>
                         <li className="omat">
                             <a href="/">

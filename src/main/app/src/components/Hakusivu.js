@@ -28,13 +28,13 @@ class Hakusivu extends Component {
         return (
             <React.Fragment>
                 <Hakupalkki isRajainVisible={this.moveMainContent}/>
-                <div id="main-content" className={moveMainContent ? "move-right" : "center-content"} >
+                <main id="main-content" className={moveMainContent ? "move-right" : "center-content"} >
                     <Route path={'/haku/:keyword?'} render={(props) => <Haku {...props}/>}/>
                     <Route path={'/koulutus/:oid'} render={(props) => <Koulutus {...props} />}/>
                     <Route path={'/oppilaitos/:oid'} render={(props) => <Oppilaitos {...props} />}/>
                     <Route path={'/toteutus/:oid'} render={(props) => <Toteutus {...props} />}/>
                     <Route path={'/vertailu'} render={(props) => <Vertailu {...props} />}/>
-                </div>
+                </main>
             </React.Fragment>
         );
     }

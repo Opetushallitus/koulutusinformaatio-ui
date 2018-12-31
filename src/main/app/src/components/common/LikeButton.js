@@ -9,6 +9,7 @@ class LikeButton extends Component{
         this.state = {
           likedState: false
         }
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
     
     toggleClass() {
@@ -17,12 +18,16 @@ class LikeButton extends Component{
         });
     };
 
+    handleKeyPress(e) {
+        e.key === "Enter" &&
+        this.toggleClass(); 
+    }
     render(){
         const iconClass = this.state.likedState ? "ic_favorite" : "ic_favorite_border";
         const buttonClass = !this.state.likedState ? "" : "liked";
         const buttonText = !this.state.likedState ? "Tykkää" : "Tykätty";
         return(
-        <div role="button" aria-label={buttonText} className = {`like-button ${buttonClass}`} onClick={this.toggleClass}>
+        <div role="button" aria-label={buttonText} aria-live="assertive" className = {`like-button ${buttonClass}`} onClick={this.toggleClass} onKeyPress={this.handleKeyPress} tabIndex="0">
             <i aria-label={buttonText} className={"icon-" + iconClass}></i>
             <span>{buttonText}</span>
         </div>

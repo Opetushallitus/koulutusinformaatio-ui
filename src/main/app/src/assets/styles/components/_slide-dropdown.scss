@@ -58,9 +58,6 @@
             max-height: 100%;
             @include transitions(.25s, ease, max-height);
             .col-11 {
-                -ms-flex: 0 0 91.66667%;
-                flex: 1 0 91.66667%;
-                max-width: 92%;
                 &.text-block,
                 .item-box{
                     position: relative;

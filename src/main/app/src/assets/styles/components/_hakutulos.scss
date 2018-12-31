@@ -2,6 +2,14 @@
     margin-top: 20px;
     .col-12{
         &.Etsinta{
+            .highlight{
+                margin-left: 10px;
+                &::before,
+                &::after{
+                    padding: 0 5px;
+                    content: '"';
+                }
+            }
             &:nth-child(2){
                 h1{
                     margin-top: 0;

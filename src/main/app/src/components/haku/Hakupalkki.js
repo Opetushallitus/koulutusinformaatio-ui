@@ -49,7 +49,7 @@ class Hakupalkki extends Component {
                             <div className="row">
                                 <div className={"col-12 header-search" + (this.props.main ? " main" : "")}>
                                     <div className="search">
-                                        <input id="regular-input" className="oph-input" type="text"
+                                        <input id="regular-input" className="oph-input" aia-label={t('haku.kehoite')} type="search"
                                                placeholder={t('haku.kehoite')}
                                                value={value}
                                                onChange={this.handleChange}

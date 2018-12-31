@@ -10,7 +10,19 @@ import '../../assets/styles/components/_hakutulos-box.scss';
 @inject("vertailuStore")
 @observer
 class HakutulosBox extends Component {
+    constructor(props) {
+        super(props);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    }
    
+    handleKeyPress(e){
+        e.key === "Enter" &&
+            e.target.id === "add-compare" &&
+                this.props.vertailuStore.selectItem(this.props.vertailuOid, this.props.nimi)
+            e.target.id === "remove-compare" && 
+                this.props.vertailuStore.removeItem(this.props.vertailuOid)
+    }
+
     render() {
         
         return (
@@ -27,13 +39,13 @@ class HakutulosBox extends Component {
                         </div>           
                     </div>
                     {this.props.vertailuStore.vertailuList.findIndex((item) => item.oid === this.props.vertailuOid) !== -1 ?
-                        <div className="compare-button" onClick={() => this.props.vertailuStore.removeItem(this.props.vertailuOid)}>
-                            <span role="button" className="poista">{this.props.t("haku.poista-vertailusta")}</span>
+                        <div role="button" id="remove-compare" className="compare-button" tabIndex="0" onKeyPress={this.handleKeyPress} onClick={() => this.props.vertailuStore.removeItem(this.props.vertailuOid)}>
+                            <span className="poista">{this.props.t("haku.poista-vertailusta")}</span>
                         </div>
                         :
                         (this.props.vertailu ?
-                            <div className="compare-button" onClick={() => this.props.vertailuStore.selectItem(this.props.vertailuOid, this.props.nimi)}>
-                                <span role="button">{this.props.t("haku.ota-vertailuun")}</span>
+                            <div role="button" id="add-compare" className="compare-button" tabIndex="0" onKeyPress={this.handleKeyPress} onClick={() => this.props.vertailuStore.selectItem(this.props.vertailuOid, this.props.nimi)}>
+                                <span>{this.props.t("haku.ota-vertailuun")}</span>
                             </div>
                             :
                             <div className="compare-button inactive">

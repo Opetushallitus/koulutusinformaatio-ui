@@ -19,6 +19,7 @@ class Hakurajain extends Component {
         this.setWrapperRef = this.setWrapperRef.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.handleWindowResize = this.handleWindowResize.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     componentDidMount () {
@@ -99,6 +100,11 @@ class Hakurajain extends Component {
         this.props.hakuehtoStore.toggleRajain();
     }
 
+    handleKeyPress(e) {
+        e.key === "Enter" &&
+        this.toggleRajain();    
+    }
+
     toggleRajain() {
         this.props.hakuehtoStore.toggleRajain();
         this.props.shareVisibility();
@@ -127,7 +133,7 @@ class Hakurajain extends Component {
             <React.Fragment>
                 <div className="container">
                     <div className="col-12">
-                        <div id="filters-button" className="filter-button" onClick={() => this.toggleRajain(this)} role="button">
+                        <div id="filters-button" role="button" tabIndex="0" className="filter-button" aria-label={this.props.hakuehtoStore.rajainOpen ? t("haku.sulje-rajain") : t("haku.rajaa-etsintää")} onClick={() => this.toggleRajain(this)} onKeyPress={this.handleKeyPress} >
                             <span>{this.props.hakuehtoStore.rajainOpen ? t("haku.sulje-rajain") : t("haku.rajaa-etsintää")}</span>
                         </div>
                     </div>
@@ -139,7 +145,7 @@ class Hakurajain extends Component {
                     <div className={`filter-container ${this.state.isVisible ? "open" : "collapsed"}`}>
                         <div className="filter-options" style={{height: this.state.filtersHeight, overflowX: "scroll"}}>
                             <div className="filters-main" id="filters-form">
-                                <div className="form-group">
+                                <div className="form-group" aria-label={t('haku.koulutustyyppi')} tabIndex="0">
                                     <h5>{t('haku.koulutustyyppi')}</h5>
                                     <Hakurajainvalinta text={t('haku.lukio')} checked={this.props.hakuehtoStore.filter.koulutus.indexOf('lk') !== -1}
                                                        handleChange={() => this.handleKoulutusChange('lk')} color="1"/>
@@ -150,7 +156,7 @@ class Hakurajain extends Component {
                                     <Hakurajainvalinta text={t('haku.muut')} checked={this.props.hakuehtoStore.filter.koulutus.indexOf('muu') !== -1}
                                                        handleChange={() => this.handleKoulutusChange('muu')} color="5"/>
                                 </div>
-                                <div className="form-group">
+                                <div className="form-group" aria-label={t('haku.opetuskieli')} tabIndex="0">
                                     <h5>{t('haku.opetuskieli')}</h5>
                                     <Hakurajainvalinta text={t('haku.suomi')} checked={this.props.hakuehtoStore.filter.kieli.indexOf('fi') !== -1}
                                                        handleChange={() => this.handleKieliChange('fi')}/>
@@ -161,17 +167,17 @@ class Hakurajain extends Component {
                                 </div>
                                 <div className="form-group">
                                     <h5 className="filter-title">{t('haku.paikkakunta')}</h5>
-                                    <input id="paikkakunta" className="oph-input" type="text" aria-label={t('haku.paikkakunta-kehoite')} placeholder={t('haku.paikkakunta-kehoite')}
+                                    <input id="paikkakunta" className="oph-input" type="text" placeholder={t('haku.paikkakunta-kehoite')}
                                            onChange={(e) =>this.handlePaikkakuntaChange(e.target.value)}
                                            value={value}
                                            onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit(e)}}}/>
                                 </div>
                                 <div className="form-group action-buttons">
-                                    <Link id="rajain-search" role="button" aria-label={t('haku.hae')} className="btn btn-primary" to={{
+                                    <Link id="rajain-search" role="button" tabIndex="0" aria-label={t('haku.hae')} className="btn btn-primary" to={{
                                         pathname: link,
                                         search: search
                                     }} onClick={() => {this.toggleRajain()}}>{t('haku.hae')}</Link>
-                                    <Link id="rajain-clear" role="button" aria-label={t('haku.poista-rajaukset')} className="clear-compare" to={{
+                                    <Link id="rajain-clear" role="button" tabIndex="0" aria-label={t('haku.poista-rajaukset')} className="clear-compare" to={{
                                         pathname: link,
                                         search: ''
                                     }} onClick={() => {this.clear()}}>{t('haku.poista-rajaukset')}</Link>

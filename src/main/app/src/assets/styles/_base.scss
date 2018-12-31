@@ -10,6 +10,9 @@
 [tabindex="-1"]:focus {
     outline: 0 !important;
 }
+*:focus {
+    outline: none;
+}
 html, body {
     width: auto !important;
     overflow-x: hidden !important;
