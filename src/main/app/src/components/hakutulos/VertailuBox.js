@@ -10,6 +10,20 @@ import '../../assets/styles/components/_vertailu-box.scss';
 @observer
 class VertailuBox extends Component {
 
+    constructor(props) {
+        super(props);
+      this.handleKeyPress = this.handleKeyPress.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.props = nextProps;
+}
+
+    handleKeyPress(e) {
+        e.key === "Enter" && 
+            this.props.vertailuStore.clearItems()
+    }
+    
     renderVertailuList() {     
         
         return this.props.vertailuStore.vertailuList.map((i) =>
@@ -41,11 +55,11 @@ class VertailuBox extends Component {
                             </div>
                             <div className="col-12 col-md-12 col-lg-3 pull-right d-flex justify-content-center align-items-center flex-column">
                                 {this.props.vertailuStore.size > 1 ?
-                                    <Link to={this.props.vertailuStore.createVertailuLink} id={"vertaile"}
+                                    <Link to={this.props.vertailuStore.createVertailuLink} id="vertaile" 
                                           role="button" className="btn btn-primary">{this.props.t("haku.vertaile")}</Link>
                                     :
                                     <a className="btn btn-primary disabled">{this.props.t("haku.vertaile")}</a>}
-                                <a className="clear-compare" onClick={this.props.vertailuStore.clearItems}>{this.props.t("haku.poista-kaikki")}</a>
+                                <a className="clear-compare" id="clear-compare" tabIndex="0" onClick={this.props.vertailuStore.clearItems} onKeyPress={this.handleKeyPress}>{this.props.t("haku.poista-kaikki")}</a>
                             </div>
                         </div>
                     </div>

@@ -10,6 +10,21 @@ import {translate} from 'react-i18next';
 @observer
 class HakutulosToggle extends Component {
 
+    constructor(props) {
+        super(props);
+      this.handleKeyPress = this.handleKeyPress.bind(this);
+      this.toggle = this.toggle.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.props = nextProps;
+    }
+
+    handleKeyPress(e) {
+        e.key === "Enter" && 
+           this.toggle(e,e.target.id);
+    }
+
     toggle(event, toggle) {
         const search = qs.parse(this.props.location.search);
         search.toggle = toggle;
@@ -22,13 +37,13 @@ class HakutulosToggle extends Component {
         return <div className="row tabs-result">
         <div className="col-12">
             <ul className="toggle-tabs"> 
-                <li role="button" tabIndex="0" aria-label={`${t('haku.koulutukset')} ${this.props.hakuStore.koulutusCount}`}  className={this.props.hakuStore.toggleKoulutus ? "valittu" : ""} id={"koulutus-toggle"} onClick={(e) => {this.toggle(e, 'koulutus')}}>
+                <li role="button" id="koulutus" tabIndex="0" aria-label={`${t('haku.koulutukset')} ${this.props.hakuStore.koulutusCount}`}  className={this.props.hakuStore.toggleKoulutus ? "valittu" : ""} onClick={(e) => {this.toggle(e, 'koulutus')}} onKeyPress={this.handleKeyPress}>
                     <div className="KoulutuksetOppilaitokset" >
                         <span >{t('haku.koulutukset')}</span>
                         <span className="Hakutulos_pallo">({this.props.hakuStore.koulutusCount})</span>
                     </div>
                 </li>
-                <li role="button" tabIndex="0" aria-label={`${t('haku.oppilaitokset')} ${this.props.hakuStore.oppilaitosCount}`} className={this.props.hakuStore.toggleKoulutus ? "" : "valittu"} id={"oppilaitos-toggle"} onClick={(e) => {this.toggle(e, 'oppilaitos')}}>
+                <li role="button" id="oppilaitos" tabIndex="0" aria-label={`${t('haku.oppilaitokset')} ${this.props.hakuStore.oppilaitosCount}`} className={this.props.hakuStore.toggleKoulutus ? "" : "valittu"} onClick={(e) => {this.toggle(e, 'oppilaitos')}} onKeyPress={this.handleKeyPress}>
                     <div className="KoulutuksetOppilaitokset" >
                         <span>{t('haku.oppilaitokset')}</span>
                         <span className="Hakutulos_pallo">({this.props.hakuStore.oppilaitosCount})</span>
