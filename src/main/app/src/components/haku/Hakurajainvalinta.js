@@ -11,7 +11,8 @@ class Hakurajainvalinta extends Component {
     }
 
     handleKeyPress(e) {
-       this.props.handleChange();
+        e.key === "Enter" &&
+            this.props.handleChange();
     }
 
     render() {
