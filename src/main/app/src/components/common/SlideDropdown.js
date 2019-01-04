@@ -59,7 +59,7 @@ class SlideDropdown extends Component{
         return(
             <div className="row dropdown-component">
                 <div className="col-12">
-                    <div className={"col-12 slide-dropdown " + dropDownContent}>
+                    <div className={`col-12 slide-dropdown ${dropDownContent}`}>
                         <div className="slide-dropdown-header" onClick={this.toggleClass} onKeyPress={this.handleKeyPress} tabIndex="0" role="menu" aria-label={this.props.title} aria-live="assertive" aria-expanded={this.state.viewContentState ? true : false}>
                             <h2 className="d-flex justify-content-between">
                                 <span className={"collapse-button icon-ic-block-" + dropDownContent}></span>
@@ -67,8 +67,8 @@ class SlideDropdown extends Component{
                             </h2>
                         </div>    
                     </div> 
-                    <div className={"dropdown-content " + dropDownContent + " " + isComponentCollapsing}>
-                        <div className="col-12">                  
+                    <div className={`dropdown-content ${dropDownContent} ${isComponentCollapsing}`}>
+                        <div className="col-12" tabIndex="0">                  
                                 {
                                     this.props.oppilaitos && 
                                     <div key={this.props.oid} className="col-12 box-container">

@@ -21,7 +21,6 @@ class Koulutus extends Component {
         this.state = {
             koulutus: undefined,
             selectedMenuItem: 0,
-            isMobile: false,
             menuElements: [
                 "Koulutuksen esittely",
                 "Oppilaitokset"
@@ -30,7 +29,6 @@ class Koulutus extends Component {
         this.getSelectedItem=this.getSelectedItem.bind(this);
         this.setSelectedItem=this.setSelectedItem.bind(this);
         this.resetSelectedItem=this.resetSelectedItem.bind(this);
-        this.toggleMobileState = this.toggleMobileState.bind(this);
     };
     
     async componentDidMount() {
@@ -56,21 +54,24 @@ class Koulutus extends Component {
             selectedMenuItem: i
         })
     }
+
     setSelectedItem(){
         return this.state.selectedMenuItem;
     }
+
     resetSelectedItem(){
         this.setState({
             selectedMenuItem: 0
         })
     }
+
     chooseKoulutus() {
         let selectedItem= this.setSelectedItem();
         if(this.state.koulutus && this.state.koulutus.searchData.tyyppi) {
             switch(this.state.koulutus.searchData.tyyppi) {
                 case 'lk': return <Lukio items={this.state.menuElements} selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>; //TODO
-                case 'kk': return <Korkeakoulu items={this.state.menuElements} selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
-                case 'ako': return <Avoin items={this.state.menuElements} selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
+                case 'kk': return <Korkeakoulu items={this.state.menuElements}  selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
+                case 'ako': return <Avoin items={this.state.menuElements}  selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
                 case 'amm' : return <Ammatillinen items={this.state.menuElements} selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
                 default: return <Ammatillinen items={this.state.menuElements} selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus} muu={true}/>;
             } 
@@ -83,9 +84,7 @@ class Koulutus extends Component {
             return this.state.koulutus.searchData.tyyppi;
         }
     }
-    toggleMobileState() {
 
-    }
     render() {
         const selectedKoulutus = this.chooseKoulutus();
         const actualKoulutus = this.koulutusType();
@@ -97,9 +96,8 @@ class Koulutus extends Component {
                         <Media query="(min-width: 992px)">
                                 { 
                                     matches => matches ? (
-                                        this.toggleMobileState(false),
                                         <KoulutusSidebar items={this.state.menuElements} type={actualKoulutus} selected={selectedItem} item={this.getSelectedItem}></KoulutusSidebar>
-                                    ): (this.toggleMobileState(true), null)
+                                    ): null
                                 }
                         </Media>   
                         <div className="col-12 col-md-12 col-lg-8 col-xl-9">

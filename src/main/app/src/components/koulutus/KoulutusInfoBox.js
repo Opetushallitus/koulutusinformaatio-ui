@@ -7,7 +7,7 @@ class KoulutusInfoBox extends Component {
         return (
           <div className="col-12" id="info-box">
                 <div className="koulutusinfo">
-                    <ul className="koulutusinfolaatikko">
+                    <ul className="koulutusinfolaatikko" tabIndex="0">
                         {this.props.fields.map(row => row[1] && <li key={row[0]}><span>{`${row[0]}:  ${row[1]}`}</span></li>)}
                     </ul>
                 </div>

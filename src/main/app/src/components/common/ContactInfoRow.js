@@ -63,7 +63,7 @@ class ContactInfoRow extends Component{
                 {sectionType === "oppilaitos" &&
                     <img alt="school" className="align-self-center" src={SchoolImage}></img>
                 }
-                    <ul>
+                    <ul tabIndex="0">
                         <li>{contactData.name}</li>
                         <li>{`${contactData.address}, ${contactData.postNo} ${contactData.city}`}</li>
                         {sectionType === "toteutus" && contactData.email !== "---" &&

@@ -103,7 +103,7 @@ class Hakutulos extends Component {
                 <VertailuBox/>
                 <div id="hakutulos-content">
                     <div className="container">
-                        <HakutulosSummary/>
+                        <HakutulosSummary iDidUpdate={this.props.iUpdatedMyChildren}/>
                     </div>
                     <div className="container" id="toggle-tabs">
                         <HakutulosToggle/>

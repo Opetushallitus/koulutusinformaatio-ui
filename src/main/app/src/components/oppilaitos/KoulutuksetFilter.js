@@ -17,11 +17,11 @@ class KoulutuksetFilter extends Component{
         return(
             <div className="col-12 col-lg-11 col-xl-12 col-xxxl-9" id="koulutukset-filter">
             <div className="row">
-                    <div className="form-group">
+                    <div className="form-group" tabIndex="0">
                         <h4>Rajaa koulutuksia</h4>
                         <h5>Valitse tiedekunta</h5>
                         {
-                            filtersName.map((filter,i) => <CheckBox filterName={filter} key={i} />)
+                            filtersName.map((filter,i) => <CheckBox filterName={filter} key={`${i}${filter}`} />)
                         }
                     </div>
                     <hr/>

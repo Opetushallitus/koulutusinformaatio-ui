@@ -39,9 +39,13 @@ class Haku extends Component {
         this.props.history.replace(this.props.hakuStore.createHakuUrl);
     }
 
+    hakutulosUpdated(){
+        this.props.isComponentUpdated();
+    }
+
     render() {
         return (
-            <Hakutulos {...this.props}/>
+            <Hakutulos {...this.props} iUpdatedMyChildren={this.hakutulosUpdated()}/>
         );
     }
 }

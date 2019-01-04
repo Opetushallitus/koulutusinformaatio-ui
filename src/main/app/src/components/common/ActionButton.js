@@ -8,14 +8,15 @@ class ActionButton extends Component{
     
     constructor(props) {
         super(props)
-        this.toggleSelected = this.toggleSelected.bind(this);
-        this.toggleSwitch = this.toggleSwitch.bind(this);
         this.state = {
             selected: false,
             switched: true,
             type: "compare",
             disabled: false
         }
+        this.toggleSelected = this.toggleSelected.bind(this);
+        this.toggleSwitch = this.toggleSwitch.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     toggleSelected(){
@@ -55,6 +56,11 @@ class ActionButton extends Component{
         }       
     }; 
 
+    handleKeyPress(e){
+        e.key === "Enter" &&
+            this.toggleSwitch();    
+    }
+
     render(){
         const {t} = this.props;
         const isSelected = this.state.selected ? "on" : "off";
@@ -69,7 +75,7 @@ class ActionButton extends Component{
                     </div>
                 }
                 { buttonType === "switch" &&
-                    <div className="switch-button" onClick={this.toggleSwitch} tabIndex="0">
+                    <div className="switch-button" onClick={this.toggleSwitch} onKeyPress={this.handleKeyPress} tabIndex="0">
                         <div className={`switched ${isSwitched} d-flex justify-content-around`}>
                             <div className="switch">
                                 Kyllä

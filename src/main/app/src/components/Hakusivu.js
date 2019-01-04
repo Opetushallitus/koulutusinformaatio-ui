@@ -23,13 +23,25 @@ class Hakusivu extends Component {
         })
     }
 
+    onComponentUpdate(){
+        if (document.getElementsByTagName("h1")[0]){
+            document.getElementsByTagName("h1")[0].setAttribute("tabIndex",0);
+            document.getElementsByTagName("h1")[0].focus();
+            return;
+        } else if (document.getElementsByTagName("h2")[0]){
+            document.getElementsByTagName("h2")[0].setAttribute("tabIndex",0);
+            document.getElementsByTagName("h2")[0].focus(); 
+            return;
+        }
+    }
+
     render() {        
         let moveMainContent =  this.state.isFilterDisplayed; 
         return (
             <React.Fragment>
                 <Hakupalkki isRajainVisible={this.moveMainContent}/>
-                <main id="main-content" className={moveMainContent ? "move-right" : "center-content"} >
-                    <Route path={'/haku/:keyword?'} render={(props) => <Haku {...props}/>}/>
+                <main id="main-content" className={moveMainContent ? "move-right" : "center-content"}>
+                    <Route path={'/haku/:keyword?'} render={(props) => <Haku {...props} isComponentUpdated={this.onComponentUpdate}/>}/>
                     <Route path={'/koulutus/:oid'} render={(props) => <Koulutus {...props} />}/>
                     <Route path={'/oppilaitos/:oid'} render={(props) => <Oppilaitos {...props} />}/>
                     <Route path={'/toteutus/:oid'} render={(props) => <Toteutus {...props} />}/>

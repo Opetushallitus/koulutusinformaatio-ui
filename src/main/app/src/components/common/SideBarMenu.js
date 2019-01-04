@@ -32,7 +32,7 @@ class SideBarMenu extends Component {
                     <ul className="sidebar-menu">
                         {
                             menuItems &&
-                            menuItems.map((t,i) => <li key={i} className={this.state.activeIndex === i ? 'active': null}  onClick={this.toggleClass.bind(this, i)}><span>{t}</span></li>)
+                        menuItems.map((t,i) => <li key={`${i}${t}`} tabIndex="0" className={this.state.activeIndex === i ? 'active': null}  onClick={this.toggleClass.bind(this, i)} onKeyPress={(e) => this.toggleClass(i)}><span>    {t}</span></li>)
                         }                   
                     </ul>
                 </div>            

@@ -7,6 +7,15 @@ import {translate} from 'react-i18next';
 @observer
 class HakutulosSummary extends Component {
 
+    componentWillReceiveProps(nextProps){
+        this.props = nextProps;
+    }
+
+    componentDidUpdate(){
+        this.props.iDidUpdate;
+
+    }
+
     renderKeywordResultSummary() {
         const {t} = this.props;
         return (
