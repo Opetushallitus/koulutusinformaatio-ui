@@ -1,23 +1,27 @@
 @import '../settings';
 
 .info-page{
-    &.toteutus{
+    &.hakukohde{
         .left-column{
             border-right: 1px solid $soft-grey;
             padding-bottom: 30px;
         }
-        #toteutus-header{
+        #hakukohde-header{
             margin-top: 0;
-            #toteutus-header-nimi{
+            #hakukohde-header-nimi{
                 margin-top: 5px;
             }
+        }
+        .hakukohde-header-second{
+            font-size: 20px;
+            margin-bottom: 0;
         }
     }
 }
 
 @media (max-width: 992px) {
     .info-page{
-        &.toteutus{
+        &.hakukohde{
             .left-column{
                 border-right: none;
                 padding-left: 0;

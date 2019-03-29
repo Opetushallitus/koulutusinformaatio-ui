@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Localizer as l, TimeMillisParser as timeParser} from "../../tools/Utils";
 import '../../assets/styles/components/_toteutus-info-box.scss';
+import {Link} from "react-router-dom";
 
 class ToteutusInfoBox extends Component {
 
@@ -60,6 +61,9 @@ class ToteutusInfoBox extends Component {
         if(!this.state.fieldsLeft) {
             return null;
         }
+        console.log("this", this);
+        const link = '/hakukohde/1.2.246.562.17.25527204512'/*?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
+        + '&lng=' + l.getLanguage()*/;
         return (
             <div id="toteutus-info-box">
                 <div className="col-12">
@@ -76,6 +80,7 @@ class ToteutusInfoBox extends Component {
                         <div className="col-12 col-md-6 box hakemus">
                             {this.state.otsikkoRight ? <h3>{`${this.state.otsikkoRight} !`}</h3> : ""}
                                 {this.state.hakuajatToShow.length > 0 ? this.state.hakuajatToShow.map((h, i) => ToteutusInfoBox.createFieldsAndButtonForSingleHakuaika(h, i)) : <p>Ei aktiivisia tai tulevia hakuja tällä hetkellä</p>}
+                                <Link to={link} className={"hakutulosbox-link"}>hakukohdelinkki</Link>
                         </div>
                     </div>
                 </div>

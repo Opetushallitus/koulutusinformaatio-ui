@@ -59,13 +59,13 @@ class Ammatillinen extends Component {
                 }
 
                 {tutkinnonOsat &&
-                    <SlideDropDown toteutus={true} content={tutkinnonOsat} title={t('koulutus.tutkinnon-rakenne')}/>
+                    <SlideDropDown toteutus={true} content={tutkinnonOsat} title={t('koulutus.kuvaus')}/>
                 }  
 
                 {jatkoOpinnot &&
                     <SlideDropDown title={t('koulutus.jatko-opinnot')} toteutus={true} content={jatkoOpinnot} />
                 }
-                <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset}/>
+                <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset} educationName={this.props.result.searchData.nimi}/>
             </React.Fragment>);
     }
 }

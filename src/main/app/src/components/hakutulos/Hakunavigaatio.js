@@ -67,7 +67,7 @@ class Hakunavigaatio extends Component {
         const nextLink = (this.props.navigaatioStore.hasNext && !this.props.vertailu) ? <a onClick={(e) => {this.next(e);}}>
             <span>{t("navigaatio.seuraava")}</span>
         </a> : <span/>;
-
+     
         return (
             <div className="container-fluid app-navigation-bar hakupalkki">
                 <div className="container">

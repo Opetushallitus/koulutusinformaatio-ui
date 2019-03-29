@@ -6,11 +6,11 @@ $compared-items: (
     blue: $flat-blue
 );
 .compare{
+    margin-top: 40px;
     h1 {
         margin-top: 40px;
         a{
             &.header{
-                margin-top: 40px;
                 text-decoration: none;
                 color: black;
                 .icon-ic-back-button{

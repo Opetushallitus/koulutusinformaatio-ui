@@ -54,7 +54,7 @@ class SlideDropdown extends Component{
     
     render(){
         const dropDownContent = this.state.viewContentState ? "expanded" : "collapsed";
-        const isComponentCollapsing = this.state.isCollapsing ? "collapsing" : ""
+        const isComponentCollapsing = this.state.isCollapsing ? "collapsing" : "";
         const tProp = this.props;
         return(
             <div className="row dropdown-component">
@@ -72,7 +72,7 @@ class SlideDropdown extends Component{
                                 {
                                     this.props.oppilaitos && 
                                     <div key={this.props.oid} className="col-12 box-container">
-                                        {tProp.oppilaitos.map((t) => <OppilaitosListItem key={t.oid} toteutus={t} name={t} education={this.props.education}/>)}
+                                        {tProp.oppilaitos.map((t) => <OppilaitosListItem key={t.oid} toteutus={t} name={t} education={this.props.education} educationName={this.props.educationName ? this.props.educationName : null} />)}
                                     </div>
                                 }
                                 {

@@ -39,6 +39,42 @@
             
         }
     }
+    .dropdown-content-min{
+        &.collapsed {
+            display: none;
+        }       
+        &.expanded{
+            @include fadeInDown(
+                $duration: .25s,
+                $count: 1,
+                $delay: 0,
+                $function: ease, 
+                $fill: both 
+            );
+            max-height: 100%;
+            @include transitions(.25s, ease, max-height);
+            .col-11 {
+                &.text-block,
+                .item-box{
+                    position: relative;
+                    right: -40px;
+                    padding: 1px 0 0 0;
+                }
+            }
+            &.collapsing{ 
+                @include fadeOutUp(
+                    $duration: .2s,
+                    $count: 1,
+                    $delay: 0,
+                    $function: ease, 
+                    $fill: both,
+                    $visibility: hidden              
+                );  
+                max-height: 0;
+                @include transitions(.2s, ease, max-height);          
+            }
+        }
+    }
     .dropdown-content{
         border-bottom: 1px solid $soft-grey;
         border-left: 1px solid $soft-grey;

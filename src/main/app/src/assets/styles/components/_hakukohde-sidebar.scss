@@ -1,0 +1,77 @@
+@import '../settings';
+
+$channels: (
+  lk: $brick,
+  amm: $mid-green,
+  kk: $amethyst,
+  ako: $water-blue,
+  muu: $yellow-ochre
+);
+
+.hakukohde-sidebar{
+   
+    h2,
+    h3{
+        font-weight: bold;
+        @include smoothFonts();
+        letter-spacing: -.5px;
+        margin: 15px 0;
+    }
+    h3{
+        line-height: 12px !important;
+        color: $battleship-grey;
+    }
+    .contact-data{
+        -ms-flex: 1 1 100%;
+        flex: 1 1 100%;
+        max-width: 100%;
+        margin-bottom: 15px; 
+        ul{
+            margin-block-start: 0;
+            margin-block-end: 0;
+            padding-inline-start: 0;
+            li{
+                color: black;
+            }
+        }
+    }
+    .website{
+        flex: 1 1 100%;
+        a{
+            text-decoration: none;
+            span{
+                &:first-child{
+                    border-radius: 50%;
+                    width: 40px;
+                    height: 40px;
+                    margin-right: 10px;
+                    text-align: center;
+                    &.link-icon{
+                        @each $channel, $color in $channels{
+                            &.#{$channel}{
+                                background: $color;
+                            }
+                        }
+                        &::after{
+                            content: "\e91c";
+                            font-family: $material-icons-font-family;
+                            @include smoothFonts();
+                            font-weight: 100;
+                            color: white;
+                            font-size: 25px;
+                            line-height: 41px;
+                            display: inline-block;
+                            vertical-align: middle;
+                        }
+                    }
+                }
+                &:last-child{
+                    font-weight: bold;
+                }
+            }
+            .text{
+                text-decoration: underline;
+            }
+        }
+    }
+}

@@ -5,6 +5,7 @@ import Koulutus from './koulutus/Koulutus';
 import Oppilaitos from './oppilaitos/Oppilaitos';
 import Toteutus from './toteutus/Koulutus';
 import Vertailu from './vertailu/Vertailu';
+import Hakukohde from './hakukohde/Koulutus'
 import { Route } from 'react-router-dom';
 import '../assets/styles/components/_hakusivu.scss';
 
@@ -45,6 +46,7 @@ class Hakusivu extends Component {
                     <Route path={'/koulutus/:oid'} render={(props) => <Koulutus {...props} />}/>
                     <Route path={'/oppilaitos/:oid'} render={(props) => <Oppilaitos {...props} />}/>
                     <Route path={'/toteutus/:oid'} render={(props) => <Toteutus {...props} />}/>
+                    <Route path={'/hakukohde/:oid'} render={(props) => <Hakukohde {...props} />}/>
                     <Route path={'/vertailu'} render={(props) => <Vertailu {...props} />}/>
                 </main>
             </React.Fragment>
