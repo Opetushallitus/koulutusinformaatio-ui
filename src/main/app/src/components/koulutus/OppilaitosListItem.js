@@ -46,7 +46,6 @@ class OppilaitosListItem extends Component {
     render () {
         const dropDownContent = this.state.viewContentState ? "expanded" : "collapsed";
         const isComponentCollapsing = this.state.isCollapsing ? "collapsing" : "";
-        const tProp = this.props;
         const oppilaitos = this.props.toteutus;
         const link = '/toteutus/' + oppilaitos.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
             + '&lng=' + l.getLanguage();
