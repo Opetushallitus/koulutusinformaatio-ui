@@ -40,9 +40,9 @@ class Lukio extends Component {
             <React.Fragment>
                 <div className="col-12 col-md-12 col-lg-8 col-xl-9 left-column">
                     <HakukohdeHeader komoOid={this.props.koulutus.komoOid}
-                                    nimi={this.props.koulutus.searchData.nimi}
+                                    nimi={this.props.koulutus.metadata.nimi}
                                     organisaatio={this.props.koulutus.organisaatio.nimi}/>
-                    <HakukohdeInfoBox nimi={this.props.koulutus.searchData.nimi} fields={this.parseInfoBoxFieldsTwoSided()}/>
+                    <HakukohdeInfoBox nimi={this.props.koulutus.metadata.nimi} fields={this.parseInfoBoxFieldsTwoSided()}/>
                     <SlideDropdown toteutus={true} content={"Valintaperusteiden kuvaus"} title="Valintaperusteiden kuvaus"/>
                     <SlideDropdown toteutus={true} content={"Valintakokeet"} title="Valintakokeet"/>
                     <SlideDropdown toteutus={true} content={"Tarvittavat liitteet"} title="Tarvittavat liitteet"/>

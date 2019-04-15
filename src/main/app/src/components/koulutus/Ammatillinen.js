@@ -37,15 +37,22 @@ class Ammatillinen extends Component {
         const {t} = this.props;
         const koulutusohjelma = l.localize(this.props.result.koulutusohjelma, undefined);
         const osaamisala = this.props.result.osaamisala ? l.localize(this.props.result.osaamisala.meta, undefined).nimi : undefined;
-
+        const koulutuksenkuvaus = "tba";
         const osaamisalat = koulutusohjelma ? koulutusohjelma : osaamisala;
-        const tutkinnonOsat = l.localize(this.props.result.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
-        const jatkoOpinnot = l.localize(this.props.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined);
+        //const tutkinnonOsat = l.localize(this.props.result.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
+       // const jatkoOpinnot = l.localize(this.props.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined); 
+/*   tää ois react.fragmentin sisällä             {tutkinnonOsat &&
+                    <SlideDropDown toteutus={true} content={tutkinnonOsat} title={t('koulutus.kuvaus')}/>
+                }  
+
+                {jatkoOpinnot &&
+                    <SlideDropDown title={t('koulutus.jatko-opinnot')} toteutus={true} content={jatkoOpinnot} />
+                } */
 
         const hattu = this.props.muu ? "muu-hattu" : "ammatillinen-hattu";
         return (
             <React.Fragment>
-                <KoulutusHeader hattu={hattu} nimi={this.props.result.searchData.nimi}/>
+                <KoulutusHeader hattu={hattu} nimi={this.props.result.nimi}/>
                 <Media query="(max-width: 992px)">
                                 {
                                     matches => matches ? (
@@ -58,14 +65,11 @@ class Ammatillinen extends Component {
                     <SlideDropDown toteutus={true} content={osaamisalat} title={t('koulutus.osaamisalat')}/>
                 }
 
-                {tutkinnonOsat &&
-                    <SlideDropDown toteutus={true} content={tutkinnonOsat} title={t('koulutus.kuvaus')}/>
-                }  
-
-                {jatkoOpinnot &&
-                    <SlideDropDown title={t('koulutus.jatko-opinnot')} toteutus={true} content={jatkoOpinnot} />
+                {koulutuksenkuvaus &&
+                    <SlideDropDown text={true} title={t('koulutus.kuvaus')}/>
                 }
-                <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset} educationName={this.props.result.searchData.nimi}/>
+
+                <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset} educationName={this.props.result.nimi}/>
             </React.Fragment>);
     }
 }

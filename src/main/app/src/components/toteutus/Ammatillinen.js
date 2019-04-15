@@ -29,40 +29,57 @@ class Ammatillinen extends Component {
         const {t} = this.props;
         const fields = [];
         // laajuus, kesto, maksullinen, tutkintonimike
-        const opintojenLaajuusarvo = l.localize(this.props.koulutus.opintojenLaajuusarvo, '-');
-        const opintojenLaajuusyksikko = l.localize(this.props.koulutus.opintojenLaajuusyksikko);
-        fields.push([t('koulutus.laajuus'), opintojenLaajuusarvo && (opintojenLaajuusarvo + " " + opintojenLaajuusyksikko)]);
-        const suunniteltuKesto = this.props.koulutus.suunniteltuKestoArvo;
-        const suunniteltuKestoTyyppi = l.localize(this.props.koulutus.suunniteltuKestoTyyppi);
-        fields.push([t('koulutus.kesto'), suunniteltuKesto + " " + suunniteltuKestoTyyppi]);
 
-        fields.push([t('koulutus.maksullinen'), this.props.koulutus.opintojenMaksullisuus ? t('kyllä') : t('ei')]);
-        fields.push([t('koulutus.tutkintonimikkeet'), this.props.koulutus.tutkintonimikes ? this.props.koulutus.tutkintonimikes.map(t => l.localize(t) + " ") : '-']);
+        fields.push([t('toteutus.alkaa'), (this.props.koulutus.metadata.opetus.alkamiskausi && this.props.koulutus.metadata.opetus.alkamiskausi.nimi) ? l.localize(this.props.koulutus.metadata.opetus.alkamiskausi.nimi) +" "+ this.props.koulutus.metadata.opetus.alkamisvuosi : '-']);
+        fields.push([t('toteutus.opetuskieli'), (this.props.koulutus.metadata.opetus.opetuskieli && this.props.koulutus.metadata.opetus.opetuskieli["0"]) ? l.localize(this.props.koulutus.metadata.opetus.opetuskieli["0"].nimi) : '-']);
+        fields.push([t('toteutus.opetusaika'), (this.props.koulutus.metadata.opetus.opetusaika && this.props.koulutus.metadata.opetus.opetusaika.nimi) ? l.localize(this.props.koulutus.metadata.opetus.opetusaika.nimi) : '-']);
+        fields.push([t('toteutus.opetustapa'), (this.props.koulutus.metadata.opetus.opetustapa && this.props.koulutus.metadata.opetus.opetustapa["0"]) ? l.localize(this.props.koulutus.metadata.opetus.opetustapa["0"].nimi) : '-']);
+        fields.push([t('toteutus.laajuus'), '-']); //koulutuksesta?
+        fields.push([t('toteutus.kesto'), '-']); //koulutuksesta?
+        fields.push([t('toteutus.maksullinen'), this.props.koulutus.metadata.opetus.onkoMaksullinen ? t('kyllä') : t('ei')]);
+        fields.push([t('toteutus.lukuvuosimaksu'), this.props.koulutus.metadata.opetus.lukuvuosimaksu.maksu ? (this.props.koulutus.metadata.opetus.lukuvuosimaksu.maksu + 'eur') : '0 eur']); //vika objekti tuntematon?
 
         return fields;
     }
 
     render() {
-        const osaamisalat = l.localize(this.props.koulutus.koulutusohjelma, undefined);
-        const tutkinnonOsat = l.localize(this.props.koulutus.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
-        const erikoistumisalat = l.localize(this.props.koulutus.kuvausKomo.TAVOITTEET, undefined);
-        const {t} = this.props;
-        return (
-            <React.Fragment>
-                <div className="col-12 col-md-12 col-lg-8 col-xl-9 left-column">
-                    <ToteutusHeader komoOid={this.props.koulutus.komoOid}
-                                    nimi={this.props.koulutus.searchData.nimi}
-                                    organisaatio={this.props.koulutus.organisaatio.nimi}/>
-                    <ToteutusInfoBox fields={this.parseInfoBoxFieldsTwoSided()}/>
-                    {osaamisalat && 
-                        <SlideDropdown toteutus={true} content={osaamisalat} title={t('koulutus.osaamisalat')}/>
+        const kuvaus = this.props.koulutus.metadata.kuvaus;
+        const osaamisalat = this.props.koulutus.metadata.osaamisalat;
+        const jatkoopinnot = "tba";
+        // const tutkinnonOsat = l.localize(this.props.koulutus.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
+       // const erikoistumisalat = l.localize(this.props.koulutus.kuvausKomo.TAVOITTEET, undefined);
+
+     /*    nääki react.fragiin 
+                    {kuvaus &&
+                        <SlideDropdown toteutus={true} content={kuvaus} title={t('koulutus.kuvaus')}/>
                     }
                     {tutkinnonOsat &&
                         <SlideDropdown toteutus={true} content={tutkinnonOsat} title="Koulutuksen sisältö ja tavoitteet"/>
                     }
                     {erikoistumisalat &&
                         <SlideDropdown toteutus={true} content={erikoistumisalat} title="Pääaineen tai erikoistumisalan valinta"/>
+                    } */
+                    console.log(osaamisalat);
+       const {t} = this.props;
+        return (
+            <React.Fragment>
+                <div className="col-12 col-md-12 col-lg-8 col-xl-9 left-column">
+                    <ToteutusHeader komoOid={this.props.koulutus.komoOid}
+                                    nimi={this.props.koulutus.nimi}
+                                    organisaatio={this.props.koulutus.organisaatio.nimi}/>
+                    <ToteutusInfoBox fields={this.parseInfoBoxFieldsTwoSided()}/>
+
+                    {kuvaus &&
+                        <SlideDropdown text={true} title={t('toteutus.kuvaus')} />
                     }
+
+                    {osaamisalat && 
+                        <SlideDropdown text={true} title={t('toteutus.osaamisalat')}/>
+                    }
+                    {jatkoopinnot &&
+                        <SlideDropdown text={true} title={t('toteutus.jatko-opintomahdollisuudet')}/>
+                    }
+
                 </div>
                 <ToteutusSidebar organisaatio={this.props.organisaatio} koulutus={this.props.koulutus} educationType={this.educationType}/>
             </React.Fragment>

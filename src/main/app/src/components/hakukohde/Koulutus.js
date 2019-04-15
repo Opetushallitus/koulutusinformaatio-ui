@@ -21,15 +21,15 @@ class Koulutus extends Component {
     };
 
     async componentDidMount() {
-        await this.getKoulutus();
+        await this.getHakukohde();
     }
 
     async componentWillReceiveProps(nextProps) {
         this.props = nextProps;
-        await this.getKoulutus();
+        await this.getHakukohde();
     }
 
-    getKoulutus() {
+    getHakukohde() {
         this.props.navigaatioStore.setOid(this.props.match.params.oid);
         this.props.restStore.getToteutus(this.props.navigaatioStore.oid, (k, o) => {
             this.setState({
@@ -41,12 +41,12 @@ class Koulutus extends Component {
 
     chooseKoulutus() {
         if(this.state.koulutus) {
-            switch(this.state.koulutus.searchData.tyyppi) {
-                case 'lk': return <Lukio organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.searchData.tyyppi} oid={this.props.navigaatioStore.oid} />; //TODO
-                case 'kk': return <Korkeakoulu organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.searchData.tyyppi} oid={this.props.navigaatioStore.oid} />;
-                case 'ako': return <Avoin organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.searchData.tyyppi} oid={this.props.navigaatioStore.oid} />;
-                case 'amm' : return <Ammatillinen organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.searchData.tyyppi} oid={this.props.navigaatioStore.oid} />;
-                default: return <Ammatillinen organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.searchData.tyyppi} oid={this.props.navigaatioStore.oid} muu={true} />;
+            switch(this.state.koulutus.metadata.tyyppi) {
+                case 'lk': return <Lukio organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />; //TODO
+                case 'yo': return <Korkeakoulu organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
+                case 'ako': return <Avoin organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
+                case 'amm' : return <Ammatillinen organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
+                default: return <Ammatillinen organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} muu={true} />;
             }
         }
         return <div/>

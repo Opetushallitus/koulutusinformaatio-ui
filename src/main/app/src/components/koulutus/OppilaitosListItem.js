@@ -55,8 +55,8 @@ class OppilaitosListItem extends Component {
                 <div className="col-11 item-box">         
                     <div className="text d-flex justify-content-between">
                         <div>
-                            <Link to={link} className={"hakutulosbox-link"}>{l.localize(oppilaitos.tarjoaja, this.props.t("koulutus.tuntematon"))}</Link>
-                            <p>{l.localize(oppilaitos.osaamisala, "")}</p>
+                            <Link to={link} className={"hakutulosbox-link"}>{l.localize(oppilaitos.organisaatio.nimi, this.props.t("koulutus.tuntematon"))}</Link>
+                            <p>{l.localize(oppilaitos.organisaatio.paikkakunta, "")}</p>
                         </div>
                         <LikeButton></LikeButton>
                     </div>

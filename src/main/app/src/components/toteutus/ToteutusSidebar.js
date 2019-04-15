@@ -48,7 +48,7 @@ class ToteutusSidebar extends Component {
                     </div>
                     <div className='col-md-12'>
                         <h3>{t('toteutus.yhteystiedot')}</h3>
-                        <ContactInfoRow name={l.localize(this.props.organisaatio)} data={this.props.organisaatio} type="toteutus" educationType={educationType}/>
+                        <ContactInfoRow name={l.localize(this.props.organisaatio)} data={this.props.koulutus.metadata.yhteystieto} type="toteutus" educationType={educationType}/>
                     </div>
                     <hr className="col-md-12"/>
                     <div className='col-md-12'>

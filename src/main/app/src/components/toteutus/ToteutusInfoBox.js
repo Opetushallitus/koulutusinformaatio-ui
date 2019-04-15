@@ -61,8 +61,7 @@ class ToteutusInfoBox extends Component {
         if(!this.state.fieldsLeft) {
             return null;
         }
-        console.log("this", this);
-        const link = '/hakukohde/1.2.246.562.17.25527204512'/*?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
+        const link = '/hakukohde/1.2.246.562.17.00000000000000000023'/*?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
         + '&lng=' + l.getLanguage()*/;
         return (
             <div id="toteutus-info-box">

@@ -62,7 +62,7 @@ class RestStore {
                 if(err) {
                     this.handleError(err)
                 } else {
-                    const koulutus = res.body.result ? res.body.result : undefined;
+                    const koulutus = res.body ? res.body : undefined;
                     onSuccess(koulutus)
                 }
             });
@@ -76,8 +76,8 @@ class RestStore {
                 if(err) {
                     this.handleError(err)
                 } else {
-                    const koulutus = ( res.body.result && res.body.result.koulutus ) ? res.body.result.koulutus[oid] : undefined;
-                    const organisaatio = (koulutus && koulutus.organisaatio.oid && res.body.result.organisaatiot) ? res.body.result.organisaatiot[koulutus.organisaatio.oid] : undefined;
+                    const koulutus = res.body ? res.body : undefined;
+                    const organisaatio = (res.body && res.body.organisaatio) ? res.body.organisaatio : undefined;
                     onSuccess(koulutus, organisaatio)
                 }
             });
@@ -87,6 +87,19 @@ class RestStore {
     getOppilaitos = (oid, onSuccess) => {
         superagent
             .get(this.urlStore.urls.url('konfo-backend.oppilaitos') + oid)
+            .end((err, res) => {
+                if(err) {
+                    this.handleError(err)
+                } else {
+                    onSuccess(res.body.result)
+                }
+            });
+    };
+
+    @action
+    getHakukohde = (oid, onSuccess) => {
+        superagent
+            .get(this.urlStore.urls.url('konfo-backend.hakukohde') + oid)
             .end((err, res) => {
                 if(err) {
                     this.handleError(err)

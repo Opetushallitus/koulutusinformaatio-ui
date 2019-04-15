@@ -59,7 +59,7 @@ class Avoin extends Component {
             <React.Fragment>
                 <div className="col-12 col-md-12 col-lg-8 col-xl-9 left-column">
                     <HakukohdeHeader komoOid={this.props.koulutus.komoOid}
-                                    nimi={this.props.koulutus.searchData.nimi}
+                                    nimi={this.props.koulutus.metadata.nimi}
                                     organisaatio={this.props.koulutus.organisaatio.nimi}/>
                     <HakukohdeInfoBox fields={this.parseInfoBoxFieldsTwoSided()}/>
                     { kuvaus &&
