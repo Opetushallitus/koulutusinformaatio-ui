@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Localizer as l, TimeMillisParser as timeParser} from "../../tools/Utils";
 import '../../assets/styles/components/_toteutus-info-box.scss';
-import {Link} from "react-router-dom";
 
 class ToteutusInfoBox extends Component {
 
@@ -61,9 +60,6 @@ class ToteutusInfoBox extends Component {
         if(!this.state.fieldsLeft) {
             return null;
         }
-        /*const link = '/hakukohde/1.2.246.562.17.00000000000000000023'/*?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
-        + '&lng=' + l.getLanguage();*/
-       // <Link to={link} className={"hakutulosbox-link"}>hakukohdelinkki</Link> hakukohde-sivun testi linkki
         return (
             <div id="toteutus-info-box">
                 <div className="col-12">
