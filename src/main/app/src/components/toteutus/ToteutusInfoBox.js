@@ -62,7 +62,7 @@ class ToteutusInfoBox extends Component {
             return null;
         }
         /*const link = '/hakukohde/1.2.246.562.17.00000000000000000023'/*?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
-        + '&lng=' + l.getLanguage()*/;
+        + '&lng=' + l.getLanguage();*/
        // <Link to={link} className={"hakutulosbox-link"}>hakukohdelinkki</Link> hakukohde-sivun testi linkki
         return (
             <div id="toteutus-info-box">
