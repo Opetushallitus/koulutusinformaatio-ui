@@ -61,8 +61,9 @@ class ToteutusInfoBox extends Component {
         if(!this.state.fieldsLeft) {
             return null;
         }
-        const link = '/hakukohde/1.2.246.562.17.00000000000000000023'/*?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
+        /*const link = '/hakukohde/1.2.246.562.17.00000000000000000023'/*?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
         + '&lng=' + l.getLanguage()*/;
+       // <Link to={link} className={"hakutulosbox-link"}>hakukohdelinkki</Link> hakukohde-sivun testi linkki
         return (
             <div id="toteutus-info-box">
                 <div className="col-12">
@@ -79,7 +80,6 @@ class ToteutusInfoBox extends Component {
                         <div className="col-12 col-md-6 box hakemus">
                             {this.state.otsikkoRight ? <h3>{`${this.state.otsikkoRight} !`}</h3> : ""}
                                 {this.state.hakuajatToShow.length > 0 ? this.state.hakuajatToShow.map((h, i) => ToteutusInfoBox.createFieldsAndButtonForSingleHakuaika(h, i)) : <p>Ei aktiivisia tai tulevia hakuja tällä hetkellä</p>}
-                                <Link to={link} className={"hakutulosbox-link"}>hakukohdelinkki</Link>
                         </div>
                     </div>
                 </div>
