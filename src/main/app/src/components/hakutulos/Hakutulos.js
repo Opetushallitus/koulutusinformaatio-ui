@@ -55,12 +55,12 @@ class Hakutulos extends Component {
                     
                     <HakutulosBox key={r.oid}
                                   oid={r.oid}
-                                  vertailuOid={r.toteutusOid}
-                                  tyyppi={r.tyyppi}
-                                  haettavissa={r.haettavissa}
+                                  vertailuOid={r.toteutusOid}//vertailuun toteutus oid?
+                                  tyyppi={r.koulutustyyppi}
+                                  haettavissa={r.hakuOnKaynnissa}
                                   nimi={this.getKoulutusNimi(r)}
                                   link={link}
-                                  text1={this.getOsaamisala(r)}
+                                  text1={this.getOsaamisala(r)}//osaamisalat = ammattinimikkeet ammatillisessa? entä miten kk ylempi/alempi tarkistetaan?
                                   text2={""}
                                   vertailu={vertailuActive}/>)
             });
