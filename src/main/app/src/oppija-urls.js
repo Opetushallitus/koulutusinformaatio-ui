@@ -12,7 +12,6 @@ const production = {
 };
 
 const development = {
-<<<<<<< HEAD
     "konfo-backend.base-url" : "https://hahtuvaopintopolku.fi",
     "konfo-backend.search.koulutukset" : "https://untuvaopintopolku.fi/konfo-backend/search/koulutukset",
     "konfo-backend.search.oppilaitokset" : "https://untuvaopintopolku.fi/konfo-backend/search/oppilaitokset",
