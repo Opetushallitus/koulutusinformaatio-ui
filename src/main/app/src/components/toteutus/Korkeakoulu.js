@@ -55,6 +55,7 @@ class Korkeakoulu extends Component {
 
     render() {
         const {t} = this.props;
+        const osaamisalat = this.props.koulutus.metadata.alemmanKorkeakoulututkinnonOsaamisalat.concat(this.props.koulutus.metadata.ylemmanKorkeakoulututkinnonOsaamisalat);
         return (
             <React.Fragment>
                 <div className="col-12 col-md-12 col-lg-8 col-xl-9 left-column">
@@ -63,8 +64,10 @@ class Korkeakoulu extends Component {
                                     nimi={this.props.koulutus.metadata.nimi}
                                     organisaatio={this.props.koulutus.organisaatio.nimi}/>
                     <ToteutusInfoBox fields={this.parseInfoBoxFieldsTwoSided()}/>
-                        <SlideDropdown text={true} title={t('toteutus.kuvaus')}/>
-                        <SlideDropdown text={true} title={t('toteutus.pääaineet')}/>
+                        <SlideDropdown kuvaus={true} teksti={l.localize(this.props.koulutus.metadata.kuvaus)} title={t('toteutus.kuvaus')} />        
+                        <SlideDropdown title={t('toteutus.pääaineet')} osaamisalat={true} osaamisalatlist={osaamisalat.length > 0 ? osaamisalat : false}/>
+
+
                         <SlideDropdown text={true} title={t('toteutus.jatko-opintomahdollisuudet')}/>
                 </div>
                 <ToteutusSidebar organisaatio={this.props.organisaatio} koulutus={this.props.koulutus} educationType={this.educationType}/>

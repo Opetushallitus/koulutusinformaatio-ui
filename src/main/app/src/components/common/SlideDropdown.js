@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import renderHTML from 'react-render-html';
 import '../../assets/styles/components/_slide-dropdown.scss';
+import {Localizer as l} from '../../tools/Utils';
 import OppilaitosListItem from '../koulutus/OppilaitosListItem';
+import OsaamisalaListItem from '../toteutus/OsaamisalaListItem';
 import OskariKartta from "../oppilaitos/OskariKartta";
 import ContactInfoRow from '../common/ContactInfoRow';
 
@@ -78,7 +80,20 @@ class SlideDropdown extends Component{
                                 {
                                     this.props.text && 
                                     <div className="col-12">
-                                        {this.state.textContent()}                               
+                                        {this.props.teksti ? this.props.teksti : this.state.textContent()}                               
+                                    </div>
+                                }
+                                {
+                                    this.props.kuvaus && 
+                                    <div className="col-11 text-block">
+                                        <p>{this.props.teksti}</p>                          
+                                    </div>
+                                }
+                                {
+                                    this.props.osaamisalat && 
+                                    <div className="col-12 box-container">
+                                        {tProp.osaamisalatlist.map((t) => <OsaamisalaListItem key={l.localize(t.nimi)} osaamisala={t}/>)}
+                              
                                     </div>
                                 }
                                 {

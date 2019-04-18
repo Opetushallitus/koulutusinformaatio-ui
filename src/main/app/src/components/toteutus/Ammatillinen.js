@@ -44,6 +44,7 @@ class Ammatillinen extends Component {
 
     render() {
         const kuvaus = this.props.koulutus.metadata.kuvaus;
+        console.log(kuvaus);
         const osaamisalat = this.props.koulutus.metadata.osaamisalat;
         const jatkoopinnot = "tba";
         // const tutkinnonOsat = l.localize(this.props.koulutus.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
@@ -70,7 +71,7 @@ class Ammatillinen extends Component {
                     <ToteutusInfoBox fields={this.parseInfoBoxFieldsTwoSided()}/>
 
                     {kuvaus &&
-                        <SlideDropdown text={true} title={t('toteutus.kuvaus')} />
+                        <SlideDropdown kuvaus={true} teksti={l.localize(this.props.koulutus.metadata.kuvaus)} title={t('toteutus.kuvaus')} />
                     }
 
                     {osaamisalat && 
