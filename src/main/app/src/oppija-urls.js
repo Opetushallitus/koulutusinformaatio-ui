@@ -13,8 +13,8 @@ const production = {
 
 const development = {
     "konfo-backend.base-url" : "http://localhost:" + process.env.REACT_APP_BACKEND_PORT,
-    "konfo-backend.search.koulutukset" : "http://localhost:" + process.env.REACT_APP_BACKEND_PORT + "/konfo-backend/search/koulutukset",
-    "konfo-backend.search.oppilaitokset" : "http://localhost:" + process.env.REACT_APP_BACKEND_PORT + "/konfo-backend/search/oppilaitokset",
+    "konfo-backend.search.koulutukset" : "https://untuvaopintopolku.fi/konfo-backend/search/koulutukset",
+    "konfo-backend.search.oppilaitokset" : "https://untuvaopintopolku.fi/konfo-backend/search/oppilaitokset",
     "konfo-backend.koulutus" : "http://localhost:" + process.env.REACT_APP_BACKEND_PORT + "/konfo-backend/koulutus/",
     "konfo-backend.toteutus" : "http://localhost:" + process.env.REACT_APP_BACKEND_PORT + "/konfo-backend/toteutus/",
     "konfo-backend.oppilaitos" : "http://localhost:" + process.env.REACT_APP_BACKEND_PORT + "/konfo-backend/oppilaitos/",
