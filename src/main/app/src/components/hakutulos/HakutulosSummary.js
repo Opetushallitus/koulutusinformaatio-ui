@@ -11,11 +11,6 @@ class HakutulosSummary extends Component {
         this.props = nextProps;
     }
 
-    componentDidUpdate(){
-        this.props.iDidUpdate;
-
-    }
-
     renderKeywordResultSummary() {
         const {t} = this.props;
         return (
