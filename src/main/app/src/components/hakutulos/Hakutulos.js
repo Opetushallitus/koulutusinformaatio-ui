@@ -55,7 +55,7 @@ class Hakutulos extends Component {
                     
                     <HakutulosBox key={r.oid}
                                   oid={r.oid}
-                                  vertailuOid={r.toteutusOid}//vertailuun toteutus oid?
+                                  vertailuOid={r.oid}
                                   tyyppi={r.koulutustyyppi}
                                   haettavissa={r.hakuOnKaynnissa}
                                   nimi={this.getKoulutusNimi(r)}
