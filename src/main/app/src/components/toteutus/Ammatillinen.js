@@ -47,21 +47,7 @@ class Ammatillinen extends Component {
         console.log(kuvaus);
         const osaamisalat = this.props.koulutus.metadata.osaamisalat;
         const jatkoopinnot = "tba";
-        // const tutkinnonOsat = l.localize(this.props.koulutus.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
-       // const erikoistumisalat = l.localize(this.props.koulutus.kuvausKomo.TAVOITTEET, undefined);
-
-     /*    nääki react.fragiin 
-                    {kuvaus &&
-                        <SlideDropdown toteutus={true} content={kuvaus} title={t('koulutus.kuvaus')}/>
-                    }
-                    {tutkinnonOsat &&
-                        <SlideDropdown toteutus={true} content={tutkinnonOsat} title="Koulutuksen sisältö ja tavoitteet"/>
-                    }
-                    {erikoistumisalat &&
-                        <SlideDropdown toteutus={true} content={erikoistumisalat} title="Pääaineen tai erikoistumisalan valinta"/>
-                    } */
-                    console.log(osaamisalat);
-       const {t} = this.props;
+        const {t} = this.props;
         return (
             <React.Fragment>
                 <div className="col-12 col-md-12 col-lg-8 col-xl-9 left-column">

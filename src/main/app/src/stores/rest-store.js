@@ -97,6 +97,20 @@ class RestStore {
     };
 
     @action
+    getHaku = (oid, onSuccess) => {
+        superagent
+            .get(this.urlStore.urls.url('konfo-backend.haku') + oid)
+            .end((err, res) => {
+                if(err) {
+                    this.handleError(err)
+                } else {
+                    const haku = res.body ? res.body : undefined;
+                    onSuccess(haku)
+                }
+            });
+    };
+
+    @action
     getHakukohde = (oid, onSuccess) => {
         superagent
             .get(this.urlStore.urls.url('konfo-backend.hakukohde') + oid)
@@ -104,7 +118,8 @@ class RestStore {
                 if(err) {
                     this.handleError(err)
                 } else {
-                    onSuccess(res.body.result)
+                    const hakukohde = res.body ? res.body : undefined;
+                    onSuccess(hakukohde)
                 }
             });
     };

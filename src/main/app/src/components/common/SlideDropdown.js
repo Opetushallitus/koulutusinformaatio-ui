@@ -4,6 +4,7 @@ import '../../assets/styles/components/_slide-dropdown.scss';
 import {Localizer as l} from '../../tools/Utils';
 import OppilaitosListItem from '../koulutus/OppilaitosListItem';
 import OsaamisalaListItem from '../toteutus/OsaamisalaListItem';
+import ValintakokeetListItem from '../hakukohde/ValintakokeetListItem'
 import OskariKartta from "../oppilaitos/OskariKartta";
 import ContactInfoRow from '../common/ContactInfoRow';
 
@@ -92,7 +93,7 @@ class SlideDropdown extends Component{
                                 {
                                     this.props.osaamisalat && 
                                     <div className="col-12 box-container">
-                                        {tProp.osaamisalatlist.map((t) => <OsaamisalaListItem key={l.localize(t.nimi)} osaamisala={t}/>)}
+                                        {tProp.osaamisalatlist ? tProp.osaamisalatlist.map((t) => <OsaamisalaListItem key={l.localize(t.nimi)} osaamisala={t}/>): undefined}
                               
                                     </div>
                                 }
@@ -107,6 +108,13 @@ class SlideDropdown extends Component{
                                     this.props.toteutus &&
                                     <div className="col-11 text-block">
                                         {renderHTML(this.props.content)}
+                                    </div>
+                                }
+                                {
+                                    this.props.valintakokeet && 
+                                    <div className="col-12 box-container">
+                                        {tProp.valintakokeetlist ? tProp.valintakokeetlist.map((t) => <ValintakokeetListItem key={l.localize(t.tyyppi.nimi)} valintakoe={t}/>): undefined}
+                              
                                     </div>
                                 }
                         </div>

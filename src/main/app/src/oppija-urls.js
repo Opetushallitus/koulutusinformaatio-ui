@@ -19,7 +19,8 @@ const development = {
     "konfo-backend.toteutus" : "https://untuvaopintopolku.fi/konfo-backend/toteutus/",
     "konfo-backend.oppilaitos" : "https://hahtuvaopintopolku.fi/konfo-backend/oppilaitos/",
     "konfo-backend.palaute" : "https://hahtuvaopintopolku.fi/konfo-backend/palaute",
-    "konfo-backend.hakukohde" : "https://untuvaopintopolku.fi/konfo-bakend/hakukohde",
+    "konfo-backend.hakukohde" : "https://untuvaopintopolku.fi/konfo-backend/hakukohde/",
+    "konfo-backend.haku" : "https://untuvaopintopolku.fi/konfo-backend/haku/",
     "kartta.base-url" : "https://hkp.maanmittauslaitos.fi",
     "kartta.publish-url" : "https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0",
     

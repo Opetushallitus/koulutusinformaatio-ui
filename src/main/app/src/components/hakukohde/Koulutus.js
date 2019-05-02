@@ -15,8 +15,8 @@ class Koulutus extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            koulutus: undefined,
-            organisaatio: undefined
+            hakukohde: undefined,
+            haku: undefined,
         }
     };
 
@@ -31,22 +31,30 @@ class Koulutus extends Component {
 
     getHakukohde() {
         this.props.navigaatioStore.setOid(this.props.match.params.oid);
-        this.props.restStore.getToteutus(this.props.navigaatioStore.oid, (k, o) => {
+        this.props.restStore.getHakukohde(this.props.navigaatioStore.oid, (k) => {
             this.setState({
-                koulutus: k,
-                organisaatio: o
+                hakukohde: k
             })
+            this.getHaku(k.hakuOid);
         });
     }
 
+    getHaku(oid) {
+        this.props.restStore.getHaku(oid, (h) =>{
+            this.setState({
+                haku: h
+            })
+        })
+    }
+
     chooseKoulutus() {
-        if(this.state.koulutus) {
-            switch(this.state.koulutus.metadata.tyyppi) {
+        if(this.state.hakukohde && this.state.haku) {
+            switch(this.state.hakukohde) {
                 case 'lk': return <Lukio organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />; //TODO
-                case 'yo': return <Korkeakoulu organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
+                case 'kk': return <Korkeakoulu organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
                 case 'ako': return <Avoin organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
                 case 'amm' : return <Ammatillinen organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
-                default: return <Ammatillinen organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} muu={true} />;
+                default: return <Ammatillinen hakukohde={this.state.hakukohde} haku={this.state.haku} oid={this.props.navigaatioStore.oid} muu={true} />;
             }
         }
         return <div/>
