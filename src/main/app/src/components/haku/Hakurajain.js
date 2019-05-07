@@ -158,12 +158,12 @@ class Hakurajain extends Component {
                                 </div>
                                 <div className="form-group" aria-label={t('haku.opetuskieli')} tabIndex="0">
                                     <h5>{t('haku.opetuskieli')}</h5>
-                                    <Hakurajainvalinta text={t('haku.suomi')} checked={this.props.hakuehtoStore.filter.kieli.indexOf('fi') !== -1}
-                                                       handleChange={() => this.handleKieliChange('fi')}/>
-                                    <Hakurajainvalinta text={t('haku.ruotsi')} checked={this.props.hakuehtoStore.filter.kieli.indexOf('sv') !== -1}
-                                                       handleChange={() => this.handleKieliChange('sv')}/>
-                                    <Hakurajainvalinta text={t('haku.englanti')} checked={this.props.hakuehtoStore.filter.kieli.indexOf('en') !== -1}
-                                                       handleChange={() => this.handleKieliChange('en')}/>
+                                    <Hakurajainvalinta text={t('haku.suomi')} checked={this.props.hakuehtoStore.filter.kieli.indexOf('oppilaitoksenopetuskieli_1') !== -1}
+                                                       handleChange={() => this.handleKieliChange('oppilaitoksenopetuskieli_1')}/>
+                                    <Hakurajainvalinta text={t('haku.ruotsi')} checked={this.props.hakuehtoStore.filter.kieli.indexOf('oppilaitoksenopetuskieli_2') !== -1}
+                                                       handleChange={() => this.handleKieliChange('oppilaitoksenopetuskieli_2')}/>
+                                    <Hakurajainvalinta text={t('haku.englanti')} checked={this.props.hakuehtoStore.filter.kieli.indexOf('oppilaitoksenopetuskieli_4') !== -1}
+                                                       handleChange={() => this.handleKieliChange('oppilaitoksenopetuskieli_4')}/>
                                 </div>
                                 <div className="form-group">
                                     <h5 className="filter-title">{t('haku.paikkakunta')}</h5>

@@ -27,7 +27,7 @@ class RestStore {
                 size: paging.pageSize,
                 paikkakunta: filter.paikkakunta,
                 koulutustyyppi: filter.koulutus.join(','),
-                opetuskieli: filter.kieli.map((k) => 'kieli_' + k).join(','),
+                opetuskieli: filter.kieli.map((k) => k).join(','),
                 lng: l.getLanguage()})
             .catch(this.handleError))
     };
@@ -41,7 +41,7 @@ class RestStore {
                 size: paging.pageSize,
                 paikkakunta: filter.paikkakunta,
                 koulutustyyppi: filter.koulutus.join(','),
-                kieli: filter.kieli.map((k) => 'kieli_' + k).join(','),
+                //kieli: filter.kieli.map((k) => k).join(','),
                 lng: l.getLanguage()})
             .catch(this.handleError))
     };
