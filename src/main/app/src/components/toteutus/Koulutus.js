@@ -44,6 +44,8 @@ class Koulutus extends Component {
             switch(this.state.toteutus.metadata.tyyppi) {
                 case 'lk': return <Lukio organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />; //TODO
                 case 'yo': return <Korkeakoulu organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
+                case 'amk': return <Korkeakoulu organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
+                case 'kk': return <Korkeakoulu organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
                 case 'ako': return <Avoin organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
                 case 'amm' : return <Ammatillinen organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
                 default: return <Ammatillinen organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} muu={true} />;

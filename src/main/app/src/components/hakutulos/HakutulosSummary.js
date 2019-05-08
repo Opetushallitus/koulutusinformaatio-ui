@@ -29,6 +29,8 @@ class HakutulosSummary extends Component {
                 case 'lk': return 'lukiot';
                 case 'amm': return 'ammatilliset tutkinnot';
                 case 'kk': return 'korkeakoulut';
+                case 'yo': return 'korkeakoulut';
+                case 'amk': return 'korkeakoulut';
                 case 'muu': return 'muut koulutukset';
                 default: return '';
             }
