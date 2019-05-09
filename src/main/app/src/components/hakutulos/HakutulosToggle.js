@@ -26,7 +26,7 @@ class HakutulosToggle extends Component {
     }
 
     toggle(event, toggle) {
-        const search = qs.parse(this.props.location.search);
+        const search = qs.parse(this.props.history.location.search);
         search.toggle = toggle;
         event.preventDefault();
         this.props.history.replace({search: qs.stringify(search)});
