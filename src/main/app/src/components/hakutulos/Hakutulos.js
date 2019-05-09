@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
 import {Localizer as l} from '../../tools/Utils';
-import HakutulosToggle from "./HakutulosToggle";
+import HakutulosToggleWrapper from "./HakutulosToggleWrapper";
 import HakutulosSummary from "./HakutulosSummary";
 import HakutulosBox from "../common/HakutulosBox";
 import Sivutus from './Sivutus';
@@ -106,7 +106,7 @@ class Hakutulos extends Component {
                         <HakutulosSummary iDidUpdate={this.props.iUpdatedMyChildren}/>
                     </div>
                     <div className="container" id="toggle-tabs">
-                        <HakutulosToggle/>
+                        <HakutulosToggleWrapper/>
                     </div>
                     <div className="container search-results" id="search-results">
                         <div className="row">

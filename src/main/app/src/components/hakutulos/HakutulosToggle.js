@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 import qs from 'query-string';
 import '../../assets/styles/components/_hakutulos-toggle.scss';
 import {translate} from 'react-i18next';
