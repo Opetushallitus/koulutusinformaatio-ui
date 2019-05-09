@@ -37,9 +37,9 @@ class HakutulosSummary extends Component {
         }).filter((k) => !!k).join(', ');
         const kielet = this.props.hakuStore.filter.kieli.map((k) => {
             switch (k) {
-                case 'fi': return 'suomi';
-                case 'sv': return 'ruotsi';
-                case 'en': return 'englanti';
+                case 'oppilaitoksenopetuskieli_1': return 'suomi';
+                case 'oppilaitoksenopetuskieli_2': return 'ruotsi';
+                case 'oppilaitoksenopetuskieli_4': return 'englanti';
                 default: return '';
             }
         }).filter((k) => !!k).join(', ');
@@ -51,7 +51,7 @@ class HakutulosSummary extends Component {
                     {koulutustyypit ? (' ' + t('haku.koulutustyypillä', {count: this.props.hakuStore.filter.koulutus.length})) + ' ' : '' }
                     {koulutustyypit ? <span className="highlight">{koulutustyypit}</span> : '' }
                     {kielet ? (koulutustyypit ? ' ' + t('ja') : '') + (' ' + t('haku.kielellä', {count: this.props.hakuStore.filter.kieli.length})) + ' ' : '' }
-                    {kielet ? <span className="highlight">"{kielet}"</span> : '' }
+                    {kielet ? <span className="highlight">{kielet}</span> : '' }
                     {paikkakunta ? ((koulutustyypit || kielet) ? ' ' + t('sekä') : '' ) + (' ' + t('haku.paikkakunnalla') + ' ') : ''}
                     {paikkakunta ? <span className="highlight">{paikkakunta}</span> : '' }
                 </h1>
