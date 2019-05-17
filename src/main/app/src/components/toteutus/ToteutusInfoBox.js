@@ -15,7 +15,7 @@ class ToteutusInfoBox extends Component {
         };
     }
 
-    selectHakuaikasToShow(hakukohteet, hakuaikas) {
+    selectHakuaikasToShow(hakukohteet) {
         var toShow = [];
         const now = new Date().getTime();
         if(hakukohteet && hakukohteet.length > 0){
@@ -66,7 +66,7 @@ class ToteutusInfoBox extends Component {
                             }
                         </div>
                         <div className="col-12 col-md-6 box hakemus">
-                            {this.state.otsikkoRight ? <h3>{`${this.state.otsikkoRight} !`}</h3> : ""}
+                            {this.state.otsikkoRight ? <h3>{`${this.state.otsikkoRight}`}</h3> : ""}
                                 {this.state.hakuajatToShow.length > 0 ? this.state.hakuajatToShow.map((h, i) => ToteutusInfoBox.createFieldsAndButtonForSingleHakuaika(h, i)) : <p>Ei aktiivisia tai tulevia hakuja tällä hetkellä</p>}
                         </div>
                     </div>

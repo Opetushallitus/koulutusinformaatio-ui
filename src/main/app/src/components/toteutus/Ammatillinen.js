@@ -21,7 +21,7 @@ class Ammatillinen extends Component {
         fields.left = this.parseInfoBoxFieldsLeft();
         fields.otsikkoLeft = t('koulutus.tiedot');
         fields.hakukohteet = this.props.toteutus.hakukohteet;
-        fields.otsikkoRight = t('koulutus.hae-koulutukseen');
+        fields.otsikkoRight = t('toteutus.tietoa-hakuväylistä');
         return fields;
     }
 
