@@ -1,4 +1,5 @@
 import i18n from './i18n';
+import padStart from 'lodash/padStart';
 
 class Localizer {
 
@@ -69,4 +70,26 @@ class TimeMillisParser {
     }
 }
 
-export {Parser, Localizer, OsoiteParser, TimeMillisParser};
+class FormatdDate{
+    static formatDateString = (dateString, format) => {
+        if (!dateString) {
+        return '';
+        }
+    
+        const [date, time = ''] = dateString.split('T');
+        const [year, month, day] = date.split('-');
+        const [hour = '0', minute = '0'] = time.split(':');
+    
+        let formattedDate = format;
+    
+        formattedDate = formattedDate.replace(/DD/g, padStart(day, 2, '0'));
+        formattedDate = formattedDate.replace(/MM/g, padStart(month, 2, '0'));
+        formattedDate = formattedDate.replace(/YYYY/g, year);
+        formattedDate = formattedDate.replace(/HH/g, padStart(hour, 2, '0'));
+        formattedDate = formattedDate.replace(/mm/g, padStart(minute, 2, '0'));
+    
+        return formattedDate;
+    };
+}
+
+export {Parser, Localizer, OsoiteParser, TimeMillisParser, FormatdDate};

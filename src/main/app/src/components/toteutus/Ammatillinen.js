@@ -20,7 +20,7 @@ class Ammatillinen extends Component {
         const fields = {};
         fields.left = this.parseInfoBoxFieldsLeft();
         fields.otsikkoLeft = t('koulutus.tiedot');
-        fields.hakuajat = this.props.toteutus.hakuajatFromBackend;
+        fields.hakukohteet = this.props.toteutus.hakukohteet;
         fields.otsikkoRight = t('koulutus.hae-koulutukseen');
         return fields;
     }
@@ -61,7 +61,7 @@ class Ammatillinen extends Component {
                     }
 
                     {osaamisalat && 
-                        <SlideDropdown text={true} title={t('toteutus.osaamisalat')}/>
+                        <SlideDropdown title={t('toteutus.osaamisalat')} osaamisalat={true} osaamisalatlist={osaamisalat.length > 0 ? osaamisalat : false}/>
                     }
                     {jatkoopinnot &&
                         <SlideDropdown text={true} title={t('toteutus.jatko-opintomahdollisuudet')}/>

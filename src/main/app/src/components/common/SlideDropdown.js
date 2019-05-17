@@ -93,7 +93,7 @@ class SlideDropdown extends Component{
                                 {
                                     this.props.osaamisalat && 
                                     <div className="col-12 box-container">
-                                        {tProp.osaamisalatlist ? tProp.osaamisalatlist.map((t) => <OsaamisalaListItem key={l.localize(t.nimi)} osaamisala={t}/>): undefined}
+                                        {tProp.osaamisalatlist ? tProp.osaamisalatlist.map((t) => <OsaamisalaListItem key={l.localize(t.koodi.nimi)} osaamisala={t}/>): undefined}
                               
                                     </div>
                                 }

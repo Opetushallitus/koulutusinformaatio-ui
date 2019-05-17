@@ -29,7 +29,7 @@ class Korkeakoulu extends Component {
         const fields = {};
         fields.left = this.parseInfoBoxFieldsLeft();
         fields.otsikkoLeft = t('koulutus.tiedot');
-        fields.hakuajat = this.props.toteutus.hakuajatFromBackend;
+        fields.hakuajat = this.props.toteutus.hakukohteet;
         fields.otsikkoRight = t('koulutus.hae-koulutukseen');
         return fields;
     }
