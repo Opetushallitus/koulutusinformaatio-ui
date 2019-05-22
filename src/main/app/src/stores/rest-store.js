@@ -69,6 +69,22 @@ class RestStore {
     };
 
     @action
+    getKoulutusKuvaus = (oid, osaamisalakuvaukset, onSuccess) => {
+        oid = oid.substring(0, oid.indexOf('#'));
+        superagent
+            .get(this.urlStore.urls.url('konfo-backend.koulutus.kuvaus') + oid)
+            .query({ osaamisalakuvaukset: osaamisalakuvaukset })
+            .end((err, res) => {
+                if(err) {
+                    this.handleError(err)
+                } else {
+                    const kuvaus = res.body ? res.body : undefined;
+                    onSuccess(kuvaus)
+                }
+            });
+    };
+
+    @action
     getToteutus = (oid, onSuccess) => {
         superagent
             .get(this.urlStore.urls.url('konfo-backend.toteutus') + oid)

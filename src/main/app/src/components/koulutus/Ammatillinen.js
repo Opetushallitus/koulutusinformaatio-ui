@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {inject} from 'mobx-react';
 import KoulutusInfoBox from './KoulutusInfoBox';
 import OppilaitosList from './OppilaitosList';
 import KoulutusHeader from './KoulutusHeader';
@@ -8,11 +9,33 @@ import {translate} from 'react-i18next'
 import Media from 'react-media';
 import SideBarMenu from '../common/SideBarMenu';
 
+@inject("restStore")
 @translate()
 class Ammatillinen extends Component {
 
-    componentWillReceiveProps(nextProps) {
+    constructor(props) {
+        super(props);
+        this.state = {
+            kuvaus: undefined,
+        }
+    };
+
+    async componentDidMount() {
+        await this.getKoulutusKuvaus();
+    }
+
+    async componentWillReceiveProps(nextProps) {
         this.props = nextProps;
+        await this.getKoulutusKuvaus();
+    }
+
+    getKoulutusKuvaus() {
+        console.log(this);
+        this.props.restStore.getKoulutusKuvaus(this.props.result.koulutus.koodiUri, 'false', (k) => {
+            this.setState({
+                kuvaus: k
+            })
+        });
     }
 
     parseInfoBoxFields() {
@@ -37,19 +60,9 @@ class Ammatillinen extends Component {
         const {t} = this.props;
         const koulutusohjelma = l.localize(this.props.result.koulutusohjelma, undefined);
         const osaamisala = this.props.result.osaamisala ? l.localize(this.props.result.osaamisala.meta, undefined).nimi : undefined;
-        const koulutuksenkuvaus = "tba";
         const osaamisalat = koulutusohjelma ? koulutusohjelma : osaamisala;
-        //const tutkinnonOsat = l.localize(this.props.result.kuvausKomo.KOULUTUKSEN_RAKENNE, undefined);
-       // const jatkoOpinnot = l.localize(this.props.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined); 
-/*   tää ois react.fragmentin sisällä             {tutkinnonOsat &&
-                    <SlideDropDown toteutus={true} content={tutkinnonOsat} title={t('koulutus.kuvaus')}/>
-                }  
-
-                {jatkoOpinnot &&
-                    <SlideDropDown title={t('koulutus.jatko-opinnot')} toteutus={true} content={jatkoOpinnot} />
-                } */
-
         const hattu = this.props.muu ? "muu-hattu" : "ammatillinen-hattu";
+        const kuvaus = this.state.kuvaus ? this.state.kuvaus.kuvaus : undefined;
         return (
             <React.Fragment>
                 <KoulutusHeader hattu={hattu} nimi={this.props.result.nimi}/>
@@ -65,11 +78,11 @@ class Ammatillinen extends Component {
                     <SlideDropDown toteutus={true} content={osaamisalat} title={t('koulutus.osaamisalat')}/>
                 }
 
-                {koulutuksenkuvaus &&
-                    <SlideDropDown text={true} title={t('koulutus.kuvaus')}/>
+                {kuvaus &&
+                    <SlideDropDown koulutusKuvaus={true} content={l.localize(kuvaus)} title={t('koulutus.kuvaus')}/>
                 }
 
-                <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset} educationName={this.props.result.nimi}/>
+                <OppilaitosList oid={this.props.oid} koulutus={this.props.result.koulutus.koodiUri} oppilaitokset={this.props.result.toteutukset} educationName={this.props.result.nimi}/>
             </React.Fragment>);
     }
 }

@@ -16,6 +16,7 @@ const development = {
     "konfo-backend.search.koulutukset" : "https://untuvaopintopolku.fi/konfo-backend/search/koulutukset",
     "konfo-backend.search.oppilaitokset" : "https://untuvaopintopolku.fi/konfo-backend/search/oppilaitokset",
     "konfo-backend.koulutus" : "https://untuvaopintopolku.fi/konfo-backend/koulutus/",
+    "konfo-backend.koulutus.kuvaus" : "https://untuvaopintopolku.fi/konfo-backend/kuvaus/",
     "konfo-backend.toteutus" : "https://untuvaopintopolku.fi/konfo-backend/toteutus/",
     "konfo-backend.oppilaitos" : "https://hahtuvaopintopolku.fi/konfo-backend/oppilaitos/",
     "konfo-backend.palaute" : "https://hahtuvaopintopolku.fi/konfo-backend/palaute",

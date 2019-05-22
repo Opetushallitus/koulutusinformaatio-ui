@@ -48,7 +48,7 @@ class OsaamisalaListItem extends Component {
                     <div className="text d-flex justify-content-between">
                     </div>
                     <div>
-                        {l.localize(this.props.osaamisala.nimi)}
+                        {l.localize(this.props.osaamisala.koodi.nimi)}
                     </div>
                     <div>
                         {l.localize(this.props.osaamisala.kuvaus)}

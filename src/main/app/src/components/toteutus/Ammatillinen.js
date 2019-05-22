@@ -44,7 +44,6 @@ class Ammatillinen extends Component {
 
     render() {
         const kuvaus = this.props.toteutus.metadata.kuvaus;
-        console.log(this);
         const osaamisalat = this.props.toteutus.metadata.osaamisalat;
         const jatkoopinnot = "tba";
         const {t} = this.props;

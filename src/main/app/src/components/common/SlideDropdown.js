@@ -111,6 +111,12 @@ class SlideDropdown extends Component{
                                     </div>
                                 }
                                 {
+                                    this.props.koulutusKuvaus &&
+                                    <div className="col-11 text-block">
+                                        {renderHTML(this.props.content)}
+                                    </div>
+                                }
+                                {
                                     this.props.valintakokeet && 
                                     <div className="col-12 box-container">
                                         {tProp.valintakokeetlist ? tProp.valintakokeetlist.map((t) => <ValintakokeetListItem key={l.localize(t.tyyppi.nimi)} valintakoe={t}/>): undefined}
