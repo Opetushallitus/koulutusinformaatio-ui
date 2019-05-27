@@ -40,7 +40,7 @@ class Hakupalkki extends Component {
         const {t} = this.props;
         const link = '/haku/' + this.props.hakuehtoStore.keyword;
         const search = this.props.hakuehtoStore.searchParams;
-        const value = this.props.hakuehtoStore.keyword ? this.props.hakuehtoStore.keyword : '';
+        //const value = this.props.hakuehtoStore.keyword ? this.props.hakuehtoStore.keyword : '';
         return (
             <React.Fragment>
                 <div className="container-fluid" id={this.props.main ? "call-to-action" : "call-to-action-secondary"}>
@@ -51,11 +51,11 @@ class Hakupalkki extends Component {
                                     <div className="search">
                                         <input id="regular-input" className="oph-input" aia-label={t('haku.kehoite')} type="search"
                                                placeholder={t('haku.kehoite')}
-                                               value={value}
+                                               //value={value}
                                                onChange={this.handleChange}
-                                               onKeyPress={(e) => { if(e.key === 'Enter'){ this.handleSubmit(e)}}}/>
+                                               onKeyPress={(e) => { if(e.key === 'Enter' && this.props.hakuehtoStore.keyword.length > 2){ this.handleSubmit(e)}}}/>
                                         <Link role="button" aria-label={t('haku.etsi')} to={{
-                                            pathname: link,
+                                            pathname: this.props.hakuehtoStore.keyword.length > 2 ? link : undefined,
                                             search: search
                                         }} className="search-button" onClick={() => {this.closeRajain()}}>
                                             <Media query="(max-width: 768px)">
