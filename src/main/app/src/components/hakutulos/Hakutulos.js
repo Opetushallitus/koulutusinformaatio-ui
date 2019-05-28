@@ -46,6 +46,7 @@ class Hakutulos extends Component {
     }
 
     renderResultList() {
+        console.log(this);
         const vertailuActive = this.props.vertailuStore.size < 3;
         if(this.props.hakuStore.toggleKoulutus) {
             return this.props.hakuStore.koulutusResult.map((r) => {
