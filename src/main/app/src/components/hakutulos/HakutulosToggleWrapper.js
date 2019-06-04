@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import {observer, inject} from 'mobx-react';
+import {observer} from 'mobx-react';
 import HakutulosToggle from "./HakutulosToggle";
 
-@inject("hakuStore")
 @observer
 class HakutulosToggleWrapper extends Component {
 

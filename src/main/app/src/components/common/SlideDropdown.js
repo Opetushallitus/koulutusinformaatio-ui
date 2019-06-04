@@ -75,7 +75,7 @@ class SlideDropdown extends Component{
                                 {
                                     this.props.oppilaitos && 
                                     <div key={this.props.oid} className="col-12 box-container">
-                                        {tProp.oppilaitos.map((t) => <OppilaitosListItem key={t.oid} toteutus={t} name={t} education={this.props.education} educationName={this.props.educationName ? this.props.educationName : null} />)}
+                                        {tProp.oppilaitos.map((t) => <OppilaitosListItem koulutusUri={tProp.koulutus} key={t.oid} toteutus={t} name={t} education={this.props.education} educationName={this.props.educationName ? this.props.educationName : null} />)}
                                     </div>
                                 }
                                 {

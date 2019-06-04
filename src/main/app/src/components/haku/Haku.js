@@ -12,7 +12,16 @@ class Haku extends Component {
     constructor(props) {
         super(props);
         this.toggleAction = this.toggleAction.bind(this);
+        this.state = {
+            haku : undefined
+        }
     }
+
+    updateSearch(){
+        this.setState({
+            haku: this.props.hakuStore
+        })
+    };
 
     updateStores() {
         const search = qs.parse(this.props.location.search);
@@ -24,6 +33,7 @@ class Haku extends Component {
         const keyword = (match && match.params) ? match.params.keyword : '';
         this.props.hakuStore.setAll(keyword, search, this.toggleAction);
         this.props.hakuehtoStore.setAll(keyword, search);
+        this.updateSearch();
     }
 
     componentDidMount() {
@@ -44,9 +54,24 @@ class Haku extends Component {
     }
 
     render() {
-        return (
-            <Hakutulos {...this.props} iUpdatedMyChildren={this.hakutulosUpdated()}/>
-        );
+        const koulutukset = this.props.hakuStore.koulutusResult;
+        const oppilaitokset = this.props.hakuStore.oppilaitosResult;
+        if(koulutukset.length > 0 || oppilaitokset.length > 0){
+            return (
+                <Hakutulos {...this.props} iUpdatedMyChildren={this.hakutulosUpdated()}/>
+            );  
+        } else {
+            return (
+                <div className="container">
+                <div className="row result-count">
+                    <div className="col-12">
+                        <h1 aria-live="assertive">Ei hakutulosta</h1>
+                    </div>
+                </div>
+            </div>
+            );
+        }
+
     }
 }
 

@@ -14,7 +14,25 @@ import '../../assets/styles/components/_hakutulos.scss';
 @observer
 class Hakutulos extends Component {
 
-    componentWillReceiveProps(nextProps) {
+    constructor(props) {
+        super(props);
+        this.state = {
+            toggleKoulutus : undefined
+        }
+    }
+
+    updateState(){
+        this.setState({
+            toggleKoulutus : true
+        })
+    }
+
+   componentWillReceiveProps(nextProps) {
+        this.props = nextProps;
+        this.updateState();
+    }
+
+    componentDidMount(nextProps) {
         this.props = nextProps;
     }
 
@@ -46,7 +64,6 @@ class Hakutulos extends Component {
     }
 
     renderResultList() {
-        console.log(this);
         const vertailuActive = this.props.vertailuStore.size < 3;
         if(this.props.hakuStore.toggleKoulutus) {
             return this.props.hakuStore.koulutusResult.map((r) => {
