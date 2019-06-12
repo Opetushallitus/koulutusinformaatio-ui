@@ -13,7 +13,6 @@ import '../../assets/styles/components/_hakunavigatio.scss';
 class Hakunavigaatio extends Component {
 
     updateStores(haku) {
-        console.log("haussa", haku);
         const splitted = haku.split('?');
         const search = qs.parse(splitted[1]);
         const match = matchPath(splitted[0], {
@@ -47,14 +46,10 @@ class Hakunavigaatio extends Component {
         }
     }
 
-    componentDidMount(nextProps) {
-        this.props = nextProps;
-        const search = qs.parse(this.props.location.search);
-        this.setState({
-            hakuUrl: search.haku ? search.haku : "/haku"
-        });
-        if(search.haku) {
-            this.updateStores(search.haku)
+    componentDidMount() {
+        const search = this.state.hakuUrl ? this.state.hakuUrl : undefined;
+        if(search) {
+            this.updateStores(search)
         }
     }
 
