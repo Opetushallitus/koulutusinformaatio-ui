@@ -20,14 +20,16 @@ class ToteutusInfoBox extends Component {
         const now = new Date().getTime();
         if(hakukohteet && hakukohteet.length > 0){
             this.props.fields.hakukohteet.forEach(hakukohde => {
-                for(var i = 0; hakukohde.hakuajat.length > i; i++){
-                    const alkaaMill = new Date(hakukohde.hakuajat[i].alkaa).getTime();
-                    const paattyyMill = new Date(hakukohde.hakuajat[i].paattyy).getTime();
-                    if(alkaaMill > now || paattyyMill < now){
+                if(hakukohde.hakuajat){
+                    for(var i = 0; hakukohde.hakuajat.length > i; i++){
+                        const alkaaMill = new Date(hakukohde.hakuajat[i].alkaa).getTime();
+                        const paattyyMill = new Date(hakukohde.hakuajat[i].paattyy).getTime();
+                        if(alkaaMill > now || paattyyMill < now){
+                            break;
+                        }
+                        toShow.push(hakukohde);
                         break;
                     }
-                    toShow.push(hakukohde);
-                    break;
                 }
             });
         }
