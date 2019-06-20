@@ -50,18 +50,19 @@ class OppilaitosListItem extends Component {
         const link = '/toteutus/' + oppilaitos.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
             + '&lng=' + l.getLanguage();
         const educationName = this.props.education ? l.localize(this.props.education, this.props.t("koulutus.tuntematon")) : (this.props.educationName ? l.localize(this.props.educationName, this.props.t("koulutus.tuntematon")) : ""); 
+        const koulutusUri = this.props.koulutusUri ? this.props.koulutusUri : undefined;
         return (
             <div className="row justify-content-end">
                 <div className="col-11 item-box">         
                     <div className="text d-flex justify-content-between">
                         <div>
-                            <Link to={link} className={"hakutulosbox-link"}>{l.localize(oppilaitos.organisaatio.nimi, this.props.t("koulutus.tuntematon"))}</Link>
+                            <Link to={{ pathname: link, state: {koulutusUri: koulutusUri }}} className={"hakutulosbox-link"}>{l.localize(oppilaitos.organisaatio.nimi, this.props.t("koulutus.tuntematon"))}</Link>
                             <p>{l.localize(oppilaitos.organisaatio.paikkakunta, "")}</p>
                         </div>
                         <LikeButton></LikeButton>
                     </div>
                     <div className="education-name" onClick={this.toggleClass} onKeyPress={this.handleKeyPress}>
-                        <Link to={link} className="hakutulosbox-link">{educationName}</Link> 
+                        <Link to={"#"} className="hakutulosbox-link">{educationName}</Link> 
                         <div className={`dropdown-content-min ${dropDownContent} ${isComponentCollapsing}`}>
                             <div>
                                 <p>Opiskelupaikkoja: 71(joista vähintään 41 ensikertalaisille)</p>

@@ -9,10 +9,48 @@ import ToteutusSidebar from "./ToteutusSidebar";
 
 @translate()
 @inject("hakuStore")
+@inject("restStore")
 class Ammatillinen extends Component {
 
-    componentWillReceiveProps(nextProps) {
+    constructor(props) {
+        super(props);
+        this.state = {
+            kuvaus: undefined,
+        }
+    };
+
+    async componentDidMount() {
+        await this.getOsaamisalaKuvaus();
+    }
+
+    async componentWillReceiveProps(nextProps) {
         this.props = nextProps;
+        await this.getOsaamisalaKuvaus();
+    }
+
+    getOsaamisalaKuvaus() {
+        if(!this.props.koulutusUri){
+            return;
+        }
+        this.props.restStore.getKoulutusKuvaus(this.props.koulutusUri, 'true', (k) => {
+            this.setState({
+                kuvaus: k
+            })
+        });
+    }
+
+    insertOsaamisalaKuvaukset(osaamisalat) {
+        var self = this;
+        osaamisalat.forEach(function(ala){
+            var osaamisala = self.state.kuvaus.osaamisalat.find(function(osaamisala){
+                return osaamisala.osaamisalakoodiUri === ala.koodi.koodiUri;
+            });
+            ala.kuvaus = "";
+            if(osaamisala){
+                ala.kuvaus = osaamisala.kuvaus ? osaamisala.kuvaus : "";
+            }
+        });
+        return osaamisalat;
     }
 
     parseInfoBoxFieldsTwoSided() {
@@ -45,8 +83,12 @@ class Ammatillinen extends Component {
     render() {
         const kuvaus = this.props.toteutus.metadata.kuvaus;
         const osaamisalat = this.props.toteutus.metadata.osaamisalat;
+        if(osaamisalat && this.state.kuvaus && this.state.kuvaus.osaamisalat){
+            this.insertOsaamisalaKuvaukset(osaamisalat);
+        }
         const jatkoopinnot = "tba";
         const {t} = this.props;
+
         return (
             <React.Fragment>
                 <div className="col-12 col-md-12 col-lg-8 col-xl-9 left-column">

@@ -65,7 +65,9 @@ class Korkeakoulu extends Component {
                                     organisaatio={this.props.toteutus.organisaatio.nimi}/>
                     <ToteutusInfoBox fields={this.parseInfoBoxFieldsTwoSided()}/>
                         <SlideDropdown kuvaus={true} teksti={l.localize(this.props.toteutus.metadata.kuvaus)} title={t('toteutus.kuvaus')} />        
+                        {osaamisalat && 
                         <SlideDropdown title={t('toteutus.pääaineet')} osaamisalat={true} osaamisalatlist={osaamisalat.length > 0 ? osaamisalat : false}/>
+                        }
 
 
                         <SlideDropdown text={true} title={t('toteutus.jatko-opintomahdollisuudet')}/>

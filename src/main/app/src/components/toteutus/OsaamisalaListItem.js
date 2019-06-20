@@ -1,6 +1,7 @@
 import {Component} from "react";
 import React from "react";
 import { translate } from 'react-i18next';
+import renderHTML from 'react-render-html';
 import '../../assets/styles/components/_osaamisala-list-item.scss';
 import { Localizer as l } from '../../tools/Utils';
 import {inject} from "mobx-react";
@@ -48,10 +49,10 @@ class OsaamisalaListItem extends Component {
                     <div className="text d-flex justify-content-between">
                     </div>
                     <div>
-                        {l.localize(this.props.osaamisala.koodi.nimi)}
+                        {l.localize((this.props.osaamisala.koodi ? this.props.osaamisala.koodi.nimi : this.props.osaamisala.nimi))}
                     </div>
                     <div>
-                        {l.localize(this.props.osaamisala.kuvaus)}
+                        {renderHTML(l.localize(this.props.osaamisala.kuvaus))}
                     </div>
                     <div>
                         {l.localize(this.props.osaamisala.otsikko)}

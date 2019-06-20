@@ -40,6 +40,7 @@ class Koulutus extends Component {
     }
 
     chooseKoulutus() {
+        const koulutusUri = this.props.location.state ? (this.props.location.state.koulutusUri ? this.props.location.state.koulutusUri : undefined) : undefined;
         if(this.state.toteutus) {
             switch(this.state.toteutus.metadata.tyyppi) {
                 case 'lk': return <Lukio organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />; //TODO
@@ -47,7 +48,7 @@ class Koulutus extends Component {
                 case 'amk': return <Korkeakoulu organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
                 case 'kk': return <Korkeakoulu organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
                 case 'ako': return <Avoin organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
-                case 'amm' : return <Ammatillinen organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
+                case 'amm' : return <Ammatillinen koulutusUri={koulutusUri} organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
                 default: return <Ammatillinen organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} muu={true} />;
             }
         }
