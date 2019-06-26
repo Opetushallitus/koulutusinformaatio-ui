@@ -36,7 +36,6 @@ class Ammatillinen extends Component {
     }
 
     render() {
-        console.log(this);
         return (
             <React.Fragment>
                 <div className="col-12 col-md-12 col-lg-8 col-xl-9 left-column">
@@ -52,7 +51,7 @@ class Ammatillinen extends Component {
                     <SlideDropdown toteutus={true} content={"Kielitaitovaatimukset"} title="Kielitaitovaatimukset"/>
                     <SlideDropdown toteutus={true} content={"Sora-kuvaus"} title="Sora-kuvaus"/>
                 </div>
-                <HakukohdeSidebar organisaatio={this.props.organisaatio} koulutus={this.props.koulutus} educationType={this.educationType}/>
+                <HakukohdeSidebar organisaatio={this.props.hakukohde.organisaatio} educationType={this.educationType}/>
             </React.Fragment>
         );
     }

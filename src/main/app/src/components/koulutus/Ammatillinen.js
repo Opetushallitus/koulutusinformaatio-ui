@@ -30,7 +30,6 @@ class Ammatillinen extends Component {
     }
 
     getKoulutusKuvaus() {
-        console.log(this);
         this.props.restStore.getKoulutusKuvaus(this.props.result.koulutus.koodiUri, 'false', (k) => {
             this.setState({
                 kuvaus: k
