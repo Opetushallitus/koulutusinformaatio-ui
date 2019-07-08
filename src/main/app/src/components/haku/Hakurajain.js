@@ -131,11 +131,9 @@ class Hakurajain extends Component {
         const value = this.props.hakuehtoStore.filter.paikkakunta ? this.props.hakuehtoStore.filter.paikkakunta : '';
         return (
             <React.Fragment>
-                <div className="container">
-                    <div className="col-12">
-                        <div id="filters-button" role="button" tabIndex="0" className="filter-button" aria-label={this.props.hakuehtoStore.rajainOpen ? t("haku.sulje-rajain") : t("haku.rajaa-etsintää")} onClick={() => this.toggleRajain(this)} onKeyPress={this.handleKeyPress} >
-                            <span>{this.props.hakuehtoStore.rajainOpen ? t("haku.sulje-rajain") : t("haku.rajaa-etsintää")}</span>
-                        </div>
+                <div className="search-wrapper-item">
+                    <div id="filters-button" role="button" tabIndex="0" className="search-wrapper-filter" /*className="filter-button"*/ aria-label={this.props.hakuehtoStore.rajainOpen ? t("haku.sulje-rajain") : t("haku.rajaa-etsintää")} onClick={() => this.toggleRajain(this)} onKeyPress={this.handleKeyPress} >
+                        <span>Rajaa</span>
                     </div>
                 </div>
                 {this.props.hakuehtoStore.rajainOpen &&
@@ -143,7 +141,7 @@ class Hakurajain extends Component {
                 <div className="col-12">
                 <div className="filters-layer" ref={this.setWrapperRef}>
                     <div className={`filter-container ${this.state.isVisible ? "open" : "collapsed"}`}>
-                        <div className="filter-options" style={{height: this.state.filtersHeight, overflowX: "scroll"}}>
+                        <div className="filter-options" /*style={{height: this.state.filtersHeight, overflowX: "scroll"}}*/>
                             <div className="filters-main" id="filters-form">
                                 <div className="form-group" aria-label={t('haku.koulutustyyppi')} tabIndex="0">
                                     <h5>{t('haku.koulutustyyppi')}</h5>

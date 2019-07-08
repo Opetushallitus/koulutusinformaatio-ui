@@ -49,28 +49,30 @@ class Hakupalkki extends Component {
                             <div className="row">
                                 <div className={"col-12 header-search" + (this.props.main ? " main" : "")}>
                                     <div className="search">
-                                        <input id="regular-input" className="oph-input" aia-label={t('haku.kehoite')} type="search"
-                                               placeholder={t('haku.kehoite')}
-                                               //value={value}
-                                               onChange={this.handleChange}
-                                               onKeyPress={(e) => { if(e.key === 'Enter' && this.props.hakuehtoStore.keyword.length > 2){ this.handleSubmit(e)}}}/>
-                                        <Link role="button" aria-label={t('haku.etsi')} to={{
-                                            pathname: this.props.hakuehtoStore.keyword.length > 2 ? link : undefined,
-                                            search: search
-                                        }} className="search-button" onClick={() => {this.closeRajain()}}>
-                                            <Media query="(max-width: 768px)">
-                                             {
-                                                 matches => matches ? ("") : (t('haku.etsi'))
-                                             }
-                                            </Media>
-                                        </Link>
+                                        <div className="search-wrapper">
+                                            <input id="regular-input" className="search-wrapper-input search-wrapper-item" aia-label={t('haku.kehoite')} type="search"
+                                                placeholder={t('haku.kehoite')}
+                                                //value={value}
+                                                onChange={this.handleChange}
+                                                onKeyPress={(e) => { if(e.key === 'Enter' && this.props.hakuehtoStore.keyword.length > 2){ this.handleSubmit(e)}}}/>
+                                            <Hakurajain shareVisibility={this.props.isRajainVisible}/>
+                                            <Link role="button" aria-label={t('haku.etsi')} to={{
+                                                pathname: this.props.hakuehtoStore.keyword.length > 2 ? link : undefined,
+                                                search: search
+                                            }} className="search-button search-wrapper-item" onClick={() => {this.closeRajain()}}>
+                                                <Media query="(max-width: 768px)">
+                                                {
+                                                    matches => matches ? ("") : (t('haku.etsi'))
+                                                }
+                                                </Media>
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <Hakurajain shareVisibility={this.props.isRajainVisible}/>
             </React.Fragment>
         );
     }
