@@ -12,15 +12,19 @@ const production = {
 };
 
 const development = {
-    "konfo-backend.base-url" : "http://localhost:" + process.env.REACT_APP_BACKEND_PORT,
-    "konfo-backend.search.koulutukset" : "http://localhost:" + process.env.REACT_APP_BACKEND_PORT + "/konfo-backend/search/koulutukset",
-    "konfo-backend.search.oppilaitokset" : "http://localhost:" + process.env.REACT_APP_BACKEND_PORT + "/konfo-backend/search/oppilaitokset",
-    "konfo-backend.koulutus" : "http://localhost:" + process.env.REACT_APP_BACKEND_PORT + "/konfo-backend/koulutus/",
-    "konfo-backend.toteutus" : "http://localhost:" + process.env.REACT_APP_BACKEND_PORT + "/konfo-backend/toteutus/",
-    "konfo-backend.oppilaitos" : "http://localhost:" + process.env.REACT_APP_BACKEND_PORT + "/konfo-backend/oppilaitos/",
-    "konfo-backend.palaute" : "http://localhost:" + process.env.REACT_APP_BACKEND_PORT + "/konfo-backend/palaute",
+    "konfo-backend.base-url" : "https://hahtuvaopintopolku.fi",
+    "konfo-backend.search.koulutukset" : "https://untuvaopintopolku.fi/konfo-backend/search/koulutukset",
+    "konfo-backend.search.oppilaitokset" : "https://untuvaopintopolku.fi/konfo-backend/search/oppilaitokset",
+    "konfo-backend.koulutus" : "https://untuvaopintopolku.fi/konfo-backend/koulutus/",
+    "konfo-backend.koulutus.kuvaus" : "https://untuvaopintopolku.fi/konfo-backend/kuvaus/",
+    "konfo-backend.toteutus" : "https://untuvaopintopolku.fi/konfo-backend/toteutus/",
+    "konfo-backend.oppilaitos" : "https://hahtuvaopintopolku.fi/konfo-backend/oppilaitos/",
+    "konfo-backend.palaute" : "https://hahtuvaopintopolku.fi/konfo-backend/palaute",
+    "konfo-backend.hakukohde" : "https://untuvaopintopolku.fi/konfo-backend/hakukohde/",
+    "konfo-backend.haku" : "https://untuvaopintopolku.fi/konfo-backend/haku/",
     "kartta.base-url" : "https://hkp.maanmittauslaitos.fi",
-    "kartta.publish-url" : "https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0"
+    "kartta.publish-url" : "https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0",
+    
 };
 
 export {production, development}

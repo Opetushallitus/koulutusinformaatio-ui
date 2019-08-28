@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import renderHTML from 'react-render-html';
 import '../../assets/styles/components/_slide-dropdown.scss';
+import {Localizer as l} from '../../tools/Utils';
 import OppilaitosListItem from '../koulutus/OppilaitosListItem';
+import OsaamisalaListItem from '../toteutus/OsaamisalaListItem';
+import ValintakokeetListItem from '../hakukohde/ValintakokeetListItem'
 import OskariKartta from "../oppilaitos/OskariKartta";
 import ContactInfoRow from '../common/ContactInfoRow';
 
@@ -54,7 +57,7 @@ class SlideDropdown extends Component{
     
     render(){
         const dropDownContent = this.state.viewContentState ? "expanded" : "collapsed";
-        const isComponentCollapsing = this.state.isCollapsing ? "collapsing" : ""
+        const isComponentCollapsing = this.state.isCollapsing ? "collapsing" : "";
         const tProp = this.props;
         return(
             <div className="row dropdown-component">
@@ -72,13 +75,26 @@ class SlideDropdown extends Component{
                                 {
                                     this.props.oppilaitos && 
                                     <div key={this.props.oid} className="col-12 box-container">
-                                        {tProp.oppilaitos.map((t) => <OppilaitosListItem key={t.oid} toteutus={t} name={t} education={this.props.education}/>)}
+                                        {tProp.oppilaitos.map((t) => <OppilaitosListItem koulutusUri={tProp.koulutus} key={t.oid} toteutus={t} name={t} education={this.props.education} educationName={this.props.educationName ? this.props.educationName : null} />)}
                                     </div>
                                 }
                                 {
                                     this.props.text && 
                                     <div className="col-12">
-                                        {this.state.textContent()}                               
+                                        {this.props.teksti ? this.props.teksti : this.state.textContent()}                               
+                                    </div>
+                                }
+                                {
+                                    this.props.kuvaus && 
+                                    <div className="col-11 text-block">
+                                        <p>{this.props.teksti}</p>                          
+                                    </div>
+                                }
+                                {
+                                    this.props.osaamisalat && 
+                                    <div className="col-12 box-container">
+                                        {tProp.osaamisalatlist ? tProp.osaamisalatlist.map((t) => <OsaamisalaListItem key={(l.localize(t.koodi) ? l.localize(t.koodi.nimi) : l.localize(t.nimi))} osaamisala={t}/>): undefined}
+                              
                                     </div>
                                 }
                                 {
@@ -92,6 +108,19 @@ class SlideDropdown extends Component{
                                     this.props.toteutus &&
                                     <div className="col-11 text-block">
                                         {renderHTML(this.props.content)}
+                                    </div>
+                                }
+                                {
+                                    this.props.koulutusKuvaus &&
+                                    <div className="col-11 text-block">
+                                        {renderHTML(this.props.content)}
+                                    </div>
+                                }
+                                {
+                                    this.props.valintakokeet && 
+                                    <div className="col-12 box-container">
+                                        {tProp.valintakokeetlist ? tProp.valintakokeetlist.map((t) => <ValintakokeetListItem key={l.localize(t.tyyppi.nimi)} valintakoe={t}/>): undefined}
+                              
                                     </div>
                                 }
                         </div>

@@ -1,0 +1,36 @@
+@import '../settings';
+
+.info-page{
+    &.hakukohde{
+        .left-column{
+            border-right: 1px solid $soft-grey;
+            padding-bottom: 30px;
+        }
+        #hakukohde-header{
+            margin-top: 0;
+            #hakukohde-header-nimi{
+                margin-top: 5px;
+            }
+        }
+        .hakukohde-header-second{
+            font-size: 20px;
+            margin-bottom: 0;
+        }
+    }
+}
+
+@media (max-width: 992px) {
+    .info-page{
+        &.hakukohde{
+            .left-column{
+                border-right: none;
+                padding-left: 0;
+                padding-right: 0; 
+            }
+            .right-column{
+                padding-left: 0;
+                padding-right: 0; 
+            }
+        }
+    }
+}

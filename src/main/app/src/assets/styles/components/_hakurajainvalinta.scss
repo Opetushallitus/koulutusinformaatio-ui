@@ -45,7 +45,7 @@ $channels: (
     padding-left: 1px;
     color: $greyish-brown;
     &:not(:empty) {
-      padding-left: $checkbox-label-padding;
+      padding-left: 30px; //$checkbox-label-padding;
     }
     
     &:before, &:after {
@@ -75,6 +75,7 @@ $channels: (
     display: block;
     float: left;
     font-size: inherit;
+    position: absolute;
 
     &:checked {
        + label:before{

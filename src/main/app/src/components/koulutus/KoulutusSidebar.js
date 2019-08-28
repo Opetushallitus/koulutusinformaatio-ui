@@ -8,7 +8,7 @@ class KoulutusSidebar extends Component {
     getName(){
         switch(this.props.type){
             case 'lk': return "Lukio";
-            case 'kk': return "Korkeakoulu";
+            case 'yo': return "Korkeakoulu";
             case 'ako': return "Avoin";
             case 'amm' : return "Ammatillinen";
             default: return "Ammatillinen";  

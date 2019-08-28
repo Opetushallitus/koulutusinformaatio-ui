@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 import qs from 'query-string';
 import '../../assets/styles/components/_hakutulos-toggle.scss';
 import {translate} from 'react-i18next';
@@ -26,7 +26,7 @@ class HakutulosToggle extends Component {
     }
 
     toggle(event, toggle) {
-        const search = qs.parse(this.props.location.search);
+        const search = qs.parse(this.props.history.location.search);
         search.toggle = toggle;
         event.preventDefault();
         this.props.history.replace({search: qs.stringify(search)});

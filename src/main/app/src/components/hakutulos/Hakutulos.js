@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
 import {Localizer as l} from '../../tools/Utils';
-import HakutulosToggle from "./HakutulosToggle";
+import HakutulosToggleWrapper from "./HakutulosToggleWrapper";
 import HakutulosSummary from "./HakutulosSummary";
 import HakutulosBox from "../common/HakutulosBox";
 import Sivutus from './Sivutus';
@@ -14,7 +14,25 @@ import '../../assets/styles/components/_hakutulos.scss';
 @observer
 class Hakutulos extends Component {
 
-    componentWillReceiveProps(nextProps) {
+    constructor(props) {
+        super(props);
+        this.state = {
+            toggleKoulutus : undefined
+        }
+    }
+
+    updateState(){
+        this.setState({
+            toggleKoulutus : true
+        })
+    }
+
+   componentWillReceiveProps(nextProps) {
+        this.props = nextProps;
+        this.updateState();
+    }
+
+    componentDidMount(nextProps) {
         this.props = nextProps;
     }
 
@@ -55,12 +73,12 @@ class Hakutulos extends Component {
                     
                     <HakutulosBox key={r.oid}
                                   oid={r.oid}
-                                  vertailuOid={r.toteutusOid}
-                                  tyyppi={r.tyyppi}
-                                  haettavissa={r.haettavissa}
+                                  vertailuOid={r.oid}
+                                  tyyppi={r.koulutustyyppi}
+                                  haettavissa={r.hakuOnKaynnissa}
                                   nimi={this.getKoulutusNimi(r)}
                                   link={link}
-                                  text1={this.getOsaamisala(r)}
+                                  text1={this.getOsaamisala(r)}//osaamisalat = ammattinimikkeet ammatillisessa? entä miten kk ylempi/alempi tarkistetaan?
                                   text2={""}
                                   vertailu={vertailuActive}/>)
             });
@@ -106,7 +124,7 @@ class Hakutulos extends Component {
                         <HakutulosSummary iDidUpdate={this.props.iUpdatedMyChildren}/>
                     </div>
                     <div className="container" id="toggle-tabs">
-                        <HakutulosToggle/>
+                        <HakutulosToggleWrapper/>
                     </div>
                     <div className="container search-results" id="search-results">
                         <div className="row">

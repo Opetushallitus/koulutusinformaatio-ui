@@ -73,3 +73,35 @@
         left: 5%;
     }
 }
+
+.search{
+    width: 830px;
+    background-color: #E0E1DD;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.36);
+    padding: 24px 40px;
+    border-radius: 2px;
+}
+
+.search-wrapper{
+    width: 100%;
+    background-color: #ffffff;
+    display: table;
+    padding: 13px 25px;
+    border-radius: 2px;
+}
+
+.search-wrapper-item{
+    display: table-cell;
+}
+
+.search-wrapper-input{
+    -webkit-appearance: none;
+    color: #B2B2B2;
+    border: none;
+    font-size: 16px;
+}
+
+.search-wrapper-filter{
+    border-left: 1px solid #000;
+    padding-left: 10px;
+}

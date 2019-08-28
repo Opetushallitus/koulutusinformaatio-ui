@@ -27,7 +27,7 @@ class RestStore {
                 size: paging.pageSize,
                 paikkakunta: filter.paikkakunta,
                 koulutustyyppi: filter.koulutus.join(','),
-                kieli: filter.kieli.map((k) => 'kieli_' + k).join(','),
+                opetuskieli: filter.kieli.map((k) => k).join(','),
                 lng: l.getLanguage()})
             .catch(this.handleError))
     };
@@ -41,7 +41,7 @@ class RestStore {
                 size: paging.pageSize,
                 paikkakunta: filter.paikkakunta,
                 koulutustyyppi: filter.koulutus.join(','),
-                kieli: filter.kieli.map((k) => 'kieli_' + k).join(','),
+                //kieli: filter.kieli.map((k) => k).join(','),
                 lng: l.getLanguage()})
             .catch(this.handleError))
     };
@@ -62,8 +62,24 @@ class RestStore {
                 if(err) {
                     this.handleError(err)
                 } else {
-                    const koulutus = res.body.result ? res.body.result : undefined;
+                    const koulutus = res.body ? res.body : undefined;
                     onSuccess(koulutus)
+                }
+            });
+    };
+
+    @action
+    getKoulutusKuvaus = (oid, osaamisalakuvaukset, onSuccess) => {
+        oid = oid.substring(0, oid.indexOf('#'));
+        superagent
+            .get(this.urlStore.urls.url('konfo-backend.koulutus.kuvaus') + oid)
+            .query({ osaamisalakuvaukset: osaamisalakuvaukset })
+            .end((err, res) => {
+                if(err) {
+                    this.handleError(err)
+                } else {
+                    const kuvaus = res.body ? res.body : undefined;
+                    onSuccess(kuvaus)
                 }
             });
     };
@@ -76,8 +92,8 @@ class RestStore {
                 if(err) {
                     this.handleError(err)
                 } else {
-                    const koulutus = ( res.body.result && res.body.result.koulutus ) ? res.body.result.koulutus[oid] : undefined;
-                    const organisaatio = (koulutus && koulutus.organisaatio.oid && res.body.result.organisaatiot) ? res.body.result.organisaatiot[koulutus.organisaatio.oid] : undefined;
+                    const koulutus = res.body ? res.body : undefined;
+                    const organisaatio = (res.body && res.body.organisaatio) ? res.body.organisaatio : undefined;
                     onSuccess(koulutus, organisaatio)
                 }
             });
@@ -92,6 +108,34 @@ class RestStore {
                     this.handleError(err)
                 } else {
                     onSuccess(res.body.result)
+                }
+            });
+    };
+
+    @action
+    getHaku = (oid, onSuccess) => {
+        superagent
+            .get(this.urlStore.urls.url('konfo-backend.haku') + oid)
+            .end((err, res) => {
+                if(err) {
+                    this.handleError(err)
+                } else {
+                    const haku = res.body ? res.body : undefined;
+                    onSuccess(haku)
+                }
+            });
+    };
+
+    @action
+    getHakukohde = (oid, onSuccess) => {
+        superagent
+            .get(this.urlStore.urls.url('konfo-backend.hakukohde') + oid)
+            .end((err, res) => {
+                if(err) {
+                    this.handleError(err)
+                } else {
+                    const hakukohde = res.body ? res.body : undefined;
+                    onSuccess(hakukohde)
                 }
             });
     };

@@ -22,7 +22,7 @@
 .filter-container {
     position: absolute;
     max-width: 355px;
-    width: 100%;
+    width: 355px;
     &.index {
         max-width: 450px;
         width: 100%;
@@ -56,7 +56,8 @@
     }
     .filter-options {
         z-index: 998;
-        left: 0;
+        right: 130px;
+        top: 30px;
         width: 100%;
         background: #ffffff;
         position: absolute;

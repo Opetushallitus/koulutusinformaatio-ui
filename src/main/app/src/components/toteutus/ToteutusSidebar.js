@@ -18,8 +18,17 @@ class ToteutusSidebar extends Component {
         };
     }
 
+    async componentDidMount() {
+        await this.getOppilaitosTiedot();
+    }
+
+    async componentWillReceiveProps(nextProps) {
+        this.props = nextProps;
+        await this.getOppilaitosTiedot();
+    }
+
     getOppilaitosTiedot() {
-        this.props.restStore.getOppilaitos(this.props.oid, (o) => {
+        this.props.restStore.getOppilaitos(this.props.organisaatio.oid, (o) => {
             this.setState({
                 oppilaitos: o
             })
@@ -46,10 +55,10 @@ class ToteutusSidebar extends Component {
                         <h2 id="toteutus-side-header">{l.localize(this.props.organisaatio, "", "Tuntematon oppilaitos")}</h2>
                         <ActionButton type="react-link" address={link}/>
                     </div>
-                    <div className='col-md-12'>
+                    {this.state.oppilaitos && <div className='col-md-12'>
                         <h3>{t('toteutus.yhteystiedot')}</h3>
-                        <ContactInfoRow name={l.localize(this.props.organisaatio)} data={this.props.organisaatio} type="toteutus" educationType={educationType}/>
-                    </div>
+                        <ContactInfoRow name={l.localize(this.props.organisaatio)} data={this.state.oppilaitos} type="toteutus" educationType={educationType}/>
+                    </div>}
                     <hr className="col-md-12"/>
                     <div className='col-md-12'>
                         <dl>

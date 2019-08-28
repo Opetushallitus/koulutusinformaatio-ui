@@ -67,6 +67,25 @@
         }
     }
 
+    .toggle-link-button{
+        display: inline-block;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        line-height: 0;
+        height: 0;
+        padding: 18px 35px;
+        @include transitions();
+        background: #4a90e2;
+        color: white;
+        &:hover{
+            cursor: pointer;
+        }
+        span{
+            line-height: 0;
+        }
+    }
+
     .switch-button{
         border: 2px solid $water-blue;
         -webkit-border-radius: 4px;

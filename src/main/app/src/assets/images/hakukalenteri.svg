@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="39px" viewBox="0 0 36 39" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 55.2 (78181) - https://sketchapp.com -->
+    <title>1DD2EA4D-A998-40AE-B701-6DA7D1B48CB8</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <path d="M20.2222222,15.95 L13,15.95 L13,23.2 L20.2222222,23.2 L20.2222222,15.95 Z M18.7777778,0 L18.7777778,2.9 L7.22222222,2.9 L7.22222222,0 L4.33333333,0 L4.33333333,2.9 L2.88888889,2.9 C1.28555556,2.9 0.0144444444,4.205 0.0144444444,5.8 L0,26.1 C0,27.7016258 1.29339961,29 2.88888889,29 L23.1111111,29 C24.7,29 26,27.695 26,26.1 L26,5.8 C26,4.205 24.7,2.9 23.1111111,2.9 L21.6666667,2.9 L21.6666667,0 L18.7777778,0 Z M23.1111111,26.1 L2.88888889,26.1 L2.88888889,10.15 L23.1111111,10.15 L23.1111111,26.1 Z" id="path-1"></path>
+        <filter x="-30.8%" y="-24.1%" width="161.5%" height="155.2%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.13 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter2"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter2" result="shadowBlurOuter2"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowBlurOuter2" result="shadowMatrixOuter2"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="shadowMatrixOuter2"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="🖥-Oppija---Etusivu" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Etusivu" transform="translate(-122.000000, -2366.000000)">
+            <g id="Haetuimmat-palvelut-/-desktop" transform="translate(87.000000, 1923.000000)">
+                <g id="Group-10">
+                    <g id="Group-5-Copy" transform="translate(0.000000, 407.000000)">
+                        <g id="Group-4">
+                            <g id="Icons-/-hakukalenteri" transform="translate(40.000000, 40.000000)">
+                                <g id="icons/action/event">
+                                    <g id="event">
+                                        <g id="Shape">
+                                            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                                            <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -11,11 +11,6 @@ class HakutulosSummary extends Component {
         this.props = nextProps;
     }
 
-    componentDidUpdate(){
-        this.props.iDidUpdate;
-
-    }
-
     renderKeywordResultSummary() {
         const {t} = this.props;
         return (
@@ -34,15 +29,17 @@ class HakutulosSummary extends Component {
                 case 'lk': return 'lukiot';
                 case 'amm': return 'ammatilliset tutkinnot';
                 case 'kk': return 'korkeakoulut';
+                case 'yo': return 'korkeakoulut';
+                case 'amk': return 'korkeakoulut';
                 case 'muu': return 'muut koulutukset';
                 default: return '';
             }
         }).filter((k) => !!k).join(', ');
         const kielet = this.props.hakuStore.filter.kieli.map((k) => {
             switch (k) {
-                case 'fi': return 'suomi';
-                case 'sv': return 'ruotsi';
-                case 'en': return 'englanti';
+                case 'oppilaitoksenopetuskieli_1': return 'suomi';
+                case 'oppilaitoksenopetuskieli_2': return 'ruotsi';
+                case 'oppilaitoksenopetuskieli_4': return 'englanti';
                 default: return '';
             }
         }).filter((k) => !!k).join(', ');
@@ -54,7 +51,7 @@ class HakutulosSummary extends Component {
                     {koulutustyypit ? (' ' + t('haku.koulutustyypillä', {count: this.props.hakuStore.filter.koulutus.length})) + ' ' : '' }
                     {koulutustyypit ? <span className="highlight">{koulutustyypit}</span> : '' }
                     {kielet ? (koulutustyypit ? ' ' + t('ja') : '') + (' ' + t('haku.kielellä', {count: this.props.hakuStore.filter.kieli.length})) + ' ' : '' }
-                    {kielet ? <span className="highlight">"{kielet}"</span> : '' }
+                    {kielet ? <span className="highlight">{kielet}</span> : '' }
                     {paikkakunta ? ((koulutustyypit || kielet) ? ' ' + t('sekä') : '' ) + (' ' + t('haku.paikkakunnalla') + ' ') : ''}
                     {paikkakunta ? <span className="highlight">{paikkakunta}</span> : '' }
                 </h1>

@@ -46,6 +46,13 @@ class Hakunavigaatio extends Component {
         }
     }
 
+    componentDidMount() {
+        const search = this.state.hakuUrl ? this.state.hakuUrl : undefined;
+        if(search) {
+            this.updateStores(search)
+        }
+    }
+
     prev(event) {
         this.props.navigaatioStore.withPrevOid((oid) => {this.navigate(event, oid)})
     }
@@ -67,7 +74,7 @@ class Hakunavigaatio extends Component {
         const nextLink = (this.props.navigaatioStore.hasNext && !this.props.vertailu) ? <a onClick={(e) => {this.next(e);}}>
             <span>{t("navigaatio.seuraava")}</span>
         </a> : <span/>;
-
+     
         return (
             <div className="container-fluid app-navigation-bar hakupalkki">
                 <div className="container">

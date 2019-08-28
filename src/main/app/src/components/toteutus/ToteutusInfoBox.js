@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Localizer as l, TimeMillisParser as timeParser} from "../../tools/Utils";
+import {Link} from "react-router-dom";
+import {Localizer as l, FormatdDate as formatDate} from "../../tools/Utils";
 import '../../assets/styles/components/_toteutus-info-box.scss';
 
 class ToteutusInfoBox extends Component {
@@ -10,48 +11,41 @@ class ToteutusInfoBox extends Component {
             otsikkoLeft: props.fields.otsikkoLeft,
             fieldsLeft: props.fields.left,
             otsikkoRight: props.fields.otsikkoRight,
-            hakuajatToShow: this.selectHakuaikasToShow(props.fields.hakuajat)
+            hakuajatToShow: this.selectHakuaikasToShow(props.fields.hakukohteet)
         };
     }
 
-    selectHakuaikasToShow(hakuaikas) {
+    selectHakuaikasToShow(hakukohteet) {
         var toShow = [];
-        if (hakuaikas) {
-            if (hakuaikas.aktiiviset.length > 0) {
-                toShow = hakuaikas.aktiiviset; // Aktiivisia hakuja voi olla monta samaan aikaan
-            } else if (hakuaikas.tulevat.length > 0) {
-                let seuraavaksiAlkava = hakuaikas.tulevat[0];
-                hakuaikas.tulevat.forEach(aika => {
-                    if(aika.alkuPvm < seuraavaksiAlkava.alkuPvm) {
-                        seuraavaksiAlkava = aika;
+        const now = new Date().getTime();
+        if(hakukohteet && hakukohteet.length > 0){
+            this.props.fields.hakukohteet.forEach(hakukohde => {
+                if(hakukohde.hakuajat){
+                    for(var i = 0; hakukohde.hakuajat.length > i; i++){
+                        const alkaaMill = new Date(hakukohde.hakuajat[i].alkaa).getTime();
+                        const paattyyMill = new Date(hakukohde.hakuajat[i].paattyy).getTime();
+                        if(alkaaMill > now || paattyyMill < now){
+                            break;
+                        }
+                        toShow.push(hakukohde);
+                        break;
                     }
-                });
-                toShow = [seuraavaksiAlkava]; // Tulevista hauista näytetään vain seuraavaksi alkava
-            }
+                }
+            });
         }
         return toShow;
     }
 
-    static createFieldsAndButtonForSingleHakuaika(hakuaika, i) {
-        if (hakuaika && hakuaika.alkuPvm) {
-            const now = new Date().getTime();
-            const aktiivinen = hakuaika.alkuPvm < now && hakuaika.loppuPvm ? hakuaika.loppuPvm > now : !hakuaika.loppuPvm;
-            const haunNimi = hakuaika.hakuNimi ? l.localize(hakuaika.hakuNimi) : "Haulla ei nimeä";
-            const aikaReadable = `${timeParser.millisToReadable(hakuaika.alkuPvm ? hakuaika.alkuPvm : null)} - ${timeParser.millisToReadable(hakuaika.loppuPvm ? hakuaika.loppuPvm : null)}`;
-            return (<div className="col-12" key={i}>
-                        <p className="Haun nimi">{haunNimi}</p>
-                        <ul className="Hakuaika">
-                            <li>Hakuaika</li>
-                            <li>{aikaReadable}</li>        
+    static createFieldsAndButtonForSingleHakuaika(hakukohde, i) {
+        const link = '/hakukohde/'+hakukohde.oid;
+        if (hakukohde) {
+            const haunNimi = hakukohde.nimi ? l.localize(hakukohde.nimi) : "Haulla ei nimeä";
+            const aikaReadable = `${formatDate.formatDateString(hakukohde.hakuajat[0].alkaa, 'DD.MM.YYYY')} - ${formatDate.formatDateString(hakukohde.hakuajat[0].paattyy, 'DD.MM.YYYY')}`;
+            return (<div className="col-12 hakukohde-container" key={i}>
+                        <Link to={link} className="hakukohde-nimi">{haunNimi}</Link>
+                        <ul className="Hakuaika hakukohde-hakuaika">
+                            <li>Hakuaika: {aikaReadable}</li>    
                         </ul>
-                        <div className="action-button" key={`haku oidille ${hakuaika.hakuOid}`}>
-                            <a role="button">
-                                <div className="link-button">
-                                    <span>{aktiivinen ? "Jätä hakemus" : "Tilaa muistutus"}</span>
-                                </div>
-                            </a>
-                        </div>
-                        
                     </div>);
         } else return null;
     }
@@ -74,7 +68,7 @@ class ToteutusInfoBox extends Component {
                             }
                         </div>
                         <div className="col-12 col-md-6 box hakemus">
-                            {this.state.otsikkoRight ? <h3>{`${this.state.otsikkoRight} !`}</h3> : ""}
+                            {this.state.otsikkoRight ? <h3>{`${this.state.otsikkoRight}`}</h3> : ""}
                                 {this.state.hakuajatToShow.length > 0 ? this.state.hakuajatToShow.map((h, i) => ToteutusInfoBox.createFieldsAndButtonForSingleHakuaika(h, i)) : <p>Ei aktiivisia tai tulevia hakuja tällä hetkellä</p>}
                         </div>
                     </div>

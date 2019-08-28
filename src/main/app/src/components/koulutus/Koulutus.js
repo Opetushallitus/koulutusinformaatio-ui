@@ -67,10 +67,12 @@ class Koulutus extends Component {
 
     chooseKoulutus() {
         let selectedItem= this.setSelectedItem();
-        if(this.state.koulutus && this.state.koulutus.searchData.tyyppi) {
-            switch(this.state.koulutus.searchData.tyyppi) {
+        if(this.state.koulutus && this.state.koulutus.koulutustyyppi) {
+            switch(this.state.koulutus.koulutustyyppi) {
                 case 'lk': return <Lukio items={this.state.menuElements} selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>; //TODO
+                case 'yo': return <Korkeakoulu items={this.state.menuElements}  selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
                 case 'kk': return <Korkeakoulu items={this.state.menuElements}  selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
+                case 'amk': return <Korkeakoulu items={this.state.menuElements}  selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
                 case 'ako': return <Avoin items={this.state.menuElements}  selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
                 case 'amm' : return <Ammatillinen items={this.state.menuElements} selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus}/>;
                 default: return <Ammatillinen items={this.state.menuElements} selected={selectedItem} item={this.getSelectedItem} oid={this.props.navigaatioStore.oid} result={this.state.koulutus} muu={true}/>;
@@ -81,7 +83,7 @@ class Koulutus extends Component {
 
     koulutusType() {
         if(this.state.koulutus){
-            return this.state.koulutus.searchData.tyyppi;
+            return this.state.koulutus.koulutustyyppi;
         }
     }
 

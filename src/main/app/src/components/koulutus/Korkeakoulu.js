@@ -35,12 +35,9 @@ class Korkeakoulu extends Component {
 
     render() {
         const {t} = this.props;
-        const erikoistumisalat = l.localize(this.props.result.kuvausKomo.TAVOITTEET, undefined);
-        const jatkoOpinnot = l.localize(this.props.result.kuvausKomo.JATKOOPINTO_MAHDOLLISUUDET, undefined);
-
         return (
             <React.Fragment>
-                <KoulutusHeader hattu="korkeakoulu-hattu" nimi={this.props.result.searchData.nimi}/>
+                <KoulutusHeader hattu="korkeakoulu-hattu" nimi={this.props.result.metadata.nimi}/>
                 <Media query="(max-width: 992px)">
                                 {
                                     matches => matches ? (
@@ -48,14 +45,9 @@ class Korkeakoulu extends Component {
                             ):null}
                         </Media>
                 <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
-                {erikoistumisalat &&
-                    <SlideDropDown title={t('koulutus.pääaineet')} toteutus={true} content={erikoistumisalat} />
-                }                               
-                {jatkoOpinnot &&
-                    <SlideDropDown title={t('koulutus.jatko-opinnot')} toteutus={true} content={jatkoOpinnot} />
-                }
-                <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset} nimi={this.props.result.searchData.nimi}/>
-            </React.Fragment>
+                <SlideDropDown text={true} title={t('koulutus.kuvaus')}/>
+                <OppilaitosList oid={this.props.oid} oppilaitokset={this.props.result.toteutukset} educationName={this.props.result.nimi}/>
+           </React.Fragment>
         );
     }
 }

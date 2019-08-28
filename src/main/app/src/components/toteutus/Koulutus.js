@@ -15,38 +15,41 @@ class Koulutus extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            koulutus: undefined,
+            toteutus: undefined,
             organisaatio: undefined
         }
     };
 
     async componentDidMount() {
-        await this.getKoulutus();
+        await this.getToteutus();
     }
 
     async componentWillReceiveProps(nextProps) {
         this.props = nextProps;
-        await this.getKoulutus();
+        await this.getToteutus();
     }
 
-    getKoulutus() {
+    getToteutus() {
         this.props.navigaatioStore.setOid(this.props.match.params.oid);
         this.props.restStore.getToteutus(this.props.navigaatioStore.oid, (k, o) => {
             this.setState({
-                koulutus: k,
+                toteutus: k,
                 organisaatio: o
             })
         });
     }
 
     chooseKoulutus() {
-        if(this.state.koulutus) {
-            switch(this.state.koulutus.searchData.tyyppi) {
-                case 'lk': return <Lukio organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.searchData.tyyppi} oid={this.props.navigaatioStore.oid} />; //TODO
-                case 'kk': return <Korkeakoulu organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.searchData.tyyppi} oid={this.props.navigaatioStore.oid} />;
-                case 'ako': return <Avoin organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.searchData.tyyppi} oid={this.props.navigaatioStore.oid} />;
-                case 'amm' : return <Ammatillinen organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.searchData.tyyppi} oid={this.props.navigaatioStore.oid} />;
-                default: return <Ammatillinen organisaatio={this.state.organisaatio} koulutus={this.state.koulutus} educationType={this.state.koulutus && this.state.koulutus.searchData.tyyppi} oid={this.props.navigaatioStore.oid} muu={true} />;
+        const koulutusUri = this.props.location.state ? (this.props.location.state.koulutusUri ? this.props.location.state.koulutusUri : undefined) : undefined;
+        if(this.state.toteutus) {
+            switch(this.state.toteutus.metadata.tyyppi) {
+                case 'lk': return <Lukio organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />; //TODO
+                case 'yo': return <Korkeakoulu organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
+                case 'amk': return <Korkeakoulu organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
+                case 'kk': return <Korkeakoulu organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
+                case 'ako': return <Avoin organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
+                case 'amm' : return <Ammatillinen koulutusUri={koulutusUri} organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} />;
+                default: return <Ammatillinen organisaatio={this.state.organisaatio} toteutus={this.state.toteutus} educationType={this.state.koulutus && this.state.koulutus.metadata.tyyppi} oid={this.props.navigaatioStore.oid} muu={true} />;
             }
         }
         return <div/>

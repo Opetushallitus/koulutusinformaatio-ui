@@ -102,7 +102,11 @@
     "opetuskielet": "Opetuskielet",
     "suoritustavat": "Suoritustavat",
     "opetusajat": "Opetusajat",
-    "oppilaitokset": "Oppilaitokset"
+    "oppilaitokset": "Oppilaitokset",
+    "kuvaus": "Koulutuken kuvaus",
+    "opetusaika": "Opetusaika",
+    "opetustapa": "Opetustapa",
+    "lukuvuosimaksu": "Lukuvuosimaksu"
   },
   "vertailu": {
     "takaisin-edelliselle-sivulle": "Takaisin edelliselle sivulle",
@@ -205,9 +209,22 @@
     "puhelin": "Puhelin:",
     "kotisivu": "Oppilaitoksen kotisivu",
     "tutkintonimikkeet": "Tutkintonimikkeet:",
-    "hae-koulutukseen": "Hae tähän koulutukseen!",
     "ei-sähköpostia": "Ei sähköpostiosoitetta",
     "ei-kotisivua": "Ei kotisivua",
-    "hae-koulutukseen": "Hae tähän koulutukseen!"
+    "hae-koulutukseen": "Hae tähän koulutukseen!",
+    "tietoa-hakuväylistä": "Tietoa hakuväylistä",
+    "alkaa": "Koulutus alkaa",
+    "opetuskieli": "Opetuskieli",
+    "opetusaika": "Opetusaika",
+    "opetustapa": "Opetustapa",
+    "laajuus": "Laajuus",
+    "kesto": "Kesto",
+    "maksullinen": "Maksullinen",
+    "lukuvuosimaksu": "Lukuvuosimaksu",
+    "kuvaus": "Toteutuksen kuvaus",
+    "osaamisalat": "Osaamisalat",
+    "jatko-opintomahdollisuudet": "Jatko-opintomahdollisuudet",
+    "stipendit": "Stipendit käytössä",
+    "pääaineet": "Pääaineet"
   }
 }
