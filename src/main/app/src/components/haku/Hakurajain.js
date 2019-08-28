@@ -114,7 +114,7 @@ class Hakurajain extends Component {
                 filtersHeight: this.state.isVisible ? 0 : layerHeight,
                 isVisible: !this.state.isVisible
         })
-        },250)
+        },50)
     }
 
     clear() {
