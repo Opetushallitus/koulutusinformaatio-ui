@@ -75,7 +75,7 @@ class Etusivu extends Component {
                         </div>
                     </div>
                     <div className="news-container">
-                        <h1>Ajankohtaista ja uutisia</h1>
+                        <h1 className="news-container-title">Ajankohtaista ja uutisia</h1>
                         <div className="news-item-container">
                             <div className="news-item">
                                 <div className="news-item-header">
@@ -117,7 +117,7 @@ class Etusivu extends Component {
                         </div>
                     </div>
                     <div className="services-container">
-                        <h1>Muut Palvelut</h1>
+                        <h1 className="services-container-title">Muut Palvelut</h1>
                         <div className="services-item-container">
                             <div className="services-item">
                                 <div className="services-item-header">
@@ -146,7 +146,7 @@ class Etusivu extends Component {
                         </div>
                     </div>
                     <div className="shortcut-container">
-                        <h1>Muut Palvelut</h1>
+                        <h1 className="shortcut-container-title">Muut Palvelut</h1>
                         <div className="shortcut-item-container">
                             <div className="shortcut-item">
                                 <div className="shortcut-item-header">
@@ -181,3 +181,5 @@ class Etusivu extends Component {
 }
 
 export default Etusivu;
+
+
