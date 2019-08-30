@@ -25,3 +25,11 @@
         line-height: normal!important;
     }
 }
+
+.navigation-header-wrapper {
+    top: 0px;
+    position: fixed;
+    left: 0px;
+    width: 100%;
+    z-index: 99;
+}

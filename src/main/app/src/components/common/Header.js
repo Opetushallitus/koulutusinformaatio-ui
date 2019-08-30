@@ -12,14 +12,16 @@ class Header extends Component {
         const {t} = this.props;
         return (
             <React.Fragment>
-                <div className="container-fluid navigation-bar"/>
-                <div className="container navigation">
-                    <div className="row">
-                        <MenuButton changeLanguage={this.changeLanguage} togglePalaute={this.togglePalaute}/>       
-                        <Link to={{ pathname: '/'}} className="navbar-brand" aria-label="Link to home page">{t('opintopolku')}</Link>
-                    </div>
-                    <div>
-                        <ServicesButton></ServicesButton>
+                <div className="navigation-header-wrapper">
+                    <div className="container-fluid navigation-bar"/>
+                    <div className="container navigation">
+                        <div className="row">
+                            <MenuButton changeLanguage={this.changeLanguage} togglePalaute={this.togglePalaute}/>       
+                            <Link to={{ pathname: '/'}} className="navbar-brand" aria-label="Link to home page">{t('opintopolku')}</Link>
+                        </div>
+                        <div>
+                            <ServicesButton></ServicesButton>
+                        </div>
                     </div>
                 </div>
             </React.Fragment>
