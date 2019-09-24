@@ -32,3 +32,22 @@
         } 
     }
 }
+
+.oppilaitos-list-item-link {
+    color: #000000;
+    text-decoration: none;
+    padding-top: 10px;
+    font-size: 20px;
+}
+
+.oppilaitos-list-item-tutkintonimikkeet {
+    color: #378703;
+}
+
+.oppilaitos-list-item-info {
+    display: flex;
+}
+
+.oppilaitos-list-item-info-span {
+    margin-left: 10px;
+}

@@ -2,7 +2,6 @@ import {Component} from "react";
 import React from "react";
 import { translate } from 'react-i18next';
 import {Link} from "react-router-dom";
-import LikeButton from '../common/LikeButton';
 import '../../assets/styles/components/_oppilaitos-list-item.scss';
 import { Localizer as l } from '../../tools/Utils';
 import {inject} from "mobx-react";
@@ -44,36 +43,33 @@ class OppilaitosListItem extends Component {
     }
 
     render () {
-        const dropDownContent = this.state.viewContentState ? "expanded" : "collapsed";
-        const isComponentCollapsing = this.state.isCollapsing ? "collapsing" : "";
         const oppilaitos = this.props.toteutus;
         const link = '/toteutus/' + oppilaitos.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
             + '&lng=' + l.getLanguage();
-        const educationName = this.props.education ? l.localize(this.props.education, this.props.t("koulutus.tuntematon")) : (this.props.educationName ? l.localize(this.props.educationName, this.props.t("koulutus.tuntematon")) : ""); 
         const koulutusUri = this.props.koulutusUri ? this.props.koulutusUri : undefined;
         return (
             <div className="row justify-content-end">
                 <div className="col-11 item-box">         
                     <div className="text d-flex justify-content-between">
                         <div>
-                            <Link to={{ pathname: link, state: {koulutusUri: koulutusUri }}} className={"hakutulosbox-link"}>{l.localize(oppilaitos.organisaatio.nimi, this.props.t("koulutus.tuntematon"))}</Link>
-                            <p>{l.localize(oppilaitos.organisaatio.paikkakunta, "")}</p>
+                            <Link to={{ pathname: link, state: {koulutusUri: koulutusUri }}} className={"hakutulosbox-link oppilaitos-list-item-link"}>{l.localize(oppilaitos.organisaatio.nimi, this.props.t("koulutus.tuntematon"))}</Link>
+                            <p className="oppilaitos-list-item-tutkintonimikkeet">Tutkintonimikkeet tähän</p>
+                            <span>Kuvaus tähän</span>
                         </div>
-                        <LikeButton></LikeButton>
                     </div>
-                    <div className="education-name" onClick={this.toggleClass} onKeyPress={this.handleKeyPress}>
-                        <Link to={"#"} className="hakutulosbox-link">{educationName}</Link> 
-                        <div className={`dropdown-content-min ${dropDownContent} ${isComponentCollapsing}`}>
-                            <div>
-                                <p>Opiskelupaikkoja: 71(joista vähintään 41 ensikertalaisille)</p>
-                                <p>Hakuaika: 4.3.2019 klo 08:00 - 28.3.2019 klo 15:00</p>
-                            </div>
-                            <div className="action-button">
-                                <div role="button" id="add-compare" className="toggle-link-button" tabIndex="0" onKeyPress={this.handleKeyPress} onClick={() => this.props.vertailuStore.selectItem(this.props.vertailuOid, this.props.nimi)}>
-                                    <span>Lue lisää ja hae koulutukseen</span>
-                                </div>
-                            </div>
-                        </div> 
+                    <div className="oppilaitos-list-item-info">
+                        <span className="oppilaitos-list-item-info-span">
+                            <i className="icon-outline-add_location"></i>
+                            Tuusula
+                        </span>
+                        <span className="oppilaitos-list-item-info-span">
+                            <i className="icon-outline-access_time"></i>
+                            Päiväopetus
+                        </span>
+                        <span className="oppilaitos-list-item-info-span">
+                            <i className="icon-ic_star"></i>
+                            Ilmainen
+                        </span>
                     </div>
                 </div>
             </div>    

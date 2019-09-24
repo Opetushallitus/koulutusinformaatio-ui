@@ -1,6 +1,6 @@
 @import '../settings';
 
-#info-box{
+#additional-info-box{
     
     background-color: #effaef;
     //box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
@@ -10,7 +10,7 @@
     max-width: none;
 }
 
-.koulutus-info-header {
+.koulutus-additional-info-header {
     text-align: center;
     padding-top: 80px;
     padding-bottom: 10px;
@@ -28,15 +28,11 @@
 
  }
 
- .koulutusinfolaatikko {
+ .koulutus-additional-info-box {
      padding: 70px 200px;
-     display: flex;
      justify-content: space-evenly;
  }
 
- .koulutusinfolaatikko-item {
-    width: 200px;
-    i {
-        padding-right: 10px;;
-     }
+ .koulutus-additional-info-dropdown {
+    background-color: #effaef;
  }
