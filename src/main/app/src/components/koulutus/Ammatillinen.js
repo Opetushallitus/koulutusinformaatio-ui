@@ -86,7 +86,6 @@ class Ammatillinen extends Component {
     }
 
     render() {
-        const {t} = this.props;
         const koulutusohjelma = l.localize(this.props.result.koulutusohjelma, undefined);
         const osaamisala = this.props.result.osaamisala ? l.localize(this.props.result.osaamisala.meta, undefined).nimi : undefined;
         const osaamisalat = koulutusohjelma ? koulutusohjelma : osaamisala;
@@ -104,7 +103,7 @@ class Ammatillinen extends Component {
                     <KoulutusDescriptionBox content={l.localize(kuvaus)}/>
                 }
                 {osaamisalat && 
-                    <SlideDropDown toteutus={true} content={osaamisalat} title={t('koulutus.osaamisalat')}/>
+                    <SlideDropDown toteutus={true} content={osaamisalat} title={l.localize('koulutus.osaamisalat')}/>
                 }
                 <OppilaitosList oid={this.props.oid} koulutus={this.props.result.koulutus.koodiUri} oppilaitokset={this.props.result.toteutukset} educationName={this.props.result.nimi}/>
                 <KoulutusAdditionalInfoBox fields={this.parseAdditionalInfoBoxFields()}/>
