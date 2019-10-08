@@ -2,7 +2,7 @@ server:
   servlet:
     context-path: /konfo
 host:
-  host-oppija: https://{{host_oppija}}
+  host-oppija: https://{{host_beta}}
 kartta:
   host: {{konfo_ui_kartta_host}}
   pid: {{konfo_ui_kartta_pid}}
