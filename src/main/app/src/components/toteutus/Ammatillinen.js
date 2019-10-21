@@ -4,8 +4,12 @@ import { Localizer as l } from '../../tools/Utils';
 import {translate} from 'react-i18next'
 import {inject} from "mobx-react";
 import ToteutusHeader from "./ToteutusHeader";
-import SlideDropdown from '../common/SlideDropdown';
-import ToteutusSidebar from "./ToteutusSidebar";
+import ToteutusDescriptionBox from './ToteutusDescriptionBox';
+import OsaamisalaInfoBox from './OsaamisalaInfoBox';
+import ToteutusAdditionalInfoBox from './ToteutusAdditionalInfoBox';
+import ToteutusHeaderImage from './ToteutusHeaderImage';
+import ToteutusContactInfoBox from './ToteutusContactInfoBox';
+import '../../assets/styles/components/_toteutus-page.scss';
 
 @translate()
 @inject("hakuStore")
@@ -21,11 +25,13 @@ class Ammatillinen extends Component {
 
     async componentDidMount() {
         await this.getOsaamisalaKuvaus();
+        //await this.getOppilaitosInfo(); oppilaitos haku rikki atm
     }
 
     async componentWillReceiveProps(nextProps) {
         this.props = nextProps;
         await this.getOsaamisalaKuvaus();
+        //await this.getOppilaitosInfo(); oppilaitos haku rikki atm
     }
 
     getOsaamisalaKuvaus() {
@@ -35,6 +41,17 @@ class Ammatillinen extends Component {
         this.props.restStore.getKoulutusKuvaus(this.props.koulutusUri, 'true', (k) => {
             this.setState({
                 kuvaus: k
+            })
+        });
+    }
+
+    getOppilaitosInfo() {
+        if(!this.props.organisaatio.oid){
+            return;
+        }
+        this.props.restStore.getOppilaitos(this.props.organisaatio.oid, 'true', (k) => {
+            this.setState({
+                oppilaitos: k
             })
         });
     }
@@ -53,30 +70,49 @@ class Ammatillinen extends Component {
         return osaamisalat;
     }
 
-    parseInfoBoxFieldsTwoSided() {
-        const {t} = this.props;
-        const fields = {};
-        fields.left = this.parseInfoBoxFieldsLeft();
-        fields.otsikkoLeft = t('koulutus.tiedot');
-        fields.hakukohteet = this.props.toteutus.hakukohteet;
-        fields.otsikkoRight = t('toteutus.tietoa-hakuväylistä');
-        return fields;
-    }
-
     parseInfoBoxFieldsLeft() {
         const {t} = this.props;
         const fields = [];
-        // laajuus, kesto, maksullinen, tutkintonimike
 
-        fields.push([t('toteutus.alkaa'), (this.props.toteutus.metadata.opetus.alkamiskausi && this.props.toteutus.metadata.opetus.alkamiskausi.nimi) ? l.localize(this.props.toteutus.metadata.opetus.alkamiskausi.nimi) +" "+ this.props.toteutus.metadata.opetus.alkamisvuosi : '-']);
-        fields.push([t('toteutus.opetuskieli'), (this.props.toteutus.metadata.opetus.opetuskieli && this.props.toteutus.metadata.opetus.opetuskieli["0"]) ? l.localize(this.props.toteutus.metadata.opetus.opetuskieli["0"].nimi) : '-']);
-        fields.push([t('toteutus.opetusaika'), (this.props.toteutus.metadata.opetus.opetusaika && this.props.toteutus.metadata.opetus.opetusaika.nimi) ? l.localize(this.props.toteutus.metadata.opetus.opetusaika.nimi) : '-']);
-        fields.push([t('toteutus.opetustapa'), (this.props.toteutus.metadata.opetus.opetustapa && this.props.toteutus.metadata.opetus.opetustapa["0"]) ? l.localize(this.props.toteutus.metadata.opetus.opetustapa["0"].nimi) : '-']);
-        fields.push([t('toteutus.laajuus'), '-']); //koulutuksesta?
-        fields.push([t('toteutus.kesto'), '-']); //koulutuksesta?
-        fields.push([t('toteutus.maksullinen'), this.props.toteutus.metadata.opetus.onkoMaksullinen ? t('kyllä') : t('ei')]);
-        fields.push([t('toteutus.lukuvuosimaksu'), this.props.toteutus.metadata.opetus.lukuvuosimaksu.maksu ? (this.props.toteutus.metadata.opetus.lukuvuosimaksu.maksu + 'eur') : '0 eur']); //vika objekti tuntematon?
+        fields.push([t('toteutus.alkaa'), (this.props.toteutus.metadata.opetus.alkamiskausi && this.props.toteutus.metadata.opetus.alkamiskausi.nimi) ? l.localize(this.props.toteutus.metadata.opetus.alkamiskausi.nimi) +" "+ this.props.toteutus.metadata.opetus.alkamisvuosi : '-', "outlined_flag"]);
+        fields.push([t('toteutus.opetuskieli'), (this.props.toteutus.metadata.opetus.opetuskieli && this.props.toteutus.metadata.opetus.opetuskieli["0"]) ? l.localize(this.props.toteutus.metadata.opetus.opetuskieli["0"].nimi) : '-', "chat_bubble_outline"]);
+        fields.push([t('toteutus.opetusaika'), (this.props.toteutus.metadata.opetus.opetusaika && this.props.toteutus.metadata.opetus.opetusaika.nimi) ? l.localize(this.props.toteutus.metadata.opetus.opetusaika.nimi) : '-', "hourglass_empty"]);
+        fields.push([t('toteutus.opetustapa'), (this.props.toteutus.metadata.opetus.opetustapa && this.props.toteutus.metadata.opetus.opetustapa["0"]) ? l.localize(this.props.toteutus.metadata.opetus.opetustapa["0"].nimi) : '-', "menu_book"]);
+        fields.push([t('toteutus.laajuus'), '-', "timelapse"]); //koulutuksesta?
+        fields.push([t('toteutus.kesto'), '-', "access_time"]); //koulutuksesta?
+        fields.push([t('toteutus.maksullinen'), this.props.toteutus.metadata.opetus.onkoMaksullinen ? t('kyllä') : t('ei'), "euro_symbol"]);
+        fields.push([t('toteutus.tutkintonimikkeet'), '-', "school"]);
 
+        return fields;
+    }
+
+    parseAdditionalInfoBoxFields() {//placeholder until real data is available from backend
+        const fields = [];
+
+        const field0 = {
+            title: undefined
+        };
+        field0.title = "Opintojen rakenne";
+
+        const field1 = {
+            title: undefined
+        };
+        field1.title = "Jatko-opintomahdollisuudet";
+
+        const field2 = {
+            title: undefined
+        };
+        field2.title = "Suuntautumisvaihtoehdot";
+
+        const field3 = {
+            title: undefined
+        };
+        field3.title = "Uramahdollisuudet";
+        
+        fields.push(field0);
+        fields.push(field1);
+        fields.push(field2);
+        fields.push(field3);
         return fields;
     }
 
@@ -86,30 +122,38 @@ class Ammatillinen extends Component {
         if(osaamisalat && this.state.kuvaus && this.state.kuvaus.osaamisalat){
             this.insertOsaamisalaKuvaukset(osaamisalat);
         }
-        const jatkoopinnot = "tba";
-        const {t} = this.props;
 
         return (
             <React.Fragment>
-                <div className="col-12 col-md-12 col-lg-8 col-xl-9 left-column">
+                <div className="col-12 col-md-12 col-lg-12 col-xl-12">
                     <ToteutusHeader komoOid={this.props.toteutus.komoOid}
                                     nimi={this.props.toteutus.nimi}
                                     organisaatio={this.props.toteutus.organisaatio.nimi}/>
-                    <ToteutusInfoBox fields={this.parseInfoBoxFieldsTwoSided()}/>
-
+                    <div className="header-image">
+                        <ToteutusHeaderImage></ToteutusHeaderImage>
+                    </div>
+                    <ToteutusInfoBox fields={this.parseInfoBoxFieldsLeft()}/>
+                    <div className="hakukohde-info-wrapper">
+                        <div className="hakukohde-info-box">
+                            <div className="hakukohde-info-text-box">
+                                <li>Jatkuva haku käynnissä</li>
+                                <li>Katso oppilaitoksen hakukohteet ja täytä hakemus</li>
+                            </div>
+                            <div className="hakukohde-info-button-wrapper">
+                                <a role="button" aria-label="Etsi" className="toteutus-hakukohteet-button" href="">Näytä hakukohteet</a>
+                            </div>
+                        </div>
+                    </div>
                     {kuvaus &&
-                        <SlideDropdown kuvaus={true} teksti={l.localize(this.props.toteutus.metadata.kuvaus)} title={t('toteutus.kuvaus')} />
+                        <ToteutusDescriptionBox content={l.localize(kuvaus)}/>
                     }
 
                     {osaamisalat && 
-                        <SlideDropdown title={t('toteutus.osaamisalat')} osaamisalat={true} osaamisalatlist={osaamisalat.length > 0 ? osaamisalat : false}/>
+                        <OsaamisalaInfoBox fields={osaamisalat}/>
                     }
-                    {jatkoopinnot &&
-                        <SlideDropdown text={true} title={t('toteutus.jatko-opintomahdollisuudet')}/>
-                    }
-
+                    <ToteutusAdditionalInfoBox fields={this.parseAdditionalInfoBoxFields()}/>
+                    <ToteutusContactInfoBox/>
                 </div>
-                <ToteutusSidebar organisaatio={this.props.organisaatio} koulutus={this.props.toteutus} educationType={this.educationType}/>
             </React.Fragment>
         );
     }

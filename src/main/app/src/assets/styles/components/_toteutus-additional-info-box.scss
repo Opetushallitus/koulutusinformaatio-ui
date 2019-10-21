@@ -1,6 +1,6 @@
 @import '../settings';
 
-#info-box{
+#toteutus-additional-information-box{
     
     background-color: #effaef;
     //box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
@@ -10,7 +10,7 @@
     max-width: none;
 }
 
-.koulutus-info-header {
+.toteutus-additional-info-header {
     text-align: center;
     padding-top: 80px;
     padding-bottom: 10px;
@@ -28,20 +28,11 @@
 
  }
 
- .koulutusinfolaatikko {
-    padding: 70px 100px 70px 350px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
+ .toteutus-additional-info-box {
+     padding: 70px 200px;
+     justify-content: space-evenly;
  }
 
- .koulutusinfolaatikko-item {
-    width: 300px;
-    margin-bottom: 40px;
-    i {
-        padding-right: 10px;;
-     }
-    li:nth-child(2){
-        padding-left: 33px;
-    }
+ .toteutus-additional-info-dropdown {
+    background-color: #effaef;
  }

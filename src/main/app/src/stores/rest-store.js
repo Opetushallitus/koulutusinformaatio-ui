@@ -101,7 +101,7 @@ class RestStore {
                     const organisaatio = (res.body && res.body.organisaatio) ? res.body.organisaatio : undefined;
                     onSuccess(koulutus, organisaatio)
                 }
-            });
+            }); 
     };
 
     @action

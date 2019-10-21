@@ -7,8 +7,6 @@ import OppilaitosList from './OppilaitosList';
 import SlideDropDown from '../common/SlideDropdown';
 import { Localizer as l } from '../../tools/Utils';
 import {translate} from 'react-i18next'
-import Media from 'react-media';
-import SideBarMenu from '../common/SideBarMenu';
 
 @inject("restStore")
 @translate()
@@ -41,21 +39,16 @@ class Ammatillinen extends Component {
     parseInfoBoxFields() {
         const {t} = this.props;
         const fields = [];
-        // laajuus, kesto, maksullinen, tutkintonimike
 
+        fields.push([t('koulutus.tutkintonimikkeet'), this.props.result.tutkintonimikes ? this.props.result.tutkintonimikes.map(t => l.localize(t) + " ") : '-', "school"]);
+        fields.push([t('koulutus.koulutusaste'), "Ammatillinen tutkinto", "account_balance"]);
         const opintojenLaajuusarvo = l.localize(this.props.result.opintojenLaajuusarvo, '-');
         const opintojenLaajuusyksikko = l.localize(this.props.result.opintojenLaajuusyksikko);
-        fields.push([t('koulutus.laajuus'), opintojenLaajuusarvo && (opintojenLaajuusarvo + " " + opintojenLaajuusyksikko), "ic_toys"]);
-        const suunniteltuKesto = this.props.result.suunniteltuKestoArvo;
-        const suunniteltuKestoTyyppi = l.localize(this.props.result.suunniteltuKestoTyyppi);
-        fields.push([t('koulutus.suunniteltu-kesto'), suunniteltuKesto + " " + suunniteltuKestoTyyppi, "outline-access_time"]);
-        fields.push([t('koulutus.koulutusaste'), "Ammatillinen tutkinto", "ic_account_balance"]);
-        fields.push([t('koulutus.tutkintonimikkeet'), this.props.result.tutkintonimikes ? this.props.result.tutkintonimikes.map(t => l.localize(t) + " ") : '-', "ic_school"]);
-
+        fields.push([t('koulutus.laajuus'), opintojenLaajuusarvo && (opintojenLaajuusarvo + " " + opintojenLaajuusyksikko), "hourglass_empty"]);     
         return fields;
     }
 
-    parseAdditionalInfoBoxFields() {
+    parseAdditionalInfoBoxFields() {//placeholder until real data is available from backend
         const fields = [];
 
         const field0 = {
@@ -92,12 +85,6 @@ class Ammatillinen extends Component {
         const kuvaus = this.state.kuvaus ? this.state.kuvaus.kuvaus : undefined;
         return (
             <React.Fragment>
-                <Media query="(max-width: 992px)">
-                                {
-                                    matches => matches ? (
-                                        <SideBarMenu items={this.props.items} item={this.props.item}/>    
-                            ):null}
-                        </Media> 
                 <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
                 {kuvaus &&
                     <KoulutusDescriptionBox content={l.localize(kuvaus)}/>
