@@ -25,7 +25,7 @@ class LikeButton extends Component{
     render(){
         const iconClass = this.state.likedState ? "ic_favorite" : "ic_favorite_border";
         const buttonClass = !this.state.likedState ? "" : "liked";
-        const buttonText = !this.state.likedState ? "Tykkää" : "Tykätty";
+        const buttonText = !this.state.likedState ? "Lisää suosikkeihin" : "Lisätty suosikkeihin";
         return(
         <div role="button" aria-label={buttonText} aria-live="assertive" className = {`like-button ${buttonClass}`} onClick={this.toggleClass} onKeyPress={this.handleKeyPress} tabIndex="0">
             <i aria-label={buttonText} className={"icon-" + iconClass}></i>

@@ -6,7 +6,7 @@
     background-size: cover;
     background-position: center;
     .header-search {
-        padding: 80px 0 20px 15px;
+        padding: 70px 0 0 0;
     }
 }
 
@@ -15,6 +15,12 @@
     background: transparent;
     position: relative;
 }
+
+.container.search-container {
+    max-width: 100%;
+    padding: 0;
+}
+
 #call-to-action {
     background-image:url('../../images/o-EDUCATION-facebook.jpg');
     background-repeat:no-repeat;

@@ -1,10 +1,15 @@
 @import '../settings';
 
 #like-box{
-    border: 1px solid $soft-grey;
-    padding: 15px ;
+    //border: 1px solid $soft-grey;
+    padding: 15px;
+    padding-bottom: 70px;
     margin-top: 10px;
-    background: white; 
+    //background: white;
+    justify-content: center !important;
+    .like-button{
+        padding-right: 35px;
+    } 
 }
 
 @media (max-width: 992px){

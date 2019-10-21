@@ -6,10 +6,10 @@ import Ammatillinen from "./Ammatillinen";
 import Hakunavigaatio from './../hakutulos/Hakunavigaatio';
 import Media from 'react-media';
 import KoulutusHeaderImage from './KoulutusHeaderImage';
-import KoulutusSidebar from './KoulutusSidebar';
 import PageVertailuBox from '../common/PageLikeBox';
 import Avoin from "./Avoin";
 import Lukio from "./Lukio";
+import KoulutusHeader from './KoulutusHeader';
 
 @inject("restStore")
 @inject("navigaatioStore")
@@ -87,32 +87,40 @@ class Koulutus extends Component {
         }
     }
 
+    koulutusNimi() {
+        if(this.state.koulutus){
+            return this.state.koulutus.nimi;
+        }
+    }
+
     render() {
         const selectedKoulutus = this.chooseKoulutus();
         const actualKoulutus = this.koulutusType();
-        let selectedItem= this.setSelectedItem();
+        const koulutusNimi = this.koulutusNimi();
+        const hattu = (actualKoulutus !== 'amm') ? "muu-hattu" : "ammatillinen-hattu";
         return (
             <React.Fragment>
                 <div className="container" id="koulutus-container">
                     <div className="row">
                         <Media query="(min-width: 992px)">
-                                { 
+                                {/* 
                                     matches => matches ? (
                                         <KoulutusSidebar items={this.state.menuElements} type={actualKoulutus} selected={selectedItem} item={this.getSelectedItem}></KoulutusSidebar>
-                                    ): null
+                                    ): null*/
                                 }
-                        </Media>   
-                        <div className="col-12 col-md-12 col-lg-8 col-xl-9">
-                                <div className="header-image">
-                                    <KoulutusHeaderImage></KoulutusHeaderImage>
-                                </div>
+                        </Media>
+                        <div className="col-12 col-md-12 col-lg-12 col-xl-12">
+                                <KoulutusHeader hattu={hattu} nimi={koulutusNimi}/>
                                 <Media query="(min-width: 992px)">
                                 {
                                     matches => matches ? (
-                                        <PageVertailuBox text="Ota vertailuun"></PageVertailuBox>
+                                        <PageVertailuBox text="Lisää vertailuun"></PageVertailuBox>
                                     ): null
                                 }
                                 </Media>
+                                <div className="header-image">
+                                    <KoulutusHeaderImage></KoulutusHeaderImage>
+                                </div>
                                 {selectedKoulutus}
                         </div>
                     </div>                

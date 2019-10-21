@@ -20,7 +20,7 @@ class KoulutusHeader extends Component {
                 <div className="col-12">
                     <h1 className="d-flex justify-content-between">
                         <span className={hattuClass}></span>
-                        <span className="title">{this.parseNimi()}</span>
+                        <span className="title koulutus-header-title">{this.parseNimi()}</span>
                     </h1>
                 </div>
             </div>

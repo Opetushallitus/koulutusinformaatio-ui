@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import {inject} from 'mobx-react';
 import KoulutusInfoBox from './KoulutusInfoBox';
+import KoulutusAdditionalInfoBox from './KoulutusAdditionalInfoBox';
+import KoulutusDescriptionBox from './KoulutusDescriptionBox';
 import OppilaitosList from './OppilaitosList';
-import KoulutusHeader from './KoulutusHeader';
 import SlideDropDown from '../common/SlideDropdown';
 import { Localizer as l } from '../../tools/Utils';
 import {translate} from 'react-i18next'
-import Media from 'react-media';
-import SideBarMenu from '../common/SideBarMenu';
 
 @inject("restStore")
 @translate()
@@ -40,48 +39,61 @@ class Ammatillinen extends Component {
     parseInfoBoxFields() {
         const {t} = this.props;
         const fields = [];
-        // laajuus, kesto, maksullinen, tutkintonimike
 
+        fields.push([t('koulutus.tutkintonimikkeet'), this.props.result.tutkintonimikes ? this.props.result.tutkintonimikes.map(t => l.localize(t) + " ") : '-', "school"]);
+        fields.push([t('koulutus.koulutusaste'), "Ammatillinen tutkinto", "account_balance"]);
         const opintojenLaajuusarvo = l.localize(this.props.result.opintojenLaajuusarvo, '-');
         const opintojenLaajuusyksikko = l.localize(this.props.result.opintojenLaajuusyksikko);
-        fields.push([t('koulutus.laajuus'), opintojenLaajuusarvo && (opintojenLaajuusarvo + " " + opintojenLaajuusyksikko)]);
-        const suunniteltuKesto = this.props.result.suunniteltuKestoArvo;
-        const suunniteltuKestoTyyppi = l.localize(this.props.result.suunniteltuKestoTyyppi);
-        fields.push([t('koulutus.suunniteltu-kesto'), suunniteltuKesto + " " + suunniteltuKestoTyyppi]);
+        fields.push([t('koulutus.laajuus'), opintojenLaajuusarvo && (opintojenLaajuusarvo + " " + opintojenLaajuusyksikko), "hourglass_empty"]);     
+        return fields;
+    }
 
-        fields.push([t('koulutus.maksullinen'), this.props.result.opintojenMaksullisuus ? t('kyllä') : t('ei')]);
-        fields.push([t('koulutus.tutkintonimikkeet'), this.props.result.tutkintonimikes ? this.props.result.tutkintonimikes.map(t => l.localize(t) + " ") : '-']);
+    parseAdditionalInfoBoxFields() {//placeholder until real data is available from backend
+        const fields = [];
 
+        const field0 = {
+            title: undefined
+        };
+        field0.title = "Opintojen rakenne";
+
+        const field1 = {
+            title: undefined
+        };
+        field1.title = "Jatko-opintomahdollisuudet";
+
+        const field2 = {
+            title: undefined
+        };
+        field2.title = "Suuntautumisvaihtoehdot";
+
+        const field3 = {
+            title: undefined
+        };
+        field3.title = "Uramahdollisuudet";
+        
+        fields.push(field0);
+        fields.push(field1);
+        fields.push(field2);
+        fields.push(field3);
         return fields;
     }
 
     render() {
-        const {t} = this.props;
         const koulutusohjelma = l.localize(this.props.result.koulutusohjelma, undefined);
         const osaamisala = this.props.result.osaamisala ? l.localize(this.props.result.osaamisala.meta, undefined).nimi : undefined;
         const osaamisalat = koulutusohjelma ? koulutusohjelma : osaamisala;
-        const hattu = this.props.muu ? "muu-hattu" : "ammatillinen-hattu";
         const kuvaus = this.state.kuvaus ? this.state.kuvaus.kuvaus : undefined;
         return (
             <React.Fragment>
-                <KoulutusHeader hattu={hattu} nimi={this.props.result.nimi}/>
-                <Media query="(max-width: 992px)">
-                                {
-                                    matches => matches ? (
-                                        <SideBarMenu items={this.props.items} item={this.props.item}/>    
-                            ):null}
-                        </Media> 
                 <KoulutusInfoBox fields={this.parseInfoBoxFields()}/>
-                
-                {osaamisalat && 
-                    <SlideDropDown toteutus={true} content={osaamisalat} title={t('koulutus.osaamisalat')}/>
-                }
-
                 {kuvaus &&
-                    <SlideDropDown koulutusKuvaus={true} content={l.localize(kuvaus)} title={t('koulutus.kuvaus')}/>
+                    <KoulutusDescriptionBox content={l.localize(kuvaus)}/>
                 }
-
+                {osaamisalat && 
+                    <SlideDropDown toteutus={true} content={osaamisalat} title={l.localize('koulutus.osaamisalat')}/>
+                }
                 <OppilaitosList oid={this.props.oid} koulutus={this.props.result.koulutus.koodiUri} oppilaitokset={this.props.result.toteutukset} educationName={this.props.result.nimi}/>
+                <KoulutusAdditionalInfoBox fields={this.parseAdditionalInfoBoxFields()}/>
             </React.Fragment>);
     }
 }

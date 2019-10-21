@@ -1,23 +1,28 @@
 import {Component} from "react";
 import React from "react";
-import SlideDropdown from '../common/SlideDropdown';
 import { Localizer as l } from '../../tools/Utils';
 import {translate} from 'react-i18next';
+import '../../assets/styles/components/_oppilaitos-list.scss';
+import OppilaitosListItem from './OppilaitosListItem';
 
 @translate()
 class OppilaitosList extends Component {
 
     render () {
-        const {t} = this.props;
         const oppilaitokset = this.props.oppilaitokset.sort((o1, o2) => {
            return l.localize(o1.tarjoaja, "").localeCompare(l.localize(o2.tarjoaja, ""))
         });
-        const educationTitle = this.props.nimi || false;
+        const tProp = this.props;
         return (
     
-            <React.Fragment>            
-                <SlideDropdown title={t('koulutus.oppilaitokset')} koulutus={this.props.koulutus} oppilaitos={oppilaitokset.length > 0 ? oppilaitokset : false} education={educationTitle} educationName={this.props.educationName ? this.props.educationName : null}>
-               </SlideDropdown>                       
+            <React.Fragment>
+            <div>
+                <h1 className="oppilaitos-info-header">Koulutusta järjestävät oppilaitokset</h1>
+                <div className="rectangle"></div>
+                    {oppilaitokset && <div key={this.props.oid} className="col-12 box-container">
+                        {oppilaitokset.map((t) => <OppilaitosListItem koulutusUri={tProp.koulutus} key={t.oid} toteutus={t} name={t} education={this.props.education} educationName={this.props.educationName ? this.props.educationName : null} />)}
+                    </div>}
+            </div>                        
             </React.Fragment>
         );
     }

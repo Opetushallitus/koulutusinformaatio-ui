@@ -22,6 +22,7 @@ class RestStore {
     searchKoulutuksetPromise = (keyword, paging, filter) => {
         return (superagent
             .get(this.urlStore.urls.url('konfo-backend.search.koulutukset'))
+            .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
             .query({keyword: keyword,
                 page: paging.pageKoulutus,
                 size: paging.pageSize,
@@ -36,6 +37,7 @@ class RestStore {
     searchOppilaitoksetPromise = (keyword, paging, filter) => {
         return (superagent
             .get(this.urlStore.urls.url('konfo-backend.search.oppilaitokset'))
+            .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
             .query({keyword: keyword,
                 page: paging.pageOppilaitos,
                 size: paging.pageSize,
@@ -58,6 +60,7 @@ class RestStore {
     getKoulutus = (oid, onSuccess) => {
         superagent
             .get(this.urlStore.urls.url('konfo-backend.koulutus') + oid)
+            .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
             .end((err, res) => {
                 if(err) {
                     this.handleError(err)
@@ -73,6 +76,7 @@ class RestStore {
         oid = oid.substring(0, oid.indexOf('#'));
         superagent
             .get(this.urlStore.urls.url('konfo-backend.koulutus.kuvaus') + oid)
+            .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
             .query({ osaamisalakuvaukset: osaamisalakuvaukset })
             .end((err, res) => {
                 if(err) {
@@ -88,6 +92,7 @@ class RestStore {
     getToteutus = (oid, onSuccess) => {
         superagent
             .get(this.urlStore.urls.url('konfo-backend.toteutus') + oid)
+            .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
             .end((err, res) => {
                 if(err) {
                     this.handleError(err)
@@ -96,13 +101,14 @@ class RestStore {
                     const organisaatio = (res.body && res.body.organisaatio) ? res.body.organisaatio : undefined;
                     onSuccess(koulutus, organisaatio)
                 }
-            });
+            }); 
     };
 
     @action
     getOppilaitos = (oid, onSuccess) => {
         superagent
             .get(this.urlStore.urls.url('konfo-backend.oppilaitos') + oid)
+            .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
             .end((err, res) => {
                 if(err) {
                     this.handleError(err)
@@ -116,6 +122,7 @@ class RestStore {
     getHaku = (oid, onSuccess) => {
         superagent
             .get(this.urlStore.urls.url('konfo-backend.haku') + oid)
+            .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
             .end((err, res) => {
                 if(err) {
                     this.handleError(err)
@@ -130,6 +137,7 @@ class RestStore {
     getHakukohde = (oid, onSuccess) => {
         superagent
             .get(this.urlStore.urls.url('konfo-backend.hakukohde') + oid)
+            .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
             .end((err, res) => {
                 if(err) {
                     this.handleError(err)
@@ -144,12 +152,14 @@ class RestStore {
     getToteutusPromise = (oid) => {
         return (superagent
             .get(this.urlStore.urls.url('konfo-backend.toteutus') + oid))
+            .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
     };
 
     @action
     getOppilaitosPromise = (oid) => {
         return (superagent
             .get(this.urlStore.urls.url('konfo-backend.oppilaitos') + oid))
+            .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
     };
 }
 

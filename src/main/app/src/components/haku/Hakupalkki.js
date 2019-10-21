@@ -45,7 +45,7 @@ class Hakupalkki extends Component {
             <React.Fragment>
                 <div className="container-fluid" id={this.props.main ? "call-to-action" : "call-to-action-secondary"}>
                     <div className="jumbotron">
-                        <div className="container">
+                        <div className="container search-container">
                             <div className="row">
                                 <div className={"col-12 header-search" + (this.props.main ? " main" : "")}>
                                     <div className="search">
