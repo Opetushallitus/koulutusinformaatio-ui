@@ -11,7 +11,7 @@ class HakutulosToggleWrapper extends Component {
 
     render() {
         return (
-            <HakutulosToggle/>
+            <HakutulosToggle />
         );
     }
 }
