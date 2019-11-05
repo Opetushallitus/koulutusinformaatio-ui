@@ -83,6 +83,9 @@ class Hakutulos extends Component {
                                   vertailu={vertailuActive}/>)
             });
         } else {
+            if(!this.props.hakuStore.oppilaitosResult){
+                return;
+            }
             return this.props.hakuStore.oppilaitosResult.map((r) => {
                 const link = '/oppilaitos/' + r.oid + '?haku=' + encodeURIComponent(this.props.hakuStore.createHakuUrl)
                                                     + '&lng=' + l.getLanguage();

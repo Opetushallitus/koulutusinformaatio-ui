@@ -56,7 +56,7 @@ class Haku extends Component {
     render() {
         const koulutukset = this.props.hakuStore.koulutusResult;
         const oppilaitokset = this.props.hakuStore.oppilaitosResult;
-        if(koulutukset.length > 0 || oppilaitokset.length > 0){
+        if((koulutukset && koulutukset.length > 0) || (oppilaitokset && oppilaitokset.length > 0)){
             return (
                 <Hakutulos {...this.props} iUpdatedMyChildren={this.hakutulosUpdated()}/>
             );  
