@@ -218,10 +218,10 @@ class HakuStore {
                 this.rest.searchKoulutuksetPromise(this.keyword, this.paging, this.filter),
                 this.rest.searchOppilaitoksetPromise(this.keyword, this.paging, this.filter)
             ], (result) => { runInAction(() => {
-                this.koulutusResult = result[0] ? result[0].koulutukset : [];
-                this.koulutusCount = result[0] ? result[0].total_count : 0;
-                this.oppilaitosResult = result[1] ? result[1].result : [];
-                this.oppilaitosCount = result[1] ? result[1].count : 0;
+                this.koulutusResult = result[0] ? result[0].hits : [];
+                this.koulutusCount = result[0] ? result[0].hits.length : 0;
+                this.oppilaitosResult = result[1] ? result[1].hits : [];
+                this.oppilaitosCount = result[1] ? result[1].hits.length : 0;
                 if(onSuccess) {
                     onSuccess()
                 }
@@ -235,8 +235,8 @@ class HakuStore {
             this.rest.search([
                 this.rest.searchKoulutuksetPromise(this.keyword, this.paging, this.filter)
             ], (result) => { runInAction(() => {
-                this.koulutusResult = result[0] ? result[0].koulutukset : [];
-                this.koulutusCount = result[0] ? result[0].total_count : 0;
+                this.koulutusResult = result[0] ? result[0].hits : [];
+                this.koulutusCount = result[0] ? result[0].hits.length : 0;
                 if(onSuccess) {
                     onSuccess()
                 }
@@ -250,8 +250,8 @@ class HakuStore {
             this.rest.search([
                 this.rest.searchOppilaitoksetPromise(this.keyword, this.paging, this.filter)
             ], (result) => { runInAction(() => {
-                this.oppilaitosResult = result[0] ? result[0].result : [];
-                this.oppilaitosCount = result[0] ? result[0].count : 0;
+                this.oppilaitosResult = result[0] ? result[0].hits : [];
+                this.oppilaitosCount = result[0] ? result[0].hits.length : 0;
                 if(onSuccess) {
                     onSuccess()
                 }
