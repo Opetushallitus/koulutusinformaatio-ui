@@ -6,6 +6,12 @@
   "kyllä": "Kyllä",
   "ei": "Ei",
   "tuntematon": "Tuntematon",
+  "etusivu": "Etusivu",
+  "jumpotron": {
+    "otsikko": "Jatkuvaa oppimista elämäsi jokaiseen vaiheeseen.",
+    "esittely": "Opintopolkun kautta voit suunnitella omia opintoja ja hakea koulutuksiin. Sivuston tiedot ja palvelut ovat luotettavia ja turvallisia.",
+    "naytakaikki": "Näytä kaikki vaihtoehdot"
+  },
   "footer": {
     "vastuuvapauslauseke": "Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja koulutuksistaan Opintopolussa. Tietojen oikeellisuuden voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.",
     "palaute": "Anna palautetta",
@@ -13,10 +19,21 @@
     "mikä-opintopolku": "Mikä on Opintopolku",
     "tietoturvaseloste": "Tietoturvaseloste"
   },
+  "sisaltohaku": {
+    "otsikko": "Sisältöhaku",
+    "hakusana": "Hakusana",
+    "rajaatuloksia": "Rajaa tuloksia",
+    "eituloksia": "Ei hakutuloksia",
+    "summary": "Hakusanalla \"{{hakusana}}\" ei löytynyt hakutuloksia. Tarkista hakusana tai kokeile toista hakusanaa.",
+    "takaisin": "Siirry Opintopolun etusivulle"
+  },
   "palaute": {
-    "otsikko": "Mitä mieltä olit sivusta?",
-    "kommentti": "Anna halutessasi kommentteja sivusta",
-    "lähetä": "Lähetä"
+    "otsikko": "Mitä mieltä olet uudesta Opintopolusta?",
+    "kommentti": "Haluatko antaa palautetta?",
+    "lähetä": "Lähetä",
+    "kiitos": "Kiitos palautteestasi!",
+    "vastaanotettu": "Palautteesi on vastaanotettu onnistuneesti. Käsittelemme palautteet mahdollisimman pian.",
+    "palaa": "Palaa Opintopolkuun"
   },
   "haku": {
     "etsi": "Etsi",
@@ -37,6 +54,7 @@
     "näytä": "Näytä",
     "kaikki": "Kaikki",
     "rajaa-etsintää": "+ RAJAA ETSINTÄÄ",
+    "rajaa": "Rajaa",
     "sulje-rajain": "- SULJE RAJAIMET",
     "koulutustyyppi": "Koulutustyyppi",
     "lukio": "Lukio",

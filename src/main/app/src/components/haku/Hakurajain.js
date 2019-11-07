@@ -107,7 +107,7 @@ class Hakurajain extends Component {
 
     toggleRajain() {
         this.props.hakuehtoStore.toggleRajain();
-        this.props.shareVisibility();
+        //this.props.shareVisibility();
         setTimeout(() => {
             const layerHeight = this.calculateLayerHeight();
             this.setState({
@@ -132,9 +132,19 @@ class Hakurajain extends Component {
         return (
             <React.Fragment>
                 <div className="search-wrapper-item">
-                    <div id="filters-button" role="button" tabIndex="0" className="search-wrapper-filter" /*className="filter-button"*/ aria-label={this.props.hakuehtoStore.rajainOpen ? t("haku.sulje-rajain") : t("haku.rajaa-etsintää")} onClick={() => this.toggleRajain(this)} onKeyPress={this.handleKeyPress} >
-                        <span>Rajaa</span>
-                    </div>
+                    <button id="filters-button"
+                         tabIndex="0"
+                         className="search-wrapper-filter" /*className="filter-button"*/
+                         aria-label={this.props.hakuehtoStore.rajainOpen ? t("haku.sulje-rajain") : t("haku.rajaa-etsintää")}
+                         onClick={() => this.toggleRajain(this)} onKeyPress={this.handleKeyPress} >
+                        <span className="search-wrapper--rajaa">
+                            {t("haku.rajaa")}
+                            {this.state.isVisible ?
+                                <span className="material-icons">expand_less</span>
+                                : <span className="material-icons">expand_more</span>}
+
+                        </span>
+                    </button>
                 </div>
                 {this.props.hakuehtoStore.rajainOpen &&
                 <div className="container search-filter">

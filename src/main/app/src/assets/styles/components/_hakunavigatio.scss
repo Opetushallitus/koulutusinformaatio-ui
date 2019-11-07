@@ -83,14 +83,22 @@
     max-width: 1600px;
     margin: auto;
 }
+.header-search--secondary {
+    max-width: none;
+    .search-wrapper {
+        border: 1px solid $light-grey;
+    }
+}
 
 .search-wrapper{
     width: 100%;
-    background-color: #ffffff;
-    display: table;
-    padding: 13px 25px;
+    background-color: $white;
+    display: flex;
+    flex-direction: row;
+    padding: 16px 20px;
     border-radius: 2px;
-    margin-bottom: 20px;
+
+
 }
 
 .search-wrapper-item{
@@ -99,12 +107,13 @@
 
 .search-wrapper-input{
     -webkit-appearance: none;
-    color: #B2B2B2;
+    color: $black;
     border: none;
     font-size: 16px;
 }
 
-.search-wrapper-filter{
-    border-left: 1px solid #000;
-    padding-left: 10px;
+.search-wrapper--rajaa {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }

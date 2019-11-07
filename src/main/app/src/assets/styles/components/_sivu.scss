@@ -1,0 +1,56 @@
+@import '../settings';
+
+h1 {
+  font-weight: 900;
+}
+h2 {
+  font-weight: 600;
+  color: $dark-grey;
+}
+.anchor {
+  color: $dark-grey;
+}
+.sivu-element {
+  margin: 15px 0;
+  color: $dark-grey;
+  display: block;
+}
+.sivu {
+  padding-top: 30px;
+  padding-bottom: 100px;
+}
+.sivu-breadcrump {
+  i {
+    vertical-align: super;
+    font-size: 22px;
+    padding-right: 10px;
+  }
+  padding-bottom: 5px;
+}
+.sivu-breadcrump-item {
+  font-weight: 400;
+  max-width: 250px;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-right: 15px;
+
+}
+
+.sivu-breadcrump-separator {
+  margin: 0 15px;
+  font-size: 20px;
+  color: $soft-grey;
+}
+a {
+  color: #378703;
+  text-decoration: none;
+  font-weight: 600;
+}
+a.link:visited {
+  color: #0052CC;
+}
+a[href*='//']{
+
+}

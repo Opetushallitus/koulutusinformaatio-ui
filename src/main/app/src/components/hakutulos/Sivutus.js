@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
-import qs from 'query-string';
+import parse from "url-parse";
 import { withRouter } from 'react-router-dom';
 import {translate} from 'react-i18next';
 import '../../assets/styles/components/_sivutus.scss'
@@ -11,23 +11,25 @@ import '../../assets/styles/components/_sivutus.scss'
 class Sivutus extends Component {
 
     handlePagination(event, page) {
-        const search = qs.parse(this.props.location.search);
+        const search = parse(this.props.location.search);
         if (this.props.hakuStore.toggleKoulutus) {
             search.kpage = '' + page;
         } else {
             search.opage = '' + page;
         }
         event.preventDefault();
-        this.props.history.replace({search: qs.stringify(search)});
+        this.props.history.replace({search: "" //qs.stringify(search)
+        });
     }
 
     handlePageSizeChange(event) {
-        const search = qs.parse(this.props.location.search);
+        const search = parse(this.props.location.search);
         search.kpage = '1';
         search.opage = '1';
         search.pagesize = '' + event.target.value;
         event.preventDefault();
-        this.props.history.replace({search: qs.stringify(search)});
+        this.props.history.replace({search: "" //qs.stringify(search)
+        });
     }
 
     createPaginationItem(page, active) {
