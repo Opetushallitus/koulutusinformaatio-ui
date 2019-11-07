@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import { inject, observer } from 'mobx-react';
 import { Localizer as l } from "../../tools/Utils";
-import qs from 'querystring';
+import parse from "url-parse";
 import Media from 'react-media';
 import '../../assets/styles/components/_vertailu.scss';
 
@@ -15,18 +15,18 @@ class Vertailu extends Component {
 
     constructor(props) {
         super(props);
-        const search = qs.parse(this.props.location.search);
+        const search = parse(this.props.location.search);
         this.state = {
             hakuUrl: search.haku ? search.haku : "/haku"
         };
     }
 
     componentDidMount() {
-        const search = qs.parse(this.props.location.search.slice(1));
+        const search = parse(this.props.location.search.slice(1));
         if (search.haku) {
             const splitted = search.haku.split('?');
             if (splitted[1]) {
-                const haku = qs.parse(search.haku.split('?')[1]);
+                const haku = parse(search.haku.split('?')[1]);
                 this.props.hakuStore.setToggle(haku.toggle);
             }
         }

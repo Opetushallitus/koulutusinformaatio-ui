@@ -4,11 +4,17 @@
   "homepage": "/konfo",
   "private": true,
   "dependencies": {
+    "@contentful/rich-text-react-renderer": "^13.4.0",
+    "@contentful/rich-text-types": "^13.4.0",
     "ajv": "^6.5.2",
+    "contentful": "^3.5.0",
+    "csvtojson": "^2.0.10",
     "i18next": "^11.6.0",
     "i18next-browser-languagedetector": "^2.2.3",
     "i18next-xhr-backend": "^1.5.1",
     "jschannel": "1.0.2",
+    "lodash": "^4.17.15",
+    "material-icons": "^0.3.1",
     "mobx": "^4.3.1",
     "mobx-react": "^5.2.5",
     "oph-urls-js": "github:Opetushallitus/oph-urls-js#master",
@@ -16,11 +22,13 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-i18next": "^7.10.1",
+    "react-markdown": "^4.2.2",
     "react-media": "^1.8.0",
     "react-render-html": "0.6.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.1",
-    "superagent": "^3.8.3"
+    "superagent": "^3.8.3",
+    "url-parse": "^1.4.7"
   },
   "config": {
     "port": "3005",

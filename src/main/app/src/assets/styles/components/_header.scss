@@ -1,4 +1,6 @@
 @import '../settings';
+$material-icons-font-path: '~material-icons/iconfont/';
+@import '~material-icons/iconfont/material-icons.scss';
 
 .navigation-bar {
     background-color: $dark-flat-green;
@@ -14,7 +16,7 @@
     font-weight: 600;
     position: absolute;
     z-index: 1;
-    margin: 3px 0 0 65px;
+    margin: 16px 0 0 85px;
     color: white;
     text-decoration: none;
     &:hover {
@@ -24,12 +26,23 @@
     a{
         line-height: normal!important;
     }
+    span {
+        display: block;
+        text-transform: uppercase;
+        font-size: 14px;
+        line-height: 16px;
+        font-weight: 700;
+    }
+    .navbar-studyinfo {
+        font-weight: 100;
+        font-size: 12px;
+    }
 }
 
 .navigation-header-wrapper {
-    top: 0px;
-    position: fixed;
-    left: 0px;
+    top: 0;
+    left: 0;
+    height: 69px;
     width: 100%;
     z-index: 99;
 }

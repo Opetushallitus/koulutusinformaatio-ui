@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {observer, inject} from 'mobx-react';
 import { withRouter } from 'react-router-dom'
-import qs from 'query-string';
+import parse from "url-parse";
 import { matchPath } from 'react-router';
 import {translate} from 'react-i18next';
 import '../../assets/styles/components/_hakunavigatio.scss';
@@ -14,7 +14,7 @@ class Hakunavigaatio extends Component {
 
     updateStores(haku) {
         const splitted = haku.split('?');
-        const search = qs.parse(splitted[1]);
+        const search = parse(splitted[1]);
         const match = matchPath(splitted[0], {
             path: '/haku/:keyword',
             exact: true,
@@ -26,7 +26,7 @@ class Hakunavigaatio extends Component {
 
     constructor(props) {
         super(props);
-        const search = qs.parse(this.props.location.search);
+        const search = parse(this.props.location.search);
         this.state = {
             hakuUrl: search.haku ? search.haku : "/haku"
         };
@@ -37,7 +37,7 @@ class Hakunavigaatio extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.props = nextProps;
-        const search = qs.parse(this.props.location.search);
+        const search = parse(this.props.location.search);
         this.setState({
             hakuUrl: search.haku ? search.haku : "/haku"
         });

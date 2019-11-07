@@ -1,6 +1,8 @@
 server:
   servlet:
     context-path: /konfo
+bucket:
+  url: https://{{konfo_content_s3_bucket}}/
 host:
   host-oppija: https://{{host_beta}}
 kartta:

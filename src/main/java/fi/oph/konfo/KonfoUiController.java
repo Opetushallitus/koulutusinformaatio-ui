@@ -9,6 +9,7 @@ public class KonfoUiController {
     @GetMapping(value = {
             "/",
             "/haku",
+            "/sivu/*",
             "/haku/*",
             "/koulutus",
             "/koulutus/*",
