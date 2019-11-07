@@ -1,8 +1,21 @@
+@import '../settings';
+
+.search-wrapper-filter{
+    border-left: 1px solid $black;
+    border-right: 0;
+    border-top: 0;
+    border-bottom: 0;
+    background-color: transparent;
+    padding-left: 10px;
+    color: $black;
+    height: 40px;
+}
+
 .filter-button{
     position: absolute;
     z-index: 10002;
     top: -1em;
-    color: #ffffff;
+    color: $black;
     text-align: center;
     span{
         background-image: -webkit-gradient( linear, left top, left bottom, color-stop(0, #5B5B5B), color-stop(0.47, #464646));
@@ -101,7 +114,6 @@
     }
     
 }
-
 @media (max-width: 768px){
     .search-filter{
         padding: 0;

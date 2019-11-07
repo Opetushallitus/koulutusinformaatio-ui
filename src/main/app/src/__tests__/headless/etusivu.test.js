@@ -78,7 +78,7 @@ describe('Etusivu', () => {
         expect.assertions(6);
         await page.click('.menu.is-closed');
         await page.click('.palaute a');
-        expect(await page.$eval('.palaute-form-header', e => e.innerHTML)).toBe('Mitä mieltä olit sivusta?');
+        expect(await page.$eval('.palaute-form-header', e => e.innerHTML)).toBe('Mitä mieltä olet uudesta Opintopolusta?');
         expect((await page.$$('.icon-outline-star_border')).length).toEqual(5);
         expect(await page.$('.palaute-form-container .btn.inactive')).toBeDefined();
         await page.click('.icon-outline-star_border');

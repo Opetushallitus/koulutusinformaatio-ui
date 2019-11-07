@@ -36,6 +36,8 @@ Kehityksen aikana käyttöliittymää kannattaa ajaa pelkästään nodella, joll
 
 `cd src/main/app`
 
+Ensimmäisellä kerralla `npm rebuild node-sass`
+
 `npm start`
 
 Käyttöliittymä aukeaa osoitteeseen:

@@ -2,25 +2,24 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { translate } from 'react-i18next';
 import MenuButton from './MenuButton';
-import ServicesButton from './ServicesButton';
 import '../../assets/styles/components/_header.scss';
 
 @translate()
 class Header extends Component {
     
     render() {
-        const {t} = this.props;
+        const {t, toggleMenu, isOpen} = this.props;
         return (
             <React.Fragment>
                 <div className="navigation-header-wrapper">
-                    <div className="container-fluid navigation-bar"/>
-                    <div className="container navigation">
+                    <div className="navigation-bar"/>
+                    <div className="navigation">
                         <div className="row">
-                            <MenuButton changeLanguage={this.changeLanguage} togglePalaute={this.togglePalaute}/>       
-                            <Link to={{ pathname: '/'}} className="navbar-brand" aria-label="Link to home page">{t('opintopolku')}</Link>
-                        </div>
-                        <div>
-                            <ServicesButton></ServicesButton>
+                            <MenuButton changeLanguage={this.changeLanguage} toggleMenu={toggleMenu} isOpen={isOpen}/>
+                            <Link to={{ pathname: '/'}} className="navbar-brand" aria-label="Link to home page">
+                                <span>{t('opintopolku')}</span>
+                                <span className="navbar-studyinfo">{t('studyinfo.fi')}</span>
+                            </Link>
                         </div>
                     </div>
                 </div>
