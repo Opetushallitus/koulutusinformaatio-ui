@@ -35,7 +35,7 @@ class Hakunavigaatio extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.props = nextProps;
         const search = qs.parse(this.props.location.search);
         this.setState({

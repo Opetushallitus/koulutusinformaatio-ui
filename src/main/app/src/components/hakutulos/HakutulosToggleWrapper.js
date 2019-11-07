@@ -5,7 +5,7 @@ import HakutulosToggle from "./HakutulosToggle";
 @observer
 class HakutulosToggleWrapper extends Component {
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.props = nextProps;
     }
 

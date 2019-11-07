@@ -4,6 +4,8 @@
   "homepage": "/konfo",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.5.1",
+    "@material-ui/icons": "^4.5.1",
     "ajv": "^6.5.2",
     "i18next": "^11.6.0",
     "i18next-browser-languagedetector": "^2.2.3",
@@ -13,7 +15,7 @@
     "mobx-react": "^5.2.5",
     "oph-urls-js": "github:Opetushallitus/oph-urls-js#master",
     "oskari-rpc": "2.0.5",
-    "react": "^16.4.2",
+    "react": "^16.11.0",
     "react-dom": "^16.4.2",
     "react-i18next": "^7.10.1",
     "react-media": "^1.8.0",

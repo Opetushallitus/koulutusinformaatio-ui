@@ -7,7 +7,7 @@ import {translate} from 'react-i18next';
 @observer
 class HakutulosSummary extends Component {
 
-    componentWillReceiveProps(nextProps){
+    UNSAFE_componentWillReceiveProps(nextProps){
         this.props = nextProps;
     }
 
@@ -15,7 +15,10 @@ class HakutulosSummary extends Component {
         const {t} = this.props;
         return (
             <div className="col-12 Etsinta">
-                <h1 aria-live="assertive">{`${t('haku.summary', {count: this.props.hakuStore.totalCount})} ${t('haku.hakusanalla')}`}
+                {/* <h1 aria-live="assertive">{`${t('haku.summary', {count: this.props.hakuStore.totalCount})} ${t('haku.hakusanalla')}`}
+                    <span className="highlight">{this.props.hakuStore.keyword}</span>
+                </h1> */}
+                <h1 aria-live="assertive"><b>{`${t('haku.hakusana')} `}</b>
                     <span className="highlight">{this.props.hakuStore.keyword}</span>
                 </h1>
             </div>
