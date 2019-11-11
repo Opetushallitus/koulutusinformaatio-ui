@@ -2,36 +2,6 @@
 $material-icons-font-path: '~material-icons/iconfont/';
 @import '~material-icons/iconfont/material-icons.scss';
 
-#sidebar-wrapper {
-    width: 330px;
-    display: block;
-    height: 100%;
-    min-height: 100vh;
-    color: $white;
-    top: 69px;
-    position: absolute;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background: #fff;
-    -webkit-box-shadow: 9px 4px 42px -16px rgba(0,0,0,0.1);
-    -moz-box-shadow: 9px 4px 42px -16px rgba(0,0,0,0.1);
-    box-shadow: 9px 4px 42px -16px rgba(0,0,0,0.1);
-    @include slideInLeft(
-        $duration: .1s,
-        $delay: 0s,
-        $function: ease
-    );
-    &::-webkit-scrollbar {
-        display: none;
-    }
-    &.is-closing-true{
-        @include slideOutLeft(
-            $duration: .1s,
-            $delay: 0s,
-            $function: ease
-        );
-    }
-}
 .sidebar-input-container {
     width: 100%;
     background-color: $side-menu-input-background;
@@ -54,7 +24,7 @@ $material-icons-font-path: '~material-icons/iconfont/';
         }
 
         input[type="submit"] {
-            margin-left: -33px;
+            margin-left: -53px;
             height: 33px;
             width: 33px;
             background: $dark-flat-green;

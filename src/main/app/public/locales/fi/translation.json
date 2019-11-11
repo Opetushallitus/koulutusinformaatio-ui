@@ -1,5 +1,10 @@
 {
-  "opintopolku": "Opintopolku",
+  "opintopolku": {
+    "brand": "Opintopolku linkki",
+    "otsikko": "Opintopolku",
+    "studyinfo": "Studyinfo.fi",
+    "beta": "beta"
+  },
   "valikko": "Valikko",
   "ja": "ja",
   "sekä": "sekä",

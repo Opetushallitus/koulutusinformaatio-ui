@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './assets/styles/styles.scss';
+import clsx from 'clsx';
 import { Switch, Route } from 'react-router-dom';
 import KonfoStore from './stores/konfo-store';
 import { Provider } from 'mobx-react';
@@ -18,6 +19,7 @@ import { styles } from './styles';
 const konfoStore = new KonfoStore();
 
 const App = props => {
+  const {classes} = props;
   const hakuStore = konfoStore.hakuStore;
   const hakuehtoStore = konfoStore.hakuehtoStore;
   const urlStore = konfoStore.urlStore;
@@ -47,17 +49,21 @@ const App = props => {
     >
       <I18nextProvider i18n={i18n} initialLanguage={'fi'}>
         <React.Fragment>
-          <div id="page-content-wrapper">
+          <div className={classes.root}>
             <Header toggleMenu={toggleMenu} isOpen={menuVisible} />
-            {menuVisible ? <SideMenu closeMenu={closeMenu} /> : null}
-            <div id="app-main-content" className={menuVisible ? 'menu-visible' : 'menu-invisible'}>
+            <SideMenu menuVisible={menuVisible} closeMenu={closeMenu} />
+            <main id="app-main-content"
+                  className={clsx(classes.content, {
+                    [classes.contentShift]: menuVisible,
+                  })}
+            >
               <Switch>
                 <Route exact path="/" component={Etusivu} />
                 <Route path="/sisaltohaku/" component={Sisaltohaku} />
                 <Route path="/" component={Hakusivu} />
               </Switch>
               <Footer changeLanguage={this.changeLanguage} />
-            </div>
+            </main>
           </div>
           <PalautePopup />
         </React.Fragment>
