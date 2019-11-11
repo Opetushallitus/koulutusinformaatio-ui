@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Hakupalkki from './haku/Hakupalkki';
 import Haku from './haku/Haku';
+import Sivu from './sivu/Sivu';
 import Koulutus from './koulutus/Koulutus';
 import Oppilaitos from './oppilaitos/Oppilaitos';
 import Toteutus from './toteutus/Koulutus';
@@ -40,7 +41,13 @@ class Hakusivu extends Component {
         let moveMainContent =  this.state.isFilterDisplayed; 
         return (
             <React.Fragment>
-                <Hakupalkki isRajainVisible={this.moveMainContent}/>
+                <div id="call-to-action-secondary">
+                    <div className="col-12">
+                        <div className="header-search header-search--secondary">
+                            <Hakupalkki isRajainVisible={this.moveMainContent}/>
+                        </div>
+                    </div>
+                </div>
                 <main id="main-content" className={moveMainContent ? "move-right" : "center-content"}>
                     <Route path={'/haku/:keyword?'} render={(props) => <Haku {...props} isComponentUpdated={this.onComponentUpdate}/>}/>
                     <Route path={'/koulutus/:oid'} render={(props) => <Koulutus {...props} />}/>
@@ -48,6 +55,7 @@ class Hakusivu extends Component {
                     <Route path={'/toteutus/:oid'} render={(props) => <Toteutus {...props} />}/>
                     <Route path={'/hakukohde/:oid'} render={(props) => <Hakukohde {...props} />}/>
                     <Route path={'/vertailu'} render={(props) => <Vertailu {...props} />}/>
+                    <Route path={'/sivu/:id'} render={(props) => <Sivu {...props} />}/>
                 </main>
             </React.Fragment>
         );

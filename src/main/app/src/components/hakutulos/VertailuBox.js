@@ -15,7 +15,7 @@ class VertailuBox extends Component {
       this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.props = nextProps;
 }
 

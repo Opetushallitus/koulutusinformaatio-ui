@@ -1,3 +1,7 @@
 @import './grid/flex-grid.scss';
 @import 'font-style';
 @import 'base';
+@import './animations';
+body {
+  background-color: $main-bg;
+}

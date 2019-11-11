@@ -219,9 +219,9 @@ class HakuStore {
                 this.rest.searchOppilaitoksetPromise(this.keyword, this.paging, this.filter)
             ], (result) => { runInAction(() => {
                 this.koulutusResult = result[0] ? result[0].hits : [];
-                this.koulutusCount = result[0] ? result[0].hits.length : 0;
+                this.koulutusCount = (result[0] && result[0].hits.length > 0) ? result[0].hits.length : 0;
                 this.oppilaitosResult = result[1] ? result[1].hits : [];
-                this.oppilaitosCount = result[1] ? result[1].hits.length : 0;
+                this.oppilaitosCount = (result[1] && result[1].hits.length > 0) ? result[1].hits.length : 0;
                 if(onSuccess) {
                     onSuccess()
                 }

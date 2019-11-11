@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import qs from 'query-string';
+import parse from "url-parse";
 import {observer, inject} from 'mobx-react';
 import Hakutulos from '../hakutulos/Hakutulos';
 import { matchPath } from 'react-router';
@@ -24,7 +24,7 @@ class Haku extends Component {
     };
 
     updateStores() {
-        const search = qs.parse(this.props.location.search);
+        const search = parse(this.props.location.search);
         const match = matchPath(this.props.history.location.pathname, {
             path: '/haku/:keyword',
             exact: true,
