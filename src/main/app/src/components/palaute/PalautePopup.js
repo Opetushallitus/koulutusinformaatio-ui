@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import '../../assets/styles/components/_palaute.scss';
 import Palaute from "../common/Palaute";
 
-
 class PalautePopup extends Component {
 
     constructor(props) {
@@ -37,7 +36,7 @@ class PalautePopup extends Component {
                     </div>
                 </div>
             </div>
-            {this.state.show ? <Palaute togglePalaute={hide}/> : null}
+            {this.state.show ? <Palaute open={true} hide={hide}/>: null}
         </React.Fragment>;
     }
 }

@@ -137,6 +137,10 @@ $material-icons-font-path: '~material-icons/iconfont/';
 .palaute-form-rating {
     margin-bottom: 15px;
     flex-direction: row;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 240px;
 }
 .palaute-form-star {
     cursor: pointer;
@@ -149,11 +153,11 @@ $material-icons-font-path: '~material-icons/iconfont/';
 }
 
 .palaute-form-comment {
-    width: 60%;
-    padding-bottom: 10px;
+    width: 500px;
+    height: 90px;
 }
 .palaute-form-comment textarea {
-    height: 200px;
+    height: 90px;
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -170,15 +174,4 @@ $material-icons-font-path: '~material-icons/iconfont/';
     font-size: 16px;
     color: $grey;
     text-align: center;
-}
-
-.palaute-form .inactive {
-    background-color: #d6d6d6;
-    border-color: #b6b9b6;
-}
-.palaute-form-button {
-    width: 220px;
-    cursor: pointer;
-    background-color: $dark-flat-green;
-
 }
