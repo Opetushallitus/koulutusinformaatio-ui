@@ -15,6 +15,7 @@ import i18n from './tools/i18n';
 import { I18nextProvider } from 'react-i18next';
 import { withStyles } from '@material-ui/core';
 import { styles } from './styles';
+import Hidden from "@material-ui/core/Hidden";
 
 const konfoStore = new KonfoStore();
 
@@ -49,22 +50,40 @@ const App = props => {
     >
       <I18nextProvider i18n={i18n} initialLanguage={'fi'}>
         <React.Fragment>
-          <div className={classes.root}>
-            <Header toggleMenu={toggleMenu} isOpen={menuVisible} />
-            <SideMenu menuVisible={menuVisible} closeMenu={closeMenu} />
-            <main id="app-main-content"
-                  className={clsx(classes.content, {
-                    [classes.contentShift]: menuVisible,
-                  })}
-            >
-              <Switch>
-                <Route exact path="/" component={Etusivu} />
-                <Route path="/sisaltohaku/" component={Sisaltohaku} />
-                <Route path="/" component={Hakusivu} />
-              </Switch>
-              <Footer changeLanguage={this.changeLanguage} />
-            </main>
-          </div>
+            <Hidden smUp implementation="css">
+              <div className={classes.root}>
+                <Header toggleMenu={toggleMenu} isOpen={menuVisible} />
+              <SideMenu small={true} menuVisible={menuVisible} closeMenu={closeMenu} />
+              <main id="app-main-content"
+                    className={clsx(classes.smContent, {
+                      [classes.smContentShift]: menuVisible,
+                    })}>
+                <Switch>
+                  <Route exact path="/" component={Etusivu} />
+                  <Route path="/sisaltohaku/" component={Sisaltohaku} />
+                  <Route path="/" component={Hakusivu} />
+                </Switch>
+                <Footer changeLanguage={this.changeLanguage} />
+              </main>
+              </div>
+            </Hidden>
+            <Hidden xsDown implementation="css">
+              <div className={classes.root}>
+                <Header toggleMenu={toggleMenu} isOpen={menuVisible} />
+              <SideMenu small={false} menuVisible={menuVisible} closeMenu={closeMenu} />
+              <main id="app-main-content"
+                    className={clsx(classes.content, {
+                      [classes.contentShift]: menuVisible,
+                    })}>
+                <Switch>
+                  <Route exact path="/" component={Etusivu} />
+                  <Route path="/sisaltohaku/" component={Sisaltohaku} />
+                  <Route path="/" component={Hakusivu} />
+                </Switch>
+                <Footer changeLanguage={this.changeLanguage} />
+              </main>
+              </div>
+            </Hidden>
           <PalautePopup />
         </React.Fragment>
       </I18nextProvider>

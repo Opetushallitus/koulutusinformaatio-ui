@@ -94,15 +94,25 @@ class SideMenu extends Component {
 
         return (
             <React.Fragment>
-                <Drawer open={this.props.menuVisible}
-                        className={classes.drawer}
-                        variant="persistent"
-                        anchor="left"
-                        classes={{
-                            paper: classes.drawerPaper,
-                        }}>
-                    {innards}
-                </Drawer>
+                {this.props.small ?
+                    <Drawer open={this.props.menuVisible}
+                            className={classes.smDrawer}
+                            variant="persistent"
+                            anchor="left"
+                            classes={{
+                                paper: classes.smDrawerPaper,
+                            }}>
+                        {innards}
+                    </Drawer> :
+                    <Drawer open={this.props.menuVisible}
+                            className={classes.drawer}
+                            variant="persistent"
+                            anchor="left"
+                            classes={{
+                                paper: classes.drawerPaper,
+                            }}>
+                        {innards}
+                    </Drawer>}
             </React.Fragment>
         );
     }

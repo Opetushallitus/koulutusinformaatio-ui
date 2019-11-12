@@ -10,6 +10,45 @@ export const sideMenuStyles = theme => ({
     drawerPaper: {
         width: drawerWidth,
     },
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing(3),
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        marginLeft: -drawerWidth,
+    },
+    contentShift: {
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginLeft: 0,
+    },
+    smDrawer: {
+        width: "100%",
+        flexShrink: 0,
+    },
+    smDrawerPaper: {
+        width: "100%",
+    },
+    smContent: {
+        flexGrow: 1,
+        padding: theme.spacing(3),
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        marginLeft: "-100%",
+    },
+    smContentShift: {
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginLeft: 0,
+    },
     inputBackground: {
         backgroundColor: colors.sideInputBackground,
         paddingLeft: "20px",
@@ -47,22 +86,6 @@ export const sideMenuStyles = theme => ({
         padding: theme.spacing(0, 1),
         ...theme.mixins.toolbar,
         justifyContent: 'flex-end',
-    },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(3),
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        marginLeft: -drawerWidth,
-    },
-    contentShift: {
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-        marginLeft: 0,
-    },
+    }
 });
 
