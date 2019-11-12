@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { colors } from '../../styles';
 import { withRouter} from 'react-router-dom';
 import {inject, observer} from 'mobx-react';
 import SidebarValikko from "./SidebarValikko";
@@ -8,80 +7,11 @@ import { withStyles } from '@material-ui/core/styles';
 import '../../assets/styles/components/_side-menu.scss';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
-import {drawerWidth} from '../../styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import Murupolku from "./Murupolku";
-
-const sideMenuStyles = theme => ({
-    root: {
-        display: 'flex',
-        marginLeft: "20px",
-        paddingLeft: "20px"
-    },
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-    },
-    drawerPaper: {
-        width: drawerWidth,
-    },
-    inputBackground: {
-        backgroundColor: colors.sideInputBackground,
-        paddingLeft: "20px",
-        paddingTop: "91px",
-        paddingBottom: "20px",
-    },
-    murupolku: {
-        paddingLeft: "20px",
-
-    },
-    inputRoot: {
-        height: "35px",
-        display: 'flex',
-        alignItems: 'center',
-        borderRadius: 0,
-        width: 290,
-    },
-    input: {
-        borderRadius: 0,
-        marginLeft: theme.spacing(1),
-        flex: 1,
-    },
-    iconButton: {
-        minWidth: "40px",
-        maxWidth: "40px",
-        borderRadius: 0,
-    },
-    divider: {
-        height: 28,
-        margin: 4,
-    },
-    drawerHeader: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: theme.spacing(0, 1),
-        ...theme.mixins.toolbar,
-        justifyContent: 'flex-end',
-    },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(3),
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        marginLeft: -drawerWidth,
-    },
-    contentShift: {
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-        marginLeft: 0,
-    },
-});
+import {styles} from "../../styles";
 
 @translate()
 @inject("contentfulStore")
@@ -178,4 +108,4 @@ class SideMenu extends Component {
     }
 }
 
-export default withRouter(withStyles(sideMenuStyles, { withTheme: true })(SideMenu));
+export default withRouter(withStyles(styles, { withTheme: true })(SideMenu));

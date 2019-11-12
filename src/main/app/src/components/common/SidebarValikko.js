@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter} from 'react-router-dom';
-import { colors } from '../../styles';
+import { colors } from '../../colors';
 import {withStyles} from "@material-ui/core";
 import {translate} from "react-i18next";
 import List from '@material-ui/core/List';

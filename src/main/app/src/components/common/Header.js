@@ -12,7 +12,7 @@ import Chip from '@material-ui/core/Chip';
 import MenuIcon from '@material-ui/icons/Menu';
 import Icon from '@material-ui/core/Icon';
 import {withStyles} from "@material-ui/core";
-import { colors } from '../../styles';
+import { colors } from '../../colors';
 
 const headerStyles = theme => ({
     root: {

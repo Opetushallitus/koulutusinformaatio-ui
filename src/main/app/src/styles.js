@@ -1,37 +1,11 @@
 import { createStyles } from '@material-ui/core/styles';
-
-export const drawerWidth = 330;
-export const colors = {
-    green: "#378703",
-    white: "#FFF",
-    grey: "#4C4C4C",
-    greyBackground: "#F6F7F9",
-    sideInputBackground: "#EDF1F5",
-    lightGrey: "#b2b2b2"
-};
-// const contentWidth = 1080;
+import {sideMenuStyles} from "./sideMenuStyles";
 
 export const styles = theme =>
   createStyles({
-
+    ...sideMenuStyles(theme),
     root: {
       display: 'flex',
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-      transition: theme.transitions.create('margin', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-      }),
-      marginLeft: -drawerWidth,
-    },
-    contentShift: {
-      transition: theme.transitions.create('margin', {
-          easing: theme.transitions.easing.easeOut,
-          duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
     },
     // ******************************************************************
     // General
