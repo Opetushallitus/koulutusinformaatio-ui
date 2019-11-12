@@ -14,7 +14,12 @@ class Palvelu extends Component {
 
         const a = palvelu.image ? asset[palvelu.image.id] : null;
         const color = palvelu.color || "sininen";
-        return <div className={`services-item ${color}`} key={palvelu.id}  >
+        const forwardToPage = () => {
+            if(palvelu.linkki && palvelu.linkki.id) {
+                this.props.history.push(`sivu/${palvelu.linkki.id}`);
+            }
+        };
+        return <div className={`services-item ${color}`} key={palvelu.id} onClick={forwardToPage}>
             <div className="services-item-header">
                 { a ? <img className="card-icon" src={a.url} key={a.id} alt="star"/> : null }{palvelu.name}
             </div>
