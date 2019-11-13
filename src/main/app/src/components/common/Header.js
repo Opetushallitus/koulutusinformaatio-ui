@@ -13,6 +13,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Icon from '@material-ui/core/Icon';
 import {withStyles} from "@material-ui/core";
 import { colors } from '../../colors';
+import HeaderIcon from '../../assets/images/Header.svg'
 
 const headerStyles = theme => ({
     root: {
@@ -29,6 +30,10 @@ const headerStyles = theme => ({
         fontWeight: "bold",
         textTransform: 'uppercase'
 
+    },
+    icon: {
+        width: "160px",
+        height: "25px"
     },
     beta: {
         color: colors.green,
@@ -68,12 +73,9 @@ class Header extends Component {
                             className={clsx(classes.menuButton)}>
                             {isOpen?<Icon>close</Icon>: <MenuIcon />}
                         </IconButton>
-                        <Typography variant="h6" noWrap>
-                            <Link to={{ pathname: '/'}} className="navbar-brand" aria-label={t('opintopolku.brand')}>
-                                <span>{t('opintopolku.otsikko')}</span>
-                                <span className="navbar-studyinfo">{t('opintopolku.studyinfo')}</span>
-                            </Link>
-                        </Typography>
+                        <Icon className={classes.icon}>
+                            <img alt={t('opintopolku.brand')} src={HeaderIcon}/>
+                        </Icon>
                         <Chip className={classes.beta}
                               size='small'
                               classes={{label: classes.betaLabel}}
