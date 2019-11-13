@@ -29,37 +29,15 @@ class Hakurajain extends Component {
         document.removeEventListener('mousedown', this.handleClickOutside);
     }
 
-    getBoundingClientRect() {
-        const rect = document.getElementById("main-content").getBoundingClientRect();
-        return {
-          height: rect.height
-        };
-    }
 
     setWrapperRef(node) {
         this.wrapperRef = node;
     }
 
-    calculateLayerHeight(){
-        const element = this.getBoundingClientRect();
-        const filtersForm = document.getElementById('filters-form');
-        const layerHeight = filtersForm && filtersForm.clientHeight <= window.innerHeight - 175 ? element.height : window.innerHeight - 175;
-        return layerHeight;
-    }
-
-    handleWindowResize() {
-        setTimeout(() => {
-            const layerHeight = this.calculateLayerHeight();
-            this.setState({
-                filtersHeight: layerHeight
-              });
-        },100) 
-    }
-
     handleClickOutside(event) {   
         const clickedElementId = event.target && event.target.offsetParent ? event.target.offsetParent.id : "no-id";
         const isFiltersButton = clickedElementId === "filters-button";
-        const isToggleTabs = event.target.parentElement.className === "KoulutuksetOppilaitokset";
+        const isToggleTabs = (event.target.parentElement || {}).className === "KoulutuksetOppilaitokset";
         if ((this.wrapperRef && !this.wrapperRef.contains(event.target)) && !isToggleTabs && !isFiltersButton) {
             this.toggleRajain();
         }
@@ -104,14 +82,6 @@ class Hakurajain extends Component {
 
     toggleRajain() {
         this.props.hakuehtoStore.toggleRajain();
-        //this.props.shareVisibility();
-        setTimeout(() => {
-            const layerHeight = this.calculateLayerHeight();
-            this.setState({
-                filtersHeight: this.state.isVisible ? 0 : layerHeight,
-                isVisible: !this.state.isVisible
-        })
-        },50)
     }
 
     clear() {
