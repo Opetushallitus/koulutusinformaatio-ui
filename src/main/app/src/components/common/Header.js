@@ -12,6 +12,7 @@ import Icon from '@material-ui/core/Icon';
 import {withStyles} from "@material-ui/core";
 import { colors } from '../../colors';
 import HeaderIcon from '../../assets/images/Header.svg'
+import {withRouter} from "react-router-dom";
 
 const headerStyles = theme => ({
     root: {
@@ -31,7 +32,8 @@ const headerStyles = theme => ({
     },
     icon: {
         width: "160px",
-        height: "25px"
+        height: "25px",
+        cursor: "pointer"
     },
     beta: {
         color: colors.green,
@@ -56,7 +58,10 @@ const headerStyles = theme => ({
 class Header extends Component {
     
     render() {
-        const {t, toggleMenu, isOpen, classes} = this.props;
+        const {t, toggleMenu, isOpen, classes, history} = this.props;
+        const forwardToFrontPage = () => {
+            history.push(`/`);
+        };
         return (<React.Fragment>
                 <CssBaseline />
                 <AppBar
@@ -71,7 +76,8 @@ class Header extends Component {
                             className={clsx(classes.menuButton)}>
                             {isOpen?<Icon>close</Icon>: <MenuIcon />}
                         </IconButton>
-                        <Icon className={classes.icon}>
+                        <Icon className={classes.icon}
+                              onClick={forwardToFrontPage}>
                             <img alt={t('opintopolku.brand')} src={HeaderIcon}/>
                         </Icon>
                         <Chip className={classes.beta}
@@ -85,4 +91,4 @@ class Header extends Component {
     }
 }
 
-export default withStyles(headerStyles, { withTheme: true })(Header);
+export default withRouter(withStyles(headerStyles, { withTheme: true })(Header));
