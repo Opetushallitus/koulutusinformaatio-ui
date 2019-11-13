@@ -18,17 +18,14 @@ class Hakurajain extends Component {
         };
         this.setWrapperRef = this.setWrapperRef.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
-        this.handleWindowResize = this.handleWindowResize.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     componentDidMount () {
-        window.addEventListener('resize', this.handleWindowResize); 
         document.addEventListener('mousedown', this.handleClickOutside);
     }
 
     componentWillUnmount() {
-        window.removeEventListener('resize', this.handleWindowResize);
         document.removeEventListener('mousedown', this.handleClickOutside);
     }
 

@@ -8,6 +8,43 @@ import ReactMarkdown from 'react-markdown';
 import Kortti from "./kortti/Kortti";
 import Uutinen from "./uutinen/Uutinen";
 import Palvelu from "./palvelu/Palvelu";
+import Grid from '@material-ui/core/Grid';
+import {colors} from "../colors";
+import {withStyles} from "@material-ui/core";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import clsx from "clsx";
+
+const etusivuStyles = theme => ({
+    content: {
+        marginLeft: "90px",
+        marginRight: "90px"
+    },
+    header: {
+        fontSize: "28px",
+        paddingLeft: "12px",
+        paddingTop: "60px"
+    },
+    spaceOnBorders: {
+        paddingLeft: 90,
+        paddingRight: 90,
+
+    },
+    oikopolut: {
+        backgroundColor: colors.white,
+        paddingBottom: "100px"
+    },
+    uutiset: {
+        backgroundColor: colors.lightGreyBackground,
+        paddingBottom: "100px"
+    },
+    palvelut: {
+        backgroundColor: colors.white,
+        paddingBottom: "100px"
+    },
+});
+
+
+
 
 @inject("hakuStore")
 @inject("contentfulStore")
@@ -21,19 +58,12 @@ class Etusivu extends Component {
             showMore: false
 
         };
-        this.moveMainContent = this.moveMainContent.bind(this);
         this.showAll = this.showAll.bind(this);
     }
 
     componentDidMount() {
         this.props.hakuehtoStore.clearHakuehdot();
         this.props.hakuStore.clearHaku();
-    }
-
-    moveMainContent() {
-        this.setState({...this.state,
-            isFilterDisplayed: !this.state.isFilterDisplayed            
-        })
     }
 
     showAll() {
@@ -43,11 +73,10 @@ class Etusivu extends Component {
     }
 
     render() {
-        let moveMainContent =  this.state.isFilterDisplayed;
         const {
             info, uutiset, ohjeetJaTuki,
             kortit, palvelut} = this.props.contentfulStore.data;
-
+        const {classes} = this.props;
         const forwardToPage = (id) => {
             this.props.history.push(`sivu/${id}`);
         };
@@ -63,58 +92,79 @@ class Etusivu extends Component {
 
         const Palvelut = (props) => {
             return props.rivit.map(rivi => {
-                return <div className="shortcut-container" key={rivi.map(u => u.id).join()}>
-                    <h1 className="services-container-title">{props.otsikko}</h1>
-                    <div className="services-item-container">
-                        {rivi.map(p => <Palvelu id={p.id} key={p.id}/>)}
-                    </div>
-                </div>;
+                return <React.Fragment>
+                    <h1 className={classes.header}>{props.otsikko}</h1>
+                <Grid container item xs={12} spacing={3} key={rivi.map(u => u.id).join()}>
+
+                    {rivi.map(p => <Palvelu id={p.id} key={p.id}/>)}
+                </Grid></React.Fragment>;
             })};
 
-        return (
-            <React.Fragment>
+        const EtusivuContent = (props) => {
+            const matches = useMediaQuery('(min-width: 979px)');
+            return <React.Fragment>
                 <Route exact path='/' render={() => <Jumpotron/>}/>
-                <div id="main-content" className={`container ${moveMainContent ? "move-right" : "center-content"}`}>
-                    {infos.map((info) =>
-                    {
-                        return <div className="front-page-notification item-link"
-                                    key={info.id}
-                                    onClick={() => forwardToPage(info.linkki.id)}>
+                <div className={clsx(classes.oikopolut, matches? classes.spaceOnBorders: null)}>
+                    <Grid container spacing={3}>
+                        {infos.map((info) => {
+                            return <Grid item xs={12}>
+                                <div className="front-page-notification item-link"
+                                     key={info.id}
+                                     onClick={() => forwardToPage(info.linkki.id)}>
                             <span className="notification-content">
                                      <ReactMarkdown source={info.content}/>
                             </span>
-                        </div>;
-                    })}
-                    <div className="menu-container">
-                        {(single(kortit).kortit || []).map(k => {
-                            return <Kortti id={k.id} key={k.id}/>
+                                </div>
+                            </Grid>;
                         })}
-                    </div>
-                    <div className="news-container">
-                        <h1 className="news-container-title">Ajankohtaista ja uutisia</h1>
-                    </div>
+                        <h1 className={classes.header}>Oikopolut</h1>
+                        <Grid container item xs={12} spacing={3}>
+                            {(single(kortit).kortit || []).map(k => {
+                                return <Kortti id={k.id} key={k.id}/>;
+                            })}
+                        </Grid>
 
-                    {uutisrivit.map((rivi) =>
-                    {
-                        return <div className="news-container" key={rivi.map(u => u.id).join()}>
+                    </Grid>
+                </div>
+
+                <div className={clsx(classes.uutiset, matches? classes.spaceOnBorders: null)}>
+                    <Grid container spacing={3}>
+
+                        <Grid container item xs={12} spacing={3}>
+                            <h1 className={classes.header}>Ajankohtaista ja uutisia</h1>
+                        </Grid>
+
+                        {uutisrivit.map((rivi) => {
+                            return <Grid container item xs={12} spacing={3} key={rivi.map(u => u.id).join()}>
                                 {rivi.map(u => <Uutinen id={u.id} key={u.id}/>)}
-                        </div>
-                    })}
-                    <div className="news-container">
-                        {showMore ?
-                            <div className="news-show-more">
-                                <a role="button" aria-label={"Näytä kaikki"} onClick={this.showAll} className="news-show-button">Näytä kaikki</a>
-                            </div> : null
-                        }
-                    </div>
-                    <Palvelut otsikko={"Muut palvelut"} rivit={palvelurivit} />
-                    <Palvelut otsikko={"Ohjeet ja tuki"} rivit={ohjerivit} />
+                            </Grid>
+                        })}
+
+                        <Grid container item xs={12} spacing={3}>
+                            {showMore ?
+                                <div className="news-show-more">
+                                    <a role="button" aria-label={"Näytä kaikki"} onClick={this.showAll}
+                                       className="news-show-button">Näytä kaikki</a>
+                                </div> : null
+                            }
+                        </Grid>
+
+                    </Grid>
+                </div>
+
+                <div className={clsx(classes.palvelut, matches? classes.spaceOnBorders: null)}>
+                    <Grid container spacing={3}>
+                        <Palvelut otsikko={"Muut palvelut"} rivit={palvelurivit}/>
+                        <Palvelut otsikko={"Ohjeet ja tuki"} rivit={ohjerivit}/>
+                    </Grid>
                 </div>
             </React.Fragment>
-        );  
+        };
+        return <EtusivuContent/>;
     }
 }
 
-export default withRouter(Etusivu);
+
+export default withRouter(withStyles(etusivuStyles, { withTheme: true })(Etusivu));
 
 
