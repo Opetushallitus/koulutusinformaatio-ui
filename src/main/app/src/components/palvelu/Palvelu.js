@@ -63,8 +63,7 @@ class Palvelu extends Component {
             }
         };
 
-        return <Grid item xs={12} sm={6} md={4}
-                     key={palvelu.id}>
+        return <Grid item xs={12} sm={6} md={4}>
             <Card className={clsx(classes.card, classes[color])} key={palvelu.id} onClick={forwardToPage}>
                 <CardHeader
                     avatar={

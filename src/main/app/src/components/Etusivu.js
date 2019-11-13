@@ -92,12 +92,13 @@ class Etusivu extends Component {
 
         const Palvelut = (props) => {
             return props.rivit.map(rivi => {
-                return <React.Fragment>
+                return <Grid container key={rivi.map(u => u.id).join()}>
                     <h1 className={classes.header}>{props.otsikko}</h1>
-                <Grid container item xs={12} spacing={3} key={rivi.map(u => u.id).join()}>
+                <Grid container item xs={12} spacing={3} >
 
                     {rivi.map(p => <Palvelu id={p.id} key={p.id}/>)}
-                </Grid></React.Fragment>;
+                </Grid>
+                </Grid>;
             })};
 
         const EtusivuContent = (props) => {
@@ -107,9 +108,8 @@ class Etusivu extends Component {
                 <div className={clsx(classes.oikopolut, matches? classes.spaceOnBorders: null)}>
                     <Grid container spacing={3}>
                         {infos.map((info) => {
-                            return <Grid item xs={12}>
+                            return <Grid item xs={12} key={info.id}>
                                 <div className="front-page-notification item-link"
-                                     key={info.id}
                                      onClick={() => forwardToPage(info.linkki.id)}>
                             <span className="notification-content">
                                      <ReactMarkdown source={info.content}/>
@@ -120,7 +120,8 @@ class Etusivu extends Component {
                         <h1 className={classes.header}>Oikopolut</h1>
                         <Grid container item xs={12} spacing={3}>
                             {(single(kortit).kortit || []).map(k => {
-                                return <Kortti id={k.id} key={k.id}/>;
+                                return <Kortti id={k.id}
+                                               key={k.id}/>;
                             })}
                         </Grid>
 
@@ -135,8 +136,10 @@ class Etusivu extends Component {
                         </Grid>
 
                         {uutisrivit.map((rivi) => {
-                            return <Grid container item xs={12} spacing={3} key={rivi.map(u => u.id).join()}>
-                                {rivi.map(u => <Uutinen id={u.id} key={u.id}/>)}
+                            return <Grid container item xs={12} spacing={3}
+                                         key={rivi.map(u => u.id).join()}>
+                                {rivi.map(u => <Uutinen id={u.id}
+                                                        key={u.id}/>)}
                             </Grid>
                         })}
 

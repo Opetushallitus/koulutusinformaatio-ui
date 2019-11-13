@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Link, withRouter} from 'react-router-dom';
 import {observer, inject} from 'mobx-react';
 import '../../assets/styles/components/_etusivu.scss';
 import Grid from "@material-ui/core/Grid";
@@ -61,9 +61,8 @@ class Kortti extends Component {
             return a ? a.url : null;
         };
 
-        return <Grid item xs={12} sm={6} md={4}
-                     key={kortti.id}>
-            <Card className={clsx(classes.card, classes[kortti.color])} >
+        return <Grid item xs={12} sm={6} md={4}>
+            <Card className={clsx(classes.card, classes[kortti.color])}>
                 <CardMedia
                     className={classes.media}
                     image={imgUrl(kortti)}
@@ -74,18 +73,17 @@ class Kortti extends Component {
                     {linkit.map(l => {
                         const page = sivu[l.id];
                         return page ?
-                            <div className={classes.link}>
+                            <div className={classes.link}
+                                 key={page.id}>
                                 <Icon>chevron_right</Icon>
-                            <Link key={page.id}
-                                            className={classes.linkElement}
-                                            to={`sivu/${page.id}`}>{page.name}</Link>
+                                <Link className={classes.linkElement}
+                                      to={`sivu/${page.id}`}>{page.name}</Link>
                             </div> : null;
                     })}
                 </CardContent>
             </Card>
         </Grid>;
-
     }
 }
 
-export default withRouter(withStyles(korttiStyles, { withTheme: true })(Kortti));
+export default withRouter(withStyles(korttiStyles, {withTheme: true})(Kortti));

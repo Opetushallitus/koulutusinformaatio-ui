@@ -17,6 +17,9 @@
     "esittely": "Opintopolkun kautta voit suunnitella omia opintoja ja hakea koulutuksiin. Sivuston tiedot ja palvelut ovat luotettavia ja turvallisia.",
     "naytakaikki": "Näytä kaikki vaihtoehdot"
   },
+  "uutinen": {
+    "kategoria": "Uutinen"
+  },
   "footer": {
     "vastuuvapauslauseke": "Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja koulutuksistaan Opintopolussa. Tietojen oikeellisuuden voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.",
     "palaute": "Anna palautetta",
