@@ -59,7 +59,7 @@ class Palvelu extends Component {
         const color = palvelu.color || "sininen";
         const forwardToPage = () => {
             if(palvelu.linkki && palvelu.linkki.id) {
-                this.props.history.push(`sivu/${palvelu.linkki.id}`);
+                this.props.history.push(`/sivu/${palvelu.linkki.id}`);
             }
         };
 
