@@ -7,7 +7,7 @@ import '../assets/styles/components/_etusivu.scss';
 import ReactMarkdown from 'react-markdown';
 import Kortti from "./kortti/Kortti";
 import Uutinen from "./uutinen/Uutinen";
-import Palvelu from "./palvelu/Palvelu";
+import Palvelut from "./palvelu/Palvelut";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import {colors} from "../colors";
@@ -78,9 +78,7 @@ class Etusivu extends Component {
     }
 
     render() {
-        const {
-            info, uutiset, ohjeetJaTuki,
-            kortit, palvelut} = this.props.contentfulStore.data;
+        const {info, uutiset, kortit} = this.props.contentfulStore.data;
         const {classes} = this.props;
         const forwardToPage = (id) => {
             this.props.history.push(`sivu/${id}`);
@@ -89,22 +87,9 @@ class Etusivu extends Component {
         const infos = Object.values(info);
         const single = (entry) => (Object.values(entry)[0] || {});
 
-        const palvelurivit = _.chunk(single(palvelut).linkit, 3);
-        const ohjerivit = _.chunk(single(ohjeetJaTuki).linkit, 3);
         let uutisrivit = _.chunk(single(uutiset).linkit, 3);
         const showMore = this.state.showMore === false && uutisrivit.length > 1;
         uutisrivit = showMore ? _.take(uutisrivit, 1) : uutisrivit;
-
-        const Palvelut = (props) => {
-            return props.rivit.map(rivi => {
-                return <Grid container key={rivi.map(u => u.id).join()}>
-                    <h1 className={classes.header}>{props.otsikko}</h1>
-                <Grid container spacing={3} >
-
-                    {rivi.map(p => <Palvelu id={p.id} key={p.id}/>)}
-                </Grid>
-                </Grid>;
-            })};
 
         const EtusivuContent = (props) => {
             const matches = useMediaQuery('(min-width: 979px)');
@@ -164,12 +149,7 @@ class Etusivu extends Component {
                     </Grid>
                 </div>
 
-                <div className={clsx(classes.palvelut, matches? classes.spaceOnBorders: null)}>
-                    <Grid container>
-                        <Palvelut otsikko={"Muut palvelut"} rivit={palvelurivit}/>
-                        <Palvelut otsikko={"Ohjeet ja tuki"} rivit={ohjerivit}/>
-                    </Grid>
-                </div>
+                <Palvelut/>
             </React.Fragment>
         };
         return <EtusivuContent/>;
