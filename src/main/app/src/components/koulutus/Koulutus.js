@@ -25,7 +25,7 @@ class Koulutus extends Component {
                 "Koulutuksen esittely",
                 "Oppilaitokset"
             ]
-        }
+        };
         this.getSelectedItem=this.getSelectedItem.bind(this);
         this.setSelectedItem=this.setSelectedItem.bind(this);
         this.resetSelectedItem=this.resetSelectedItem.bind(this);

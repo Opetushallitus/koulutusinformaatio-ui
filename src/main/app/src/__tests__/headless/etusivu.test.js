@@ -14,8 +14,9 @@ function response(json) { return {
     status: 200,
     contentType: 'application/json',
     headers: {"Access-Control-Allow-Origin": "*"},
-    body: JSON.stringify(json)}};
-
+    body: JSON.stringify(json)
+}
+}
 beforeAll(async () => {
     browser = await puppeteer.launch(
         {args: ['--no-sandbox']}

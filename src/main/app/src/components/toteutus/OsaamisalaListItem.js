@@ -10,11 +10,11 @@ import {inject} from "mobx-react";
 class OsaamisalaListItem extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             viewContentState: false,
             isCollapsing: false,
-        }
+        };
         this.toggleClass = this.toggleClass.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
     }

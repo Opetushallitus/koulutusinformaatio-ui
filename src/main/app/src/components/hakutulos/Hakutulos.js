@@ -9,11 +9,10 @@ import HakutulosToggleWrapper from './HakutulosToggleWrapper';
 import HakutulosSummary from './HakutulosSummary';
 import HakutulosSuodattimet from './HakutulosSuodattimet'
 import HakutulosBox from '../common/HakutulosBox';
-// import Sivutus from './Sivutus';
-import { translate } from 'react-i18next';
 import VertailuBox from './VertailuBox';
 import '../../assets/styles/components/_hakutulos.scss';
 import { styles } from '../../styles';
+import { withTranslation } from 'react-i18next';
 
 @inject('hakuStore', 'vertailuStore')
 @observer
@@ -190,6 +189,6 @@ class Hakutulos extends Component {
   }
 }
 
-const HakuTulosWithStyles = withStyles(styles)(Hakutulos);
+const HakuTulosWithStyles = withTranslation()(withStyles(styles)(Hakutulos));
 
 export default HakuTulosWithStyles;

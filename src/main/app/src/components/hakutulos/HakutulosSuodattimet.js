@@ -60,7 +60,7 @@ class HakutulosSuodattimet extends Component {
     const { classes, hakuStore } = this.props;
     const { koulutusResult, oppilaitosResult } = hakuStore;
     const objKoulutukset = toJS(koulutusResult);
-    const objOppilatokset = toJS(oppilaitosResult)
+    const objOppilatokset = toJS(oppilaitosResult);
     console.log(Object.entries(toJS(hakuStore)));
     console.log(objKoulutukset);
     console.log(objOppilatokset);
@@ -135,4 +135,4 @@ class HakutulosSuodattimet extends Component {
 
 const HakutulosSuodattimetWithStyles = withStyles(styles)(HakutulosSuodattimet);
 
-export default withRouter(HakutulosSuodattimetWithStyles);
+export default withTranslation()(withRouter(HakutulosSuodattimetWithStyles));

@@ -47,7 +47,7 @@ class ContactInfoRow extends Component{
                 return result;
             }, false)
             
-        }
+        };
         return contactData;
     }
     

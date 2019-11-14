@@ -613,7 +613,7 @@ if (!define) {
                         };
                     }(method);
                 }
-            }
+            };
 
             // Dynamic publish from remote
             var onBind = function(trans, method) {

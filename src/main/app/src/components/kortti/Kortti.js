@@ -57,7 +57,7 @@ class Kortti extends Component {
                 const image = entry.image || {};
                 return image ? asset[image.id] : null;
             };
-            const a = assetForEntry(uutinen)
+            const a = assetForEntry(uutinen);
             return a ? a.url : null;
         };
 

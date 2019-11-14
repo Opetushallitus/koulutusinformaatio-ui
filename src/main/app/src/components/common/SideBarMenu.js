@@ -4,10 +4,10 @@ import '../../assets/styles/components/_sidebar-menu.scss';
 class SideBarMenu extends Component {
     
     constructor(props) {
-        super(props)   
+        super(props);
         this.state = {
           activeIndex: this.props.selected || 0
-        }
+        };
         this.toggleClass= this.toggleClass.bind(this); 
         this.selectedMenuItem = this.selectedMenuItem.bind(this);
     }

@@ -6,7 +6,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { SchoolOutlined, AccountBalanceOutlined } from '@material-ui/icons';
 import qs from 'query-string';
 import '../../assets/styles/components/_hakutulos-toggle.scss';
-import { translate } from 'react-i18next';
 import { styles } from '../../styles';
 
 @inject('hakuStore')

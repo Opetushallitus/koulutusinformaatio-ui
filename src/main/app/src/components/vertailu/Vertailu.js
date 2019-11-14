@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Hakunavigaatio from '../hakutulos/Hakunavigaatio';
 import { Link } from 'react-router-dom';
-import { translate } from 'react-i18next';
 import { inject, observer } from 'mobx-react';
 import { Localizer as l } from "../../tools/Utils";
 import parse from "url-parse";

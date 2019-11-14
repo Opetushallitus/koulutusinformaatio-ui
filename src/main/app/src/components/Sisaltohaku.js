@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
 import {inject, observer} from 'mobx-react';
 import { Link, withRouter } from 'react-router-dom';
 import Murupolku from './common/Murupolku';
@@ -21,7 +20,7 @@ class Sisaltohaku extends Component {
         this.setState({...this.state, search: value});
     };
     doSearch = () => {
-        this.setState({...this.state, originalSearch: this.state.search})
+        this.setState({...this.state, originalSearch: this.state.search});
         this.props.history.push('/sisaltohaku/?hakusana=' + this.state.search);
     };
     currentSearch = () => {

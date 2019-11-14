@@ -33,4 +33,4 @@ class HakukohdeHeader extends Component {
     }
 }
 
-export default withTranslation()(HakukohdeHeader);
+export default withTranslation()(withRouter(HakukohdeHeader));

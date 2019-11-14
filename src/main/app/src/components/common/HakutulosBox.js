@@ -17,7 +17,7 @@ class HakutulosBox extends Component {
     handleKeyPress(e){
         e.key === "Enter" &&
             e.target.id === "add-compare" &&
-                this.props.vertailuStore.selectItem(this.props.vertailuOid, this.props.nimi)
+                this.props.vertailuStore.selectItem(this.props.vertailuOid, this.props.nimi);
             e.target.id === "remove-compare" && 
                 this.props.vertailuStore.removeItem(this.props.vertailuOid)
     }

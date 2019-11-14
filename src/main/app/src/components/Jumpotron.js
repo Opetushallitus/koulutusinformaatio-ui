@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import Hakupalkki from './haku/Hakupalkki'
 import { withRouter } from 'react-router-dom';
 import '../assets/styles/components/_hakupalkki.scss';

@@ -4,11 +4,11 @@ import '../../assets/styles/components/_services-menu.scss';
 class ServicesMenu extends Component{
     
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
           componentState: false,
           closing: false
-        }
+        };
         this.closeMenu= this.closeMenu.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
     }

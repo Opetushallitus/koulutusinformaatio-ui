@@ -17,13 +17,13 @@ class OppilaitosKoulutuksetList extends Component{
     }
 
     async componentDidMount() {
-        this.setState({ name: this.props.name.indexOf(",") ? this.props.name.split(",")[0] : this.props.name })
+        this.setState({ name: this.props.name.indexOf(",") ? this.props.name.split(",")[0] : this.props.name });
         await this.setKoulutukset();
     }
 
     async componentWillReceiveProps(nextProps){
         if (nextProps.name !== this.state.name) {
-           this.setState({ name: nextProps.name.indexOf(",") ? nextProps.name.split(",")[0] : nextProps.name })
+           this.setState({ name: nextProps.name.indexOf(",") ? nextProps.name.split(",")[0] : nextProps.name });
            await this.setKoulutukset();
         }
     } 

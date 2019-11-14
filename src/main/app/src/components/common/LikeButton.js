@@ -4,11 +4,11 @@ import '../../assets/styles/components/_like-button.scss';
 class LikeButton extends Component{
     
     constructor(props) {
-        super(props)
+        super(props);
         this.toggleClass= this.toggleClass.bind(this);
         this.state = {
           likedState: false
-        }
+        };
         this.handleKeyPress = this.handleKeyPress.bind(this);
     }
     

@@ -7,4 +7,4 @@ module.exports = function override(config, env) {
     config = rewireMobX(config, env);
 
     return config;
-}
+};

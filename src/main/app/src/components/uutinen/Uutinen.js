@@ -45,7 +45,7 @@ class Uutinen extends Component {
     render() {
         const {id, classes, t} = this.props;
         const uutinen = this.props.contentfulStore.data.uutinen[id];
-        const link = (uutinen.sivu || {}).id
+        const link = (uutinen.sivu || {}).id;
 
         const {asset} = this.props.contentfulStore.data;
         const imgUrl = (uutinen) => {
@@ -53,7 +53,7 @@ class Uutinen extends Component {
                 const image = entry.image || {};
                 return image ? asset[image.id] : null;
             };
-            const a = assetForEntry(uutinen)
+            const a = assetForEntry(uutinen);
             return a ? a.url : null;
         };
 

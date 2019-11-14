@@ -87,7 +87,7 @@ class Oppilaitos extends Component {
         const data = this.state.oppilaitos;
         const kieli = l.getLanguage();
         if(data && data.yleiskuvaus && data.yleiskuvaus["kieli_" + kieli + "#1"])
-            return <div>{renderHTML(data.yleiskuvaus["kieli_" + kieli + "#1"])}</div>
+            return <div>{renderHTML(data.yleiskuvaus["kieli_" + kieli + "#1"])}</div>;
         return "";
     }
 

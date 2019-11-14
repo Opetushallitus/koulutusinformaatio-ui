@@ -5,11 +5,11 @@ import '../../assets/styles/components/_services-button.scss';
 class ServicesButton extends Component{
     
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
           componentState: false,
           showMenu: false
-        }
+        };
         this.openServices= this.openServices.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
     }

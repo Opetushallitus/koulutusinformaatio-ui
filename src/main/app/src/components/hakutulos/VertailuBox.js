@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {withTranslation} from 'react-i18next';
 import { inject, observer } from 'mobx-react';
 import { Localizer as l} from "../../tools/Utils";
