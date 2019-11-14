@@ -7,7 +7,6 @@ import '../assets/styles/components/_etusivu.scss';
 import ReactMarkdown from 'react-markdown';
 import Kortti from "./kortti/Kortti";
 import Uutinen from "./uutinen/Uutinen";
-import Palvelut from "./palvelu/Palvelut";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import {colors} from "../colors";
@@ -148,8 +147,6 @@ class Etusivu extends Component {
 
                     </Grid>
                 </div>
-
-                <Palvelut/>
             </React.Fragment>
         };
         return <EtusivuContent/>;

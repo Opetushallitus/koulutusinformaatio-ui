@@ -16,6 +16,7 @@ import { I18nextProvider } from 'react-i18next';
 import { withStyles } from '@material-ui/core';
 import { styles } from './styles';
 import Hidden from "@material-ui/core/Hidden";
+import Palvelut from "./components/palvelu/Palvelut";
 
 const konfoStore = new KonfoStore();
 
@@ -37,6 +38,17 @@ const App = props => {
   const closeMenu = () => {
     setMenuVisible(false);
   };
+  const main = (
+      <React.Fragment>
+      <Switch>
+          <Route exact path="/" component={Etusivu} />
+          <Route path="/sisaltohaku/" component={Sisaltohaku} />
+          <Route path="/" component={Hakusivu} />
+        </Switch>
+        <Palvelut/>
+        <Footer changeLanguage={this.changeLanguage} />
+    </React.Fragment>
+  );
 
   return (
     <Provider
@@ -58,12 +70,7 @@ const App = props => {
                     className={clsx(classes.smContent, {
                       [classes.smContentShift]: menuVisible,
                     })}>
-                <Switch>
-                  <Route exact path="/" component={Etusivu} />
-                  <Route path="/sisaltohaku/" component={Sisaltohaku} />
-                  <Route path="/" component={Hakusivu} />
-                </Switch>
-                <Footer changeLanguage={this.changeLanguage} />
+                {main}
               </main>
               </div>
             </Hidden>
@@ -75,12 +82,7 @@ const App = props => {
                     className={clsx(classes.content, {
                       [classes.contentShift]: menuVisible,
                     })}>
-                <Switch>
-                  <Route exact path="/" component={Etusivu} />
-                  <Route path="/sisaltohaku/" component={Sisaltohaku} />
-                  <Route path="/" component={Hakusivu} />
-                </Switch>
-                <Footer changeLanguage={this.changeLanguage} />
+                {main}
               </main>
               </div>
             </Hidden>
