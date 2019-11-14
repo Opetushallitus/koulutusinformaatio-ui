@@ -9,6 +9,7 @@ import Kortti from "./kortti/Kortti";
 import Uutinen from "./uutinen/Uutinen";
 import Palvelu from "./palvelu/Palvelu";
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import {colors} from "../colors";
 import {withStyles} from "@material-ui/core";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -19,9 +20,13 @@ const etusivuStyles = theme => ({
         marginLeft: "90px",
         marginRight: "90px"
     },
+    info: {
+        backgroundColor: colors.veryLightGreyBackground,
+        borderRadius: 2,
+        padding: "25px 20px"
+    },
     header: {
         fontSize: "28px",
-        paddingLeft: "12px",
         paddingTop: "60px"
     },
     spaceOnBorders: {
@@ -94,7 +99,7 @@ class Etusivu extends Component {
             return props.rivit.map(rivi => {
                 return <Grid container key={rivi.map(u => u.id).join()}>
                     <h1 className={classes.header}>{props.otsikko}</h1>
-                <Grid container item xs={12} spacing={3} >
+                <Grid container spacing={3} >
 
                     {rivi.map(p => <Palvelu id={p.id} key={p.id}/>)}
                 </Grid>
@@ -105,20 +110,24 @@ class Etusivu extends Component {
             const matches = useMediaQuery('(min-width: 979px)');
             return <React.Fragment>
                 <Route exact path='/' render={() => <Jumpotron/>}/>
-                <div className={clsx(classes.oikopolut, matches? classes.spaceOnBorders: null)}>
+                <div className={clsx(classes.oikopolut, matches ? classes.spaceOnBorders : null)}>
                     <Grid container spacing={3}>
                         {infos.map((info) => {
                             return <Grid item xs={12} key={info.id}>
-                                <div className="front-page-notification item-link"
-                                     onClick={() => forwardToPage(info.linkki.id)}>
-                            <span className="notification-content">
-                                     <ReactMarkdown source={info.content}/>
-                            </span>
-                                </div>
+                                <Paper className={classes.info}
+                                       elevation={0}
+                                       onClick={() => forwardToPage(info.linkki.id)}>
+                                    <span className="notification-content">
+                                             <ReactMarkdown source={info.content}/>
+                                    </span>
+                                </Paper>
                             </Grid>;
                         })}
+                    </Grid>
+
+                    <Grid container>
                         <h1 className={classes.header}>Oikopolut</h1>
-                        <Grid container item xs={12} spacing={3}>
+                        <Grid container spacing={3}>
                             {(single(kortit).kortit || []).map(k => {
                                 return <Kortti id={k.id}
                                                key={k.id}/>;
@@ -129,21 +138,21 @@ class Etusivu extends Component {
                 </div>
 
                 <div className={clsx(classes.uutiset, matches? classes.spaceOnBorders: null)}>
-                    <Grid container spacing={3}>
+                    <Grid container>
 
-                        <Grid container item xs={12} spacing={3}>
+                        <Grid item xs={12}>
                             <h1 className={classes.header}>Ajankohtaista ja uutisia</h1>
                         </Grid>
 
                         {uutisrivit.map((rivi) => {
-                            return <Grid container item xs={12} spacing={3}
+                            return <Grid container spacing={3}
                                          key={rivi.map(u => u.id).join()}>
                                 {rivi.map(u => <Uutinen id={u.id}
                                                         key={u.id}/>)}
                             </Grid>
                         })}
 
-                        <Grid container item xs={12} spacing={3}>
+                        <Grid container>
                             {showMore ?
                                 <div className="news-show-more">
                                     <a role="button" aria-label={"Näytä kaikki"} onClick={this.showAll}
@@ -156,7 +165,7 @@ class Etusivu extends Component {
                 </div>
 
                 <div className={clsx(classes.palvelut, matches? classes.spaceOnBorders: null)}>
-                    <Grid container spacing={3}>
+                    <Grid container>
                         <Palvelut otsikko={"Muut palvelut"} rivit={palvelurivit}/>
                         <Palvelut otsikko={"Ohjeet ja tuki"} rivit={ohjerivit}/>
                     </Grid>
