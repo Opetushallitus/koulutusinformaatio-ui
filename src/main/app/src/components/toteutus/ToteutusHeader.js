@@ -3,7 +3,6 @@ import {withTranslation} from 'react-i18next';
 import {Localizer as l} from "../../tools/Utils";
 import {inject} from "mobx-react";
 import '../../assets/styles/components/_toteutus-header.scss';
-import {withRouter} from "react-router-dom";
 
 @inject("hakuStore")
 class ToteutusHeader extends Component {

@@ -6,7 +6,6 @@ import {inject} from "mobx-react";
 import ToteutusHeader from "./ToteutusHeader";
 import SlideDropdown from '../common/SlideDropdown';
 import ToteutusSidebar from "./ToteutusSidebar";
-import {withRouter} from "react-router-dom";
 
 @inject("hakuStore")
 class Korkeakoulu extends Component {

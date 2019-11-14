@@ -4,7 +4,6 @@ import { withTranslation } from 'react-i18next';
 import '../../assets/styles/components/_valintakokeet-list-item.scss';
 import { Localizer as l } from '../../tools/Utils';
 import {inject} from "mobx-react";
-import {withRouter} from "react-router-dom";
 
 @inject("hakuStore", "vertailuStore")
 class ValintakokeetListItem extends Component {

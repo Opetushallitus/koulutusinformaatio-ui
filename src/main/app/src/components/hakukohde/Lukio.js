@@ -5,7 +5,6 @@ import {inject} from "mobx-react";
 import HakukohdeHeader from "./HakukohdeHeader";
 import SlideDropdown from '../common/SlideDropdown';
 import HakukohdeSidebar from "./HakukohdeSidebar";
-import {withRouter} from "react-router-dom";
 
 @inject("hakuStore")
 class Lukio extends Component {

@@ -5,7 +5,6 @@ import renderHTML from 'react-render-html';
 import '../../assets/styles/components/_osaamisala-list-item.scss';
 import { Localizer as l } from '../../tools/Utils';
 import {inject} from "mobx-react";
-import {withRouter} from "react-router-dom";
 
 @inject("hakuStore", "vertailuStore")
 class OsaamisalaListItem extends Component {

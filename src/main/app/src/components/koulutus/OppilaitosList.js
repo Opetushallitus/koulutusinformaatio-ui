@@ -4,7 +4,6 @@ import { Localizer as l } from '../../tools/Utils';
 import {withTranslation} from 'react-i18next';
 import '../../assets/styles/components/_oppilaitos-list.scss';
 import OppilaitosListItem from './OppilaitosListItem';
-import {withRouter} from "react-router-dom";
 
 class OppilaitosList extends Component {
 

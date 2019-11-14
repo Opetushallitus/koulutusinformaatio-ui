@@ -6,7 +6,6 @@ import HakukohdeHeader from './HakukohdeHeader';
 import SlideDropdown from '../common/SlideDropdown';
 import HakukohdeSidebar from "./HakukohdeSidebar";
 import { Localizer as l } from '../../tools/Utils';
-import {withRouter} from "react-router-dom";
 
 @inject("hakuStore")
 class Ammatillinen extends Component {

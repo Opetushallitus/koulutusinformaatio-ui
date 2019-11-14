@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {withTranslation} from 'react-i18next';
 import {Localizer as l} from "../../tools/Utils";
 import '../../assets/styles/components/_koulutus-header.scss';
-import {withRouter} from "react-router-dom";
 
 class KoulutusHeader extends Component {
 

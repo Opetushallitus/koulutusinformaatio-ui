@@ -3,7 +3,6 @@ import ActionButton from './ActionButton';
 import {withTranslation} from "react-i18next";
 import SchoolImage from '../../assets/images/school.jpg';
 import '../../assets/styles/components/_contact-info-row.scss';
-import {withRouter} from "react-router-dom";
 
 class ContactInfoRow extends Component{
     

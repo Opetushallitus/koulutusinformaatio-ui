@@ -7,7 +7,6 @@ import KoulutusHeader from "./KoulutusHeader";
 import SlideDropDown from '../common/SlideDropdown';
 import Media from 'react-media';
 import SideBarMenu from '../common/SideBarMenu';
-import {withRouter} from "react-router-dom";
 
 class Korkeakoulu extends Component {
 

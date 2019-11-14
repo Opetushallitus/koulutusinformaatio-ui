@@ -7,7 +7,6 @@ import OppilaitosList from "./OppilaitosList";
 import SlideDropDown from '../common/SlideDropdown';
 import KoulutusHeader from "./KoulutusHeader";
 import SideBarMenu from '../common/SideBarMenu';
-import {withRouter} from "react-router-dom";
 
 class Avoin extends Component {
 

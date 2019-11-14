@@ -13,7 +13,6 @@ import OppilaitosSidebar from './OppilaitosSidebar';
 import SlideDropDown from '../common/SlideDropdown';
 import SideBarMenu from '../common/SideBarMenu';
 import '../../assets/styles/components/_oppilaitos.scss';
-import {withRouter} from "react-router-dom";
 
 @inject("restStore")
 @inject("navigaatioStore")

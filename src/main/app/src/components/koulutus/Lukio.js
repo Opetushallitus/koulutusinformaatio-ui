@@ -8,7 +8,6 @@ import SideBarMenu from '../common/SideBarMenu';
 import OppilaitosList from "./OppilaitosList";
 import KoulutusHeader from "./KoulutusHeader";
 import SlideDropDown from '../common/SlideDropdown';
-import {withRouter} from "react-router-dom";
 
 class Lukio extends Component {
 

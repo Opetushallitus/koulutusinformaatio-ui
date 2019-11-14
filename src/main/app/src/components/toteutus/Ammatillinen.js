@@ -10,7 +10,6 @@ import ToteutusAdditionalInfoBox from './ToteutusAdditionalInfoBox';
 import ToteutusHeaderImage from './ToteutusHeaderImage';
 import ToteutusContactInfoBox from './ToteutusContactInfoBox';
 import '../../assets/styles/components/_toteutus-page.scss';
-import {withRouter} from "react-router-dom";
 
 @inject("hakuStore")
 @inject("restStore")

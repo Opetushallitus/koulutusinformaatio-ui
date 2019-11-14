@@ -6,8 +6,7 @@ import KoulutusDescriptionBox from './KoulutusDescriptionBox';
 import OppilaitosList from './OppilaitosList';
 import SlideDropDown from '../common/SlideDropdown';
 import { Localizer as l } from '../../tools/Utils';
-import {withTranslation} from 'react-i18next'
-import {withRouter} from "react-router-dom";
+import {withTranslation} from 'react-i18next';
 
 @inject("restStore")
 class Ammatillinen extends Component {

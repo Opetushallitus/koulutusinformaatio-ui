@@ -12,7 +12,6 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Star from '@material-ui/icons/Star';
-import {withRouter} from "react-router-dom";
 
 const palauteStyles = theme => ({
     root: {

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import renderHTML from 'react-render-html';
 import {withTranslation} from 'react-i18next';
-import {withRouter} from "react-router-dom";
 
 class KoulutusSection extends Component {
 
