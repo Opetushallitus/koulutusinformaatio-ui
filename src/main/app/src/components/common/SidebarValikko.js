@@ -65,7 +65,6 @@ const valikkoStyles = theme => ({
     }
 });
 
-@translate()
 class SidebarValikko extends Component {
 
     render() {

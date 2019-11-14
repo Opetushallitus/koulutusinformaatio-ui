@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import {Link} from "react-router-dom";
-import {translate} from "react-i18next";
+import {Link, withRouter} from "react-router-dom";
+import {withTranslation} from "react-i18next";
 import '../../assets/styles/components/_action-button.scss';
 
-@translate()
 class ActionButton extends Component{
     
     constructor(props) {
@@ -114,4 +113,4 @@ class ActionButton extends Component{
     }
 }
 
-export default ActionButton;
+export default withTranslation()(ActionButton);

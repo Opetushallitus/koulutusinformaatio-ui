@@ -5,7 +5,7 @@ import {observer, inject} from 'mobx-react';
 import OppilaitosHeaderImage from './OppilaitosHeaderImage';
 import PageLikeBox from '../common/PageLikeBox';
 import renderHTML from 'react-render-html';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import { Localizer as l } from "../../tools/Utils";
 import OppilaitosArvostelut from './OppilaitosArvostelut';
 import OppilaitosKoulutuksetList from './OppilaitosKoulutuksetList';
@@ -13,10 +13,10 @@ import OppilaitosSidebar from './OppilaitosSidebar';
 import SlideDropDown from '../common/SlideDropdown';
 import SideBarMenu from '../common/SideBarMenu';
 import '../../assets/styles/components/_oppilaitos.scss';
+import {withRouter} from "react-router-dom";
 
 @inject("restStore")
 @inject("navigaatioStore")
-@translate()
 @observer
 class Oppilaitos extends Component {
 
@@ -151,4 +151,4 @@ class Oppilaitos extends Component {
     }
 }
 
-export default Oppilaitos;
+export default withTranslation()(Oppilaitos);

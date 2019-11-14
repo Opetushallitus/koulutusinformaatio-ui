@@ -1,11 +1,11 @@
 import {Component} from "react";
 import React from "react";
 import { Localizer as l } from '../../tools/Utils';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import '../../assets/styles/components/_oppilaitos-list.scss';
 import OppilaitosListItem from './OppilaitosListItem';
+import {withRouter} from "react-router-dom";
 
-@translate()
 class OppilaitosList extends Component {
 
     render () {
@@ -28,4 +28,4 @@ class OppilaitosList extends Component {
     }
 }
 
-export default OppilaitosList;
+export default withTranslation()(OppilaitosList);

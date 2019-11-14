@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import clsx from 'clsx';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import '../../assets/styles/components/_header.scss';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -54,7 +54,6 @@ const headerStyles = theme => ({
     },
 });
 
-@translate()
 class Header extends Component {
     
     render() {
@@ -91,4 +90,4 @@ class Header extends Component {
     }
 }
 
-export default withRouter(withStyles(headerStyles, { withTheme: true })(Header));
+export default withTranslation()(withRouter(withStyles(headerStyles, { withTheme: true })(Header)));

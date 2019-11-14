@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { Localizer as l } from '../../tools/Utils';
 import KoulutusInfoBox from './KoulutusInfoBox';
 import Media from 'react-media';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import OppilaitosList from "./OppilaitosList";
 import SlideDropDown from '../common/SlideDropdown';
 import KoulutusHeader from "./KoulutusHeader";
 import SideBarMenu from '../common/SideBarMenu';
-@translate()
+import {withRouter} from "react-router-dom";
+
 class Avoin extends Component {
 
     componentWillReceiveProps(nextProps) {
@@ -69,4 +70,4 @@ class Avoin extends Component {
     }
 }
 
-export default Avoin;
+export default withTranslation()(Avoin);

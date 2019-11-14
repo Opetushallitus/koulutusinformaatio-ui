@@ -15,7 +15,6 @@ import VertailuBox from './VertailuBox';
 import '../../assets/styles/components/_hakutulos.scss';
 import { styles } from '../../styles';
 
-@translate()
 @inject('hakuStore', 'vertailuStore')
 @observer
 class Hakutulos extends Component {

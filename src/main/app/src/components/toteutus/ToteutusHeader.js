@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import {Localizer as l} from "../../tools/Utils";
 import {inject} from "mobx-react";
 import '../../assets/styles/components/_toteutus-header.scss';
+import {withRouter} from "react-router-dom";
 
-@translate()
 @inject("hakuStore")
 class ToteutusHeader extends Component {
 
@@ -28,4 +28,4 @@ class ToteutusHeader extends Component {
     }
 }
 
-export default ToteutusHeader;
+export default withTranslation()(ToteutusHeader);

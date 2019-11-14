@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import {Localizer as l} from "../../tools/Utils";
 import '../../assets/styles/components/_koulutus-header.scss';
+import {withRouter} from "react-router-dom";
 
-@translate()
 class KoulutusHeader extends Component {
 
     parseNimi() {
@@ -30,4 +30,4 @@ class KoulutusHeader extends Component {
     }
 }
 
-export default KoulutusHeader;
+export default withTranslation()(KoulutusHeader);

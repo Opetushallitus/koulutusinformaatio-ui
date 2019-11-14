@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Localizer as l } from '../../tools/Utils';
 import HakukohdeInfoBox from './HakukohdeInfoBox';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import {inject} from "mobx-react";
 import HakukohdeHeader from './HakukohdeHeader';
 import SlideDropdown from '../common/SlideDropdown';
 import HakukohdeSidebar from "./HakukohdeSidebar";
+import {withRouter} from "react-router-dom";
 
-@translate()
 @inject("hakuStore")
 class Avoin extends Component {
 
@@ -72,4 +72,4 @@ class Avoin extends Component {
     }
 }
 
-export default Avoin;
+export default withTranslation()(Avoin);

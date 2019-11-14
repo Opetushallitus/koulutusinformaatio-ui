@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { inject, observer } from 'mobx-react';
 import LikeButton from './LikeButton';
 import '../../assets/styles/components/_hakutulos-box.scss';
 
-@translate()
 @inject("vertailuStore")
 @observer
 class HakutulosBox extends Component {
@@ -58,4 +57,4 @@ class HakutulosBox extends Component {
     }
 }
 
-export default withRouter(HakutulosBox);
+export default withTranslation()(withRouter(HakutulosBox));

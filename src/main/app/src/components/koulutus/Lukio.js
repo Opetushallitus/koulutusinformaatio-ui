@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import KoulutusInfoBox from './KoulutusInfoBox';
 import KoulutusSection from './KoulutusSection';
 import {Localizer as l} from '../../tools/Utils';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import Media from 'react-media';
 import SideBarMenu from '../common/SideBarMenu';
 import OppilaitosList from "./OppilaitosList";
 import KoulutusHeader from "./KoulutusHeader";
 import SlideDropDown from '../common/SlideDropdown';
+import {withRouter} from "react-router-dom";
 
-@translate()
 class Lukio extends Component {
 
     componentWillReceiveProps(nextProps) {
@@ -72,4 +72,4 @@ class Lukio extends Component {
     }
 }
 
-export default Lukio;
+export default withTranslation()(Lukio);

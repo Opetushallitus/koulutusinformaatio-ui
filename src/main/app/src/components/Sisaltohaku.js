@@ -6,10 +6,8 @@ import Murupolku from './common/Murupolku';
 import parse from "url-parse";
 import '../assets/styles/components/_sisaltohaku.scss';
 
-@translate()
 @inject("contentfulStore")
 @observer
-@translate()
 class Sisaltohaku extends Component {
     constructor(props) {
         super(props);

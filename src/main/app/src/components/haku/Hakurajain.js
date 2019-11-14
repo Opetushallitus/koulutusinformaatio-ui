@@ -3,10 +3,9 @@ import Hakurajainvalinta from './Hakurajainvalinta';
 import {observer, inject} from 'mobx-react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import '../../assets/styles/components/_hakurajain.scss';
 
-@translate()
 @inject ("hakuehtoStore")
 @observer
 class Hakurajain extends Component {
@@ -168,4 +167,4 @@ class Hakurajain extends Component {
     }
 }
 
-export default withRouter(Hakurajain);
+export default withTranslation()(withRouter(Hakurajain));

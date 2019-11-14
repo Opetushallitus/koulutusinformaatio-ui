@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import HakukohdeInfoBox from './HakukohdeInfoBox';
-import {translate} from 'react-i18next'
+import {withTranslation} from 'react-i18next'
 import {inject} from "mobx-react";
 import HakukohdeHeader from './HakukohdeHeader';
 import SlideDropdown from '../common/SlideDropdown';
 import HakukohdeSidebar from "./HakukohdeSidebar";
 import { Localizer as l } from '../../tools/Utils';
+import {withRouter} from "react-router-dom";
 
-@translate()
 @inject("hakuStore")
 class Ammatillinen extends Component {
 
@@ -57,4 +57,4 @@ class Ammatillinen extends Component {
     }
 }
 
-export default Ammatillinen;
+export default withTranslation()(Ammatillinen);

@@ -1,11 +1,11 @@
 import {Component} from "react";
 import React from "react";
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import '../../assets/styles/components/_valintakokeet-list-item.scss';
 import { Localizer as l } from '../../tools/Utils';
 import {inject} from "mobx-react";
+import {withRouter} from "react-router-dom";
 
-@translate()
 @inject("hakuStore", "vertailuStore")
 class ValintakokeetListItem extends Component {
 
@@ -56,4 +56,4 @@ class ValintakokeetListItem extends Component {
     }
 }
 
-export default ValintakokeetListItem;
+export default withTranslation()(ValintakokeetListItem);

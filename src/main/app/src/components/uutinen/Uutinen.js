@@ -9,7 +9,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import {withStyles} from "@material-ui/core";
 import {colors} from "../../colors";
-import {translate} from "react-i18next";
+import {withTranslation} from "react-i18next";
 
 const uutinenStyles = theme => ({
     card: {
@@ -40,7 +40,6 @@ const uutinenStyles = theme => ({
 
 @inject("contentfulStore")
 @observer
-@translate()
 class Uutinen extends Component {
 
     render() {
@@ -91,4 +90,4 @@ class Uutinen extends Component {
     }
 }
 
-export default withRouter(withStyles(uutinenStyles, { withTheme: true })(Uutinen));
+export default withTranslation()(withRouter(withStyles(uutinenStyles, { withTheme: true })(Uutinen)));

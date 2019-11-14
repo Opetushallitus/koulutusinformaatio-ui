@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { withRouter} from 'react-router-dom';
 import {inject, observer} from 'mobx-react';
 import SidebarValikko from "./SidebarValikko";
@@ -13,7 +13,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import Murupolku from "./Murupolku";
 import {styles} from "../../styles";
 
-@translate()
 @inject("contentfulStore")
 @observer
 class SideMenu extends Component {
@@ -118,4 +117,4 @@ class SideMenu extends Component {
     }
 }
 
-export default withRouter(withStyles(styles, { withTheme: true })(SideMenu));
+export default withTranslation()(withRouter(withStyles(styles, { withTheme: true })(SideMenu)));

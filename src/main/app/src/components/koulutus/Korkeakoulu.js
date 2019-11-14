@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import KoulutusInfoBox from './KoulutusInfoBox';
 import { Localizer as l } from '../../tools/Utils';
-import {translate} from 'react-i18next'
+import {withTranslation} from 'react-i18next'
 import OppilaitosList from "./OppilaitosList";
 import KoulutusHeader from "./KoulutusHeader";
 import SlideDropDown from '../common/SlideDropdown';
 import Media from 'react-media';
 import SideBarMenu from '../common/SideBarMenu';
+import {withRouter} from "react-router-dom";
 
-@translate()
 class Korkeakoulu extends Component {
 
     componentWillReceiveProps(nextProps) {
@@ -52,4 +52,4 @@ class Korkeakoulu extends Component {
     }
 }
 
-export default Korkeakoulu;
+export default withTranslation()(Korkeakoulu);

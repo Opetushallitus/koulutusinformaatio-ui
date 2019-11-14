@@ -8,7 +8,6 @@ import parse from "url-parse";
 import Media from 'react-media';
 import '../../assets/styles/components/_vertailu.scss';
 
-@translate()
 @inject("vertailuStore", "hakuStore")
 @observer
 class Vertailu extends Component {

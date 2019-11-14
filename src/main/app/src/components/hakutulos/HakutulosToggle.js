@@ -9,7 +9,6 @@ import '../../assets/styles/components/_hakutulos-toggle.scss';
 import { translate } from 'react-i18next';
 import { styles } from '../../styles';
 
-@translate()
 @inject('hakuStore')
 @observer
 class HakutulosToggle extends Component {

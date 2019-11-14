@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import {translate} from 'react-i18next';
+import {Link, withRouter} from 'react-router-dom';
+import {withTranslation} from 'react-i18next';
 import { inject, observer } from 'mobx-react';
 import { Localizer as l} from "../../tools/Utils";
 import '../../assets/styles/components/_vertailu-box.scss';
 
-@translate()
 @inject("hakuStore", "vertailuStore")
 @observer
 class VertailuBox extends Component {
@@ -68,4 +67,4 @@ class VertailuBox extends Component {
     }
 }
 
-export default VertailuBox;
+export default withTranslation()(VertailuBox);

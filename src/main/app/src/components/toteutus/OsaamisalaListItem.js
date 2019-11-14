@@ -1,12 +1,12 @@
 import {Component} from "react";
 import React from "react";
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import renderHTML from 'react-render-html';
 import '../../assets/styles/components/_osaamisala-list-item.scss';
 import { Localizer as l } from '../../tools/Utils';
 import {inject} from "mobx-react";
+import {withRouter} from "react-router-dom";
 
-@translate()
 @inject("hakuStore", "vertailuStore")
 class OsaamisalaListItem extends Component {
 
@@ -66,4 +66,4 @@ class OsaamisalaListItem extends Component {
     }
 }
 
-export default OsaamisalaListItem;
+export default withTranslation()(OsaamisalaListItem);

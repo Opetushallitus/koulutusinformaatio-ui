@@ -18,10 +18,9 @@ import { ExpandMore } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import qs from 'query-string';
 import '../../assets/styles/components/_hakutulos-toggle.scss';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { styles } from '../../styles';
 
-@translate()
 @inject('hakuStore')
 @observer
 class HakutulosSuodattimet extends Component {
