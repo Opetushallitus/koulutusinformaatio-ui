@@ -5,6 +5,7 @@ import {translate} from 'react-i18next'
 import {inject} from "mobx-react";
 import ToteutusHeader from "./ToteutusHeader";
 import ToteutusDescriptionBox from './ToteutusDescriptionBox';
+import ToteutusHakukohdeBox from './ToteutusHakukohdeBox';
 import OsaamisalaInfoBox from './OsaamisalaInfoBox';
 import ToteutusAdditionalInfoBox from './ToteutusAdditionalInfoBox';
 import ToteutusHeaderImage from './ToteutusHeaderImage';
@@ -151,6 +152,7 @@ class Ammatillinen extends Component {
                     {osaamisalat && 
                         <OsaamisalaInfoBox fields={osaamisalat}/>
                     }
+                    <ToteutusHakukohdeBox/>
                     <ToteutusAdditionalInfoBox fields={this.parseAdditionalInfoBoxFields()}/>
                     <ToteutusContactInfoBox/>
                 </div>

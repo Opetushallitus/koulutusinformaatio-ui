@@ -1,0 +1,90 @@
+@import '../settings';
+
+.valintaperuste-wrapper{
+    width: 800px;
+    margin: auto;
+}
+
+.valintaperuste-header-title{
+    margin-top: 50px;
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.valintaperuste-kuvaus-title{
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.valintaperuste-kuvaus-text{
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.valintaperuste-list-item{
+    display: list-item;
+}
+
+.valintaperuste-list-wrapper{
+    padding-left: 20px;
+}
+
+.valintaperuste-box-wrapper{
+    margin-top: 30px;
+}
+
+.valintaperuste-valintakoe-text-title{
+    font-weight: 600;
+    font-size: 18px;;
+    margin-bottom: 5px;
+}
+
+.valintaperuste-valintakoe-text{
+    font-size: 18px;;
+    margin-bottom: 10px;
+}
+
+.valintaperuste-valintakoe-box{
+    background: #EDF1F5;
+    padding: 30px 50px;
+    margin-bottom: 30px;
+}
+
+.hakukohde-button {
+    color: #ffffff;
+    background-color: #378703;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+    letter-spacing: 1px;
+    padding: 13px 40px;
+    height: 40px;
+    width: 117.17px;
+    border-radius: 2px;
+}
+
+.paluu-button {
+    color: #378703;
+    background-color: #ffffff;
+    border: 1px solid #378703;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+    letter-spacing: 1px;
+    padding: 13px 40px;
+    height: 40px;
+    width: 117.17px;
+    border-radius: 2px;
+}
+
+.valintaperusteet{
+    float: right;
+    margin-right: 150px;
+}
+
+.paluu{
+    float: left;
+    margin-left: 40px;
+}

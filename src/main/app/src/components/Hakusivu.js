@@ -5,6 +5,7 @@ import Sivu from './sivu/Sivu';
 import Koulutus from './koulutus/Koulutus';
 import Oppilaitos from './oppilaitos/Oppilaitos';
 import Toteutus from './toteutus/Koulutus';
+import Valintaperusteet from './valintaperusteet/index'
 import Vertailu from './vertailu/Vertailu';
 import Hakukohde from './hakukohde/Koulutus'
 import { Route } from 'react-router-dom';
@@ -56,6 +57,7 @@ class Hakusivu extends Component {
                     <Route path={'/hakukohde/:oid'} render={(props) => <Hakukohde {...props} />}/>
                     <Route path={'/vertailu'} render={(props) => <Vertailu {...props} />}/>
                     <Route path={'/sivu/:id'} render={(props) => <Sivu {...props} />}/>
+                    <Route path={'/valintaperusteet/:oid'} render={(props) => <Valintaperusteet {...props} />}/>
                 </main>
             </React.Fragment>
         );
