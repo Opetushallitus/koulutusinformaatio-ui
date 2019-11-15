@@ -1,20 +1,19 @@
 import {Component} from "react";
 import React from "react";
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import '../../assets/styles/components/_valintakokeet-list-item.scss';
 import { Localizer as l } from '../../tools/Utils';
 import {inject} from "mobx-react";
 
-@translate()
 @inject("hakuStore", "vertailuStore")
 class ValintakokeetListItem extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             viewContentState: false,
             isCollapsing: false,
-        }
+        };
         this.toggleClass = this.toggleClass.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
     }
@@ -56,4 +55,4 @@ class ValintakokeetListItem extends Component {
     }
 }
 
-export default ValintakokeetListItem;
+export default withTranslation()(ValintakokeetListItem);

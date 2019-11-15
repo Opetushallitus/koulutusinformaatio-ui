@@ -12,14 +12,14 @@ import ContactInfoRow from '../common/ContactInfoRow';
 class SlideDropdown extends Component{
     
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
           viewContentState: false,
           isCollapsing: false,
           textContent: () => {
             return <div className="col-11 text-block"><p>Opintopolku-portaalia ylläpitää Opetushallitus. Suomalaiset oppilaitokset ja korkeakoulut ylläpitävät Opintopolussa omien koulutustensa tietoja. Opintopolku.fi-palvelussa voi:</p> <ul> <li>Selailla eri aloja ja tutkintoja</li> <li>Saada tietoa opinnoista</li> <li>Etsiä ajankohtaisia koulutuksia</li> <li>Tutustua valintaperusteisiin</li> <li>Hakea koulutuksiin</li> <li>Katsoa videoita ja lukea tarinoita opiskelijoiden omista kokemuksista.</li> </ul> <p>Opintopolku.fi -palvelu on sähköinen palvelukokonaisuus, josta löytyy kattavasti koulutuksen ja opetuksen järjestäjän palveluita. Palvelujen käyttäjiä ovat esimerkiksi koulutukseen hakeutujat, opiskelijat, oppilaitokset, yritykset sekä julkishallinto.</p> <p>Opintopolku.fi -palvelu tarjoaa kansalaiselle helppokäyttöisiä, luotettavia ja turvallisia palveluita elinikäisen ja yksilöllisen oppimispolun suunnitteluun ja toteuttamiseen.</p> <p>Opintopolku on kokonaisuudessaan sähköinen palvelukokonaisuus myös koulutuksen ja opetuksen järjestäjille.</p></div>;
           }
-        }
+        };
         this.toggleClass = this.toggleClass.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this); 
     }

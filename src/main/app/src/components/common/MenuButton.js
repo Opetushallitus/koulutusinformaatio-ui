@@ -3,7 +3,6 @@ import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import '../../assets/styles/components/_menu-button.scss';
 
-@translate()
 class MenuButton extends Component {
     
     constructor(props) {

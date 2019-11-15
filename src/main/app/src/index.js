@@ -5,7 +5,13 @@ import BrowserRouter from 'react-router-dom/BrowserRouter';
 import { theme } from './theme';
 import App from './App';
 import { MuiThemeProvider } from '@material-ui/core';
-//import registerServiceWorker from './registerServiceWorker';
+import i18n from "i18next";
+
+i18n.init({
+    react: {
+        useSuspense: false
+    }
+});
 
 ReactDOM.render(
   <BrowserRouter basename={'/konfo'}>

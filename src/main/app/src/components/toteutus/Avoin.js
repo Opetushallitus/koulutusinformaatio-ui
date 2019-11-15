@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { Localizer as l } from '../../tools/Utils';
 import ToteutusInfoBox from './ToteutusInfoBox';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import {inject} from "mobx-react";
 import ToteutusHeader from "./ToteutusHeader";
 import SlideDropdown from '../common/SlideDropdown';
 import ToteutusSidebar from "./ToteutusSidebar";
 
-@translate()
 @inject("hakuStore")
 class Avoin extends Component {
 
@@ -71,4 +70,4 @@ class Avoin extends Component {
     }
 }
 
-export default Avoin;
+export default withTranslation()(Avoin);

@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import renderHTML from 'react-render-html';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 
-@translate()
 class KoulutusSection extends Component {
 
     render () {
@@ -22,4 +21,4 @@ class KoulutusSection extends Component {
     }
 }
 
-export default KoulutusSection;
+export default withTranslation()(KoulutusSection);

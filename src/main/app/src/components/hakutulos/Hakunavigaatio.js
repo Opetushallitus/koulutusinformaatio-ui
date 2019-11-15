@@ -4,10 +4,9 @@ import {observer, inject} from 'mobx-react';
 import { withRouter } from 'react-router-dom'
 import parse from "url-parse";
 import { matchPath } from 'react-router';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import '../../assets/styles/components/_hakunavigatio.scss';
 
-@translate()
 @inject("navigaatioStore")
 @observer
 class Hakunavigaatio extends Component {
@@ -97,4 +96,4 @@ class Hakunavigaatio extends Component {
     }
 }
 
-export default withRouter(Hakunavigaatio);
+export default withTranslation()(withRouter(Hakunavigaatio));

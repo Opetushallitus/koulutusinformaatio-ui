@@ -2,11 +2,10 @@ import React, {Component} from 'react';
 import {observer, inject} from 'mobx-react';
 import { Link, withRouter } from 'react-router-dom';
 import '../../assets/styles/components/_sivu.scss';
-import {translate} from "react-i18next";
+import {withTranslation} from "react-i18next";
 
 @inject("contentfulStore")
 @observer
-@translate()
 class Murupolku extends Component {
 
     constructor(props) {
@@ -33,4 +32,4 @@ class Murupolku extends Component {
     }
 }
 
-export default withRouter(Murupolku);
+export default withTranslation()(withRouter(Murupolku));

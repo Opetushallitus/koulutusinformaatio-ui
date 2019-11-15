@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import '../../assets/styles/components/_footer.scss';
 import Media from 'react-media';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { withRouter} from 'react-router-dom';
 import {inject, observer} from "mobx-react";
 import ReactMarkdown from 'react-markdown';
 
 @inject("contentfulStore")
-@translate()
 @observer
 class Footer extends Component {
 
@@ -86,4 +85,4 @@ class Footer extends Component {
     }
 }
 
-export default withRouter(Footer);
+export default withTranslation()(withRouter(Footer));

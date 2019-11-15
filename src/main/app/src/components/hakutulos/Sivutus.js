@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
 import parse from "url-parse";
 import { withRouter } from 'react-router-dom';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import '../../assets/styles/components/_sivutus.scss'
 
-@translate()
 @inject("hakuStore")
 @observer
 class Sivutus extends Component {
@@ -116,4 +115,4 @@ class Sivutus extends Component {
     }
 }
 
-export default withRouter(Sivutus);
+export default withTranslation()(withRouter(Sivutus));

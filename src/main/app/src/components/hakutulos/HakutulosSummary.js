@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 
-@translate()
 @inject("hakuStore")
 @observer
 class HakutulosSummary extends Component {
@@ -72,4 +71,4 @@ class HakutulosSummary extends Component {
     }
 }
 
-export default HakutulosSummary;
+export default withTranslation(HakutulosSummary);

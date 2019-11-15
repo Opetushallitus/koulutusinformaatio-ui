@@ -30,11 +30,11 @@ class Hakusivu extends Component {
         if (document.getElementsByTagName("h1")[0]){
             document.getElementsByTagName("h1")[0].setAttribute("tabIndex",0);
             document.getElementsByTagName("h1")[0].focus();
-            return;
+
         } else if (document.getElementsByTagName("h2")[0]){
             document.getElementsByTagName("h2")[0].setAttribute("tabIndex",0);
             document.getElementsByTagName("h2")[0].focus(); 
-            return;
+
         }
     }
 

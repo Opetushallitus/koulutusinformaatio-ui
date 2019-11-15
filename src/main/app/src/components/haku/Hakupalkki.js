@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import Hakurajain from './Hakurajain';
 import {observer, inject} from 'mobx-react';
 import { Link, withRouter } from 'react-router-dom';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import Media from 'react-media';
 import '../../assets/styles/components/_hakupalkki.scss';
 
-@translate()
 @inject ("hakuehtoStore")
 @observer
 class Hakupalkki extends Component {
@@ -68,4 +67,4 @@ class Hakupalkki extends Component {
     }
 }
 
-export default withRouter(Hakupalkki);
+export default withTranslation()(withRouter(Hakupalkki));

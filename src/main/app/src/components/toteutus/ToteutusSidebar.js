@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import {inject} from "mobx-react";
 import {Localizer as l} from "../../tools/Utils";
-import {translate} from "react-i18next";
 import ContactInfoRow from '../common/ContactInfoRow';
 import ActionButton from '../common/ActionButton';
 import '../../assets/styles/components/_toteutus-sidebar.scss';
 
-@translate()
 @inject("restStore")
 @inject("hakuStore")
 class ToteutusSidebar extends Component {

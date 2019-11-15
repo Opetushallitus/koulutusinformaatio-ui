@@ -1,21 +1,20 @@
 import {Component} from "react";
 import React from "react";
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import renderHTML from 'react-render-html';
 import '../../assets/styles/components/_osaamisala-list-item.scss';
 import { Localizer as l } from '../../tools/Utils';
 import {inject} from "mobx-react";
 
-@translate()
 @inject("hakuStore", "vertailuStore")
 class OsaamisalaListItem extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             viewContentState: false,
             isCollapsing: false,
-        }
+        };
         this.toggleClass = this.toggleClass.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
     }
@@ -66,4 +65,4 @@ class OsaamisalaListItem extends Component {
     }
 }
 
-export default OsaamisalaListItem;
+export default withTranslation()(OsaamisalaListItem);

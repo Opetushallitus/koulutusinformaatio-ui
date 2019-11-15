@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import clsx from 'clsx';
-import { Link } from 'react-router-dom'
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import '../../assets/styles/components/_header.scss';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Chip from '@material-ui/core/Chip';
 import MenuIcon from '@material-ui/icons/Menu';
 import Icon from '@material-ui/core/Icon';
 import {withStyles} from "@material-ui/core";
-import { colors } from '../../styles';
+import { colors } from '../../colors';
+import HeaderIcon from '../../assets/images/Header.svg'
+import {withRouter} from "react-router-dom";
 
 const headerStyles = theme => ({
     root: {
@@ -29,6 +29,11 @@ const headerStyles = theme => ({
         fontWeight: "bold",
         textTransform: 'uppercase'
 
+    },
+    icon: {
+        width: "160px",
+        height: "25px",
+        cursor: "pointer"
     },
     beta: {
         color: colors.green,
@@ -49,11 +54,13 @@ const headerStyles = theme => ({
     },
 });
 
-@translate()
 class Header extends Component {
     
     render() {
-        const {t, toggleMenu, isOpen, classes} = this.props;
+        const {t, toggleMenu, isOpen, classes, history} = this.props;
+        const forwardToFrontPage = () => {
+            history.push(`/`);
+        };
         return (<React.Fragment>
                 <CssBaseline />
                 <AppBar
@@ -68,12 +75,10 @@ class Header extends Component {
                             className={clsx(classes.menuButton)}>
                             {isOpen?<Icon>close</Icon>: <MenuIcon />}
                         </IconButton>
-                        <Typography variant="h6" noWrap>
-                            <Link to={{ pathname: '/'}} className="navbar-brand" aria-label={t('opintopolku.brand')}>
-                                <span>{t('opintopolku.otsikko')}</span>
-                                <span className="navbar-studyinfo">{t('opintopolku.studyinfo')}</span>
-                            </Link>
-                        </Typography>
+                        <Icon className={classes.icon}
+                              onClick={forwardToFrontPage}>
+                            <img alt={t('opintopolku.brand')} src={HeaderIcon}/>
+                        </Icon>
                         <Chip className={classes.beta}
                               size='small'
                               classes={{label: classes.betaLabel}}
@@ -85,4 +90,4 @@ class Header extends Component {
     }
 }
 
-export default withStyles(headerStyles, { withTheme: true })(Header);
+export default withTranslation()(withRouter(withStyles(headerStyles, { withTheme: true })(Header)));

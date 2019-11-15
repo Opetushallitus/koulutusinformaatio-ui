@@ -33,11 +33,11 @@ class Sivu extends Component {
         const value = props.children[0].props.value;
         switch (level) {
             case 1:
-                return <h1><a className={"anchor"} name={value}>{value}</a></h1>
+                return <h1><a className={"anchor"} name={value}>{value}</a></h1>;
             case 2:
-                return <h2><a className={"anchor"} name={value}>{value}</a></h2>
+                return <h2><a className={"anchor"} name={value}>{value}</a></h2>;
             case 3:
-                return <h3><a className={"anchor"} name={value}>{value}</a></h3>
+                return <h3><a className={"anchor"} name={value}>{value}</a></h3>;
             default:
                 return <h4><a className={"anchor"} name={value}>{value}</a></h4>
         }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ToteutusInfoBox from './ToteutusInfoBox';
 import { Localizer as l } from '../../tools/Utils';
-import {translate} from 'react-i18next'
+import {withTranslation} from 'react-i18next'
 import {inject} from "mobx-react";
 import ToteutusHeader from "./ToteutusHeader";
 import ToteutusDescriptionBox from './ToteutusDescriptionBox';
@@ -12,7 +12,6 @@ import ToteutusHeaderImage from './ToteutusHeaderImage';
 import ToteutusContactInfoBox from './ToteutusContactInfoBox';
 import '../../assets/styles/components/_toteutus-page.scss';
 
-@translate()
 @inject("hakuStore")
 @inject("restStore")
 class Ammatillinen extends Component {
@@ -161,4 +160,4 @@ class Ammatillinen extends Component {
     }
 }
 
-export default Ammatillinen;
+export default withTranslation()(Ammatillinen);

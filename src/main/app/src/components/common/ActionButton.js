@@ -1,19 +1,18 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
-import {translate} from "react-i18next";
+import {withTranslation} from "react-i18next";
 import '../../assets/styles/components/_action-button.scss';
 
-@translate()
 class ActionButton extends Component{
     
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             selected: false,
             switched: true,
             type: "compare",
             disabled: false
-        }
+        };
         this.toggleSelected = this.toggleSelected.bind(this);
         this.toggleSwitch = this.toggleSwitch.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -114,4 +113,4 @@ class ActionButton extends Component{
     }
 }
 
-export default ActionButton;
+export default withTranslation()(ActionButton);

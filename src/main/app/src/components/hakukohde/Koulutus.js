@@ -34,7 +34,7 @@ class Koulutus extends Component {
         this.props.restStore.getHakukohde(this.props.navigaatioStore.oid, (k) => {
             this.setState({
                 hakukohde: k
-            })
+            });
             this.getHaku(k.hakuOid);
         });
     }

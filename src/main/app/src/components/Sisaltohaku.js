@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
 import {inject, observer} from 'mobx-react';
 import { Link, withRouter } from 'react-router-dom';
 import Murupolku from './common/Murupolku';
 import parse from "url-parse";
 import '../assets/styles/components/_sisaltohaku.scss';
 
-@translate()
 @inject("contentfulStore")
 @observer
-@translate()
 class Sisaltohaku extends Component {
     constructor(props) {
         super(props);
@@ -23,7 +20,7 @@ class Sisaltohaku extends Component {
         this.setState({...this.state, search: value});
     };
     doSearch = () => {
-        this.setState({...this.state, originalSearch: this.state.search})
+        this.setState({...this.state, originalSearch: this.state.search});
         this.props.history.push('/sisaltohaku/?hakusana=' + this.state.search);
     };
     currentSearch = () => {

@@ -7,7 +7,48 @@ import '../assets/styles/components/_etusivu.scss';
 import ReactMarkdown from 'react-markdown';
 import Kortti from "./kortti/Kortti";
 import Uutinen from "./uutinen/Uutinen";
-import Palvelu from "./palvelu/Palvelu";
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import {colors} from "../colors";
+import {withStyles} from "@material-ui/core";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import clsx from "clsx";
+
+const etusivuStyles = theme => ({
+    content: {
+        marginLeft: "90px",
+        marginRight: "90px"
+    },
+    info: {
+        backgroundColor: colors.veryLightGreyBackground,
+        borderRadius: 2,
+        padding: "25px 20px"
+    },
+    header: {
+        fontSize: "28px",
+        paddingTop: "60px"
+    },
+    spaceOnBorders: {
+        paddingLeft: 90,
+        paddingRight: 90,
+
+    },
+    oikopolut: {
+        backgroundColor: colors.white,
+        paddingBottom: "100px"
+    },
+    uutiset: {
+        backgroundColor: colors.lightGreyBackground,
+        paddingBottom: "100px"
+    },
+    palvelut: {
+        backgroundColor: colors.white,
+        paddingBottom: "100px"
+    },
+});
+
+
+
 
 @inject("hakuStore")
 @inject("contentfulStore")
@@ -21,19 +62,12 @@ class Etusivu extends Component {
             showMore: false
 
         };
-        this.moveMainContent = this.moveMainContent.bind(this);
         this.showAll = this.showAll.bind(this);
     }
 
     componentDidMount() {
         this.props.hakuehtoStore.clearHakuehdot();
         this.props.hakuStore.clearHaku();
-    }
-
-    moveMainContent() {
-        this.setState({...this.state,
-            isFilterDisplayed: !this.state.isFilterDisplayed            
-        })
     }
 
     showAll() {
@@ -43,11 +77,8 @@ class Etusivu extends Component {
     }
 
     render() {
-        let moveMainContent =  this.state.isFilterDisplayed;
-        const {
-            info, uutiset, ohjeetJaTuki,
-            kortit, palvelut} = this.props.contentfulStore.data;
-
+        const {info, uutiset, kortit} = this.props.contentfulStore.data;
+        const {classes} = this.props;
         const forwardToPage = (id) => {
             this.props.history.push(`sivu/${id}`);
         };
@@ -55,66 +86,74 @@ class Etusivu extends Component {
         const infos = Object.values(info);
         const single = (entry) => (Object.values(entry)[0] || {});
 
-        const palvelurivit = _.chunk(single(palvelut).linkit, 3);
-        const ohjerivit = _.chunk(single(ohjeetJaTuki).linkit, 3);
         let uutisrivit = _.chunk(single(uutiset).linkit, 3);
         const showMore = this.state.showMore === false && uutisrivit.length > 1;
         uutisrivit = showMore ? _.take(uutisrivit, 1) : uutisrivit;
 
-        const Palvelut = (props) => {
-            return props.rivit.map(rivi => {
-                return <div className="shortcut-container" key={rivi.map(u => u.id).join()}>
-                    <h1 className="services-container-title">{props.otsikko}</h1>
-                    <div className="services-item-container">
-                        {rivi.map(p => <Palvelu id={p.id} key={p.id}/>)}
-                    </div>
-                </div>;
-            })};
-
-        return (
-            <React.Fragment>
+        const EtusivuContent = (props) => {
+            const matches = useMediaQuery('(min-width: 979px)');
+            return <React.Fragment>
                 <Route exact path='/' render={() => <Jumpotron/>}/>
-                <div id="main-content" className={`container ${moveMainContent ? "move-right" : "center-content"}`}>
-                    {infos.map((info) =>
-                    {
-                        return <div className="front-page-notification item-link"
-                                    key={info.id}
-                                    onClick={() => forwardToPage(info.linkki.id)}>
-                            <span className="notification-content">
-                                     <ReactMarkdown source={info.content}/>
-                            </span>
-                        </div>;
-                    })}
-                    <div className="menu-container">
-                        {(single(kortit).kortit || []).map(k => {
-                            return <Kortti id={k.id} key={k.id}/>
+                <div className={clsx(classes.oikopolut, matches ? classes.spaceOnBorders : null)}>
+                    <Grid container spacing={3}>
+                        {infos.map((info) => {
+                            return <Grid item xs={12} key={info.id}>
+                                <Paper className={classes.info}
+                                       elevation={0}
+                                       onClick={() => forwardToPage(info.linkki.id)}>
+                                    <span className="notification-content">
+                                             <ReactMarkdown source={info.content}/>
+                                    </span>
+                                </Paper>
+                            </Grid>;
                         })}
-                    </div>
-                    <div className="news-container">
-                        <h1 className="news-container-title">Ajankohtaista ja uutisia</h1>
-                    </div>
+                    </Grid>
 
-                    {uutisrivit.map((rivi) =>
-                    {
-                        return <div className="news-container" key={rivi.map(u => u.id).join()}>
-                                {rivi.map(u => <Uutinen id={u.id} key={u.id}/>)}
-                        </div>
-                    })}
-                    <div className="news-container">
-                        {showMore ?
-                            <div className="news-show-more">
-                                <a role="button" aria-label={"Näytä kaikki"} onClick={this.showAll} className="news-show-button">Näytä kaikki</a>
-                            </div> : null
-                        }
-                    </div>
-                    <Palvelut otsikko={"Muut palvelut"} rivit={palvelurivit} />
-                    <Palvelut otsikko={"Ohjeet ja tuki"} rivit={ohjerivit} />
+                    <Grid container>
+                        <h1 className={classes.header}>Oikopolut</h1>
+                        <Grid container spacing={3}>
+                            {(single(kortit).kortit || []).map(k => {
+                                return <Kortti id={k.id}
+                                               key={k.id}/>;
+                            })}
+                        </Grid>
+
+                    </Grid>
+                </div>
+
+                <div className={clsx(classes.uutiset, matches? classes.spaceOnBorders: null)}>
+                    <Grid container>
+
+                        <Grid item xs={12}>
+                            <h1 className={classes.header}>Ajankohtaista ja uutisia</h1>
+                        </Grid>
+
+                        {uutisrivit.map((rivi) => {
+                            return <Grid container spacing={3}
+                                         key={rivi.map(u => u.id).join()}>
+                                {rivi.map(u => <Uutinen id={u.id}
+                                                        key={u.id}/>)}
+                            </Grid>
+                        })}
+
+                        <Grid container>
+                            {showMore ?
+                                <div className="news-show-more">
+                                    <a role="button" aria-label={"Näytä kaikki"} onClick={this.showAll}
+                                       className="news-show-button">Näytä kaikki</a>
+                                </div> : null
+                            }
+                        </Grid>
+
+                    </Grid>
                 </div>
             </React.Fragment>
-        );  
+        };
+        return <EtusivuContent/>;
     }
 }
 
-export default withRouter(Etusivu);
+
+export default withRouter(withStyles(etusivuStyles, { withTheme: true })(Etusivu));
 
 

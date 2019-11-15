@@ -1,7 +1,7 @@
 import React, {Component, useState} from 'react';
 import superagent from "superagent";
 import {inject} from "mobx-react/index";
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import '../../assets/styles/components/_palaute.scss';
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -48,7 +48,6 @@ const palauteStyles = theme => ({
     },
 });
 
-@translate()
 @inject("urlStore")
 class Palaute extends Component {
 
@@ -180,7 +179,7 @@ class Palaute extends Component {
     }
 }
 
-export default withStyles(palauteStyles, { withTheme: true })(Palaute);
+export default withTranslation()(withStyles(palauteStyles, { withTheme: true })(Palaute));
 
 
 

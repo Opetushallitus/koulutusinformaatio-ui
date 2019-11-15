@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import ToteutusInfoBox from './ToteutusInfoBox';
 import { Localizer as l } from '../../tools/Utils';
-import {translate} from 'react-i18next'
+import {withTranslation} from 'react-i18next'
 import {inject} from "mobx-react";
 import ToteutusHeader from "./ToteutusHeader";
 import SlideDropdown from '../common/SlideDropdown';
 import ToteutusSidebar from "./ToteutusSidebar";
 
-@translate()
 @inject("hakuStore")
 class Korkeakoulu extends Component {
 
@@ -78,4 +77,4 @@ class Korkeakoulu extends Component {
     }
 }
 
-export default Korkeakoulu;
+export default withTranslation()(Korkeakoulu);

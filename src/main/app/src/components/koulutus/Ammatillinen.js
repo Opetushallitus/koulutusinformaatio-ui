@@ -6,10 +6,9 @@ import KoulutusDescriptionBox from './KoulutusDescriptionBox';
 import OppilaitosList from './OppilaitosList';
 import SlideDropDown from '../common/SlideDropdown';
 import { Localizer as l } from '../../tools/Utils';
-import {translate} from 'react-i18next'
+import {withTranslation} from 'react-i18next';
 
 @inject("restStore")
-@translate()
 class Ammatillinen extends Component {
 
     constructor(props) {
@@ -98,4 +97,4 @@ class Ammatillinen extends Component {
     }
 }
 
-export default Ammatillinen;
+export default withTranslation()(Ammatillinen);

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter} from 'react-router-dom';
-import { colors } from '../../styles';
+import { colors } from '../../colors';
 import {withStyles} from "@material-ui/core";
-import {translate} from "react-i18next";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -65,7 +64,6 @@ const valikkoStyles = theme => ({
     }
 });
 
-@translate()
 class SidebarValikko extends Component {
 
     render() {

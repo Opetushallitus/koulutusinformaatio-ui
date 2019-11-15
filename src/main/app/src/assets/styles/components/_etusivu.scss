@@ -1,7 +1,6 @@
 @import '../settings';
 
 .front-page-notification {
-    margin-top: 25px;
     background-color: #B2B2B2;
     border-radius: 2px;
     padding: 25px 20px;
@@ -146,8 +145,7 @@
     background-color: #006699;
     box-shadow: 0 2px 8px 0 rgba(0,0,0,0.2);
     padding: 45px 40px;
-
-
+    cursor: pointer;
 }
 
 .polku {

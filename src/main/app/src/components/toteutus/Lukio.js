@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import ToteutusInfoBox from './ToteutusInfoBox';
 import {Localizer as l} from '../../tools/Utils';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import {inject} from "mobx-react";
 import ToteutusHeader from "./ToteutusHeader";
 import SlideDropdown from '../common/SlideDropdown';
 import ToteutusSidebar from "./ToteutusSidebar";
 
-@translate()
 @inject("hakuStore")
 class Lukio extends Component {
 
@@ -72,4 +71,4 @@ class Lukio extends Component {
     }
 }
 
-export default Lukio;
+export default withTranslation()(Lukio);

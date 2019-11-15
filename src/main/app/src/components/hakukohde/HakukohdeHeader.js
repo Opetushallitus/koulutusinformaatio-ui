@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import {Localizer as l} from "../../tools/Utils";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import {inject} from "mobx-react";
 import LikeButton from '../common/LikeButton';
 
-@translate()
 @inject("hakuStore")
 class HakukohdeHeader extends Component {
 
@@ -34,4 +33,4 @@ class HakukohdeHeader extends Component {
     }
 }
 
-export default HakukohdeHeader;
+export default withTranslation()(withRouter(HakukohdeHeader));

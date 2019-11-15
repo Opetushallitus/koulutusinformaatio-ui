@@ -1,21 +1,20 @@
 import {Component} from "react";
 import React from "react";
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import {Link} from "react-router-dom";
 import '../../assets/styles/components/_oppilaitos-list-item.scss';
 import { Localizer as l } from '../../tools/Utils';
 import {inject} from "mobx-react";
 
-@translate()
 @inject("hakuStore", "vertailuStore")
 class OppilaitosListItem extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             viewContentState: false,
             isCollapsing: false,
-        }
+        };
         this.toggleClass = this.toggleClass.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
     }
@@ -77,4 +76,4 @@ class OppilaitosListItem extends Component {
     }
 }
 
-export default OppilaitosListItem;
+export default withTranslation()(OppilaitosListItem);

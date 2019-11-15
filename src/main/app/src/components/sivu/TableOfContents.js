@@ -9,7 +9,7 @@ class TableOfContents extends Component {
             case 1:
                 return null;
             case 2:
-                return <a className={"toc"} href={`#${value}`}>{value}</a>
+                return <a className={"toc"} href={`#${value}`}>{value}</a>;
             default:
                 return null;
         }

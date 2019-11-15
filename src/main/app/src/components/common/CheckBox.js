@@ -5,7 +5,7 @@ class CheckBox extends Component{
         super(props);
         this.state = {
             checked: false
-        }
+        };
         this.handleKeyPress= this.handleKeyPress.bind(this);
     }
     
