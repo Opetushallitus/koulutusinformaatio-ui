@@ -1,5 +1,13 @@
 @import '../settings';
-
+.image {
+  display: block;
+}
+.component {
+  padding-top: 32px;
+  &:last-child {
+    padding-bottom: 32px;
+  }
+}
 h1 {
   font-weight: 900;
 }
@@ -7,9 +15,7 @@ h2 {
   font-weight: 600;
   color: $dark-grey;
 }
-.anchor {
-  color: $dark-grey;
-}
+
 .sivu-element {
   margin: 15px 0;
   color: $dark-grey;
