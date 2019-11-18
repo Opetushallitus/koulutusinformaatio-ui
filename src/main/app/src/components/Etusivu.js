@@ -22,7 +22,8 @@ const etusivuStyles = theme => ({
     info: {
         backgroundColor: colors.veryLightGreyBackground,
         borderRadius: 2,
-        padding: "25px 20px"
+        padding: "25px 20px",
+        cursor: "pointer"
     },
     header: {
         fontSize: "28px",
