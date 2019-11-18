@@ -132,7 +132,6 @@ class Etusivu extends Component {
                         {uutisrivit.map((rivi) => {
                             return <React.Fragment>
                                 {rivi.map(u => <Uutinen id={u.id}
-                                                        key={rivi.map(u => u.id).join()}
                                                         key={u.id}/>)}
                             </React.Fragment>
 
