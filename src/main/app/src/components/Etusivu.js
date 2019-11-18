@@ -128,14 +128,16 @@ class Etusivu extends Component {
                         <Grid item xs={12}>
                             <h1 className={classes.header}>Ajankohtaista ja uutisia</h1>
                         </Grid>
-
+                        <Grid container spacing={3}>
                         {uutisrivit.map((rivi) => {
-                            return <Grid container spacing={3}
-                                         key={rivi.map(u => u.id).join()}>
+                            return <React.Fragment>
                                 {rivi.map(u => <Uutinen id={u.id}
+                                                        key={rivi.map(u => u.id).join()}
                                                         key={u.id}/>)}
-                            </Grid>
+                            </React.Fragment>
+
                         })}
+                        </Grid>
 
                         <Grid container>
                             {showMore ?
