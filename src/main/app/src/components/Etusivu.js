@@ -6,7 +6,7 @@ import _ from 'lodash';
 import '../assets/styles/components/_etusivu.scss';
 import ReactMarkdown from 'react-markdown';
 import Kortti from "./kortti/Kortti";
-import Uutinen from "./uutinen/Uutinen";
+import Uutiset from "./uutinen/Uutiset";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import {colors} from "../colors";
@@ -87,9 +87,9 @@ class Etusivu extends Component {
         const infos = Object.values(info);
         const single = (entry) => (Object.values(entry)[0] || {});
 
-        let uutisrivit = _.chunk(single(uutiset).linkit, 3);
-        const showMore = this.state.showMore === false && uutisrivit.length > 1;
-        uutisrivit = showMore ? _.take(uutisrivit, 1) : uutisrivit;
+        let uutislinkit = (single(uutiset).linkit || []);
+        const showMore = this.state.showMore === false && uutislinkit.length > 3;
+
 
         const EtusivuContent = (props) => {
             const matches = useMediaQuery('(min-width: 979px)');
@@ -129,13 +129,7 @@ class Etusivu extends Component {
                             <h1 className={classes.header}>Ajankohtaista ja uutisia</h1>
                         </Grid>
                         <Grid container spacing={3}>
-                        {uutisrivit.map((rivi) => {
-                            return <React.Fragment>
-                                {rivi.map(u => <Uutinen id={u.id}
-                                                        key={u.id}/>)}
-                            </React.Fragment>
-
-                        })}
+                            <Uutiset uutiset={showMore ? _.take(uutislinkit, 3) : uutislinkit}/>
                         </Grid>
 
                         <Grid container>

@@ -1,18 +1,17 @@
-import React  from 'react';
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import {makeStyles} from "@material-ui/core";
 import clsx from "clsx";
 import Grid from "@material-ui/core/Grid";
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import {colors} from "../../colors";
 import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
-import { inject } from "mobx-react";
-import { observer } from "mobx-react-lite";
+import {inject} from "mobx-react";
+import {observer} from "mobx-react-lite";
 import OpetushallitusIcon from "../../assets/images/OpetushallitusIcon.svg";
 import OPHIcon from "../../assets/images/OPH logo.png";
 import OKMIcon from "../../assets/images/OKM_logo-fi.png";
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles({
@@ -69,12 +68,11 @@ const useStyles = makeStyles({
 
 
 const Footer = inject(stores => ({contentfulStore: stores.contentfulStore}))(observer(({contentfulStore}) => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const matches = useMediaQuery('(min-width: 979px)');
     const classes = useStyles();
     const single = (entry) => (Object.values(entry)[0] || {});
     const {content, contentRight, contentCenter, lopputekstit} = single(contentfulStore.data.footer);
-    console.log(JSON.stringify( contentfulStore.data.footer))
     const renderers = {
         link: props => {
             const value = props.children[0].props.value;
@@ -99,28 +97,29 @@ const Footer = inject(stores => ({contentfulStore: stores.contentfulStore}))(obs
                   className={classes.content}
             >
                 <Grid item xs={12} sm={4} md={3}>
-                    <Typography>
-                        <Box lineHeight={"21px"} m={1}>
-                            <ReactMarkdown renderers={renderers}
-                                           disallowedTypes={['paragraph']}
-                                           unwrapDisallowed
-                                           source={content}/>
-                        </Box>
-                    </Typography>
+                    <Box lineHeight={"21px"} m={1}>
+                        <ReactMarkdown renderers={renderers}
+                                       disallowedTypes={['paragraph']}
+                                       unwrapDisallowed
+                                       source={content}/>
+                    </Box>
+
                 </Grid>
                 <Grid item xs={12} sm={4} md={3}>
-                    <ReactMarkdown renderers={renderers}
-                                   disallowedTypes={['paragraph']}
-                                   unwrapDisallowed
-                                   source={contentCenter}/>
+                    <Box lineHeight={"21px"} m={1}>
+                        <ReactMarkdown renderers={renderers}
+                                       disallowedTypes={['paragraph']}
+                                       unwrapDisallowed
+                                       source={contentCenter}/>
+                    </Box>
                 </Grid>
                 <Grid item xs={12} sm={4} md={3}>
-                    <Typography>
-                    <ReactMarkdown renderers={renderers}
-                                   disallowedTypes={['paragraph']}
-                                   unwrapDisallowed
-                                   source={contentRight}/>
-                    </Typography>
+                    <Box lineHeight={"21px"} m={1}>
+                        <ReactMarkdown renderers={renderers}
+                                       disallowedTypes={['paragraph']}
+                                       unwrapDisallowed
+                                       source={contentRight}/>
+                    </Box>
                 </Grid>
             </Grid>
             <Grid container>
