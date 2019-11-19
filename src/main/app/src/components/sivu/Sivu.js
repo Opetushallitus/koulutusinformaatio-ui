@@ -24,6 +24,7 @@ const useStyles = theme => ({
     },
     image: {
         display: 'block',
+        marginBottom: "15px",
     },
     component: {
         paddingTop: "32px",
@@ -106,6 +107,7 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
             processingInstructions: processingInstructions
         });
         const renderers = {
+            image: props => ImageComponent(props),
             imageReference: props => ImageComponent(props),
             heading: props => Heading(props)
         };
