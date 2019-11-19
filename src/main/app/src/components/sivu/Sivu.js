@@ -54,7 +54,7 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
             });
             if (parent) {
                 const [parentId, parentItem] = parent;
-                return [parentItem].concat(findParent(parentId));
+                return findParent(parentId).concat([parentItem]);
             } else {
                 return [];
             }
