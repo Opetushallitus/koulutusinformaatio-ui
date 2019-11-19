@@ -20,7 +20,7 @@ const useStyles = theme => ({
         lineHeight: "48px",
         marginTop: "15px",
         marginBottom: "30px",
-        fontWeight: "600",
+        fontWeight: "700",
         color: colors.black
     },
     image: {

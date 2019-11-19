@@ -11,7 +11,7 @@ const useStyles = makeStyles({
         color: colors.black,
         fontSize: "24px",
         lineHeight: "30px",
-        fontWeight: "600",
+        fontWeight: "700",
         marginTop: "15px",
         marginBottom: "25px"
     },
