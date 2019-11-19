@@ -1,6 +1,5 @@
 import React from 'react';
-import {makeStyles, withStyles} from "@material-ui/core";
-import {colors} from "../../colors";
+import {withStyles} from "@material-ui/core";
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -26,16 +25,7 @@ const ExpansionPanel = withStyles({
     expanded: {},
 })(MuiExpansionPanel);
 
-const useStyles = makeStyles({
-    footer: {
-        backgroundColor: colors.white,
-        lineHeight: "21px"
-    }
-});
-
-
-const Accordion = ({...props, summary, text}) => {
-    const classes = useStyles();
+const Accordion = ({summary, text}) => {
     return <ExpansionPanel elevation={0}>
         <ExpansionPanelSummary
             elevation={0}

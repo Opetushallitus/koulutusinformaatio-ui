@@ -13,6 +13,7 @@ import OpetushallitusIcon from "../../assets/images/OpetushallitusIcon.svg";
 import OPHIcon from "../../assets/images/OPH logo.png";
 import OKMIcon from "../../assets/images/OKM_logo-fi.png";
 import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles({
     footer: {
@@ -76,7 +77,7 @@ const Footer = inject(stores => ({contentfulStore: stores.contentfulStore}))(obs
     const renderers = {
         link: props => {
             const value = props.children[0].props.value;
-            return <a className={classes.link} href={props.href}>{value}</a>;
+            return <Link className={classes.link} href={props.href}>{value}</Link>;
         }
     };
     return <footer>

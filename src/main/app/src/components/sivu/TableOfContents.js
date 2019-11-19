@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../../assets/styles/components/_toc.scss';
 import ReactMarkdown from 'react-markdown';
+import Link from '@material-ui/core/Link';
 
 class TableOfContents extends Component {
     HeadingLevelToComponent = (level, props) => {
@@ -9,7 +10,7 @@ class TableOfContents extends Component {
             case 1:
                 return null;
             case 2:
-                return <a className={"toc"} href={`#${value}`}>{value}</a>;
+                return <Link className={"toc"} href={`#${value}`}>{value}</Link>;
             default:
                 return null;
         }

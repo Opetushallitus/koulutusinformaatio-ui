@@ -1,35 +1,48 @@
 import React, {Component} from 'react';
 import {observer, inject} from 'mobx-react';
-import { Link, withRouter } from 'react-router-dom';
-import '../../assets/styles/components/_sivu.scss';
-import {withTranslation} from "react-i18next";
+import { withRouter } from 'react-router-dom';
+import {useTranslation, withTranslation} from "react-i18next";
+import {makeStyles} from "@material-ui/core";
+import {colors} from "../../colors";
+import Icon from '@material-ui/core/Icon';
+import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
+import Link from '@material-ui/core/Link';
 
-@inject("contentfulStore")
-@observer
-class Murupolku extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {}
+const useStyles = makeStyles({
+    breadcrump: {
+    },
+    icon: {
+        marginRight: "10px"
+    },
+    link: {
+        fontWeight: "400",
+        maxWidth: "250px",
+        display: "inline-block",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis",
+        paddingRight: "15px",
     }
+});
 
-    componentDidMount() {
-    }
+const Murupolku = ({path, history}) => {
+    const {t} = useTranslation();
+    const classes = useStyles();
+    const forwardToFrontPage = (path) => {
+        history.push(path);
+    };
+    return <div className={classes.breadcrump}>
+        <Icon className={classes.icon}><HomeOutlinedIcon/></Icon>
 
-    render() {
-        const {t, path} = this.props;
-        return <div className="sivu-breadcrump">
-            <i className="icon-outline-home"/>
-            <Link to={''} className="link sivu-breadcrump-item">{t('etusivu')}</Link>
-            {path.map(({name, link}, ind) => {
-                return [
-                    link ? <Link key={`breadcrumplink-${ind}`} className="sivu-breadcrump-item link"
-                                      to={link}>{name}</Link>
-                        : <span key={`breadcrumplink-${ind}`} className="sivu-breadcrump-item">{name}</span>
-                ];
-            })}
-        </div>;
-    }
+        <Link onClick={() => forwardToFrontPage('/')} className={classes.link}>{t('etusivu')}</Link>
+        {path.map(({name, link}, ind) => {
+            return [
+                link ? <Link key={`breadcrumplink-${ind}`} className={classes.link}
+                                  to={link}>{name}</Link>
+                    : <span key={`breadcrumplink-${ind}`} className={classes.link}>{name}</span>
+            ];
+        })}
+    </div>;
 }
 
-export default withTranslation()(withRouter(Murupolku));
+export default withRouter(Murupolku);

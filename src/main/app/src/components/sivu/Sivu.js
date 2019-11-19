@@ -1,7 +1,6 @@
 import React from 'react';
 import {observer, inject} from 'mobx-react';
 import { withRouter } from 'react-router-dom';
-import '../../assets/styles/components/_sivu.scss';
 import Murupolku from '../common/Murupolku';
 import ReactMarkdown from 'react-markdown';
 import htmlParser from 'react-markdown/plugins/html-parser';
@@ -11,11 +10,24 @@ import Accordion from './Accordion';
 import Heading from './Heading';
 import Youtube from './Youtube';
 import Grid from '@material-ui/core/Grid';
+import {withStyles} from "@material-ui/core";
 
-const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(observer(props => {
+const useStyles = theme => ({
+    image: {
+        display: 'block',
+    },
+    component: {
+        paddingTop: "32px",
+        "&:last-child": {
+            paddingBottom: "32px"
+        }
+    }
+});
+
+const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(observer(({...props,classes}) => {
 
     const ImageComponent = ({src, alt}) => {
-        return <img className={"image"} src={src} alt={alt}/>
+        return <img className={classes.image} src={src} alt={alt}/>
     };
 
     const murupolkuPath = () => {
@@ -92,7 +104,7 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
                       direction="row"
                       justify="center"
                       alignItems="center"
-                      className={"component"}>
+                      className={classes.component}>
                     <Grid item xs={12} sm={12} md={10}>
                         <Murupolku path={murupolkuPath()}/>
                     </Grid>
@@ -101,7 +113,7 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
                       direction="row"
                       justify="center"
                       alignItems="center"
-                      className={"component"}>
+                      className={classes.component}>
                     <Grid item xs={12} sm={12} md={10}>
                         <h1>{name}</h1>
                         <p>{description}</p>
@@ -135,4 +147,4 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
     }
 }));
 
-export default withRouter(Sivu);
+export default withRouter(withStyles(useStyles, { withTheme: true })(Sivu));
