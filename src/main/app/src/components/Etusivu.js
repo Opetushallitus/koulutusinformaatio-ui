@@ -8,11 +8,13 @@ import ReactMarkdown from 'react-markdown';
 import Kortti from "./kortti/Kortti";
 import Uutiset from "./uutinen/Uutiset";
 import Grid from '@material-ui/core/Grid';
+import {withStyles} from "@material-ui/core";
 import Paper from '@material-ui/core/Paper';
 import {colors} from "../colors";
-import {withStyles} from "@material-ui/core";
+import Button from '@material-ui/core/Button';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import clsx from "clsx";
+import { withTranslation } from 'react-i18next';
 
 const etusivuStyles = theme => ({
     content: {
@@ -46,6 +48,11 @@ const etusivuStyles = theme => ({
         backgroundColor: colors.white,
         paddingBottom: "100px"
     },
+    showMore: {
+        marginTop: "55px",
+        fontWeight: "600",
+        textTransform: "none"
+    }
 });
 
 
@@ -79,7 +86,7 @@ class Etusivu extends Component {
 
     render() {
         const {info, uutiset, kortit} = this.props.contentfulStore.data;
-        const {classes} = this.props;
+        const {t, classes} = this.props;
         const forwardToPage = (id) => {
             this.props.history.push(`sivu/${id}`);
         };
@@ -132,12 +139,19 @@ class Etusivu extends Component {
                             <Uutiset uutiset={showMore ? _.take(uutislinkit, 3) : uutislinkit}/>
                         </Grid>
 
-                        <Grid container>
+                        <Grid container
+                              direction="row"
+                              justify="center"
+                              alignItems="center">
                             {showMore ?
-                                <div className="news-show-more">
-                                    <a role="button" aria-label={"Näytä kaikki"} onClick={this.showAll}
-                                       className="news-show-button">Näytä kaikki</a>
-                                </div> : null
+                                <Button
+                                    className={classes.showMore}
+                                    variant="contained"
+                                    onClick={this.showAll}
+                                    color="primary">
+                                    {t('näytä-kaikki')}
+                                </Button>
+                                : null
                             }
                         </Grid>
 
@@ -150,6 +164,6 @@ class Etusivu extends Component {
 }
 
 
-export default withRouter(withStyles(etusivuStyles, { withTheme: true })(Etusivu));
+export default withTranslation()(withRouter(withStyles(etusivuStyles, { withTheme: true })(Etusivu)));
 
 
