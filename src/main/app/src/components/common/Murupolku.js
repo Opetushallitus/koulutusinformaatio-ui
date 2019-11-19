@@ -1,9 +1,7 @@
-import React, {Component} from 'react';
-import {observer, inject} from 'mobx-react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
-import {useTranslation, withTranslation} from "react-i18next";
+import {useTranslation} from "react-i18next";
 import {makeStyles} from "@material-ui/core";
-import {colors} from "../../colors";
 import Icon from '@material-ui/core/Icon';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import Link from '@material-ui/core/Link';
