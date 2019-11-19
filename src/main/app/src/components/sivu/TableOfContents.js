@@ -1,18 +1,37 @@
-import React, { Component } from 'react';
-import '../../assets/styles/components/_toc.scss';
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import Link from '@material-ui/core/Link';
+import {makeStyles} from "@material-ui/core";
 import {sanitize} from './Heading';
+import {colors} from "../../colors";
 
-class TableOfContents extends Component {
-    HeadingLevelToComponent = (level, props) => {
+const useStyles = makeStyles({
+    link: {
+        fontSize: "16px",
+        lineHeight: "24px",
+        paddingLeft: "21px",
+        color: colors.green,
+        borderLeftColor: colors.softGrey,
+        borderLeftWidth: "1px",
+        borderLeftStyle: "solid",
+        display: "block",
+        paddingBottom: "15px"
+    }
+});
+
+
+
+const TableOfContents = (props) => {
+    const classes = useStyles();
+    const {content} = props;
+    const HeadingLevelToComponent = (level, props) => {
         const value = props.children[0].props.value;
         const anchor = sanitize(value);
         switch (level) {
             case 1:
                 return null;
             case 2:
-                return <Link className={"toc"}
+                return <Link className={classes.link}
                              aria-label="anchor"
                              href={`#${anchor}`}>
                     {value}
@@ -21,26 +40,21 @@ class TableOfContents extends Component {
                 return null;
         }
     };
-    render() {
-        const content = this.props.content;
-
-        const renderers = {
-            heading: props => this.HeadingLevelToComponent(props.level, props),
-            paragraph: props => null,
-            list: props => null,
-            listItem: props => null,
-            break: props => null,
-            emphasis: props => null,
-            strong: props => null,
-            blockquote: props => null,
-            thematicBreak: props => null,
-            table: props => null
-        };
-        return <ReactMarkdown source={content}
-                              skipHtml={true}
-                              renderers={renderers}/>;
-
-    }
-}
+    const renderers = {
+        heading: props => HeadingLevelToComponent(props.level, props),
+        paragraph: props => null,
+        list: props => null,
+        listItem: props => null,
+        break: props => null,
+        emphasis: props => null,
+        strong: props => null,
+        blockquote: props => null,
+        thematicBreak: props => null,
+        table: props => null
+    };
+    return <ReactMarkdown source={content}
+                          skipHtml={true}
+                          renderers={renderers}/>;
+};
 
 export default TableOfContents;
