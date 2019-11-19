@@ -6,9 +6,11 @@ import {colors} from "../../colors";
 const useStyles = makeStyles({
     anchor: {
         color: colors.black,
-        "&:a" : {
-            color: colors.black,
-        }
+        fontSize: "24px",
+        lineHeight: "30px",
+        fontWeight: "600",
+        marginTop: "15px",
+        marginBottom: "25px"
     },
     anchorLink: {
         color: colors.black,

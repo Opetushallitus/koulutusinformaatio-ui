@@ -10,7 +10,11 @@ class TableOfContents extends Component {
             case 1:
                 return null;
             case 2:
-                return <Link className={"toc"} href={`#${value}`}>{value}</Link>;
+                return <Link className={"toc"}
+                             href={`#${value}`}
+                             onClick={event => event.preventDefault()}>
+                    {value}
+                </Link>;
             default:
                 return null;
         }

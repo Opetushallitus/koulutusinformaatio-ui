@@ -11,5 +11,6 @@ export const colors = {
     veryLightGreyBackground: "rgba(0,0,0,.05)",
     sideInputBackground: "#EDF1F5",
     lightGrey: "#b2b2b2",
+    black: "#1D1D1D",
     lightAlphaGrey: "rgba(178,178,178,.5)"
 };

@@ -10,9 +10,18 @@ import Accordion from './Accordion';
 import Heading from './Heading';
 import Youtube from './Youtube';
 import Grid from '@material-ui/core/Grid';
+import {colors} from "../../colors";
 import {withStyles} from "@material-ui/core";
 
 const useStyles = theme => ({
+    header1: {
+        fontSize: "40px",
+        lineHeight: "48px",
+        marginTop: "15px",
+        marginBottom: "30px",
+        fontWeight: "600",
+        color: colors.black
+    },
     image: {
         display: 'block',
     },
@@ -20,7 +29,10 @@ const useStyles = theme => ({
         paddingTop: "32px",
         "&:last-child": {
             paddingBottom: "32px"
-        }
+        },
+        fontSize: "16px",
+        lineHeight: "27px",
+        color: colors.grey
     }
 });
 
@@ -115,7 +127,7 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
                       alignItems="center"
                       className={classes.component}>
                     <Grid item xs={12} sm={12} md={10}>
-                        <h1>{name}</h1>
+                        <h1 className={classes.header1}>{name}</h1>
                         <p>{description}</p>
                         <Grid container>
                             {tableOfContents ?<Grid item xs={12} sm={3}>
