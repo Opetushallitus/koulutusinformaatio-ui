@@ -12,6 +12,7 @@ import Youtube from './Youtube';
 import Grid from '@material-ui/core/Grid';
 import {colors} from "../../colors";
 import {withStyles} from "@material-ui/core";
+import Link from '@material-ui/core/Link';
 
 const useStyles = theme => ({
     header1: {
@@ -107,6 +108,8 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
             processingInstructions: processingInstructions
         });
         const renderers = {
+            link: p => <Link href={p.href}>{p.children[0].props.value}</Link>,
+            linkReference: p => <Link href={p.href}>{p.children[0].props.value}</Link>,
             image: props => ImageComponent(props),
             imageReference: props => ImageComponent(props),
             heading: props => Heading(props)
