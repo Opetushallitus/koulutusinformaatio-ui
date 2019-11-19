@@ -142,8 +142,6 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
                                 <ReactMarkdown source={content}
                                                escapeHtml={false}
                                                renderers={renderers}
-                                               disallowedTypes={['paragraph']}
-                                               unwrapDisallowed
                                                astPlugins={[parseHtml]}
                                 />
                             </Grid>
