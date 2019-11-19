@@ -130,10 +130,10 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
                         <h1 className={classes.header1}>{name}</h1>
                         <p>{description}</p>
                         <Grid container>
-                            {tableOfContents ?<Grid item xs={12} sm={3}>
+                            {tableOfContents ?<Grid item xs={12} sm={12} md={3}>
                                 <TableOfContents content={content}/>
                             </Grid> : null}
-                            <Grid item xs={12} sm={tableOfContents ? 9 : 12}>
+                            <Grid item xs={12} sm={12} md={tableOfContents ? 9 : 12}>
                                 <ReactMarkdown source={content}
                                                escapeHtml={false}
                                                renderers={renderers}

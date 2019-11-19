@@ -2,6 +2,9 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core";
 import {colors} from "../../colors";
 
+export function sanitize(name) {
+    return name.replace(/\s+/g, '_')
+}
 
 const useStyles = makeStyles({
     anchor: {
@@ -13,7 +16,7 @@ const useStyles = makeStyles({
         marginBottom: "25px"
     },
     anchorLink: {
-        color: colors.black,
+        color: colors.black
     }
 });
 
@@ -21,15 +24,17 @@ const useStyles = makeStyles({
 const Heading = ({...props,level}) => {
     const classes = useStyles();
     const value = props.children[0].props.value;
+    const refe = sanitize(value);
+    const anchor = <a className={classes.anchorLink} id={refe} name={refe}>{value}</a>;
     switch (level) {
        case 1:
-           return <h1 className={classes.anchor}><a className={classes.anchorLink} name={value}/>{value}</h1>
+           return <h1 className={classes.anchor}>{anchor}</h1>
        case 2:
-           return <h2 className={classes.anchor}><a className={classes.anchorLink} name={value}/>{value}</h2>
+           return <h2 className={classes.anchor}>{anchor}</h2>
        case 3:
-           return <h3 className={classes.anchor}><a className={classes.anchorLink} name={value}/>{value}</h3>
+           return <h3 className={classes.anchor}>{anchor}</h3>
        default:
-           return <h4 className={classes.anchor}><a className={classes.anchorLink} name={value}/>{value}</h4>
+           return <h4 className={classes.anchor}>{anchor}</h4>
     }
 };
 
