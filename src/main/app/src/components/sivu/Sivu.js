@@ -69,7 +69,7 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
     };
 
     const pageId = props.match.params.id;
-    const {sivu} = props.contentfulStore.data;
+    const {sivu, loading} = props.contentfulStore.data;
     const page = sivu[pageId];
 
     if (page && page.content) {
@@ -171,12 +171,13 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
                   justify="center"
                   alignItems="center"
                   className={classes.component}>
-                <Grid item xs={12} sm={6} md={6}
-                      className={classes.notFound}>
-                    <h1 className={classes.header1}>{t('sisaltohaku.sivua-ei-löytynyt')}</h1>
-                    <p>{t('sisaltohaku.etsimääsi-ei-löydy')}</p>
-                    <Link href={"/"}>{t('sisaltohaku.takaisin')}</Link>
-                </Grid>
+                {loading ? null :
+                    <Grid item xs={12} sm={6} md={6}
+                          className={classes.notFound}>
+                        <h1 className={classes.header1}>{t('sisaltohaku.sivua-ei-löytynyt')}</h1>
+                        <p>{t('sisaltohaku.etsimääsi-ei-löydy')}</p>
+                        <Link href={"/"}>{t('sisaltohaku.takaisin')}</Link>
+                    </Grid>}
             </Grid>);
     }
 }));
