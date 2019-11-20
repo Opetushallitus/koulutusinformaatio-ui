@@ -78,7 +78,7 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
         const {content,description,tableOfContents,name} = page;
         const SivuLink = props => {
             const id = props.children[0];
-            return <Link href={id}>{sivu[id].name}</Link>
+            return <Link href={forwardTo(id)}>{sivu[id].name}</Link>
         }
         const LinkOrYoutube = ({...props, children, className}) => {
             if(className === "embedly-card") {
