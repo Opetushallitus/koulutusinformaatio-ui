@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react';
 import superagent from "superagent";
-import {inject} from "mobx-react/index";
+import {inject} from "mobx-react";
 import {withTranslation} from 'react-i18next';
 import '../../assets/styles/components/_palaute.scss';
 import Dialog from "@material-ui/core/Dialog";

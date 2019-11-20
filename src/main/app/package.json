@@ -19,7 +19,7 @@
     "markdown-to-jsx": "^6.10.3",
     "material-icons": "^0.3.1",
     "mobx": "^4.3.1",
-    "mobx-react": "^5.2.5",
+    "mobx-react": "6.1.4",
     "mobx-react-lite": "^1.5.1",
     "oph-urls-js": "github:Opetushallitus/oph-urls-js#master",
     "oskari-rpc": "2.0.5",
