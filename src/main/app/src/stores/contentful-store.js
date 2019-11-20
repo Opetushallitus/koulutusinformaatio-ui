@@ -16,6 +16,10 @@ class ContentfulStore {
         uutiset: {}
     };
 
+    forwardTo = (id) => {
+        return this.data.sivu[id] ? `/sivu/${this.data.sivu[id].slug || id}` : null;
+    }
+
     assetUrl(url) {
         return `${this.urlStore.urls.url('konfo-backend.content', '')}${url}`;
     }

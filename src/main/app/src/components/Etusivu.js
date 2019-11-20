@@ -86,6 +86,7 @@ class Etusivu extends Component {
 
     render() {
         const {info, uutiset, kortit} = this.props.contentfulStore.data;
+        const {forwardTo} = this.props.contentfulStore;
         const {t, classes} = this.props;
         const forwardToPage = (id) => {
             this.props.history.push(`sivu/${id}`);

@@ -52,6 +52,7 @@ const palveluStyles = theme => ({
 class Palvelu extends Component {
     render() {
         const {id, classes, contentfulStore} = this.props;
+        const {forwardTo} = this.props.contentfulStore;
         const {asset} = contentfulStore.data;
         const palvelu = contentfulStore.data.palvelu[id];
 
@@ -59,7 +60,7 @@ class Palvelu extends Component {
         const color = palvelu.color || "sininen";
         const forwardToPage = () => {
             if(palvelu.linkki && palvelu.linkki.id) {
-                this.props.history.push(`/sivu/${palvelu.linkki.id}`);
+                this.props.history.push(forwardTo(id));
             }
         };
 

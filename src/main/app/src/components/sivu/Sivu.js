@@ -42,6 +42,7 @@ const useStyles = theme => ({
 });
 
 const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(observer(({...props,t, classes, contentfulStore}) => {
+    const {forwardTo} = contentfulStore;
     const ImageComponent = ({...props, src, alt}) => {
         const url = src.replace("//images.ctfassets.net/", "")
         return <img className={classes.image} src={contentfulStore.assetUrl(url)} alt={alt}/>
@@ -65,7 +66,7 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
             }
         };
         const breadcrump = page ? findParent(pageId).concat([page]) : [];
-        return breadcrump.map(b => ({name: b.name, link: `/sivu/${b.id}`}))
+        return breadcrump.map(b => ({name: b.name, link: forwardTo(b.id)}))
     };
 
     const pageId = props.match.params.id;
