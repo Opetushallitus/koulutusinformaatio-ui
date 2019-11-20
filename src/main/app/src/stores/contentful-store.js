@@ -17,7 +17,7 @@ class ContentfulStore {
     };
 
     forwardTo = (id) => {
-        return this.data.sivu[id] ? `/sivu/${this.data.sivu[id].slug || id}` : null;
+        return this.data.sivu[id] ? `/sivu/${this.data.sivu[id].slug || id}` : `/sivu/poistettu`;
     }
 
     assetUrl(url) {
