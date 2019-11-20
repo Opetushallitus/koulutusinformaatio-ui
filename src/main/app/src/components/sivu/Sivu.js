@@ -86,7 +86,6 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
             } else {
                 return <Link target="_blank"
                              rel="noopener"
-                             rel="noreferrer"
                              {...props}><OpenInNewIcon/>{children}</Link>
             }
         };
