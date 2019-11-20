@@ -47,9 +47,10 @@ const korttiStyles = theme => ({
 class Kortti extends Component {
 
     render() {
-        const {id, classes} = this.props;
-        const {asset, sivu} = this.props.contentfulStore.data;
-        const kortti = this.props.contentfulStore.data.kortti[id];
+        const {id, classes, contentfulStore} = this.props;
+        const {asset, sivu} = contentfulStore.data;
+        const {forwardTo} = contentfulStore;
+        const kortti = contentfulStore.data.kortti[id];
 
         const linkit = kortti.linkit || [];
         const imgUrl = (uutinen) => {
@@ -58,7 +59,7 @@ class Kortti extends Component {
                 return image ? asset[image.id] : null;
             };
             const a = assetForEntry(uutinen);
-            return a ? a.url : null;
+            return a ? contentfulStore.assetUrl(a.url) : null;
         };
 
         return <Grid item xs={12} sm={6} md={4}>
@@ -77,7 +78,7 @@ class Kortti extends Component {
                                  key={page.id}>
                                 <Icon>chevron_right</Icon>
                                 <Link className={classes.linkElement}
-                                      to={`sivu/${page.id}`}>{page.name}</Link>
+                                      to={forwardTo(id)}>{page.name}</Link>
                             </div> : null;
                     })}
                 </CardContent>

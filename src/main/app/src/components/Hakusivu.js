@@ -55,7 +55,7 @@ class Hakusivu extends Component {
                     <Route path={'/toteutus/:oid'} render={(props) => <Toteutus {...props} />}/>
                     <Route path={'/hakukohde/:oid'} render={(props) => <Hakukohde {...props} />}/>
                     <Route path={'/vertailu'} render={(props) => <Vertailu {...props} />}/>
-                    <Route path={'/sivu/:id'} render={(props) => <Sivu {...props} />}/>
+                    <Route path={'/sivu/:id'} render={(props) => <Sivu/>}/>
                 </main>
             </React.Fragment>
         );

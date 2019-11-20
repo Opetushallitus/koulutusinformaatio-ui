@@ -88,11 +88,7 @@ h3 span{
     @include fluid-sizing('font-size', $h3-font-size-map);
     @include fluid-sizing('line-height', $h3-line-height-map);
 }
-a {
-    color: $dark-flat-blue;
-    @include fluid-sizing('font-size', $text-font-size-map);
-    @include fluid-sizing('line-height', $text-line-height-map);
-}
+
 p,
 span{
     @include fluid-sizing('font-size', $text-font-size-map);

@@ -8,6 +8,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import {inject, observer} from "mobx-react";
 
 const valikkoStyles = theme => ({
     root: {
@@ -64,22 +65,24 @@ const valikkoStyles = theme => ({
     }
 });
 
+@inject("contentfulStore")
+@observer
 class SidebarValikko extends Component {
 
     render() {
-        const { classes, parent, select, deselect, match } = this.props;
+        const { classes, parent, select, deselect } = this.props;
+        const {forwardTo} = this.props.contentfulStore;
 
         const ListItemLink = (props) => {
             return <ListItem button component="a" {...props} />;
         };
-        const forwardToPage = (url) => {
-            this.props.history.push(url);
+        const forwardToPage = (id) => {
+            this.props.history.push(forwardTo(id));
         };
         const SivuItem = (props) => {
             const {name,id} = props;
-            const link = `${match.url}sivu/${id}`;
             return <ListItemLink role="none"
-                                 onClick={() => forwardToPage(link)}
+                                 onClick={() => forwardToPage(id)}
                                  className={classes.valikko}>
                 <ListItemText role="menuitem"
                               className={classes.valintaText}

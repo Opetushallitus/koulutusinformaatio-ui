@@ -4,15 +4,17 @@ import { Route, withRouter } from 'react-router-dom';
 import {observer, inject} from 'mobx-react';
 import _ from 'lodash';
 import '../assets/styles/components/_etusivu.scss';
-import ReactMarkdown from 'react-markdown';
+import Markdown from 'markdown-to-jsx';
 import Kortti from "./kortti/Kortti";
-import Uutinen from "./uutinen/Uutinen";
+import Uutiset from "./uutinen/Uutiset";
 import Grid from '@material-ui/core/Grid';
+import {withStyles} from "@material-ui/core";
 import Paper from '@material-ui/core/Paper';
 import {colors} from "../colors";
-import {withStyles} from "@material-ui/core";
+import Button from '@material-ui/core/Button';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import clsx from "clsx";
+import { withTranslation } from 'react-i18next';
 
 const etusivuStyles = theme => ({
     content: {
@@ -22,7 +24,8 @@ const etusivuStyles = theme => ({
     info: {
         backgroundColor: colors.veryLightGreyBackground,
         borderRadius: 2,
-        padding: "25px 20px"
+        padding: "25px 20px",
+        cursor: "pointer"
     },
     header: {
         fontSize: "28px",
@@ -45,6 +48,11 @@ const etusivuStyles = theme => ({
         backgroundColor: colors.white,
         paddingBottom: "100px"
     },
+    showMore: {
+        marginTop: "55px",
+        fontWeight: "600",
+        textTransform: "none"
+    }
 });
 
 
@@ -78,17 +86,18 @@ class Etusivu extends Component {
 
     render() {
         const {info, uutiset, kortit} = this.props.contentfulStore.data;
-        const {classes} = this.props;
+        const {forwardTo} = this.props.contentfulStore;
+        const {t, classes} = this.props;
         const forwardToPage = (id) => {
-            this.props.history.push(`sivu/${id}`);
+            this.props.history.push(forwardTo(id));
         };
 
         const infos = Object.values(info);
         const single = (entry) => (Object.values(entry)[0] || {});
 
-        let uutisrivit = _.chunk(single(uutiset).linkit, 3);
-        const showMore = this.state.showMore === false && uutisrivit.length > 1;
-        uutisrivit = showMore ? _.take(uutisrivit, 1) : uutisrivit;
+        let uutislinkit = (single(uutiset).linkit || []);
+        const showMore = this.state.showMore === false && uutislinkit.length > 3;
+
 
         const EtusivuContent = (props) => {
             const matches = useMediaQuery('(min-width: 979px)');
@@ -102,7 +111,9 @@ class Etusivu extends Component {
                                        elevation={0}
                                        onClick={() => forwardToPage(info.linkki.id)}>
                                     <span className="notification-content">
-                                             <ReactMarkdown source={info.content}/>
+                                             <Markdown>
+                                                 {info.content}
+                                             </Markdown>
                                     </span>
                                 </Paper>
                             </Grid>;
@@ -127,21 +138,23 @@ class Etusivu extends Component {
                         <Grid item xs={12}>
                             <h1 className={classes.header}>Ajankohtaista ja uutisia</h1>
                         </Grid>
+                        <Grid container spacing={3}>
+                            <Uutiset uutiset={showMore ? _.take(uutislinkit, 3) : uutislinkit}/>
+                        </Grid>
 
-                        {uutisrivit.map((rivi) => {
-                            return <Grid container spacing={3}
-                                         key={rivi.map(u => u.id).join()}>
-                                {rivi.map(u => <Uutinen id={u.id}
-                                                        key={u.id}/>)}
-                            </Grid>
-                        })}
-
-                        <Grid container>
+                        <Grid container
+                              direction="row"
+                              justify="center"
+                              alignItems="center">
                             {showMore ?
-                                <div className="news-show-more">
-                                    <a role="button" aria-label={"Näytä kaikki"} onClick={this.showAll}
-                                       className="news-show-button">Näytä kaikki</a>
-                                </div> : null
+                                <Button
+                                    className={classes.showMore}
+                                    variant="contained"
+                                    onClick={this.showAll}
+                                    color="primary">
+                                    {t('näytä-kaikki')}
+                                </Button>
+                                : null
                             }
                         </Grid>
 
@@ -154,6 +167,6 @@ class Etusivu extends Component {
 }
 
 
-export default withRouter(withStyles(etusivuStyles, { withTheme: true })(Etusivu));
+export default withTranslation()(withRouter(withStyles(etusivuStyles, { withTheme: true })(Etusivu)));
 
 

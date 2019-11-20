@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import clsx from 'clsx';
 import {observer, inject} from 'mobx-react';
 import '../../assets/styles/components/_etusivu.scss';
-import ReactMarkdown from "react-markdown";
+import Markdown from 'markdown-to-jsx';
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import Avatar from "@material-ui/core/Avatar";
@@ -51,15 +51,16 @@ const palveluStyles = theme => ({
 @observer
 class Palvelu extends Component {
     render() {
-        const {id, classes} = this.props;
-        const {asset} = this.props.contentfulStore.data;
-        const palvelu = this.props.contentfulStore.data.palvelu[id];
+        const {id, classes, contentfulStore} = this.props;
+        const {forwardTo} = this.props.contentfulStore;
+        const {asset} = contentfulStore.data;
+        const palvelu = contentfulStore.data.palvelu[id];
 
         const a = palvelu.image ? asset[palvelu.image.id] : null;
         const color = palvelu.color || "sininen";
         const forwardToPage = () => {
             if(palvelu.linkki && palvelu.linkki.id) {
-                this.props.history.push(`/sivu/${palvelu.linkki.id}`);
+                this.props.history.push(forwardTo(id));
             }
         };
 
@@ -68,7 +69,7 @@ class Palvelu extends Component {
                 <CardHeader
                     avatar={
                         <Avatar aria-label={"TODO"}
-                                src={a.url}
+                                src={contentfulStore.assetUrl(a.url)}
                                 className={classes.avatar}>
                         </Avatar>
                     }
@@ -78,7 +79,9 @@ class Palvelu extends Component {
                     subheader=""
                 />
                 <CardContent className={classes.content}>
-                    <ReactMarkdown source={palvelu.content}/>
+                    <Markdown>
+                        {palvelu.content}
+                    </Markdown>
                 </CardContent>
             </Card>
         </Grid>;

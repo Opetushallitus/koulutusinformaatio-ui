@@ -144,6 +144,11 @@ export const theme = createMuiTheme({
         width: '100%'
       }
     },
+    MuiLink: {
+      root: {
+        cursor: "pointer"
+      }
+    },
     MuiCheckbox: {
       colorSecondary: {
         // color: primaryGreen

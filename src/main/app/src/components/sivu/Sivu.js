@@ -1,50 +1,57 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {observer, inject} from 'mobx-react';
 import { withRouter } from 'react-router-dom';
-import '../../assets/styles/components/_sivu.scss';
 import Murupolku from '../common/Murupolku';
-import ReactMarkdown from 'react-markdown';
-import parse from "url-parse";
-import htmlParser from 'react-markdown/plugins/html-parser';
-import HtmlToReact from 'html-to-react';
 import TableOfContents from './TableOfContents';
+import {Accordion, Summary} from './Accordion';
+import Heading from './Heading';
+import Paragraph from './Paragraph';
+import Youtube from './Youtube';
+import Grid from '@material-ui/core/Grid';
+import {colors} from "../../colors";
+import {withStyles} from "@material-ui/core";
+import Link from '@material-ui/core/Link';
+import Markdown from 'markdown-to-jsx';
+import { withTranslation } from 'react-i18next';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
-@inject("contentfulStore")
-@observer
-class Sivu extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-
-        }
+const useStyles = theme => ({
+    notFound: {
+        textAlign: "center"
+    },
+    header1: {
+        fontSize: "40px",
+        lineHeight: "48px",
+        marginTop: "15px",
+        marginBottom: "30px",
+        fontWeight: "700",
+        color: colors.black
+    },
+    image: {
+        display: 'block',
+        marginBottom: "15px",
+    },
+    component: {
+        paddingTop: "32px",
+        "&:last-child": {
+            paddingBottom: "32px"
+        },
+        fontSize: "16px",
+        lineHeight: "27px",
+        color: colors.grey
     }
-    static Youtube = (props) => {
-        const url = parse(props.url, true);
-        return <iframe title={props.url}
-                       width="560" height="315"
-                       style={{display: "block", margin: "10px 0px"}}
-                       src={`https://www.youtube.com/embed/${url.query.v}`}
-                       frameBorder="0"
-                       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                       allowFullScreen={true}/>;
+});
+
+const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(observer(({...props,t, classes, contentfulStore}) => {
+    const {forwardTo} = contentfulStore;
+    const ImageComponent = ({...props, src, alt}) => {
+        const url = src.replace("//images.ctfassets.net/", "")
+        return <img className={classes.image} src={contentfulStore.assetUrl(url)} alt={alt}/>
     };
-    static HeadingLevelToComponent = (level, props) => {
-        const value = props.children[0].props.value;
-        switch (level) {
-            case 1:
-                return <h1><a className={"anchor"} name={value}>{value}</a></h1>;
-            case 2:
-                return <h2><a className={"anchor"} name={value}>{value}</a></h2>;
-            case 3:
-                return <h3><a className={"anchor"} name={value}>{value}</a></h3>;
-            default:
-                return <h4><a className={"anchor"} name={value}>{value}</a></h4>
-        }
-    };
-    murupolkuPath = () => {
-        const pageId = this.props.match.params.id;
-        const {sivu, valikko} = this.props.contentfulStore.data;
+
+    const murupolkuPath = () => {
+        const pageId = props.match.params.id;
+        const {sivu, valikko} = props.contentfulStore.data;
         const all = Object.entries(valikko).concat(Object.entries(sivu));
         const page = sivu[pageId];
         const findParent = (id) => {
@@ -54,88 +61,129 @@ class Sivu extends Component {
             });
             if (parent) {
                 const [parentId, parentItem] = parent;
-                return [parentItem].concat(findParent(parentId));
+                return findParent(parentId).concat([parentItem]);
             } else {
                 return [];
             }
         };
         const breadcrump = page ? findParent(pageId).concat([page]) : [];
-        return breadcrump.map(b => ({name: b.name, link: `/sivu/${b.id}`}))
+        return breadcrump.map(b => ({name: b.name, link: forwardTo(b.id)}))
     };
 
-    render() {
-        const pageId = this.props.match.params.id;
-        const {sivu, loading} = this.props.contentfulStore.data;
-        const page = sivu[pageId];
+    const pageId = props.match.params.id;
+    const {sivu, loading} = props.contentfulStore.data;
+    const page = sivu[pageId];
 
-        if(page && page.content) {
-            const content = page.content;
-            const header = page.name;
-            var processNodeDefinitions = new HtmlToReact.ProcessNodeDefinitions(React);
-
-            var processingInstructions = [
-                {
-                    shouldProcessNode: function (node) {
-                        return node.attribs && node.attribs['class'] === 'embedly-card';
-                    },
-                    processNode: function (node, children) {
-                        return React.createElement(
-                            Sivu.Youtube,
-                            {url: node.attribs['href']});
-                    }
-                },
-                {
-                    shouldProcessNode: function (node) {
-                        return true;
-                    },
-                    processNode: processNodeDefinitions.processDefaultNode
-                }
-            ];
-            const parseHtml = htmlParser({
-                isValidNode: node => true,
-                processingInstructions: processingInstructions
-            });
-            const renderers = {
-                heading: props => Sivu.HeadingLevelToComponent(props.level, props)
-            };
-            return (
-                <div className="sivu">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-12">
-                                <Murupolku path={this.murupolkuPath()}/>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-3">
-                                <TableOfContents content={content}/>
-                            </div>
-                            <div className="col-6">
-                                <h1>{header}</h1>
-                                <ReactMarkdown source={content}
-                                               escapeHtml={false}
-                                               renderers={renderers}
-                                               astPlugins={[parseHtml]}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>);
-        } else {
-            return (
-                <div className="container">
-                    <div className="row result-count">
-                        <div className="col-12">
-                            {loading ? <p>Ladataan...</p>:<h1 aria-live="assertive">Sivua ei löytynyt</h1>}
-
-                        </div>
-                    </div>
-                </div>);
+    if (page && page.content) {
+        const {content,description,tableOfContents,name} = page;
+        const SivuLink = props => {
+            const id = props.children[0];
+            return <Link href={forwardTo(id)}>{sivu[id].name}</Link>
         }
+        const LinkOrYoutube = ({...props, children, className}) => {
+            if(className === "embedly-card") {
+                return <Youtube {...props}/>
+            } else {
+                return <Link target="_blank"
+                             rel="noopener"
+                             {...props}><OpenInNewIcon/>{children}</Link>
+            }
+        };
 
-
-
+        return (
+            <React.Fragment>
+                <Grid container
+                      direction="row"
+                      justify="center"
+                      alignItems="center"
+                      className={classes.component}>
+                    <Grid item xs={12} sm={12} md={10}>
+                        <Murupolku path={murupolkuPath()}/>
+                    </Grid>
+                </Grid>
+                <Grid container
+                      direction="row"
+                      justify="center"
+                      alignItems="center"
+                      className={classes.component}>
+                    <Grid item xs={12} sm={12} md={10}>
+                        <h1 className={classes.header1}>{name}</h1>
+                        <p>{description}</p>
+                        <Grid container>
+                            {tableOfContents ?<Grid item xs={12} sm={12} md={3}>
+                                <TableOfContents content={content}/>
+                            </Grid> : null}
+                            <Grid item xs={12} sm={12} md={tableOfContents ? 9 : 12}>
+                                <Markdown
+                                    options={{
+                                        overrides: {
+                                            img: {
+                                                component: ImageComponent
+                                            },
+                                            h1: {
+                                                component: Heading,
+                                                props: {
+                                                    level: 1
+                                                },
+                                            },
+                                            h2: {
+                                                component: Heading,
+                                                props: {
+                                                    level: 2
+                                                },
+                                            },
+                                            h3: {
+                                                component: Heading,
+                                                props: {
+                                                    level: 3
+                                                },
+                                            },
+                                            h4: {
+                                                component: Heading,
+                                                props: {
+                                                    level: 4
+                                                },
+                                            },
+                                            p: {
+                                                component: Paragraph
+                                            },
+                                            a: {
+                                                component: LinkOrYoutube
+                                            },
+                                            details: {
+                                                component: Accordion
+                                            },
+                                            summary: {
+                                                component: Summary
+                                            },
+                                            sivu: {
+                                                component: SivuLink
+                                            }
+                                        }
+                                    }}>
+                                    {content}
+                                </Markdown>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </React.Fragment>);
+    } else {
+        return (
+            <Grid container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                  className={classes.component}>
+                {loading ? null :
+                    <Grid item xs={12} sm={6} md={6}
+                          className={classes.notFound}>
+                        <h1 className={classes.header1}>{t('sisaltohaku.sivua-ei-löytynyt')}</h1>
+                        <p>{t('sisaltohaku.etsimääsi-ei-löydy')}</p>
+                        <Link href={"/"}>{t('sisaltohaku.takaisin')}</Link>
+                    </Grid>}
+            </Grid>);
     }
-}
+}));
 
-export default withRouter(Sivu);
+export default withTranslation()(withRouter(withStyles(useStyles, { withTheme: true })(Sivu)));
