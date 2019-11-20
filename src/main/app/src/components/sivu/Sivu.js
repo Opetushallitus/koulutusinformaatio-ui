@@ -74,6 +74,10 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
 
     if (page && page.content) {
         const {content,description,tableOfContents,name} = page;
+        const SivuLink = props => {
+            const id = props.children[0];
+            return <Link href={id}>{sivu[id].name}</Link>
+        }
         const LinkOrYoutube = ({...props, className}) => {
             if(className === "embedly-card") {
                 return <Youtube {...props}/>
@@ -147,6 +151,9 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
                                             },
                                             summary: {
                                                 component: Summary
+                                            },
+                                            sivu: {
+                                                component: SivuLink
                                             }
                                         }
                                     }}>

@@ -65,6 +65,9 @@ const TableOfContents = (props) => {
                 },
                 details: {
                     component: Null
+                },
+                sivu: {
+                    component: Null
                 }
             }
         }}>
