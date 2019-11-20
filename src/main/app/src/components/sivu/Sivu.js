@@ -13,6 +13,7 @@ import {withStyles} from "@material-ui/core";
 import Link from '@material-ui/core/Link';
 import Markdown from 'markdown-to-jsx';
 import { withTranslation } from 'react-i18next';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 const useStyles = theme => ({
     notFound: {
@@ -42,6 +43,7 @@ const useStyles = theme => ({
 });
 
 const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(observer(({...props,t, classes, contentfulStore}) => {
+    const {forwardTo} = contentfulStore;
     const ImageComponent = ({...props, src, alt}) => {
         const url = src.replace("//images.ctfassets.net/", "")
         return <img className={classes.image} src={contentfulStore.assetUrl(url)} alt={alt}/>
@@ -65,24 +67,27 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
             }
         };
         const breadcrump = page ? findParent(pageId).concat([page]) : [];
-        return breadcrump.map(b => ({name: b.name, link: `/sivu/${b.id}`}))
+        return breadcrump.map(b => ({name: b.name, link: forwardTo(b.id)}))
     };
 
     const pageId = props.match.params.id;
-    const {sivu} = props.contentfulStore.data;
+    const {sivu, loading} = props.contentfulStore.data;
     const page = sivu[pageId];
 
     if (page && page.content) {
         const {content,description,tableOfContents,name} = page;
         const SivuLink = props => {
             const id = props.children[0];
-            return <Link href={id}>{sivu[id].name}</Link>
+            return <Link href={forwardTo(id)}>{sivu[id].name}</Link>
         }
-        const LinkOrYoutube = ({...props, className}) => {
+        const LinkOrYoutube = ({...props, children, className}) => {
             if(className === "embedly-card") {
                 return <Youtube {...props}/>
             } else {
-                return <Link {...props}/>
+                return <Link target="_blank"
+                             rel="noopener"
+                             rel="noreferrer"
+                             {...props}><OpenInNewIcon/>{children}</Link>
             }
         };
 
@@ -171,12 +176,13 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
                   justify="center"
                   alignItems="center"
                   className={classes.component}>
-                <Grid item xs={12} sm={6} md={6}
-                      className={classes.notFound}>
-                    <h1 className={classes.header1}>{t('sisaltohaku.sivua-ei-löytynyt')}</h1>
-                    <p>{t('sisaltohaku.etsimääsi-ei-löydy')}</p>
-                    <Link href={"/"}>{t('sisaltohaku.takaisin')}</Link>
-                </Grid>
+                {loading ? null :
+                    <Grid item xs={12} sm={6} md={6}
+                          className={classes.notFound}>
+                        <h1 className={classes.header1}>{t('sisaltohaku.sivua-ei-löytynyt')}</h1>
+                        <p>{t('sisaltohaku.etsimääsi-ei-löydy')}</p>
+                        <Link href={"/"}>{t('sisaltohaku.takaisin')}</Link>
+                    </Grid>}
             </Grid>);
     }
 }));

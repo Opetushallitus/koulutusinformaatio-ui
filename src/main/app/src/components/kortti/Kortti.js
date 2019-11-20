@@ -49,6 +49,7 @@ class Kortti extends Component {
     render() {
         const {id, classes, contentfulStore} = this.props;
         const {asset, sivu} = contentfulStore.data;
+        const {forwardTo} = contentfulStore;
         const kortti = contentfulStore.data.kortti[id];
 
         const linkit = kortti.linkit || [];
@@ -77,7 +78,7 @@ class Kortti extends Component {
                                  key={page.id}>
                                 <Icon>chevron_right</Icon>
                                 <Link className={classes.linkElement}
-                                      to={`sivu/${page.id}`}>{page.name}</Link>
+                                      to={forwardTo(id)}>{page.name}</Link>
                             </div> : null;
                     })}
                 </CardContent>

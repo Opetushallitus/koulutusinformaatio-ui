@@ -47,6 +47,7 @@ class Uutinen extends Component {
 
     render() {
         const {id, classes, t, contentfulStore, history} = this.props;
+        const {forwardTo} = contentfulStore;
         const uutinen = contentfulStore.data.uutinen[id];
         const link = (uutinen.sivu || {}).id;
 
@@ -61,7 +62,7 @@ class Uutinen extends Component {
         };
 
         const forwardToPage = (id) => {
-            history.push(`sivu/${id}`);
+            history.push(forwardTo(id));
         };
 
         return <Grid item xs={12} sm={6} md={4}
