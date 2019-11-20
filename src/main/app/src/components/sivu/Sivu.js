@@ -13,6 +13,7 @@ import {withStyles} from "@material-ui/core";
 import Link from '@material-ui/core/Link';
 import Markdown from 'markdown-to-jsx';
 import { withTranslation } from 'react-i18next';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 const useStyles = theme => ({
     notFound: {
@@ -79,11 +80,14 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
             const id = props.children[0];
             return <Link href={id}>{sivu[id].name}</Link>
         }
-        const LinkOrYoutube = ({...props, className}) => {
+        const LinkOrYoutube = ({...props, children, className}) => {
             if(className === "embedly-card") {
                 return <Youtube {...props}/>
             } else {
-                return <Link {...props}/>
+                return <Link target="_blank"
+                             rel="noopener"
+                             rel="noreferrer"
+                             {...props}><OpenInNewIcon/>{children}</Link>
             }
         };
 
