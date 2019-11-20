@@ -69,7 +69,7 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
     };
 
     const pageId = props.match.params.id;
-    const {sivu, loading} = props.contentfulStore.data;
+    const {sivu} = props.contentfulStore.data;
     const page = sivu[pageId];
 
     if (page && page.content) {
