@@ -27,6 +27,9 @@ const useStyles = theme => ({
         fontWeight: "700",
         color: colors.black
     },
+    icon: {
+        fontSize: "16px"
+    },
     image: {
         display: 'block',
         marginBottom: "15px",
@@ -85,8 +88,11 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
                 return <Youtube {...props}/>
             } else {
                 return <Link target="_blank"
-                             rel="noopener"
-                             {...props}><OpenInNewIcon/>{children}</Link>
+                      rel="noopener"
+                    {...props}>
+                    {children}
+                    <OpenInNewIcon className={classes.icon}/>
+                </Link>
             }
         };
 
