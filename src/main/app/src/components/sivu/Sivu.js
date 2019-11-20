@@ -40,8 +40,6 @@ const useStyles = theme => ({
 });
 
 const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(observer(({...props,classes, contentfulStore}) => {
-    const urlStore = new UrlStore();
-
     const ImageComponent = ({...props, src, alt}) => {
         const url = src.replace("//images.ctfassets.net/", "")
         return <img className={classes.image} src={contentfulStore.assetUrl(url)} alt={alt}/>
