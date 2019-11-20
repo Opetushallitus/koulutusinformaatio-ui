@@ -7,12 +7,16 @@ import { Grid, Paper, Typography } from '@material-ui/core';
 import { Localizer as l } from '../../tools/Utils';
 import HakutulosToggleWrapper from './HakutulosToggleWrapper';
 import HakutulosSummary from './HakutulosSummary';
-import HakutulosSuodattimet from './HakutulosSuodattimet'
+import OpetusKieliSuodatin from './hakutulosSuodattimet/OpetusKieliSuodatin';
+import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
 import HakutulosBox from '../common/HakutulosBox';
+// import HakutulosBox from './HakutulosBox';
+import KoulutusKortti from './hakutulosKortit/KoulutusKortti';
 import VertailuBox from './VertailuBox';
 import '../../assets/styles/components/_hakutulos.scss';
 import { styles } from '../../styles';
 import { withTranslation } from 'react-i18next';
+import { toJS } from 'mobx';
 
 @inject('hakuStore', 'vertailuStore')
 @observer
@@ -71,10 +75,10 @@ class Hakutulos extends Component {
 
   renderResultList() {
     const vertailuActive = this.props.vertailuStore.size < 3;
+    const koulutusResult = toJS(this.props.hakuStore.koulutusResult);
+    const oppilaitosResult = toJS(this.props.hakuStore.oppilaitosResult);
     if (this.props.hakuStore.toggleKoulutus) {
-      return this.props.hakuStore.koulutusResult.map(r => {
-        console.log(this.getKoulutusNimi(r));
-        // console.log(Object.entries(r));
+      return koulutusResult.map(r => {
         const link =
           '/koulutus/' +
           r.oid +
@@ -83,17 +87,19 @@ class Hakutulos extends Component {
           '&lng=' +
           l.getLanguage();
         return (
-          <HakutulosBox
+          <KoulutusKortti
             key={r.oid}
             oid={r.oid}
-            vertailuOid={r.oid}
             tyyppi={r.koulutustyyppi}
             haettavissa={r.hakuOnKaynnissa}
-            nimi={this.getKoulutusNimi(r)}
+            // nimi={this.getKoulutusNimi(r)}
             link={link}
-            text1={this.getOsaamisala(r)} //osaamisalat = ammattinimikkeet ammatillisessa? entä miten kk ylempi/alempi tarkistetaan?
-            text2={''}
-            vertailu={vertailuActive}
+            // text1={this.getOsaamisala(r)} //osaamisalat = ammattinimikkeet ammatillisessa? entä miten kk ylempi/alempi tarkistetaan?
+            kuvaus={r.kuvaus}
+            nimi={r.nimi}
+            opintojenlaajuus={r.opintojenlaajuus}
+            opintojenlaajuusyksikko={r.opintojenlaajuusyksikko}
+            tutkintonimikkeet={r.tutkintonimikkeet || []}
           />
         );
       });
@@ -173,12 +179,11 @@ class Hakutulos extends Component {
             </Grid>
             <Grid item container xs={12}>
               <Grid item xs={3} className={classes.hakutulosFiltersGrid}>
-                <HakutulosSuodattimet />
+                <OpetusKieliSuodatin />
+                <KoulutusTyyppiSuodatin />
               </Grid>
               <Grid item xs={9}>
-                <div id="search-results">
-                  <div className="row">{this.renderResultList()}</div>
-                </div>
+                <div id="search-results">{this.renderResultList()}</div>
               </Grid>
             </Grid>
             {/* <Sivutus /> */}

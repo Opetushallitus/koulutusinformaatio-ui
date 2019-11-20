@@ -51,7 +51,51 @@ export const styles = theme =>
     hakuTulosListItemText: {
       fontSize: 14,
       color: '#4C4C4C'
-    }
+    },
+    hakutulosKortti: {
+      width: '100%',
+      border: '1px solid black',
+      padding: theme.spacing(3)
+    },
+    koulutusKorttiImgBtn: {
+      width: 250,
+      height: 250
+    },
+    koulutusKorttiLeftMargin: {
+      marginLeft: '0.5em'
+    },
+    koulutusKorttiKuvaus: {
+      overflow: 'hidden',
+      position: 'relative',
+      lineHeight: '1.2em',
+      maxHeight: '3.6em',
+      textAlign: 'justify',
+      marginRight: '-1em',
+      paddingRight: '1em',
+      '&::before': {
+        content: '"..."',
+        position: 'absolute',
+        right: 0,
+        bottom: 0
+      },
+      '&::after': {
+        content: '""',
+        position: 'absolute',
+        right: 0,
+        width: '1em',
+        marginTop: '0.2em',
+        background: 'red'
+      }
+
+
+    },
+    koulutusKorttiImg: {
+      margin: 'auto',
+      display: 'block',
+      maxWidth: '100%',
+      maxHeight: '100%'
+    },
+
     // ******************************************************************
     // AppBar
     // ******************************************************************

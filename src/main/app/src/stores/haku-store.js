@@ -40,11 +40,13 @@ class HakuStore {
             this.searchAll(() => {
                 if(!search.toggle) {
                     const toggle = this.koulutusCount >= this.oppilaitosCount ? 'koulutus' : 'oppilaitos';
+                    console.log(`haku-store - setAll gets Triggered`);
                     this.setToggle(toggle);
                     if(toggleAction) {
                         toggleAction(toggle);
                     }
                 } else {
+                    console.log(`haku-store - setAll gets Triggered`);
                     this.setToggle(search.toggle);
                 }
             });
@@ -53,7 +55,8 @@ class HakuStore {
         } else if (pagingChange.oppilaitos) {
             this.searchOppilaitokset();
         } else {
-            this.setToggle(search.toggle);
+            console.log(`haku-store - setAll gets Triggered`);
+            // this.setToggle(search.toggle);
         }
     };
 
@@ -116,7 +119,8 @@ class HakuStore {
     };
 
     @action
-    setToggle = (toggle) => {
+    setToggle = toggle => {
+        console.log(`haku-store - setToggle - toggle = ${toggle}`);
         const newToggle = (toggle && toggle.toLowerCase() === 'koulutus') ? 'koulutus' : 'oppilaitos';
         const change = this.toggle !== newToggle;
         this.toggle = newToggle;
