@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import {observer, inject} from 'mobx-react';
 import '../../assets/styles/components/_etusivu.scss';
-import ReactMarkdown from "react-markdown";
+import Markdown from 'markdown-to-jsx';
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -18,7 +18,10 @@ const uutinenStyles = theme => ({
         lineHeight: "26px",
         color: colors.green
     },
-
+    content: {
+        marginTop: "20px",
+        marginBottom: "5px"
+    },
     media: {
         height: 0,
         paddingTop: '56.25%'
@@ -83,7 +86,11 @@ class Uutinen extends Component {
                             07.11.2019
                         </Grid>
                     </Grid>
-                    <ReactMarkdown source={uutinen.content}/>
+                    <div className={classes.content}>
+                        <Markdown>
+                            {uutinen.content}
+                        </Markdown>
+                    </div>
                 </CardContent>
             </Card>
         </Grid>;
