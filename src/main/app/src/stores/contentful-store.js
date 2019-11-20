@@ -16,6 +16,10 @@ class ContentfulStore {
         uutiset: {}
     };
 
+    assetUrl(url) {
+        return `${this.urlStore.urls.url('konfo-backend.content', '')}${url}`;
+    }
+
     static bodyAsArray(res) {
         return res.body ? res.body : [];
     }

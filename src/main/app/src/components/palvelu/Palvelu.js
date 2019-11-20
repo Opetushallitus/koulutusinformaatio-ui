@@ -51,9 +51,9 @@ const palveluStyles = theme => ({
 @observer
 class Palvelu extends Component {
     render() {
-        const {id, classes} = this.props;
-        const {asset} = this.props.contentfulStore.data;
-        const palvelu = this.props.contentfulStore.data.palvelu[id];
+        const {id, classes, contentfulStore} = this.props;
+        const {asset} = contentfulStore.data;
+        const palvelu = contentfulStore.data.palvelu[id];
 
         const a = palvelu.image ? asset[palvelu.image.id] : null;
         const color = palvelu.color || "sininen";
@@ -68,7 +68,7 @@ class Palvelu extends Component {
                 <CardHeader
                     avatar={
                         <Avatar aria-label={"TODO"}
-                                src={a.url}
+                                src={contentfulStore.assetUrl(a.url)}
                                 className={classes.avatar}>
                         </Avatar>
                     }

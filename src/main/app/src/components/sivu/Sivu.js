@@ -13,6 +13,8 @@ import Grid from '@material-ui/core/Grid';
 import {colors} from "../../colors";
 import {withStyles} from "@material-ui/core";
 import Link from '@material-ui/core/Link';
+import UrlStore from "../../stores/url-store";
+import Box from '@material-ui/core/Box';
 
 const useStyles = theme => ({
     header1: {
@@ -38,10 +40,12 @@ const useStyles = theme => ({
     }
 });
 
-const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(observer(({...props,classes}) => {
+const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(observer(({...props,classes, contentfulStore}) => {
+    const urlStore = new UrlStore();
 
-    const ImageComponent = ({src, alt}) => {
-        return <img className={classes.image} src={src} alt={alt}/>
+    const ImageComponent = ({...props, src, alt}) => {
+        const url = src.replace("//images.ctfassets.net/", "")
+        return <img className={classes.image} src={contentfulStore.assetUrl(url)} alt={alt}/>
     };
 
     const murupolkuPath = () => {

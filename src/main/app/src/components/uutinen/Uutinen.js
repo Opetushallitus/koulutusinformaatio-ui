@@ -43,22 +43,22 @@ const uutinenStyles = theme => ({
 class Uutinen extends Component {
 
     render() {
-        const {id, classes, t} = this.props;
-        const uutinen = this.props.contentfulStore.data.uutinen[id];
+        const {id, classes, t, contentfulStore, history} = this.props;
+        const uutinen = contentfulStore.data.uutinen[id];
         const link = (uutinen.sivu || {}).id;
 
-        const {asset} = this.props.contentfulStore.data;
+        const {asset} = contentfulStore.data;
         const imgUrl = (uutinen) => {
             const assetForEntry = (entry) => {
                 const image = entry.image || {};
                 return image ? asset[image.id] : null;
             };
             const a = assetForEntry(uutinen);
-            return a ? a.url : null;
+            return a ? contentfulStore.assetUrl(a.url) : null;
         };
 
         const forwardToPage = (id) => {
-            this.props.history.push(`sivu/${id}`);
+            history.push(`sivu/${id}`);
         };
 
         return <Grid item xs={12} sm={6} md={4}

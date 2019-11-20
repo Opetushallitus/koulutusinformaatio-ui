@@ -8,7 +8,7 @@ import {colors} from "../../colors";
 const useStyles = makeStyles({
     link: {
         fontSize: "16px",
-        lineHeight: "24px",
+        lineHeight: "27px",
         paddingLeft: "21px",
         color: colors.green,
         borderLeftColor: colors.softGrey,
