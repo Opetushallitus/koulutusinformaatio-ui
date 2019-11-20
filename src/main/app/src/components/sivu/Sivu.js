@@ -2,17 +2,16 @@ import React from 'react';
 import {observer, inject} from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import Murupolku from '../common/Murupolku';
-import ReactMarkdown from 'react-markdown';
-import htmlParser from 'react-markdown/plugins/html-parser';
-import HtmlToReact from 'html-to-react';
 import TableOfContents from './TableOfContents';
-import Accordion from './Accordion';
+import {Accordion, Summary} from './Accordion';
 import Heading from './Heading';
+import Paragraph from './Paragraph';
 import Youtube from './Youtube';
 import Grid from '@material-ui/core/Grid';
 import {colors} from "../../colors";
 import {withStyles} from "@material-ui/core";
 import Link from '@material-ui/core/Link';
+import Markdown from 'markdown-to-jsx';
 
 const useStyles = theme => ({
     header1: {
@@ -71,48 +70,12 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
 
     if (page && page.content) {
         const {content,description,tableOfContents,name} = page;
-        var processNodeDefinitions = new HtmlToReact.ProcessNodeDefinitions(React);
-        var id = 0;
-        var processingInstructions = [
-            {
-                shouldProcessNode: function (node) {
-                    return true;
-                },
-                processNode: function (node, children) {
-                    switch (node.name) {
-                        case "a":
-                            return ((node.attribs || {})['class'] === 'embedly-card') &&
-                                React.createElement(
-                                    Youtube,
-                                    {url: node.attribs['href']});
-                        case "details":
-                            return React.createElement(
-                                Accordion,
-                                {key: `key-${++id}`,
-                                summary: ((node.children.filter(n => n.name === 'summary')[0] || {}).children || []).map(d => d.data).join(""),
-                                text: (node.children.filter(n => n.type === 'text') || []).map(d => d.data).join("")});
-                        default:
-                            return null;
-                    }
-                }
-            },
-            {
-                shouldProcessNode: function (node) {
-                    return true;
-                },
-                processNode: processNodeDefinitions.processDefaultNode
+        const LinkOrYoutube = ({...props, className}) => {
+            if(className === "embedly-card") {
+                return <Youtube {...props}/>
+            } else {
+                return <Link {...props}/>
             }
-        ];
-        const parseHtml = htmlParser({
-            isValidNode: node => true,
-            processingInstructions: processingInstructions
-        });
-        const renderers = {
-            link: p => <Link href={p.href}>{p.children[0].props.value}</Link>,
-            linkReference: p => <Link href={p.href}>{p.children[0].props.value}</Link>,
-            image: props => ImageComponent(props),
-            imageReference: props => ImageComponent(props),
-            heading: props => Heading(props)
         };
 
         return (
@@ -139,11 +102,52 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
                                 <TableOfContents content={content}/>
                             </Grid> : null}
                             <Grid item xs={12} sm={12} md={tableOfContents ? 9 : 12}>
-                                <ReactMarkdown source={content}
-                                               escapeHtml={false}
-                                               renderers={renderers}
-                                               astPlugins={[parseHtml]}
-                                />
+                                <Markdown
+                                    options={{
+                                        overrides: {
+                                            img: {
+                                                component: ImageComponent
+                                            },
+                                            h1: {
+                                                component: Heading,
+                                                props: {
+                                                    level: 1
+                                                },
+                                            },
+                                            h2: {
+                                                component: Heading,
+                                                props: {
+                                                    level: 2
+                                                },
+                                            },
+                                            h3: {
+                                                component: Heading,
+                                                props: {
+                                                    level: 3
+                                                },
+                                            },
+                                            h4: {
+                                                component: Heading,
+                                                props: {
+                                                    level: 4
+                                                },
+                                            },
+                                            p: {
+                                                component: Paragraph
+                                            },
+                                            a: {
+                                                component: LinkOrYoutube
+                                            },
+                                            details: {
+                                                component: Accordion
+                                            },
+                                            summary: {
+                                                component: Summary
+                                            }
+                                        }
+                                    }}>
+                                    {content}
+                                </Markdown>
                             </Grid>
                         </Grid>
                     </Grid>

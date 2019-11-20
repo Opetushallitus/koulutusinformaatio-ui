@@ -1,9 +1,8 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
 import Link from '@material-ui/core/Link';
 import {makeStyles} from "@material-ui/core";
-import {sanitize} from './Heading';
 import {colors} from "../../colors";
+import Markdown from 'markdown-to-jsx';
 
 const useStyles = makeStyles({
     link: {
@@ -24,37 +23,53 @@ const useStyles = makeStyles({
 const TableOfContents = (props) => {
     const classes = useStyles();
     const {content} = props;
-    const HeadingLevelToComponent = (level, props) => {
-        const value = props.children[0].props.value;
-        const anchor = sanitize(value);
-        switch (level) {
-            case 1:
-                return null;
-            case 2:
-                return <Link className={classes.link}
-                             aria-label="anchor"
-                             href={`#${anchor}`}>
-                    {value}
-                </Link>;
-            default:
-                return null;
-        }
+    const HeadingLevelToComponent = (props) => {
+        const value = props.children;
+        const anchor = props.id;
+        return <Link className={classes.link}
+              aria-label="anchor"
+              href={`#${anchor}`}>
+            {value}
+        </Link>
     };
-    const renderers = {
-        heading: props => HeadingLevelToComponent(props.level, props),
-        paragraph: props => null,
-        list: props => null,
-        listItem: props => null,
-        break: props => null,
-        emphasis: props => null,
-        strong: props => null,
-        blockquote: props => null,
-        thematicBreak: props => null,
-        table: props => null
-    };
-    return <ReactMarkdown source={content}
-                          skipHtml={true}
-                          renderers={renderers}/>;
+    const Null = (props) => null
+    return <Markdown
+        options={{
+            overrides: {
+                img: {
+                    component: Null
+                },
+                h1: {
+                    component: Null
+                },
+                h2: {
+                    component: HeadingLevelToComponent
+                },
+                h3: {
+                    component: Null
+                },
+                h4: {
+                    component: Null
+                },
+                p: {
+                    component: Null
+                },
+                a: {
+                    component: Null
+                },
+                ul: {
+                    component: Null
+                },
+                ol: {
+                    component: Null
+                },
+                details: {
+                    component: Null
+                }
+            }
+        }}>
+        {content}
+    </Markdown>;
 };
 
 export default TableOfContents;

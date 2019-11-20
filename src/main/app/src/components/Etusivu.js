@@ -4,7 +4,7 @@ import { Route, withRouter } from 'react-router-dom';
 import {observer, inject} from 'mobx-react';
 import _ from 'lodash';
 import '../assets/styles/components/_etusivu.scss';
-import ReactMarkdown from 'react-markdown';
+import Markdown from 'markdown-to-jsx';
 import Kortti from "./kortti/Kortti";
 import Uutiset from "./uutinen/Uutiset";
 import Grid from '@material-ui/core/Grid';
@@ -110,7 +110,9 @@ class Etusivu extends Component {
                                        elevation={0}
                                        onClick={() => forwardToPage(info.linkki.id)}>
                                     <span className="notification-content">
-                                             <ReactMarkdown source={info.content}/>
+                                             <Markdown>
+                                                 {info.content}
+                                             </Markdown>
                                     </span>
                                 </Paper>
                             </Grid>;

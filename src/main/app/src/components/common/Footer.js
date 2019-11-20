@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
+import Markdown from 'markdown-to-jsx';
 import {useTranslation} from 'react-i18next';
 import {makeStyles} from "@material-ui/core";
 import clsx from "clsx";
@@ -74,10 +74,14 @@ const Footer = inject(stores => ({contentfulStore: stores.contentfulStore}))(obs
     const classes = useStyles();
     const single = (entry) => (Object.values(entry)[0] || {});
     const {content, contentRight, contentCenter, lopputekstit} = single(contentfulStore.data.footer);
-    const renderers = {
-        link: props => {
-            const value = props.children[0].props.value;
-            return <Link className={classes.link} href={props.href}>{value}</Link>;
+    const overrides = {
+        overrides: {
+            a: {
+                component: Link,
+                props: {
+                    className: classes.link
+                }
+            }
         }
     };
     return <footer>
@@ -99,27 +103,24 @@ const Footer = inject(stores => ({contentfulStore: stores.contentfulStore}))(obs
             >
                 <Grid item xs={12} sm={4} md={3}>
                     <Box lineHeight={"21px"} m={1}>
-                        <ReactMarkdown renderers={renderers}
-                                       disallowedTypes={['paragraph']}
-                                       unwrapDisallowed
-                                       source={content}/>
+                        <Markdown options={overrides}>
+                            {content || ""}
+                        </Markdown>
                     </Box>
 
                 </Grid>
                 <Grid item xs={12} sm={4} md={3}>
                     <Box lineHeight={"21px"} m={1}>
-                        <ReactMarkdown renderers={renderers}
-                                       disallowedTypes={['paragraph']}
-                                       unwrapDisallowed
-                                       source={contentCenter}/>
+                        <Markdown options={overrides}>
+                            {contentCenter || ""}
+                        </Markdown>
                     </Box>
                 </Grid>
                 <Grid item xs={12} sm={4} md={3}>
                     <Box lineHeight={"21px"} m={1}>
-                        <ReactMarkdown renderers={renderers}
-                                       disallowedTypes={['paragraph']}
-                                       unwrapDisallowed
-                                       source={contentRight}/>
+                        <Markdown options={overrides}>
+                            {contentRight || ""}
+                        </Markdown>
                     </Box>
                 </Grid>
             </Grid>
@@ -140,10 +141,9 @@ const Footer = inject(stores => ({contentfulStore: stores.contentfulStore}))(obs
                   className={classes.content}
             >
                 <Grid item xs={12} sm={12} md={8}>
-                    <ReactMarkdown renderers={renderers}
-                                   disallowedTypes={['paragraph']}
-                                   unwrapDisallowed
-                                   source={lopputekstit}/>
+                    <Markdown options={overrides}>
+                        {lopputekstit || ""}
+                    </Markdown>
                 </Grid>
             </Grid>
         </div>

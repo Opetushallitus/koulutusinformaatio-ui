@@ -2,7 +2,6 @@ import React from 'react';
 import {withStyles} from "@material-ui/core";
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -24,23 +23,24 @@ const ExpansionPanel = withStyles({
     },
     expanded: {},
 })(MuiExpansionPanel);
-
-const Accordion = ({summary, text}) => {
+const Summary = ({...props, children}) => {
+    console.log('here?')
+    return <ExpansionPanelSummary
+        elevation={0}
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1a-content"
+    >
+        <Typography>{children}</Typography>
+    </ExpansionPanelSummary>
+}
+const Accordion = ({...props, children}) => {
+    console.log(props)
     return <ExpansionPanel elevation={0}>
-        <ExpansionPanelSummary
-            elevation={0}
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-        >
-            <Typography>{summary}</Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails
-            elevation={0}>
-            <Typography>
-                {text}
-            </Typography>
-        </ExpansionPanelDetails>
+        {children}
     </ExpansionPanel>
 };
 
-export default Accordion;
+export {
+    Summary,
+    Accordion,
+}

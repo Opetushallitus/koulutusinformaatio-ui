@@ -21,10 +21,10 @@ const useStyles = makeStyles({
 });
 
 
-const Heading = ({...props,level}) => {
+const Heading = ({id, children,level}) => {
     const classes = useStyles();
-    const value = props.children[0].props.value;
-    const refe = sanitize(value);
+    const value = children;
+    const refe = id;
     const anchor = <a className={classes.anchorLink} id={refe} name={refe}>{value}</a>;
     switch (level) {
        case 1:
