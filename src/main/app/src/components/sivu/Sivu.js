@@ -13,7 +13,6 @@ import Grid from '@material-ui/core/Grid';
 import {colors} from "../../colors";
 import {withStyles} from "@material-ui/core";
 import Link from '@material-ui/core/Link';
-import UrlStore from "../../stores/url-store";
 
 const useStyles = theme => ({
     header1: {
