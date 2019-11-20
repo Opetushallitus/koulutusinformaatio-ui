@@ -12,8 +12,12 @@ import {colors} from "../../colors";
 import {withStyles} from "@material-ui/core";
 import Link from '@material-ui/core/Link';
 import Markdown from 'markdown-to-jsx';
+import { withTranslation } from 'react-i18next';
 
 const useStyles = theme => ({
+    notFound: {
+        textAlign: "center"
+    },
     header1: {
         fontSize: "40px",
         lineHeight: "48px",
@@ -37,7 +41,7 @@ const useStyles = theme => ({
     }
 });
 
-const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(observer(({...props,classes, contentfulStore}) => {
+const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(observer(({...props,t, classes, contentfulStore}) => {
     const ImageComponent = ({...props, src, alt}) => {
         const url = src.replace("//images.ctfassets.net/", "")
         return <img className={classes.image} src={contentfulStore.assetUrl(url)} alt={alt}/>
@@ -155,15 +159,19 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
             </React.Fragment>);
     } else {
         return (
-            <div className="container">
-                <div className="row result-count">
-                    <div className="col-12">
-                        {loading ? <p>Ladataan...</p> : <h1 aria-live="assertive">Sivua ei löytynyt</h1>}
-
-                    </div>
-                </div>
-            </div>);
+            <Grid container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                  className={classes.component}>
+                <Grid item xs={12} sm={6} md={6}
+                      className={classes.notFound}>
+                    <h1 className={classes.header1}>{t('sisaltohaku.sivua-ei-löytynyt')}</h1>
+                    <p>{t('sisaltohaku.etsimääsi-ei-löydy')}</p>
+                    <Link href={"/"}>{t('sisaltohaku.takaisin')}</Link>
+                </Grid>
+            </Grid>);
     }
 }));
 
-export default withRouter(withStyles(useStyles, { withTheme: true })(Sivu));
+export default withTranslation()(withRouter(withStyles(useStyles, { withTheme: true })(Sivu)));

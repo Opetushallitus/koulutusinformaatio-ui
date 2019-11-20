@@ -33,6 +33,8 @@
     "hakusana": "Hakusana",
     "rajaatuloksia": "Rajaa tuloksia",
     "eituloksia": "Ei hakutuloksia",
+    "sivua-ei-löytynyt": "Sivua ei löytynyt",
+    "etsimääsi-ei-löydy": "Etsimääsi sivua ei valitettavasti löytynyt. Tätä sivua ei ole suomeksi tai sivun osoite on muuttunut. Tarkistathan, että kirjoittamasi osoite on oikein.",
     "summary": "Hakusanalla \"{{hakusana}}\" ei löytynyt hakutuloksia. Tarkista hakusana tai kokeile toista hakusanaa.",
     "takaisin": "Siirry Opintopolun etusivulle"
   },
