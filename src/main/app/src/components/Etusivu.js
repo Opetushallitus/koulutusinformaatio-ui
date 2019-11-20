@@ -89,7 +89,7 @@ class Etusivu extends Component {
         const {forwardTo} = this.props.contentfulStore;
         const {t, classes} = this.props;
         const forwardToPage = (id) => {
-            this.props.history.push(`sivu/${id}`);
+            this.props.history.push(forwardTo(id));
         };
 
         const infos = Object.values(info);
