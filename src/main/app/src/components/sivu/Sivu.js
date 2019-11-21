@@ -68,7 +68,7 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
 
     if (page && page.content) {
         const {content,description,name, sideContent} = page;
-        const tableOfContents = page.tableOfContents === true;
+        const tableOfContents = page.tableOfContents === "true";
         const isBlank = (str) => {
             return (!str || /^\s*$/.test(str))
         };

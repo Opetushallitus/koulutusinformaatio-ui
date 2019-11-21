@@ -12,7 +12,7 @@ const useStyles = makeStyles({
         fontSize: "24px",
         lineHeight: "30px",
         fontWeight: "700",
-        marginTop: "15px",
+        marginTop: "0",
         marginBottom: "25px"
     },
     anchorLink: {
