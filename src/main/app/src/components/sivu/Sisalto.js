@@ -50,7 +50,7 @@ const useStyles = makeStyles({
     }
 });
 
-const Sisalto = ({content, contentfulStore}) => {
+const Sisalto = ({content, contentfulStore, alwaysFullWidth}) => {
     const classes = useStyles();
     const {forwardTo} = contentfulStore;
     const {sivu} = contentfulStore.data;
@@ -63,7 +63,7 @@ const Sisalto = ({content, contentfulStore}) => {
                      alignItems="flex-start"
                      className={classes.imageContainer}
 
-        ><Grid item xs={12} sm={9} md={9}>
+        ><Grid item xs={12} sm={alwaysFullWidth ? 12 : 9} md={alwaysFullWidth ? 12 : 9}>
             <Card className={classes.card}
                     elevation={0}
         >

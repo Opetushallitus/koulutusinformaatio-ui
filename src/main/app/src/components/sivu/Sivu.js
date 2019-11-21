@@ -88,11 +88,14 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
                             <Grid item xs={12} sm={12} md={tableOfContents ? 9 : 12}>
                                 <Grid container>
                                     <Grid item xs={12} sm={12} md={hasSideContent ? 8 : 12}>
-                                        <Sisalto content={content} contentfulStore={contentfulStore}/>
+                                        <Sisalto content={content}
+                                                 contentfulStore={contentfulStore}/>
                                     </Grid>
                                     {hasSideContent ?
                                     <Grid item xs={12} sm={12} md={4}>
-                                        <Sisalto content={sideContent} contentfulStore={contentfulStore}/>
+                                        <Sisalto content={sideContent}
+                                                 alwaysFullWidth={true}
+                                                 contentfulStore={contentfulStore}/>
                                     </Grid> : null}
                                 </Grid>
                             </Grid>
