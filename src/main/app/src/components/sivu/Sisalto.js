@@ -8,6 +8,8 @@ import Youtube from "./Youtube";
 import OpenInNewIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import {colors} from "../../colors";
 import {makeStyles} from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardMedia from "@material-ui/core/CardMedia";
 
 const useStyles = makeStyles({
     notFound: {
@@ -36,6 +38,10 @@ const useStyles = makeStyles({
         fontSize: "16px",
         lineHeight: "27px",
         color: colors.grey
+    },
+    media: {
+        height: 0,
+        paddingTop: '56.25%'
     }
 });
 
@@ -46,7 +52,16 @@ const Sisalto = ({content, contentfulStore}) => {
 
     const ImageComponent = ({...props, src, alt}) => {
         const url = src.replace("//images.ctfassets.net/", "")
-        return <img className={classes.image} src={contentfulStore.assetUrl(url)} alt={alt}/>
+        return<Card className={classes.card}
+                    elevation={0}
+        >
+            <CardMedia
+                className={classes.media}
+                image={contentfulStore.assetUrl(url)}
+                title={alt}
+            /></Card>
+
+
     };
     const SivuLink = props => {
         const id = props.children[0];
