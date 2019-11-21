@@ -41,7 +41,12 @@ const useStyles = makeStyles({
     },
     media: {
         height: 0,
-        paddingTop: '56.25%'
+        paddingTop: '56.25%',
+    },
+    card: {
+        maxWidth: '45vw',
+        transitionDuration: '0.3s',
+        maxHeight: '45vw'
     }
 });
 
