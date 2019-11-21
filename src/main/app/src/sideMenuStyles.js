@@ -12,7 +12,7 @@ export const sideMenuStyles = theme => ({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(3),
+        padding: 0,
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -35,7 +35,7 @@ export const sideMenuStyles = theme => ({
     },
     smContent: {
         flexGrow: 1,
-        padding: theme.spacing(3),
+        padding: 0,
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,

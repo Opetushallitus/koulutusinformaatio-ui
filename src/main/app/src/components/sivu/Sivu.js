@@ -3,17 +3,12 @@ import {observer, inject} from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import Murupolku from '../common/Murupolku';
 import TableOfContents from './TableOfContents';
-import {Accordion, Summary} from './Accordion';
-import Heading from './Heading';
-import Paragraph from './Paragraph';
-import Youtube from './Youtube';
+import Sisalto from './Sisalto';
 import Grid from '@material-ui/core/Grid';
 import {colors} from "../../colors";
 import {withStyles} from "@material-ui/core";
 import Link from '@material-ui/core/Link';
-import Markdown from 'markdown-to-jsx';
 import { withTranslation } from 'react-i18next';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 const useStyles = theme => ({
     notFound: {
@@ -29,28 +24,11 @@ const useStyles = theme => ({
     },
     icon: {
         fontSize: "16px"
-    },
-    image: {
-        display: 'block',
-        marginBottom: "15px",
-    },
-    component: {
-        paddingTop: "32px",
-        "&:last-child": {
-            paddingBottom: "32px"
-        },
-        fontSize: "16px",
-        lineHeight: "27px",
-        color: colors.grey
     }
 });
 
 const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(observer(({...props,t, classes, contentfulStore}) => {
     const {forwardTo} = contentfulStore;
-    const ImageComponent = ({...props, src, alt}) => {
-        const url = src.replace("//images.ctfassets.net/", "")
-        return <img className={classes.image} src={contentfulStore.assetUrl(url)} alt={alt}/>
-    };
 
     const murupolkuPath = () => {
         const pageId = props.match.params.id;
@@ -78,23 +56,11 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
     const page = sivu[pageId];
 
     if (page && page.content) {
-        const {content,description,tableOfContents,name} = page;
-        const SivuLink = props => {
-            const id = props.children[0];
-            return <Link href={forwardTo(id)}>{sivu[id].name}</Link>
-        }
-        const LinkOrYoutube = ({...props, children, className}) => {
-            if(className === "embedly-card") {
-                return <Youtube {...props}/>
-            } else {
-                return <Link target="_blank"
-                      rel="noopener"
-                    {...props}>
-                    {children}
-                    <OpenInNewIcon className={classes.icon}/>
-                </Link>
-            }
+        const {content,description,tableOfContents,name, sideContent} = page;
+        const isBlank = (str) => {
+            return (!str || /^\s*$/.test(str))
         };
+        const hasSideContent = !isBlank(sideContent);
 
         return (
             <React.Fragment>
@@ -120,55 +86,15 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
                                 <TableOfContents content={content}/>
                             </Grid> : null}
                             <Grid item xs={12} sm={12} md={tableOfContents ? 9 : 12}>
-                                <Markdown
-                                    options={{
-                                        overrides: {
-                                            img: {
-                                                component: ImageComponent
-                                            },
-                                            h1: {
-                                                component: Heading,
-                                                props: {
-                                                    level: 1
-                                                },
-                                            },
-                                            h2: {
-                                                component: Heading,
-                                                props: {
-                                                    level: 2
-                                                },
-                                            },
-                                            h3: {
-                                                component: Heading,
-                                                props: {
-                                                    level: 3
-                                                },
-                                            },
-                                            h4: {
-                                                component: Heading,
-                                                props: {
-                                                    level: 4
-                                                },
-                                            },
-                                            p: {
-                                                component: Paragraph
-                                            },
-                                            a: {
-                                                component: LinkOrYoutube
-                                            },
-                                            details: {
-                                                component: Accordion
-                                            },
-                                            summary: {
-                                                component: Summary
-                                            },
-                                            sivu: {
-                                                component: SivuLink
-                                            }
-                                        }
-                                    }}>
-                                    {content}
-                                </Markdown>
+                                <Grid container>
+                                    <Grid item xs={12} sm={12} md={hasSideContent ? 8 : 12}>
+                                        <Sisalto content={content} contentfulStore={contentfulStore}/>
+                                    </Grid>
+                                    {hasSideContent ?
+                                    <Grid item xs={12} sm={12} md={4}>
+                                        <Sisalto content={sideContent} contentfulStore={contentfulStore}/>
+                                    </Grid> : null}
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
