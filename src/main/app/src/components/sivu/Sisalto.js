@@ -31,15 +31,7 @@ const useStyles = makeStyles({
         display: 'block',
         marginBottom: "15px",
     },
-    component: {
-        paddingTop: "32px",
-        "&:last-child": {
-            paddingBottom: "32px"
-        },
-        fontSize: "16px",
-        lineHeight: "27px",
-        color: colors.grey
-    },
+
     media: {
         height: 0,
         paddingTop: '56.25%',

@@ -24,7 +24,18 @@ const useStyles = theme => ({
     },
     icon: {
         fontSize: "16px"
-    }
+    },
+    component: {
+        paddingLeft: "10px",
+        paddingRight: "10px",
+        paddingTop: "32px",
+        "&:last-child": {
+            paddingBottom: "32px"
+        },
+        fontSize: "16px",
+        lineHeight: "27px",
+        color: colors.grey
+    },
 });
 
 const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(observer(({...props,t, classes, contentfulStore}) => {
@@ -56,52 +67,49 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
     const page = sivu[pageId];
 
     if (page && page.content) {
-        const {content,description,tableOfContents,name, sideContent} = page;
+        const {content,description,name, sideContent} = page;
+        const tableOfContents = page.tableOfContents === true;
         const isBlank = (str) => {
             return (!str || /^\s*$/.test(str))
         };
         const hasSideContent = !isBlank(sideContent);
 
+
         return (
             <React.Fragment>
-                <Grid container
-                      direction="row"
-                      justify="center"
-                      alignItems="center"
-                      className={classes.component}>
-                    <Grid item xs={12} sm={12} md={10}>
-                        <Murupolku path={murupolkuPath()}/>
+                <div className={classes.component}>
+                    <Grid container
+                          direction="row"
+                          justify="center"
+                          alignItems="center">
+                        <Grid item xs={12} sm={12} md={tableOfContents ? (hasSideContent ? 12 : 10) : 7}>
+                            <Murupolku path={murupolkuPath()}/>
+                            <h1 className={classes.header1}>{name}</h1>
+                            <p>{description}</p>
+                        </Grid>
                     </Grid>
-                </Grid>
-                <Grid container
-                      direction="row"
-                      justify="center"
-                      alignItems="center"
-                      className={classes.component}>
-                    <Grid item xs={12} sm={12} md={10}>
-                        <h1 className={classes.header1}>{name}</h1>
-                        <p>{description}</p>
-                        <Grid container>
-                            {tableOfContents ?<Grid item xs={12} sm={12} md={3}>
-                                <TableOfContents content={content}/>
-                            </Grid> : null}
-                            <Grid item xs={12} sm={12} md={tableOfContents ? 9 : 12}>
-                                <Grid container>
-                                    <Grid item xs={12} sm={12} md={hasSideContent ? 8 : 12}>
-                                        <Sisalto content={content}
-                                                 contentfulStore={contentfulStore}/>
-                                    </Grid>
-                                    {hasSideContent ?
+                    <Grid container
+                          direction="row"
+                          justify="center">
+                        {tableOfContents ? <Grid item xs={12} sm={12} md={3}>
+                            <TableOfContents content={content}/>
+                        </Grid> : null}
+                        <Grid item xs={12} sm={12} md={tableOfContents ? (hasSideContent ? 9 : 7) : 7}>
+                            <Grid container>
+                                <Grid item xs={12} sm={12} md={hasSideContent ? 8 : 12}>
+                                    <Sisalto content={content}
+                                             contentfulStore={contentfulStore}/>
+                                </Grid>
+                                {hasSideContent ?
                                     <Grid item xs={12} sm={12} md={4}>
                                         <Sisalto content={sideContent}
                                                  alwaysFullWidth={true}
                                                  contentfulStore={contentfulStore}/>
                                     </Grid> : null}
-                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
+                </div>
             </React.Fragment>);
     } else {
         return (
