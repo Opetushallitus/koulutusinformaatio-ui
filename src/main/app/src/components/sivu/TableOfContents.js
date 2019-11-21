@@ -6,6 +6,8 @@ import Markdown from 'markdown-to-jsx';
 
 const useStyles = makeStyles({
     link: {
+        overflow: "hidden",
+        textOverflow: "ellipsis",
         fontSize: "16px",
         lineHeight: "27px",
         paddingLeft: "21px",
