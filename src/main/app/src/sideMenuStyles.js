@@ -57,6 +57,8 @@ export const sideMenuStyles = theme => ({
     },
     murupolku: {
         paddingLeft: "20px",
+        paddingTop: "20px",
+        paddingBottom: "20px"
 
     },
     inputRoot: {
