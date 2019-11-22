@@ -13,7 +13,6 @@ const useStyles = makeStyles({
     container: {
         position: "relative",
         paddingBottom: "56.25%",
-        paddingTop: "30px",
         height: "0",
         overflow: "hidden"
     }

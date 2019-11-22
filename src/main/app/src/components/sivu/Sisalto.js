@@ -39,7 +39,12 @@ const useStyles = makeStyles({
     card: {
     },
     imageContainer: {
+    },
+    youtube: {
+        paddingTop: "0",
+        paddingBottom: "20px"
     }
+
 });
 
 const Sisalto = ({content, contentfulStore, alwaysFullWidth}) => {
@@ -74,7 +79,7 @@ const Sisalto = ({content, contentfulStore, alwaysFullWidth}) => {
     };
     const LinkOrYoutube = ({...props, children, className}) => {
         if(className === "embedly-card") {
-            return <Youtube {...props}/>
+            return <div className={classes.youtube}><Youtube {...props}/></div>
         } else {
             return <Link target="_blank"
                          rel="noopener"
