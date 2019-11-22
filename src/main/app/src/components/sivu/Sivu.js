@@ -81,6 +81,7 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
                     <Grid container
                           direction="row"
                           justify="center"
+                          spacing={2}
                           alignItems="center">
                         <Grid item xs={12} sm={12} md={tableOfContents ? (hasSideContent ? 12 : 10) : 7}>
                             <Murupolku path={murupolkuPath()}/>
@@ -90,12 +91,14 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
                     </Grid>
                     <Grid container
                           direction="row"
+                          spacing={2}
                           justify="center">
                         {tableOfContents ? <Grid item xs={12} sm={12} md={3}>
                             <TableOfContents content={content}/>
                         </Grid> : null}
                         <Grid item xs={12} sm={12} md={tableOfContents ? (hasSideContent ? 9 : 7) : 7}>
-                            <Grid container>
+                            <Grid container
+                                  spacing={2}>
                                 <Grid item xs={12} sm={12} md={hasSideContent ? 8 : 12}>
                                     <Sisalto content={content}
                                              contentfulStore={contentfulStore}/>
