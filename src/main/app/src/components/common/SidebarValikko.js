@@ -48,6 +48,7 @@ const valikkoStyles = theme => ({
     otsikkoText: {
         textTransform: "uppercase",
         fontSize: "12px",
+        color: colors.green
     },
     valintaText: {
         marginTop: "9px",
@@ -101,15 +102,12 @@ class SidebarValikko extends Component {
         };
         const OtsikkoItem = (props) => {
             const {name} = props;
-            return <ListItemLink role="none" className={classes.otsikko}>
-                <ListItemText role="menuitem"
+            return <h2 role="menuitem"
                               className={classes.otsikkoText}
                               variant="menu"
                               typography="menu"
                               tabIndex="0"
-                              aria-label={name}>{name}</ListItemText>
-
-            </ListItemLink>;
+                              aria-label={name}>{name}</h2>;
         };
 
         return (
