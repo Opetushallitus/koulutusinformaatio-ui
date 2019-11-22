@@ -57,8 +57,8 @@ const Palvelut = inject(stores => ({contentfulStore: stores.contentfulStore}))(o
 
     return <div className={clsx(classes.palvelut, matches? classes.spaceOnBorders: classes.smSpaceOnBorders)}>
         <Grid container>
-            <Rivi otsikko={"Muut palvelut"} rivit={palvelurivit}/>
-            <Rivi otsikko={"Ohjeet ja tuki"} rivit={ohjerivit}/>
+            <Rivi otsikko={t('palvelut.otsikko-muut-palvelut')} rivit={palvelurivit}/>
+            <Rivi otsikko={t('palvelut.otsikko-ohjeet-ja-tuki')} rivit={ohjerivit}/>
         </Grid>
     </div>;
 }));

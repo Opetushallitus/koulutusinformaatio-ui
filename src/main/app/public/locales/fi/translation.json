@@ -5,6 +5,10 @@
     "studyinfo": "Studyinfo.fi",
     "beta": "beta"
   },
+  "palvelut": {
+    "otsikko-muut-palvelut": "Muut palvelut",
+    "otsikko-ohjeet-ja-tuki": "Ohjeet ja tuki"
+  },
   "valikko": "Valikko",
   "ja": "ja",
   "sekä": "sekä",
