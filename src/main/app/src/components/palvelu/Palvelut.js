@@ -4,13 +4,13 @@ import clsx from 'clsx';
 import '../../assets/styles/components/_etusivu.scss';
 import {colors} from "../../colors";
 import Grid from "@material-ui/core/Grid";
+import { observer } from "mobx-react-lite";
 import Palvelu from "./Palvelu";
 import _ from "lodash";
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
-import { inject } from "mobx-react";
-import { observer } from "mobx-react-lite";
 import {useTranslation} from 'react-i18next';
+import {useStores} from '../../hooks'
 
 const useStyles = makeStyles({
     header: {
@@ -33,8 +33,9 @@ const useStyles = makeStyles({
     },
 });
 
-const Palvelut = inject(stores => ({contentfulStore: stores.contentfulStore}))(observer(({contentfulStore}) => {
+const Palvelut = observer(() => {
     const {t} = useTranslation();
+    const {contentfulStore} = useStores();
     const matches = useMediaQuery('(min-width: 979px)');
     const {ohjeetJaTuki, palvelut} = (contentfulStore.data || {});
     const classes = useStyles();
@@ -61,6 +62,6 @@ const Palvelut = inject(stores => ({contentfulStore: stores.contentfulStore}))(o
             <Rivi otsikko={t('palvelut.otsikko-ohjeet-ja-tuki')} rivit={ohjerivit}/>
         </Grid>
     </div>;
-}));
+});
 
 export default withRouter(Palvelut);
