@@ -55,7 +55,7 @@ const Sisalto = ({content, contentfulStore, alwaysFullWidth}) => {
                      alignItems="flex-start"
                      className={classes.imageContainer}
 
-        ><Grid item xs={12} sm={alwaysFullWidth ? 12 : 9} md={alwaysFullWidth ? 12 : 9}>
+        ><Grid item xs={12} sm={alwaysFullWidth ? 12 : 12} md={alwaysFullWidth ? 12 : 12}>
             <Card className={classes.card}
                     elevation={0}
         >
