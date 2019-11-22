@@ -15,7 +15,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 const palveluStyles = theme => ({
     card: {
         cursor: "pointer",
-        minHeight: "255px",
+        minHeight: "200px",
         borderRadius: 1,
         padding: "20px 20px 0px 20px",
     },

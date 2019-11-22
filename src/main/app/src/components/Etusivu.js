@@ -36,6 +36,10 @@ const etusivuStyles = theme => ({
         paddingRight: 90,
 
     },
+    smSpaceOnBorders: {
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
     oikopolut: {
         backgroundColor: colors.white,
         paddingBottom: "100px"
@@ -103,7 +107,7 @@ class Etusivu extends Component {
             const matches = useMediaQuery('(min-width: 979px)');
             return <React.Fragment>
                 <Route exact path='/' render={() => <Jumpotron/>}/>
-                <div className={clsx(classes.oikopolut, matches ? classes.spaceOnBorders : null)}>
+                <div className={clsx(classes.oikopolut, matches ? classes.spaceOnBorders : classes.smSpaceOnBorders)}>
                     <Grid container spacing={3}>
                         {infos.map((info) => {
                             return <Grid item xs={12} key={info.id}>
@@ -132,7 +136,7 @@ class Etusivu extends Component {
                     </Grid>
                 </div>
 
-                <div className={clsx(classes.uutiset, matches? classes.spaceOnBorders: null)}>
+                <div className={clsx(classes.uutiset, matches? classes.spaceOnBorders: classes.smSpaceOnBorders)}>
                     <Grid container>
 
                         <Grid item xs={12}>

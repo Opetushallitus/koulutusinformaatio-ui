@@ -64,6 +64,10 @@ const useStyles = makeStyles({
     spaceOnBorders: {
         paddingLeft: 90,
         paddingRight: 90
+    },
+    smSpaceOnBorders: {
+        paddingLeft: 10,
+        paddingRight: 10
     }
 });
 
@@ -85,7 +89,7 @@ const Footer = inject(stores => ({contentfulStore: stores.contentfulStore}))(obs
         }
     };
     return <footer>
-        <div className={clsx(classes.footer, matches ? classes.spaceOnBorders : null)}>
+        <div className={clsx(classes.footer, matches ? classes.spaceOnBorders : classes.smSpaceOnBorders)}>
             <Grid container>
                 <Grid item xs={12}>
                     <div className={classes.hr}>
