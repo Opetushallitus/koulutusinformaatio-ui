@@ -29,7 +29,9 @@ const etusivuStyles = theme => ({
     },
     header: {
         fontSize: "28px",
-        paddingTop: "60px"
+        paddingTop: "60px",
+        paddingBottom: "28px",
+        fontWeight: "700"
     },
     spaceOnBorders: {
         paddingLeft: 90,
