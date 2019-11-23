@@ -14,8 +14,10 @@ import _ from 'lodash';
 const useStyles = makeStyles({
     breadcrump: {
         height: "20px",
-        display: "inline-block"
-
+        display: "inline-block",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis"
     },
     forwardIcon: {
         color: colors.lightGrey,
@@ -42,7 +44,7 @@ const useStyles = makeStyles({
 });
 
 const Murupolku = ({path, history}) => {
-    const matches = useMediaQuery('(max-width: 750px)');
+    const matches = useMediaQuery('(max-width: 900px)');
     const {t} = useTranslation();
     const classes = useStyles();
     const forwardToFrontPage = (path) => {
@@ -58,7 +60,7 @@ const Murupolku = ({path, history}) => {
                                                key={`breadcrumpseparator-${ind}`}
                                                className={classes.forwardIcon}/>;
 
-            return (matches ? [arrow, "...", arrow]: [arrow]).concat([
+            return (matches ? [arrow, <span className={classes.link}>...</span>, arrow]: [arrow]).concat([
                 link ? <Link key={`breadcrumplink-${ind}`}
                              className={clsx(classes.link, _.isEqual(currentLink, last) && classes.lastLink)}
                              to={link}>{name}</Link>
