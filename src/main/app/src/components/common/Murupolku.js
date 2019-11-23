@@ -7,12 +7,15 @@ import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import Link from '@material-ui/core/Link';
 import clsx from 'clsx';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
 import {colors} from "../../colors";
 import _ from 'lodash';
 
 const useStyles = makeStyles({
     breadcrump: {
-        height: "20px"
+        height: "20px",
+        display: "inline-block"
+
     },
     forwardIcon: {
         color: colors.lightGrey,
@@ -39,28 +42,31 @@ const useStyles = makeStyles({
 });
 
 const Murupolku = ({path, history}) => {
+    const matches = useMediaQuery('(max-width: 750px)');
     const {t} = useTranslation();
     const classes = useStyles();
     const forwardToFrontPage = (path) => {
         history.push(path);
     };
     const last = path[path.length - 1];
+    const shownPath = matches ? (path.length === 0 ? [] : [path[path.length - 1]]) : path;
     return <div className={classes.breadcrump}>
         <Icon className={classes.icon}><HomeOutlinedIcon/></Icon>
         <Link onClick={() => forwardToFrontPage('/')} className={classes.link}>{t('etusivu')}</Link>
-        {path.map(({...currentLink, name, link}, ind) => {
-            return [
-                <ArrowForwardIosIcon style={{ fontSize: "12px", height: "20px" }}
-                                     key={`breadcrumpseparator-${ind}`}
-                                     className={classes.forwardIcon}/>,
+        {shownPath.map(({...currentLink, name, link}, ind) => {
+            const arrow = <ArrowForwardIosIcon style={{fontSize: "12px", height: "20px"}}
+                                               key={`breadcrumpseparator-${ind}`}
+                                               className={classes.forwardIcon}/>;
+
+            return (matches ? [arrow, "...", arrow]: [arrow]).concat([
                 link ? <Link key={`breadcrumplink-${ind}`}
                              className={clsx(classes.link, _.isEqual(currentLink, last) && classes.lastLink)}
                              to={link}>{name}</Link>
                     : <span key={`breadcrumplink-${ind}`}
                             className={clsx(classes.link)}>{name}</span>
-            ];
+            ]);
         })}
     </div>;
-}
+};
 
 export default withRouter(Murupolku);

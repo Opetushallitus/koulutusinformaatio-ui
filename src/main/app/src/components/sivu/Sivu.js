@@ -47,9 +47,10 @@ const Sivu = inject(stores => ({contentfulStore: stores.contentfulStore}))(obser
         const all = Object.entries(valikko).concat(Object.entries(sivu));
         const page = sivu[pageId];
         const findParent = (id) => {
+            const childId = ((sivu[id] || {}).id) || id;
             const parent = all.find((entry, ind) => {
                 const [, item] = entry;
-                return (item.linkki || []).find(i => i.id === id);
+                return (item.linkki || []).find(i => i.id === childId);
             });
             if (parent) {
                 const [parentId, parentItem] = parent;
