@@ -4,22 +4,28 @@ import clsx from 'clsx';
 import '../../assets/styles/components/_etusivu.scss';
 import {colors} from "../../colors";
 import Grid from "@material-ui/core/Grid";
+import { observer } from "mobx-react-lite";
 import Palvelu from "./Palvelu";
 import _ from "lodash";
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
-import { inject } from "mobx-react";
-import { observer } from "mobx-react-lite";
+import {useTranslation} from 'react-i18next';
+import {useStores} from '../../hooks'
 
 const useStyles = makeStyles({
     header: {
         fontSize: "28px",
-        paddingTop: "60px"
+        paddingTop: "60px",
+        paddingBottom: "28px",
+        fontWeight: "700"
     },
     spaceOnBorders: {
         paddingLeft: 90,
         paddingRight: 90,
-
+    },
+    smSpaceOnBorders: {
+        paddingLeft: 10,
+        paddingRight: 10,
     },
     palvelut: {
         backgroundColor: colors.white,
@@ -27,7 +33,9 @@ const useStyles = makeStyles({
     },
 });
 
-const Palvelut = inject(stores => ({contentfulStore: stores.contentfulStore}))(observer(({contentfulStore}) => {
+const Palvelut = observer(() => {
+    const {t} = useTranslation();
+    const {contentfulStore} = useStores();
     const matches = useMediaQuery('(min-width: 979px)');
     const {ohjeetJaTuki, palvelut} = (contentfulStore.data || {});
     const classes = useStyles();
@@ -48,12 +56,12 @@ const Palvelut = inject(stores => ({contentfulStore: stores.contentfulStore}))(o
             </Grid>;
         })};
 
-    return <div className={clsx(classes.palvelut, matches? classes.spaceOnBorders: null)}>
+    return <div className={clsx(classes.palvelut, matches? classes.spaceOnBorders: classes.smSpaceOnBorders)}>
         <Grid container>
-            <Rivi otsikko={"Muut palvelut"} rivit={palvelurivit}/>
-            <Rivi otsikko={"Ohjeet ja tuki"} rivit={ohjerivit}/>
+            <Rivi otsikko={t('palvelut.otsikko-muut-palvelut')} rivit={palvelurivit}/>
+            <Rivi otsikko={t('palvelut.otsikko-ohjeet-ja-tuki')} rivit={ohjerivit}/>
         </Grid>
     </div>;
-}));
+});
 
 export default withRouter(Palvelut);

@@ -24,7 +24,6 @@ const ExpansionPanel = withStyles({
     expanded: {},
 })(MuiExpansionPanel);
 const Summary = ({...props, children}) => {
-    console.log('here?')
     return <ExpansionPanelSummary
         elevation={0}
         expandIcon={<ExpandMoreIcon />}

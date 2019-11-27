@@ -11,11 +11,12 @@ import CardContent from "@material-ui/core/CardContent";
 import {withStyles} from "@material-ui/core";
 import {colors} from "../../colors";
 import CardHeader from '@material-ui/core/CardHeader';
+import Box from "@material-ui/core/Box";
 
 const palveluStyles = theme => ({
     card: {
         cursor: "pointer",
-        minHeight: "255px",
+        minHeight: "200px",
         borderRadius: 1,
         padding: "20px 20px 0px 20px",
     },
@@ -63,7 +64,12 @@ class Palvelu extends Component {
                 this.props.history.push(forwardTo(id));
             }
         };
-
+        const Paragraph = ({children}) => {
+            return <Box lineHeight="21px"
+                        fontSize="14px">
+                {children}
+            </Box>
+        };
         return <Grid item xs={12} sm={6} md={4}>
             <Card className={clsx(classes.card, classes[color])} key={palvelu.id} onClick={forwardToPage}>
                 <CardHeader
@@ -79,7 +85,16 @@ class Palvelu extends Component {
                     subheader=""
                 />
                 <CardContent className={classes.content}>
-                    <Markdown>
+                    <Markdown
+                        options={{
+                            overrides: {
+                                    p: {
+                                        component: Paragraph
+                                    },
+                                    span: {
+                                        component: Paragraph
+                                    }
+                                }}}>
                         {palvelu.content}
                     </Markdown>
                 </CardContent>

@@ -5,12 +5,28 @@ import {makeStyles} from "@material-ui/core";
 import Icon from '@material-ui/core/Icon';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import Link from '@material-ui/core/Link';
+import clsx from 'clsx';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
+import {colors} from "../../colors";
+import _ from 'lodash';
 
 const useStyles = makeStyles({
     breadcrump: {
+        height: "20px",
+        display: "inline-block",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis"
+    },
+    forwardIcon: {
+        color: colors.lightGrey,
+        marginRight: "10px",
+        marginLeft: "10px"
     },
     icon: {
         marginRight: "10px"
+
     },
     link: {
         fontWeight: "400",
@@ -19,28 +35,40 @@ const useStyles = makeStyles({
         overflow: "hidden",
         whiteSpace: "nowrap",
         textOverflow: "ellipsis",
-        paddingRight: "15px",
+        verticalAlign: "top",
+        color: colors.grey
+    },
+    lastLink: {
+        color: colors.green
     }
 });
 
 const Murupolku = ({path, history}) => {
+    const matches = useMediaQuery('(max-width: 900px)');
     const {t} = useTranslation();
     const classes = useStyles();
     const forwardToFrontPage = (path) => {
         history.push(path);
     };
+    const last = path[path.length - 1];
+    const shownPath = matches ? (path.length === 0 ? [] : [path[path.length - 1]]) : path;
     return <div className={classes.breadcrump}>
         <Icon className={classes.icon}><HomeOutlinedIcon/></Icon>
-
         <Link onClick={() => forwardToFrontPage('/')} className={classes.link}>{t('etusivu')}</Link>
-        {path.map(({name, link}, ind) => {
-            return [
-                link ? <Link key={`breadcrumplink-${ind}`} className={classes.link}
-                                  to={link}>{name}</Link>
-                    : <span key={`breadcrumplink-${ind}`} className={classes.link}>{name}</span>
-            ];
+        {shownPath.map(({...currentLink, name, link}, ind) => {
+            const arrow = <ArrowForwardIosIcon style={{fontSize: "12px", height: "20px"}}
+                                               key={`breadcrumpseparator-${ind}`}
+                                               className={classes.forwardIcon}/>;
+
+            return (matches ? [arrow, <span className={classes.link}>...</span>, arrow]: [arrow]).concat([
+                link ? <Link key={`breadcrumplink-${ind}`}
+                             className={clsx(classes.link, _.isEqual(currentLink, last) && classes.lastLink)}
+                             to={link}>{name}</Link>
+                    : <span key={`breadcrumplink-${ind}`}
+                            className={clsx(classes.link)}>{name}</span>
+            ]);
         })}
     </div>;
-}
+};
 
 export default withRouter(Murupolku);
