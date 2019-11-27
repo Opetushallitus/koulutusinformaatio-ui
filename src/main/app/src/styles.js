@@ -1,7 +1,7 @@
 import { createStyles } from '@material-ui/core/styles';
-import {sideMenuStyles} from "./sideMenuStyles";
+import { sideMenuStyles } from './sideMenuStyles';
 
-export const styles = theme =>
+export const styles = (theme) =>
   createStyles({
     ...sideMenuStyles(theme),
     root: {
@@ -15,43 +15,43 @@ export const styles = theme =>
     // Hakutulos
     // ******************************************************************
     hakutulosToggleBarMargins: {
-      margin: theme.spacing(3, 0, 1, 0)
+      margin: theme.spacing(3, 0, 1, 0),
     },
     hakutulosSisalto: {
       maxWidth: 1600,
-      margin: 'auto'
+      margin: 'auto',
     },
     hakuTulosSisaltoPaperi: {
       width: '100%',
       padding: theme.spacing(1, 11),
-      boxShadow: 'none'
+      boxShadow: 'none',
     },
     hakuTulosNavText: {
-      margin: theme.spacing(5, 0, 7, 0)
+      margin: theme.spacing(5, 0, 7, 0),
     },
     customWrapper: {
       flexDirection: 'row',
       textTransform: 'capitalize',
-      textAlign: 'left'
+      textAlign: 'left',
     },
     customLabelIcon: {
       minHeight: '50px',
       paddingLeft: 0,
-      paddingRight: theme.spacing(4)
+      paddingRight: theme.spacing(4),
     },
     customIconRoot: {
-      marginBottom: 0
+      marginBottom: 0,
     },
     hakutulosFiltersGrid: {
-      padding: theme.spacing(2, 4, 2, 0)
+      padding: theme.spacing(2, 4, 2, 0),
     },
     listItemCheckbox: {
-      padding: '0 9px 0 9px'
+      padding: '0 9px 0 9px',
     },
     hakuTulosListItemText: {
       fontSize: 14,
-      color: '#4C4C4C'
-    }
+      color: '#4C4C4C',
+    },
     // ******************************************************************
     // AppBar
     // ******************************************************************

@@ -1,23 +1,26 @@
-import { observable } from "mobx"
-import {urls as ophUrls} from 'oph-urls-js';
-import {production, development} from '../oppija-urls.js';
+import { observable } from 'mobx';
+import { urls as ophUrls } from 'oph-urls-js';
+import { production, development } from '../oppija-urls.js';
 
 class UrlStore {
-    @observable urls = ophUrls;
+  @observable urls = ophUrls;
 
-    async loadFrontProperties() {
-        await this.urls.load({overrides: '/konfo/rest/config/frontProperties'}); //TODO: Poista "konfo" urlista?
-    }
+  async loadFrontProperties() {
+    await this.urls.load({ overrides: '/konfo/rest/config/frontProperties' }); //TODO: Poista "konfo" urlista?
+  }
 
-    constructor(konfoStore) {
-        console.log('Ollaan ympäristössä ' + process.env.NODE_ENV);
-        if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
-            this.urls.addProperties(development);
-        } else {
-            this.urls.addProperties(production);
-            this.loadFrontProperties();
-        }
+  constructor(konfoStore) {
+    console.log('Ollaan ympäristössä ' + process.env.NODE_ENV);
+    if (
+      process.env.NODE_ENV === 'development' ||
+      process.env.NODE_ENV === 'test'
+    ) {
+      this.urls.addProperties(development);
+    } else {
+      this.urls.addProperties(production);
+      this.loadFrontProperties();
     }
+  }
 }
 
 export default UrlStore;

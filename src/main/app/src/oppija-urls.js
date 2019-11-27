@@ -1,32 +1,41 @@
-
 const production = {
-    "konfo-backend.base-url" : "/",
-    "konfo-backend.search.koulutukset" : "/konfo-backend/search/koulutukset",
-    "konfo-backend.search.oppilaitokset" : "/konfo-backend/search/oppilaitokset",
-    "konfo-backend.koulutus" : "/konfo-backend/koulutus/",
-    "konfo-backend.toteutus" : "/konfo-backend/toteutus/",
-    "konfo-backend.oppilaitos" : "/konfo-backend/oppilaitos/",
-    "konfo-backend.palaute" : "/konfo-backend/palaute",
-    "konfo-backend.content" : "https://konfo-content.untuvaopintopolku.fi/$1",
-    "kartta.base-url" : "https://hkp.maanmittauslaitos.fi",
-    "kartta.publish-url" : "https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0"
+  'konfo-backend.base-url': '/',
+  'konfo-backend.search.koulutukset': '/konfo-backend/search/koulutukset',
+  'konfo-backend.search.oppilaitokset': '/konfo-backend/search/oppilaitokset',
+  'konfo-backend.koulutus': '/konfo-backend/koulutus/',
+  'konfo-backend.toteutus': '/konfo-backend/toteutus/',
+  'konfo-backend.oppilaitos': '/konfo-backend/oppilaitos/',
+  'konfo-backend.palaute': '/konfo-backend/palaute',
+  'konfo-backend.content': 'https://konfo-content.untuvaopintopolku.fi/$1',
+  'kartta.base-url': 'https://hkp.maanmittauslaitos.fi',
+  'kartta.publish-url':
+    'https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0',
 };
 
 const development = {
-    "konfo-backend.base-url" : "https://beta.hahtuvaopintopolku.fi",
-    "konfo-backend.search.koulutukset" : "https://beta.hahtuvaopintopolku.fi/konfo-backend/search/koulutukset",
-    "konfo-backend.search.oppilaitokset" : "https://beta.hahtuvaopintopolku.fi/konfo-backend/search/oppilaitokset",
-    "konfo-backend.koulutus" : "https://beta.hahtuvaopintopolku.fi/konfo-backend/koulutus/",
-    "konfo-backend.koulutus.kuvaus" : "https://beta.hahtuvaopintopolku.fi/konfo-backend/kuvaus/",
-    "konfo-backend.toteutus" : "https://beta.hahtuvaopintopolku.fi/konfo-backend/toteutus/",
-    "konfo-backend.oppilaitos" : "https://beta.hahtuvaopintopolku.fi/konfo-backend/oppilaitos/",
-    "konfo-backend.palaute" : "https://beta.hahtuvaopintopolku.fi/konfo-backend/palaute",
-    "konfo-backend.content" : "https://konfo-content.untuvaopintopolku.fi/$1",
-    "konfo-backend.hakukohde" : "https://beta.hahtuvaopintopolku.fi/konfo-backend/hakukohde/",
-    "konfo-backend.haku" : "https://beta.hahtuvaopintopolku.fi/konfo-backend/haku/",
-    "kartta.base-url" : "https://hkp.maanmittauslaitos.fi",
-    "kartta.publish-url" : "https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0",
-    
+  'konfo-backend.base-url': 'https://beta.hahtuvaopintopolku.fi',
+  'konfo-backend.search.koulutukset':
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/search/koulutukset',
+  'konfo-backend.search.oppilaitokset':
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/search/oppilaitokset',
+  'konfo-backend.koulutus':
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/koulutus/',
+  'konfo-backend.koulutus.kuvaus':
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/kuvaus/',
+  'konfo-backend.toteutus':
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/toteutus/',
+  'konfo-backend.oppilaitos':
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/oppilaitos/',
+  'konfo-backend.palaute':
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/palaute',
+  'konfo-backend.content': 'https://konfo-content.untuvaopintopolku.fi/$1',
+  'konfo-backend.hakukohde':
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/hakukohde/',
+  'konfo-backend.haku':
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/haku/',
+  'kartta.base-url': 'https://hkp.maanmittauslaitos.fi',
+  'kartta.publish-url':
+    'https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0',
 };
 
-export {production, development}
+export { production, development };

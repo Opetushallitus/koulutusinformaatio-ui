@@ -38,14 +38,30 @@ class HakutulosToggle extends Component {
         onChange={this.handleSelectedTab}
       >
         <Tab
-          icon={<SchoolOutlined style={{ marginBottom: 0, marginRight: '15px' }} />}
-          classes={{ wrapper: classes.customWrapper, labelIcon: classes.customLabelIcon }}
-          label={`${t('haku.koulutukset')} (${this.props.hakuStore.koulutusCount})`}
+          icon={
+            <SchoolOutlined style={{ marginBottom: 0, marginRight: '15px' }} />
+          }
+          classes={{
+            wrapper: classes.customWrapper,
+            labelIcon: classes.customLabelIcon,
+          }}
+          label={`${t('haku.koulutukset')} (${
+            this.props.hakuStore.koulutusCount
+          })`}
         ></Tab>
         <Tab
-          icon={<AccountBalanceOutlined style={{ marginBottom: 0, marginRight: '15px' }} />}
-          classes={{ wrapper: classes.customWrapper, labelIcon: classes.customLabelIcon }}
-          label={`${t('haku.oppilaitokset')} (${this.props.hakuStore.oppilaitosCount})`}
+          icon={
+            <AccountBalanceOutlined
+              style={{ marginBottom: 0, marginRight: '15px' }}
+            />
+          }
+          classes={{
+            wrapper: classes.customWrapper,
+            labelIcon: classes.customLabelIcon,
+          }}
+          label={`${t('haku.oppilaitokset')} (${
+            this.props.hakuStore.oppilaitosCount
+          })`}
         ></Tab>
       </Tabs>
     );
