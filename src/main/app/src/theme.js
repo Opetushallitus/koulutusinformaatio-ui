@@ -1,21 +1,19 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-
-const primaryGreen = '#378703';
-const primaryTextBlack = '#4f4f4f';
+import { colors } from './colors';
 
 // Material UI theme customization
 // Learn more: https://material-ui.com/customization/themes/
 export const theme = createMuiTheme({
   palette: {
     primary: {
-      main: primaryGreen
+      main: colors.green
     },
     secondary: {
-      main: primaryGreen
+      main: colors.green
     },
     text: {
-      primary: primaryTextBlack,
-      secondary: primaryTextBlack
+      primary: colors.textBlack,
+      secondary: colors.textBlack
     }
   },
   typography: {
@@ -23,7 +21,7 @@ export const theme = createMuiTheme({
     subtitle1: {
       fontWeight: 600,
       fontSize: '16px',
-      color: '#1D1D1D'
+      color: colors.black
     }
   },
   // props: {
@@ -76,12 +74,12 @@ export const theme = createMuiTheme({
     },
     MuiExpansionPanel: {
       root: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: colors.white,
         marginBottom: '16px',
         boxShadow: '0 2px 8px 0 rgba(0,0,0,0.2)',
         borderRadius: '0 !important',
         '&:before': {
-          backgroundColor: '#FFFFFF'
+          backgroundColor: colors.white
         }
       }
 
@@ -128,17 +126,15 @@ export const theme = createMuiTheme({
     MuiListItemIcon: {
       root: {
         minWidth: 32
-      },
-
+      }
     },
     MuiButtonBase: {
       root: {
         // paddingTop: '0 !important',
         // paddingBottom: '0 !important'
-      },
-      
+      }
     },
-    
+
     MuiListItemText: {
       primary: {
         width: '100%'
@@ -146,7 +142,7 @@ export const theme = createMuiTheme({
     },
     MuiLink: {
       root: {
-        cursor: "pointer"
+        cursor: 'pointer'
       }
     },
     MuiCheckbox: {

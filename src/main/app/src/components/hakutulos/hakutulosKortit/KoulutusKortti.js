@@ -9,18 +9,20 @@ import { SchoolOutlined, TimelapseOutlined } from '@material-ui/icons';
 import { styles } from '../../../styles';
 import { fontWeight } from '@material-ui/system';
 import hakuKoulutukseen_img from '../../../assets/images/haku-koulutukseen.jpg';
+import {educationTypeColorCode} from '../../../colors';
 
 const KoulutusKortti = props => {
   const {
     classes,
-    nimi,
+    nimi, 
     kuvaus,
+    koulutustyyppi,
     opintojenlaajuus,
     opintojenlaajuusyksikko,
-    tutkintonimikkeet
+    tutkintonimikkeet,
+    i18n
   } = props;
 
-  console.log(props);
 
   const tutkintonimikkeetStr = tutkintonimikkeet
     .reduce((acc, current) => {
@@ -28,25 +30,24 @@ const KoulutusKortti = props => {
     }, '')
     .replace(/,\s*$/, '');
 
-  const opintojenlaajuusStr = opintojenlaajuus && opintojenlaajuus.nimi && opintojenlaajuus.nimi.fi;
-  const opintojenlaajuusyksikkoStr = opintojenlaajuusyksikkoStr || 'opintopistettä';
+  const opintojenlaajuusStr = opintojenlaajuus && opintojenlaajuus.nimi && opintojenlaajuus.nimi[i18n.language] || 'ei_määritelty';
+  const opintojenlaajuusyksikkoStr = opintojenlaajuusyksikko && opintojenlaajuusyksikko.nimi[i18n.language] || '';
   const kuvausStr = kuvaus => {
     const kuvausStr = kuvaus && kuvaus.fi;
 
     if (!kuvausStr) {
       return 'Ei kuvausta';
     }
-    if (kuvausStr.length > 255) {
-      return `${kuvausStr.slice(0,250)}...`;
+    const strippedHTMLKuvausStr = kuvausStr.replace(/<[^>]*>/gm, '');
+    if (strippedHTMLKuvausStr.length > 255) {
+      return `${strippedHTMLKuvausStr.slice(0,250)}...`;
     }
-    return kuvausStr;
+    return strippedHTMLKuvausStr;
   };
 
-  console.log(tutkintonimikkeetStr);
-
-  //   console.log(result);
   return (
-    <Paper className={classes.hakutulosKortti}>
+    <Paper className={classes.hakutulosKortti} 
+    style={{borderTop: `5px solid ${educationTypeColorCode[koulutustyyppi] || educationTypeColorCode.muu}`}}>
       <Grid container spacing={4}>
         <Grid container item xs={8} spacing={3} direction="column">
           <Grid item>
@@ -55,7 +56,6 @@ const KoulutusKortti = props => {
             </Typography>
           </Grid>
           <Grid item>
-            {/* <Typography className={classes.koulutusKorttiKuvaus}>{kuvaus.fi}</Typography> */}
             <Typography>{kuvausStr(kuvaus)}</Typography>
           </Grid>
 

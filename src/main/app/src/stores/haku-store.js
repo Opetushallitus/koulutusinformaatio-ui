@@ -5,8 +5,20 @@ class HakuStore {
     @observable keyword = '';
     @observable koulutusResult = [];
     @observable koulutusCount = 0;
+    @observable koulutusFilters = {
+        opetusKieli: {},
+        koulutusTyyppi: {},
+        maakunta: {},
+        kunta: {}
+    };
     @observable oppilaitosResult = [];
     @observable oppilaitosCount = 0;
+    @observable oppilaitosFilters = {
+        opetusKieli: {},
+        koulutusTyyppi: {},
+        maakunta: {},
+        kunta: {}
+    };
     @observable toggle = 'koulutus';
     @observable paging = {
         pageOppilaitos: 1,
@@ -224,8 +236,17 @@ class HakuStore {
             ], (result) => { runInAction(() => {
                 this.koulutusResult = result[0] ? result[0].hits : [];
                 this.koulutusCount = (result[0] && result[0].hits.length > 0) ? result[0].hits.length : 0;
+                this.koulutusFilters.opetusKieli = result[0].filters.opetuskieli;
+                this.koulutusFilters.koulutusTyyppi = result[0].filters.koulutustyyppi;
+                this.koulutusFilters.maakunta = result[0].filters.maakunta;
+                this.koulutusFilters.kunta = result[0].filters.kunta;
                 this.oppilaitosResult = result[1] ? result[1].hits : [];
                 this.oppilaitosCount = (result[1] && result[1].hits.length > 0) ? result[1].hits.length : 0;
+                this.oppilaitosFilters.opetusKieli = result[1].filters.opetuskieli;
+                this.oppilaitosFilters.koulutusTyyppi = result[1].filters.koulutustyyppi
+                this.oppilaitosFilters.maakunta = result[1].filters.maakunta;
+                this.oppilaitosFilters.kunta = result[1].filters.kunta;
+                
                 if(onSuccess) {
                     onSuccess()
                 }

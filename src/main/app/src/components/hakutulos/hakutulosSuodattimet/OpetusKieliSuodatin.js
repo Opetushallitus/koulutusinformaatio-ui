@@ -26,75 +26,36 @@ class OpetusKieliSuodatin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: this.props.hakuStore.toggle === 'koulutus' ? 0 : 1,
-      selectedLanguages: [],
-      oppilaitosFilters: {
-        opp_language_fi: [],
-        opp_language_sv: [],
-        opp_language_en: []
-      },
-      koulutusFilters: {
-        koul_language_fi: [],
-        koul_language_sv: [],
-        koul_language_en: []
-      }
+      opetusKieli: {},
+      valitutOpetusKielet: []
     };
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     this.props = nextProps;
     const { hakuStore } = this.props;
-    const oppilaitosFilters = { ...this.state.oppilaitosFilters };
-    const koulutusFilters = {
-      koul_language_fi: [],
-      koul_language_sv: [],
-      koul_language_en: []
-    };
-    const { koulutusResult, oppilaitosResult } = hakuStore;
-    const objKoulutukset = toJS(koulutusResult);
+    const opetusKieliJS =
+      hakuStore.toggle === 'koulutus'
+        ? toJS(hakuStore.koulutusFilters.opetusKieli)
+        : toJS(hakuStore.oppilaitosFilters.opetusKieli);
 
-    objKoulutukset.map(koulutusObj => {
-      const { kielivalinta = [] } = koulutusObj;
-
-      kielivalinta.forEach(langKey => {
-        switch (langKey) {
-          case 'fi':
-            koulutusFilters.koul_language_fi.push(koulutusObj);
-            break;
-          case 'sv':
-            koulutusFilters.koul_language_sv.push(koulutusObj);
-            break;
-          case 'en':
-            koulutusFilters.koul_language_en.push(koulutusObj);
-            break;
-          default:
-            break;
-        }
-      });
-    });
-    this.setState({ koulutusFilters: koulutusFilters });
+    this.setState({ opetusKieli: opetusKieliJS });
   }
 
-  handleSelectedTab = (event, newValue) => {
-    this.setState({ selectedTab: newValue });
-    const search = qs.parse(this.props.history.location.search);
-    search.toggle = newValue === 0 ? 'koulutus' : 'oppilaitos';
-    this.props.history.replace({ search: qs.stringify(search) });
-  };
-
-  handleLanguageToggle = language => () => {
-    const currentIndex = this.state.selectedLanguages.indexOf(language);
-    const newSelectedLanguages = [...this.state.selectedLanguages];
+  handleLanguageToggle = kieliId => () => {
+    const currentIndex = this.state.valitutOpetusKielet.indexOf(kieliId);
+    const valitutOpetusKielet = [...this.state.valitutOpetusKielet];
     if (currentIndex === -1) {
-      newSelectedLanguages.push(language);
+      valitutOpetusKielet.push(kieliId);
     } else {
-      newSelectedLanguages.splice(currentIndex, 1);
+      valitutOpetusKielet.splice(currentIndex, 1);
     }
-    this.setState({ selectedLanguages: newSelectedLanguages });
+    this.setState({ valitutOpetusKielet: valitutOpetusKielet });
   };
 
   render() {
-    const { classes, hakuStore } = this.props;
+    const { classes, i18n } = this.props;
+    console.log(this.state.valitutOpetusKielet);
 
     return (
       <ExpansionPanel defaultExpanded={true}>
@@ -103,15 +64,20 @@ class OpetusKieliSuodatin extends Component {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <List style={{ width: '100%' }}>
-            {Object.keys(this.state.koulutusFilters).map(lang => {
-              const labelId = `language-list-label-${lang}`;
+            {Object.keys(this.state.opetusKieli).map(opetuskieliKey => {
+              const labelId = `language-list-label-${opetuskieliKey}`;
               return (
-                <ListItem key={lang} dense button onClick={this.handleLanguageToggle(lang)}>
+                <ListItem
+                  key={opetuskieliKey}
+                  dense
+                  button
+                  onClick={this.handleLanguageToggle(opetuskieliKey)}
+                >
                   <ListItemIcon>
                     <Checkbox
                       classes={{ root: classes.listItemCheckbox }}
                       edge="start"
-                      checked={this.state.selectedLanguages.indexOf(lang) !== -1}
+                      checked={this.state.valitutOpetusKielet.indexOf(opetuskieliKey) !== -1}
                       tabIndex={-1}
                       disableRipple
                       inputProps={{ 'aria-labelledby': labelId }}
@@ -122,8 +88,8 @@ class OpetusKieliSuodatin extends Component {
                     id={labelId}
                     primary={
                       <Grid container justify="space-between">
-                        <Grid item>{lang}</Grid>
-                        <Grid item>{`(${this.state.koulutusFilters[lang].length})`}</Grid>
+                        <Grid item>{this.state.opetusKieli[opetuskieliKey].nimi[i18n.language]}</Grid>
+                        <Grid item>{`(${this.state.opetusKieli[opetuskieliKey].count})`}</Grid>
                       </Grid>
                     }
                   />

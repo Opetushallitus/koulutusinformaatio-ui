@@ -12,11 +12,13 @@ import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodati
 import HakutulosBox from '../common/HakutulosBox';
 // import HakutulosBox from './HakutulosBox';
 import KoulutusKortti from './hakutulosKortit/KoulutusKortti';
+import OppilaitosKortti from './hakutulosKortit/OppilaitosKortti';
 import VertailuBox from './VertailuBox';
 import '../../assets/styles/components/_hakutulos.scss';
 import { styles } from '../../styles';
 import { withTranslation } from 'react-i18next';
 import { toJS } from 'mobx';
+import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
 
 @inject('hakuStore', 'vertailuStore')
 @observer
@@ -94,8 +96,8 @@ class Hakutulos extends Component {
             haettavissa={r.hakuOnKaynnissa}
             // nimi={this.getKoulutusNimi(r)}
             link={link}
-            // text1={this.getOsaamisala(r)} //osaamisalat = ammattinimikkeet ammatillisessa? entä miten kk ylempi/alempi tarkistetaan?
             kuvaus={r.kuvaus}
+            koulutustyyppi={r.koulutustyyppi}
             nimi={r.nimi}
             opintojenlaajuus={r.opintojenlaajuus}
             opintojenlaajuusyksikko={r.opintojenlaajuusyksikko}
@@ -113,16 +115,19 @@ class Hakutulos extends Component {
           '&lng=' +
           l.getLanguage();
         return (
-          <HakutulosBox
+          <OppilaitosKortti
             key={r.oid}
             oid={r.oid}
             tyyppi={r.tyyppi}
             haettavissa={false}
-            nimi={this.getOppilaitosNimi(r)}
+            // nimi={this.getOppilaitosNimi(r)}
+            nimi={r.nimi}
             link={link}
             text1={r.kayntiosoite ? r.kayntiosoite : ''}
             text2={r.postitoimipaikka ? r.postitoimipaikka : ''}
-            vertailu={false}
+            // vertailu={false}
+            oppilaitos={toJS(r)}
+
           />
         );
       });
@@ -178,11 +183,12 @@ class Hakutulos extends Component {
               </Grid>
             </Grid>
             <Grid item container xs={12}>
-              <Grid item xs={3} className={classes.hakutulosFiltersGrid}>
-                <OpetusKieliSuodatin />
+              <Grid item xs={3} className={classes.hakutulosFilters}>
                 <KoulutusTyyppiSuodatin />
+                <OpetusKieliSuodatin />
+                <SijaintiSuodatin />
               </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={9} className={classes.hakutulosContent}>
                 <div id="search-results">{this.renderResultList()}</div>
               </Grid>
             </Grid>

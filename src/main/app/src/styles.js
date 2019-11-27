@@ -1,11 +1,11 @@
 import { createStyles } from '@material-ui/core/styles';
-import {sideMenuStyles} from "./sideMenuStyles";
+import { sideMenuStyles } from './sideMenuStyles';
 
 export const styles = theme =>
   createStyles({
     ...sideMenuStyles(theme),
     root: {
-      display: 'flex',
+      display: 'flex'
     },
     // ******************************************************************
     // General
@@ -20,6 +20,10 @@ export const styles = theme =>
     hakutulosSisalto: {
       maxWidth: 1600,
       margin: 'auto'
+    },
+    hakuTulosTabIconMargin: {
+      marginBottom: '0 !important',
+      marginRight: theme.spacing(2)
     },
     hakuTulosSisaltoPaperi: {
       width: '100%',
@@ -42,8 +46,12 @@ export const styles = theme =>
     customIconRoot: {
       marginBottom: 0
     },
-    hakutulosFiltersGrid: {
+    hakutulosFilters: {
       padding: theme.spacing(2, 4, 2, 0)
+    },
+    hakutulosContent: {
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2)
     },
     listItemCheckbox: {
       padding: '0 9px 0 9px'
@@ -52,49 +60,28 @@ export const styles = theme =>
       fontSize: 14,
       color: '#4C4C4C'
     },
+    eduTypeInnerListPadding: {
+      paddingLeft: theme.spacing(2.2)
+    },
     hakutulosKortti: {
       width: '100%',
-      border: '1px solid black',
-      padding: theme.spacing(3)
+      padding: theme.spacing(3),
+      marginBottom: theme.spacing(1.5),
+      boxShadow: '0 0 8px 0 rgba(0,0,0,0.2)'
     },
     koulutusKorttiImgBtn: {
-      width: 250,
-      height: 250
+      width: 200,
+      height: 200
     },
     koulutusKorttiLeftMargin: {
       marginLeft: '0.5em'
-    },
-    koulutusKorttiKuvaus: {
-      overflow: 'hidden',
-      position: 'relative',
-      lineHeight: '1.2em',
-      maxHeight: '3.6em',
-      textAlign: 'justify',
-      marginRight: '-1em',
-      paddingRight: '1em',
-      '&::before': {
-        content: '"..."',
-        position: 'absolute',
-        right: 0,
-        bottom: 0
-      },
-      '&::after': {
-        content: '""',
-        position: 'absolute',
-        right: 0,
-        width: '1em',
-        marginTop: '0.2em',
-        background: 'red'
-      }
-
-
     },
     koulutusKorttiImg: {
       margin: 'auto',
       display: 'block',
       maxWidth: '100%',
       maxHeight: '100%'
-    },
+    }
 
     // ******************************************************************
     // AppBar

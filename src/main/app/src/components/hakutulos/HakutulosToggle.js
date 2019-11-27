@@ -8,7 +8,7 @@ import qs from 'query-string';
 import '../../assets/styles/components/_hakutulos-toggle.scss';
 import { styles } from '../../styles';
 import { toJS } from 'mobx';
-import {withTranslation} from 'react-i18next'
+import { withTranslation } from 'react-i18next';
 
 @inject('hakuStore')
 @observer
@@ -23,33 +23,27 @@ class HakutulosToggle extends Component {
   }
 
   handleSelectedTab = (event, newValue) => {
-    // console.log(`Hakutulostoggle - handleSelectedTab, Selected Tab = ${newValue}`);
+    const { hakuStore, history } = this.props;
     this.setState({ selectedTab: newValue });
-    const search = qs.parse(this.props.history.location.search);
+    const search = qs.parse(history.location.search);
     const toggleValue = newValue === 0 ? 'koulutus' : 'oppilaitos';
     search.toggle = toggleValue;
-    // console.log(`HakutulosToggle - handleSelectedTab - toggleValue = ${toggleValue}`);
-    this.props.hakuStore.setToggle(toggleValue);
-    this.props.history.replace({ search: qs.stringify(search) });
-  }
+    hakuStore.setToggle(toggleValue);
+    history.replace({ search: qs.stringify(search) });
+  };
 
   render() {
     const { t, classes, hakuStore } = this.props;
     // console.log(`HakutulosToggle - render() - 40 toggle = ${toJS(hakuStore.toggle)}`);
     return (
-      <Tabs
-        value={this.state.selectedTab}
-        indicatorColor="primary"
-        textColor="primary"
-        onChange={this.handleSelectedTab}
-      >
+      <Tabs value={this.state.selectedTab} indicatorColor="primary" textColor="primary" onChange={this.handleSelectedTab}>
         <Tab
-          icon={<SchoolOutlined style={{ marginBottom: 0, marginRight: '15px' }} />}
+          icon={<SchoolOutlined className={classes.hakuTulosTabIconMargin}  />}
           classes={{ wrapper: classes.customWrapper, labelIcon: classes.customLabelIcon }}
           label={`${t('haku.koulutukset')} (${this.props.hakuStore.koulutusCount})`}
         ></Tab>
         <Tab
-          icon={<HomeWorkOutlined style={{ marginBottom: 0, marginRight: '15px' }} />}
+          icon={<HomeWorkOutlined className={classes.hakuTulosTabIconMargin} />}
           classes={{ wrapper: classes.customWrapper, labelIcon: classes.customLabelIcon }}
           label={`${t('haku.oppilaitokset')} (${this.props.hakuStore.oppilaitosCount})`}
         ></Tab>
