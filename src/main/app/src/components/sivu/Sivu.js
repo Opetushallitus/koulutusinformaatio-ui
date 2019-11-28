@@ -1,16 +1,17 @@
 import React from 'react';
-import { observer, inject } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import Murupolku from '../common/Murupolku';
 import TableOfContents from './TableOfContents';
 import Sisalto from './Sisalto';
 import Grid from '@material-ui/core/Grid';
 import { colors } from '../../colors';
-import { withStyles } from '@material-ui/core';
+import { makeStyles, withStyles } from '@material-ui/core';
 import Link from '@material-ui/core/Link';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
+import { useStores } from '../../hooks';
+import { observer } from 'mobx-react-lite';
 
-const useStyles = (theme) => ({
+const useStyles = makeStyles({
   notFound: {
     textAlign: 'center',
   },
@@ -38,123 +39,122 @@ const useStyles = (theme) => ({
   },
 });
 
-const Sivu = inject((stores) => ({ contentfulStore: stores.contentfulStore }))(
-  observer(({ t, classes, contentfulStore, ...props }) => {
-    const { forwardTo } = contentfulStore;
+const Sivu = observer((props) => {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const { contentfulStore } = useStores();
+  const { forwardTo } = contentfulStore;
 
-    const murupolkuPath = () => {
-      const pageId = props.match.params.id;
-      const { sivu, valikko } = props.contentfulStore.data;
-      const all = Object.entries(valikko).concat(Object.entries(sivu));
-      const page = sivu[pageId];
-      const findParent = (id) => {
-        const childId = (sivu[id] || {}).id || id;
-        const parent = all.find((entry, ind) => {
-          const [, item] = entry;
-          return (item.linkki || []).find((i) => i.id === childId);
-        });
-        if (parent) {
-          const [parentId, parentItem] = parent;
-          return findParent(parentId).concat([parentItem]);
-        } else {
-          return [];
-        }
-      };
-      const breadcrump = page ? findParent(pageId).concat([page]) : [];
-      return breadcrump.map((b) => ({ name: b.name, link: forwardTo(b.id) }));
-    };
-
+  const murupolkuPath = () => {
     const pageId = props.match.params.id;
-    const { sivu, loading } = props.contentfulStore.data;
+    const { sivu, valikko } = contentfulStore.data;
+    const all = Object.entries(valikko).concat(Object.entries(sivu));
     const page = sivu[pageId];
+    const findParent = (id) => {
+      const childId = (sivu[id] || {}).id || id;
+      const parent = all.find((entry, ind) => {
+        const [, item] = entry;
+        return (item.linkki || []).find((i) => i.id === childId);
+      });
+      if (parent) {
+        const [parentId, parentItem] = parent;
+        return findParent(parentId).concat([parentItem]);
+      } else {
+        return [];
+      }
+    };
+    const breadcrump = page ? findParent(pageId).concat([page]) : [];
+    return breadcrump.map((b) => ({ name: b.name, link: forwardTo(b.id) }));
+  };
 
-    if (page && page.content) {
-      const { content, description, name, sideContent } = page;
-      const tableOfContents = page.tableOfContents === 'true';
-      const isBlank = (str) => {
-        return !str || /^\s*$/.test(str);
-      };
-      const hasSideContent = !isBlank(sideContent);
+  const pageId = props.match.params.id;
+  const { sivu, loading } = contentfulStore.data;
+  const page = sivu[pageId];
 
-      return (
-        <React.Fragment>
-          <div className={classes.component}>
+  if (page && page.content) {
+    const { content, description, name, sideContent } = page;
+    const tableOfContents = page.tableOfContents === 'true';
+    const isBlank = (str) => {
+      return !str || /^\s*$/.test(str);
+    };
+    const hasSideContent = !isBlank(sideContent);
+
+    return (
+      <React.Fragment>
+        <div className={classes.component}>
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            spacing={2}
+            alignItems="center"
+          >
             <Grid
-              container
-              direction="row"
-              justify="center"
-              spacing={2}
-              alignItems="center"
+              item
+              xs={12}
+              sm={12}
+              md={tableOfContents ? (hasSideContent ? 12 : 10) : 8}
             >
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={tableOfContents ? (hasSideContent ? 12 : 10) : 8}
-              >
-                <Murupolku path={murupolkuPath()} />
-                <h1 className={classes.header1}>{name}</h1>
-                <p>{description}</p>
-              </Grid>
+              <Murupolku path={murupolkuPath()} />
+              <h1 className={classes.header1}>{name}</h1>
+              <p>{description}</p>
             </Grid>
-            <Grid container direction="row" spacing={2} justify="center">
-              {tableOfContents ? (
-                <Grid item xs={12} sm={12} md={3}>
-                  <TableOfContents content={content} />
+          </Grid>
+          <Grid container direction="row" spacing={2} justify="center">
+            {tableOfContents ? (
+              <Grid item xs={12} sm={12} md={3}>
+                <TableOfContents content={content} />
+              </Grid>
+            ) : null}
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={tableOfContents ? (hasSideContent ? 9 : 7) : 8}
+            >
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={12} md={hasSideContent ? 8 : 12}>
+                  <Sisalto
+                    content={content}
+                    contentfulStore={contentfulStore}
+                  />
                 </Grid>
-              ) : null}
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={tableOfContents ? (hasSideContent ? 9 : 7) : 8}
-              >
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={12} md={hasSideContent ? 8 : 12}>
+                {hasSideContent ? (
+                  <Grid item xs={12} sm={12} md={4}>
                     <Sisalto
-                      content={content}
+                      content={sideContent}
+                      alwaysFullWidth={true}
                       contentfulStore={contentfulStore}
                     />
                   </Grid>
-                  {hasSideContent ? (
-                    <Grid item xs={12} sm={12} md={4}>
-                      <Sisalto
-                        content={sideContent}
-                        alwaysFullWidth={true}
-                        contentfulStore={contentfulStore}
-                      />
-                    </Grid>
-                  ) : null}
-                </Grid>
+                ) : null}
               </Grid>
             </Grid>
-          </div>
-        </React.Fragment>
-      );
-    } else {
-      return (
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          className={classes.component}
-        >
-          {loading ? null : (
-            <Grid item xs={12} sm={6} md={6} className={classes.notFound}>
-              <h1 className={classes.header1}>
-                {t('sisaltohaku.sivua-ei-löytynyt')}
-              </h1>
-              <p>{t('sisaltohaku.etsimääsi-ei-löydy')}</p>
-              <Link href={'/'}>{t('sisaltohaku.takaisin')}</Link>
-            </Grid>
-          )}
-        </Grid>
-      );
-    }
-  })
-);
+          </Grid>
+        </div>
+      </React.Fragment>
+    );
+  } else {
+    return (
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        className={classes.component}
+      >
+        {loading ? null : (
+          <Grid item xs={12} sm={6} md={6} className={classes.notFound}>
+            <h1 className={classes.header1}>
+              {t('sisaltohaku.sivua-ei-löytynyt')}
+            </h1>
+            <p>{t('sisaltohaku.etsimääsi-ei-löydy')}</p>
+            <Link href={'/'}>{t('sisaltohaku.takaisin')}</Link>
+          </Grid>
+        )}
+      </Grid>
+    );
+  }
+});
 
-export default withTranslation()(
-  withRouter(withStyles(useStyles, { withTheme: true })(Sivu))
-);
+export default withRouter(Sivu);
