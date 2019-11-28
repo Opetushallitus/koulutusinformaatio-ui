@@ -12,7 +12,7 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
-  Grid
+  Grid,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
@@ -28,7 +28,7 @@ class HakutulosSuodattimet extends Component {
     super(props);
     this.state = {
       selectedTab: this.props.hakuStore.toggleKoulutus ? 0 : 1,
-      selectedLanguages: []
+      selectedLanguages: [],
     };
     this.handleSelectedTab = this.handleSelectedTab.bind(this);
     this.handleLanguageToggle = this.handleLanguageToggle.bind(this);
@@ -45,7 +45,7 @@ class HakutulosSuodattimet extends Component {
     this.props.history.replace({ search: qs.stringify(search) });
   }
 
-  handleLanguageToggle = language => () => {
+  handleLanguageToggle = (language) => () => {
     const currentIndex = this.state.selectedLanguages.indexOf(language);
     const newSelectedLanguages = [...this.state.selectedLanguages];
     if (currentIndex === -1) {
@@ -65,7 +65,6 @@ class HakutulosSuodattimet extends Component {
     console.log(objKoulutukset);
     console.log(objOppilatokset);
 
-
     return (
       <React.Fragment>
         <ExpansionPanel defaultExpanded={true}>
@@ -74,15 +73,22 @@ class HakutulosSuodattimet extends Component {
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <List style={{ width: '100%' }}>
-              {['Suomi', 'Englanti', 'Ruotsi'].map(lang => {
+              {['Suomi', 'Englanti', 'Ruotsi'].map((lang) => {
                 const labelId = `language-list-label-${lang}`;
                 return (
-                  <ListItem key={lang} dense button onClick={this.handleLanguageToggle(lang)}>
+                  <ListItem
+                    key={lang}
+                    dense
+                    button
+                    onClick={this.handleLanguageToggle(lang)}
+                  >
                     <ListItemIcon>
                       <Checkbox
                         classes={{ root: classes.listItemCheckbox }}
                         edge="start"
-                        checked={this.state.selectedLanguages.indexOf(lang) !== -1}
+                        checked={
+                          this.state.selectedLanguages.indexOf(lang) !== -1
+                        }
                         tabIndex={-1}
                         disableRipple
                         inputProps={{ 'aria-labelledby': labelId }}

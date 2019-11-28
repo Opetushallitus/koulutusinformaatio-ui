@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
-import {observer} from 'mobx-react';
-import HakutulosToggle from "./HakutulosToggle";
+import { observer } from 'mobx-react';
+import HakutulosToggle from './HakutulosToggle';
 
 @observer
 class HakutulosToggleWrapper extends Component {
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    this.props = nextProps;
+  }
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        this.props = nextProps;
-    }
-
-    render() {
-        return (
-            <HakutulosToggle />
-        );
-    }
+  render() {
+    return <HakutulosToggle />;
+  }
 }
 
 export default HakutulosToggleWrapper;
