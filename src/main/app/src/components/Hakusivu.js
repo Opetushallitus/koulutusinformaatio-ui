@@ -9,7 +9,6 @@ import Vertailu from './vertailu/Vertailu';
 import Hakukohde from './hakukohde/Koulutus';
 import { Route } from 'react-router-dom';
 import '../assets/styles/components/_hakusivu.scss';
-import AmmatillinenKoulutus from './AmmatillinenKoulutus';
 
 class Hakusivu extends Component {
   constructor(props) {
