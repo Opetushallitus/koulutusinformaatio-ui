@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import SidebarValikko from './SidebarValikko';
 import { withStyles } from '@material-ui/core/styles';
-import '../../assets/styles/components/_side-menu.scss';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -63,6 +62,7 @@ class SideMenu extends Component {
             component="form"
             onSubmit={this.doSearch}
             className={classes.inputRoot}
+            elevation={0}
           >
             <InputBase
               className={classes.input}

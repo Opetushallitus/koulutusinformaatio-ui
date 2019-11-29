@@ -9,7 +9,6 @@ import clsx from 'clsx';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import { colors } from '../../colors';
-import _ from 'lodash';
 
 const useStyles = makeStyles({
   breadcrump: {
@@ -49,7 +48,6 @@ const Murupolku = ({ path, history }) => {
   const forwardToFrontPage = (path) => {
     history.push(path);
   };
-  const last = path[path.length - 1];
   const shownPath = matches
     ? path.length === 0
       ? []
@@ -81,7 +79,7 @@ const Murupolku = ({ path, history }) => {
               key={`breadcrumplink-${ind}`}
               className={clsx(
                 classes.link,
-                _.isEqual(currentLink, last) && classes.lastLink
+                ind === path.length - 1 && classes.lastLink
               )}
               to={link}
             >

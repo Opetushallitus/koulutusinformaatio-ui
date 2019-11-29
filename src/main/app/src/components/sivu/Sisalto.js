@@ -112,7 +112,7 @@ const Sisalto = ({
       options={{
         overrides: {
           img: {
-            component: ImageComponent,
+            component: excludeMedia ? Null : ImageComponent,
           },
           h1: {
             component: Heading,
@@ -142,13 +142,13 @@ const Sisalto = ({
             component: Paragraph,
           },
           a: {
-            component: LinkOrYoutube,
+            component: excludeMedia ? Null : LinkOrYoutube,
           },
           details: {
-            component: Accordion,
+            component: excludeMedia ? Null : Accordion,
           },
           summary: {
-            component: Summary,
+            component: excludeMedia ? Null : Summary,
           },
           sivu: {
             component: SivuLink,
