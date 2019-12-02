@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   anchor: {
     color: colors.black,
     fontSize: '24px',
-    lineHeight: '10px',
+    lineHeight: '1.7rem',
     fontWeight: '700',
     marginTop: '0',
     marginBottom: '25px',
