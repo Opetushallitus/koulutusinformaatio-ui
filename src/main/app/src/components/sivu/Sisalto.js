@@ -5,7 +5,7 @@ import { Accordion, Summary } from './Accordion';
 import Markdown from 'markdown-to-jsx';
 import Link from '@material-ui/core/Link';
 import Youtube from './Youtube';
-import OpenInNewIcon from '@material-ui/core/SvgIcon/SvgIcon';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { colors } from '../../colors';
 import { makeStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
