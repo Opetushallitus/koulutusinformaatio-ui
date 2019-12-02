@@ -65,3 +65,9 @@ tai tietyissä porteissa
 `PORT=5555 BACKEND_PORT=5556 npm test`
 
 Jos haluaa ajaa testit ilman watchia, annetaan lisäksi parametriksi `CI=true`.
+
+Linttaukset voi ajaa komennola
+`npm run lint`
+tai automaattisen fiksauksen kanssa
+`npm run lint:fix`
+Linttaukset ajetaan automaattisesti, kun koodia koitetaan committaa.
