@@ -151,15 +151,23 @@ class SidebarValikko extends Component {
           </ListItemLink>
         ) : null}
         <OtsikkoItem
-          key={this.props.name}
+          key={`otsikko-item-${this.props.name}`}
           name={this.props.name}
           id={this.props.id}
         />
         {this.props.links.map((i) => {
           if (i.type === 'sivu') {
-            return <SivuItem key={i.name} name={i.name} id={i.id} />;
+            return (
+              <SivuItem key={`sivu-item-${i.name}`} name={i.name} id={i.id} />
+            );
           } else {
-            return <ValikkoItem key={i.name} name={i.name} id={i.id} />;
+            return (
+              <ValikkoItem
+                key={`valikko-item-${i.name}`}
+                name={i.name}
+                id={i.id}
+              />
+            );
           }
         })}
       </List>

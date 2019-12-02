@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import Murupolku from '../common/Murupolku';
 import TableOfContents from './TableOfContents';
@@ -45,6 +45,14 @@ const Sivu = observer((props) => {
   const { contentfulStore } = useStores();
   const { forwardTo } = contentfulStore;
 
+  useEffect(() => {
+    const el = window.location.hash
+      ? document.getElementById(window.location.hash.substring(1))
+      : null;
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
   const murupolkuPath = () => {
     const pageId = props.match.params.id;
     const { sivu, valikko } = contentfulStore.data;

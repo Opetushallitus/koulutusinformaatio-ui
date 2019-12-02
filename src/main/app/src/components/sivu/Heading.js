@@ -25,11 +25,7 @@ const Heading = ({ id, children, level }) => {
   const classes = useStyles();
   const value = children;
   const refe = id;
-  const anchor = (
-    <a className={classes.anchorLink} id={refe} name={refe}>
-      {value}
-    </a>
-  );
+  const anchor = <div className={classes.anchorLink} id={refe}></div>;
   switch (level) {
     case 1:
       return (
