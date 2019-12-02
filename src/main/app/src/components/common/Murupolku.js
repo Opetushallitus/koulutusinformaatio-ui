@@ -2,7 +2,6 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
-import Icon from '@material-ui/core/Icon';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import Link from '@material-ui/core/Link';
 import clsx from 'clsx';
@@ -12,31 +11,39 @@ import { colors } from '../../colors';
 
 const useStyles = makeStyles({
   breadcrump: {
-    height: '20px',
-    display: 'inline-block',
+    marginLeft: '0',
+    paddingLeft: '0',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start',
+    justifyItems: 'flex-start',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
+    listStyle: 'none',
   },
-  forwardIcon: {
+  home: {
+    display: 'inline-flex',
+    verticalAlign: 'middle',
+    marginRight: '10px',
+    fontSize: '22px',
+  },
+  arrow: {
+    display: 'inline-flex',
+    verticalAlign: 'middle',
     color: colors.lightGrey,
     marginRight: '10px',
     marginLeft: '10px',
+    fontSize: '12px',
   },
-  icon: {
-    marginRight: '10px',
-  },
-  link: {
+  item: {
+    display: 'inline-flex',
     fontWeight: '400',
-    maxWidth: '250px',
-    display: 'inline-block',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-    verticalAlign: 'top',
+    verticalAlign: 'sub',
     color: colors.grey,
   },
-  lastLink: {
+  link: {
     color: colors.green,
   },
 });
@@ -45,54 +52,43 @@ const Murupolku = ({ path, history }) => {
   const matches = useMediaQuery('(max-width: 900px)');
   const { t } = useTranslation();
   const classes = useStyles();
-  const forwardToFrontPage = (path) => {
+  const forwardToPage = (path) => {
     history.push(path);
   };
   const shownPath = matches
     ? path.length === 0
       ? []
-      : [path[path.length - 1]]
+      : [{ name: '...' }, path[path.length - 1]]
     : path;
-  return (
-    <div className={classes.breadcrump}>
-      <Icon className={classes.icon}>
-        <HomeOutlinedIcon />
-      </Icon>
-      <Link onClick={() => forwardToFrontPage('/')} className={classes.link}>
-        {t('etusivu')}
-      </Link>
-      {shownPath.map(({ name, link, ...currentLink }, ind) => {
-        const arrow = (
-          <ArrowForwardIosIcon
-            style={{ fontSize: '12px', height: '20px' }}
-            key={`breadcrumpseparator-${ind}`}
-            className={classes.forwardIcon}
-          />
-        );
 
-        return (matches
-          ? [arrow, <span className={classes.link}>...</span>, arrow]
-          : [arrow]
-        ).concat([
-          link ? (
+  return (
+    <ul className={clsx(classes.breadcrump)}>
+      <li>
+        <HomeOutlinedIcon className={classes.home} />
+        <Link
+          onClick={() => forwardToPage('/')}
+          className={clsx(classes.item, classes.link)}
+        >
+          {t('etusivu')}
+        </Link>
+      </li>
+
+      {shownPath.map(({ name, link }, ind) => (
+        <li key={`breadcrump-item-${ind}`}>
+          <ArrowForwardIosIcon className={classes.arrow} />
+          {ind === shownPath.length - 1 ? (
             <Link
-              key={`breadcrumplink-${ind}`}
-              className={clsx(
-                classes.link,
-                ind === path.length - 1 && classes.lastLink
-              )}
-              to={link}
+              className={clsx(classes.item, classes.link)}
+              onClick={() => forwardToPage(link)}
             >
               {name}
             </Link>
           ) : (
-            <span key={`breadcrumplink-${ind}`} className={clsx(classes.link)}>
-              {name}
-            </span>
-          ),
-        ]);
-      })}
-    </div>
+            <span className={classes.item}>{name}</span>
+          )}
+        </li>
+      ))}
+    </ul>
   );
 };
 
