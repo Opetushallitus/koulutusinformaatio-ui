@@ -61,10 +61,12 @@ export const sideMenuStyles = (theme) => ({
     paddingBottom: '20px',
   },
   inputRoot: {
-    height: '35px',
+    height: '38px',
     display: 'flex',
     alignItems: 'center',
-    borderRadius: 0,
+    boxSizing: 'border-box',
+    border: '1px solid #B2B2B2',
+    borderRadius: '2px',
     width: 290,
   },
   input: {

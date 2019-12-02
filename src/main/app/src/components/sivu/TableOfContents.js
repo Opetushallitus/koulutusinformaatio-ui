@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from '@material-ui/core/Link';
+import { HashLink as Link } from 'react-router-hash-link';
 import { makeStyles } from '@material-ui/core';
 import { colors } from '../../colors';
 import Markdown from 'markdown-to-jsx';
@@ -27,7 +27,14 @@ const TableOfContents = (props) => {
     const value = props.children;
     const anchor = props.id;
     return (
-      <Link className={classes.link} aria-label="anchor" href={`#${anchor}`}>
+      <Link
+        className={classes.link}
+        aria-label="anchor"
+        to={`#${anchor}`}
+        scroll={(el) =>
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      >
         {value}
       </Link>
     );

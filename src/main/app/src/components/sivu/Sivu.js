@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import Murupolku from '../common/Murupolku';
 import TableOfContents from './TableOfContents';
 import Sisalto from './Sisalto';
 import Grid from '@material-ui/core/Grid';
 import { colors } from '../../colors';
-import { makeStyles, withStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import Link from '@material-ui/core/Link';
 import { useTranslation } from 'react-i18next';
 import { useStores } from '../../hooks';
@@ -45,6 +45,14 @@ const Sivu = observer((props) => {
   const { contentfulStore } = useStores();
   const { forwardTo } = contentfulStore;
 
+  useEffect(() => {
+    const el = window.location.hash
+      ? document.getElementById(window.location.hash.substring(1))
+      : null;
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
   const murupolkuPath = () => {
     const pageId = props.match.params.id;
     const { sivu, valikko } = contentfulStore.data;

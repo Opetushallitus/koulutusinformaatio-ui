@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   anchor: {
     color: colors.black,
     fontSize: '24px',
-    lineHeight: '10px',
+    lineHeight: '1.7rem',
     fontWeight: '700',
     marginTop: '0',
     marginBottom: '25px',
@@ -25,11 +25,7 @@ const Heading = ({ id, children, level }) => {
   const classes = useStyles();
   const value = children;
   const refe = id;
-  const anchor = (
-    <a className={classes.anchorLink} id={refe} name={refe}>
-      {value}
-    </a>
-  );
+  const anchor = <div className={classes.anchorLink} id={refe}></div>;
   switch (level) {
     case 1:
       return (
