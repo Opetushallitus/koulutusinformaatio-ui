@@ -3,6 +3,7 @@ import { colors } from './colors';
 
 // Material UI theme customization
 // Learn more: https://material-ui.com/customization/themes/
+
 export const theme = createMuiTheme({
   palette: {
     primary: {
@@ -23,31 +24,59 @@ export const theme = createMuiTheme({
     fontFamily: ['Open Sans', 'Arial', 'Roboto'],
     h1: {
       fontSize: '2.5rem',
-      letterSpacing: '-1.5px',
-      fontWeight: 'bold',
+      letterSpacing: '-0.09375rem',
+      fontWeight: 700,
       color: colors.black,
       lineHeight: '3rem',
+      '@media (max-width:600px)': {
+        fontSize: '2rem',
+        letterSpacing: '-0.075rem',
+        lineHeight: '2.375rem',
+      },
     },
     h2: {
-      fontSize: '1.75rem',
-      fontWeight: 'bold',
+      fontSize: '2rem',
+      fontWeight: 700,
       color: colors.black,
-      lineHeight: '2rem',
+      lineHeight: '2.25rem',
+      '@media (max-width:600px)': {
+        fontSize: '1.75rem',
+        lineHeight: '2rem',
+      },
     },
     h3: {
-      fontWeight: 600,
+      fontSize: '1.75rem',
+      fontWeight: 700,
+      lineHeight: '2rem',
       color: colors.black,
+      '@media (max-width:600px)': {
+        fontSize: '1.5rem',
+        lineHeight: '1.875rem',
+      },
     },
     h4: {
       color: colors.black,
-      fontSize: '1.25rem',
-      fontWeight: 'bold',
-      lineHeight: '1.7rem',
+      fontSize: '1.5rem',
+      fontWeight: '700',
+      lineHeight: '1.75rem',
+      '@media (max-width:600px)': {
+        fontSize: '1.25rem',
+        lineHeight: '1.5rem',
+      },
     },
     subtitle1: {
       fontWeight: 600,
       fontSize: '16px',
       color: colors.black,
+    },
+    body1: {
+      fontSize: '1rem',
+      fontWeight: 400,
+      lineHeight: '1.6875rem',
+      color: colors.grey,
+      '@media (max-width:600px)': {
+        lineHeight: '1.6875rem',
+      },
     },
   },
   // props: {
