@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
+import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles({
   notFound: {
@@ -44,11 +45,21 @@ const useStyles = makeStyles({
   },
 });
 
-const Sisalto = ({ content, contentfulStore, alwaysFullWidth }) => {
+const Sisalto = ({
+  content,
+  contentfulStore,
+  alwaysFullWidth,
+  excludeMedia,
+  ...props
+}) => {
   const classes = useStyles();
   const { forwardTo } = contentfulStore;
   const { sivu } = contentfulStore.data;
-
+  const forwardToPage = (e, id) => {
+    props.history.push(forwardTo(id));
+    e.preventDefault();
+  };
+  const Null = (props) => null;
   const ImageComponent = ({ src, alt, ...props }) => {
     const url = src.replace('//images.ctfassets.net/', '');
     return (
@@ -78,7 +89,7 @@ const Sisalto = ({ content, contentfulStore, alwaysFullWidth }) => {
   };
   const SivuLink = (props) => {
     const id = props.children[0];
-    return <Link href={forwardTo(id)}>{sivu[id].name}</Link>;
+    return <Link onClick={(e) => forwardToPage(e, id)}>{sivu[id].name}</Link>;
   };
   const LinkOrYoutube = ({ children, className, ...props }) => {
     if (className === 'embedly-card') {
@@ -150,4 +161,4 @@ const Sisalto = ({ content, contentfulStore, alwaysFullWidth }) => {
   );
 };
 
-export default Sisalto;
+export default withRouter(Sisalto);
