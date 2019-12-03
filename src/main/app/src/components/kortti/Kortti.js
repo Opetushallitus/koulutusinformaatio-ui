@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
-import '../../assets/styles/components/_etusivu.scss';
-import Grid from '@material-ui/core/Grid';
+import { Grid, Link } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
@@ -76,7 +75,10 @@ class Kortti extends Component {
               return page ? (
                 <div className={classes.link} key={page.id}>
                   <Icon>chevron_right</Icon>
-                  <Link className={classes.linkElement} to={forwardTo(id)}>
+                  <Link
+                    className={classes.linkElement}
+                    href={forwardTo(page.id)}
+                  >
                     {page.name}
                   </Link>
                 </div>
