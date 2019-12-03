@@ -12,9 +12,8 @@ import { withStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import { colors } from '../colors';
 import Button from '@material-ui/core/Button';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import clsx from 'clsx';
 import { withTranslation } from 'react-i18next';
+import ReactiveBorder from './ReactiveBorder';
 
 const etusivuStyles = (theme) => ({
   content: {
@@ -32,14 +31,6 @@ const etusivuStyles = (theme) => ({
     paddingTop: '60px',
     paddingBottom: '28px',
     fontWeight: '700',
-  },
-  spaceOnBorders: {
-    paddingLeft: 90,
-    paddingRight: 90,
-  },
-  smSpaceOnBorders: {
-    paddingLeft: 10,
-    paddingRight: 10,
   },
   oikopolut: {
     backgroundColor: colors.white,
@@ -98,16 +89,10 @@ class Etusivu extends Component {
     const showMore = this.state.showMore === false && uutislinkit.length > 3;
 
     const EtusivuContent = (props) => {
-      const matches = useMediaQuery('(min-width: 979px)');
       return (
         <React.Fragment>
           <Route exact path="/" render={() => <Jumpotron />} />
-          <div
-            className={clsx(
-              classes.oikopolut,
-              matches ? classes.spaceOnBorders : classes.smSpaceOnBorders
-            )}
-          >
+          <ReactiveBorder className={classes.oikopolut}>
             <Grid container spacing={3}>
               {infos.map((info) => {
                 return (
@@ -134,14 +119,9 @@ class Etusivu extends Component {
                 })}
               </Grid>
             </Grid>
-          </div>
+          </ReactiveBorder>
 
-          <div
-            className={clsx(
-              classes.uutiset,
-              matches ? classes.spaceOnBorders : classes.smSpaceOnBorders
-            )}
-          >
+          <ReactiveBorder className={classes.uutiset}>
             <Grid container>
               <Grid item xs={12}>
                 <h1 className={classes.header}>Ajankohtaista ja uutisia</h1>
@@ -170,7 +150,7 @@ class Etusivu extends Component {
                 ) : null}
               </Grid>
             </Grid>
-          </div>
+          </ReactiveBorder>
         </React.Fragment>
       );
     };
