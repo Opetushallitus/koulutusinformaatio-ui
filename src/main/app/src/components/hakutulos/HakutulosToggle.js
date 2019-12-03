@@ -7,6 +7,7 @@ import { SchoolOutlined, AccountBalanceOutlined } from '@material-ui/icons';
 import qs from 'query-string';
 import '../../assets/styles/components/_hakutulos-toggle.scss';
 import { styles } from '../../styles';
+import { withTranslation } from 'react-i18next';
 
 @inject('hakuStore')
 @observer
@@ -70,4 +71,4 @@ class HakutulosToggle extends Component {
 
 const HakuTulosToggleWithStyles = withStyles(styles)(HakutulosToggle);
 
-export default withRouter(HakuTulosToggleWithStyles);
+export default withTranslation()(withRouter(HakuTulosToggleWithStyles));

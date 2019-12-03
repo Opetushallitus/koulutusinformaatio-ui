@@ -3,7 +3,6 @@ import Jumpotron from './Jumpotron';
 import { Route, withRouter } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import _ from 'lodash';
-import '../assets/styles/components/_etusivu.scss';
 import Markdown from 'markdown-to-jsx';
 import Kortti from './kortti/Kortti';
 import Uutiset from './uutinen/Uutiset';

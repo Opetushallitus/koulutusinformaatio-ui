@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import clsx from 'clsx';
 import { observer, inject } from 'mobx-react';
-import '../../assets/styles/components/_etusivu.scss';
 import Markdown from 'markdown-to-jsx';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';

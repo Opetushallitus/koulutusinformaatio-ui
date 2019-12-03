@@ -1,7 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import clsx from 'clsx';
-import '../../assets/styles/components/_etusivu.scss';
 import { colors } from '../../colors';
 import Grid from '@material-ui/core/Grid';
 import { observer } from 'mobx-react-lite';
