@@ -18,8 +18,8 @@ class ContentfulStore {
 
   forwardTo = (id) => {
     return this.data.sivu[id]
-      ? `/sivu/${this.data.sivu[id].slug || id}`
-      : `/sivu/poistettu`;
+      ? `/konfo/sivu/${this.data.sivu[id].slug || id}`
+      : `/konfo/sivu/poistettu`;
   };
 
   assetUrl(url) {
