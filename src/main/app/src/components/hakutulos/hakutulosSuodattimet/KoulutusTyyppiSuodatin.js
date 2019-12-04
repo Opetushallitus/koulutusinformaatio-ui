@@ -35,7 +35,9 @@ class KoulutusTyyppiSuodatin extends Component {
     this.props = nextProps;
     const { hakuStore } = this.props;
     const koulutusTyypitJS =
-      hakuStore.toggle === 'koulutus' ? toJS(hakuStore.koulutusFilters.koulutusTyyppi) : toJS(hakuStore.oppilaitosFilters.koulutusTyyppi);
+      hakuStore.toggle === 'koulutus'
+        ? toJS(hakuStore.koulutusFilters.koulutusTyyppi)
+        : toJS(hakuStore.oppilaitosFilters.koulutusTyyppi);
 
     this.setState({ koulutusTyypit: koulutusTyypitJS });
   }
@@ -55,7 +57,7 @@ class KoulutusTyyppiSuodatin extends Component {
     const { classes, i18n } = this.props;
 
     return (
-      <ExpansionPanel defaultExpanded={true}>
+      <ExpansionPanel defaultExpanded={false}>
         <ExpansionPanelSummary expandIcon={<ExpandMore />}>
           <Typography variant="subtitle1">KoulutusTyyppi</Typography>
         </ExpansionPanelSummary>
@@ -64,8 +66,14 @@ class KoulutusTyyppiSuodatin extends Component {
             {Object.keys(this.state.koulutusTyypit).map(eduTypeOuterListKey => {
               const labelId = `educationtype-outerlist-label-${eduTypeOuterListKey}`;
               return (
-                <React.Fragment>
-                  <ListItem key={eduTypeOuterListKey} dense button onClick={this.handleEduTypeToggle(eduTypeOuterListKey)}>
+                <React.Fragment key={`fragment-${eduTypeOuterListKey}`}>
+                  <ListItem
+                    key={eduTypeOuterListKey}
+                    id={eduTypeOuterListKey}
+                    dense
+                    button
+                    onClick={this.handleEduTypeToggle(eduTypeOuterListKey)}
+                  >
                     <ListItemIcon>
                       <Checkbox
                         classes={{ root: classes.listItemCheckbox }}
@@ -93,6 +101,7 @@ class KoulutusTyyppiSuodatin extends Component {
                         <ListItem
                           className={classes.eduTypeInnerListPadding}
                           key={`${eduTypeOuterListKey}_${eduTypeInnerListkey}`}
+                          id={`${eduTypeOuterListKey}_${eduTypeInnerListkey}`}
                           dense
                           button
                           onClick={this.handleEduTypeToggle(eduTypeInnerListkey)}
@@ -113,7 +122,11 @@ class KoulutusTyyppiSuodatin extends Component {
                             primary={
                               <Grid container justify="space-between">
                                 <Grid item>
-                                  {this.state.koulutusTyypit[eduTypeOuterListKey].alakoodit[eduTypeInnerListkey].nimi[i18n.language]}
+                                  {
+                                    this.state.koulutusTyypit[eduTypeOuterListKey].alakoodit[eduTypeInnerListkey].nimi[
+                                      i18n.language
+                                    ]
+                                  }
                                 </Grid>
                                 <Grid item>
                                   {`(${this.state.koulutusTyypit[eduTypeOuterListKey].alakoodit[eduTypeInnerListkey].count})`}

@@ -38,24 +38,36 @@ class OpetusKieliSuodatin extends Component {
       hakuStore.toggle === 'koulutus'
         ? toJS(hakuStore.koulutusFilters.opetusKieli)
         : toJS(hakuStore.oppilaitosFilters.opetusKieli);
+    console.log(toJS(hakuStore.filter.opetusKielet));
 
     this.setState({ opetusKieli: opetusKieliJS });
   }
 
   handleLanguageToggle = kieliId => () => {
+    const { hakuStore, history } = this.props;
     const currentIndex = this.state.valitutOpetusKielet.indexOf(kieliId);
     const valitutOpetusKielet = [...this.state.valitutOpetusKielet];
+    
     if (currentIndex === -1) {
       valitutOpetusKielet.push(kieliId);
     } else {
       valitutOpetusKielet.splice(currentIndex, 1);
     }
+
     this.setState({ valitutOpetusKielet: valitutOpetusKielet });
+    console.log(valitutOpetusKielet);
+    // this.setState({ selectedTab: newValue });
+    const search = qs.parse(history.location.search);
+    search.opetuskieli = valitutOpetusKielet.join(',');
+    hakuStore.setOpetusKieliFilter(valitutOpetusKielet);
+    history.replace({ search: qs.stringify(search) });
+    console.log(history.location.search);
+
+
   };
 
   render() {
     const { classes, i18n } = this.props;
-    console.log(this.state.valitutOpetusKielet);
 
     return (
       <ExpansionPanel defaultExpanded={true}>
@@ -72,6 +84,7 @@ class OpetusKieliSuodatin extends Component {
                   dense
                   button
                   onClick={this.handleLanguageToggle(opetuskieliKey)}
+                  disabled={this.state.opetusKieli[opetuskieliKey].count === 0}
                 >
                   <ListItemIcon>
                     <Checkbox

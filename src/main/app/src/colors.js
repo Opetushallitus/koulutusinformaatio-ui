@@ -12,7 +12,8 @@ export const colors = {
     lightGrey: "#b2b2b2",
     black: "#1D1D1D",
     textBlack: "#4F4F4F",
-    lightAlphaGrey: "rgba(178,178,178,.5)"
+    lightAlphaGrey: "rgba(178,178,178,.5)",
+    greyMuiListOnHover: "rgba(0,0,0,0.08)"
 };
 
 export const educationTypeColorCode = {

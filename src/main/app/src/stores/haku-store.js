@@ -28,6 +28,7 @@ class HakuStore {
     @observable filter = {
         koulutus: [],
         kieli: [],
+        opetusKielet: [],
         paikkakunta: ''
     };
 
@@ -37,6 +38,7 @@ class HakuStore {
 
     @action
     setAll = (keyword, search, toggleAction) => {
+        console.log(`setAll() 41`);
         const keywordChange = this.setKeyword(keyword);
         const filterChange = this.setFilter({
             koulutus: search.koulutustyyppi,
@@ -58,7 +60,7 @@ class HakuStore {
                         toggleAction(toggle);
                     }
                 } else {
-                    console.log(`haku-store - setAll gets Triggered`);
+                    console.log(`haku-store - setAll gets Triggered line 62`);
                     this.setToggle(search.toggle);
                 }
             });
@@ -67,7 +69,7 @@ class HakuStore {
         } else if (pagingChange.oppilaitos) {
             this.searchOppilaitokset();
         } else {
-            console.log(`haku-store - setAll gets Triggered`);
+            console.log(`haku-store - setAll gets Triggered line 71`);
             // this.setToggle(search.toggle);
         }
     };
@@ -139,6 +141,13 @@ class HakuStore {
         return change;
     };
 
+    @action
+    setOpetusKieliFilter = (valitutOpetusKielet = []) => {
+        const change = valitutOpetusKielet !== this.filter.opetusKielet;
+        this.filter.opetusKielet = valitutOpetusKielet
+        return change;
+    }
+
     @computed get toggleKoulutus() {
         return 'koulutus' === this.toggle
     }
@@ -162,6 +171,7 @@ class HakuStore {
             + (this.filter.paikkakunta ? '&paikkakunta=' + this.filter.paikkakunta : '')
             + (this.filter.koulutus.length ? '&koulutustyyppi=' + this.filter.koulutus.join(',') : '')
             + (this.filter.kieli.length ? '&kieli=' + this.filter.kieli.join(',') : '')
+            + (this.filter.opetusKielet.length ? '&opetuskieli=' + this.filter.opetusKielet.join(',') : '')
             + "&lng=" + l.getLanguage();
     }
 
@@ -213,6 +223,7 @@ class HakuStore {
         this.filter.paikkakunta = '';
         this.filter.koulutus = [];
         this.filter.kieli = [];
+        this.filter.opetusKielet = [];
         this.paging.pageOppilaitos = 1;
         this.paging.pageKoulutus = 1;
         this.paging.pageSize = 20;

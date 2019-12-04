@@ -1,4 +1,4 @@
-import { observable, action /*configure*/ } from "mobx"
+import { observable, action, toJS /*configure*/ } from "mobx"
 import superagent from 'superagent';
 import {Localizer as l} from "../tools/Utils";
 
@@ -20,6 +20,8 @@ class RestStore {
 
     @action
     searchKoulutuksetPromise = (keyword, paging, filter) => {
+        console.log('rest-store/searchKoulutuksetProimise');
+        console.log(toJS(filter.opetusKielet));
         return (superagent
             .get(this.urlStore.urls.url('konfo-backend.search.koulutukset'))
             .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
@@ -28,7 +30,8 @@ class RestStore {
                 size: paging.pageSize,
                 paikkakunta: filter.paikkakunta,
                 koulutustyyppi: filter.koulutus.join(','),
-                opetuskieli: filter.kieli.map((k) => k).join(','),
+                // opetuskieli: filter.kieli.map((k) => k).join(','),
+                opetuskieli: filter.opetusKielet.map((k) => k).join(','),
                 lng: l.getLanguage()})
             .catch(this.handleError))
     };
@@ -44,6 +47,7 @@ class RestStore {
                 paikkakunta: filter.paikkakunta,
                 koulutustyyppi: filter.koulutus.join(','),
                 //kieli: filter.kieli.map((k) => k).join(','),
+                opetuskieli: filter.opetusKielet.map((k) => k).join(','),
                 lng: l.getLanguage()})
             .catch(this.handleError))
     };

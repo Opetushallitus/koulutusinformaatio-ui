@@ -17,6 +17,7 @@ class Hakupalkki extends Component {
     }
 
     handleChange(event) {
+        console.log(event.target.value);
         if(event.target.value) {
             this.props.hakuehtoStore.keyword = event.target.value
         } else {
