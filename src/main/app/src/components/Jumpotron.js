@@ -25,12 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   jumpotron: {
     backgroundColor: colors.green,
-    marginTop: '145px',
-    marginBottom: '65px',
-    paddingTop: '48px',
-    paddingLeft: '68px',
-    paddingRight: '68px',
-    paddingBottom: '48px',
+    marginTop: '85px',
   },
   title: {
     color: colors.white,
@@ -67,20 +62,24 @@ const Jumpotron = () => {
           <Grid item xs={12} sm={12} md={10} lg={8}>
             <ReactiveBorder>
               <Card className={classes.jumpotron}>
-                <CardHeader
-                  disableTypography={true}
-                  title={
-                    <h1 className={classes.title}>{t('jumpotron.otsikko')}</h1>
-                  }
-                  subheader={
-                    <p className={classes.subheader}>
-                      {t('jumpotron.esittely')}
-                    </p>
-                  }
-                />
-                <CardContent className={classes.content}>
-                  <Hakupalkki />
-                </CardContent>
+                <ReactiveBorder>
+                  <CardHeader
+                    disableTypography={true}
+                    title={
+                      <h1 className={classes.title}>
+                        {t('jumpotron.otsikko')}
+                      </h1>
+                    }
+                    subheader={
+                      <p className={classes.subheader}>
+                        {t('jumpotron.esittely')}
+                      </p>
+                    }
+                  />
+                  <CardContent className={classes.content}>
+                    <Hakupalkki />
+                  </CardContent>
+                </ReactiveBorder>
               </Card>
             </ReactiveBorder>
           </Grid>

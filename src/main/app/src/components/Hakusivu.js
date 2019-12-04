@@ -7,6 +7,7 @@ import Oppilaitos from './oppilaitos/Oppilaitos';
 import Toteutus from './toteutus/Koulutus';
 import Vertailu from './vertailu/Vertailu';
 import Hakukohde from './hakukohde/Koulutus';
+import ReactiveBorder from './ReactiveBorder';
 import { Route } from 'react-router-dom';
 import '../assets/styles/components/_hakusivu.scss';
 
@@ -40,11 +41,9 @@ class Hakusivu extends Component {
     return (
       <React.Fragment>
         <div id="call-to-action-secondary">
-          <div className="col-12">
-            <div className="header-search header-search--secondary">
-              <Hakupalkki isRajainVisible={this.moveMainContent} />
-            </div>
-          </div>
+          <ReactiveBorder>
+            <Hakupalkki isRajainVisible={this.moveMainContent} />
+          </ReactiveBorder>
         </div>
         <main
           id="main-content"

@@ -20,6 +20,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import { colors } from '../colors';
 import { observer } from 'mobx-react-lite';
 import _ from 'lodash';
+import ReactiveBorder from './ReactiveBorder';
 
 const useStyles = makeStyles({
   paper: {
@@ -40,12 +41,6 @@ const useStyles = makeStyles({
     minHeight: '60px',
     minWidth: '60px',
     borderRadius: 0,
-  },
-  component: {
-    paddingLeft: '60px',
-    paddingRight: '60px',
-    paddingTop: '95px',
-    paddingBottom: '95px',
   },
   card: {
     display: 'flex',
@@ -114,7 +109,7 @@ const Sisaltohaku = (props) => {
   const keywords = asKeywords(hakusana);
 
   return (
-    <div className={classes.component}>
+    <ReactiveBorder>
       <Grid
         container
         direction="row"
@@ -186,10 +181,7 @@ const Sisaltohaku = (props) => {
                     forwardToPage(id);
                   }}
                 >
-                  <CardHeader
-                    className={classes.title}
-                    title={s.name}
-                  ></CardHeader>
+                  <CardHeader className={classes.title} title={s.name} />
                   <CardContent className={classes.content}>
                     <Preview
                       parts={parts}
@@ -204,7 +196,7 @@ const Sisaltohaku = (props) => {
           })
         )}
       </Grid>
-    </div>
+    </ReactiveBorder>
   );
 };
 
