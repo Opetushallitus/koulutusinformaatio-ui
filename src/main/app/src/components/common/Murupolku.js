@@ -55,11 +55,12 @@ const Murupolku = ({ path, history }) => {
   const forwardToPage = (path) => {
     history.push(path);
   };
-  const shownPath = matches
-    ? path.length === 0
-      ? []
-      : [{ name: '...' }, path[path.length - 1]]
-    : path;
+  const shownPath =
+    matches && path.length !== 1
+      ? path.length === 0
+        ? []
+        : [{ name: '...' }, path[path.length - 1]]
+      : path;
 
   return (
     <ul className={clsx(classes.breadcrump)}>
