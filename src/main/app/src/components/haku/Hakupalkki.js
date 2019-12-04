@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import { useStores } from '../../hooks';
 import { colors } from '../../colors';
 import { theme } from '../../theme';
+import { observer } from 'mobx-react-lite';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Hakupalkki = ({ history }) => {
+const Hakupalkki = observer(({ history }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { hakuehtoStore } = useStores();
@@ -91,6 +92,6 @@ const Hakupalkki = ({ history }) => {
       </Paper>
     </ThemeProvider>
   );
-};
+});
 
 export default withRouter(Hakupalkki);
