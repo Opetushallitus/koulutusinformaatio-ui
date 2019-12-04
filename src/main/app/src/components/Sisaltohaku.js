@@ -23,6 +23,9 @@ import _ from 'lodash';
 import ReactiveBorder from './ReactiveBorder';
 
 const useStyles = makeStyles({
+  sisaltohaku: {
+    marginTop: '40px',
+  },
   paper: {
     height: '60px',
     display: 'flex',
@@ -115,6 +118,7 @@ const Sisaltohaku = (props) => {
         direction="row"
         justify="center"
         spacing={2}
+        className={classes.sisaltohaku}
         alignItems="center"
       >
         <Grid item xs={12}>
