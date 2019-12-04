@@ -71,3 +71,13 @@ Linttaukset voi ajaa komennola
 tai automaattisen fiksauksen kanssa
 `npm run lint:fix`
 Linttaukset ajetaan automaattisesti, kun koodia koitetaan committaa.
+
+## Cypress testit
+
+Testit löytyy hakemistosta `src/main/app/cypress/inegration`.
+Testeja on ajettava silloin kun projektti pyörii lokaalisti, testiajon tuloksena syntyy seuraavat alikansiot: `screenshot`,`videos` ja `cypress`-kansion juureen generoituu xml-testiraportti muotoa `results-7596f9033e99bf9fa0ddcbdc7fc969d9.xml`,
+
+Testit voi ajaa komennolla
+
+`npm run cypress`
+
