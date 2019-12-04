@@ -1,5 +1,4 @@
 import React from 'react';
-import Paragraph from './Paragraph';
 import { Accordion, Summary } from './Accordion';
 import Markdown from 'markdown-to-jsx';
 import Link from '@material-ui/core/Link';
@@ -142,7 +141,12 @@ const Sisalto = ({
             },
           },
           p: {
-            component: Paragraph,
+            component: Typography,
+            props: {
+              variant: 'body1',
+              component: 'p',
+              paragraph: true,
+            },
           },
           a: {
             component: excludeMedia ? Null : LinkOrYoutube,
