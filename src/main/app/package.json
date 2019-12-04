@@ -54,10 +54,12 @@
     "start-and-test": "start-test start-for-test $PORT run-test",
     "run-test": "react-app-rewired test --env=jsdom",
     "lint": "eslint src/",
-    "lint:fix": "eslint src/ --fix"
+    "lint:fix": "eslint src/ --fix",
+    "cypress": "cypress run"
   },
   "devDependencies": {
     "customize-cra": "0.9.1",
+    "cypress": "^3.7.0",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-prettier": "^3.1.1",
     "husky": "^3.1.0",

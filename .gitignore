@@ -5,6 +5,11 @@ node_modules/
 
 # testing
 coverage
+src/main/app/cypress/screenshots/
+src/main/app/cypress/videos/
+src/main/app/node_modules/
+src/main/app/cypress/results-*.xml
+
 
 # production
 build/
