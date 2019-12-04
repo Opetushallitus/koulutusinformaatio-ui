@@ -16,10 +16,6 @@ import ReactiveBorder from './ReactiveBorder';
 import { useStores } from '../hooks';
 
 const useStyles = makeStyles({
-  content: {
-    marginLeft: '90px',
-    marginRight: '90px',
-  },
   info: {
     backgroundColor: colors.veryLightGreyBackground,
     borderRadius: 2,

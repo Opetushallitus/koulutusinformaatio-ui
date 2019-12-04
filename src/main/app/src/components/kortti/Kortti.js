@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { observer, inject } from 'mobx-react';
-import { Grid, Link } from '@material-ui/core';
+import { observer } from 'mobx-react';
+import { Grid, Link, makeStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import { withStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import { colors } from '../../colors';
 import Icon from '@material-ui/core/Icon';
+import { useStores } from '../../hooks';
 
-const korttiStyles = (theme) => ({
+const useStyles = makeStyles({
   card: {
-    width: '100%',
+    height: '100%',
   },
   media: {
     height: 0,
@@ -21,6 +21,8 @@ const korttiStyles = (theme) => ({
   link: {
     color: colors.white,
     display: 'block',
+    fontSize: '16px',
+    lineHeight: '35px',
   },
   linkElement: {
     color: colors.white,
@@ -29,6 +31,12 @@ const korttiStyles = (theme) => ({
   },
   otsikko: {
     color: colors.white,
+    fontFamily: 'Open Sans',
+    fontSize: '24px',
+    fontWeight: 'bold',
+    lineHeight: '28px',
+    paddingTop: '10px',
+    paddingBottom: '15px',
   },
   haku: {
     background: colors.blue,
@@ -41,56 +49,48 @@ const korttiStyles = (theme) => ({
   },
 });
 
-@inject('contentfulStore')
-@observer
-class Kortti extends Component {
-  render() {
-    const { id, classes, contentfulStore } = this.props;
-    const { asset, sivu } = contentfulStore.data;
-    const { forwardTo } = contentfulStore;
-    const kortti = contentfulStore.data.kortti[id];
+const Kortti = observer(({ id }) => {
+  const classes = useStyles();
+  const { contentfulStore } = useStores();
+  const { asset, sivu } = contentfulStore.data;
+  const { forwardTo } = contentfulStore;
+  const kortti = contentfulStore.data.kortti[id];
 
-    const linkit = kortti.linkit || [];
-    const imgUrl = (uutinen) => {
-      const assetForEntry = (entry) => {
-        const image = entry.image || {};
-        return image ? asset[image.id] : null;
-      };
-      const a = assetForEntry(uutinen);
-      return a ? contentfulStore.assetUrl(a.url) : null;
+  const linkit = kortti.linkit || [];
+  const imgUrl = (uutinen) => {
+    const assetForEntry = (entry) => {
+      const image = entry.image || {};
+      return image ? asset[image.id] : null;
     };
+    const a = assetForEntry(uutinen);
+    return a ? contentfulStore.assetUrl(a.url) : null;
+  };
 
-    return (
-      <Grid item xs={12} sm={6} md={4}>
-        <Card className={clsx(classes.card, classes[kortti.color])}>
-          <CardMedia
-            className={classes.media}
-            image={imgUrl(kortti)}
-            title="TODO"
-          />
-          <CardContent>
-            <h2 className={classes.otsikko}>{kortti.name}</h2>
-            {linkit.map((l) => {
-              const page = sivu[l.id];
-              return page ? (
-                <div className={classes.link} key={page.id}>
-                  <Icon>chevron_right</Icon>
-                  <Link
-                    className={classes.linkElement}
-                    href={forwardTo(page.id)}
-                  >
-                    {page.name}
-                  </Link>
-                </div>
-              ) : null;
-            })}
-          </CardContent>
-        </Card>
-      </Grid>
-    );
-  }
-}
+  return (
+    <Grid item xs={12} sm={6} md={4}>
+      <Card className={clsx(classes.card, classes[kortti.color])}>
+        <CardMedia
+          className={classes.media}
+          image={imgUrl(kortti)}
+          title="TODO"
+        />
+        <CardContent>
+          <h2 className={classes.otsikko}>{kortti.name}</h2>
+          {linkit.map((l) => {
+            const page = sivu[l.id];
+            return page ? (
+              <div className={classes.link} key={page.id}>
+                <Icon>chevron_right</Icon>
+                <Link className={classes.linkElement} href={forwardTo(page.id)}>
+                  {page.name}
+                </Link>
+              </div>
+            ) : null;
+          })}
+        </CardContent>
+      </Card>
+    </Grid>
+  );
+});
 
-export default withRouter(
-  withStyles(korttiStyles, { withTheme: true })(Kortti)
-);
+export default withRouter(Kortti);
