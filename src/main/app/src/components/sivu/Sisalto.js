@@ -1,13 +1,11 @@
 import React from 'react';
-import Heading from './Heading';
-import Paragraph from './Paragraph';
 import { Accordion, Summary } from './Accordion';
 import Markdown from 'markdown-to-jsx';
 import Link from '@material-ui/core/Link';
 import Youtube from './Youtube';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { colors } from '../../colors';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -115,31 +113,40 @@ const Sisalto = ({
             component: excludeMedia ? Null : ImageComponent,
           },
           h1: {
-            component: Heading,
+            component: Typography,
             props: {
-              level: 1,
+              variant: 'h1',
+              gutterBottom: true,
             },
           },
           h2: {
-            component: Heading,
+            component: Typography,
             props: {
-              level: 2,
+              variant: 'h2',
+              gutterBottom: true,
             },
           },
           h3: {
-            component: Heading,
+            component: Typography,
             props: {
-              level: 3,
+              variant: 'h3',
+              gutterBottom: true,
             },
           },
           h4: {
-            component: Heading,
+            component: Typography,
             props: {
-              level: 4,
+              variant: 'h4',
+              gutterBottom: true,
             },
           },
           p: {
-            component: Paragraph,
+            component: Typography,
+            props: {
+              variant: 'body1',
+              component: 'p',
+              paragraph: true,
+            },
           },
           a: {
             component: excludeMedia ? Null : LinkOrYoutube,
