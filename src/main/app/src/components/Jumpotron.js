@@ -77,7 +77,7 @@ const Jumpotron = () => {
                       {t('jumpotron.esittely')}
                     </p>
                   }
-                ></CardHeader>
+                />
                 <CardContent className={classes.content}>
                   <Hakupalkki />
                 </CardContent>
