@@ -101,7 +101,7 @@ const Sivu = observer((props) => {
               item
               xs={12}
               sm={12}
-              md={tableOfContents ? (hasSideContent ? 12 : 10) : 8}
+              md={tableOfContents ? (hasSideContent ? 12 : 10) : 6}
             >
               <Murupolku path={murupolkuPath()} />
               <h1 className={classes.header1}>{name}</h1>
@@ -118,7 +118,7 @@ const Sivu = observer((props) => {
               item
               xs={12}
               sm={12}
-              md={tableOfContents ? (hasSideContent ? 9 : 7) : 8}
+              md={tableOfContents ? (hasSideContent ? 9 : 7) : 6}
             >
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={hasSideContent ? 8 : 12}>
