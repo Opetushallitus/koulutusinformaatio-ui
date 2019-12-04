@@ -47,7 +47,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Etusivu = observer((props) => {
+const Etusivu = observer(({ history }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { contentfulStore } = useStores();
@@ -55,7 +55,7 @@ const Etusivu = observer((props) => {
 
   const { forwardTo } = contentfulStore;
   const forwardToPage = (id) => {
-    this.props.history.push(forwardTo(id));
+    history.push(forwardTo(id));
   };
   const infos = Object.values(info);
 

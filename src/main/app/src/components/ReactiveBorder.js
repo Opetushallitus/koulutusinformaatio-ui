@@ -4,6 +4,8 @@ import { theme } from '../theme';
 
 const useStyles = makeStyles((theme) => ({
   spaceOnBorders: {
+    paddingTop: 25,
+    paddingBottom: 25,
     paddingLeft: 10,
     paddingRight: 10,
     [theme.breakpoints.up('sm')]: {

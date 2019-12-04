@@ -65,7 +65,6 @@ const Kortti = observer(({ id }) => {
     const a = assetForEntry(uutinen);
     return a ? contentfulStore.assetUrl(a.url) : null;
   };
-
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Card className={clsx(classes.card, classes[kortti.color])}>
@@ -81,7 +80,10 @@ const Kortti = observer(({ id }) => {
             return page ? (
               <div className={classes.link} key={page.id}>
                 <Icon>chevron_right</Icon>
-                <Link className={classes.linkElement} href={forwardTo(page.id)}>
+                <Link
+                  className={classes.linkElement}
+                  href={`/konfo${forwardTo(page.id)}`}
+                >
                   {page.name}
                 </Link>
               </div>
