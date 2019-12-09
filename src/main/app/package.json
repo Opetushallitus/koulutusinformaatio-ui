@@ -28,8 +28,8 @@
     "react-i18next": "^11.2.1",
     "react-media": "^1.8.0",
     "react-render-html": "0.6.0",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.1",
+    "react-router-dom": "^5.1.2",
+    "react-router-hash-link": "^1.2.2",
     "react-select": "^3.0.8",
     "superagent": "^3.8.3",
     "url-parse": "^1.4.7"
@@ -40,6 +40,12 @@
     "testport": "3482",
     "testbackendport": "4483"
   },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "plugin:prettier/recommended"
+    ]
+  },
   "scripts": {
     "build": "react-app-rewired build",
     "test": "./scripts/test.sh $PORT $BACKEND_PORT",
@@ -47,23 +53,51 @@
     "start": "./scripts/start.sh $PORT $BACKEND_PORT",
     "start-for-test": "BROWSER=none NODE_ENV=test react-app-rewired start",
     "start-and-test": "start-test start-for-test $PORT run-test",
-    "run-test": "react-app-rewired test --env=jsdom"
+    "run-test": "react-app-rewired test --env=jsdom",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix"
   },
   "devDependencies": {
-    "babel-plugin-emotion": "^9.2.11",
-    "node-sass": "^4.9.3",
-    "preact": "^8.3.1",
-    "preact-compat": "^3.18.4",
+    "customize-cra": "0.9.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "husky": "^3.1.0",
+    "lint-staged": "^9.5.0",
+    "node-sass": "^4.13.0",
+    "prettier": "^1.19.1",
     "puppeteer": "^1.7.0",
-    "react-app-rewire-css-modules": "github:codebandits/react-app-rewire-css-modules",
-    "react-app-rewire-mobx": "^1.0.8",
-    "react-app-rewired": "^1.5.2",
+    "react-app-rewired": "2.1.5",
+    "react-scripts": "3.2.0",
     "sass-loader": "^7.1.0",
     "start-server-and-test": "^1.7.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,json}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ]
   },
   "jest": {
     "testPathIgnorePatterns": [
       "<rootDir>/src/__tests__/mocks"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
     ]
   }
 }

@@ -1,71 +1,97 @@
-import React, { Component } from 'react';
-import Hakurajain from './Hakurajain';
-import {observer, inject} from 'mobx-react';
-import { Link, withRouter } from 'react-router-dom';
-import {withTranslation} from 'react-i18next';
-import Media from 'react-media';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 import '../../assets/styles/components/_hakupalkki.scss';
+import { useTranslation } from 'react-i18next';
+import { Paper, makeStyles, ThemeProvider } from '@material-ui/core';
+import InputBase from '@material-ui/core/InputBase';
+import Button from '@material-ui/core/Button';
+import { useStores } from '../../hooks';
+import { colors } from '../../colors';
+import { theme } from '../../theme';
+import { observer } from 'mobx-react-lite';
 
-@inject ("hakuehtoStore")
-@observer
-class Hakupalkki extends Component {
+const useStyles = makeStyles((theme) => ({
+  input: {
+    borderRadius: 0,
+    marginLeft: theme.spacing(3),
+    flex: 1,
+    color: colors.grey,
+    fontFamily: 'Open Sans',
+    fontSize: '16px',
+    fontWeight: '600',
+    lineHeight: '27px',
+  },
+  iconButton: {
+    color: colors.white,
+    borderRadius: '2px',
+    height: '40px',
+    width: '114px',
+    fontFamily: 'Open Sans',
+    fontSize: '16px',
+    fontWeight: '600',
+    lineHeight: '16px',
+    textAlign: 'center',
+    marginRight: '20px',
+  },
+  inputRoot: {
+    height: '73px',
+    display: 'flex',
+    alignItems: 'center',
+    boxSizing: 'border-box',
+    border: '1px solid #B2B2B2',
+    borderRadius: '2px',
+  },
+}));
 
-    constructor(props){
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+const Hakupalkki = observer(({ history }) => {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const { hakuehtoStore } = useStores();
+  const doSearch = (event) => {
+    event.preventDefault();
+    history.push(hakuehtoStore.createHakuUrl);
+  };
+  const setSearch = (event) => {
+    if (event.target.value) {
+      hakuehtoStore.keyword = event.target.value;
+    } else {
+      hakuehtoStore.keyword = '';
     }
+  };
+  return (
+    <ThemeProvider theme={theme}>
+      <Paper
+        component="form"
+        onSubmit={doSearch}
+        className={classes.inputRoot}
+        elevation={4}
+      >
+        <InputBase
+          className={classes.input}
+          onKeyPress={(event) =>
+            event.key === 'Enter' &&
+            hakuehtoStore.keyword.length > 2 &&
+            doSearch(event)
+          }
+          onChange={setSearch}
+          type="search"
+          placeholder={t('haku.kehoite')}
+          inputProps={{
+            'aria-label': t('haku.kehoite'),
+          }}
+        />
+        <Button
+          type="submit"
+          variant="contained"
+          color="secondary"
+          className={classes.iconButton}
+          aria-label={t('haku.etsi')}
+        >
+          {t('haku.etsi')}
+        </Button>
+      </Paper>
+    </ThemeProvider>
+  );
+});
 
-    handleChange(event) {
-        console.log(event.target.value);
-        if(event.target.value) {
-            this.props.hakuehtoStore.keyword = event.target.value
-        } else {
-            this.props.hakuehtoStore.keyword = ''
-        }
-    }
-
-    handleSubmit(event) {
-        this.handleChange(event);
-        event.preventDefault();
-        this.props.hakuehtoStore.closeRajain();
-        this.props.history.push(this.props.hakuehtoStore.createHakuUrl);
-    }
-
-    closeRajain() {
-        this.props.hakuehtoStore.closeRajain();
-    }
-
-    render() {
-        const {t} = this.props;
-        const link = '/haku/' + this.props.hakuehtoStore.keyword;
-        const search = this.props.hakuehtoStore.searchParams;
-        //const value = this.props.hakuehtoStore.keyword ? this.props.hakuehtoStore.keyword : '';
-        return (
-            <React.Fragment>
-                <div className="hakupalkki-search">
-                    <div className="search-wrapper">
-                        <input id="regular-input" className="search-wrapper-input search-wrapper-item" aia-label={t('haku.kehoite')} type="search"
-                               placeholder={t('haku.kehoite')}
-                            //value={value}
-                               onChange={this.handleChange}
-                               onKeyPress={(e) => { if(e.key === 'Enter' && this.props.hakuehtoStore.keyword.length > 2){ this.handleSubmit(e)}}}/>
-                        <Hakurajain shareVisibility={this.props.isRajainVisible}/>
-                        <Link role="button" aria-label={t('haku.etsi')} to={{
-                            pathname: this.props.hakuehtoStore.keyword.length > 2 ? link : undefined,
-                            search: search
-                        }} className="search-button search-wrapper-item" onClick={() => {this.closeRajain()}}>
-                            <Media query="(max-width: 768px)">
-                                {
-                                    matches => matches ? ("") : (t('haku.etsi'))
-                                }
-                            </Media>
-                        </Link>
-                    </div>
-                </div>
-            </React.Fragment>
-        );
-    }
-}
-
-export default withTranslation()(withRouter(Hakupalkki));
+export default withRouter(Hakupalkki);

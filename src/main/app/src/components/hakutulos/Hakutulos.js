@@ -6,34 +6,34 @@ import { HomeOutlined } from '@material-ui/icons';
 import { Grid, Paper, Typography } from '@material-ui/core';
 import { Localizer as l } from '../../tools/Utils';
 // import HakutulosToggleWrapper from './HakutulosToggleWrapper';
-import HakutulosToggleWrapper from './HakutulosToggle'
+import HakutulosToggle from './HakutulosToggle';
 // import HakutulosSummary from './HakutulosSummary';
 import OpetusKieliSuodatin from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
-import HakutulosBox from '../common/HakutulosBox';
+// import HakutulosBox from '../common/HakutulosBox';
 // import HakutulosBox from './HakutulosBox';
 import KoulutusKortti from './hakutulosKortit/KoulutusKortti';
 import OppilaitosKortti from './hakutulosKortit/OppilaitosKortti';
-import VertailuBox from './VertailuBox';
+// import VertailuBox from './VertailuBox';
 import '../../assets/styles/components/_hakutulos.scss';
 import { styles } from '../../styles';
 import { withTranslation } from 'react-i18next';
 import { toJS } from 'mobx';
 import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
 
-@inject('hakuStore', 'vertailuStore')
+@inject('hakuStore')
 @observer
 class Hakutulos extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      toggleKoulutus: undefined
+      toggleKoulutus: undefined,
     };
   }
 
   updateState() {
     this.setState({
-      toggleKoulutus: true
+      toggleKoulutus: true,
     });
   }
 
@@ -53,8 +53,8 @@ class Hakutulos extends Component {
   getKoulutusAiheet(koulutus) {
     if (koulutus.aiheet && 0 < koulutus.aiheet.length) {
       return koulutus.aiheet
-        .map(a => l.localize(a, null))
-        .filter(a => a != null)
+        .map((a) => l.localize(a, null))
+        .filter((a) => a != null)
         .join(', ');
     }
     return '';
@@ -77,11 +77,11 @@ class Hakutulos extends Component {
   }
 
   renderResultList() {
-    const vertailuActive = this.props.vertailuStore.size < 3;
+    // const vertailuActive = this.props.vertailuStore.size < 3;
     const koulutusResult = toJS(this.props.hakuStore.koulutusResult);
     const oppilaitosResult = toJS(this.props.hakuStore.oppilaitosResult);
     if (this.props.hakuStore.toggleKoulutus) {
-      return koulutusResult.map(r => {
+      return koulutusResult.map((r) => {
         const link =
           '/koulutus/' +
           r.oid +
@@ -107,7 +107,7 @@ class Hakutulos extends Component {
         );
       });
     } else {
-      return this.props.hakuStore.oppilaitosResult.map(r => {
+      return oppilaitosResult.map((r) => {
         const link =
           '/oppilaitos/' +
           r.oid +
@@ -128,7 +128,6 @@ class Hakutulos extends Component {
             text2={r.postitoimipaikka ? r.postitoimipaikka : ''}
             // vertailu={false}
             oppilaitos={toJS(r)}
-
           />
         );
       });
@@ -143,7 +142,9 @@ class Hakutulos extends Component {
           <div className="container">
             <div className="row result-count">
               <div className="col-12">
-                <h1 aria-live="assertive">{t('haku.lisää-hakusana-tai-rajain')}</h1>
+                <h1 aria-live="assertive">
+                  {t('haku.lisää-hakusana-tai-rajain')}
+                </h1>
               </div>
             </div>
           </div>
@@ -153,10 +154,19 @@ class Hakutulos extends Component {
 
     return (
       <React.Fragment>
-        <VertailuBox />
+        {/* <VertailuBox /> */}
         <Grid className={classes.hakutulosSisalto} container spacing={3}>
-          <Paper className={classes.hakuTulosSisaltoPaperi} id="hakutulos-content">
-            <Grid container item xs={12} alignItems="center" className={classes.hakuTulosNavText}>
+          <Paper
+            className={classes.hakuTulosSisaltoPaperi}
+            id="hakutulos-content"
+          >
+            <Grid
+              container
+              item
+              xs={12}
+              alignItems="center"
+              className={classes.hakuTulosNavText}
+            >
               <Grid>
                 <HomeOutlined />
               </Grid>
@@ -172,19 +182,23 @@ class Hakutulos extends Component {
             {/* <Grid item xs={12}>
               <HakutulosSummary iDidUpdate={this.props.iUpdatedMyChildren} />
             </Grid> */}
-            <Grid container alignItems="center" className={classes.hakutulosToggleBarMargins}>
+            <Grid
+              container
+              alignItems="center"
+              className={classes.hakutulosToggleBarMargins}
+            >
               <Grid item xs={3}>
                 <Typography variant="h5">{t('haku.rajaa-tuloksia')}</Typography>
               </Grid>
               <Grid id="toggle-tabs" item xs={7}>
-                <HakutulosToggleWrapper />
+                <HakutulosToggle key="hakutolusToggle" />
               </Grid>
               <Grid item xs={2}>
                 <Typography align="right">Järjestä: Nimi A-Ö</Typography>
               </Grid>
             </Grid>
             <Grid item container xs={12}>
-              <Grid item xs={3} className={classes.hakutulosFilters}>
+              <Grid item xs={3} className={classes.hakutulosFiltersGrid}>
                 <KoulutusTyyppiSuodatin />
                 <OpetusKieliSuodatin />
                 <SijaintiSuodatin />

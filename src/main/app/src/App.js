@@ -8,20 +8,20 @@ import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import Hakusivu from './components/Hakusivu';
 import Etusivu from './components/Etusivu';
-import PalautePopup from "./components/palaute/PalautePopup";
-import SideMenu from "./components/common/SideMenu";
-import Sisaltohaku from "./components/Sisaltohaku";
+import PalautePopup from './components/palaute/PalautePopup';
+import SideMenu from './components/common/SideMenu';
+import Sisaltohaku from './components/Sisaltohaku';
 import i18n from './tools/i18n';
 import { I18nextProvider } from 'react-i18next';
 import { withStyles } from '@material-ui/core';
 import { styles } from './styles';
-import Hidden from "@material-ui/core/Hidden";
-import Palvelut from "./components/palvelu/Palvelut";
+import Palvelut from './components/palvelu/Palvelut';
+import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 
 const konfoStore = new KonfoStore();
 
-const App = props => {
-  const {classes} = props;
+const App = (props) => {
+  const { classes } = props;
   const hakuStore = konfoStore.hakuStore;
   const hakuehtoStore = konfoStore.hakuehtoStore;
   const urlStore = konfoStore.urlStore;
@@ -30,6 +30,7 @@ const App = props => {
   const vertailuStore = konfoStore.vertailuStore;
   const contentfulStore = konfoStore.contentfulStore;
   contentfulStore.fetchData();
+  const matches = useMediaQuery('(max-width: 600px)');
 
   const [menuVisible, setMenuVisible] = useState(false);
   const toggleMenu = () => {
@@ -39,14 +40,14 @@ const App = props => {
     setMenuVisible(false);
   };
   const main = (
-      <React.Fragment>
+    <React.Fragment>
       <Switch>
-          <Route exact path="/" component={Etusivu} />
-          <Route path="/sisaltohaku/" component={Sisaltohaku} />
-          <Route path="/" component={Hakusivu} />
-        </Switch>
-        <Palvelut/>
-        <Footer changeLanguage={this.changeLanguage} />
+        <Route exact path="/" component={Etusivu} />
+        <Route path="/sisaltohaku/" component={Sisaltohaku} />
+        <Route path="/" component={Hakusivu} />
+      </Switch>
+      <Palvelut />
+      <Footer />
     </React.Fragment>
   );
 
@@ -62,30 +63,24 @@ const App = props => {
     >
       <I18nextProvider i18n={i18n} initialLanguage={'fi'}>
         <React.Fragment>
-            <Hidden smUp implementation="css">
-              <div className={classes.root}>
-                <Header toggleMenu={toggleMenu} isOpen={menuVisible} />
-              <SideMenu small={true} menuVisible={menuVisible} closeMenu={closeMenu} />
-              <main id="app-main-content"
-                    className={clsx(classes.smContent, {
-                      [classes.smContentShift]: menuVisible,
-                    })}>
-                {main}
-              </main>
-              </div>
-            </Hidden>
-            <Hidden xsDown implementation="css">
-              <div className={classes.root}>
-                <Header toggleMenu={toggleMenu} isOpen={menuVisible} />
-              <SideMenu small={false} menuVisible={menuVisible} closeMenu={closeMenu} />
-              <main id="app-main-content"
-                    className={clsx(classes.content, {
-                      [classes.contentShift]: menuVisible,
-                    })}>
-                {main}
-              </main>
-              </div>
-            </Hidden>
+          <div className={classes.root}>
+            <Header toggleMenu={toggleMenu} isOpen={menuVisible} />
+            <SideMenu
+              small={matches}
+              menuVisible={menuVisible}
+              closeMenu={closeMenu}
+            />
+            <main
+              id="app-main-content"
+              className={clsx(matches ? classes.smContent : classes.content, {
+                [matches
+                  ? classes.smContentShift
+                  : classes.contentShift]: menuVisible,
+              })}
+            >
+              {main}
+            </main>
+          </div>
           <PalautePopup />
         </React.Fragment>
       </I18nextProvider>

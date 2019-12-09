@@ -1,11 +1,11 @@
 import { createStyles } from '@material-ui/core/styles';
 import { sideMenuStyles } from './sideMenuStyles';
 
-export const styles = theme =>
+export const styles = (theme) =>
   createStyles({
     ...sideMenuStyles(theme),
     root: {
-      display: 'flex'
+      display: 'flex',
     },
     // ******************************************************************
     // General
@@ -15,73 +15,73 @@ export const styles = theme =>
     // Hakutulos
     // ******************************************************************
     hakutulosToggleBarMargins: {
-      margin: theme.spacing(3, 0, 1, 0)
+      margin: theme.spacing(3, 0, 1, 0),
     },
     hakutulosSisalto: {
       maxWidth: 1600,
-      margin: 'auto'
+      margin: 'auto',
     },
     hakuTulosTabIconMargin: {
       marginBottom: '0 !important',
-      marginRight: theme.spacing(2)
+      marginRight: theme.spacing(2),
     },
     hakuTulosSisaltoPaperi: {
       width: '100%',
       padding: theme.spacing(1, 11),
-      boxShadow: 'none'
+      boxShadow: 'none',
     },
     hakuTulosNavText: {
-      margin: theme.spacing(5, 0, 7, 0)
+      margin: theme.spacing(5, 0, 7, 0),
     },
     customWrapper: {
       flexDirection: 'row',
       textTransform: 'capitalize',
-      textAlign: 'left'
+      textAlign: 'left',
     },
     customLabelIcon: {
       minHeight: '50px',
       paddingLeft: 0,
-      paddingRight: theme.spacing(4)
+      paddingRight: theme.spacing(4),
     },
     customIconRoot: {
-      marginBottom: 0
+      marginBottom: 0,
     },
-    hakutulosFilters: {
-      padding: theme.spacing(2, 4, 2, 0)
+    hakutulosFiltersGrid: {
+      padding: theme.spacing(2, 4, 2, 0),
     },
     hakutulosContent: {
       paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2)
+      paddingBottom: theme.spacing(2),
     },
     listItemCheckbox: {
-      padding: '0 9px 0 9px'
+      padding: '0 9px 0 9px',
     },
     hakuTulosListItemText: {
       fontSize: 14,
-      color: '#4C4C4C'
+      color: '#4C4C4C',
     },
     eduTypeInnerListPadding: {
-      paddingLeft: theme.spacing(2.2)
+      paddingLeft: theme.spacing(2.2),
     },
     hakutulosKortti: {
       width: '100%',
       padding: theme.spacing(3),
       marginBottom: theme.spacing(1.5),
-      boxShadow: '0 0 8px 0 rgba(0,0,0,0.2)'
+      boxShadow: '0 0 8px 0 rgba(0,0,0,0.2)',
     },
     koulutusKorttiImgBtn: {
       width: 200,
-      height: 200
+      height: 200,
     },
     koulutusKorttiLeftMargin: {
-      marginLeft: '0.5em'
+      marginLeft: '0.5em',
     },
     koulutusKorttiImg: {
       margin: 'auto',
       display: 'block',
       maxWidth: '100%',
-      maxHeight: '100%'
-    }
+      maxHeight: '100%',
+    },
 
     // ******************************************************************
     // AppBar

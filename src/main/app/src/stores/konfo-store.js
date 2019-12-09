@@ -7,15 +7,18 @@ import VertailuStore from './vertailu-store';
 import ContentfulStore from './contentful-store';
 
 class KonfoStore {
-    constructor() {
-        this.urlStore = new UrlStore();
-        this.restStore = new RestStore(this.urlStore);
-        this.hakuStore = new HakuStore(this.restStore);
-        this.hakuehtoStore = new HakuehtoStore();
-        this.contentfulStore = new ContentfulStore('sv', this.urlStore);
-        this.navigaatioStore = new NavigaatioStore(this.hakuStore, this.hakuehtoStore);
-        this.vertailuStore = new VertailuStore(this.hakuStore, this.restStore);
-    }
+  constructor() {
+    this.urlStore = new UrlStore();
+    this.restStore = new RestStore(this.urlStore);
+    this.hakuStore = new HakuStore(this.restStore);
+    this.hakuehtoStore = new HakuehtoStore();
+    this.contentfulStore = new ContentfulStore('sv', this.urlStore);
+    this.navigaatioStore = new NavigaatioStore(
+      this.hakuStore,
+      this.hakuehtoStore
+    );
+    this.vertailuStore = new VertailuStore(this.hakuStore, this.restStore);
+  }
 }
 
 export default KonfoStore;

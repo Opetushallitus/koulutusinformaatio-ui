@@ -7,7 +7,6 @@ import { SchoolOutlined, HomeWorkOutlined } from '@material-ui/icons';
 import qs from 'query-string';
 import '../../assets/styles/components/_hakutulos-toggle.scss';
 import { styles } from '../../styles';
-import { toJS } from 'mobx';
 import { withTranslation } from 'react-i18next';
 
 @inject('hakuStore')
@@ -18,14 +17,14 @@ class HakutulosToggle extends Component {
     this.state = {
       selectedTab: this.props.hakuStore.toggle === 'koulutus' ? 0 : 1,
       koulutusCount: this.props.hakuStore.koulutusCount,
-      oppilaitosCount: this.props.hakuStore.oppilaitosCount
+      oppilaitosCount: this.props.hakuStore.oppilaitosCount,
     };
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({
       koulutusCount: nextProps.hakuStore.koulutusCount,
-      oppilaitosCount: nextProps.hakuStore.oppilaitosCount
+      oppilaitosCount: nextProps.hakuStore.oppilaitosCount,
     });
     this.props = nextProps;
   }
@@ -42,7 +41,7 @@ class HakutulosToggle extends Component {
 
   render() {
     const { t, classes, hakuStore } = this.props;
-    // console.log(`HakutulosToggle - render() - 40 toggle = ${toJS(hakuStore.toggle)}`);
+
     return (
       <Tabs
         value={this.state.selectedTab}
@@ -52,12 +51,18 @@ class HakutulosToggle extends Component {
       >
         <Tab
           icon={<SchoolOutlined className={classes.hakuTulosTabIconMargin} />}
-          classes={{ wrapper: classes.customWrapper, labelIcon: classes.customLabelIcon }}
+          classes={{
+            wrapper: classes.customWrapper,
+            labelIcon: classes.customLabelIcon,
+          }}
           label={`${t('haku.koulutukset')} (${this.state.koulutusCount})`}
         ></Tab>
         <Tab
           icon={<HomeWorkOutlined className={classes.hakuTulosTabIconMargin} />}
-          classes={{ wrapper: classes.customWrapper, labelIcon: classes.customLabelIcon }}
+          classes={{
+            wrapper: classes.customWrapper,
+            labelIcon: classes.customLabelIcon,
+          }}
           label={`${t('haku.oppilaitokset')} (${hakuStore.oppilaitosCount})`}
         ></Tab>
       </Tabs>
@@ -65,6 +70,8 @@ class HakutulosToggle extends Component {
   }
 }
 
-const HakuTulosToggleWithStyles = withTranslation()(withStyles(styles)(HakutulosToggle));
+const HakuTulosToggleWithStyles = withTranslation()(
+  withStyles(styles)(HakutulosToggle)
+);
 
-export default withRouter(HakuTulosToggleWithStyles);
+export default withTranslation()(withRouter(HakuTulosToggleWithStyles));
