@@ -35,6 +35,7 @@ class Hakutulos extends Component {
     this.setState({
       toggleKoulutus: true,
     });
+    window.scroll(0, 0);
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
