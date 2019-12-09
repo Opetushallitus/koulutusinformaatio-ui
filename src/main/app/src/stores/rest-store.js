@@ -20,18 +20,19 @@ class RestStore {
 
     @action
     searchKoulutuksetPromise = (keyword, paging, filter) => {
-        console.log('rest-store/searchKoulutuksetProimise');
-        console.log(toJS(filter.opetusKielet));
+        console.log('%c searchKoulutuksetProimise() (23)', 'color: #c62828; font-weight: bold;');
+        console.log(toJS(filter));
         return (superagent
             .get(this.urlStore.urls.url('konfo-backend.search.koulutukset'))
             .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
             .query({keyword: keyword,
                 page: paging.pageKoulutus,
                 size: paging.pageSize,
-                paikkakunta: filter.paikkakunta,
-                koulutustyyppi: filter.koulutus.join(','),
+                // paikkakunta: filter.paikkakunta,
+                // koulutustyyppi: filter.koulutus.join(','),
                 // opetuskieli: filter.kieli.map((k) => k).join(','),
-                opetuskieli: filter.opetusKielet.map((k) => k).join(','),
+                opetuskieli: filter.opetusKielet ? filter.opetusKielet.map((k) => k).join(','): '',
+                // opetuskieli: filter.opetusKielet.map((k) => k).join(','),
                 lng: l.getLanguage()})
             .catch(this.handleError))
     };
@@ -44,10 +45,11 @@ class RestStore {
             .query({keyword: keyword,
                 page: paging.pageOppilaitos,
                 size: paging.pageSize,
-                paikkakunta: filter.paikkakunta,
-                koulutustyyppi: filter.koulutus.join(','),
+                // paikkakunta: filter.paikkakunta,
+                // koulutustyyppi: filter.koulutus.join(','),
                 //kieli: filter.kieli.map((k) => k).join(','),
-                opetuskieli: filter.opetusKielet.map((k) => k).join(','),
+                // opetuskieli: filter.opetusKielet.map((k) => k).join(','),
+                opetuskieli: filter.opetusKielet ? filter.opetusKielet.map((k) => k).join(',') : '',
                 lng: l.getLanguage()})
             .catch(this.handleError))
     };

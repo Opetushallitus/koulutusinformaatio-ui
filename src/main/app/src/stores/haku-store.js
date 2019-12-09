@@ -1,4 +1,4 @@
-import { observable, computed, action, runInAction } from "mobx"
+import { observable, computed, action, runInAction, toJS } from "mobx"
 import {Localizer as l} from "../tools/Utils";
 
 class HakuStore {
@@ -38,7 +38,6 @@ class HakuStore {
 
     @action
     setAll = (keyword, search, toggleAction) => {
-        console.log(`setAll() 41`);
         const keywordChange = this.setKeyword(keyword);
         const filterChange = this.setFilter({
             koulutus: search.koulutustyyppi,
@@ -54,13 +53,11 @@ class HakuStore {
             this.searchAll(() => {
                 if(!search.toggle) {
                     const toggle = this.koulutusCount >= this.oppilaitosCount ? 'koulutus' : 'oppilaitos';
-                    console.log(`haku-store - setAll gets Triggered`);
                     this.setToggle(toggle);
                     if(toggleAction) {
                         toggleAction(toggle);
                     }
                 } else {
-                    console.log(`haku-store - setAll gets Triggered line 62`);
                     this.setToggle(search.toggle);
                 }
             });
@@ -69,7 +66,7 @@ class HakuStore {
         } else if (pagingChange.oppilaitos) {
             this.searchOppilaitokset();
         } else {
-            console.log(`haku-store - setAll gets Triggered line 71`);
+            console.log('haku-store.js - setAll() (70)');
             // this.setToggle(search.toggle);
         }
     };

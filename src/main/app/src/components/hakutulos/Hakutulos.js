@@ -5,8 +5,9 @@ import { Box } from '@material-ui/core';
 import { HomeOutlined } from '@material-ui/icons';
 import { Grid, Paper, Typography } from '@material-ui/core';
 import { Localizer as l } from '../../tools/Utils';
-import HakutulosToggleWrapper from './HakutulosToggleWrapper';
-import HakutulosSummary from './HakutulosSummary';
+// import HakutulosToggleWrapper from './HakutulosToggleWrapper';
+import HakutulosToggleWrapper from './HakutulosToggle'
+// import HakutulosSummary from './HakutulosSummary';
 import OpetusKieliSuodatin from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
 import HakutulosBox from '../common/HakutulosBox';
@@ -168,9 +169,9 @@ class Hakutulos extends Component {
                 </Box>
               </Grid>
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <HakutulosSummary iDidUpdate={this.props.iUpdatedMyChildren} />
-            </Grid>
+            </Grid> */}
             <Grid container alignItems="center" className={classes.hakutulosToggleBarMargins}>
               <Grid item xs={3}>
                 <Typography variant="h5">{t('haku.rajaa-tuloksia')}</Typography>

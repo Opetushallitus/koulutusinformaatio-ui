@@ -38,7 +38,6 @@ class OpetusKieliSuodatin extends Component {
       hakuStore.toggle === 'koulutus'
         ? toJS(hakuStore.koulutusFilters.opetusKieli)
         : toJS(hakuStore.oppilaitosFilters.opetusKieli);
-    console.log(toJS(hakuStore.filter.opetusKielet));
 
     this.setState({ opetusKieli: opetusKieliJS });
   }
@@ -56,12 +55,14 @@ class OpetusKieliSuodatin extends Component {
 
     this.setState({ valitutOpetusKielet: valitutOpetusKielet });
     console.log(valitutOpetusKielet);
-    // this.setState({ selectedTab: newValue });
     const search = qs.parse(history.location.search);
     search.opetuskieli = valitutOpetusKielet.join(',');
     hakuStore.setOpetusKieliFilter(valitutOpetusKielet);
     history.replace({ search: qs.stringify(search) });
-    console.log(history.location.search);
+    hakuStore.searchKoulutukset();
+    hakuStore.searchOppilaitokset();
+
+
 
 
   };

@@ -15,10 +15,18 @@ import { withTranslation } from 'react-i18next';
 class HakutulosToggle extends Component {
   constructor(props) {
     super(props);
-    this.state = { selectedTab: this.props.hakuStore.toggle === 'koulutus' ? 0 : 1 };
+    this.state = {
+      selectedTab: this.props.hakuStore.toggle === 'koulutus' ? 0 : 1,
+      koulutusCount: this.props.hakuStore.koulutusCount,
+      oppilaitosCount: this.props.hakuStore.oppilaitosCount
+    };
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
+    this.setState({
+      koulutusCount: nextProps.hakuStore.koulutusCount,
+      oppilaitosCount: nextProps.hakuStore.oppilaitosCount
+    });
     this.props = nextProps;
   }
 
@@ -36,16 +44,21 @@ class HakutulosToggle extends Component {
     const { t, classes, hakuStore } = this.props;
     // console.log(`HakutulosToggle - render() - 40 toggle = ${toJS(hakuStore.toggle)}`);
     return (
-      <Tabs value={this.state.selectedTab} indicatorColor="primary" textColor="primary" onChange={this.handleSelectedTab}>
+      <Tabs
+        value={this.state.selectedTab}
+        indicatorColor="primary"
+        textColor="primary"
+        onChange={this.handleSelectedTab}
+      >
         <Tab
-          icon={<SchoolOutlined className={classes.hakuTulosTabIconMargin}  />}
+          icon={<SchoolOutlined className={classes.hakuTulosTabIconMargin} />}
           classes={{ wrapper: classes.customWrapper, labelIcon: classes.customLabelIcon }}
-          label={`${t('haku.koulutukset')} (${this.props.hakuStore.koulutusCount})`}
+          label={`${t('haku.koulutukset')} (${this.state.koulutusCount})`}
         ></Tab>
         <Tab
           icon={<HomeWorkOutlined className={classes.hakuTulosTabIconMargin} />}
           classes={{ wrapper: classes.customWrapper, labelIcon: classes.customLabelIcon }}
-          label={`${t('haku.oppilaitokset')} (${this.props.hakuStore.oppilaitosCount})`}
+          label={`${t('haku.oppilaitokset')} (${hakuStore.oppilaitosCount})`}
         ></Tab>
       </Tabs>
     );
