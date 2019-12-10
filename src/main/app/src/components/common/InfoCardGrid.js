@@ -1,0 +1,41 @@
+import React from 'react';
+import InfoCard from './InfoCard';
+import { Grid, Typography } from '@material-ui/core';
+import Spacer from './Spacer';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles({
+  grid: {
+    width: '100%',
+  },
+});
+
+const InfoCardGrid = (props) => {
+  const { cards, title } = props;
+  const classes = useStyles();
+
+  return (
+    <Grid
+      className={classes.grid}
+      container
+      direction="column"
+      alignItems="center"
+    >
+      <Grid item>
+        <Typography variant="h2">{title}</Typography>
+      </Grid>
+      <Grid item>
+        <Spacer />
+      </Grid>
+      <Grid item container spacing={3} align="center" justify="center">
+        {cards.map((cardData) => (
+          <Grid item xs={12} md={6} lg={4}>
+            <InfoCard {...cardData} />
+          </Grid>
+        ))}
+      </Grid>
+    </Grid>
+  );
+};
+
+export default InfoCardGrid;
