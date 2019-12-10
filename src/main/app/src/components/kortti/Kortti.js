@@ -76,7 +76,7 @@ const Kortti = observer(({ id }) => {
         <CardContent>
           <h2 className={classes.otsikko}>{kortti.name}</h2>
           {linkit.map((l) => {
-            const page = sivu[l.id];
+            const page = sivu[(l || {}).id];
             return page ? (
               <div className={classes.link} key={page.id}>
                 <Icon>chevron_right</Icon>
