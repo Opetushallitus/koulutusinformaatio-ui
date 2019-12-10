@@ -1,8 +1,8 @@
 import React from 'react';
 import { Grid, Typography, makeStyles } from '@material-ui/core';
-import Spacer from './common/Spacer';
-import TreeImage from '../assets/images/ammatillinen_koulutus_puu.svg';
-import LinkCardGrid from './common/LinkCardGrid';
+import Spacer from './Spacer';
+import TreeImage from '../../assets/images/ammatillinen_koulutus_puu.svg'; //TODO: This should probably be a prop
+import LinkCardGrid from './LinkCardGrid';
 
 const useStyles = makeStyles((theme) => ({
   treeContainer: {
