@@ -81,16 +81,18 @@ const Sisalto = observer(
         </Grid>
       );
     };
-    const SivuLink = (props) => {
-      const id = props.children[0];
-      return (
+    const isBlank = (str) => {
+      return !str || /^\s*$/.test(str);
+    };
+    const SivuLink = ({ slug, children }) => {
+      return sivu[slug] ? (
         <Link
-          href={`/konfo/${forwardTo(id)}`}
-          onClick={(e) => forwardToPage(e, id)}
+          href={`/konfo${forwardTo(slug)}`}
+          onClick={(e) => forwardToPage(e, slug)}
         >
-          {sivu[id].name}
+          {isBlank(children[0]) ? sivu[slug].name : children}
         </Link>
-      );
+      ) : null;
     };
     const LinkOrYoutube = ({ children, className, ...props }) => {
       if (className === 'embedly-card') {
