@@ -83,7 +83,14 @@ const Sisalto = observer(
     };
     const SivuLink = (props) => {
       const id = props.children[0];
-      return <Link onClick={(e) => forwardToPage(e, id)}>{sivu[id].name}</Link>;
+      return (
+        <Link
+          href={`/konfo/${forwardTo(id)}`}
+          onClick={(e) => forwardToPage(e, id)}
+        >
+          {sivu[id].name}
+        </Link>
+      );
     };
     const LinkOrYoutube = ({ children, className, ...props }) => {
       if (className === 'embedly-card') {
