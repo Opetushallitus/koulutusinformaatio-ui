@@ -9,6 +9,7 @@ import Vertailu from './vertailu/Vertailu';
 import Hakukohde from './hakukohde/Koulutus';
 import ReactiveBorder from './ReactiveBorder';
 import { Route } from 'react-router-dom';
+import AmmatillinenKoulutus from './AmmatillinenKoulutus';
 import '../assets/styles/components/_hakusivu.scss';
 
 class Hakusivu extends Component {
@@ -49,6 +50,12 @@ class Hakusivu extends Component {
           id="main-content"
           className={moveMainContent ? 'move-right' : 'center-content'}
         >
+          {/*TODO: Remove below route, only used for testing purposes */}
+          <Route
+            exact
+            path="/omapolku/ammatillinen"
+            component={AmmatillinenKoulutus}
+          />
           <Route
             path={'/haku/:keyword?'}
             render={(props) => (
