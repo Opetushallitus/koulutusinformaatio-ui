@@ -21,6 +21,10 @@ export const styles = (theme) =>
       maxWidth: 1600,
       margin: 'auto',
     },
+    hakuTulosTabIconMargin: {
+      marginBottom: '0 !important',
+      marginRight: theme.spacing(2),
+    },
     hakuTulosSisaltoPaperi: {
       width: '100%',
       padding: theme.spacing(1, 11),
@@ -45,6 +49,10 @@ export const styles = (theme) =>
     hakutulosFiltersGrid: {
       padding: theme.spacing(2, 4, 2, 0),
     },
+    hakutulosContent: {
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
+    },
     listItemCheckbox: {
       padding: '0 9px 0 9px',
     },
@@ -52,6 +60,29 @@ export const styles = (theme) =>
       fontSize: 14,
       color: '#4C4C4C',
     },
+    eduTypeInnerListPadding: {
+      paddingLeft: theme.spacing(2.2),
+    },
+    hakutulosKortti: {
+      width: '100%',
+      padding: theme.spacing(3),
+      marginBottom: theme.spacing(1.5),
+      boxShadow: '0 0 8px 0 rgba(0,0,0,0.2)',
+    },
+    koulutusKorttiImgBtn: {
+      width: 200,
+      height: 200,
+    },
+    koulutusKorttiLeftMargin: {
+      marginLeft: '0.5em',
+    },
+    koulutusKorttiImg: {
+      margin: 'auto',
+      display: 'block',
+      maxWidth: '100%',
+      maxHeight: '100%',
+    },
+
     // ******************************************************************
     // AppBar
     // ******************************************************************

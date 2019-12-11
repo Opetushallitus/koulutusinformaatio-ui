@@ -12,7 +12,19 @@ export const colors = {
   sideInputBackground: '#EDF1F5',
   lightGrey: '#b2b2b2',
   black: '#1D1D1D',
+  textBlack: '#4F4F4F',
   lightAlphaGrey: 'rgba(178,178,178,.5)',
   primaryGreen: '#378703',
   primaryTextBlack: '#4f4f4f',
+  greyMuiListOnHover: 'rgba(0,0,0,0.08)',
+};
+
+export const educationTypeColorCode = {
+  lk: '#c62828', // Brick
+  amm: '#43A047', // Mid-green
+  kk: '#9c56b8', // Amethist
+  yo: '#9c56b8', // Amethist
+  amk: '#9c56b8', // Amethist
+  ako: '#1976D2', // Water Blue
+  muu: '#DE9A06', // yellow Ochre
 };

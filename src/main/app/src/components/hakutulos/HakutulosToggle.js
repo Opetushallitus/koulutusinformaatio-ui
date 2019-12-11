@@ -1,74 +1,67 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { observer, inject } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import { Tabs, Tab } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { SchoolOutlined, AccountBalanceOutlined } from '@material-ui/icons';
+import { SchoolOutlined, HomeWorkOutlined } from '@material-ui/icons';
 import qs from 'query-string';
-import '../../assets/styles/components/_hakutulos-toggle.scss';
 import { styles } from '../../styles';
 import { withTranslation } from 'react-i18next';
+import { useStores } from '../../hooks';
 
-@inject('hakuStore')
-@observer
-class HakutulosToggle extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { selectedTab: this.props.hakuStore.toggleKoulutus ? 0 : 1 };
-    this.handleSelectedTab = this.handleSelectedTab.bind(this);
-  }
+const HakutulosToggle = observer((props) => {
+  const { t, classes, history } = props;
+  const { hakuStore } = useStores();
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this.props = nextProps;
-  }
+  const [koulutusCount, setKoulutusCount] = useState(0);
+  const [oppilaitosCount, setOppilaitosCount] = useState(0);
+  const [selectedTab, setSelectedTab] = useState(0);
 
-  handleSelectedTab(event, newValue) {
-    this.setState({ selectedTab: newValue });
-    const search = qs.parse(this.props.history.location.search);
-    search.toggle = newValue === 0 ? 'koulutus' : 'oppilaitos';
-    this.props.history.replace({ search: qs.stringify(search) });
-  }
+  useEffect(() => {
+    setKoulutusCount(hakuStore.koulutusCount);
+    setOppilaitosCount(hakuStore.oppilaitosCount);
+    const tab = hakuStore.toggle === 'koulutus' ? 0 : 1;
+    setSelectedTab(tab);
+  }, [hakuStore.koulutusCount, hakuStore.oppilaitosCount, hakuStore.toggle]);
 
-  render() {
-    const { t, classes } = this.props;
-    return (
-      <Tabs
-        value={this.state.selectedTab}
-        indicatorColor="primary"
-        textColor="primary"
-        onChange={this.handleSelectedTab}
-      >
-        <Tab
-          icon={
-            <SchoolOutlined style={{ marginBottom: 0, marginRight: '15px' }} />
-          }
-          classes={{
-            wrapper: classes.customWrapper,
-            labelIcon: classes.customLabelIcon,
-          }}
-          label={`${t('haku.koulutukset')} (${
-            this.props.hakuStore.koulutusCount
-          })`}
-        ></Tab>
-        <Tab
-          icon={
-            <AccountBalanceOutlined
-              style={{ marginBottom: 0, marginRight: '15px' }}
-            />
-          }
-          classes={{
-            wrapper: classes.customWrapper,
-            labelIcon: classes.customLabelIcon,
-          }}
-          label={`${t('haku.oppilaitokset')} (${
-            this.props.hakuStore.oppilaitosCount
-          })`}
-        ></Tab>
-      </Tabs>
-    );
-  }
-}
+  const handleSelectedTab = (event, newValue) => {
+    setSelectedTab(newValue);
+    const search = qs.parse(history.location.search);
+    const toggleValue = newValue === 0 ? 'koulutus' : 'oppilaitos';
+    search.toggle = toggleValue;
+    hakuStore.setToggle(toggleValue);
+    history.replace({ search: qs.stringify(search) });
+  };
 
-const HakuTulosToggleWithStyles = withStyles(styles)(HakutulosToggle);
+  return (
+    <Tabs
+      value={selectedTab}
+      indicatorColor="primary"
+      textColor="primary"
+      onChange={handleSelectedTab}
+    >
+      <Tab
+        icon={<SchoolOutlined className={classes.hakuTulosTabIconMargin} />}
+        classes={{
+          wrapper: classes.customWrapper,
+          labelIcon: classes.customLabelIcon,
+        }}
+        label={`${t('haku.koulutukset')} (${koulutusCount})`}
+      ></Tab>
+      <Tab
+        icon={<HomeWorkOutlined className={classes.hakuTulosTabIconMargin} />}
+        classes={{
+          wrapper: classes.customWrapper,
+          labelIcon: classes.customLabelIcon,
+        }}
+        label={`${t('haku.oppilaitokset')} (${oppilaitosCount})`}
+      ></Tab>
+    </Tabs>
+  );
+});
+
+const HakuTulosToggleWithStyles = withTranslation()(
+  withStyles(styles)(HakutulosToggle)
+);
 
 export default withTranslation()(withRouter(HakuTulosToggleWithStyles));

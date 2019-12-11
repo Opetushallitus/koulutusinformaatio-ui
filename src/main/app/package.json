@@ -30,6 +30,7 @@
     "react-render-html": "0.6.0",
     "react-router-dom": "^5.1.2",
     "react-router-hash-link": "^1.2.2",
+    "react-select": "^3.0.8",
     "superagent": "^3.8.3",
     "url-parse": "^1.4.7"
   },

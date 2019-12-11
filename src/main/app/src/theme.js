@@ -7,14 +7,14 @@ import { colors } from './colors';
 export const theme = createMuiTheme({
   palette: {
     primary: {
-      main: colors.primaryGreen,
+      main: colors.green,
     },
     secondary: {
-      main: colors.primaryGreen,
+      main: colors.green,
     },
     text: {
-      primary: colors.primaryTextBlack,
-      secondary: colors.primaryTextBlack,
+      primary: colors.textBlack,
+      secondary: colors.textBlack,
     },
   },
   typography: {
@@ -129,12 +129,12 @@ export const theme = createMuiTheme({
     },
     MuiExpansionPanel: {
       root: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: colors.white,
         marginBottom: '16px',
         boxShadow: '0 2px 8px 0 rgba(0,0,0,0.2)',
         borderRadius: '0 !important',
         '&:before': {
-          backgroundColor: '#FFFFFF',
+          backgroundColor: colors.white,
         },
       },
 
