@@ -7,18 +7,12 @@ import '../../../assets/styles/components/_hakutulos-box.scss';
 import { Grid, Paper, Typography, ButtonBase } from '@material-ui/core';
 import { SchoolOutlined, PublicOutlined } from '@material-ui/icons';
 import { styles } from '../../../styles';
-import { fontWeight } from '@material-ui/system';
 import oppilaitos_img from '../../../assets/images/logo-oppilaitos.png';
-import {educationTypeColorCode} from '../../../colors';
+import { educationTypeColorCode } from '../../../colors';
 import _get from 'lodash/get';
 
-const OppilaitosKortti = props => {
-  const {
-    classes,
-    nimi, 
-    i18n,
-    oppilaitos
-  } = props;
+const OppilaitosKortti = (props) => {
+  const { classes, nimi, i18n, oppilaitos } = props;
 
   const paikkakunnatStr = oppilaitos.paikkakunnat
     .reduce((acc, current) => {
@@ -26,7 +20,7 @@ const OppilaitosKortti = props => {
     }, '')
     .replace(/,\s*$/, '');
 
-  const kuvausStr = kuvaus => {
+  const kuvausStr = (kuvaus) => {
     const kuvausStr = kuvaus && kuvaus[i18n.language];
 
     if (!kuvausStr) {
@@ -35,20 +29,22 @@ const OppilaitosKortti = props => {
     const strippedHTMLKuvausStr = kuvausStr.replace(/<[^>]*>/gm, '');
 
     if (strippedHTMLKuvausStr.length > 255) {
-      return `${strippedHTMLKuvausStr.slice(0,250)}...`;
+      return `${strippedHTMLKuvausStr.slice(0, 250)}...`;
     }
     return strippedHTMLKuvausStr;
   };
   const koulutusOhjelmatStr = () => {
     const amount = _get(oppilaitos, 'koulutusohjelmia', 0);
-    if(amount === 0) return 'ei kolutusohjelmia';
-    if(amount === 1) return `${amount} koulutusohjelma`;
+    if (amount === 0) return 'ei kolutusohjelmia';
+    if (amount === 1) return `${amount} koulutusohjelma`;
     return `${amount} koukutusohjelmaa`;
   };
 
   return (
-    <Paper className={classes.hakutulosKortti} 
-    style={{borderTop: `5px solid ${educationTypeColorCode.amm}`}}>
+    <Paper
+      className={classes.hakutulosKortti}
+      style={{ borderTop: `5px solid ${educationTypeColorCode.amm}` }}
+    >
       <Grid container spacing={4}>
         <Grid container item xs={8} spacing={3} direction="column">
           <Grid item>
@@ -57,9 +53,7 @@ const OppilaitosKortti = props => {
             </Typography>
           </Grid>
           <Grid item>
-            <Typography>
-                {kuvausStr(oppilaitos.kuvaus)}
-                </Typography>
+            <Typography>{kuvausStr(oppilaitos.kuvaus)}</Typography>
           </Grid>
 
           <Grid item container direction="row">
@@ -69,7 +63,7 @@ const OppilaitosKortti = props => {
               </Grid>
               <Grid item xs={11}>
                 <Typography className={classes.koulutusKorttiLeftMargin}>
-                {koulutusOhjelmatStr()}
+                  {koulutusOhjelmatStr()}
                 </Typography>
               </Grid>
             </Grid>
@@ -79,7 +73,7 @@ const OppilaitosKortti = props => {
               </Grid>
               <Grid item xs={11}>
                 <Typography className={classes.koulutusKorttiLeftMargin}>
-                    {paikkakunnatStr}
+                  {paikkakunnatStr}
                 </Typography>
               </Grid>
             </Grid>
@@ -96,17 +90,6 @@ const OppilaitosKortti = props => {
         </Grid>
       </Grid>
     </Paper>
-    // <div key={props.oid} className={`col-12 col-md-12 ${props.oppilaitos ? "col-lg-12": "col-lg-6"} box-container`}>
-    //     <div className={`col-12 search-box ${props.tyyppi}`}>
-    //         {props.haettavissa && <div className="haku">{props.t("haku.haku")}</div>}
-    //         <div className="d-flex justify-content-between">
-    //             <div className="text">
-    //                 <Link to={props.link} className={"hakutulosbox-link"}>{props.nimi}</Link>
-    //                 <p>{props.text1}<br/>{props.text2}</p>
-    //             </div>
-    //         </div>
-    //     </div>
-    // </div>
   );
 };
 

@@ -7,22 +7,20 @@ import '../../../assets/styles/components/_hakutulos-box.scss';
 import { Grid, Paper, Typography, ButtonBase } from '@material-ui/core';
 import { SchoolOutlined, TimelapseOutlined } from '@material-ui/icons';
 import { styles } from '../../../styles';
-import { fontWeight } from '@material-ui/system';
 import hakuKoulutukseen_img from '../../../assets/images/haku-koulutukseen.jpg';
-import {educationTypeColorCode} from '../../../colors';
+import { educationTypeColorCode } from '../../../colors';
 
-const KoulutusKortti = props => {
+const KoulutusKortti = (props) => {
   const {
     classes,
-    nimi, 
+    nimi,
     kuvaus,
     koulutustyyppi,
     opintojenlaajuus,
     opintojenlaajuusyksikko,
     tutkintonimikkeet,
-    i18n
+    i18n,
   } = props;
-
 
   const tutkintonimikkeetStr = tutkintonimikkeet
     .reduce((acc, current) => {
@@ -30,9 +28,15 @@ const KoulutusKortti = props => {
     }, '')
     .replace(/,\s*$/, '');
 
-  const opintojenlaajuusStr = opintojenlaajuus && opintojenlaajuus.nimi && opintojenlaajuus.nimi[i18n.language] || 'ei_määritelty';
-  const opintojenlaajuusyksikkoStr = opintojenlaajuusyksikko && opintojenlaajuusyksikko.nimi[i18n.language] || '';
-  const kuvausStr = kuvaus => {
+  const opintojenlaajuusStr =
+    (opintojenlaajuus &&
+      opintojenlaajuus.nimi &&
+      opintojenlaajuus.nimi[i18n.language]) ||
+    'ei_määritelty';
+  const opintojenlaajuusyksikkoStr =
+    (opintojenlaajuusyksikko && opintojenlaajuusyksikko.nimi[i18n.language]) ||
+    '';
+  const kuvausStr = (kuvaus) => {
     const kuvausStr = kuvaus && kuvaus.fi;
 
     if (!kuvausStr) {
@@ -40,14 +44,19 @@ const KoulutusKortti = props => {
     }
     const strippedHTMLKuvausStr = kuvausStr.replace(/<[^>]*>/gm, '');
     if (strippedHTMLKuvausStr.length > 255) {
-      return `${strippedHTMLKuvausStr.slice(0,250)}...`;
+      return `${strippedHTMLKuvausStr.slice(0, 250)}...`;
     }
     return strippedHTMLKuvausStr;
   };
 
   return (
-    <Paper className={classes.hakutulosKortti} 
-    style={{borderTop: `5px solid ${educationTypeColorCode[koulutustyyppi] || educationTypeColorCode.muu}`}}>
+    <Paper
+      className={classes.hakutulosKortti}
+      style={{
+        borderTop: `5px solid ${educationTypeColorCode[koulutustyyppi] ||
+          educationTypeColorCode.muu}`,
+      }}
+    >
       <Grid container spacing={4}>
         <Grid container item xs={8} spacing={3} direction="column">
           <Grid item>
@@ -93,17 +102,6 @@ const KoulutusKortti = props => {
         </Grid>
       </Grid>
     </Paper>
-    // <div key={props.oid} className={`col-12 col-md-12 ${props.oppilaitos ? "col-lg-12": "col-lg-6"} box-container`}>
-    //     <div className={`col-12 search-box ${props.tyyppi}`}>
-    //         {props.haettavissa && <div className="haku">{props.t("haku.haku")}</div>}
-    //         <div className="d-flex justify-content-between">
-    //             <div className="text">
-    //                 <Link to={props.link} className={"hakutulosbox-link"}>{props.nimi}</Link>
-    //                 <p>{props.text1}<br/>{props.text2}</p>
-    //             </div>
-    //         </div>
-    //     </div>
-    // </div>
   );
 };
 
