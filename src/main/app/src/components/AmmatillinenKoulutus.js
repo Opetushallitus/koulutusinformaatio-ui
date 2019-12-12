@@ -1,57 +1,12 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import { observer } from 'mobx-react-lite';
-import OpetusKasvatusPsykologiaIcon from '../assets/images/opetus_kasvatus_psykologia.svg';
 import InfoGrid from './common/InfoGrid';
 import { Typography, Grid } from '@material-ui/core';
-import Markdown from 'markdown-to-jsx';
 import { useStores } from '../hooks';
 import InfoCardGrid from './common/InfoCardGrid';
 import Tree from './common/Tree';
 import Sisalto from './sivu/Sisalto';
-
-const cardData = [
-  {
-    text: 'Kasvatusalat',
-    icon: OpetusKasvatusPsykologiaIcon,
-  },
-  {
-    text: 'Humanistiset ja taidealat',
-    icon: OpetusKasvatusPsykologiaIcon,
-  },
-  {
-    text: 'Yhteiskunnalliset alat',
-    icon: OpetusKasvatusPsykologiaIcon,
-  },
-  {
-    text: 'Kauppa ja halliinto',
-    icon: OpetusKasvatusPsykologiaIcon,
-  },
-  {
-    text: 'Luonnontieteet',
-    icon: OpetusKasvatusPsykologiaIcon,
-  },
-  {
-    text: 'Tietojenkäsittely ja tietoliikenne (ICT)',
-    icon: OpetusKasvatusPsykologiaIcon,
-  },
-  {
-    text: 'Tekniikat alat',
-    icon: OpetusKasvatusPsykologiaIcon,
-  },
-  {
-    text: 'Maa- ja metsätalous',
-    icon: OpetusKasvatusPsykologiaIcon,
-  },
-  {
-    text: 'Terveys- ja hyvinvointialat',
-    icon: OpetusKasvatusPsykologiaIcon,
-  },
-  {
-    text: 'Palvelualat',
-    icon: OpetusKasvatusPsykologiaIcon,
-  },
-];
 
 const uutisHelper = (data, noPics, greenTitle) => {
   const testiTeksti = `Ammatillisia tutkintoja ovat ammatilliset perustutkinnot, ammattitutkinnot ja erikoisammattitutkinnot.  Tässä osiossa kerrotaan yleisesti opinnoista ja tutkinnon suorittamisesta.`;
@@ -95,9 +50,17 @@ const Module = ({ module }) => {
       />
     );
   } else if (module.type === 'puu') {
-    const { name, id } = contentfulStore.data.puu[module.id];
+    const { name, id, left, right } = contentfulStore.data.puu[module.id];
+    const { lehti } = contentfulStore.data;
 
-    return <Tree id={id} title={name} cards={cardData} />;
+    return (
+      <Tree
+        id={id}
+        title={name}
+        cardsLeft={left.map(({ id }) => lehti[id])}
+        cardsRight={right.map(({ id }) => lehti[id])}
+      />
+    );
   } else if (module.type === 'sivu') {
     const { content, id } = contentfulStore.data.sivu[module.id];
     return (

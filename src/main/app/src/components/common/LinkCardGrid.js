@@ -5,9 +5,9 @@ import LinkCard from './LinkCard';
 const LinkCardGrid = ({ id, cards }) => {
   return (
     <Grid container spacing={3} direction="column">
-      {cards.map((card, index) => (
+      {(cards || []).map((card, index) => (
         <Grid item key={`link-card-grid-${id}-${index}`}>
-          <LinkCard text={card.text} icon={card.icon} />
+          <LinkCard text={card.name} icon={card.icon} />
         </Grid>
       ))}
     </Grid>

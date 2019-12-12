@@ -16,12 +16,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Tree = (props) => {
-  const { id, title, cards } = props;
+const Tree = ({ id, title, cardsLeft, cardsRight }) => {
   const classes = useStyles();
-  const cardsMid = Math.ceil(cards.length / 2);
-  const leftCards = cards.slice(0, cardsMid);
-  const rightCards = cards.slice(cardsMid);
 
   return (
     <Grid container direction="column" alignItems="center">
@@ -40,11 +36,11 @@ const Tree = (props) => {
         spacing={10}
       >
         <Grid item xs={12} lg={4}>
-          <LinkCardGrid id={`${id}-left`} cards={leftCards} />
+          <LinkCardGrid id={`${id}-left`} cards={cardsLeft} />
         </Grid>
         <Grid item lg={3} />
         <Grid item xs={12} lg={4}>
-          <LinkCardGrid id={`${id}-right`} cards={rightCards} />
+          <LinkCardGrid id={`${id}-right`} cards={cardsRight} />
         </Grid>
       </Grid>
     </Grid>
