@@ -79,13 +79,19 @@ const Module = ({ module }) => {
     const gridData = data ? JSON.parse(data) : [];
     return <InfoGrid heading="Perustiedot" id={id} gridData={gridData} />;
   } else if (module.type === 'uutiset') {
-    const { name, id } = contentfulStore.data.uutiset[module.id];
+    const { name, id, showImage, greenText } = contentfulStore.data.uutiset[
+      module.id
+    ];
 
     return (
       <InfoCardGrid
         id={id}
         title={name}
-        cards={uutisHelper(contentfulStore.data.uutinen, true, true)}
+        cards={uutisHelper(
+          contentfulStore.data.uutinen,
+          showImage === 'false',
+          greenText === 'true'
+        )}
       />
     );
   } else if (module.type === 'puu') {
