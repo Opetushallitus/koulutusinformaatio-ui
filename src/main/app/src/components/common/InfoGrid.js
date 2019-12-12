@@ -3,6 +3,23 @@ import clsx from 'clsx';
 import { makeStyles, Typography, Grid, Paper, Icon } from '@material-ui/core';
 import { colors } from '../../colors';
 import Spacer from './Spacer';
+import KoulutusAsteIcon from '../../assets/images/koulutusaste.svg';
+import KoulutusTyypitIcon from '../../assets/images/koulutustyyppi.svg';
+import TutkintoNimikeIcon from '../../assets/images/tutkintonimike.svg';
+import SuunniteltuKestoIcon from '../../assets/images/suunniteltu_kesto.svg';
+import KoulutuksenLaajuusIcon from '../../assets/images/koulutuksen_laajuus.svg';
+import TutkintoonHakeminenIcon from '../../assets/images/tutkintoon_hakeminen.svg';
+import OpetusKasvatusPsykologiaIcon from '../../assets/images/opetus_kasvatus_psykologia.svg';
+
+const iconLookupTable = {
+  KoulutusAsteIcon: KoulutusAsteIcon,
+  KoulutusTyypitIcon: KoulutusTyypitIcon,
+  TutkintoNimikeIcon: TutkintoNimikeIcon,
+  SuunniteltuKestoIcon: SuunniteltuKestoIcon,
+  KoulutuksenLaajuusIcon: KoulutuksenLaajuusIcon,
+  TutkintoonHakeminenIcon: TutkintoonHakeminenIcon,
+  OpetusKasvatusPsykologiaIcon: OpetusKasvatusPsykologiaIcon,
+};
 
 const useStyles = makeStyles({
   paper: {
@@ -51,7 +68,7 @@ const InfoGrid = ({ heading, gridData, id }) => {
             >
               <Grid item>
                 <Icon>
-                  <img src={e.icon} alt="" />
+                  <img src={iconLookupTable[e.icon]} alt="" />
                 </Icon>
               </Grid>
               <Grid

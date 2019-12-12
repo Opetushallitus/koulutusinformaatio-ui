@@ -60,7 +60,7 @@ const Etusivu = observer(({ history }) => {
   const infos = Object.values(info);
 
   const single = (entry) => Object.values(entry)[0] || {};
-  let uutislinkit = single(uutiset).linkit || [];
+  let uutislinkit = (uutiset['etusivun-uutiset'] || {}).linkit || [];
 
   const [showMore, setShowMore] = useState(!(uutislinkit.length > 3));
 
