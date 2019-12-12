@@ -10,6 +10,7 @@ class ContentfulStore {
     info: {},
     asset: {},
     footer: {},
+    sivuKooste: {},
     palvelut: {},
     valikot: {},
     ohjeetJaTuki: {},

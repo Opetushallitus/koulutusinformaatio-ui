@@ -39,7 +39,7 @@ const LinkCard = (props) => {
           </Icon>
         </Grid>
         <Grid item xs={9}>
-          <Typography align="left" variant="p">
+          <Typography align="left" variant="body1">
             {text}
           </Typography>
         </Grid>

@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import { makeStyles, Typography, Grid, Paper, Icon } from '@material-ui/core';
 import { colors } from '../../colors';
 import Spacer from './Spacer';
@@ -23,8 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-const InfoGrid = (props) => {
-  const { heading, gridData } = props;
+const InfoGrid = ({ heading, gridData, id }) => {
   const classes = useStyles();
 
   return (
@@ -39,8 +39,16 @@ const InfoGrid = (props) => {
           justify="space-evenly"
           spacing={5}
         >
-          {gridData.map((e) => (
-            <Grid item container spacing={1} xs={12} md={6} lg={4}>
+          {gridData.map((e, index) => (
+            <Grid
+              item
+              container
+              spacing={1}
+              xs={12}
+              md={6}
+              lg={4}
+              key={`info-grid-${e.id}-${index}`}
+            >
               <Grid item>
                 <Icon>
                   <img src={e.icon} alt="" />
@@ -55,7 +63,7 @@ const InfoGrid = (props) => {
                 direction="column"
               >
                 <Typography
-                  className={[classes.title, classes.text]}
+                  className={clsx(classes.title, classes.text)}
                   variant="body1"
                   component="h3"
                 >

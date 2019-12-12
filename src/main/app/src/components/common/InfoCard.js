@@ -43,12 +43,7 @@ const InfoCard = (props) => {
       ) : null}
       <CardContent className={classes.content}>
         {title ? (
-          <Typography
-            align="left"
-            color={titleColor ? titleColor : ''}
-            gutterBottom
-            variant="h4"
-          >
+          <Typography align="left" gutterBottom variant="h4">
             {title}
           </Typography>
         ) : null}

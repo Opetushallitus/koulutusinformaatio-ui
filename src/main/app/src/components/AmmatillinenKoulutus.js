@@ -16,6 +16,7 @@ import InfoCardGrid from './common/InfoCardGrid';
 import Tree from './common/Tree';
 
 const infoGridData = {
+  id: 'placeholder',
   text: `
 Ammatillisia tutkintoja ovat ammatilliset perustutkinnot, ammattitutkinnot ja erikoisammattitutkinnot.  Ammatillisissa opilaitoksissa voi opiskella myös erilaisia tutkintoon johtamattomia opintokokonaisuuksia.
 
@@ -129,7 +130,11 @@ const AmmatillinenKoulutus = () => {
       <main id="main-content" className="center-content" style={pads}>
         <Box display="flex" flexDirection="column" alignItems="center">
           <Typography variant="h1">Ammatillinen koulutus</Typography>
-          <InfoGrid heading="Perustiedot" gridData={infoGridData.infoGrid} />
+          <InfoGrid
+            heading="Perustiedot"
+            id={infoGridData.id}
+            gridData={infoGridData.infoGrid}
+          />
           <div style={{ width: '50%' }}>
             <Markdown>{infoGridData.text}</Markdown>
           </div>
@@ -139,7 +144,7 @@ const AmmatillinenKoulutus = () => {
               cards={uutisHelper(contentfulStore.data.uutinen)}
             />
           ) : null}
-          <Tree title="Koulutusalat" cards={cardData} />
+          <Tree id={'placeholder'} title="Koulutusalat" cards={cardData} />
           {contentfulStore.data.uutinen ? (
             <InfoCardGrid
               title="Polkuja ammatilliseen koulutukseen"
