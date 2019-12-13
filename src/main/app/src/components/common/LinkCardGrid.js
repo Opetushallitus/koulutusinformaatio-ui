@@ -7,7 +7,7 @@ const LinkCardGrid = ({ id, cards }) => {
     <Grid container spacing={3} direction="column">
       {(cards || []).map((card, index) => (
         <Grid item key={`link-card-grid-${id}-${index}`}>
-          <LinkCard text={card.name} icon={card.icon} />
+          <LinkCard sivu={card.sivu} text={card.name} icon={card.icon} />
         </Grid>
       ))}
     </Grid>

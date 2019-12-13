@@ -1,7 +1,17 @@
 import React from 'react';
-import { Grid, makeStyles, Icon, Typography, Paper } from '@material-ui/core';
+import {
+  Grid,
+  makeStyles,
+  Icon,
+  Typography,
+  Paper,
+  withStyles,
+} from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { colors } from '../../colors';
+import { observer } from 'mobx-react-lite';
+import { useStores } from '../../hooks';
+import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles({
   grid: {
@@ -14,6 +24,7 @@ const useStyles = makeStyles({
     borderLeft: '4px solid',
     borderLeftColor: colors.green,
     minWidth: '426px',
+    cursor: 'pointer',
   },
   leftIcon: {
     height: '60px',
@@ -22,10 +33,20 @@ const useStyles = makeStyles({
 });
 
 const LinkCard = (props) => {
-  const { icon, text } = props;
+  const { contentfulStore } = useStores();
+  const { forwardTo } = contentfulStore;
+  const { icon, text, history, sivu } = props;
+  const url = (icon || {}).url;
+  const forwardToPage = (id) => {
+    history.push(forwardTo(id));
+  };
+
   const classes = useStyles();
   return (
-    <Paper className={classes.paper}>
+    <Paper
+      className={classes.paper}
+      onClick={() => sivu && forwardToPage(sivu.id)}
+    >
       <Grid
         className={classes.grid}
         spacing={3}
@@ -35,7 +56,12 @@ const LinkCard = (props) => {
       >
         <Grid item xs={2}>
           <Icon className={classes.leftIcon}>
-            <img src={icon} alt="" />
+            {url ? (
+              <img
+                src={contentfulStore.assetUrl(url)}
+                alt={(icon || {}).description}
+              />
+            ) : null}
           </Icon>
         </Grid>
         <Grid item xs={9}>
@@ -50,4 +76,4 @@ const LinkCard = (props) => {
     </Paper>
   );
 };
-export default LinkCard;
+export default withRouter(observer(LinkCard));
