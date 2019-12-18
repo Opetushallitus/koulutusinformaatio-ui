@@ -40,9 +40,7 @@ const Preview = observer(({ markdown, keywords }) => {
   return (
     <p>
       {(result || []).map(([sentence, [kw, index]], sidx) => {
-        return sentence && kw
-          ? markSentence(sentence, kw, index, sidx)
-          : 'WADAAP' + index;
+        return sentence && kw ? markSentence(sentence, kw, index, sidx) : null;
       })}
     </p>
   );
