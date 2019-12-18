@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import Murupolku from './common/Murupolku';
 import Preview from './Preview';
@@ -81,7 +81,7 @@ const Sisaltohaku = observer((props) => {
         content: (content + (sideContent || '')).toLowerCase(),
       };
     });
-  const fetchResults = (search) => {
+  const fetchResults = useCallback((search) => {
     const keywords = asKeywords(search);
     if (!_.isEmpty(keywords)) {
       return index.filter(({ content }) => {
@@ -90,7 +90,7 @@ const Sisaltohaku = observer((props) => {
     } else {
       return [];
     }
-  };
+  });
   const hakusana = _.trim(
     (parse(props.location.search, true).query || {}).hakusana
   );
@@ -108,10 +108,10 @@ const Sisaltohaku = observer((props) => {
   const activeSearch = hakusana !== '';
   const keywords = asKeywords(hakusana);
   useEffect(() => {
-    if (keywords) {
-      doSearch({ preventDefault: () => {} });
-    }
-  });
+    const searchAfterContentfulLoaded = () =>
+      setState({ ...state, results: fetchResults(state.search) });
+    searchAfterContentfulLoaded();
+  }, [fetchResults, state]);
   return (
     <ReactiveBorder>
       <Grid
