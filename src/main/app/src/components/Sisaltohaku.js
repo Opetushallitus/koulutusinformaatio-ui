@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import Murupolku from './common/Murupolku';
 import Preview from './Preview';
@@ -66,7 +66,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Sisaltohaku = (props) => {
+const Sisaltohaku = observer((props) => {
   const asKeywords = (s) => s.toLowerCase().split(/[ ,]+/);
   const { contentfulStore } = useStores();
   const forwardToPage = (id) => {
@@ -82,14 +82,11 @@ const Sisaltohaku = (props) => {
       };
     });
   const fetchResults = (search) => {
-    console.log('updating results ' + search);
     const keywords = asKeywords(search);
     if (!_.isEmpty(keywords)) {
-      const r = index.filter(({ content }) => {
+      return index.filter(({ content }) => {
         return keywords.find((kw) => content.includes(kw));
       });
-      console.log(r);
-      return r;
     } else {
       return [];
     }
@@ -110,7 +107,11 @@ const Sisaltohaku = (props) => {
   };
   const activeSearch = hakusana !== '';
   const keywords = asKeywords(hakusana);
-
+  useEffect(() => {
+    if (keywords) {
+      doSearch({ preventDefault: () => {} });
+    }
+  });
   return (
     <ReactiveBorder>
       <Grid
@@ -157,25 +158,24 @@ const Sisaltohaku = (props) => {
           </Paper>
         </Grid>
         {activeSearch && _.isEmpty(state.results) ? (
-          <React.Fragment>
-            <Grid item xs={12}>
-              <h1>{t('sisaltohaku.eituloksia')}</h1>
-            </Grid>
-            <Grid item xs={12}>
-              <span>
-                {t('sisaltohaku.summary', { hakusana: hakusana || '' })}
-              </span>
-            </Grid>
-            <Grid item xs={12}>
-              <Link href={'/'}>{t('sisaltohaku.takaisin')}</Link>
-            </Grid>
-          </React.Fragment>
+          contentfulStore.data.loading ? null : (
+            <React.Fragment>
+              <Grid item xs={12}>
+                <h1>{t('sisaltohaku.eituloksia')}</h1>
+              </Grid>
+              <Grid item xs={12}>
+                <span>
+                  {t('sisaltohaku.summary', { hakusana: hakusana || '' })}
+                </span>
+              </Grid>
+              <Grid item xs={12}>
+                <Link href={'/'}>{t('sisaltohaku.takaisin')}</Link>
+              </Grid>
+            </React.Fragment>
+          )
         ) : (
           state.results.map(({ id }) => {
             const s = sivu[id];
-            const parts = (s.content.split(/\n/g) || []).concat(
-              (s.sideContent || '').split(/\n/g) || []
-            );
             return (
               <Grid item xs={12} key={id}>
                 <Card
@@ -187,12 +187,7 @@ const Sisaltohaku = (props) => {
                 >
                   <CardHeader className={classes.title} title={s.name} />
                   <CardContent className={classes.content}>
-                    <Preview
-                      parts={parts}
-                      id={id}
-                      contentfulStore={contentfulStore}
-                      keywords={keywords}
-                    />
+                    <Preview markdown={s.content} keywords={keywords} />
                   </CardContent>
                 </Card>
               </Grid>
@@ -202,6 +197,6 @@ const Sisaltohaku = (props) => {
       </Grid>
     </ReactiveBorder>
   );
-};
+});
 
-export default withRouter(observer(Sisaltohaku));
+export default withRouter(Sisaltohaku);
