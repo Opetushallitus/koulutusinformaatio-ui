@@ -81,7 +81,7 @@ const Sisaltohaku = observer((props) => {
         content: (content + (sideContent || '')).toLowerCase(),
       };
     });
-  const fetchResults = useCallback((search) => {
+  const fetchResults = (search) => {
     const keywords = asKeywords(search);
     if (!_.isEmpty(keywords)) {
       return index.filter(({ content }) => {
@@ -90,7 +90,7 @@ const Sisaltohaku = observer((props) => {
     } else {
       return [];
     }
-  });
+  };
   const hakusana = _.trim(
     (parse(props.location.search, true).query || {}).hakusana
   );
@@ -107,11 +107,6 @@ const Sisaltohaku = observer((props) => {
   };
   const activeSearch = hakusana !== '';
   const keywords = asKeywords(hakusana);
-  useEffect(() => {
-    const searchAfterContentfulLoaded = () =>
-      setState({ ...state, results: fetchResults(state.search) });
-    searchAfterContentfulLoaded();
-  }, [fetchResults, state]);
   return (
     <ReactiveBorder>
       <Grid
