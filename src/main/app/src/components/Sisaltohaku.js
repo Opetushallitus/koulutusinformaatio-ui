@@ -102,11 +102,14 @@ const Sisaltohaku = observer((props) => {
   const { t } = useTranslation();
   const doSearch = (event) => {
     props.history.push('/sisaltohaku/?hakusana=' + _.trim(state.search));
-    event.preventDefault();
+    event && event.preventDefault();
     setState({ ...state, results: fetchResults(state.search) });
   };
   const activeSearch = hakusana !== '';
   const keywords = asKeywords(hakusana);
+  useEffect(() => {
+    doSearch(null);
+  }, [contentfulStore.data.loading]); /* eslint-disable-line */
   return (
     <ReactiveBorder>
       <Grid

@@ -6,8 +6,7 @@ import { observer } from 'mobx-react-lite';
 
 const useStyles = makeStyles({
   highlight: {
-    backgroundColor: colors.green,
-    color: colors.white,
+    backgroundColor: colors.highlight,
   },
 });
 
