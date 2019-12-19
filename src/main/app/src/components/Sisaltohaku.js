@@ -100,13 +100,16 @@ const Sisaltohaku = observer((props) => {
   });
   const classes = useStyles();
   const { t } = useTranslation();
-  const doSearch = (event) => {
+  const doSearch = useCallback((event) => {
     props.history.push('/sisaltohaku/?hakusana=' + _.trim(state.search));
-    event.preventDefault();
+    event && event.preventDefault();
     setState({ ...state, results: fetchResults(state.search) });
-  };
+  });
   const activeSearch = hakusana !== '';
   const keywords = asKeywords(hakusana);
+  useEffect(() => {
+    doSearch(null);
+  }, [contentfulStore.data.loading, doSearch]);
   return (
     <ReactiveBorder>
       <Grid
