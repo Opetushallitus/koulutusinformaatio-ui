@@ -31,7 +31,6 @@ const headerStyles = (theme) => ({
   },
   icon: {
     width: '160px',
-    height: '25px',
     cursor: 'pointer',
   },
   beta: {
@@ -73,9 +72,9 @@ class Header extends Component {
             >
               {isOpen ? <Icon>close</Icon> : <MenuIcon />}
             </IconButton>
-            <Icon className={classes.icon} onClick={forwardToFrontPage}>
+            <IconButton className={classes.icon} onClick={forwardToFrontPage}>
               <img alt={t('opintopolku.brand')} src={HeaderIcon} />
-            </Icon>
+            </IconButton>
             <Chip
               className={classes.beta}
               size="small"
