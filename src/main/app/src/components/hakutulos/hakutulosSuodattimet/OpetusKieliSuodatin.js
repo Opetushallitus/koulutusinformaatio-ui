@@ -19,39 +19,49 @@ import qs from 'query-string';
 import { withTranslation } from 'react-i18next';
 import { styles } from '../../../styles';
 import { useStores } from '../../../hooks';
+import { toJS } from 'mobx';
 
 const OpetusKieliSuodatin = observer((props) => {
   const { classes, i18n, history } = props;
   const { hakuStore } = useStores();
-  const { koulutusFilters, oppilaitosFilters, toggle } = hakuStore;
+  const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
+  const { opetusKielet } = filter;
 
   const [opetusKieli, setOpetusKieli] = useState({});
   const [valitutOpetusKielet, setValitutOpetusKielet] = useState([]);
 
   useEffect(() => {
     toggle === 'koulutus'
-      ? setOpetusKieli(koulutusFilters.opetusKieli)
-      : setOpetusKieli(oppilaitosFilters.opetusKieli);
+      ? setOpetusKieli(toJS(koulutusFilters.opetusKieli))
+      : setOpetusKieli(toJS(oppilaitosFilters.opetusKieli));
+    setValitutOpetusKielet(toJS(opetusKielet));
   }, [
-    koulutusFilters.opetusKieli,
-    oppilaitosFilters.opetusKieli,
     props,
     toggle,
+    opetusKielet,
+    koulutusFilters.opetusKieli,
+    oppilaitosFilters.opetusKieli,
   ]);
 
-  const handleLanguageToggle = (kieliId) => () => {
-    const currentIndex = valitutOpetusKielet.indexOf(kieliId);
+  const handleLanguageToggle = (opetuskieliObj) => () => {
+    const opetuskieliFilterObj = {
+      id: opetuskieliObj[0],
+      name: opetuskieliObj[1]?.nimi,
+    };
+    const currentIndex = valitutOpetusKielet.findIndex(
+      ({ id }) => id === opetuskieliFilterObj.id
+    );
     const newValitutOpetusKielet = [...valitutOpetusKielet];
 
     if (currentIndex === -1) {
-      newValitutOpetusKielet.push(kieliId);
+      newValitutOpetusKielet.push(opetuskieliFilterObj);
     } else {
       newValitutOpetusKielet.splice(currentIndex, 1);
     }
 
     setValitutOpetusKielet(newValitutOpetusKielet);
     const search = qs.parse(history.location.search);
-    search.opetuskieli = newValitutOpetusKielet.join(',');
+    search.opetuskieli = newValitutOpetusKielet.map(({ id }) => id).join(',');
     hakuStore.setOpetusKieliFilter(newValitutOpetusKielet);
     history.replace({ search: qs.stringify(search) });
     hakuStore.searchKoulutukset();
@@ -65,37 +75,36 @@ const OpetusKieliSuodatin = observer((props) => {
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
         <List style={{ width: '100%' }}>
-          {Object.keys(opetusKieli).map((opetuskieliKey) => {
-            const labelId = `language-list-label-${opetuskieliKey}`;
+          {Object.entries(opetusKieli).map((opetuskieliArr) => {
+            const labelId = `language-list-label-${opetuskieliArr[0]}`;
             return (
               <ListItem
-                key={opetuskieliKey}
+                key={opetuskieliArr[0]}
                 dense
                 button
-                onClick={handleLanguageToggle(opetuskieliKey)}
-                disabled={opetusKieli[opetuskieliKey].count === 0}
+                onClick={handleLanguageToggle(opetuskieliArr)}
+                disabled={opetuskieliArr[1].count === 0}
               >
                 <ListItemIcon>
                   <Checkbox
                     classes={{ root: classes.listItemCheckbox }}
                     edge="start"
-                    checked={valitutOpetusKielet.indexOf(opetuskieliKey) !== -1}
+                    checked={
+                      valitutOpetusKielet.find(
+                        ({ id }) => id === opetuskieliArr[0]
+                      ) !== undefined
+                    }
                     tabIndex={-1}
                     disableRipple
-                    inputProps={{ 'aria-labelledby': labelId }}
                   />
                 </ListItemIcon>
                 <ListItemText
                   classes={{ primary: classes.hakuTulosListItemText }}
                   id={labelId}
                   primary={
-                    <Grid container justify="space-between">
-                      <Grid item>
-                        {opetusKieli[opetuskieliKey].nimi[i18n.language]}
-                      </Grid>
-                      <Grid
-                        item
-                      >{`(${opetusKieli[opetuskieliKey].count})`}</Grid>
+                    <Grid container justify="space-between" wrap="nowrap">
+                      <Grid item>{opetuskieliArr[1].nimi[i18n.language]}</Grid>
+                      <Grid item>{`(${opetuskieliArr[1].count})`}</Grid>
                     </Grid>
                   }
                 />
