@@ -57,7 +57,8 @@ class Haku extends Component {
     const oppilaitokset = this.props.hakuStore.oppilaitosResult;
     if (
       (koulutukset && koulutukset.length > 0) ||
-      (oppilaitokset && oppilaitokset.length > 0)
+      (oppilaitokset && oppilaitokset.length > 0) ||
+      true
     ) {
       return (
         <Hakutulos

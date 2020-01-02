@@ -6,8 +6,10 @@ import { HomeOutlined } from '@material-ui/icons';
 import { Grid, Paper, Typography } from '@material-ui/core';
 import { Localizer as l } from '../../tools/Utils';
 import HakutulosToggle from './HakutulosToggle';
+import KoulutusalatSuodatin from './hakutulosSuodattimet/KoulutusalatSuodatin';
 import OpetusKieliSuodatin from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
+import SuodatinValinnat from './hakutulosSuodattimet/SuodatinValinnat';
 import KoulutusKortti from './hakutulosKortit/KoulutusKortti';
 import OppilaitosKortti from './hakutulosKortit/OppilaitosKortti';
 import '../../assets/styles/components/_hakutulos.scss';
@@ -20,9 +22,11 @@ import { useStores } from '../../hooks';
 const Hakutulos = observer((props) => {
   const { t, classes } = props;
   const { hakuStore } = useStores();
+  const { filter } = hakuStore;
+  const { koulutustyyppi, koulutusala, opetusKielet, sijainti } = filter;
 
   useEffect(() => {
-    window.scroll(0, 0);
+    window.scroll(0, 170);
   }, [props]);
 
   const renderResultList = () => {
@@ -125,8 +129,13 @@ const Hakutulos = observer((props) => {
             <KoulutusTyyppiSuodatin />
             <OpetusKieliSuodatin />
             <SijaintiSuodatin />
+            <KoulutusalatSuodatin />
           </Grid>
           <Grid item xs={9} className={classes.hakutulosContent}>
+            {(koulutustyyppi.length > 0 ||
+              opetusKielet.length > 0 ||
+              koulutusala.length > 0 ||
+              sijainti.length > 0) && <SuodatinValinnat />}
             <div id="search-results">{renderResultList()}</div>
           </Grid>
         </Grid>

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toJS } from 'mobx';
-import { observer, inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import {
   Checkbox,
@@ -12,141 +12,164 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
-  Grid
+  Grid,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import qs from 'query-string';
 import { withTranslation } from 'react-i18next';
 import { styles } from '../../../styles';
+import { useStores } from '../../../hooks';
 
-@inject('hakuStore')
-@observer
-class KoulutusTyyppiSuodatin extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      koulutusTyypit: {},
-      valitutKoulutusTyypit: []
-    };
-  }
+const KoulutusTyyppiSuodatin = observer((props) => {
+  const { classes, i18n, history } = props;
+  const { hakuStore } = useStores();
+  const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
+  const { koulutustyyppi } = filter;
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this.props = nextProps;
-    const { hakuStore } = this.props;
+  const [koulutusTyypit, setKoulutusTyypit] = useState({});
+  const [valitutKoulutusTyypit, setValitutKoulutusTyypit] = useState([]);
+
+  useEffect(() => {
     const koulutusTyypitJS =
-      hakuStore.toggle === 'koulutus'
-        ? toJS(hakuStore.koulutusFilters.koulutusTyyppi)
-        : toJS(hakuStore.oppilaitosFilters.koulutusTyyppi);
+      toggle === 'koulutus'
+        ? toJS(koulutusFilters.koulutusTyyppi)
+        : toJS(oppilaitosFilters.koulutusTyyppi);
+    setKoulutusTyypit(koulutusTyypitJS);
+    setValitutKoulutusTyypit(toJS(koulutustyyppi));
+  }, [
+    hakuStore,
+    koulutusFilters.koulutusTyyppi,
+    koulutustyyppi,
+    oppilaitosFilters.koulutusTyyppi,
+    props,
+    toggle,
+  ]);
 
-    this.setState({ koulutusTyypit: koulutusTyypitJS });
-  }
+  const handleEduTypeToggle = (koulutustyyppiObj) => () => {
+    const koulutustyyppiFilterObj = {
+      id: koulutustyyppiObj[0],
+      name: koulutustyyppiObj[1]?.nimi,
+    };
+    const currentIndex = valitutKoulutusTyypit.findIndex(
+      ({ id }) => id === koulutustyyppiFilterObj.id
+    );
+    const newValitutKoulutusTyypit = [...valitutKoulutusTyypit];
 
-  handleEduTypeToggle = tyyppi => () => {
-    const currentIndex = this.state.valitutKoulutusTyypit.indexOf(tyyppi);
-    const valitutKoulutusTyypit = [...this.state.valitutKoulutusTyypit];
     if (currentIndex === -1) {
-      valitutKoulutusTyypit.push(tyyppi);
+      newValitutKoulutusTyypit.push(koulutustyyppiFilterObj);
     } else {
-      valitutKoulutusTyypit.splice(currentIndex, 1);
+      newValitutKoulutusTyypit.splice(currentIndex, 1);
     }
-    this.setState({ valitutKoulutusTyypit: valitutKoulutusTyypit });
+
+    setValitutKoulutusTyypit(newValitutKoulutusTyypit);
+    const search = qs.parse(history.location.search);
+    search.koulutustyyppi = newValitutKoulutusTyypit
+      .map(({ id }) => id)
+      .join(',');
+    hakuStore.setKoulutusTyyppiFilter(newValitutKoulutusTyypit);
+    history.replace({ search: qs.stringify(search) });
+    hakuStore.searchKoulutukset();
+    hakuStore.searchOppilaitokset();
   };
 
-  render() {
-    const { classes, i18n } = this.props;
-
-    return (
-      <ExpansionPanel defaultExpanded={false}>
-        <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-          <Typography variant="subtitle1">KoulutusTyyppi</Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <List style={{ width: '100%' }}>
-            {Object.keys(this.state.koulutusTyypit).map(eduTypeOuterListKey => {
-              const labelId = `educationtype-outerlist-label-${eduTypeOuterListKey}`;
-              return (
-                <React.Fragment key={`fragment-${eduTypeOuterListKey}`}>
-                  <ListItem
-                    key={eduTypeOuterListKey}
-                    id={eduTypeOuterListKey}
-                    dense
-                    button
-                    onClick={this.handleEduTypeToggle(eduTypeOuterListKey)}
-                  >
-                    <ListItemIcon>
-                      <Checkbox
-                        classes={{ root: classes.listItemCheckbox }}
-                        edge="start"
-                        checked={this.state.valitutKoulutusTyypit.indexOf(eduTypeOuterListKey) !== -1}
-                        tabIndex={-1}
-                        disableRipple
-                        inputProps={{ 'aria-labelledby': labelId }}
-                      />
-                    </ListItemIcon>
-                    <ListItemText
-                      classes={{ primary: classes.hakuTulosListItemText }}
-                      id={labelId}
-                      primary={
-                        <Grid container justify="space-between">
-                          <Grid item>{this.state.koulutusTyypit[eduTypeOuterListKey].nimi.fi}</Grid>
-                          <Grid item>{`(${this.state.koulutusTyypit[eduTypeOuterListKey].count})`}</Grid>
-                        </Grid>
+  return (
+    <ExpansionPanel defaultExpanded={true}>
+      <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+        <Typography variant="subtitle1">KoulutusTyyppi</Typography>
+      </ExpansionPanelSummary>
+      <ExpansionPanelDetails>
+        <List style={{ width: '100%' }}>
+          {Object.entries(koulutusTyypit).map((eduTypeOuterArr) => {
+            const labelId = `educationtype-outerlist-label-${eduTypeOuterArr[0]}`;
+            return (
+              <React.Fragment key={`fragment-${eduTypeOuterArr[0]}`}>
+                <ListItem
+                  key={eduTypeOuterArr[0]}
+                  id={eduTypeOuterArr[0]}
+                  dense
+                  button
+                  onClick={handleEduTypeToggle(eduTypeOuterArr)}
+                >
+                  <ListItemIcon>
+                    <Checkbox
+                      classes={{ root: classes.listItemCheckbox }}
+                      edge="start"
+                      checked={
+                        valitutKoulutusTyypit.findIndex(
+                          ({ id }) => id === eduTypeOuterArr[0]
+                        ) !== -1
                       }
-                    ></ListItemText>
-                  </ListItem>
-                  {this.state.koulutusTyypit[eduTypeOuterListKey].alakoodit &&
-                    Object.keys(this.state.koulutusTyypit[eduTypeOuterListKey].alakoodit).map(eduTypeInnerListkey => {
+                      tabIndex={-1}
+                      disableRipple
+                      inputProps={{ 'aria-labelledby': labelId }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    classes={{ primary: classes.hakuTulosListItemText }}
+                    id={labelId}
+                    primary={
+                      <Grid container justify="space-between" wrap="nowrap">
+                        <Grid item>{eduTypeOuterArr[1].nimi.fi}</Grid>
+                        <Grid item>{`(${eduTypeOuterArr[1].count})`}</Grid>
+                      </Grid>
+                    }
+                  ></ListItemText>
+                </ListItem>
+                {eduTypeOuterArr[1].alakoodit &&
+                  Object.entries(eduTypeOuterArr[1].alakoodit).map(
+                    (eduTypeInnerArr) => {
                       return (
                         <ListItem
                           className={classes.eduTypeInnerListPadding}
-                          key={`${eduTypeOuterListKey}_${eduTypeInnerListkey}`}
-                          id={`${eduTypeOuterListKey}_${eduTypeInnerListkey}`}
+                          key={`${eduTypeOuterArr[0]}_${eduTypeInnerArr[0]}`}
+                          id={`${eduTypeOuterArr[0]}_${eduTypeInnerArr[0]}`}
                           dense
                           button
-                          onClick={this.handleEduTypeToggle(eduTypeInnerListkey)}
+                          onClick={handleEduTypeToggle(eduTypeInnerArr)}
                         >
                           <ListItemIcon>
                             <Checkbox
                               classes={{ root: classes.listItemCheckbox }}
                               edge="start"
-                              checked={this.state.valitutKoulutusTyypit.indexOf(eduTypeInnerListkey) !== -1}
+                              checked={
+                                valitutKoulutusTyypit.findIndex(
+                                  ({ id }) => id === eduTypeInnerArr[0]
+                                ) !== -1
+                              }
                               tabIndex={-1}
                               disableRipple
-                              inputProps={{ 'aria-labelledby': labelId }}
                             />
                           </ListItemIcon>
                           <ListItemText
                             classes={{ primary: classes.hakuTulosListItemText }}
-                            id={`this ${labelId}_${eduTypeInnerListkey}`}
+                            id={`this ${labelId}_${eduTypeInnerArr}`}
                             primary={
                               <Grid container justify="space-between">
                                 <Grid item>
-                                  {
-                                    this.state.koulutusTyypit[eduTypeOuterListKey].alakoodit[eduTypeInnerListkey].nimi[
-                                      i18n.language
-                                    ]
-                                  }
+                                  {eduTypeInnerArr[1].nimi[i18n.language]}
                                 </Grid>
                                 <Grid item>
-                                  {`(${this.state.koulutusTyypit[eduTypeOuterListKey].alakoodit[eduTypeInnerListkey].count})`}
+                                  {`(${eduTypeInnerArr[1].count})`}
                                 </Grid>
                               </Grid>
                             }
                           ></ListItemText>
                         </ListItem>
                       );
-                    })}
-                </React.Fragment>
-              );
-            })}
-          </List>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-    );
-  }
-}
+                    }
+                  )}
+              </React.Fragment>
+            );
+          })}
+        </List>
+      </ExpansionPanelDetails>
+    </ExpansionPanel>
+  );
+});
 
-const KoulutusTyyppiSuodatinWithStyles = withTranslation()(withStyles(styles)(KoulutusTyyppiSuodatin));
+const KoulutusTyyppiSuodatinWithStyles = withTranslation()(
+  withStyles(styles)(KoulutusTyyppiSuodatin)
+);
 
 export default withRouter(KoulutusTyyppiSuodatinWithStyles);
