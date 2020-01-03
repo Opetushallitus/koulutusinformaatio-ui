@@ -145,7 +145,11 @@ const KoulutusTyyppiSuodatin = observer((props) => {
                             classes={{ primary: classes.hakuTulosListItemText }}
                             id={`this ${labelId}_${eduTypeInnerArr}`}
                             primary={
-                              <Grid container justify="space-between">
+                              <Grid
+                                container
+                                justify="space-between"
+                                wrap="nowrap"
+                              >
                                 <Grid item>
                                   {eduTypeInnerArr[1].nimi[i18n.language]}
                                 </Grid>
