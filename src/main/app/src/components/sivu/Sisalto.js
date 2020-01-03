@@ -48,7 +48,7 @@ const Sisalto = observer(
   ({ content, contentfulStore, alwaysFullWidth, excludeMedia, ...props }) => {
     const classes = useStyles();
     const { forwardTo } = contentfulStore;
-    const { sivu } = contentfulStore.data;
+    const { sivu, asset } = contentfulStore.data;
     const forwardToPage = (e, id) => {
       props.history.push(forwardTo(id));
       e.preventDefault();
@@ -56,6 +56,7 @@ const Sisalto = observer(
     const Null = (props) => null;
     const ImageComponent = ({ src, alt, ...props }) => {
       const url = src.replace('//images.ctfassets.net/', '');
+      const a = asset[url];
       return (
         <Grid
           container
@@ -74,7 +75,8 @@ const Sisalto = observer(
               <CardMedia
                 className={classes.media}
                 image={contentfulStore.assetUrl(url)}
-                title={alt}
+                title={a ? a.description : alt}
+                aria-label={a ? a.description : alt}
               />
             </Card>
           </Grid>

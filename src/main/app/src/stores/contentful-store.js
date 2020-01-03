@@ -34,6 +34,9 @@ class ContentfulStore {
   static reduceToKeyValue(values) {
     return values.reduce((res, value) => {
       res[value.id] = value;
+      if (value.url) {
+        res[value.url] = value;
+      }
       if (value.slug) {
         res[value.slug] = value;
       }
