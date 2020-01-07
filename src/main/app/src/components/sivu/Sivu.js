@@ -43,7 +43,7 @@ const Sivu = observer((props) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { contentfulStore } = useStores();
-  const { forwardTo } = contentfulStore;
+  const { murupolku } = contentfulStore;
 
   useEffect(() => {
     const el = window.location.hash
@@ -53,39 +53,14 @@ const Sivu = observer((props) => {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
-  const murupolkuPath = () => {
-    const pageId = props.match.params.id;
-    const { sivu, valikko } = contentfulStore.data;
-    const all = Object.entries(valikko).concat(Object.entries(sivu));
-    const page = sivu[pageId];
-    const findParent = (id) => {
-      const childId = (sivu[id] || {}).id || id;
-      const parent = all.find((entry, ind) => {
-        const [, item] = entry;
-        return (item.linkki || []).find((i) => i.id === childId);
-      });
-      if (parent) {
-        const [parentId, parentItem] = parent;
-        return findParent(parentId).concat([parentItem]);
-      } else {
-        return [];
-      }
-    };
-    const breadcrump = page ? findParent(pageId).concat([page]) : [];
-    return breadcrump.map((b) => ({ name: b.name, link: forwardTo(b.id) }));
-  };
 
   const pageId = props.match.params.id;
   const { sivu, loading } = contentfulStore.data;
   const page = sivu[pageId];
 
   if (page && page.content) {
-    const { content, description, name, sideContent } = page;
+    const { content, description, name } = page;
     const tableOfContents = page.tableOfContents === 'true';
-    const isBlank = (str) => {
-      return !str || /^\s*$/.test(str);
-    };
-    const hasSideContent = !isBlank(sideContent);
 
     return (
       <React.Fragment>
@@ -97,13 +72,8 @@ const Sivu = observer((props) => {
             spacing={2}
             alignItems="center"
           >
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={tableOfContents ? (hasSideContent ? 12 : 10) : 6}
-            >
-              <Murupolku path={murupolkuPath()} />
+            <Grid item xs={12} sm={12} md={tableOfContents ? 10 : 6}>
+              <Murupolku path={murupolku(pageId)} />
               <h1 className={classes.header1}>{name}</h1>
               <p>{description}</p>
             </Grid>
@@ -114,28 +84,14 @@ const Sivu = observer((props) => {
                 <TableOfContents content={content} />
               </Grid>
             ) : null}
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={tableOfContents ? (hasSideContent ? 9 : 7) : 6}
-            >
+            <Grid item xs={12} sm={12} md={tableOfContents ? 7 : 6}>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={12} md={hasSideContent ? 8 : 12}>
+                <Grid item xs={12} sm={12} md={12}>
                   <Sisalto
                     content={content}
                     contentfulStore={contentfulStore}
                   />
                 </Grid>
-                {hasSideContent ? (
-                  <Grid item xs={12} sm={12} md={4}>
-                    <Sisalto
-                      content={sideContent}
-                      alwaysFullWidth={true}
-                      contentfulStore={contentfulStore}
-                    />
-                  </Grid>
-                ) : null}
               </Grid>
             </Grid>
           </Grid>

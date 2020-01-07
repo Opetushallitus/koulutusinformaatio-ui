@@ -23,6 +23,32 @@ class ContentfulStore {
     return sivu ? `/sivu/${sivu.slug || id}` : `/sivu/poistettu`;
   };
 
+  murupolku = (pageId) => {
+    const { valikko, sivu, sivuKooste } = this.data;
+    const all = Object.entries(valikko)
+      .concat(Object.entries(sivu))
+      .concat(Object.entries(sivuKooste));
+    const page = sivu[pageId] || sivuKooste[pageId];
+    const findParent = (id) => {
+      const childId = (sivu[id] || sivuKooste[id] || {}).id || id;
+      const parent = all.find((entry, ind) => {
+        const [, item] = entry;
+        return (item.linkki || []).find((i) => i.id === childId);
+      });
+      if (parent) {
+        const [parentId, parentItem] = parent;
+        return findParent(parentId).concat([parentItem]);
+      } else {
+        return [];
+      }
+    };
+    const breadcrump = page ? findParent(pageId).concat([page]) : [];
+    return breadcrump.map((b) => ({
+      name: b.name,
+      link: this.forwardTo(b.id),
+    }));
+  };
+
   assetUrl(url) {
     return `${this.urlStore.urls.url('konfo-backend.content', '')}${url}`;
   }
