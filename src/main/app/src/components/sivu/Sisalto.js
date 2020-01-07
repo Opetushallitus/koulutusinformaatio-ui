@@ -75,7 +75,7 @@ const Sisalto = observer(
               <CardMedia
                 className={classes.media}
                 image={contentfulStore.assetUrl(url)}
-                title={alt}
+                title={a ? a.name : alt}
                 aria-label={a ? a.description : alt}
               />
             </Card>
