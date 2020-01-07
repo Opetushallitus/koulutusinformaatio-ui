@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Hakupalkki from './haku/Hakupalkki';
 import Haku from './haku/Haku';
-import Sivu from './sivu/Sivu';
+import SivuRouter from './sivu/SivuRouter';
 import Koulutus from './koulutus/Koulutus';
 import Oppilaitos from './oppilaitos/Oppilaitos';
 import Toteutus from './toteutus/Koulutus';
@@ -82,7 +82,7 @@ class Hakusivu extends Component {
             path={'/vertailu'}
             render={(props) => <Vertailu {...props} />}
           />
-          <Route path={'/sivu/:id'} render={(props) => <Sivu />} />
+          <Route path={'/sivu/:id'} render={(props) => <SivuRouter />} />
         </main>
       </React.Fragment>
     );

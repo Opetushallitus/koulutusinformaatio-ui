@@ -6,8 +6,6 @@ import Sisalto from './Sisalto';
 import Grid from '@material-ui/core/Grid';
 import { colors } from '../../colors';
 import { makeStyles } from '@material-ui/core';
-import Link from '@material-ui/core/Link';
-import { useTranslation } from 'react-i18next';
 import { useStores } from '../../hooks';
 import { observer } from 'mobx-react-lite';
 
@@ -39,8 +37,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Sivu = observer((props) => {
-  const { t } = useTranslation();
+const Sivu = observer(({ id }) => {
   const classes = useStyles();
   const { contentfulStore } = useStores();
   const { murupolku } = contentfulStore;
@@ -54,71 +51,46 @@ const Sivu = observer((props) => {
     }
   });
 
-  const pageId = props.match.params.id;
-  const { sivu, loading } = contentfulStore.data;
+  const pageId = id;
+  const { sivu } = contentfulStore.data;
   const page = sivu[pageId];
 
-  if (page && page.content) {
-    const { content, description, name } = page;
-    const tableOfContents = page.tableOfContents === 'true';
+  const { content, description, name } = page;
+  const tableOfContents = page.tableOfContents === 'true';
 
-    return (
-      <React.Fragment>
-        <div className={classes.component}>
-          <Grid
-            container
-            direction="row"
-            justify="center"
-            spacing={2}
-            alignItems="center"
-          >
-            <Grid item xs={12} sm={12} md={tableOfContents ? 10 : 6}>
-              <Murupolku path={murupolku(pageId)} />
-              <h1 className={classes.header1}>{name}</h1>
-              <p>{description}</p>
-            </Grid>
+  return (
+    <React.Fragment>
+      <div className={classes.component}>
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          spacing={2}
+          alignItems="center"
+        >
+          <Grid item xs={12} sm={12} md={tableOfContents ? 10 : 6}>
+            <Murupolku path={murupolku(pageId)} />
+            <h1 className={classes.header1}>{name}</h1>
+            <p>{description}</p>
           </Grid>
-          <Grid container direction="row" spacing={2} justify="center">
-            {tableOfContents ? (
-              <Grid item xs={12} sm={12} md={3}>
-                <TableOfContents content={content} />
-              </Grid>
-            ) : null}
-            <Grid item xs={12} sm={12} md={tableOfContents ? 7 : 6}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={12} md={12}>
-                  <Sisalto
-                    content={content}
-                    contentfulStore={contentfulStore}
-                  />
-                </Grid>
+        </Grid>
+        <Grid container direction="row" spacing={2} justify="center">
+          {tableOfContents ? (
+            <Grid item xs={12} sm={12} md={3}>
+              <TableOfContents content={content} />
+            </Grid>
+          ) : null}
+          <Grid item xs={12} sm={12} md={tableOfContents ? 7 : 6}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12} md={12}>
+                <Sisalto content={content} contentfulStore={contentfulStore} />
               </Grid>
             </Grid>
           </Grid>
-        </div>
-      </React.Fragment>
-    );
-  } else {
-    return (
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        className={classes.component}
-      >
-        {loading ? null : (
-          <Grid item xs={12} sm={6} md={6} className={classes.notFound}>
-            <h1 className={classes.header1}>
-              {t('sisaltohaku.sivua-ei-löytynyt')}
-            </h1>
-            <p>{t('sisaltohaku.etsimääsi-ei-löydy')}</p>
-            <Link href={'/'}>{t('sisaltohaku.takaisin')}</Link>
-          </Grid>
-        )}
-      </Grid>
-    );
-  }
+        </Grid>
+      </div>
+    </React.Fragment>
+  );
 });
 
 export default withRouter(Sivu);
