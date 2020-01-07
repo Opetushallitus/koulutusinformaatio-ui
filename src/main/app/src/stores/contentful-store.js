@@ -11,6 +11,7 @@ class ContentfulStore {
     asset: {},
     footer: {},
     sivuKooste: {},
+    content: {},
     palvelut: {},
     valikot: {},
     ohjeetJaTuki: {},
@@ -18,9 +19,8 @@ class ContentfulStore {
   };
 
   forwardTo = (id) => {
-    return this.data.sivu[id]
-      ? `/sivu/${this.data.sivu[id].slug || id}`
-      : `/sivu/poistettu`;
+    const sivu = this.data.sivu[id] || this.data.sivuKooste[id];
+    return sivu ? `/sivu/${sivu.slug || id}` : `/sivu/poistettu`;
   };
 
   assetUrl(url) {
