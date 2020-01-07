@@ -61,8 +61,8 @@ const Module = ({ module }) => {
         cardsRight={right.map(({ id }) => lehti[id])}
       />
     );
-  } else if (module.type === 'sivu') {
-    const { content, id } = contentfulStore.data.sivu[module.id];
+  } else if (module.type === 'content') {
+    const { content } = contentfulStore.data.content[module.id];
     return (
       <Grid item xs={12} sm={10} md={8} lg={6}>
         <Sisalto
