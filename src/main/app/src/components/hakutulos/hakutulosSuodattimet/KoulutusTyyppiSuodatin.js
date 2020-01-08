@@ -90,6 +90,7 @@ const KoulutusTyyppiSuodatin = observer((props) => {
                   dense
                   button
                   onClick={handleEduTypeToggle(eduTypeOuterArr)}
+                  disabled={eduTypeOuterArr[1].count === 0}
                 >
                   <ListItemIcon>
                     <Checkbox
@@ -127,6 +128,7 @@ const KoulutusTyyppiSuodatin = observer((props) => {
                           dense
                           button
                           onClick={handleEduTypeToggle(eduTypeInnerArr)}
+                          disabled={eduTypeInnerArr[1].count === 0}
                         >
                           <ListItemIcon>
                             <Checkbox

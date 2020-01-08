@@ -21,12 +21,25 @@ const SuodatinValinnat = observer((props) => {
   }, [filter, props]);
 
   const handleDelete = (filterType, item) => () => {
+    const search = qs.parse(history.location.search);
+    const _filterType =
+      filterType !== 'selectedsijainnit' ? filterType : 'sijainti';
     const newFilters = { ...filters };
 
     newFilters[filterType] = newFilters[filterType].filter(
-      (thisItem) => thisItem.id !== item.id
+      ({ id }) => id !== item.id
     );
 
+    search[_filterType] = newFilters[filterType]
+      .filter(({ id }) => id !== item.id)
+      .map(({ id }) => id)
+      .join(',');
+
+    if (!search[_filterType] || search[_filterType].length === 0) {
+      delete search[_filterType];
+    }
+
+    history.replace({ search: qs.stringify(search) });
     hakuStore.setFilters(filterType, item);
     hakuStore.searchKoulutukset();
     hakuStore.searchOppilaitokset();

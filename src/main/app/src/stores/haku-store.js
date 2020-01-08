@@ -36,6 +36,7 @@ class HakuStore {
     opetusKielet: [],
     paikkakunta: '',
     sijainti: [],
+    selectedsijainnit: [],
   };
 
   constructor(rest) {
@@ -173,6 +174,13 @@ class HakuStore {
   setSijaintiFilter = (valitutSijainnit = []) => {
     const change = valitutSijainnit !== this.filter.sijainti;
     this.filter.sijainti = valitutSijainnit;
+    return change;
+  };
+
+  @action
+  setSelectedSijaintiFilter = (selectedSijainnit = []) => {
+    const change = selectedSijainnit !== this.filter.selectedsijainnit;
+    this.filter.selectedsijainnit = selectedSijainnit;
     return change;
   };
 
