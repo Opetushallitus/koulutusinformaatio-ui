@@ -27,12 +27,12 @@ const SijaintiSuodatin = observer((props) => {
   const { classes, i18n, history } = props;
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
-  const { sijainti } = filter;
+  const { sijainti, selectedsijainnit } = filter;
 
   const [maakunnat, setMaakunnat] = useState([]);
-  const [kunnat, setKunnat] = useState([]);
+  const [searchHitsSijainnit, setSearchHitsSijainnit] = useState([]);
   const [selectedSijainnit, setSelectedSijainnit] = useState([]);
-  const [valitutSijainnit, setValitutSijainnit] = useState([]);
+  const [checkedMaakunnat, setCheckedMaakunnat] = useState([]);
 
   useEffect(() => {
     const maaKunnatJS =
@@ -64,7 +64,7 @@ const SijaintiSuodatin = observer((props) => {
       },
       []
     );
-    const selectKunnatAndMaakunnat = filteredMaaKunnat.reduce(
+    const _searchHitsSijainnit = filteredMaaKunnat.reduce(
       (accumulator, maaKunta, kuntaIndex) => {
         return [
           ...accumulator,
@@ -79,9 +79,10 @@ const SijaintiSuodatin = observer((props) => {
       },
       selectKunnat
     );
+    setSelectedSijainnit(toJS(selectedsijainnit));
     setMaakunnat(maaKunnatJS);
-    setKunnat(selectKunnatAndMaakunnat);
-    setValitutSijainnit(toJS(sijainti));
+    setSearchHitsSijainnit(_searchHitsSijainnit);
+    setCheckedMaakunnat(toJS(sijainti));
   }, [
     props,
     hakuStore,
@@ -91,6 +92,7 @@ const SijaintiSuodatin = observer((props) => {
     koulutusFilters.kunta,
     oppilaitosFilters.maakunta,
     oppilaitosFilters.kunta,
+    selectedsijainnit,
     i18n.language,
   ]);
 
@@ -99,50 +101,71 @@ const SijaintiSuodatin = observer((props) => {
       id: maakuntaArr[0],
       name: maakuntaArr[1]?.nimi,
     };
-    const newValitutSijainnit = [...valitutSijainnit];
-    const newSelectedSijainnit = [...selectedSijainnit];
-    const currentIndex = valitutSijainnit.findIndex(
+    const newValitutMaakunnat = [...checkedMaakunnat];
+    const currentIndex = checkedMaakunnat.findIndex(
       ({ id }) => id === maakuntaFilterObj.id
     );
 
     if (currentIndex !== -1) {
-      newValitutSijainnit.splice(currentIndex, 1);
+      newValitutMaakunnat.splice(currentIndex, 1);
     } else {
-      newValitutSijainnit.push(maakuntaFilterObj);
+      newValitutMaakunnat.push(maakuntaFilterObj);
     }
-    setValitutSijainnit(newValitutSijainnit);
-    setHakuStoreSijaintiFilter(newValitutSijainnit, newSelectedSijainnit);
+    setCheckedMaakunnat(newValitutMaakunnat);
+    setHakuStoreSijaintiFilter(newValitutMaakunnat);
   };
 
-  const handleSelectedSijannitToggle = (selectedSijainnit) => {
-    const newSelectedSijainnit = selectedSijainnit || [];
-    setSelectedSijainnit(newSelectedSijainnit);
-    setHakuStoreSijaintiFilter(valitutSijainnit, newSelectedSijainnit);
+  const handleSelectedSijaintiIsMaakunta = (_selectedSijainti) => {
+    if (
+      checkedMaakunnat.findIndex(({ id }) => id === _selectedSijainti.id) !== -1
+    )
+      return;
+    const maakuntaFilterObj = {
+      id: _selectedSijainti?.id,
+      name: _selectedSijainti?.name,
+    };
+    const newValitutMaakunnat = [...checkedMaakunnat, maakuntaFilterObj];
+    setHakuStoreSijaintiFilter(newValitutMaakunnat);
   };
 
-  const setHakuStoreSijaintiFilter = (
-    newValitutSijainnit,
-    _selectedSijainnit
-  ) => {
-    const selectedSijainnit = _selectedSijainnit || [];
-    const combinedValitutSijainnit = selectedSijainnit.reduce(
-      (valitutSijainnitAccu, selectedSijainti, index) => {
-        if (
-          !valitutSijainnitAccu.find(({ id }) => id === selectedSijainti.id)
-        ) {
-          return [
-            ...valitutSijainnitAccu,
-            { id: selectedSijainti.id, name: selectedSijainti.name },
-          ];
-        }
-        return valitutSijainnitAccu;
-      },
-      newValitutSijainnit
-    );
+  const handleSelectedSijannitToggle = (_selectedSijainti) => {
+    const selectedSijaintitObjEntry = Object.entries(_selectedSijainti);
+
+    if (
+      selectedSijaintitObjEntry.length > 0 &&
+      _selectedSijainti.constructor === Object &&
+      _selectedSijainti.isMaakunta
+    ) {
+      return handleSelectedSijaintiIsMaakunta(_selectedSijainti);
+    }
+
+    const newSelectedSijainnit =
+      [...selectedSijainnit, _selectedSijainti] || [];
+    const combinedSijainnit = [
+      ...new Set(
+        newSelectedSijainnit
+          .map(({ id }) => id)
+          .concat(checkedMaakunnat.map(({ id }) => id))
+      ),
+    ];
     const search = qs.parse(history.location.search);
-    search.sijainti = combinedValitutSijainnit.map(({ id }) => id).join(',');
+
+    setSelectedSijainnit(newSelectedSijainnit);
+    search.sijainti = combinedSijainnit.join(',');
     history.replace({ search: qs.stringify(search) });
-    hakuStore.setSijaintiFilter(combinedValitutSijainnit);
+    hakuStore.setSelectedSijaintiFilter(newSelectedSijainnit);
+    hakuStore.searchKoulutukset();
+    hakuStore.searchOppilaitokset();
+  };
+
+  const setHakuStoreSijaintiFilter = (newValitutKunnat) => {
+    const search = qs.parse(history.location.search);
+    search.sijainti = newValitutKunnat
+      .map(({ id }) => id)
+      .concat(selectedSijainnit.map(({ id }) => id))
+      .join(',');
+    history.replace({ search: qs.stringify(search) });
+    hakuStore.setSijaintiFilter(newValitutKunnat);
     hakuStore.searchKoulutukset();
     hakuStore.searchOppilaitokset();
   };
@@ -181,7 +204,25 @@ const SijaintiSuodatin = observer((props) => {
       <ExpansionPanelDetails>
         <Grid container direction="column">
           <Grid item style={{ padding: '20px 0' }}>
-            ToDo: 'Etsi paikkakunta tai alue' - input-filter
+            <Select
+              components={{ DropdownIndicator }}
+              styles={customStyles}
+              value=""
+              name="district-search"
+              options={searchHitsSijainnit}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              placeholder="Etsi paikkakunta tai alue"
+              onChange={(e) => handleSelectedSijannitToggle(e)}
+              theme={(theme) => ({
+                ...theme,
+                colors: {
+                  ...theme.colors,
+                  primary25: colors.greyMuiListOnHover,
+                  primary: colors.green,
+                },
+              })}
+            />
           </Grid>
           <Grid item>
             <List style={{ width: '100%' }}>
@@ -201,7 +242,7 @@ const SijaintiSuodatin = observer((props) => {
                         classes={{ root: classes.listItemCheckbox }}
                         edge="start"
                         checked={
-                          valitutSijainnit.findIndex(
+                          checkedMaakunnat.findIndex(
                             ({ id }) => id === maakuntaArray[0]
                           ) !== -1
                         }

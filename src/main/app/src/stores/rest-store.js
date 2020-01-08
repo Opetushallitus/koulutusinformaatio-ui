@@ -19,6 +19,7 @@ class RestStore {
 
   @action
   searchKoulutuksetPromise = (keyword, paging, filter) => {
+    const sijainnit = filter.sijainti.concat(filter.selectedsijainnit);
     return superagent
       .get(this.urlStore.urls.url('konfo-backend.search.koulutukset'))
       .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
@@ -35,9 +36,7 @@ class RestStore {
         opetuskieli: filter.opetusKielet
           ? filter.opetusKielet.map(({ id }) => id).join(',')
           : '',
-        sijainti: filter.sijainti
-          ? filter.sijainti.map(({ id }) => id).join(',')
-          : '',
+        sijainti: sijainnit ? sijainnit.map(({ id }) => id).join(',') : '',
         lng: l.getLanguage(),
       })
       .catch(this.handleError);
@@ -45,6 +44,7 @@ class RestStore {
 
   @action
   searchOppilaitoksetPromise = (keyword, paging, filter) => {
+    const sijainnit = filter.sijainti.concat(filter.selectedsijainnit);
     return superagent
       .get(this.urlStore.urls.url('konfo-backend.search.oppilaitokset'))
       .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
@@ -61,9 +61,7 @@ class RestStore {
         opetuskieli: filter.opetusKielet
           ? filter.opetusKielet.map(({ id }) => id).join(',')
           : '',
-        sijainti: filter.sijainti
-          ? filter.sijainti.map(({ id }) => id).join(',')
-          : '',
+        sijainti: sijainnit ? sijainnit.map(({ id }) => id).join(',') : '',
         lng: l.getLanguage(),
       })
       .catch(this.handleError);

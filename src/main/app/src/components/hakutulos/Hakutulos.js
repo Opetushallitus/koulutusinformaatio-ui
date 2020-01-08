@@ -23,7 +23,13 @@ const Hakutulos = observer((props) => {
   const { t, classes } = props;
   const { hakuStore } = useStores();
   const { filter } = hakuStore;
-  const { koulutustyyppi, koulutusala, opetusKielet, sijainti } = filter;
+  const {
+    koulutustyyppi,
+    koulutusala,
+    opetusKielet,
+    sijainti,
+    selectedsijainnit,
+  } = filter;
 
   useEffect(() => {
     window.scroll(0, 170);
@@ -126,15 +132,16 @@ const Hakutulos = observer((props) => {
         </Grid>
         <Grid item container xs={12}>
           <Grid item xs={3} className={classes.hakutulosFiltersGrid}>
+            <SijaintiSuodatin />
             <KoulutusTyyppiSuodatin />
             <OpetusKieliSuodatin />
-            <SijaintiSuodatin />
             <KoulutusalatSuodatin />
           </Grid>
           <Grid item xs={9} className={classes.hakutulosContent}>
             {(koulutustyyppi.length > 0 ||
               opetusKielet.length > 0 ||
               koulutusala.length > 0 ||
+              selectedsijainnit.length > 0 ||
               sijainti.length > 0) && <SuodatinValinnat />}
             <div id="search-results">{renderResultList()}</div>
           </Grid>
