@@ -103,7 +103,9 @@ const OpetusKieliSuodatin = observer((props) => {
                   id={labelId}
                   primary={
                     <Grid container justify="space-between" wrap="nowrap">
-                      <Grid item>{opetuskieliArr[1]?.nimi?.fi}</Grid>
+                      <Grid item>
+                        {opetuskieliArr[1]?.nimi?.[i18n.language]}
+                      </Grid>
                       <Grid item>{`(${opetuskieliArr[1]?.count})`}</Grid>
                     </Grid>
                   }

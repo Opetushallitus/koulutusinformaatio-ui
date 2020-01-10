@@ -68,8 +68,8 @@ const SijaintiSuodatin = observer((props) => {
         return [
           ...kuntaAccum,
           {
-            label: `${kunta[1]?.nimi?.fi} (${kunta[1]?.count})`,
-            value: kunta[1]?.nimi?.fi,
+            label: `${kunta[1]?.nimi?.[i18n.language]} (${kunta[1]?.count})`,
+            value: kunta[1]?.nimi?.[i18n.language],
             isMaakunta: false,
             id: kunta[0],
             name: kunta[1]?.nimi,
@@ -83,8 +83,10 @@ const SijaintiSuodatin = observer((props) => {
         return [
           ...accumulator,
           {
-            label: `${maaKunta[1]?.nimi?.fi} (${maaKunta[1]?.count})`,
-            value: maaKunta[1]?.nimi?.fi,
+            label: `${maaKunta[1]?.nimi?.[i18n.language]} (${
+              maaKunta[1]?.count
+            })`,
+            value: maaKunta[1]?.nimi?.[i18n.language],
             isMaakunta: true,
             id: maaKunta[0],
             name: maaKunta[1]?.nimi,
@@ -277,7 +279,9 @@ const SijaintiSuodatin = observer((props) => {
                       id={labelId}
                       primary={
                         <Grid container justify="space-between" wrap="nowrap">
-                          <Grid item>{maakuntaArray[1]?.nimi?.fi}</Grid>
+                          <Grid item>
+                            {maakuntaArray[1]?.nimi?.[i18n.language]}
+                          </Grid>
                           <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
                         </Grid>
                       }
@@ -316,7 +320,9 @@ const SijaintiSuodatin = observer((props) => {
                         id={labelId}
                         primary={
                           <Grid container justify="space-between" wrap="nowrap">
-                            <Grid item>{maakuntaArray[1]?.nimi?.fi}</Grid>
+                            <Grid item>
+                              {maakuntaArray[1]?.nimi?.[i18n.language]}
+                            </Grid>
                             <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
                           </Grid>
                         }

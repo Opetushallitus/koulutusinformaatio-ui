@@ -152,7 +152,9 @@ const KoulutusTyyppiSuodatin = observer((props) => {
                                 justify="space-between"
                                 wrap="nowrap"
                               >
-                                <Grid item>{eduTypeInnerArr[1]?.nimi?.fi}</Grid>
+                                <Grid item>
+                                  {eduTypeInnerArr[1]?.nimi?.[i18n.language]}
+                                </Grid>
                                 <Grid item>
                                   {`(${eduTypeInnerArr[1]?.count})`}
                                 </Grid>

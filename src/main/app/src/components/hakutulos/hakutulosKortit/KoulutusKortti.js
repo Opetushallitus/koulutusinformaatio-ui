@@ -28,8 +28,9 @@ const KoulutusKortti = (props) => {
     }, '')
     .replace(/,\s*$/, '');
 
-  const opintojenlaajuusStr = opintojenlaajuus?.nimi?.fi;
-  const opintojenlaajuusyksikkoStr = opintojenlaajuusyksikko?.nimi?.fi;
+  const opintojenlaajuusStr = opintojenlaajuus?.nimi?.[i18n.language];
+  const opintojenlaajuusyksikkoStr =
+    opintojenlaajuusyksikko?.nimi?.[i18n.language];
   const kuvausStr = (kuvaus) => {
     const kuvausStr = kuvaus && kuvaus.fi;
 
@@ -56,7 +57,7 @@ const KoulutusKortti = (props) => {
           <Grid container item xs={8} spacing={3} direction="column">
             <Grid item>
               <Typography variant="h6" style={{ fontWeight: 'bold' }}>
-                {nimi?.fi}
+                {nimi?.[i18n.language]}
               </Typography>
             </Grid>
             <Grid item>

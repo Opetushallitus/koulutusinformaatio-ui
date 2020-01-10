@@ -39,7 +39,9 @@ const KoulutusalatSuodatin = observer((props) => {
         ? Object.entries(toJS(koulutusFilters.koulutusala))
         : Object.entries(toJS(oppilaitosFilters.koulutusala));
 
-    koulutusalatJS.sort((a, b) => a[1]?.nimi?.fi.localeCompare(b[1]?.nimi?.fi));
+    koulutusalatJS.sort((a, b) =>
+      a[1]?.nimi?.[i18n.language].localeCompare(b[1]?.nimi?.[i18n.language])
+    );
 
     setKoulutusAlat(koulutusalatJS);
     setValitutKoulutusAlat(toJS(hakuStore.filter.koulutusala));
@@ -50,6 +52,7 @@ const KoulutusalatSuodatin = observer((props) => {
     koulutusFilters.koulutusala,
     oppilaitosFilters.koulutusala,
     hakuStore.filter.koulutusala,
+    i18n.language,
   ]);
 
   const handleKoulutusalaOuterToggle = (koulutusalaTaso1) => () => {
@@ -120,7 +123,7 @@ const KoulutusalatSuodatin = observer((props) => {
           primary={
             <Grid container justify="space-between" wrap="nowrap">
               <Grid item style={{ fontWeight: 'bold' }}>
-                {expandedKoulutusTaso1[1]?.nimi?.fi}
+                {expandedKoulutusTaso1[1]?.nimi?.[i18n.language]}
               </Grid>
               <Grid item>{`(${expandedKoulutusTaso1[1]?.count})`}</Grid>
             </Grid>
@@ -164,7 +167,7 @@ const KoulutusalatSuodatin = observer((props) => {
                     <Grid item>
                       {
                         expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]
-                          ?.nimi?.fi
+                          ?.nimi?.[i18n.language]
                       }
                     </Grid>
                     <Grid item>
@@ -204,7 +207,9 @@ const KoulutusalatSuodatin = observer((props) => {
                   id={labelId}
                   primary={
                     <Grid container justify="space-between" wrap="nowrap">
-                      <Grid item>{kouutusalaArray[1].nimi?.fi}</Grid>
+                      <Grid item>
+                        {kouutusalaArray[1].nimi?.[i18n.language]}
+                      </Grid>
                       <Grid item>{`(${kouutusalaArray[1]?.count})`}</Grid>
                     </Grid>
                   }

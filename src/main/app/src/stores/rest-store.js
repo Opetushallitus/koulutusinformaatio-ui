@@ -37,8 +37,7 @@ class RestStore {
           ? filter.opetusKielet.map(({ id }) => id).join(',')
           : '',
         sijainti: sijainnit ? sijainnit.map(({ id }) => id).join(',') : '',
-        // lng: l.getLanguage(),
-        lng: 'fi',
+        lng: l.getLanguage(),
       })
       .catch(this.handleError);
   };
@@ -63,8 +62,7 @@ class RestStore {
           ? filter.opetusKielet.map(({ id }) => id).join(',')
           : '',
         sijainti: sijainnit ? sijainnit.map(({ id }) => id).join(',') : '',
-        // lng: l.getLanguage(),
-        lng: 'fi',
+        lng: l.getLanguage(),
       })
       .catch(this.handleError);
   };
