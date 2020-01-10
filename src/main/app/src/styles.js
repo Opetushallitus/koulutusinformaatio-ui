@@ -60,6 +60,9 @@ export const styles = (theme) =>
       fontSize: 14,
       color: '#4C4C4C',
     },
+    buttonSmallText: {
+      fontSize: 14,
+    },
     eduTypeInnerListPadding: {
       paddingLeft: theme.spacing(2.2),
     },

@@ -1,30 +1,30 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
 import '../../../assets/styles/components/_hakutulos-box.scss';
-import { Grid, Paper, Typography, ButtonBase } from '@material-ui/core';
+import { ButtonBase, Grid, Link, Paper, Typography } from '@material-ui/core';
 import { SchoolOutlined, PublicOutlined } from '@material-ui/icons';
 import { styles } from '../../../styles';
 import oppilaitos_img from '../../../assets/images/logo-oppilaitos.png';
 import { educationTypeColorCode } from '../../../colors';
 import _get from 'lodash/get';
+import { t } from 'i18next/dist/commonjs';
 
 const OppilaitosKortti = (props) => {
-  const { classes, nimi, i18n, oppilaitos } = props;
+  const { classes, nimi, i18n, oppilaitos, t } = props;
 
   const paikkakunnatStr = oppilaitos.paikkakunnat
     .reduce((acc, current) => {
-      return acc + current.nimi[i18n.language] + ', ';
+      return acc + current.nimi.fi + ', ';
     }, '')
     .replace(/,\s*$/, '');
 
   const kuvausStr = (kuvaus) => {
-    const kuvausStr = kuvaus && kuvaus[i18n.language];
+    const kuvausStr = kuvaus && kuvaus.fi;
 
     if (!kuvausStr) {
-      return 'Ei kuvausta';
+      return t('haku.ei_kuvausta');
     }
     const strippedHTMLKuvausStr = kuvausStr.replace(/<[^>]*>/gm, '');
 
@@ -35,61 +35,63 @@ const OppilaitosKortti = (props) => {
   };
   const koulutusOhjelmatStr = () => {
     const amount = _get(oppilaitos, 'koulutusohjelmia', 0);
-    if (amount === 0) return 'ei kolutusohjelmia';
-    if (amount === 1) return `${amount} koulutusohjelma`;
-    return `${amount} koukutusohjelmaa`;
+    if (amount === 0) return t('haku.ei_koulutusohjelmia');
+    if (amount === 1) return `${amount} ${t('haku.koulutusohjelma')}`;
+    return `${amount} ${t('haku.koulutusohjelmaa')}`;
   };
 
   return (
-    <Paper
-      className={classes.hakutulosKortti}
-      style={{ borderTop: `5px solid ${educationTypeColorCode.amm}` }}
-    >
-      <Grid container spacing={4}>
-        <Grid container item xs={8} spacing={3} direction="column">
-          <Grid item>
-            <Typography variant="h6" style={{ fontWeight: 'bold' }}>
-              {nimi[i18n.language] || 'Ei nimeä'}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography>{kuvausStr(oppilaitos.kuvaus)}</Typography>
-          </Grid>
+    <Link href={props.link} underline="none">
+      <Paper
+        className={classes.hakutulosKortti}
+        style={{ borderTop: `5px solid ${educationTypeColorCode.amm}` }}
+      >
+        <Grid container spacing={4}>
+          <Grid container item xs={8} spacing={3} direction="column">
+            <Grid item>
+              <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+                {nimi?.fi}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography>{kuvausStr(oppilaitos.kuvaus)}</Typography>
+            </Grid>
 
-          <Grid item container direction="row">
-            <Grid item container xs={6}>
-              <Grid item xs={1}>
-                <SchoolOutlined />
+            <Grid item container direction="row">
+              <Grid item container xs={6}>
+                <Grid item xs={1}>
+                  <SchoolOutlined />
+                </Grid>
+                <Grid item xs={11}>
+                  <Typography className={classes.koulutusKorttiLeftMargin}>
+                    {koulutusOhjelmatStr()}
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item xs={11}>
-                <Typography className={classes.koulutusKorttiLeftMargin}>
-                  {koulutusOhjelmatStr()}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid item container xs={6}>
-              <Grid item xs={1}>
-                <PublicOutlined />
-              </Grid>
-              <Grid item xs={11}>
-                <Typography className={classes.koulutusKorttiLeftMargin}>
-                  {paikkakunnatStr}
-                </Typography>
+              <Grid item container xs={6}>
+                <Grid item xs={1}>
+                  <PublicOutlined />
+                </Grid>
+                <Grid item xs={11}>
+                  <Typography className={classes.koulutusKorttiLeftMargin}>
+                    {paikkakunnatStr}
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
+          <Grid item container xs={4} justify="center">
+            <ButtonBase className={classes.koulutusKorttiImgBtn}>
+              <img
+                className={classes.koulutusKorttiImg}
+                src={oppilaitos_img}
+                alt="haku koulutukseen"
+              />
+            </ButtonBase>
+          </Grid>
         </Grid>
-        <Grid item container xs={4} justify="center">
-          <ButtonBase className={classes.koulutusKorttiImgBtn}>
-            <img
-              className={classes.koulutusKorttiImg}
-              src={oppilaitos_img}
-              alt="haku koulutukseen"
-            />
-          </ButtonBase>
-        </Grid>
-      </Grid>
-    </Paper>
+      </Paper>
+    </Link>
   );
 };
 

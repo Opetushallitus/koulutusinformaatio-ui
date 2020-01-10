@@ -3,18 +3,19 @@ import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import {
+  Button,
   Checkbox,
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
+  Grid,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   Typography,
-  Grid,
 } from '@material-ui/core';
-import { ExpandMore, SearchOutlined } from '@material-ui/icons';
+import { ExpandLess, ExpandMore, SearchOutlined } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import Select, { components } from 'react-select';
 import qs from 'query-string';
@@ -24,12 +25,15 @@ import { colors } from '../../../colors';
 import { useStores } from '../../../hooks';
 
 const SijaintiSuodatin = observer((props) => {
-  const { classes, i18n, history } = props;
+  const { classes, i18n, history, t } = props;
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
   const { sijainti, selectedsijainnit } = filter;
 
   const [maakunnat, setMaakunnat] = useState([]);
+  const [firstFiveMaakunnat, setfirstFiveMaakunnat] = useState([]);
+  const [restMaakunnat, setRestMaakunnat] = useState([]);
+  const [showRest, setShowRest] = useState(false);
   const [searchHitsSijainnit, setSearchHitsSijainnit] = useState([]);
   const [selectedSijainnit, setSelectedSijainnit] = useState([]);
   const [checkedMaakunnat, setCheckedMaakunnat] = useState([]);
@@ -44,7 +48,17 @@ const SijaintiSuodatin = observer((props) => {
         ? Object.entries(toJS(koulutusFilters.kunta))
         : Object.entries(toJS(oppilaitosFilters.kunta));
 
+    maaKunnatJS.sort((a, b) => (a[1].nimi.fi > b[1].nimi.fi ? 1 : -1));
     maaKunnatJS.sort((a, b) => b[1].count - a[1].count);
+    const unknownMaakuntaIndex = maaKunnatJS.findIndex(
+      (el) => el[0] === 'maakunta_99'
+    );
+    if (
+      unknownMaakuntaIndex !== -1 &&
+      maaKunnatJS[unknownMaakuntaIndex]?.[1]?.count === 0
+    ) {
+      maaKunnatJS.push(maaKunnatJS.splice(unknownMaakuntaIndex, 1)[0]);
+    }
     const filteredKunnat = kunnatJS.filter((kunta) => kunta[1].count > 0);
     const filteredMaaKunnat = maaKunnatJS.filter(
       (maakunta) => maakunta[1].count > 0
@@ -54,11 +68,11 @@ const SijaintiSuodatin = observer((props) => {
         return [
           ...kuntaAccum,
           {
-            label: `${kunta[1].nimi[i18n.language]} (${kunta[1].count})`,
-            value: kunta[1].nimi[i18n.language],
+            label: `${kunta[1]?.nimi?.fi} (${kunta[1]?.count})`,
+            value: kunta[1]?.nimi?.fi,
             isMaakunta: false,
             id: kunta[0],
-            name: kunta[1].nimi,
+            name: kunta[1]?.nimi,
           },
         ];
       },
@@ -69,16 +83,19 @@ const SijaintiSuodatin = observer((props) => {
         return [
           ...accumulator,
           {
-            label: `${maaKunta[1].nimi[i18n.language]} (${maaKunta[1].count})`,
-            value: maaKunta[1].nimi[i18n.language],
+            label: `${maaKunta[1]?.nimi?.fi} (${maaKunta[1]?.count})`,
+            value: maaKunta[1]?.nimi?.fi,
             isMaakunta: true,
             id: maaKunta[0],
-            name: maaKunta[1].nimi,
+            name: maaKunta[1]?.nimi,
           },
         ];
       },
       selectKunnat
     );
+    const copyMaakunnatJS = [...maaKunnatJS];
+    setfirstFiveMaakunnat(copyMaakunnatJS.splice(0, 5));
+    setRestMaakunnat(copyMaakunnatJS);
     setSelectedSijainnit(toJS(selectedsijainnit));
     setMaakunnat(maaKunnatJS);
     setSearchHitsSijainnit(_searchHitsSijainnit);
@@ -170,6 +187,10 @@ const SijaintiSuodatin = observer((props) => {
     hakuStore.searchOppilaitokset();
   };
 
+  const handleShowRest = () => {
+    setShowRest(!showRest);
+  };
+
   const DropdownIndicator = (props) => {
     return (
       components.DropdownIndicator && (
@@ -199,7 +220,7 @@ const SijaintiSuodatin = observer((props) => {
   return (
     <ExpansionPanel defaultExpanded={true}>
       <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <Typography variant="subtitle1">Sijainti</Typography>
+        <Typography variant="subtitle1">{t('haku.sijainti')}</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
         <Grid container direction="column">
@@ -226,7 +247,7 @@ const SijaintiSuodatin = observer((props) => {
           </Grid>
           <Grid item>
             <List style={{ width: '100%' }}>
-              {maakunnat.map((maakuntaArray) => {
+              {firstFiveMaakunnat.map((maakuntaArray) => {
                 const labelId = `educationtype-outerlist-label-${maakuntaArray[0]}`;
                 return (
                   <ListItem
@@ -256,14 +277,63 @@ const SijaintiSuodatin = observer((props) => {
                       id={labelId}
                       primary={
                         <Grid container justify="space-between" wrap="nowrap">
-                          <Grid item>{maakuntaArray[1].nimi.fi}</Grid>
-                          <Grid item>{`(${maakuntaArray[1].count})`}</Grid>
+                          <Grid item>{maakuntaArray[1]?.nimi?.fi}</Grid>
+                          <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
                         </Grid>
                       }
                     ></ListItemText>
                   </ListItem>
                 );
               })}
+              {showRest &&
+                restMaakunnat.map((maakuntaArray) => {
+                  const labelId = `educationtype-outerlist-label-${maakuntaArray[0]}`;
+                  return (
+                    <ListItem
+                      key={maakuntaArray[0]}
+                      id={maakuntaArray[0]}
+                      dense
+                      button
+                      disabled={maakuntaArray[1].count === 0}
+                      onClick={handleMaakuntaToggle(maakuntaArray)}
+                    >
+                      <ListItemIcon>
+                        <Checkbox
+                          classes={{ root: classes.listItemCheckbox }}
+                          edge="start"
+                          checked={
+                            checkedMaakunnat.findIndex(
+                              ({ id }) => id === maakuntaArray[0]
+                            ) !== -1
+                          }
+                          tabIndex={-1}
+                          disableRipple
+                          inputProps={{ 'aria-labelledby': labelId }}
+                        />
+                      </ListItemIcon>
+                      <ListItemText
+                        classes={{ primary: classes.hakuTulosListItemText }}
+                        id={labelId}
+                        primary={
+                          <Grid container justify="space-between" wrap="nowrap">
+                            <Grid item>{maakuntaArray[1]?.nimi?.fi}</Grid>
+                            <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
+                          </Grid>
+                        }
+                      ></ListItemText>
+                    </ListItem>
+                  );
+                })}
+              <Button
+                color="secondary"
+                size="small"
+                classes={{ label: classes.buttonSmallText }}
+                endIcon={showRest ? <ExpandLess /> : <ExpandMore />}
+                fullWidth
+                onClick={() => handleShowRest()}
+              >
+                {showRest ? t('haku.näytä_vähemmän') : t('haku.näytä_lisää')}
+              </Button>
             </List>
           </Grid>
         </Grid>

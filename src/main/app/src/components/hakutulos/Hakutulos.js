@@ -40,9 +40,7 @@ const Hakutulos = observer((props) => {
     const oppilaitosResult = toJS(hakuStore.oppilaitosResult);
     if (hakuStore.toggleKoulutus) {
       return koulutusResult.map((r) => {
-        const link = `/koulutus/${r.oid}?haku=${encodeURIComponent(
-          hakuStore.createHakuUrl
-        )}&lng=${l.getLanguage()}`;
+        const link = `/koulutus/${r.oid}`;
         return (
           <KoulutusKortti
             key={r.oid}
@@ -61,9 +59,7 @@ const Hakutulos = observer((props) => {
       });
     } else {
       return oppilaitosResult.map((r) => {
-        const link = `/oppilaitos/${r.oid}?haku=${encodeURIComponent(
-          hakuStore.createHakuUrl
-        )}&lng=${l.getLanguage()}`;
+        const link = `/oppilaitos/${r.oid}`;
         return (
           <OppilaitosKortti
             key={r.oid}
@@ -127,14 +123,14 @@ const Hakutulos = observer((props) => {
             <HakutulosToggle />
           </Grid>
           <Grid item xs={2}>
-            <Typography align="right">Järjestä: Nimi A-Ö</Typography>
+            <Typography align="right">{t('haku.järjestänimi_ä_ö')}</Typography>
           </Grid>
         </Grid>
         <Grid item container xs={12}>
           <Grid item xs={3} className={classes.hakutulosFiltersGrid}>
-            <SijaintiSuodatin />
             <KoulutusTyyppiSuodatin />
             <OpetusKieliSuodatin />
+            <SijaintiSuodatin />
             <KoulutusalatSuodatin />
           </Grid>
           <Grid item xs={9} className={classes.hakutulosContent}>

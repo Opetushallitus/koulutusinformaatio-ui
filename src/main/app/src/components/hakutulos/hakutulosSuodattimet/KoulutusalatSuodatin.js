@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import {
+  Button,
   Checkbox,
+  Divider,
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
-  Link,
+  Grid,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   Typography,
-  Grid,
-  Divider,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
@@ -24,7 +24,7 @@ import { useStores } from '../../../hooks';
 import { toJS } from 'mobx';
 
 const KoulutusalatSuodatin = observer((props) => {
-  const { classes, i18n, history } = props;
+  const { classes, i18n, history, t } = props;
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
   const { koulutusala } = filter;
@@ -39,9 +39,7 @@ const KoulutusalatSuodatin = observer((props) => {
         ? Object.entries(toJS(koulutusFilters.koulutusala))
         : Object.entries(toJS(oppilaitosFilters.koulutusala));
 
-    koulutusalatJS.sort((a, b) =>
-      a[1].nimi[i18n.language].localeCompare(b[1].nimi[i18n.language])
-    );
+    koulutusalatJS.sort((a, b) => a[1]?.nimi?.fi.localeCompare(b[1]?.nimi?.fi));
 
     setKoulutusAlat(koulutusalatJS);
     setValitutKoulutusAlat(toJS(hakuStore.filter.koulutusala));
@@ -52,15 +50,9 @@ const KoulutusalatSuodatin = observer((props) => {
     koulutusFilters.koulutusala,
     oppilaitosFilters.koulutusala,
     hakuStore.filter.koulutusala,
-    i18n.language,
   ]);
 
   const handleKoulutusalaOuterToggle = (koulutusalaTaso1) => () => {
-    console.log(
-      '%ckoulutusalaTaso1: ',
-      'color: red; font-weight: bold;',
-      koulutusalaTaso1
-    );
     setExpandedKoulutusTaso1(koulutusalaTaso1);
   };
 
@@ -73,11 +65,6 @@ const KoulutusalatSuodatin = observer((props) => {
       ({ id }) => id === koulutusID
     );
     const newValitutKoulutusalat = [...valitutKoulutusAlat];
-    console.log(
-      '%ckoulutusalaFilterObj: ',
-      'color: green; font-weight: bold;',
-      koulutusalaFilterObj
-    );
 
     if (currentIndex === -1) {
       newValitutKoulutusalat.push(koulutusalaFilterObj);
@@ -87,19 +74,7 @@ const KoulutusalatSuodatin = observer((props) => {
 
     setValitutKoulutusAlat(newValitutKoulutusalat);
     const search = qs.parse(history.location.search);
-    search.koulutusala = newValitutKoulutusalat
-      .map((koalat) => koalat.id)
-      .join(',');
-    console.log(
-      '%c' + koulutusID + ': ',
-      'color: green; font-weight: bold;',
-      obj
-    );
-    console.log(
-      '%cnewValitutKoulutusalat: ',
-      'color: green; font-weight: bold;',
-      newValitutKoulutusalat
-    );
+    search.koulutusala = newValitutKoulutusalat.map(({ id }) => id).join(',');
     hakuStore.setKoulutusalaFilter(newValitutKoulutusalat);
     history.replace({ search: qs.stringify(search) });
     hakuStore.searchKoulutukset();
@@ -108,16 +83,14 @@ const KoulutusalatSuodatin = observer((props) => {
 
   const KoulutuksetTaso2 = () => (
     <List style={{ width: '100%' }} hidden={expandedKoulutusTaso1.length === 0}>
-      <Link
-        style={{ marginBottom: '10px' }}
-        component="button"
-        variant="body2"
-        onClick={() => {
-          setExpandedKoulutusTaso1([]);
-        }}
+      <Button
+        color="secondary"
+        size="small"
+        classes={{ label: classes.buttonSmallText }}
+        onClick={() => setExpandedKoulutusTaso1([])}
       >
-        &lt;&lt; Kaikki koulutusalat
-      </Link>
+        {t('haku.__kaikki_koulutusalat')}
+      </Button>
       <ListItem
         key={expandedKoulutusTaso1[0]}
         dense
@@ -133,13 +106,12 @@ const KoulutusalatSuodatin = observer((props) => {
             classes={{ root: classes.listItemCheckbox }}
             edge="start"
             checked={
-              valitutKoulutusAlat.find(
+              valitutKoulutusAlat.findIndex(
                 ({ id }) => id === expandedKoulutusTaso1[0]
-              ) !== undefined
+              ) !== -1
             }
             tabIndex={-1}
             disableRipple
-            // inputProps={{ 'aria-labelledby': labelId }}
           />
         </ListItemIcon>
         <ListItemText
@@ -148,7 +120,7 @@ const KoulutusalatSuodatin = observer((props) => {
           primary={
             <Grid container justify="space-between" wrap="nowrap">
               <Grid item style={{ fontWeight: 'bold' }}>
-                {expandedKoulutusTaso1[1]?.nimi[i18n.language]}
+                {expandedKoulutusTaso1[1]?.nimi?.fi}
               </Grid>
               <Grid item>{`(${expandedKoulutusTaso1[1]?.count})`}</Grid>
             </Grid>
@@ -176,13 +148,12 @@ const KoulutusalatSuodatin = observer((props) => {
                   classes={{ root: classes.listItemCheckbox }}
                   edge="start"
                   checked={
-                    valitutKoulutusAlat.find(
+                    valitutKoulutusAlat.findIndex(
                       ({ id }) => id === koulutusTaso2_ID
-                    ) !== undefined
+                    ) !== -1
                   }
                   tabIndex={-1}
                   disableRipple
-                  // inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>
               <ListItemText
@@ -193,7 +164,7 @@ const KoulutusalatSuodatin = observer((props) => {
                     <Grid item>
                       {
                         expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]
-                          ?.nimi?.[i18n.language]
+                          ?.nimi?.fi
                       }
                     </Grid>
                     <Grid item>
@@ -211,7 +182,7 @@ const KoulutusalatSuodatin = observer((props) => {
   return (
     <ExpansionPanel defaultExpanded={true}>
       <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <Typography variant="subtitle1">Koulutusalat</Typography>
+        <Typography variant="subtitle1">{t('haku.koulutusalat')}</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
         <List
@@ -233,8 +204,8 @@ const KoulutusalatSuodatin = observer((props) => {
                   id={labelId}
                   primary={
                     <Grid container justify="space-between" wrap="nowrap">
-                      <Grid item>{kouutusalaArray[1].nimi[i18n.language]}</Grid>
-                      <Grid item>{`(${kouutusalaArray[1].count})`}</Grid>
+                      <Grid item>{kouutusalaArray[1].nimi?.fi}</Grid>
+                      <Grid item>{`(${kouutusalaArray[1]?.count})`}</Grid>
                     </Grid>
                   }
                 />
