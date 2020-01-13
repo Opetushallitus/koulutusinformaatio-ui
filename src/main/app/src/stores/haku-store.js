@@ -27,6 +27,7 @@ class HakuStore {
     pageKoulutus: 1,
     pageSize: 20,
   };
+  @observable sort = 'asc';
   @observable filter = {
     koulutus: [],
     koulutustyyppi: [],
@@ -160,6 +161,13 @@ class HakuStore {
       toggle && toggle.toLowerCase() === 'koulutus' ? 'koulutus' : 'oppilaitos';
     const change = this.toggle !== newToggle;
     this.toggle = newToggle;
+    return change;
+  };
+
+  @action
+  toggleSort = (newSort) => {
+    const change = this.sort !== newSort;
+    this.sort = newSort;
     return change;
   };
 
@@ -388,7 +396,8 @@ class HakuStore {
           this.rest.searchKoulutuksetPromise(
             this.keyword,
             this.paging,
-            this.filter
+            this.filter,
+            this.sort
           ),
         ],
         (result) => {
@@ -412,7 +421,8 @@ class HakuStore {
           this.rest.searchOppilaitoksetPromise(
             this.keyword,
             this.paging,
-            this.filter
+            this.filter,
+            this.sort
           ),
         ],
         (result) => {

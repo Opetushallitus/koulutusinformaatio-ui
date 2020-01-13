@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { withStyles } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
-import { HomeOutlined } from '@material-ui/icons';
-import { Grid, Paper, Typography } from '@material-ui/core';
+import { ExpandMore, ExpandLess, HomeOutlined } from '@material-ui/icons';
+import { Button, Grid, Paper, Typography } from '@material-ui/core';
 import { Localizer as l } from '../../tools/Utils';
 import HakutulosToggle from './HakutulosToggle';
 import KoulutusalatSuodatin from './hakutulosSuodattimet/KoulutusalatSuodatin';
@@ -15,12 +15,13 @@ import OppilaitosKortti from './hakutulosKortit/OppilaitosKortti';
 import '../../assets/styles/components/_hakutulos.scss';
 import { styles } from '../../styles';
 import { withTranslation } from 'react-i18next';
+import qs from 'query-string';
 import { toJS } from 'mobx';
 import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
 import { useStores } from '../../hooks';
 
 const Hakutulos = observer((props) => {
-  const { t, classes } = props;
+  const { t, classes, history } = props;
   const { hakuStore } = useStores();
   const { filter } = hakuStore;
   const {
@@ -31,9 +32,23 @@ const Hakutulos = observer((props) => {
     selectedsijainnit,
   } = filter;
 
+  const [sort, setSort] = useState('');
+
   useEffect(() => {
     window.scroll(0, 170);
-  }, [props]);
+    setSort(toJS(hakuStore.sort));
+  }, [props, hakuStore.sort]);
+
+  const handleSortToggle = (sort) => {
+    const newSort = sort === 'asc' ? 'desc' : 'asc';
+    setSort(newSort);
+    const search = qs.parse(history.location.search);
+    search.sort = newSort;
+    hakuStore.toggleSort(newSort);
+    history.replace({ search: qs.stringify(search) });
+    hakuStore.searchKoulutukset();
+    hakuStore.searchOppilaitokset();
+  };
 
   const renderResultList = () => {
     const koulutusResult = toJS(hakuStore.koulutusResult);
@@ -122,8 +137,16 @@ const Hakutulos = observer((props) => {
           <Grid id="toggle-tabs" item xs={7}>
             <HakutulosToggle />
           </Grid>
-          <Grid item xs={2}>
-            <Typography align="right">{t('haku.järjestänimi_ä_ö')}</Typography>
+          <Grid container item xs={2} direction="row-reverse">
+            <Button
+              endIcon={sort === 'asc' ? <ExpandMore /> : <ExpandLess />}
+              classes={{ label: classes.hakuTulosSortBtn }}
+              onClick={() => handleSortToggle(sort)}
+            >
+              {sort === 'asc'
+                ? t('haku.järjestänimi_a_ö')
+                : t('haku.järjestänimi_ö_a')}
+            </Button>
           </Grid>
         </Grid>
         <Grid item container xs={12}>
