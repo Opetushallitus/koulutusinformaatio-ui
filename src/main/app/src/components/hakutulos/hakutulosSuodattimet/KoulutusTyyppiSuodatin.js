@@ -7,12 +7,12 @@ import {
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
+  Grid,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   Typography,
-  Grid,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
@@ -22,7 +22,7 @@ import { styles } from '../../../styles';
 import { useStores } from '../../../hooks';
 
 const KoulutusTyyppiSuodatin = observer((props) => {
-  const { classes, i18n, history } = props;
+  const { classes, i18n, history, t } = props;
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
   const { koulutustyyppi } = filter;
@@ -76,7 +76,7 @@ const KoulutusTyyppiSuodatin = observer((props) => {
   return (
     <ExpansionPanel defaultExpanded={true}>
       <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <Typography variant="subtitle1">KoulutusTyyppi</Typography>
+        <Typography variant="subtitle1">{t('haku.koulutustyyppi')}</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
         <List style={{ width: '100%' }}>
@@ -153,10 +153,10 @@ const KoulutusTyyppiSuodatin = observer((props) => {
                                 wrap="nowrap"
                               >
                                 <Grid item>
-                                  {eduTypeInnerArr[1].nimi[i18n.language]}
+                                  {eduTypeInnerArr[1]?.nimi?.[i18n.language]}
                                 </Grid>
                                 <Grid item>
-                                  {`(${eduTypeInnerArr[1].count})`}
+                                  {`(${eduTypeInnerArr[1]?.count})`}
                                 </Grid>
                               </Grid>
                             }

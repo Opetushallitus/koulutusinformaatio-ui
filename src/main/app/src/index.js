@@ -16,6 +16,7 @@ i18n.init({
   react: {
     useSuspense: false,
   },
+  lng: 'fi',
 });
 
 ReactDOM.render(
