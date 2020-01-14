@@ -21,6 +21,9 @@ export const styles = (theme) =>
       maxWidth: 1600,
       margin: 'auto',
     },
+    hakuTulosSortBtn: {
+      fontWeight: 600,
+    },
     hakuTulosTabIconMargin: {
       marginBottom: '0 !important',
       marginRight: theme.spacing(2),

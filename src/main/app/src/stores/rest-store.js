@@ -18,7 +18,7 @@ class RestStore {
   };
 
   @action
-  searchKoulutuksetPromise = (keyword, paging, filter) => {
+  searchKoulutuksetPromise = (keyword, paging, filter, sort) => {
     const sijainnit = filter.sijainti.concat(filter.selectedsijainnit);
     return superagent
       .get(this.urlStore.urls.url('konfo-backend.search.koulutukset'))
@@ -38,12 +38,13 @@ class RestStore {
           : '',
         sijainti: sijainnit ? sijainnit.map(({ id }) => id).join(',') : '',
         lng: l.getLanguage(),
+        sort: sort,
       })
       .catch(this.handleError);
   };
 
   @action
-  searchOppilaitoksetPromise = (keyword, paging, filter) => {
+  searchOppilaitoksetPromise = (keyword, paging, filter, sort) => {
     const sijainnit = filter.sijainti.concat(filter.selectedsijainnit);
     return superagent
       .get(this.urlStore.urls.url('konfo-backend.search.oppilaitokset'))
@@ -63,6 +64,7 @@ class RestStore {
           : '',
         sijainti: sijainnit ? sijainnit.map(({ id }) => id).join(',') : '',
         lng: l.getLanguage(),
+        sort: sort,
       })
       .catch(this.handleError);
   };
