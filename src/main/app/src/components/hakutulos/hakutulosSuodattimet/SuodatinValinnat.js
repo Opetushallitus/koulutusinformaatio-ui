@@ -51,8 +51,9 @@ const SuodatinValinnat = observer((props) => {
   const handleClearFilters = () => {
     const search = qs.parse(history.location.search);
 
-    _omit(search, Object.keys(filters));
-    history.replace({ search: qs.stringify(search) });
+    history.replace({
+      search: qs.stringify(_omit(search, Object.keys(filters))),
+    });
     hakuStore.clearFilters();
   };
 
