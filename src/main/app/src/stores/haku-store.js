@@ -310,6 +310,19 @@ class HakuStore {
   }
 
   @action
+  clearFilters = () => {
+    this.filter.koulutus = [];
+    this.filter.paikkakunta = '';
+    this.filter.kieli = [];
+    this.filter.koulutustyyppi = [];
+    this.filter.koulutusala = [];
+    this.filter.opetusKielet = [];
+    this.filter.paikkakunta = [];
+    this.filter.sijainti = [];
+    this.filter.selectedsijainnit = [];
+  };
+
+  @action
   clearHaku = () => {
     this.keyword = '';
     this.filter.paikkakunta = '';
@@ -324,6 +337,7 @@ class HakuStore {
     this.oppilaitosResult = [];
     this.oppilaitosCount = 0;
     this.toggle = 'koulutus';
+    this.sort = 'asc';
   };
 
   @action
