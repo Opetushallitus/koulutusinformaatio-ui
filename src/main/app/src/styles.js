@@ -39,6 +39,8 @@ export const styles = (theme) =>
       fontWeight: 600,
     },
     hakuTulosChipRoot: {
+      marginBottom: 5,
+      marginRight: 5,
       borderRadius: 5,
       backgroundColor: '#F7F7F7',
       border: 'none',

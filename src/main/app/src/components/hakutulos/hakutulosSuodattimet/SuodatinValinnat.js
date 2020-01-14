@@ -9,6 +9,7 @@ import { withTranslation } from 'react-i18next';
 import { styles } from '../../../styles';
 import { useStores } from '../../../hooks';
 import { toJS } from 'mobx';
+import _omit from 'lodash/omit';
 
 const SuodatinValinnat = observer((props) => {
   const { classes, i18n, history, t } = props;
@@ -50,9 +51,7 @@ const SuodatinValinnat = observer((props) => {
   const handleClearFilters = () => {
     const search = qs.parse(history.location.search);
 
-    Object.keys(filters).map((filterKey) => {
-      delete search[filterKey];
-    });
+    _omit(search, Object.keys(filters));
     history.replace({ search: qs.stringify(search) });
     hakuStore.clearFilters();
   };
@@ -60,9 +59,8 @@ const SuodatinValinnat = observer((props) => {
   const displayChips = (entry) => {
     return entry[1].map((item) => (
       <Chip
-        style={{ marginRight: '5px', marginBottom: '5px' }}
-        key={`chip_${item.id}`}
         size="small"
+        key={`chip_${item.id}`}
         classes={{
           root: classes.hakuTulosChipRoot,
           label: classes.hakuTulosChipLabel,
@@ -82,13 +80,13 @@ const SuodatinValinnat = observer((props) => {
       </Grid>
       <Grid item>
         <Button
+          size="small"
           startIcon={<Clear />}
           classes={{
             label: classes.hakuTulosFiltersClearLabel,
             sizeSmall: classes.hakuTulosFiltersClearSizeSmall,
           }}
           onClick={() => handleClearFilters()}
-          size="small"
         >
           {t('haku.poista-valitut-rajaimet')}
         </Button>
