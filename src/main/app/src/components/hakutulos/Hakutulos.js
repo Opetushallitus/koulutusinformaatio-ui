@@ -27,7 +27,7 @@ const Hakutulos = observer((props) => {
   const {
     koulutustyyppi,
     koulutusala,
-    opetusKielet,
+    opetuskieli,
     sijainti,
     selectedsijainnit,
   } = filter;
@@ -158,7 +158,7 @@ const Hakutulos = observer((props) => {
           </Grid>
           <Grid item xs={9} className={classes.hakutulosContent}>
             {(koulutustyyppi.length > 0 ||
-              opetusKielet.length > 0 ||
+              opetuskieli.length > 0 ||
               koulutusala.length > 0 ||
               selectedsijainnit.length > 0 ||
               sijainti.length > 0) && <SuodatinValinnat />}

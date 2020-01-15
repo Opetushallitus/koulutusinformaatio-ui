@@ -33,8 +33,8 @@ class RestStore {
         koulutusala: filter.koulutusala
           ? filter.koulutusala.map(({ id }) => id).join(',')
           : '',
-        opetuskieli: filter.opetusKielet
-          ? filter.opetusKielet.map(({ id }) => id).join(',')
+        opetuskieli: filter.opetuskieli
+          ? filter.opetuskieli.map(({ id }) => id).join(',')
           : '',
         sijainti: sijainnit ? sijainnit.map(({ id }) => id).join(',') : '',
         lng: l.getLanguage(),
@@ -59,8 +59,8 @@ class RestStore {
         koulutusala: filter.koulutusala
           ? filter.koulutusala.map(({ id }) => id).join(',')
           : '',
-        opetuskieli: filter.opetusKielet
-          ? filter.opetusKielet.map(({ id }) => id).join(',')
+        opetuskieli: filter.opetuskieli
+          ? filter.opetuskieli.map(({ id }) => id).join(',')
           : '',
         sijainti: sijainnit ? sijainnit.map(({ id }) => id).join(',') : '',
         lng: l.getLanguage(),
