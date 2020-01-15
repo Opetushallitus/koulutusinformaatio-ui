@@ -1,5 +1,16 @@
-import { observable, computed, action, runInAction, toJS } from 'mobx';
+import { observable, computed, action, runInAction, set } from 'mobx';
 import { Localizer as l } from '../tools/Utils';
+
+const emptyFilter = {
+  koulutus: [],
+  koulutustyyppi: [],
+  koulutusala: [],
+  kieli: [],
+  opetusKielet: [],
+  paikkakunta: '',
+  sijainti: [],
+  selectedsijainnit: [],
+};
 
 class HakuStore {
   @observable keyword = '';
@@ -31,7 +42,6 @@ class HakuStore {
   @observable filter = {
     koulutus: [],
     koulutustyyppi: [],
-    // koulutusala: [{id: "kansallinenkoulutusluokitus2016koulutusalataso1_02", name: {sv: "De humanistiska och konstnärliga områdena", fi: "Humanistiset ja taidealat", en: "Arts and humanities"}}],
     koulutusala: [],
     kieli: [],
     opetusKielet: [],
@@ -310,6 +320,11 @@ class HakuStore {
   }
 
   @action
+  clearFilters = () => {
+    set(this.filter, emptyFilter);
+  };
+
+  @action
   clearHaku = () => {
     this.keyword = '';
     this.filter.paikkakunta = '';
@@ -324,6 +339,7 @@ class HakuStore {
     this.oppilaitosResult = [];
     this.oppilaitosCount = 0;
     this.toggle = 'koulutus';
+    this.sort = 'asc';
   };
 
   @action

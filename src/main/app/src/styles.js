@@ -1,5 +1,6 @@
 import { createStyles } from '@material-ui/core/styles';
 import { sideMenuStyles } from './sideMenuStyles';
+import { colors } from './colors';
 
 export const styles = (theme) =>
   createStyles({
@@ -23,6 +24,26 @@ export const styles = (theme) =>
     },
     hakuTulosSortBtn: {
       fontWeight: 600,
+    },
+    hakuTulosFiltersClearLabel: {
+      fontWeight: 600,
+      fontSize: 14,
+      textDecoration: 'underline',
+      whiteSpace: 'nowrap',
+    },
+    hakuTulosFiltersClearSizeSmall: {
+      padding: '1px 5px',
+    },
+    hakuTulosChipLabel: {
+      fontSize: 12,
+      fontWeight: 600,
+    },
+    hakuTulosChipRoot: {
+      marginBottom: 5,
+      marginRight: 5,
+      borderRadius: 5,
+      backgroundColor: '#F7F7F7',
+      border: 'none',
     },
     hakuTulosTabIconMargin: {
       marginBottom: '0 !important',
