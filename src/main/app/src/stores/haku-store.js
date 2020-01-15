@@ -6,7 +6,7 @@ const emptyFilter = {
   koulutustyyppi: [],
   koulutusala: [],
   kieli: [],
-  opetusKielet: [],
+  opetuskieli: [],
   paikkakunta: '',
   sijainti: [],
   selectedsijainnit: [],
@@ -44,7 +44,7 @@ class HakuStore {
     koulutustyyppi: [],
     koulutusala: [],
     kieli: [],
-    opetusKielet: [],
+    opetuskieli: [],
     paikkakunta: '',
     sijainti: [],
     selectedsijainnit: [],
@@ -183,8 +183,8 @@ class HakuStore {
 
   @action
   setOpetusKieliFilter = (valitutOpetusKielet = []) => {
-    const change = valitutOpetusKielet !== this.filter.opetusKielet;
-    this.filter.opetusKielet = valitutOpetusKielet;
+    const change = valitutOpetusKielet !== this.filter.opetuskieli;
+    this.filter.opetuskieli = valitutOpetusKielet;
     return change;
   };
 
@@ -254,8 +254,8 @@ class HakuStore {
       (this.filter.kieli.length
         ? '&kieli=' + this.filter.kieli.join(',')
         : '') +
-      (this.filter.opetusKielet.length
-        ? '&opetuskieli=' + this.filter.opetusKielet.join(',')
+      (this.filter.opetuskieli.length
+        ? '&opetuskieli=' + this.filter.opetuskieli.join(',')
         : '') +
       '&lng=' +
       l.getLanguage()
@@ -330,7 +330,7 @@ class HakuStore {
     this.filter.paikkakunta = '';
     this.filter.koulutus = [];
     this.filter.kieli = [];
-    this.filter.opetusKielet = [];
+    this.filter.opetuskieli = [];
     this.paging.pageOppilaitos = 1;
     this.paging.pageKoulutus = 1;
     this.paging.pageSize = 20;

@@ -25,7 +25,7 @@ const OpetusKieliSuodatin = observer((props) => {
   const { classes, i18n, history, t } = props;
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
-  const { opetusKielet } = filter;
+  const { opetuskieli } = filter;
 
   const [opetusKieli, setOpetusKieli] = useState({});
   const [valitutOpetusKielet, setValitutOpetusKielet] = useState([]);
@@ -34,11 +34,11 @@ const OpetusKieliSuodatin = observer((props) => {
     toggle === 'koulutus'
       ? setOpetusKieli(toJS(koulutusFilters.opetusKieli))
       : setOpetusKieli(toJS(oppilaitosFilters.opetusKieli));
-    setValitutOpetusKielet(toJS(opetusKielet));
+    setValitutOpetusKielet(toJS(opetuskieli));
   }, [
     props,
     toggle,
-    opetusKielet,
+    opetuskieli,
     koulutusFilters.opetusKieli,
     oppilaitosFilters.opetusKieli,
   ]);
