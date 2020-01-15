@@ -56,7 +56,7 @@ const Palvelu = observer(({ id, history }) => {
   const color = palvelu.color || 'sininen';
   const forwardToPage = () => {
     if (palvelu.linkki && palvelu.linkki.id) {
-      history.push(forwardTo(id));
+      history.push(forwardTo(palvelu.linkki.id));
     }
   };
   const Paragraph = ({ children }) => {
