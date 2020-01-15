@@ -55,6 +55,8 @@ const SuodatinValinnat = observer((props) => {
       search: qs.stringify(_omit(search, Object.keys(filters))),
     });
     hakuStore.clearFilters();
+    hakuStore.searchKoulutukset();
+    hakuStore.searchOppilaitokset();
   };
 
   const displayChips = (entry) => {
