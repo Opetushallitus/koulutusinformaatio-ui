@@ -79,18 +79,7 @@ export const theme = createMuiTheme({
       },
     },
   },
-  // props: {
-  //   MuiGrid: {
-  //     spacing: 16
-  //   },
-  //   MuiPaper: {
-  //     elevation: 1,
-  //     square: true
-  //   },
-  //   MuiAppBar: {
-  //     elevation: 1
-  //   }
-  // },
+
   overrides: {
     MuiAppBar: {
       root: {
@@ -137,20 +126,10 @@ export const theme = createMuiTheme({
           backgroundColor: colors.white,
         },
       },
-
-      //   expandIcon: {
-      //     color: 'white'
-      //   }
-      // },
-      // MuiExpansionPanelActions: {
-      //   root: {
-      //     justifyContent: 'center'
-      //   }
     },
     MuiExpansionPanelSummary: {
       root: {
         minHeight: '32px !important',
-        // border: '1px solid',
       },
       content: {
         margin: '0 !important',
@@ -158,7 +137,6 @@ export const theme = createMuiTheme({
     },
     MuiExpansionPanelDetails: {
       root: {
-        // border: '1px solid',
         padding: '0 24px 16px 24px',
       },
     },
@@ -183,13 +161,6 @@ export const theme = createMuiTheme({
         minWidth: 32,
       },
     },
-    MuiButtonBase: {
-      root: {
-        // paddingTop: '0 !important',
-        // paddingBottom: '0 !important'
-      },
-    },
-
     MuiListItemText: {
       primary: {
         width: '100%',
@@ -198,11 +169,6 @@ export const theme = createMuiTheme({
     MuiLink: {
       root: {
         cursor: 'pointer',
-      },
-    },
-    MuiCheckbox: {
-      colorSecondary: {
-        // color: primaryGreen
       },
     },
   },

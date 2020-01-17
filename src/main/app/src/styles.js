@@ -22,8 +22,29 @@ export const styles = (theme) =>
       maxWidth: 1600,
       margin: 'auto',
     },
-    hakuTulosSortBtn: {
+    hakuTulosSortBtnRoot: {
+      marginLeft: theme.spacing(2),
+    },
+    hakuTulosSortBtnLabel: {
       fontWeight: 600,
+    },
+    hakuTulosSelect: {
+      '&:before': {
+        borderBottom: 'none',
+      },
+    },
+    hakuTulosBoxRoot: {
+      marginRight: theme.spacing(2),
+    },
+    hakuStoreMenuItemRoot: {
+      paddingLeft: 12,
+    },
+    hakuTulosSelectIcon: {
+      fontSize: 20,
+    },
+    hakuTulosBoxRoot: {
+      fontSize: 14,
+      marginRight: theme.spacing(1),
     },
     hakuTulosFiltersClearLabel: {
       fontWeight: 600,
@@ -56,6 +77,12 @@ export const styles = (theme) =>
     },
     hakuTulosNavText: {
       margin: theme.spacing(5, 0, 7, 0),
+    },
+    suodatinValinnatGridRoot1: {
+      paddingBottom: 5,
+    },
+    suodatinValinnatGridRoot2: {
+      paddingTop: 5,
     },
     customWrapper: {
       flexDirection: 'row',

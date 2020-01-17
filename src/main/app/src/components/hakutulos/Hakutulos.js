@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { withStyles } from '@material-ui/core/styles';
-import { Box } from '@material-ui/core';
 import { ExpandMore, ExpandLess, HomeOutlined } from '@material-ui/icons';
-import { Button, Grid, Paper, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Grid,
+  MenuItem,
+  Paper,
+  Select,
+  Typography,
+} from '@material-ui/core';
 import { Localizer as l } from '../../tools/Utils';
 import HakutulosToggle from './HakutulosToggle';
 import KoulutusalatSuodatin from './hakutulosSuodattimet/KoulutusalatSuodatin';
@@ -23,7 +30,7 @@ import { useStores } from '../../hooks';
 const Hakutulos = observer((props) => {
   const { t, classes, history } = props;
   const { hakuStore } = useStores();
-  const { filter } = hakuStore;
+  const { filter, paging } = hakuStore;
   const {
     koulutustyyppi,
     koulutusala,
@@ -33,19 +40,39 @@ const Hakutulos = observer((props) => {
   } = filter;
 
   const [sort, setSort] = useState('');
+  const [pageSize, setPageSize] = useState(0);
 
   useEffect(() => {
     window.scroll(0, 170);
     setSort(toJS(hakuStore.sort));
-  }, [props, hakuStore.sort]);
+    setPageSize(toJS(paging.pageSize));
+  }, [props, hakuStore.sort, hakuStore.paging, paging.pageSize]);
 
   const handleSortToggle = (sort) => {
-    const newSort = sort === 'asc' ? 'desc' : 'asc';
-    setSort(newSort);
     const search = qs.parse(history.location.search);
+    const newSort = sort === 'asc' ? 'desc' : 'asc';
+
+    setSort(newSort);
     search.sort = newSort;
     hakuStore.toggleSort(newSort);
     history.replace({ search: qs.stringify(search) });
+    hakuStore.searchKoulutukset();
+    hakuStore.searchOppilaitokset();
+  };
+
+  const handlePageSizeChange = (e) => {
+    const search = qs.parse(history.location.search);
+    const newPageSize = e.target.value;
+    const newPaging = {
+      pageOppilaitos: toJS(paging.pageOppilaitos),
+      pageKoulutus: toJS(paging.pageKoulutus),
+      pageSize: newPageSize,
+    };
+
+    setPageSize(newPageSize);
+    search.pagesize = newPageSize;
+    history.replace({ search: qs.stringify(search) });
+    hakuStore.setPaging(newPaging);
     hakuStore.searchKoulutukset();
     hakuStore.searchOppilaitokset();
   };
@@ -55,7 +82,7 @@ const Hakutulos = observer((props) => {
     const oppilaitosResult = toJS(hakuStore.oppilaitosResult);
     if (hakuStore.toggleKoulutus) {
       return koulutusResult.map((r) => {
-        const link = `/koulutus/${r.oid}`;
+        const link = `/konfo/koulutus/${r.oid}`;
         return (
           <KoulutusKortti
             key={r.oid}
@@ -74,7 +101,7 @@ const Hakutulos = observer((props) => {
       });
     } else {
       return oppilaitosResult.map((r) => {
-        const link = `/oppilaitos/${r.oid}`;
+        const link = `/konfo/oppilaitos/${r.oid}`;
         return (
           <OppilaitosKortti
             key={r.oid}
@@ -112,8 +139,7 @@ const Hakutulos = observer((props) => {
           item
           xs={12}
           alignItems="center"
-          className={classes.hakuTulosNavText}
-        >
+          className={classes.hakuTulosNavText}>
           <Grid>
             <HomeOutlined />
           </Grid>
@@ -129,24 +155,59 @@ const Hakutulos = observer((props) => {
         <Grid
           container
           alignItems="center"
-          className={classes.hakutulosToggleBarMargins}
-        >
+          className={classes.hakutulosToggleBarMargins}>
           <Grid item xs={3}>
             <Typography variant="h5">{t('haku.rajaa-tuloksia')}</Typography>
           </Grid>
-          <Grid id="toggle-tabs" item xs={7}>
+          <Grid id="toggle-tabs" item xs={5}>
             <HakutulosToggle />
           </Grid>
-          <Grid container item xs={2} direction="row-reverse">
+          <Grid
+            container
+            item
+            xs={4}
+            alignItems="baseline"
+            direction="row-reverse">
             <Button
               endIcon={sort === 'asc' ? <ExpandMore /> : <ExpandLess />}
-              classes={{ label: classes.hakuTulosSortBtn }}
-              onClick={() => handleSortToggle(sort)}
-            >
+              classes={{
+                root: classes.hakuTulosSortBtnRoot,
+                label: classes.hakuTulosSortBtnLabel,
+              }}
+              onClick={() => handleSortToggle(sort)}>
               {sort === 'asc'
                 ? t('haku.järjestänimi_a_ö')
                 : t('haku.järjestänimi_ö_a')}
             </Button>
+            <Box component="span" style={{ whiteSpace: 'nowrap' }}>
+              <Box
+                component="span"
+                classes={{ root: classes.hakuTulosBoxRoot }}>
+                {t('haku.tulokset-per-sivu')}
+              </Box>
+              <Select
+                IconComponent={ExpandMore}
+                className={classes.hakuTulosSelect}
+                classes={{ icon: classes.hakuTulosSelectIcon }}
+                value={pageSize}
+                onChange={handlePageSizeChange}>
+                <MenuItem
+                  classes={{ root: classes.hakuStoreMenuItemRoot }}
+                  value={10}>
+                  10
+                </MenuItem>
+                <MenuItem
+                  classes={{ root: classes.hakuStoreMenuItemRoot }}
+                  value={20}>
+                  20
+                </MenuItem>
+                <MenuItem
+                  classes={{ root: classes.hakuStoreMenuItemRoot }}
+                  value={50}>
+                  50
+                </MenuItem>
+              </Select>
+            </Box>
           </Grid>
         </Grid>
         <Grid item container xs={12}>

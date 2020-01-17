@@ -1,4 +1,4 @@
-import { observable, computed, action, runInAction, set } from 'mobx';
+import { observable, computed, action, runInAction, set, toJS } from 'mobx';
 import { Localizer as l } from '../tools/Utils';
 
 const emptyFilter = {
@@ -57,21 +57,8 @@ class HakuStore {
   @action
   setAll = (keyword, search, toggleAction) => {
     const keywordChange = this.setKeyword(keyword);
-    const filterChange = this.setFilter({
-      koulutus: search.koulutustyyppi,
-      kieli: search.kieli,
-      paikkakunta: search.paikkakunta,
-    });
-    const pagingChange = this.setPaging({
-      pageOppilaitos: search.opage,
-      pageKoulutus: search.kpage,
-      pageSize: search.pagesize,
-    });
-    if (
-      keywordChange ||
-      filterChange ||
-      (pagingChange.koulutus && pagingChange.oppilaitos)
-    ) {
+
+    if (keywordChange) {
       this.searchAll(() => {
         if (!search.toggle) {
           const toggle =
@@ -86,12 +73,6 @@ class HakuStore {
           this.setToggle(search.toggle);
         }
       });
-    } else if (pagingChange.koulutus) {
-      this.searchKoulutukset();
-    } else if (pagingChange.oppilaitos) {
-      this.searchOppilaitokset();
-    } else {
-      // this.setToggle(search.toggle);
     }
   };
 
