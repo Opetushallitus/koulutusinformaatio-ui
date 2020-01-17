@@ -103,6 +103,7 @@
     "summary": "Etsintäsi tuotti {{count}} osuman",
     "summary_plural" : "Etsintäsi tuotti {{count}} osumaa",
     "suomi": "Suomi",
+    "tulokset-per-sivu": "Tulokset per sivu:",
     "vertaile": "Vertaile"
   },
   "navigaatio": {

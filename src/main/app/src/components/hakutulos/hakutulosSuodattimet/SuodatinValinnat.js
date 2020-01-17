@@ -75,8 +75,12 @@ const SuodatinValinnat = observer((props) => {
   };
 
   return (
-    <Grid container wrap="nowrap" justify="space-between">
-      <Grid item>
+    <Grid
+      container
+      wrap="nowrap"
+      justify="space-between"
+      classes={{ root: classes.suodatinValinnatGridRoot1 }}>
+      <Grid item classes={{ root: classes.suodatinValinnatGridRoot2 }}>
         {Object.entries(filters).map((entry) =>
           entry[1].length > 0 ? displayChips(entry) : ''
         )}
@@ -89,8 +93,7 @@ const SuodatinValinnat = observer((props) => {
             label: classes.hakuTulosFiltersClearLabel,
             sizeSmall: classes.hakuTulosFiltersClearSizeSmall,
           }}
-          onClick={() => handleClearFilters()}
-        >
+          onClick={() => handleClearFilters()}>
           {t('haku.poista-valitut-rajaimet')}
         </Button>
       </Grid>

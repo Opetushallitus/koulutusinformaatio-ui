@@ -1,5 +1,5 @@
-import React, { Component, useEffect, useState } from 'react';
-import { observer, inject } from 'mobx-react';
+import React, { useEffect, useState } from 'react';
+import { observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import { Tabs, Tab } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -38,24 +38,21 @@ const HakutulosToggle = observer((props) => {
       value={selectedTab}
       indicatorColor="primary"
       textColor="primary"
-      onChange={handleSelectedTab}
-    >
+      onChange={handleSelectedTab}>
       <Tab
         icon={<SchoolOutlined className={classes.hakuTulosTabIconMargin} />}
         classes={{
           wrapper: classes.customWrapper,
           labelIcon: classes.customLabelIcon,
         }}
-        label={`${t('haku.koulutukset')} (${koulutusCount})`}
-      ></Tab>
+        label={`${t('haku.koulutukset')} (${koulutusCount})`}></Tab>
       <Tab
         icon={<HomeWorkOutlined className={classes.hakuTulosTabIconMargin} />}
         classes={{
           wrapper: classes.customWrapper,
           labelIcon: classes.customLabelIcon,
         }}
-        label={`${t('haku.oppilaitokset')} (${oppilaitosCount})`}
-      ></Tab>
+        label={`${t('haku.oppilaitokset')} (${oppilaitosCount})`}></Tab>
     </Tabs>
   );
 });
