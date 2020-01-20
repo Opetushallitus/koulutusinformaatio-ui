@@ -88,7 +88,11 @@ const SivuKooste = ({ id }) => {
 
   return (
     <React.Fragment>
-      <main id="main-content" className="center-content" style={pads}>
+      <main
+        id="main-content"
+        className="center-content"
+        style={pads}
+        data-cy={'sivu'}>
         <Box display="flex" flexDirection="column" alignItems="center">
           <Typography variant="h1">{kooste.name}</Typography>
 

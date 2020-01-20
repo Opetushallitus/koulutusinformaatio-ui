@@ -60,14 +60,13 @@ const Sivu = observer(({ id }) => {
 
   return (
     <React.Fragment>
-      <div className={classes.component}>
+      <div className={classes.component} data-cy={'sivu'}>
         <Grid
           container
           direction="row"
           justify="center"
           spacing={2}
-          alignItems="center"
-        >
+          alignItems="center">
           <Grid item xs={12} sm={12} md={tableOfContents ? 10 : 6}>
             <Murupolku path={murupolku(pageId)} />
             <h1 className={classes.header1}>{name}</h1>
