@@ -57,6 +57,7 @@
     "run-test": "react-app-rewired test --env=jsdom",
     "cypress:run": "./node_modules/.bin/cypress run -b chrome --config baseUrl=http://localhost:3005",
     "cypress:open": "./node_modules/.bin/cypress open -b chrome --config baseUrl=http://localhost:3005",
+    "test:e2e": "npm start-for-test && npm run cypress:run",
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix"
   },

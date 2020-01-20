@@ -118,7 +118,7 @@
                                 <BACKEND_PORT>${browser.test.http.backend.port}</BACKEND_PORT>
                                 <CI>true</CI>
                             </environmentVariables>
-                            <arguments>run cypress:run</arguments>
+                            <arguments>run test:e2e</arguments>
                         </configuration>
                     </execution>
                     <execution>
