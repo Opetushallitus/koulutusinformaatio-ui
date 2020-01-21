@@ -52,6 +52,7 @@ matrix:
         - export BASE_IMAGE="baseimage-fatjar:jdk11"
         - ./ci-tools/common/pull-image.sh
         - ./ci-tools/build/build-fatjar.sh konfo-ui
+        - ./ci-tools/build/upload-image.sh $ARTIFACT_NAME --skip-dynamo-write
 
     - stage: deploy
       script:
