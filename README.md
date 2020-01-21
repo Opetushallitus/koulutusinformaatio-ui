@@ -50,7 +50,12 @@ Portteja voi vaihtaa ajamalla:
 
 ## Testit
 
-Testit löytyvät hakemistosta `src/main/app/src/__tests__`.
+Käyttöliittymätestit (cypress) käynnistyy komennolla: 
+
+    cd src/main/app
+    npm run cypress:open
+    
+Muut testit löytyvät hakemistosta `src/main/app/src/__tests__`.
 Nimetään yksikkötestit päätteellä `.test.js` ja laitetaan ne sopiviin hakemistoihin.
 Lisäksi projektissa on headless-selaintestejä, jotka käyttävät Puppeteer-kirjastoa. Laitetaan ne hakemistoon
 `src/main/app/src/__tests__/headless/`. Mock-datan luontiin tarvittavat javascript-luokat ja muut testityökalut
