@@ -9,7 +9,8 @@ import { MuiThemeProvider } from '@material-ui/core';
 import i18n from 'i18next';
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./service-worker-custom.js');
+  !window.Cypress &&
+    navigator.serviceWorker.register('./service-worker-custom.js');
 }
 
 i18n.init({

@@ -106,21 +106,6 @@
                             <goal>npm</goal>
                         </goals>
                     </execution>
-                    <!--execution>
-                        <id>Run tests</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <configuration>
-                            <environmentVariables>
-                                <PORT>${browser.test.http.port}</PORT>
-                                <BACKEND_PORT>${browser.test.http.backend.port}</BACKEND_PORT>
-                                <CI>true</CI>
-                            </environmentVariables>
-                            <arguments>test</arguments>
-                        </configuration>
-                    </execution-->
                     <execution>
                         <id>Build frontend</id>
                         <goals>

@@ -83,7 +83,7 @@ const Kortti = observer(({ id }) => {
                 <Link
                   className={classes.linkElement}
                   href={`/konfo${forwardTo(page.id)}`}
-                >
+                  data-cy="kortti-link">
                   {page.name}
                 </Link>
               </div>
