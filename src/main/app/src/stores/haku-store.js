@@ -1,4 +1,4 @@
-import { observable, computed, action, runInAction, set, toJS } from 'mobx';
+import { observable, computed, action, runInAction, set } from 'mobx';
 import { Localizer as l } from '../tools/Utils';
 
 const emptyFilter = {
@@ -16,6 +16,8 @@ class HakuStore {
   @observable keyword = '';
   @observable koulutusResult = [];
   @observable koulutusCount = 0;
+  @observable koulutusTotal = 0;
+  @observable koulutusOffset = 0;
   @observable koulutusFilters = {
     opetusKieli: {},
     koulutusTyyppi: {},
@@ -25,6 +27,8 @@ class HakuStore {
   };
   @observable oppilaitosResult = [];
   @observable oppilaitosCount = 0;
+  @observable oppilaitosTotal = 0;
+  @observable oppilaitosOffset = 0;
   @observable oppilaitosFilters = {
     opetusKieli: {},
     koulutusTyyppi: {},
@@ -49,6 +53,7 @@ class HakuStore {
     sijainti: [],
     selectedsijainnit: [],
   };
+  @observable pageSizeArray = [5, 10, 20, 30, 50];
 
   constructor(rest) {
     this.rest = rest;
@@ -144,6 +149,31 @@ class HakuStore {
       koulutus: pageChange || koulutusChange,
       oppilaitos: pageChange || oppilaitosChange,
     };
+  };
+
+  @action
+  setKoulutusOffset = (offset) => {
+    this.koulutusOffset = offset;
+  };
+
+  @action
+  setOppilaitosOffset = (offset) => {
+    this.oppilaitosOffset = offset;
+  };
+
+  @action
+  setPagingPageKoulutus = (page) => {
+    this.paging.pageKoulutus = page;
+  };
+
+  @action
+  setPagingPageOppilaitos = (page) => {
+    this.paging.pageOppilaitos = page;
+  };
+
+  @action
+  setPagingPageSize = (newPageSize) => {
+    this.paging.pageSize = newPageSize;
   };
 
   @action
@@ -321,6 +351,18 @@ class HakuStore {
     this.oppilaitosCount = 0;
     this.toggle = 'koulutus';
     this.sort = 'asc';
+    this.koulutusOffset = 0;
+    this.koulutusTotal = 0;
+    this.oppilaitosOffset = 0;
+    this.oppilaitosTotal = 0;
+  };
+
+  @action
+  clearOffsetAndPaging = () => {
+    this.paging.pageOppilaitos = 1;
+    this.paging.pageKoulutus = 1;
+    this.koulutusOffset = 0;
+    this.oppilaitosOffset = 0;
   };
 
   @action
@@ -337,6 +379,7 @@ class HakuStore {
 
   @action
   searchAll = (onSuccess) => {
+    this.clearOffsetAndPaging();
     if (this.canSearch) {
       this.rest.search(
         [
@@ -358,6 +401,7 @@ class HakuStore {
               result[0] && result[0].hits.length > 0
                 ? result[0].hits.length
                 : 0;
+            this.koulutusTotal = result[0]?.total;
             this.koulutusFilters.opetusKieli = result[0].filters.opetuskieli;
             this.koulutusFilters.koulutusTyyppi =
               result[0].filters.koulutustyyppi;
@@ -369,6 +413,7 @@ class HakuStore {
               result[1] && result[1].hits.length > 0
                 ? result[1].hits.length
                 : 0;
+            this.oppilaitosTotal = result[1]?.total;
             this.oppilaitosFilters.opetusKieli = result[1].filters.opetuskieli;
             this.oppilaitosFilters.koulutusTyyppi =
               result[1].filters.koulutustyyppi;
@@ -401,6 +446,7 @@ class HakuStore {
           runInAction(() => {
             this.koulutusResult = result[0] ? result[0].hits : [];
             this.koulutusCount = result[0] ? result[0].hits.length : 0;
+            this.koulutusTotal = result[0] ? result[0].total : 0;
             if (onSuccess) {
               onSuccess();
             }
@@ -426,6 +472,7 @@ class HakuStore {
           runInAction(() => {
             this.oppilaitosResult = result[0] ? result[0].hits : [];
             this.oppilaitosCount = result[0] ? result[0].hits.length : 0;
+            this.oppilaitosTotal = result[0] ? result[0].total : 0;
             if (onSuccess) {
               onSuccess();
             }

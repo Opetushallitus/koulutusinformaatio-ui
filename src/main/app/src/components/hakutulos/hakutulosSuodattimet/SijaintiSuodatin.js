@@ -30,7 +30,6 @@ const SijaintiSuodatin = observer((props) => {
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
   const { sijainti, selectedsijainnit } = filter;
 
-  const [maakunnat, setMaakunnat] = useState([]);
   const [firstFiveMaakunnat, setfirstFiveMaakunnat] = useState([]);
   const [restMaakunnat, setRestMaakunnat] = useState([]);
   const [showRest, setShowRest] = useState(false);
@@ -99,7 +98,6 @@ const SijaintiSuodatin = observer((props) => {
     setfirstFiveMaakunnat(copyMaakunnatJS.splice(0, 5));
     setRestMaakunnat(copyMaakunnatJS);
     setSelectedSijainnit(toJS(selectedsijainnit));
-    setMaakunnat(maaKunnatJS);
     setSearchHitsSijainnit(_searchHitsSijainnit);
     setCheckedMaakunnat(toJS(sijainti));
   }, [
@@ -171,8 +169,11 @@ const SijaintiSuodatin = observer((props) => {
 
     setSelectedSijainnit(newSelectedSijainnit);
     search.sijainti = combinedSijainnit.join(',');
+    search.kpage = 1;
+    search.opage = 1;
     history.replace({ search: qs.stringify(search) });
     hakuStore.setSelectedSijaintiFilter(newSelectedSijainnit);
+    hakuStore.clearOffsetAndPaging();
     hakuStore.searchKoulutukset();
     hakuStore.searchOppilaitokset();
   };
@@ -183,8 +184,11 @@ const SijaintiSuodatin = observer((props) => {
       .map(({ id }) => id)
       .concat(selectedSijainnit.map(({ id }) => id))
       .join(',');
+    search.kpage = 1;
+    search.opage = 1;
     history.replace({ search: qs.stringify(search) });
     hakuStore.setSijaintiFilter(newValitutKunnat);
+    hakuStore.clearOffsetAndPaging();
     hakuStore.searchKoulutukset();
     hakuStore.searchOppilaitokset();
   };
@@ -258,8 +262,7 @@ const SijaintiSuodatin = observer((props) => {
                     dense
                     button
                     disabled={maakuntaArray[1].count === 0}
-                    onClick={handleMaakuntaToggle(maakuntaArray)}
-                  >
+                    onClick={handleMaakuntaToggle(maakuntaArray)}>
                     <ListItemIcon>
                       <Checkbox
                         classes={{ root: classes.listItemCheckbox }}
@@ -284,8 +287,7 @@ const SijaintiSuodatin = observer((props) => {
                           </Grid>
                           <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
                         </Grid>
-                      }
-                    ></ListItemText>
+                      }></ListItemText>
                   </ListItem>
                 );
               })}
@@ -299,8 +301,7 @@ const SijaintiSuodatin = observer((props) => {
                       dense
                       button
                       disabled={maakuntaArray[1].count === 0}
-                      onClick={handleMaakuntaToggle(maakuntaArray)}
-                    >
+                      onClick={handleMaakuntaToggle(maakuntaArray)}>
                       <ListItemIcon>
                         <Checkbox
                           classes={{ root: classes.listItemCheckbox }}
@@ -325,8 +326,7 @@ const SijaintiSuodatin = observer((props) => {
                             </Grid>
                             <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
                           </Grid>
-                        }
-                      ></ListItemText>
+                        }></ListItemText>
                     </ListItem>
                   );
                 })}
@@ -336,8 +336,7 @@ const SijaintiSuodatin = observer((props) => {
                 classes={{ label: classes.buttonSmallText }}
                 endIcon={showRest ? <ExpandLess /> : <ExpandMore />}
                 fullWidth
-                onClick={() => handleShowRest()}
-              >
+                onClick={() => handleShowRest()}>
                 {showRest ? t('haku.näytä_vähemmän') : t('haku.näytä_lisää')}
               </Button>
             </List>

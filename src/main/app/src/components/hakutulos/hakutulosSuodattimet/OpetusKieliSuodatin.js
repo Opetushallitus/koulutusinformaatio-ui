@@ -62,7 +62,10 @@ const OpetusKieliSuodatin = observer((props) => {
     setValitutOpetusKielet(newValitutOpetusKielet);
     const search = qs.parse(history.location.search);
     search.opetuskieli = newValitutOpetusKielet.map(({ id }) => id).join(',');
+    search.kpage = 1;
+    search.opage = 1;
     hakuStore.setOpetusKieliFilter(newValitutOpetusKielet);
+    hakuStore.clearOffsetAndPaging();
     history.replace({ search: qs.stringify(search) });
     hakuStore.searchKoulutukset();
     hakuStore.searchOppilaitokset();
@@ -83,8 +86,7 @@ const OpetusKieliSuodatin = observer((props) => {
                 dense
                 button
                 onClick={handleLanguageToggle(opetuskieliArr)}
-                disabled={opetuskieliArr[1].count === 0}
-              >
+                disabled={opetuskieliArr[1].count === 0}>
                 <ListItemIcon>
                   <Checkbox
                     classes={{ root: classes.listItemCheckbox }}

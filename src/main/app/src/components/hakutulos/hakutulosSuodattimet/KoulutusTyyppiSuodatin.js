@@ -67,8 +67,11 @@ const KoulutusTyyppiSuodatin = observer((props) => {
     search.koulutustyyppi = newValitutKoulutusTyypit
       .map(({ id }) => id)
       .join(',');
+    search.kpage = 1;
+    search.opage = 1;
     hakuStore.setKoulutusTyyppiFilter(newValitutKoulutusTyypit);
     history.replace({ search: qs.stringify(search) });
+    hakuStore.clearOffsetAndPaging();
     hakuStore.searchKoulutukset();
     hakuStore.searchOppilaitokset();
   };
@@ -90,8 +93,7 @@ const KoulutusTyyppiSuodatin = observer((props) => {
                   dense
                   button
                   onClick={handleEduTypeToggle(eduTypeOuterArr)}
-                  disabled={eduTypeOuterArr[1].count === 0}
-                >
+                  disabled={eduTypeOuterArr[1].count === 0}>
                   <ListItemIcon>
                     <Checkbox
                       classes={{ root: classes.listItemCheckbox }}
@@ -114,8 +116,7 @@ const KoulutusTyyppiSuodatin = observer((props) => {
                         <Grid item>{eduTypeOuterArr[1].nimi.fi}</Grid>
                         <Grid item>{`(${eduTypeOuterArr[1].count})`}</Grid>
                       </Grid>
-                    }
-                  ></ListItemText>
+                    }></ListItemText>
                 </ListItem>
                 {eduTypeOuterArr[1].alakoodit &&
                   Object.entries(eduTypeOuterArr[1].alakoodit).map(
@@ -128,8 +129,7 @@ const KoulutusTyyppiSuodatin = observer((props) => {
                           dense
                           button
                           onClick={handleEduTypeToggle(eduTypeInnerArr)}
-                          disabled={eduTypeInnerArr[1].count === 0}
-                        >
+                          disabled={eduTypeInnerArr[1].count === 0}>
                           <ListItemIcon>
                             <Checkbox
                               classes={{ root: classes.listItemCheckbox }}
@@ -150,8 +150,7 @@ const KoulutusTyyppiSuodatin = observer((props) => {
                               <Grid
                                 container
                                 justify="space-between"
-                                wrap="nowrap"
-                              >
+                                wrap="nowrap">
                                 <Grid item>
                                   {eduTypeInnerArr[1]?.nimi?.[i18n.language]}
                                 </Grid>
@@ -159,8 +158,7 @@ const KoulutusTyyppiSuodatin = observer((props) => {
                                   {`(${eduTypeInnerArr[1]?.count})`}
                                 </Grid>
                               </Grid>
-                            }
-                          ></ListItemText>
+                            }></ListItemText>
                         </ListItem>
                       );
                     }

@@ -78,8 +78,11 @@ const KoulutusalatSuodatin = observer((props) => {
     setValitutKoulutusAlat(newValitutKoulutusalat);
     const search = qs.parse(history.location.search);
     search.koulutusala = newValitutKoulutusalat.map(({ id }) => id).join(',');
+    search.kpage = 1;
+    search.opage = 1;
     hakuStore.setKoulutusalaFilter(newValitutKoulutusalat);
     history.replace({ search: qs.stringify(search) });
+    hakuStore.clearOffsetAndPaging();
     hakuStore.searchKoulutukset();
     hakuStore.searchOppilaitokset();
   };
@@ -90,8 +93,7 @@ const KoulutusalatSuodatin = observer((props) => {
         color="secondary"
         size="small"
         classes={{ label: classes.buttonSmallText }}
-        onClick={() => setExpandedKoulutusTaso1([])}
-      >
+        onClick={() => setExpandedKoulutusTaso1([])}>
         {t('haku.__kaikki_koulutusalat')}
       </Button>
       <ListItem
@@ -102,8 +104,7 @@ const KoulutusalatSuodatin = observer((props) => {
           expandedKoulutusTaso1[0],
           expandedKoulutusTaso1[1]
         )}
-        disabled={expandedKoulutusTaso1[1]?.count === 0}
-      >
+        disabled={expandedKoulutusTaso1[1]?.count === 0}>
         <ListItemIcon>
           <Checkbox
             classes={{ root: classes.listItemCheckbox }}
@@ -144,8 +145,7 @@ const KoulutusalatSuodatin = observer((props) => {
               )}
               disabled={
                 expandedKoulutusTaso1[1]?.[koulutusTaso2_ID]?.count === 0
-              }
-            >
+              }>
               <ListItemIcon>
                 <Checkbox
                   classes={{ root: classes.listItemCheckbox }}
@@ -190,8 +190,7 @@ const KoulutusalatSuodatin = observer((props) => {
       <ExpansionPanelDetails>
         <List
           hidden={expandedKoulutusTaso1.length > 0}
-          style={{ width: '100%' }}
-        >
+          style={{ width: '100%' }}>
           {koulutusAlat.map((kouutusalaArray) => {
             const labelId = `language-list-label-${kouutusalaArray[0]}`;
             return (
@@ -200,8 +199,7 @@ const KoulutusalatSuodatin = observer((props) => {
                 dense
                 button
                 onClick={handleKoulutusalaOuterToggle(kouutusalaArray)}
-                disabled={kouutusalaArray[1].count === 0}
-              >
+                disabled={kouutusalaArray[1].count === 0}>
                 <ListItemText
                   classes={{ primary: classes.hakuTulosListItemText }}
                   id={labelId}

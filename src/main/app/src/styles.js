@@ -1,6 +1,5 @@
 import { createStyles } from '@material-ui/core/styles';
 import { sideMenuStyles } from './sideMenuStyles';
-import { colors } from './colors';
 
 export const styles = (theme) =>
   createStyles({
@@ -32,9 +31,6 @@ export const styles = (theme) =>
       '&:before': {
         borderBottom: 'none',
       },
-    },
-    hakuTulosBoxRoot: {
-      marginRight: theme.spacing(2),
     },
     hakuStoreMenuItemRoot: {
       paddingLeft: 12,
@@ -135,6 +131,9 @@ export const styles = (theme) =>
       display: 'block',
       maxWidth: '100%',
       maxHeight: '100%',
+    },
+    paginationRootCurrent: {
+      fontWeight: 'bold',
     },
 
     // ******************************************************************
