@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Box } from '@material-ui/core';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import Link from '@material-ui/core/Link';
 import clsx from 'clsx';
@@ -25,23 +25,15 @@ const useStyles = makeStyles({
   },
   home: {
     display: 'inline-flex',
-    verticalAlign: 'middle',
+    verticalAlign: 'text-bottom',
     marginRight: '10px',
     fontSize: '22px',
   },
   arrow: {
     display: 'inline-flex',
-    verticalAlign: 'middle',
     color: colors.lightGrey,
-    marginRight: '10px',
-    marginLeft: '10px',
+    marginLeft: '18px',
     fontSize: '12px',
-  },
-  item: {
-    display: 'inline-flex',
-    fontWeight: '400',
-    verticalAlign: 'sub',
-    color: colors.grey,
   },
   link: {
     color: colors.green,
@@ -66,26 +58,30 @@ const Murupolku = ({ path, history }) => {
     <ul className={clsx(classes.breadcrump)}>
       <li>
         <HomeOutlinedIcon className={classes.home} />
-        <Link
-          onClick={() => forwardToPage('/')}
-          className={clsx(classes.item, classes.link)}
-        >
-          {t('etusivu')}
-        </Link>
+        <Box component="span" ml={2}>
+          <Link
+            onClick={() => forwardToPage('/')}
+            className={clsx(classes.link)}>
+            {t('etusivu')}
+          </Link>
+        </Box>
       </li>
 
       {shownPath.map(({ name, link }, ind) => (
         <li key={`breadcrump-item-${ind}`}>
           <ArrowForwardIosIcon className={classes.arrow} />
-          {ind === shownPath.length - 1 ? (
-            <Link
-              className={clsx(classes.item, classes.link)}
-              onClick={() => forwardToPage(link)}
-            >
-              {name}
-            </Link>
+          {ind === shownPath.length - 1 && link ? (
+            <Box component="span" ml={2}>
+              <Link
+                className={clsx(classes.link)}
+                onClick={() => forwardToPage(link)}>
+                {name}
+              </Link>
+            </Box>
           ) : (
-            <span className={classes.item}>{name}</span>
+            <Box component="span" ml={2}>
+              {name}
+            </Box>
           )}
         </li>
       ))}

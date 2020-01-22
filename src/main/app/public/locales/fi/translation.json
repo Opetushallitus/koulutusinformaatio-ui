@@ -51,6 +51,7 @@
     "palaa": "Palaa Opintopolkuun"
   },
   "haku": {
+    "otsikko": "Hakutulokset",
     "ammatillinen": "Ammatilliset tutkinnot",
     "ei_kuvausta": "Ei kuvausta",
     "ei_koulutusohjelmia": "Ei koulutusohjelmia",

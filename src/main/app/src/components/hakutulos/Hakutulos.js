@@ -26,6 +26,7 @@ import qs from 'query-string';
 import { toJS } from 'mobx';
 import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
 import { useStores } from '../../hooks';
+import Murupolku from '../common/Murupolku';
 
 const Hakutulos = observer((props) => {
   const { t, classes, history } = props;
@@ -140,17 +141,7 @@ const Hakutulos = observer((props) => {
           xs={12}
           alignItems="center"
           className={classes.hakuTulosNavText}>
-          <Grid>
-            <HomeOutlined />
-          </Grid>
-          <Grid item>
-            <Box component="span" ml={2}>
-              Etusivu
-            </Box>
-            <Box component="span" ml={2}>
-              Hakutulokset
-            </Box>
-          </Grid>
+          <Murupolku path={[{ name: t('haku.otsikko') }]} />
         </Grid>
         <Grid
           container
