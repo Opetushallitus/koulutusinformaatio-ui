@@ -118,20 +118,16 @@ const Sisaltohaku = observer((props) => {
         justify="center"
         spacing={2}
         className={classes.sisaltohaku}
-        alignItems="center"
-      >
+        alignItems="center">
         <Grid item xs={12}>
-          <Murupolku
-            path={[{ name: t('sisaltohaku.otsikko'), link: '/sisaltohaku/' }]}
-          />
+          <Murupolku path={[{ name: t('sisaltohaku.otsikko') }]} />
         </Grid>
         <Grid item xs={12}>
           <Paper
             component="form"
             onSubmit={doSearch}
             elevation={0}
-            className={classes.paper}
-          >
+            className={classes.paper}>
             <InputBase
               className={classes.input}
               defaultValue={state.search}
@@ -149,8 +145,7 @@ const Sisaltohaku = observer((props) => {
               variant="contained"
               color="primary"
               className={classes.iconButton}
-              aria-label={t('sidebar.etsi-tietoa-opintopolusta')}
-            >
+              aria-label={t('sidebar.etsi-tietoa-opintopolusta')}>
               <SearchIcon />
             </Button>
           </Paper>
@@ -181,8 +176,7 @@ const Sisaltohaku = observer((props) => {
                   onClick={(e) => {
                     e.preventDefault();
                     forwardToPage(id);
-                  }}
-                >
+                  }}>
                   <CardHeader className={classes.title} title={s.name} />
                   <CardContent className={classes.content}>
                     <Preview markdown={s.content} keywords={keywords} />
