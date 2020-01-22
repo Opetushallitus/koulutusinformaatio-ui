@@ -8,11 +8,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Chip from '@material-ui/core/Chip';
 import MenuIcon from '@material-ui/icons/Menu';
-import Icon from '@material-ui/core/Icon';
 import { withStyles } from '@material-ui/core';
 import { colors } from '../../colors';
 import HeaderIcon from '../../assets/images/Header.svg';
 import { withRouter } from 'react-router-dom';
+import { Icon, Link } from '@material-ui/core';
 
 const headerStyles = (theme) => ({
   root: {
@@ -31,6 +31,7 @@ const headerStyles = (theme) => ({
   },
   icon: {
     width: '160px',
+    height: '100%',
     cursor: 'pointer',
   },
   beta: {
@@ -68,13 +69,14 @@ class Header extends Component {
               aria-label="open drawer"
               onClick={toggleMenu}
               edge="start"
-              className={clsx(classes.menuButton)}
-            >
+              className={clsx(classes.menuButton)}>
               {isOpen ? <Icon>close</Icon> : <MenuIcon />}
             </IconButton>
-            <IconButton className={classes.icon} onClick={forwardToFrontPage}>
-              <img alt={t('opintopolku.brand')} src={HeaderIcon} />
-            </IconButton>
+            <Link href={`/konfo/`}>
+              <Icon className={classes.icon} onClick={forwardToFrontPage}>
+                <img alt={t('opintopolku.brand')} src={HeaderIcon} />
+              </Icon>
+            </Link>
             <Chip
               className={classes.beta}
               size="small"

@@ -59,9 +59,7 @@ const Murupolku = ({ path, history }) => {
       <li>
         <HomeOutlinedIcon className={classes.home} />
         <Box component="span" ml={2}>
-          <Link
-            onClick={() => forwardToPage('/')}
-            className={clsx(classes.link)}>
+          <Link href={`/konfo/`} className={clsx(classes.link)}>
             {t('etusivu')}
           </Link>
         </Box>
@@ -72,9 +70,7 @@ const Murupolku = ({ path, history }) => {
           <ArrowForwardIosIcon className={classes.arrow} />
           {ind === shownPath.length - 1 && link ? (
             <Box component="span" ml={2}>
-              <Link
-                className={clsx(classes.link)}
-                onClick={() => forwardToPage(link)}>
+              <Link className={clsx(classes.link)} href={`/konfo${link}`}>
                 {name}
               </Link>
             </Box>
