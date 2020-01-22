@@ -47,19 +47,12 @@ const useStyles = makeStyles({
     backgroundColor: colors.white,
     padding: '0 68px',
   },
-  iconLeft: {
-    height: '48px',
+  icon: {
+    height: '68px',
     top: '-24px',
     position: 'relative',
     backgroundColor: colors.white,
-    padding: '0 20px 0 68px',
-  },
-  iconRight: {
-    height: '48px',
-    top: '-24px',
-    position: 'relative',
-    backgroundColor: colors.white,
-    padding: '0 68px 0 20px',
+    padding: '0 40px 0 40px',
   },
   spaceOnBorders: {
     paddingLeft: 90,
@@ -98,8 +91,7 @@ const Footer = inject((stores) => ({
           className={clsx(
             classes.footer,
             matches ? classes.spaceOnBorders : classes.smSpaceOnBorders
-          )}
-        >
+          )}>
           <Grid container>
             <Grid item xs={12}>
               <div className={classes.hr}>
@@ -116,8 +108,7 @@ const Footer = inject((stores) => ({
             direction="row"
             justify="space-evenly"
             alignItems="flex-start"
-            className={classes.content}
-          >
+            className={classes.content}>
             <Grid item xs={12} sm={4} md={3}>
               <Box lineHeight={'21px'} m={1}>
                 <Markdown options={overrides}>{content || ''}</Markdown>
@@ -139,12 +130,7 @@ const Footer = inject((stores) => ({
               <div className={classes.hr}>
                 <img
                   alt={t('opintopolku.brand')}
-                  className={classes.iconLeft}
-                  src={OKMIcon}
-                />
-                <img
-                  alt={t('opintopolku.brand')}
-                  className={classes.iconRight}
+                  className={classes.icon}
                   src={OPHIcon}
                 />
               </div>
