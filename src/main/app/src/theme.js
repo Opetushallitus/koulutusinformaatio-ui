@@ -116,30 +116,6 @@ export const theme = createMuiTheme({
         fontSize: 12,
       },
     },
-    MuiExpansionPanel: {
-      root: {
-        backgroundColor: colors.white,
-        marginBottom: '16px',
-        boxShadow: '0 2px 8px 0 rgba(0,0,0,0.2)',
-        borderRadius: '0 !important',
-        '&:before': {
-          backgroundColor: colors.white,
-        },
-      },
-    },
-    MuiExpansionPanelSummary: {
-      root: {
-        minHeight: '32px !important',
-      },
-      content: {
-        margin: '0 !important',
-      },
-    },
-    MuiExpansionPanelDetails: {
-      root: {
-        padding: '0 24px 16px 24px',
-      },
-    },
     MuiList: {
       padding: {
         paddingTop: 0,

@@ -4,9 +4,6 @@ import { observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import {
   Checkbox,
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
   Grid,
   List,
   ListItem,
@@ -20,6 +17,11 @@ import qs from 'query-string';
 import { withTranslation } from 'react-i18next';
 import { styles } from '../../../styles';
 import { useStores } from '../../../hooks';
+import {
+  SuodatinExpansionPanel,
+  SuodatinExpansionPanelSummary,
+  SuodatinExpansionPanelDetails,
+} from './SuodatinExpansionPanel';
 
 const KoulutusTyyppiSuodatin = observer((props) => {
   const { classes, i18n, history, t } = props;
@@ -77,11 +79,11 @@ const KoulutusTyyppiSuodatin = observer((props) => {
   };
 
   return (
-    <ExpansionPanel defaultExpanded={true}>
-      <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+    <SuodatinExpansionPanel defaultExpanded={true}>
+      <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
         <Typography variant="subtitle1">{t('haku.koulutustyyppi')}</Typography>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
+      </SuodatinExpansionPanelSummary>
+      <SuodatinExpansionPanelDetails>
         <List style={{ width: '100%' }}>
           {Object.entries(koulutusTyypit).map((eduTypeOuterArr) => {
             const labelId = `educationtype-outerlist-label-${eduTypeOuterArr[0]}`;
@@ -167,8 +169,8 @@ const KoulutusTyyppiSuodatin = observer((props) => {
             );
           })}
         </List>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+      </SuodatinExpansionPanelDetails>
+    </SuodatinExpansionPanel>
   );
 });
 

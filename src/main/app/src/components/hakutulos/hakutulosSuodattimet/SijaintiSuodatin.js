@@ -5,9 +5,6 @@ import { withRouter } from 'react-router-dom';
 import {
   Button,
   Checkbox,
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
   Grid,
   List,
   ListItem,
@@ -23,6 +20,11 @@ import { withTranslation } from 'react-i18next';
 import { styles } from '../../../styles';
 import { colors } from '../../../colors';
 import { useStores } from '../../../hooks';
+import {
+  SuodatinExpansionPanel,
+  SuodatinExpansionPanelSummary,
+  SuodatinExpansionPanelDetails,
+} from './SuodatinExpansionPanel';
 
 const SijaintiSuodatin = observer((props) => {
   const { classes, i18n, history, t } = props;
@@ -224,11 +226,11 @@ const SijaintiSuodatin = observer((props) => {
   };
 
   return (
-    <ExpansionPanel defaultExpanded={true}>
-      <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+    <SuodatinExpansionPanel defaultExpanded={true}>
+      <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
         <Typography variant="subtitle1">{t('haku.sijainti')}</Typography>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
+      </SuodatinExpansionPanelSummary>
+      <SuodatinExpansionPanelDetails>
         <Grid container direction="column">
           <Grid item style={{ padding: '20px 0' }}>
             <Select
@@ -342,8 +344,8 @@ const SijaintiSuodatin = observer((props) => {
             </List>
           </Grid>
         </Grid>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+      </SuodatinExpansionPanelDetails>
+    </SuodatinExpansionPanel>
   );
 });
 

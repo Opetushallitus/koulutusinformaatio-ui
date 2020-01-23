@@ -5,9 +5,6 @@ import {
   Button,
   Checkbox,
   Divider,
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
   Grid,
   List,
   ListItem,
@@ -22,6 +19,11 @@ import { withTranslation } from 'react-i18next';
 import { styles } from '../../../styles';
 import { useStores } from '../../../hooks';
 import { toJS } from 'mobx';
+import {
+  SuodatinExpansionPanel,
+  SuodatinExpansionPanelSummary,
+  SuodatinExpansionPanelDetails,
+} from './SuodatinExpansionPanel';
 
 const KoulutusalatSuodatin = observer((props) => {
   const { classes, i18n, history, t } = props;
@@ -183,11 +185,11 @@ const KoulutusalatSuodatin = observer((props) => {
   );
 
   return (
-    <ExpansionPanel defaultExpanded={true}>
-      <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+    <SuodatinExpansionPanel defaultExpanded={true}>
+      <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
         <Typography variant="subtitle1">{t('haku.koulutusalat')}</Typography>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
+      </SuodatinExpansionPanelSummary>
+      <SuodatinExpansionPanelDetails>
         <List
           hidden={expandedKoulutusTaso1.length > 0}
           style={{ width: '100%' }}>
@@ -217,8 +219,8 @@ const KoulutusalatSuodatin = observer((props) => {
           })}
         </List>
         <KoulutuksetTaso2 />
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+      </SuodatinExpansionPanelDetails>
+    </SuodatinExpansionPanel>
   );
 });
 

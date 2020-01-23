@@ -3,9 +3,6 @@ import { observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import {
   Checkbox,
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
   Grid,
   List,
   ListItem,
@@ -20,6 +17,11 @@ import { withTranslation } from 'react-i18next';
 import { styles } from '../../../styles';
 import { useStores } from '../../../hooks';
 import { toJS } from 'mobx';
+import {
+  SuodatinExpansionPanel,
+  SuodatinExpansionPanelSummary,
+  SuodatinExpansionPanelDetails,
+} from './SuodatinExpansionPanel';
 
 const OpetusKieliSuodatin = observer((props) => {
   const { classes, i18n, history, t } = props;
@@ -72,11 +74,11 @@ const OpetusKieliSuodatin = observer((props) => {
   };
 
   return (
-    <ExpansionPanel defaultExpanded={true}>
-      <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+    <SuodatinExpansionPanel defaultExpanded={true}>
+      <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
         <Typography variant="subtitle1">{t('haku.opetuskieli')}</Typography>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
+      </SuodatinExpansionPanelSummary>
+      <SuodatinExpansionPanelDetails>
         <List style={{ width: '100%' }}>
           {Object.entries(opetusKieli).map((opetuskieliArr) => {
             const labelId = `language-list-label-${opetuskieliArr[0]}`;
@@ -116,8 +118,8 @@ const OpetusKieliSuodatin = observer((props) => {
             );
           })}
         </List>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+      </SuodatinExpansionPanelDetails>
+    </SuodatinExpansionPanel>
   );
 });
 
