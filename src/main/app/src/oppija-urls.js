@@ -9,6 +9,7 @@ const production = {
   'konfo-backend.content': 'https://konfo-content.untuvaopintopolku.fi/$1',
   'konfo-backend.koulutus.jarjestajat':
     '/konfo-backend/search/koulutus/$1/jarjestajat',
+  'konfo-backend.koulutus.kuvaus': '/konfo-backend/kuvaus/',
   'kartta.base-url': 'https://hkp.maanmittauslaitos.fi',
   'kartta.publish-url':
     'https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0',
