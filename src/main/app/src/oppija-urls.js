@@ -7,6 +7,8 @@ const production = {
   'konfo-backend.oppilaitos': '/konfo-backend/oppilaitos/',
   'konfo-backend.palaute': '/konfo-backend/palaute',
   'konfo-backend.content': 'https://konfo-content.untuvaopintopolku.fi/$1',
+  'konfo-backend.koulutus.jarjestajat':
+    '/konfo-backend/search/koulutus/$1/jarjestajat',
   'kartta.base-url': 'https://hkp.maanmittauslaitos.fi',
   'kartta.publish-url':
     'https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0',
