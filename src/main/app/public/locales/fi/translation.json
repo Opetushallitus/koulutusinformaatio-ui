@@ -61,7 +61,7 @@
     "kehoite": "Etsi koulutuksia tai oppilaitoksia",
     "oppilaitokset": "Oppilaitokset",
     "haku": "Haku",
-    "hakusana": "Hakusana", 
+    "hakusana": "Hakusana",
     "hakusanalla": "hakusanalla",
     "järjestänimi_a_ö": "Järjestä: Nimi A-Ö",
     "järjestänimi_ö_a": "Järjestä: Nimi Ö-A",
@@ -102,7 +102,7 @@
     "sijainti": "Sijainti",
     "sulje-rajain": "- SULJE RAJAIMET",
     "summary": "Etsintäsi tuotti {{count}} osuman",
-    "summary_plural" : "Etsintäsi tuotti {{count}} osumaa",
+    "summary_plural": "Etsintäsi tuotti {{count}} osumaa",
     "suomi": "Suomi",
     "tulokset-per-sivu": "Tulokset per sivu:",
     "vertaile": "Vertaile"
@@ -127,6 +127,8 @@
   "koulutus": {
     "yleiskuvaus": "Yleiskuvaus",
     "laajuus": "Laajuus",
+    "koulutustyyppi": "Koulutustyyppi",
+    "koulutuksen-laajuus": "Koulutuksen laajuus",
     "kesto": "Kesto",
     "suunniteltu-kesto": "Suunniteltu kesto",
     "koulutusaste": "Koulutusaste",
@@ -145,7 +147,7 @@
     "ei-nimeä": "Koulutus (ei nimeä)",
     "tuntematon-nimi": "(Tuntematon nimi)",
     "hakuaika": "Hakuaika",
-    "tiedot": "Koulutuksen tiedot",
+    "tiedot": "Koulutuksen perustiedot",
     "hae-koulutukseen": "Hae koulutukseen",
     "opettaja": "Opettaja",
     "opintopisteet": "Opintopisteet",
@@ -154,10 +156,18 @@
     "suoritustavat": "Suoritustavat",
     "opetusajat": "Opetusajat",
     "oppilaitokset": "Oppilaitokset",
-    "kuvaus": "Koulutuken kuvaus",
+    "kuvaus": "Koulutuksen kuvaus",
     "opetusaika": "Opetusaika",
     "opetustapa": "Opetustapa",
-    "lukuvuosimaksu": "Lukuvuosimaksu"
+    "lukuvuosimaksu": "Lukuvuosimaksu",
+    "järjestävät-oppilaitokset": "Koulutusta järjestävät oppilaitokset",
+    "lisätietoa": "Lisätietoa koulutuksesta",
+    "tyyppi-amm": "Ammatillinen tutkinto",
+    "tarjonta": "Tutustu tarjontaan",
+    "haku-kaynnissa": "Haku käynnissä",
+    "katso-jarjestavat": "Katso koulutusta järjestävät oppilaitokset.",
+    "nayta-oppilaitokset": "Näytä oppilaitokset",
+    "ei-toteutuksia": "Tätä koulutusta ei ole tarjolla tällä hetkellä missään oppilaitoksessa."
   },
   "vertailu": {
     "takaisin-edelliselle-sivulle": "Takaisin edelliselle sivulle",
@@ -179,11 +189,11 @@
     "opinnot-lukiossa": "Opinnot lukiossa",
     "näin-haet-yhteishaussa": "Näin haet yhteishaussa",
     "opiskelijoiden-valinta-lukioihin": "Opiskelijoiden valinta lukioihin",
-    "ylioppilastutkinto":"Ylioppilastutkinto",
-    "erityislukiot":"Erityislukiot",
-    "kansainvälinen-lukiokoulutus":"Kansainvälinen lukiokoulutus",
-    "etälukiot":"Etälukiot",
-    "vaihto-opiskelijaksi":"Vaihto-opiskelijaksi",
+    "ylioppilastutkinto": "Ylioppilastutkinto",
+    "erityislukiot": "Erityislukiot",
+    "kansainvälinen-lukiokoulutus": "Kansainvälinen lukiokoulutus",
+    "etälukiot": "Etälukiot",
+    "vaihto-opiskelijaksi": "Vaihto-opiskelijaksi",
     "ammatillinen-koulutus": "Ammatillinen koulutus",
     "mitä-ammatillisessa-ovi-opiskella": "Mitä ammatillisessa voi opiskella",
     "ammatillinen-perustutkinto": "Ammatillinen perustutkinto",
@@ -276,6 +286,7 @@
     "osaamisalat": "Osaamisalat",
     "jatko-opintomahdollisuudet": "Jatko-opintomahdollisuudet",
     "stipendit": "Stipendit käytössä",
-    "pääaineet": "Pääaineet"
+    "pääaineet": "Pääaineet",
+    "maksuton": "Maksuton"
   }
 }

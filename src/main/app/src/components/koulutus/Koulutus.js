@@ -1,193 +1,125 @@
-import React, { Component } from 'react';
-import { observer, inject } from 'mobx-react';
-import '../../assets/styles/components/_koulutus.scss';
-import Korkeakoulu from './Korkeakoulu';
-import Ammatillinen from './Ammatillinen';
-import Hakunavigaatio from './../hakutulos/Hakunavigaatio';
-import Media from 'react-media';
-import KoulutusHeaderImage from './KoulutusHeaderImage';
-import PageVertailuBox from '../common/PageLikeBox';
-import Avoin from './Avoin';
-import Lukio from './Lukio';
-import KoulutusHeader from './KoulutusHeader';
+import React, { useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import { useStores } from '../../hooks';
+import { Typography, Box, Container } from '@material-ui/core';
+import { Localizer as l } from '../../tools/Utils';
+import { useTranslation } from 'react-i18next';
+import KoulutusInfoGrid from './KoulutusInfoGrid';
+import { makeStyles } from '@material-ui/styles';
+import TextBox from '../common/TextBox';
+import ToteutusList from './ToteutusList';
+import HakuKaynnissaCard from './HakuKaynnissaCard';
+import { HashLink as Link } from 'react-router-hash-link';
+import Accordion from '../common/Accordion';
+import Spacer from '../common/Spacer';
+import clsx from 'clsx';
+import { colors } from '../../colors';
 
-@inject('restStore')
-@inject('navigaatioStore')
-@observer
-class Koulutus extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      koulutus: undefined,
-      selectedMenuItem: 0,
-      menuElements: ['Koulutuksen esittely', 'Oppilaitokset'],
-    };
-    this.getSelectedItem = this.getSelectedItem.bind(this);
-    this.setSelectedItem = this.setSelectedItem.bind(this);
-    this.resetSelectedItem = this.resetSelectedItem.bind(this);
-  }
+const useStyles = makeStyles({
+  root: { marginTop: '100px' },
+  lisatietoa: { width: '50%' },
+  container: { backgroundColor: colors.white, maxWidth: '1600px' },
+});
 
-  async componentDidMount() {
-    await this.getKoulutus();
-  }
-
-  async componentWillReceiveProps(nextProps) {
-    this.props = nextProps;
-    await this.getKoulutus();
-  }
-
-  getKoulutus() {
-    this.props.navigaatioStore.setOid(this.props.match.params.oid);
-    this.props.restStore.getKoulutus(this.props.navigaatioStore.oid, (k) => {
-      this.setState({
-        koulutus: k,
+const Koulutus = (props) => {
+  const classes = useStyles();
+  const { oid } = props.match.params;
+  const { restStore } = useStores();
+  const { t } = useTranslation();
+  const [state, setState] = useState({
+    kuvaus: {},
+    koulutusAla: [],
+    tutkintoNimi: {},
+    tutkintoNimikkeet: [],
+    opintojenLaajuus: {},
+    opintojenLaajuusYksikkö: {},
+    koulutusTyyppi: '',
+    toteutukset: [],
+    lisatiedot: [],
+  });
+  useEffect(() => {
+    async function getData() {
+      const [koulutusData, toteutukset] = await Promise.all([
+        restStore.getKoulutusPromise(oid),
+        restStore.getKoulutusJarjestajatPromise(oid),
+      ]);
+      const kuvausData = await restStore.getKuvausPromise(
+        koulutusData.koulutus.koodiUri
+      ); //TODO: Proper error handling
+      setState({
+        kuvaus: kuvausData.kuvaus,
+        koulutusAla: koulutusData.metadata.koulutusala,
+        tutkintoNimi: koulutusData.nimi,
+        tutkintoNimikkeet: koulutusData.metadata.tutkintonimike,
+        opintojenLaajuus: koulutusData.metadata.opintojenLaajuus,
+        opintojenLaajuusYksikkö: koulutusData.metadata.opintojenLaajuusyksikko,
+        koulutusTyyppi: koulutusData.metadata.tyyppi,
+        toteutukset: toteutukset.hits,
+        lisatiedot: koulutusData.metadata.lisatiedot,
       });
-    });
-  }
-
-  getSelectedItem(i) {
-    this.setState({
-      selectedMenuItem: i,
-    });
-  }
-
-  setSelectedItem() {
-    return this.state.selectedMenuItem;
-  }
-
-  resetSelectedItem() {
-    this.setState({
-      selectedMenuItem: 0,
-    });
-  }
-
-  chooseKoulutus() {
-    let selectedItem = this.setSelectedItem();
-    if (this.state.koulutus && this.state.koulutus.koulutustyyppi) {
-      switch (this.state.koulutus.koulutustyyppi) {
-        case 'lk':
-          return (
-            <Lukio
-              items={this.state.menuElements}
-              selected={selectedItem}
-              item={this.getSelectedItem}
-              oid={this.props.navigaatioStore.oid}
-              result={this.state.koulutus}
-            />
-          ); //TODO
-        case 'yo':
-          return (
-            <Korkeakoulu
-              items={this.state.menuElements}
-              selected={selectedItem}
-              item={this.getSelectedItem}
-              oid={this.props.navigaatioStore.oid}
-              result={this.state.koulutus}
-            />
-          );
-        case 'kk':
-          return (
-            <Korkeakoulu
-              items={this.state.menuElements}
-              selected={selectedItem}
-              item={this.getSelectedItem}
-              oid={this.props.navigaatioStore.oid}
-              result={this.state.koulutus}
-            />
-          );
-        case 'amk':
-          return (
-            <Korkeakoulu
-              items={this.state.menuElements}
-              selected={selectedItem}
-              item={this.getSelectedItem}
-              oid={this.props.navigaatioStore.oid}
-              result={this.state.koulutus}
-            />
-          );
-        case 'ako':
-          return (
-            <Avoin
-              items={this.state.menuElements}
-              selected={selectedItem}
-              item={this.getSelectedItem}
-              oid={this.props.navigaatioStore.oid}
-              result={this.state.koulutus}
-            />
-          );
-        case 'amm':
-          return (
-            <Ammatillinen
-              items={this.state.menuElements}
-              selected={selectedItem}
-              item={this.getSelectedItem}
-              oid={this.props.navigaatioStore.oid}
-              result={this.state.koulutus}
-            />
-          );
-        default:
-          return (
-            <Ammatillinen
-              items={this.state.menuElements}
-              selected={selectedItem}
-              item={this.getSelectedItem}
-              oid={this.props.navigaatioStore.oid}
-              result={this.state.koulutus}
-              muu={true}
-            />
-          );
-      }
     }
-    return <div />;
-  }
+    getData();
+  }, [oid, restStore]);
+  return (
+    <Container className={classes.container}>
+      <Box display="flex" flexDirection="column" alignItems="center">
+        {state.koulutusAla.map((ala) => (
+          <Typography key={ala.koodiUri} variant="h3" component="h1">
+            {l.localize(ala)}
+          </Typography>
+        ))}
+        <Typography variant="h1" component="h2">
+          {l.localize(state.tutkintoNimi)}
+        </Typography>
+        <KoulutusInfoGrid
+          className={classes.root}
+          nimikkeet={state.tutkintoNimikkeet}
+          koulutustyyppi={state.koulutusTyyppi}
+          laajuus={[state.opintojenLaajuus, state.opintojenLaajuusYksikkö]}
+        />
+        {state.toteutukset?.length > 0 ? (
+          <HakuKaynnissaCard
+            title={t('koulutus.haku-kaynnissa')}
+            text={t('koulutus.katso-jarjestavat')}
+            link={
+              <Link
+                to="#tarjonta"
+                aria-label="anchor"
+                smooth
+                style={{ textDecoration: 'none' }}
+              />
+            }
+            buttonText={t('koulutus.nayta-oppilaitokset')}
+          />
+        ) : null}
 
-  koulutusType() {
-    if (this.state.koulutus) {
-      return this.state.koulutus.koulutustyyppi;
-    }
-  }
-
-  koulutusNimi() {
-    if (this.state.koulutus) {
-      return this.state.koulutus.nimi;
-    }
-  }
-
-  render() {
-    const selectedKoulutus = this.chooseKoulutus();
-    const actualKoulutus = this.koulutusType();
-    const koulutusNimi = this.koulutusNimi();
-    const hattu = actualKoulutus !== 'amm' ? 'muu-hattu' : 'ammatillinen-hattu';
-    return (
-      <React.Fragment>
-        <div className="container" id="koulutus-container">
-          <div className="row">
-            <Media query="(min-width: 992px)">
-              {/* 
-                                    matches => matches ? (
-                                        <KoulutusSidebar items={this.state.menuElements} type={actualKoulutus} selected={selectedItem} item={this.getSelectedItem}></KoulutusSidebar>
-                                    ): null*/}
-            </Media>
-            <div className="col-12 col-md-12 col-lg-12 col-xl-12">
-              <KoulutusHeader hattu={hattu} nimi={koulutusNimi} />
-              <Media query="(min-width: 992px)">
-                {(matches) =>
-                  matches ? (
-                    <PageVertailuBox text="Lisää vertailuun"></PageVertailuBox>
-                  ) : null
-                }
-              </Media>
-              <div className="header-image">
-                <KoulutusHeaderImage></KoulutusHeaderImage>
-              </div>
-              {selectedKoulutus}
-            </div>
-          </div>
+        <TextBox
+          heading={t('koulutus.kuvaus')}
+          text={l.localize(state.kuvaus)}
+          className={classes.root}
+        />
+        <div id="tarjonta">
+          <ToteutusList toteutukset={state.toteutukset} />
         </div>
-        <Hakunavigaatio />
-      </React.Fragment>
-    );
-  }
-}
+        {state.lisatiedot ? (
+          <Box
+            className={clsx([classes.lisatietoa, classes.root])}
+            display="flex"
+            flexDirection="column"
+            alignItems="center">
+            <Typography variant="h2">{t('koulutus.lisätietoa')}</Typography>
+            <Spacer />
+            <Accordion
+              items={state.lisatiedot.map((lisatieto) => ({
+                title: l.localize(lisatieto.otsikko),
+                content: l.localize(lisatieto.teksti),
+              }))}
+            />
+          </Box>
+        ) : null}
+      </Box>
+    </Container>
+  );
+};
 
-export default Koulutus;
+export default observer(Koulutus);

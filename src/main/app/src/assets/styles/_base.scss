@@ -13,11 +13,6 @@
 *:focus {
   outline: none;
 }
-// html, body {
-//     width: auto !important;
-//     overflow-x: hidden !important;
-//     height: 100%;
-// }
 html {
   box-sizing: border-box;
   -ms-overflow-style: scrollbar;
@@ -44,56 +39,6 @@ a:focus {
 a.search-button:focus,
 a.navbar-brand:focus {
   color: white;
-}
-ul {
-}
-h1,
-h2,
-h3,
-h4,
-h5 {
-  font-weight: 500;
-  color: $font-color;
-  margin-block-start: 0.2rem;
-  margin-block-end: 0.2rem;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-}
-h1 {
-  @include fluid-sizing('font-size', $h1-font-size-map);
-  @include fluid-sizing('line-height', $h1-line-height-map);
-}
-h2 {
-  @include fluid-sizing('font-size', $h2-font-size-map);
-  @include fluid-sizing('line-height', $h2-line-height-map);
-}
-h3 {
-  @include fluid-sizing('font-size', $h3-font-size-map);
-  @include fluid-sizing('line-height', $h3-line-height-map);
-}
-h1 a,
-h1 p,
-h1 span {
-  @include fluid-sizing('font-size', $h1-font-size-map);
-  @include fluid-sizing('line-height', $h1-line-height-map);
-}
-h2 a,
-h2 p,
-h2 span {
-  @include fluid-sizing('font-size', $h2-font-size-map);
-  @include fluid-sizing('line-height', $h2-line-height-map);
-}
-h3 a,
-h3 p,
-h3 span {
-  @include fluid-sizing('font-size', $h3-font-size-map);
-  @include fluid-sizing('line-height', $h3-line-height-map);
-}
-
-p,
-span {
-  @include fluid-sizing('font-size', $text-font-size-map);
-  @include fluid-sizing('line-height', $text-line-height-map);
 }
 .red {
   color: $dark-red;

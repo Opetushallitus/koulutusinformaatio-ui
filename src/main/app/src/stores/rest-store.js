@@ -178,7 +178,9 @@ class RestStore {
   getToteutusPromise = (oid) => {
     return superagent
       .get(this.urlStore.urls.url('konfo-backend.toteutus') + oid)
-      .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui');
+      .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
+      .then((res) => res.body)
+      .catch(this.handleError);
   };
 
   @action
@@ -186,6 +188,35 @@ class RestStore {
     return superagent
       .get(this.urlStore.urls.url('konfo-backend.oppilaitos') + oid)
       .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui');
+  };
+
+  @action
+  getKoulutusPromise = (oid) => {
+    return superagent
+      .get(this.urlStore.urls.url('konfo-backend.koulutus') + oid)
+      .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
+      .then((res) => res.body)
+      .catch(this.handleError);
+  };
+
+  @action
+  getKuvausPromise = (koulutuskoodi) => {
+    return superagent
+      .get(
+        this.urlStore.urls.url('konfo-backend.koulutus.kuvaus') + koulutuskoodi
+      )
+      .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
+      .then((res) => res.body)
+      .catch(this.handleError);
+  };
+  @action
+  getKoulutusJarjestajatPromise = (oid, options) => {
+    return superagent
+      .get(this.urlStore.urls.url('konfo-backend.koulutus.jarjestajat', oid))
+      .query(options)
+      .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
+      .then((res) => res.body)
+      .catch(this.handleError);
   };
 }
 

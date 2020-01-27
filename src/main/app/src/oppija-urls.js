@@ -33,6 +33,8 @@ const development = {
     'https://beta.hahtuvaopintopolku.fi/konfo-backend/hakukohde/',
   'konfo-backend.haku':
     'https://beta.hahtuvaopintopolku.fi/konfo-backend/haku/',
+  'konfo-backend.koulutus.jarjestajat':
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/search/koulutus/$1/jarjestajat',
   'kartta.base-url': 'https://hkp.maanmittauslaitos.fi',
   'kartta.publish-url':
     'https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0',

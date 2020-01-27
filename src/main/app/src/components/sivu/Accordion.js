@@ -27,14 +27,12 @@ const Summary = ({ children, ...props }) => {
     <ExpansionPanelSummary
       elevation={0}
       expandIcon={<ExpandMoreIcon />}
-      aria-controls="panel1a-content"
-    >
+      aria-controls="panel1a-content">
       <Typography>{children}</Typography>
     </ExpansionPanelSummary>
   );
 };
 const Accordion = ({ children, ...props }) => {
-  console.log(props);
   return <ExpansionPanel elevation={0}>{children}</ExpansionPanel>;
 };
 

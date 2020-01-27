@@ -1,6 +1,13 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles, Typography, Grid, Paper, Icon } from '@material-ui/core';
+import {
+  makeStyles,
+  Typography,
+  Grid,
+  Paper,
+  Icon,
+  Box,
+} from '@material-ui/core';
 import { colors } from '../../colors';
 import Spacer from './Spacer';
 import KoulutusAsteIcon from '../../assets/images/koulutusaste.svg';
@@ -41,11 +48,17 @@ const useStyles = makeStyles({
   },
 });
 
-const InfoGrid = ({ heading, gridData, id }) => {
+const InfoGrid = (props) => {
+  const { heading, gridData, className } = props;
   const classes = useStyles();
 
   return (
-    <React.Fragment>
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      width="100%"
+      className={className}>
       <Typography variant="h2">{heading}</Typography>
       <Spacer />
       <Paper className={classes.paper}>
@@ -54,8 +67,7 @@ const InfoGrid = ({ heading, gridData, id }) => {
           container
           alignItems="flex-start"
           justify="space-evenly"
-          spacing={5}
-        >
+          spacing={5}>
           {gridData.map((e, index) => (
             <Grid
               item
@@ -64,12 +76,15 @@ const InfoGrid = ({ heading, gridData, id }) => {
               xs={12}
               md={6}
               lg={4}
-              key={`info-grid-${e.id}-${index}`}
-            >
+              key={`info-grid-${e.id}-${index}`}>
               <Grid item>
-                <Icon>
-                  <img src={iconLookupTable[e.icon]} alt="" />
-                </Icon>
+                {typeof e.icon === 'string' ? (
+                  <Icon>
+                    <img src={iconLookupTable[e.icon]} alt="" />
+                  </Icon>
+                ) : (
+                  e.icon
+                )}
               </Grid>
               <Grid
                 item
@@ -78,23 +93,32 @@ const InfoGrid = ({ heading, gridData, id }) => {
                 alignContent="flex-start"
                 container
                 direction="column"
-              >
-                <Typography
-                  className={clsx(classes.title, classes.text)}
-                  variant="body1"
-                  component="h3"
-                >
-                  {e.title}
-                </Typography>
-                <Typography className={classes.text} variant="body1">
-                  {e.text}
-                </Typography>
+                wrap="nowrap">
+                <Grid item>
+                  <Typography
+                    className={clsx(classes.title, classes.text)}
+                    variant="body1"
+                    component="h3">
+                    {e.title}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  {e.text.split('\n').map((line, i) => (
+                    <Typography
+                      className={classes.text}
+                      component="div"
+                      variant="body1"
+                      key={i}>
+                      {line}
+                    </Typography>
+                  ))}
+                </Grid>
               </Grid>
             </Grid>
           ))}
         </Grid>
       </Paper>
-    </React.Fragment>
+    </Box>
   );
 };
 
