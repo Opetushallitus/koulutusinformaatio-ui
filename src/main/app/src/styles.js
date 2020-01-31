@@ -14,25 +14,29 @@ export const styles = (theme) =>
     // ******************************************************************
     // Hakutulos
     // ******************************************************************
-    hakutulosToggleBarMargins: {
-      margin: theme.spacing(3, 0, 1, 0),
+    hakuTulosHeaderGridRoot: {
+      marginBottom: theme.spacing(2),
     },
     hakutulosSisalto: {
       maxWidth: 1600,
       margin: 'auto',
     },
     hakuTulosSortBtnRoot: {
-      marginLeft: theme.spacing(2),
+      marginLeft: theme.spacing(1),
     },
     hakuTulosSortBtnLabel: {
       fontWeight: 600,
+      whiteSpace: 'nowrap',
     },
     hakuTulosSelect: {
       '&:before': {
         borderBottom: 'none',
       },
     },
-    hakuStoreMenuItemRoot: {
+    hakuTulosSelectSelectMenu: {
+      overflow: 'inherit',
+    },
+    hakuTulosMenuItemRoot: {
       paddingLeft: 12,
     },
     hakuTulosSelectIcon: {
@@ -40,6 +44,7 @@ export const styles = (theme) =>
     },
     hakuTulosBoxRoot: {
       fontSize: 14,
+      whiteSpace: 'nowrap',
       marginRight: theme.spacing(1),
     },
     hakuTulosFiltersClearLabel: {
@@ -66,10 +71,15 @@ export const styles = (theme) =>
       marginBottom: '0 !important',
       marginRight: theme.spacing(2),
     },
-    hakuTulosSisaltoPaperi: {
+    hakuTulosContentsPaper: {
       width: '100%',
-      padding: theme.spacing(1, 11),
       boxShadow: 'none',
+      [theme.breakpoints.down('lg')]: {
+        padding: theme.spacing(1, 11),
+      },
+      [theme.breakpoints.down('md')]: {
+        padding: theme.spacing(1, 1),
+      },
     },
     hakuTulosNavText: {
       margin: theme.spacing(5, 0, 7, 0),
@@ -80,6 +90,14 @@ export const styles = (theme) =>
     suodatinValinnatGridRoot2: {
       paddingTop: 5,
     },
+    hakutulosToggleTabRoot: {
+      [theme.breakpoints.between('sm', 'md')]: {
+        fontSize: '0.9rem',
+      },
+      [theme.breakpoints.up('lg')]: {
+        fontSize: '1rem',
+      },
+    },
     customWrapper: {
       flexDirection: 'row',
       textTransform: 'capitalize',
@@ -88,17 +106,10 @@ export const styles = (theme) =>
     customLabelIcon: {
       minHeight: '50px',
       paddingLeft: 0,
-      paddingRight: theme.spacing(4),
+      paddingRight: theme.spacing(3),
     },
     customIconRoot: {
       marginBottom: 0,
-    },
-    hakutulosFiltersGrid: {
-      padding: theme.spacing(2, 4, 2, 0),
-    },
-    hakutulosContent: {
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2),
     },
     listItemCheckbox: {
       padding: '0 9px 0 9px',
@@ -113,18 +124,21 @@ export const styles = (theme) =>
     eduTypeInnerListPadding: {
       paddingLeft: theme.spacing(2.2),
     },
-    hakutulosKortti: {
+    hakuTulosKorttiPaperRoot: {
       width: '100%',
-      padding: theme.spacing(3),
       marginBottom: theme.spacing(1.5),
       boxShadow: '0 0 8px 0 rgba(0,0,0,0.2)',
+      padding: theme.spacing(3),
+      [theme.breakpoints.down('xs')]: {
+        padding: theme.spacing(2),
+      },
     },
     koulutusKorttiImgBtn: {
       width: 200,
       height: 200,
     },
     koulutusKorttiLeftMargin: {
-      marginLeft: '0.5em',
+      marginLeft: theme.spacing(1),
     },
     koulutusKorttiImg: {
       margin: 'auto',
@@ -134,6 +148,36 @@ export const styles = (theme) =>
     },
     paginationRootCurrent: {
       fontWeight: 'bold',
+    },
+    oppilaitosLogoAvatar: {
+      borderRadius: 0,
+      [theme.breakpoints.up('xs')]: {
+        width: 150,
+        height: 150,
+      },
+      [theme.breakpoints.down('xs')]: {
+        width: theme.spacing(9),
+        height: theme.spacing(9),
+      },
+    },
+    koulutusKorttiAvatar: {
+      borderRadius: 0,
+      [theme.breakpoints.up('lg')]: {
+        maxWidth: 275,
+        maxHeight: 275,
+        width: '80%',
+        height: '80%',
+      },
+      [theme.breakpoints.down('md')]: {
+        width: '100%',
+        height: '100%',
+      },
+    },
+    oppilaitosKorttiGridSpacingXs1: {
+      padding: 0,
+    },
+    suodattimetExpansionPanelRoot: {
+      minWidth: 275,
     },
 
     // ******************************************************************
