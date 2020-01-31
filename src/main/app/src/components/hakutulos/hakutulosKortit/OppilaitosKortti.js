@@ -3,16 +3,26 @@ import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
 import '../../../assets/styles/components/_hakutulos-box.scss';
-import { ButtonBase, Grid, Link, Paper, Typography } from '@material-ui/core';
+import {
+  Avatar,
+  Hidden,
+  Grid,
+  Link,
+  Paper,
+  Typography,
+  useMediaQuery,
+} from '@material-ui/core';
 import { SchoolOutlined, PublicOutlined } from '@material-ui/icons';
 import { styles } from '../../../styles';
 import oppilaitos_img from '../../../assets/images/logo-oppilaitos.png';
 import { educationTypeColorCode } from '../../../colors';
 import _get from 'lodash/get';
-import { t } from 'i18next/dist/commonjs';
+import { theme } from '../../../theme';
 
 const OppilaitosKortti = (props) => {
   const { classes, nimi, i18n, oppilaitos, t } = props;
+  const lg_1280px_Up = useMediaQuery('(min-width:1280px)');
+  const xs_400_up = useMediaQuery('(min-width:400px)');
 
   const paikkakunnatStr = oppilaitos.paikkakunnat
     .reduce((acc, current) => {
@@ -43,22 +53,81 @@ const OppilaitosKortti = (props) => {
   return (
     <Link href={props.link} underline="none">
       <Paper
-        className={classes.hakutulosKortti}
-        style={{ borderTop: `5px solid ${educationTypeColorCode.amm}` }}
-      >
-        <Grid container spacing={4}>
-          <Grid container item xs={8} spacing={3} direction="column">
-            <Grid item>
-              <Typography variant="h6" style={{ fontWeight: 'bold' }}>
-                {nimi?.[i18n.language]}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography>{kuvausStr(oppilaitos.kuvaus)}</Typography>
+        classes={{ root: classes.hakuTulosKorttiPaperRoot }}
+        style={{ borderTop: `5px solid ${educationTypeColorCode.amm}` }}>
+        <Grid container alignItems="center" spacing={3}>
+          <Grid
+            container
+            item
+            lg={8}
+            md={12}
+            sm
+            xs={12}
+            spacing={lg_1280px_Up ? 3 : 0}
+            direction="column">
+            <Grid
+              item
+              container
+              direction="row"
+              wrap={xs_400_up ? 'nowrap' : 'wrap-reverse'}
+              justify="space-between"
+              spacing={2}
+              alignItems="center">
+              <Grid item sm={12} xs={xs_400_up ? 10 : 12}>
+                <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+                  {nimi?.[i18n.language]}
+                </Typography>
+              </Grid>
+              <Hidden smUp>
+                <Grid item xs justify="flex-end">
+                  <Avatar
+                    className={classes.oppilaitosLogoAvatar}
+                    src={oppilaitos_img}
+                    alt="oppilaitoksen logo"
+                  />
+                </Grid>
+              </Hidden>
             </Grid>
 
-            <Grid item container direction="row">
-              <Grid item container xs={6}>
+            <Hidden xsDown>
+              <Grid
+                item
+                container
+                spacing={2}
+                alignItems="center"
+                direction="row"
+                wrap="nowrap"
+                justify="space-between">
+                <Grid
+                  item
+                  lg={12}
+                  md={9}
+                  sm={9}
+                  xs={12}
+                  style={{ paddingTop: theme.spacing(2) }}>
+                  <Typography>{kuvausStr(oppilaitos.kuvaus)}</Typography>
+                </Grid>
+                <Hidden lgUp xsDown>
+                  <Grid
+                    item
+                    container
+                    md
+                    sm
+                    alignItems="flex-end"
+                    justify="flex-end"
+                    alignContent="flex-end">
+                    <Avatar
+                      className={classes.oppilaitosLogoAvatar}
+                      src={oppilaitos_img}
+                      alt="oppilaitoksen logo"
+                    />
+                  </Grid>
+                </Hidden>
+              </Grid>
+            </Hidden>
+
+            <Grid item container direction="row" style={{ paddingTop: 10 }}>
+              <Grid item container md={6} sm={6} xs={12}>
                 <Grid item xs={1}>
                   <SchoolOutlined />
                 </Grid>
@@ -68,7 +137,7 @@ const OppilaitosKortti = (props) => {
                   </Typography>
                 </Grid>
               </Grid>
-              <Grid item container xs={6}>
+              <Grid item container md sm xs>
                 <Grid item xs={1}>
                   <PublicOutlined />
                 </Grid>
@@ -80,15 +149,16 @@ const OppilaitosKortti = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item container xs={4} justify="center">
-            <ButtonBase className={classes.koulutusKorttiImgBtn}>
-              <img
-                className={classes.koulutusKorttiImg}
+
+          <Hidden mdDown>
+            <Grid item container lg={4} justify="center">
+              <Avatar
+                className={classes.oppilaitosLogoAvatar}
                 src={oppilaitos_img}
-                alt="haku koulutukseen"
+                alt="oppilaitoksen logo"
               />
-            </ButtonBase>
-          </Grid>
+            </Grid>
+          </Hidden>
         </Grid>
       </Paper>
     </Link>

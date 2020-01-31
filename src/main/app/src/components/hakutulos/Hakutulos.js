@@ -8,6 +8,7 @@ import { ExpandMore, ExpandLess, HomeOutlined } from '@material-ui/icons';
 import {
   Box,
   Button,
+  Hidden,
   Grid,
   MenuItem,
   Paper,
@@ -83,7 +84,7 @@ const Hakutulos = observer((props) => {
     hakuStore.searchOppilaitokset();
   };
 
-  const RenderResultList = () => {
+  const ResultList = () => {
     const koulutusResult = toJS(hakuStore.koulutusResult);
     const oppilaitosResult = toJS(hakuStore.oppilaitosResult);
     if (hakuStore.toggleKoulutus) {
@@ -138,8 +139,10 @@ const Hakutulos = observer((props) => {
   }
 
   return (
-    <Grid className={classes.hakutulosSisalto} container spacing={3}>
-      <Paper className={classes.hakuTulosSisaltoPaperi} id="hakutulos-content">
+    <Grid className={classes.hakutulosSisalto} container>
+      <Paper
+        classes={{ root: classes.hakuTulosContentsPaper }}
+        id="hakutulos-content">
         <Grid
           container
           item
@@ -150,71 +153,83 @@ const Hakutulos = observer((props) => {
         </Grid>
         <Grid
           container
-          alignItems="center"
-          className={classes.hakutulosToggleBarMargins}>
-          <Grid item xs={3}>
-            <Typography variant="h5">{t('haku.rajaa-tuloksia')}</Typography>
+          alignItems="flex-start"
+          spacing={2}
+          classes={{ root: classes.hakuTulosHeaderGridRoot }}>
+          <Grid item lg={3} md={4} sm={12}>
+            <Typography style={{ paddingTop: 10 }} variant="h5">
+              {t('haku.rajaa-tuloksia')}
+            </Typography>
           </Grid>
-          <Grid id="toggle-tabs" item xs={5}>
-            <HakutulosToggle />
-          </Grid>
-          <Grid container item xs={4} alignItems="baseline">
-            <Grid xs={6} container item wrap="nowrap" justify="flex-end">
-              <Box
-                component="span"
-                classes={{ root: classes.hakuTulosBoxRoot }}>
-                {t('haku.tulokset-per-sivu')}
-              </Box>
-              <Select
-                IconComponent={ExpandMore}
-                className={classes.hakuTulosSelect}
-                classes={{ icon: classes.hakuTulosSelectIcon }}
-                value={pageSize}
-                onChange={handlePageSizeChange}>
-                {hakuStore.pageSizeArray.map((size) => (
-                  <MenuItem
-                    classes={{ root: classes.hakuStoreMenuItemRoot }}
-                    value={size}>
-                    {size}
-                  </MenuItem>
-                ))}
-              </Select>
+          <Grid item container lg={9} md={8} sm={12} justify="space-between">
+            <Grid item lg={6} md={7} sm={7} xs={12}>
+              <HakutulosToggle />
             </Grid>
-            <Grid xs={6} container item justify="flex-end">
-              <Button
-                endIcon={sort === 'asc' ? <ExpandMore /> : <ExpandLess />}
-                classes={{
-                  root: classes.hakuTulosSortBtnRoot,
-                  label: classes.hakuTulosSortBtnLabel,
-                }}
-                onClick={() => handleSortToggle(sort)}>
-                {sort === 'asc'
-                  ? t('haku.järjestänimi_a_ö')
-                  : t('haku.järjestänimi_ö_a')}
-              </Button>
-            </Grid>
+            <Hidden xsDown>
+              <Grid
+                item
+                container
+                lg={6}
+                md={5}
+                sm={5}
+                xs
+                justify="flex-end"
+                style={{ paddingTop: 6 }}
+                alignItems="baseline">
+                <Box
+                  component="span"
+                  classes={{ root: classes.hakuTulosBoxRoot }}>
+                  {t('haku.tulokset-per-sivu')}
+                </Box>
+                <Select
+                  IconComponent={ExpandMore}
+                  className={classes.hakuTulosSelect}
+                  style={{ marginRight: 4 }}
+                  classes={{
+                    icon: classes.hakuTulosSelectIcon,
+                    selectMenu: classes.hakuTulosSelectSelectMenu,
+                  }}
+                  value={pageSize}
+                  onChange={handlePageSizeChange}>
+                  {hakuStore.pageSizeArray.map((size) => (
+                    <MenuItem
+                      key={size}
+                      classes={{ root: classes.hakuTulosMenuItemRoot }}
+                      value={size}>
+                      {size}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <Button
+                  endIcon={sort === 'asc' ? <ExpandMore /> : <ExpandLess />}
+                  classes={{
+                    root: classes.hakuTulosSortBtnRoot,
+                    label: classes.hakuTulosSortBtnLabel,
+                  }}
+                  onClick={() => handleSortToggle(sort)}>
+                  {sort === 'asc'
+                    ? t('haku.järjestänimi_a_ö')
+                    : t('haku.järjestänimi_ö_a')}
+                </Button>
+              </Grid>
+            </Hidden>
           </Grid>
         </Grid>
-        <Grid item container xs={12}>
-          <Grid item xs={3} className={classes.hakutulosFiltersGrid}>
+        <Grid item container spacing={2}>
+          <Grid item lg={3} md={4} sm={12} xs={12}>
             <KoulutusTyyppiSuodatin />
             <OpetusKieliSuodatin />
             <SijaintiSuodatin />
             <KoulutusalatSuodatin />
           </Grid>
-          <Grid
-            item
-            container
-            direction="column"
-            xs={9}
-            className={classes.hakutulosContent}>
+          <Grid item container direction="column" xs>
             <Grid item>
               {(koulutustyyppi.length > 0 ||
                 opetuskieli.length > 0 ||
                 koulutusala.length > 0 ||
                 selectedsijainnit.length > 0 ||
                 sijainti.length > 0) && <SuodatinValinnat />}
-              <RenderResultList />
+              <ResultList />
             </Grid>
             <Grid item style={{ margin: 'auto' }}>
               <Pagination />
