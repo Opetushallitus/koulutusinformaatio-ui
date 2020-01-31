@@ -42,6 +42,7 @@ const HakutulosToggle = observer((props) => {
         classes={{
           wrapper: classes.customWrapper,
           labelIcon: classes.customLabelIcon,
+          root: classes.hakutulosToggleTabRoot,
         }}
         label={`${t('haku.koulutukset')} (${hakuStore.koulutusTotal})`}></Tab>
       <Tab
@@ -49,6 +50,7 @@ const HakutulosToggle = observer((props) => {
         classes={{
           wrapper: classes.customWrapper,
           labelIcon: classes.customLabelIcon,
+          root: classes.hakutulosToggleTabRoot,
         }}
         label={`${t('haku.oppilaitokset')} (${
           hakuStore.oppilaitosTotal

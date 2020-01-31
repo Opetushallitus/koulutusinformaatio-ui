@@ -90,6 +90,14 @@ export const styles = (theme) =>
     suodatinValinnatGridRoot2: {
       paddingTop: 5,
     },
+    hakutulosToggleTabRoot: {
+      [theme.breakpoints.between('sm', 'md')]: {
+        fontSize: '0.9rem',
+      },
+      [theme.breakpoints.up('lg')]: {
+        fontSize: '1rem',
+      },
+    },
     customWrapper: {
       flexDirection: 'row',
       textTransform: 'capitalize',
