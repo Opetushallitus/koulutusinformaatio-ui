@@ -15,6 +15,7 @@ import {
 import { SchoolOutlined, TimelapseOutlined } from '@material-ui/icons';
 import { styles } from '../../../styles';
 import hakuKoulutukseen_img from '../../../assets/images/haku-koulutukseen.jpg';
+import { MUI_BREAKPOINTS } from '../../../constants';
 import { educationTypeColorCode } from '../../../colors';
 
 const KoulutusKortti = (props) => {
@@ -29,7 +30,7 @@ const KoulutusKortti = (props) => {
     i18n,
     t,
   } = props;
-  const xs_600_up = useMediaQuery('(min-width:600px)');
+  const muiScreenSizeMinSm = useMediaQuery(MUI_BREAKPOINTS.MIN_SM);
   const tutkintonimikkeetStr = tutkintonimikkeet
     .reduce((acc, current) => {
       return acc + current.nimi.fi + ', ';
@@ -98,7 +99,11 @@ const KoulutusKortti = (props) => {
               </Grid>
             </Hidden>
 
-            <Grid item container direction="row" spacing={xs_600_up ? 2 : 0}>
+            <Grid
+              item
+              container
+              direction="row"
+              spacing={muiScreenSizeMinSm ? 2 : 0}>
               <Grid item container md={6} sm={6} xs={12}>
                 <Grid item xs={1}>
                   <SchoolOutlined />

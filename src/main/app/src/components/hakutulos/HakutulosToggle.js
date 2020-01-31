@@ -8,11 +8,12 @@ import qs from 'query-string';
 import { styles } from '../../styles';
 import { withTranslation } from 'react-i18next';
 import { useStores } from '../../hooks';
+import { MUI_BREAKPOINTS } from '../../constants';
 
 const HakutulosToggle = observer((props) => {
   const { t, classes, history } = props;
   const { hakuStore } = useStores();
-  const xs_600px_up = useMediaQuery('(min-width:600px)');
+  const muiScreenSizeMinSm = useMediaQuery(MUI_BREAKPOINTS.MIN_SM);
 
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -32,7 +33,7 @@ const HakutulosToggle = observer((props) => {
 
   return (
     <Tabs
-      variant={xs_600px_up ? 'standard' : 'fullWidth'}
+      variant={muiScreenSizeMinSm ? 'standard' : 'fullWidth'}
       value={selectedTab}
       indicatorColor="primary"
       textColor="primary"

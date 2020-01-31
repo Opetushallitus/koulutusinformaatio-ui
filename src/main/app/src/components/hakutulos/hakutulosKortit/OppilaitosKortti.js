@@ -16,13 +16,14 @@ import { SchoolOutlined, PublicOutlined } from '@material-ui/icons';
 import { styles } from '../../../styles';
 import oppilaitos_img from '../../../assets/images/logo-oppilaitos.png';
 import { educationTypeColorCode } from '../../../colors';
+import { MUI_BREAKPOINTS } from '../../../constants';
 import _get from 'lodash/get';
 import { theme } from '../../../theme';
 
 const OppilaitosKortti = (props) => {
   const { classes, nimi, i18n, oppilaitos, t } = props;
-  const lg_1280px_Up = useMediaQuery('(min-width:1280px)');
-  const xs_400_up = useMediaQuery('(min-width:400px)');
+  const muiScreenSizeMinLg = useMediaQuery(MUI_BREAKPOINTS.MIN_LG);
+  const screenSizeMinCustomXs = useMediaQuery(MUI_BREAKPOINTS.MIN_XS_400);
 
   const paikkakunnatStr = oppilaitos.paikkakunnat
     .reduce((acc, current) => {
@@ -63,17 +64,17 @@ const OppilaitosKortti = (props) => {
             md={12}
             sm
             xs={12}
-            spacing={lg_1280px_Up ? 3 : 0}
+            spacing={muiScreenSizeMinLg ? 3 : 0}
             direction="column">
             <Grid
               item
               container
               direction="row"
-              wrap={xs_400_up ? 'nowrap' : 'wrap-reverse'}
+              wrap={screenSizeMinCustomXs ? 'nowrap' : 'wrap-reverse'}
               justify="space-between"
               spacing={2}
               alignItems="center">
-              <Grid item sm={12} xs={xs_400_up ? 10 : 12}>
+              <Grid item sm={12} xs={screenSizeMinCustomXs ? 10 : 12}>
                 <Typography variant="h6" style={{ fontWeight: 'bold' }}>
                   {nimi?.[i18n.language]}
                 </Typography>
