@@ -31,7 +31,7 @@ const development = {
     'https://beta.hahtuvaopintopolku.fi/konfo-backend/oppilaitos/',
   'konfo-backend.palaute':
     'https://beta.hahtuvaopintopolku.fi/konfo-backend/palaute',
-  'konfo-backend.content': 'https://konfo-content.untuvaopintopolku.fi/$1',
+  //'konfo-backend.content': 'https://konfo-content.untuvaopintopolku.fi/$1',
   'konfo-backend.hakukohde':
     'https://beta.hahtuvaopintopolku.fi/konfo-backend/hakukohde/',
   'konfo-backend.haku':
