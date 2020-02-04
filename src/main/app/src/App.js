@@ -29,7 +29,7 @@ const App = (props) => {
   const navigaatioStore = konfoStore.navigaatioStore;
   const vertailuStore = konfoStore.vertailuStore;
   const contentfulStore = konfoStore.contentfulStore;
-  contentfulStore.fetchData();
+
   const matches = useMediaQuery('(max-width: 600px)');
 
   const [menuVisible, setMenuVisible] = useState(false);
@@ -59,8 +59,7 @@ const App = (props) => {
       restStore={restStore}
       navigaatioStore={navigaatioStore}
       vertailuStore={vertailuStore}
-      contentfulStore={contentfulStore}
-    >
+      contentfulStore={contentfulStore}>
       <I18nextProvider i18n={i18n} initialLanguage={'fi'}>
         <React.Fragment>
           <div className={classes.root}>
@@ -76,8 +75,7 @@ const App = (props) => {
                 [matches
                   ? classes.smContentShift
                   : classes.contentShift]: menuVisible,
-              })}
-            >
+              })}>
               {main}
             </main>
           </div>
