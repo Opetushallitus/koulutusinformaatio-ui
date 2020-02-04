@@ -63,14 +63,12 @@ const Sisalto = observer(
           direction="row"
           justify="flex-start"
           alignItems="flex-start"
-          className={classes.imageContainer}
-        >
+          className={classes.imageContainer}>
           <Grid
             item
             xs={12}
             sm={alwaysFullWidth ? 12 : 12}
-            md={alwaysFullWidth ? 12 : 12}
-          >
+            md={alwaysFullWidth ? 12 : 12}>
             <Card className={classes.card} elevation={0}>
               <CardMedia
                 className={classes.media}
@@ -90,9 +88,8 @@ const Sisalto = observer(
       return sivu[slug] ? (
         <Link
           href={`/konfo${forwardTo(slug)}`}
-          onClick={(e) => forwardToPage(e, slug)}
-        >
-          {isBlank(children[0]) ? sivu[slug].name : children}
+          onClick={(e) => forwardToPage(e, slug)}>
+          {isBlank(children ? children[0] : null) ? sivu[slug].name : children}
         </Link>
       ) : null;
     };
@@ -168,8 +165,7 @@ const Sisalto = observer(
               component: SivuLink,
             },
           },
-        }}
-      >
+        }}>
         {content}
       </Markdown>
     );
