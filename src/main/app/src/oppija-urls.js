@@ -6,7 +6,6 @@ const production = {
   'konfo-backend.toteutus': '/konfo-backend/toteutus/',
   'konfo-backend.oppilaitos': '/konfo-backend/oppilaitos/',
   'konfo-backend.palaute': '/konfo-backend/palaute',
-  'konfo-backend.content': 'https://konfo-content.untuvaopintopolku.fi/$1',
   'konfo-backend.koulutus.jarjestajat':
     '/konfo-backend/search/koulutus/$1/jarjestajat',
   'konfo-backend.koulutus.kuvaus': '/konfo-backend/kuvaus/',
