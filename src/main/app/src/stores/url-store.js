@@ -22,7 +22,7 @@ class UrlStore {
             'konfo-backend.content':
               'https://konfo-content.untuvaopintopolku.fi/$1',
           })
-        : superagent.get(url));
+        : superagent.get(url).then((res) => res.body));
       runInAction(() => {
         this.urls.addProperties(frontProperties);
         this.loading = false;
