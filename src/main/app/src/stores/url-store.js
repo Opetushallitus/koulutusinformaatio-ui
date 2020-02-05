@@ -24,7 +24,7 @@ class UrlStore {
           })
         : superagent.get(url).then((res) => res.body));
       runInAction(() => {
-        this.urls.addProperties(frontProperties);
+        this.urls.addOverrides(frontProperties);
         this.loading = false;
       });
     } catch (error) {
