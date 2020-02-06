@@ -2,7 +2,8 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import '../../assets/styles/components/_hakupalkki.scss';
 import { useTranslation } from 'react-i18next';
-import { Paper, makeStyles, ThemeProvider } from '@material-ui/core';
+import _ from 'lodash';
+import { Paper, makeStyles, ThemeProvider, Tooltip } from '@material-ui/core';
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
 import { useStores } from '../../hooks';
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '16px',
     textAlign: 'center',
     marginRight: '20px',
+    marginLeft: '20px',
   },
   inputRoot: {
     height: '73px',
@@ -64,29 +66,35 @@ const Hakupalkki = observer(({ history }) => {
         component="form"
         onSubmit={doSearch}
         className={classes.inputRoot}
-        elevation={4}
-      >
-        <InputBase
-          className={classes.input}
-          onKeyPress={(event) =>
-            event.key === 'Enter' &&
-            hakuehtoStore.keyword.length > 2 &&
-            doSearch(event)
-          }
-          onChange={setSearch}
-          type="search"
-          placeholder={t('haku.kehoite')}
-          inputProps={{
-            'aria-label': t('haku.kehoite'),
-          }}
-        />
+        elevation={4}>
+        <Tooltip
+          placement="bottom-start"
+          open={_.inRange(hakuehtoStore.keyword.length, 1, 3)}
+          title={t('haku.syota-ainakin-kolme-merkkia')}>
+          <InputBase
+            defaultValue={hakuehtoStore.keyword}
+            className={classes.input}
+            autoFocus
+            onKeyPress={(event) =>
+              event.key === 'Enter' &&
+              hakuehtoStore.keyword.length > 2 &&
+              doSearch(event)
+            }
+            onChange={setSearch}
+            type="search"
+            placeholder={t('haku.kehoite')}
+            inputProps={{
+              'aria-label': t('haku.kehoite'),
+            }}
+          />
+        </Tooltip>
         <Button
+          disabled={hakuehtoStore.keyword.length < 3}
           type="submit"
           variant="contained"
           color="secondary"
           className={classes.iconButton}
-          aria-label={t('haku.etsi')}
-        >
+          aria-label={t('haku.etsi')}>
           {t('haku.etsi')}
         </Button>
       </Paper>

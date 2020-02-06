@@ -8,13 +8,16 @@ import { ExpandMore, ExpandLess, HomeOutlined } from '@material-ui/icons';
 import {
   Box,
   Button,
+  CircularProgress,
   Hidden,
   Grid,
+  Link,
   MenuItem,
   Paper,
   Select,
   Typography,
 } from '@material-ui/core';
+import _ from 'lodash';
 import HakutulosToggle from './HakutulosToggle';
 import KoulutusalatSuodatin from './hakutulosSuodattimet/KoulutusalatSuodatin';
 import KoulutusKortti from './hakutulosKortit/KoulutusKortti';
@@ -27,7 +30,7 @@ import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
 import { useStores } from '../../hooks';
 import Murupolku from '../common/Murupolku';
 import { styles } from '../../styles';
-import '../../assets/styles/components/_hakutulos.scss';
+import { theme } from '../../theme';
 
 const Hakutulos = observer((props) => {
   const { t, classes, history } = props;
@@ -51,6 +54,7 @@ const Hakutulos = observer((props) => {
   }, [
     props,
     hakuStore.sort,
+    hakuStore.state,
     hakuStore.paging,
     paging.pageSize,
     hakuStore.koulutusResult,
@@ -84,59 +88,91 @@ const Hakutulos = observer((props) => {
     hakuStore.searchOppilaitokset();
   };
 
-  const ResultList = () => {
+  const ResultList = (props) => {
     const koulutusResult = toJS(hakuStore.koulutusResult);
     const oppilaitosResult = toJS(hakuStore.oppilaitosResult);
-    if (hakuStore.toggleKoulutus) {
-      return koulutusResult.map((r) => {
-        const link = `/konfo/koulutus/${r.oid}`;
+
+    switch (props.hakuStoreState) {
+      case 'pending':
         return (
-          <KoulutusKortti
-            key={r.oid}
-            oid={r.oid}
-            tyyppi={r.koulutustyyppi}
-            haettavissa={r.hakuOnKaynnissa}
-            link={link}
-            kuvaus={r.kuvaus}
-            koulutustyyppi={r.koulutustyyppi}
-            nimi={r.nimi}
-            opintojenlaajuus={r.opintojenlaajuus}
-            opintojenlaajuusyksikko={r.opintojenlaajuusyksikko}
-            tutkintonimikkeet={r.tutkintonimikkeet || []}
-          />
+          <Grid
+            container
+            style={{ padding: theme.spacing(6) }}
+            justify="center">
+            <CircularProgress size={50} disableShrink />
+          </Grid>
         );
-      });
-    } else {
-      return oppilaitosResult.map((r) => {
-        const link = `/konfo/oppilaitos/${r.oid}`;
+      case 'done':
+        if (hakuStore.toggle === 'koulutus' && hakuStore.hasKoulutusResult) {
+          return koulutusResult.map((r) => {
+            const link = `/konfo/koulutus/${r.oid}`;
+            return (
+              <KoulutusKortti
+                key={r.oid}
+                oid={r.oid}
+                tyyppi={r.koulutustyyppi}
+                haettavissa={r.hakuOnKaynnissa}
+                link={link}
+                kuvaus={r.kuvaus}
+                koulutustyyppi={r.koulutustyyppi}
+                nimi={r.nimi}
+                teemakuva={r.teemakuva}
+                opintojenlaajuus={r.opintojenlaajuus}
+                opintojenlaajuusyksikko={r.opintojenlaajuusyksikko}
+                tutkintonimikkeet={r.tutkintonimikkeet || []}
+              />
+            );
+          });
+        }
+        if (
+          hakuStore.toggle === 'oppilaitos' &&
+          hakuStore.hasOppilaitosResult
+        ) {
+          return oppilaitosResult.map((r) => {
+            const link = `/konfo/oppilaitos/${r.oid}`;
+            return (
+              <OppilaitosKortti
+                key={r.oid}
+                oid={r.oid}
+                tyyppi={r.tyyppi}
+                haettavissa={false}
+                nimi={r.nimi}
+                link={link}
+                text1={r.kayntiosoite ? r.kayntiosoite : ''}
+                text2={r.postitoimipaikka ? r.postitoimipaikka : ''}
+                oppilaitos={toJS(r)}
+              />
+            );
+          });
+        }
         return (
-          <OppilaitosKortti
-            key={r.oid}
-            oid={r.oid}
-            tyyppi={r.tyyppi}
-            haettavissa={false}
-            nimi={r.nimi}
-            link={link}
-            text1={r.kayntiosoite ? r.kayntiosoite : ''}
-            text2={r.postitoimipaikka ? r.postitoimipaikka : ''}
-            oppilaitos={toJS(r)}
-          />
+          <Grid
+            container
+            alignItems="center"
+            spacing={3}
+            style={{ padding: theme.spacing(9) }}
+            direction="column">
+            <Grid item>
+              <Typography variant="h1">
+                {t('haku.ei-hakutuloksia', hakuStore.keyword)}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography paragraph>
+                {t('haku.summary', { keyword: hakuStore.keyword })}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Link underline="always" href="/konfo" variant="body1">
+                {t('haku.siirry-opintopolun-etusivulle')}
+              </Link>
+            </Grid>
+          </Grid>
         );
-      });
+      default:
+        break;
     }
   };
-
-  if (!hakuStore.keywordSet && !hakuStore.filterSet) {
-    return (
-      <div className="container">
-        <div className="row result-count">
-          <div className="col-12">
-            <h1 aria-live="assertive">{t('haku.lisää-hakusana-tai-rajain')}</h1>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <Grid className={classes.hakutulosSisalto} container>
@@ -229,7 +265,7 @@ const Hakutulos = observer((props) => {
                 koulutusala.length > 0 ||
                 selectedsijainnit.length > 0 ||
                 sijainti.length > 0) && <SuodatinValinnat />}
-              <ResultList />
+              <ResultList hakuStoreState={hakuStore.state} />
             </Grid>
             <Grid item style={{ margin: 'auto' }}>
               <Pagination />

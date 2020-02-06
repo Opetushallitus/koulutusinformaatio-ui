@@ -29,14 +29,27 @@ const OpetusKieliSuodatin = observer((props) => {
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
   const { opetuskieli } = filter;
 
-  const [opetusKieli, setOpetusKieli] = useState({});
-  const [valitutOpetusKielet, setValitutOpetusKielet] = useState([]);
+  const [opetusKielet, setOpetusKielet] = useState([]);
+  const [checkedOpetusKielet, setCheckedOpetusKielet] = useState([]);
 
   useEffect(() => {
-    toggle === 'koulutus'
-      ? setOpetusKieli(toJS(koulutusFilters.opetusKieli))
-      : setOpetusKieli(toJS(oppilaitosFilters.opetusKieli));
-    setValitutOpetusKielet(toJS(opetuskieli));
+    const _opetusKielet =
+      toggle === 'koulutus'
+        ? Object.entries(toJS(koulutusFilters.opetusKieli))
+        : Object.entries(toJS(oppilaitosFilters.opetusKieli));
+
+    _opetusKielet.sort((a, b) => (a[1].nimi.fi > b[1].nimi.fi ? 1 : -1));
+    _opetusKielet.sort((a, b) => b[1].count - a[1].count);
+    const _muuKieliIndex = _opetusKielet.findIndex(
+      (el) => el[0] === 'oppilaitoksenopetuskieli_9'
+    );
+
+    if (_muuKieliIndex !== -1) {
+      _opetusKielet.push(_opetusKielet.splice(_muuKieliIndex, 1)[0]);
+    }
+
+    setOpetusKielet(_opetusKielet);
+    setCheckedOpetusKielet(toJS(opetuskieli));
   }, [
     props,
     toggle,
@@ -50,23 +63,23 @@ const OpetusKieliSuodatin = observer((props) => {
       id: opetuskieliObj[0],
       name: opetuskieliObj[1]?.nimi,
     };
-    const currentIndex = valitutOpetusKielet.findIndex(
+    const currentIndex = checkedOpetusKielet.findIndex(
       ({ id }) => id === opetuskieliFilterObj.id
     );
-    const newValitutOpetusKielet = [...valitutOpetusKielet];
+    const newCheckedOpetusKielet = [...checkedOpetusKielet];
 
     if (currentIndex === -1) {
-      newValitutOpetusKielet.push(opetuskieliFilterObj);
+      newCheckedOpetusKielet.push(opetuskieliFilterObj);
     } else {
-      newValitutOpetusKielet.splice(currentIndex, 1);
+      newCheckedOpetusKielet.splice(currentIndex, 1);
     }
 
-    setValitutOpetusKielet(newValitutOpetusKielet);
+    setCheckedOpetusKielet(newCheckedOpetusKielet);
     const search = qs.parse(history.location.search);
-    search.opetuskieli = newValitutOpetusKielet.map(({ id }) => id).join(',');
+    search.opetuskieli = newCheckedOpetusKielet.map(({ id }) => id).join(',');
     search.kpage = 1;
     search.opage = 1;
-    hakuStore.setOpetusKieliFilter(newValitutOpetusKielet);
+    hakuStore.setOpetusKieliFilter(newCheckedOpetusKielet);
     hakuStore.clearOffsetAndPaging();
     history.replace({ search: qs.stringify(search) });
     hakuStore.searchKoulutukset();
@@ -80,7 +93,7 @@ const OpetusKieliSuodatin = observer((props) => {
       </SuodatinExpansionPanelSummary>
       <SuodatinExpansionPanelDetails>
         <List style={{ width: '100%' }}>
-          {Object.entries(opetusKieli).map((opetuskieliArr) => {
+          {opetusKielet.map((opetuskieliArr) => {
             const labelId = `language-list-label-${opetuskieliArr[0]}`;
             return (
               <ListItem
@@ -94,7 +107,7 @@ const OpetusKieliSuodatin = observer((props) => {
                     classes={{ root: classes.listItemCheckbox }}
                     edge="start"
                     checked={
-                      valitutOpetusKielet.find(
+                      checkedOpetusKielet.find(
                         ({ id }) => id === opetuskieliArr[0]
                       ) !== undefined
                     }
