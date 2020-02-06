@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles, Typography, Paper, Box } from '@material-ui/core';
 import { colors } from '../../colors';
 import Spacer from './Spacer';
-import strigtags from 'striptags';
-import Truncate from 'react-truncate';
+import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,24 +37,15 @@ const TextBox = (props) => {
   const { heading, className, text } = props;
   const [isTruncated, setIsTruncated] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const strippedText = strigtags(text)
-    .split('\n')
-    .map((textLine, i, arr) => {
-      const line = <span key={i}>{textLine}</span>;
-      if (i === arr.length - 1) {
-        return line;
-      } else {
-        return [line, <br key={i + 'br'} />];
-      }
-    });
 
   const toggleLines = (event) => {
     event.preventDefault();
     setIsExpanded(!isExpanded);
   };
-  const handleTruncate = (truncated) => {
-    if (isTruncated !== truncated) {
-      setIsTruncated(truncated);
+  const reflow = (rleState) => {
+    const { clamped } = rleState;
+    if (isTruncated !== clamped) {
+      setIsTruncated(clamped);
     }
   };
   const classes = useStyles();
@@ -71,28 +61,18 @@ const TextBox = (props) => {
       <Spacer />
       <Paper className={classes.paper}>
         <Box className={classes.textArea}>
-          <Truncate
-            lines={!isExpanded && 10}
-            ellipsis={
-              <span>
-                <span>...</span>
-                <div className={classes.showLink}>
-                  <button className={classes.linkButton} onClick={toggleLines}>
-                    {'Lue lisää'}
-                  </button>
-                </div>
-              </span>
-            }
-            onTruncate={handleTruncate}>
-            {strippedText}
-          </Truncate>
-          {!isTruncated && isExpanded && (
+          <HTMLEllipsis
+            unsafeHTML={text}
+            maxLine={isExpanded ? 1000 : 10}
+            onReflow={reflow}
+          />
+          {isTruncated || isExpanded ? (
             <div className={classes.showLink}>
               <button className={classes.linkButton} onClick={toggleLines}>
-                {'Näytä vähemmän'}
+                {isExpanded ? 'Näytä vähemmän' : 'Lue lisää'}
               </button>
             </div>
-          )}
+          ) : null}
         </Box>
       </Paper>
     </Box>
