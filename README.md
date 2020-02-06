@@ -1,5 +1,6 @@
 # Konfo-UI
 
+
 Konfo-UI on luotu create-react-app:lla. Backend, jonka ainoa tehtävä on jakaa käyttöliittymä, on Spring Boot 2.0 -sovellus.
 
 [![Build status](https://travis-ci.org/Opetushallitus/konfo-ui.svg?branch=master)](https://travis-ci.org/Opetushallitus/konfo-ui)
