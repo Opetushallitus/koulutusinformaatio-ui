@@ -15,6 +15,7 @@ import {
 import { ExpandMore } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import qs from 'query-string';
+import _ from 'lodash';
 import { withTranslation } from 'react-i18next';
 import { styles } from '../../../styles';
 import { useStores } from '../../../hooks';
@@ -128,7 +129,11 @@ const KoulutusalatSuodatin = observer((props) => {
               <Grid item style={{ fontWeight: 'bold' }}>
                 {expandedKoulutusTaso1[1]?.nimi?.[i18n.language]}
               </Grid>
-              <Grid item>{`(${expandedKoulutusTaso1[1]?.count})`}</Grid>
+              <Grid item>
+                {_.isNil(expandedKoulutusTaso1[1]?.count)
+                  ? ''
+                  : `(${expandedKoulutusTaso1[1]?.count})`}
+              </Grid>
             </Grid>
           }
         />
@@ -146,7 +151,8 @@ const KoulutusalatSuodatin = observer((props) => {
                 expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]
               )}
               disabled={
-                expandedKoulutusTaso1[1]?.[koulutusTaso2_ID]?.count === 0
+                expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]
+                  ?.count === 0
               }>
               <ListItemIcon>
                 <Checkbox
@@ -173,7 +179,12 @@ const KoulutusalatSuodatin = observer((props) => {
                       }
                     </Grid>
                     <Grid item>
-                      {`(${expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]?.count})`}
+                      {_.isNil(
+                        expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]
+                          ?.count
+                      )
+                        ? ''
+                        : `(${expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]?.count})`}
                     </Grid>
                   </Grid>
                 }
@@ -210,7 +221,11 @@ const KoulutusalatSuodatin = observer((props) => {
                       <Grid item>
                         {kouutusalaArray[1].nimi?.[i18n.language]}
                       </Grid>
-                      <Grid item>{`(${kouutusalaArray[1]?.count})`}</Grid>
+                      <Grid item>
+                        {_.isNil(kouutusalaArray[1]?.count)
+                          ? '()'
+                          : `(${kouutusalaArray[1]?.count})`}
+                      </Grid>
                     </Grid>
                   }
                 />
