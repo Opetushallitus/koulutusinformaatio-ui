@@ -63,7 +63,9 @@ const Uutinen = observer(({ id, history }) => {
   const forwardToPage = (id) => {
     history.push(forwardTo(id));
   };
-
+  const timestamp = uutinen.updated || uutinen.created;
+  const date = timestamp ? new Date(Date.parse(timestamp)) : null;
+  const leadingZero = (d) => ('0' + d).slice(-2);
   return (
     <Grid item xs={12} sm={6} md={4} onClick={() => forwardToPage(link)}>
       <Card className={classes.card} elevation={6}>
@@ -77,13 +79,16 @@ const Uutinen = observer(({ id, history }) => {
             container
             direction="row"
             justify="space-between"
-            alignItems="center"
-          >
+            alignItems="center">
             <Grid item xs={6} className={classes.kategoria}>
               {t('uutinen.kategoria')}
             </Grid>
             <Grid item xs={6} className={classes.pvm}>
-              07.11.2019
+              {date
+                ? `${leadingZero(date.getDate())}.${leadingZero(
+                    date.getMonth() + 1
+                  )}.${date.getFullYear()}`
+                : null}
             </Grid>
           </Grid>
           <div className={classes.content}>
