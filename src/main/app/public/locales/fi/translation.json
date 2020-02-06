@@ -167,7 +167,9 @@
     "haku-kaynnissa": "Haku käynnissä",
     "katso-jarjestavat": "Katso koulutusta järjestävät oppilaitokset.",
     "nayta-oppilaitokset": "Näytä oppilaitokset",
-    "ei-toteutuksia": "Tätä koulutusta ei ole tarjolla tällä hetkellä missään oppilaitoksessa."
+    "ei-toteutuksia": "Tätä koulutusta ei ole tarjolla tällä hetkellä missään oppilaitoksessa.",
+    "ei-tutkintonimiketta": "Ei tutkintonimikettä",
+    "ei-laajuutta": "Ei opintojenlaajuutta"
   },
   "vertailu": {
     "takaisin-edelliselle-sivulle": "Takaisin edelliselle sivulle",

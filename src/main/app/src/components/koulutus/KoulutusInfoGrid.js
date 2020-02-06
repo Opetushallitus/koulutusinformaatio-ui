@@ -19,8 +19,10 @@ const KoulutusInfoGrid = (props) => {
   const { t } = useTranslation();
   const nimikeString = nimikkeet
     ? nimikkeet.map((nimikeObj) => l.localize(nimikeObj)).join('\n')
-    : '';
-  const laajuusString = laajuus.map((elem) => l.localize(elem)).join(' ');
+    : t('koulutus.ei-tutkintonimiketta');
+  const laajuusString = !laajuus.includes(undefined)
+    ? laajuus.map((elem) => l.localize(elem)).join(' ')
+    : t('koulutus.ei-laajuutta');
   const koulutusTyyppiString = koulutustyyppi
     ? t(`koulutus.tyyppi-${koulutustyyppi}`)
     : '';

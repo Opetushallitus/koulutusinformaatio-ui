@@ -14,12 +14,19 @@ import Accordion from '../common/Accordion';
 import Spacer from '../common/Spacer';
 import clsx from 'clsx';
 import { colors } from '../../colors';
+import DefaultHeroImage from '../../assets/images/herokuva_default.png';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },
   lisatietoa: { width: '50%' },
   container: { backgroundColor: colors.white, maxWidth: '1600px' },
-});
+  heroImage: { maxWidth: '100%', height: 'auto' },
+  imageContainer: { maxWidth: '1600px', maxHeight: '400px' },
+  alatText: {
+    ...theme.typography.body1,
+    fontSize: '1.25rem',
+  },
+}));
 
 const Koulutus = (props) => {
   const classes = useStyles();
@@ -63,14 +70,29 @@ const Koulutus = (props) => {
   return (
     <Container className={classes.container}>
       <Box display="flex" flexDirection="column" alignItems="center">
-        {state.koulutusAla.map((ala) => (
-          <Typography key={ala.koodiUri} variant="h3" component="h1">
-            {l.localize(ala)}
+        <Box mt={4}>
+          {state.koulutusAla.map((ala) => (
+            <Typography
+              key={ala.koodiUri}
+              className={classes.alatText}
+              variant="h3"
+              component="h1">
+              {l.localize(ala)}
+            </Typography>
+          ))}
+        </Box>
+        <Box mt={1}>
+          <Typography variant="h1" component="h2">
+            {l.localize(state.tutkintoNimi)}
           </Typography>
-        ))}
-        <Typography variant="h1" component="h2">
-          {l.localize(state.tutkintoNimi)}
-        </Typography>
+        </Box>
+        <Box className={classes.imageContainer} mt={7.5}>
+          <img
+            className={classes.heroImage}
+            src={DefaultHeroImage}
+            alt="Koulutuksen teemakuva"
+          />
+        </Box>
         <KoulutusInfoGrid
           className={classes.root}
           nimikkeet={state.tutkintoNimikkeet}
@@ -98,10 +120,10 @@ const Koulutus = (props) => {
           text={l.localize(state.kuvaus)}
           className={classes.root}
         />
-        <div id="tarjonta">
+        <Box id="tarjonta">
           <ToteutusList toteutukset={state.toteutukset} />
-        </div>
-        {state.lisatiedot ? (
+        </Box>
+        {/* {state.lisatiedot ? (
           <Box
             className={clsx([classes.lisatietoa, classes.root])}
             display="flex"
@@ -116,7 +138,7 @@ const Koulutus = (props) => {
               }))}
             />
           </Box>
-        ) : null}
+        ) : null} */}
       </Box>
     </Container>
   );
