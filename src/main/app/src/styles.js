@@ -74,7 +74,7 @@ export const styles = (theme) =>
     hakuTulosContentsPaper: {
       width: '100%',
       boxShadow: 'none',
-      [theme.breakpoints.down('lg')]: {
+      [theme.breakpoints.down('xl')]: {
         padding: theme.spacing(1, 11),
       },
       [theme.breakpoints.down('md')]: {
@@ -151,9 +151,13 @@ export const styles = (theme) =>
     },
     oppilaitosLogoAvatar: {
       borderRadius: 0,
-      [theme.breakpoints.up('xs')]: {
+      [theme.breakpoints.up('lg')]: {
         width: 150,
         height: 150,
+      },
+      [theme.breakpoints.up('sm')]: {
+        width: 125,
+        height: 125,
       },
       [theme.breakpoints.down('xs')]: {
         width: theme.spacing(9),
@@ -163,8 +167,6 @@ export const styles = (theme) =>
     koulutusKorttiAvatar: {
       borderRadius: 0,
       [theme.breakpoints.up('lg')]: {
-        maxWidth: 275,
-        maxHeight: 275,
         width: '80%',
         height: '80%',
       },

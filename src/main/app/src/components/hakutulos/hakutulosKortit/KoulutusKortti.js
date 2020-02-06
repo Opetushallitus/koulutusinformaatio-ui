@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 import { SchoolOutlined, TimelapseOutlined } from '@material-ui/icons';
 import { styles } from '../../../styles';
-import hakuKoulutukseen_img from '../../../assets/images/haku-koulutukseen.jpg';
+import koulutusPlaceholderImg from '../../../assets/images/Opolkuhts.png';
 import { MUI_BREAKPOINTS } from '../../../constants';
 import { educationTypeColorCode } from '../../../colors';
 
@@ -26,6 +26,7 @@ const KoulutusKortti = (props) => {
     koulutustyyppi,
     opintojenlaajuus,
     opintojenlaajuusyksikko,
+    teemakuva,
     tutkintonimikkeet,
     i18n,
     t,
@@ -60,7 +61,11 @@ const KoulutusKortti = (props) => {
           borderTop: `5px solid ${educationTypeColorCode[koulutustyyppi] ||
             educationTypeColorCode.muu}`,
         }}>
-        <Grid container alignItems="center" spacing={3}>
+        <Grid
+          container
+          alignItems="stretch"
+          style={{ minHeight: 210 }}
+          spacing={3}>
           <Grid
             container
             item
@@ -68,7 +73,8 @@ const KoulutusKortti = (props) => {
             md={12}
             sm
             xs={12}
-            spacing={3}
+            spacing={2}
+            justify="space-between"
             direction="column">
             <Grid item>
               <Typography variant="h6" style={{ fontWeight: 'bold' }}>
@@ -88,10 +94,17 @@ const KoulutusKortti = (props) => {
                   <Typography>{kuvausStr(kuvaus)}</Typography>
                 </Grid>
                 <Hidden lgUp xsDown>
-                  <Grid item md sm xs justify="center">
+                  <Grid
+                    item
+                    container
+                    md
+                    sm
+                    xs
+                    justify="flex-end"
+                    style={{ paddingRight: 0 }}>
                     <Avatar
                       classes={{ root: classes.koulutusKorttiAvatar }}
-                      src={hakuKoulutukseen_img}
+                      src={teemakuva || koulutusPlaceholderImg}
                       alt="haku koulutukseen"
                     />
                   </Grid>
@@ -110,7 +123,9 @@ const KoulutusKortti = (props) => {
                 </Grid>
                 <Grid item xs={11}>
                   <Typography className={classes.koulutusKorttiLeftMargin}>
-                    {tutkintonimikkeetStr}
+                    {tutkintonimikkeetStr
+                      ? tutkintonimikkeetStr
+                      : t('haku.ei-tutkintonimiketta')}
                   </Typography>
                 </Grid>
               </Grid>
@@ -119,19 +134,25 @@ const KoulutusKortti = (props) => {
                   <TimelapseOutlined />
                 </Grid>
                 <Grid item xs={11}>
-                  <Typography
-                    className={
-                      classes.koulutusKorttiLeftMargin
-                    }>{`${opintojenlaajuusStr} ${opintojenlaajuusyksikkoStr}`}</Typography>
+                  <Typography className={classes.koulutusKorttiLeftMargin}>
+                    {opintojenlaajuusStr && opintojenlaajuusyksikkoStr
+                      ? `${opintojenlaajuusStr} ${opintojenlaajuusyksikkoStr}`
+                      : t('haku.ei-opintojenlaajuutta')}
+                  </Typography>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
           <Hidden only={['sm', 'md']}>
-            <Grid item container lg={4} justify="center">
+            <Grid
+              item
+              container
+              lg={4}
+              justify="flex-end"
+              alignContent="center">
               <Avatar
                 classes={{ root: classes.koulutusKorttiAvatar }}
-                src={hakuKoulutukseen_img}
+                src={teemakuva || koulutusPlaceholderImg}
                 alt="haku koulutukseen"
               />
             </Grid>

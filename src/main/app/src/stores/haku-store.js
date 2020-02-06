@@ -13,6 +13,7 @@ const emptyFilter = {
 };
 
 class HakuStore {
+  @observable state = 'pending';
   @observable keyword = '';
   @observable koulutusResult = [];
   @observable koulutusCount = 0;
@@ -62,14 +63,13 @@ class HakuStore {
   @action
   setAll = (keyword, search, toggleAction) => {
     const keywordChange = this.setKeyword(keyword);
-
     if (keywordChange) {
       this.searchAll(() => {
         if (!search.toggle) {
           const toggle =
-            this.koulutusCount >= this.oppilaitosCount
-              ? 'koulutus'
-              : 'oppilaitos';
+            this.koulutusCount <= 0 && this.oppilaitosCount > this.koulutusCount
+              ? 'oppilaitos'
+              : 'koulutus';
           this.setToggle(toggle);
           if (toggleAction) {
             toggleAction(toggle);
@@ -381,6 +381,7 @@ class HakuStore {
   searchAll = (onSuccess) => {
     this.clearOffsetAndPaging();
     if (this.canSearch) {
+      this.state = 'pending';
       this.rest.search(
         [
           this.rest.searchKoulutuksetPromise(
@@ -420,6 +421,7 @@ class HakuStore {
             this.oppilaitosFilters.koulutusala = result[1].filters.koulutusala;
             this.oppilaitosFilters.maakunta = result[1].filters.maakunta;
             this.oppilaitosFilters.kunta = result[1].filters.kunta;
+            this.state = 'done';
 
             if (onSuccess) {
               onSuccess();
@@ -433,6 +435,7 @@ class HakuStore {
   @action
   searchKoulutukset = (onSuccess) => {
     if (this.canSearch) {
+      this.state = 'pending';
       this.rest.search(
         [
           this.rest.searchKoulutuksetPromise(
@@ -447,6 +450,7 @@ class HakuStore {
             this.koulutusResult = result[0] ? result[0].hits : [];
             this.koulutusCount = result[0] ? result[0].hits.length : 0;
             this.koulutusTotal = result[0] ? result[0].total : 0;
+            this.state = 'done';
             if (onSuccess) {
               onSuccess();
             }
@@ -459,6 +463,7 @@ class HakuStore {
   @action
   searchOppilaitokset = (onSuccess) => {
     if (this.canSearch) {
+      this.state = 'pending';
       this.rest.search(
         [
           this.rest.searchOppilaitoksetPromise(
@@ -473,6 +478,7 @@ class HakuStore {
             this.oppilaitosResult = result[0] ? result[0].hits : [];
             this.oppilaitosCount = result[0] ? result[0].hits.length : 0;
             this.oppilaitosTotal = result[0] ? result[0].total : 0;
+            this.state = 'done';
             if (onSuccess) {
               onSuccess();
             }
