@@ -166,13 +166,19 @@ export const styles = (theme) =>
     },
     koulutusKorttiAvatar: {
       borderRadius: 0,
-      [theme.breakpoints.up('lg')]: {
+      [theme.breakpoints.up('md')]: {
         width: '80%',
         height: '80%',
       },
       [theme.breakpoints.down('md')]: {
         width: '100%',
         height: '100%',
+      },
+    },
+    koulutusKorttiImg: {
+      [theme.breakpoints.up('sm')]: {
+        objectFit: 'scale-down',
+        maxHeight: 155,
       },
     },
     oppilaitosKorttiGridSpacingXs1: {

@@ -151,7 +151,10 @@ const KoulutusKortti = (props) => {
               justify="flex-end"
               alignContent="center">
               <Avatar
-                classes={{ root: classes.koulutusKorttiAvatar }}
+                classes={{
+                  root: classes.koulutusKorttiAvatar,
+                  img: classes.koulutusKorttiImg,
+                }}
                 src={teemakuva || koulutusPlaceholderImg}
                 alt="haku koulutukseen"
               />
