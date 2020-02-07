@@ -79,7 +79,7 @@ const App = (props) => {
               {main}
             </main>
           </div>
-          <PalautePopup />
+          {/* <PalautePopup /> */}
         </React.Fragment>
       </I18nextProvider>
     </Provider>
