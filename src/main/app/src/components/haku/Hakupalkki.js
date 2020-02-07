@@ -74,7 +74,6 @@ const Hakupalkki = observer(({ history }) => {
           <InputBase
             defaultValue={hakuehtoStore.keyword}
             className={classes.input}
-            autoFocus
             onKeyPress={(event) =>
               event.key === 'Enter' &&
               hakuehtoStore.keyword.length > 2 &&
