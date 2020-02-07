@@ -71,7 +71,7 @@ const Kortti = observer(({ id }) => {
         <CardMedia
           className={classes.media}
           image={imgUrl(kortti)}
-          title="TODO"
+          title={kortti.name}
         />
         <CardContent>
           <h2 className={classes.otsikko}>{kortti.name}</h2>
