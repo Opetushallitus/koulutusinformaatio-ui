@@ -67,12 +67,17 @@ const Uutinen = observer(({ id, history }) => {
   const date = timestamp ? new Date(Date.parse(timestamp)) : null;
   const leadingZero = (d) => ('0' + d).slice(-2);
   return (
-    <Grid item xs={12} sm={6} md={4} onClick={() => forwardToPage(link)}>
+    <Grid
+      item
+      xs={12}
+      sm={6}
+      md={4}
+      onClick={() => link && forwardToPage(link)}>
       <Card className={classes.card} elevation={6}>
         <CardMedia
           className={classes.media}
           image={imgUrl(uutinen)}
-          title="TODO"
+          title={uutinen.name}
         />
         <CardContent>
           <Grid
