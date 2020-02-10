@@ -1,50 +1,99 @@
-import React, { Component } from 'react';
-import '../../assets/styles/components/_palaute.scss';
+import React, { useState } from 'react';
 import Palaute from '../common/Palaute';
+import { makeStyles } from '@material-ui/core';
+import { withRouter } from 'react-router-dom';
+import { colors } from '../../colors';
+import { useTranslation } from 'react-i18next';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Fab from '@material-ui/core/Fab';
+import SentimentSatisfied from '@material-ui/icons/SentimentSatisfied';
 
-class PalautePopup extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      show: false,
-      tooltip: true,
-      hover: false,
-    };
-  }
+const useStyles = makeStyles((theme) => ({
+  closeButton: {
+    padding: '0',
+    position: 'absolute',
+    right: '0',
+    top: '0',
+    color: theme.palette.grey[500],
+  },
+  container: {
+    position: 'fixed',
+    bottom: '15px',
+    right: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+  },
+  box: {
+    cursor: 'pointer',
+    lineHeight: '17px',
+    width: '140px',
+    padding: '12px 12px 18px 12px',
+    fontSize: '12px',
+    flex: '1',
+    position: 'relative',
+    background: colors.white,
+    color: colors.grey,
+    border: '1px solid #e0e1dd',
+    marginBottom: '8px',
+  },
+  popup: {
+    width: '48px',
+    height: '48px',
+  },
+}));
 
-  render() {
-    const show = () => this.setState({ ...this.state, show: true });
-    const hide = () => this.setState({ ...this.state, show: false });
-    const hideTooltip = () => this.setState({ ...this.state, tooltip: false });
-    const hover = (hover) => this.setState({ ...this.state, hover: hover });
+const PalautePopup = () => {
+  const { t } = useTranslation();
+  const classes = useStyles();
 
-    return (
-      <React.Fragment>
-        <div className="palaute-popup-container">
-          {this.state.tooltip || this.state.hover ? (
-            <span onClick={hideTooltip} className="arrow_box">
-              {this.state.tooltip ? (
-                <span className="material-icons">close</span>
-              ) : null}
-              Anna palautetta Opintopolusta
-            </span>
-          ) : null}
+  const [show, setShow] = useState(false);
+  const [tooltip, setTooltip] = useState(true);
+  const [hover, setHover] = useState(false);
 
-          <div
-            className="palaute-popup"
-            onClick={show}
-            onMouseEnter={() => hover(true)}
-            onMouseLeave={() => hover(false)}
-          >
-            <div>
-              <span className="material-icons">sentiment_satisfied_alt</span>
-            </div>
-          </div>
-        </div>
-        {this.state.show ? <Palaute open={true} hide={hide} /> : null}
-      </React.Fragment>
-    );
-  }
-}
+  const jee = (
+    <div>
+      <span className="material-icons">sentiment_satisfied_alt</span>
+    </div>
+  );
+  const vsdfg = (
+    <IconButton
+      edge="start"
+      size="medium"
+      color="inherit"
+      display="block"></IconButton>
+  );
 
-export default PalautePopup;
+  return (
+    <React.Fragment>
+      <div className={classes.container}>
+        {tooltip || hover ? (
+          <span onClick={() => setTooltip(false)} className={classes.box}>
+            {tooltip ? (
+              <IconButton
+                aria-label={t('palaute.sulje')}
+                className={classes.closeButton}
+                onClick={() => setShow(false)}>
+                <CloseIcon />
+              </IconButton>
+            ) : null}
+            {t('palaute.annaPalautetta')}
+          </span>
+        ) : null}
+
+        <Fab
+          color="secondary"
+          aria-label={t('palaute.annaPalautetta')}
+          onClick={() => setShow(true)}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}>
+          <SentimentSatisfied className={classes.popup} />
+        </Fab>
+      </div>
+      {show ? <Palaute open={true} hide={() => setShow(false)} /> : null}
+    </React.Fragment>
+  );
+};
+
+export default withRouter(PalautePopup);
