@@ -52,19 +52,6 @@ const PalautePopup = () => {
   const [tooltip, setTooltip] = useState(true);
   const [hover, setHover] = useState(false);
 
-  const jee = (
-    <div>
-      <span className="material-icons">sentiment_satisfied_alt</span>
-    </div>
-  );
-  const vsdfg = (
-    <IconButton
-      edge="start"
-      size="medium"
-      color="inherit"
-      display="block"></IconButton>
-  );
-
   return (
     <React.Fragment>
       <div className={classes.container}>
