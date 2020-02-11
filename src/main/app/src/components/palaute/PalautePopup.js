@@ -78,13 +78,13 @@ const PalautePopup = () => {
                 <CloseIcon />
               </IconButton>
             ) : null}
-            {t('palaute.annaPalautetta')}
+            {t('palaute.anna-palautetta')}
           </span>
         ) : null}
 
         <Fab
           color="secondary"
-          aria-label={t('palaute.annaPalautetta')}
+          aria-label={t('palaute.anna-palautetta')}
           onClick={() => setShow(true)}
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}>
