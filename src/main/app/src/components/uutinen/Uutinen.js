@@ -51,15 +51,11 @@ const Uutinen = observer(({ id, history }) => {
   const link = (uutinen.sivu || {}).id;
 
   const { asset } = contentfulStore.data;
-  const imgUrl = (uutinen) => {
-    const assetForEntry = (entry) => {
-      const image = entry.image || {};
-      return image ? asset[image.id] : null;
-    };
-    const a = assetForEntry(uutinen);
-    return a ? contentfulStore.assetUrl(a.url) : null;
+  const assetForEntry = (entry) => {
+    const image = entry.image || {};
+    return image ? asset[image.id] : null;
   };
-
+  const a = assetForEntry(uutinen);
   const forwardToPage = (id) => {
     history.push(forwardTo(id));
   };
@@ -76,8 +72,9 @@ const Uutinen = observer(({ id, history }) => {
       <Card className={classes.card} elevation={6}>
         <CardMedia
           className={classes.media}
-          image={imgUrl(uutinen)}
+          image={a ? contentfulStore.assetUrl(a.url) : null}
           title={uutinen.name}
+          aria-label={(a || {}).description ? a.description : uutinen.name}
         />
         <CardContent>
           <Grid

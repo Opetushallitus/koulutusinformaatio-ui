@@ -55,23 +55,20 @@ const Kortti = observer(({ id }) => {
   const { asset, sivu } = contentfulStore.data;
   const { forwardTo } = contentfulStore;
   const kortti = contentfulStore.data.kortti[id];
-
   const linkit = kortti.linkit || [];
-  const imgUrl = (uutinen) => {
-    const assetForEntry = (entry) => {
-      const image = entry.image || {};
-      return image ? asset[image.id] : null;
-    };
-    const a = assetForEntry(uutinen);
-    return a ? contentfulStore.assetUrl(a.url) : null;
+  const assetForEntry = (entry) => {
+    const image = entry.image || {};
+    return image ? asset[image.id] : null;
   };
+  const a = assetForEntry(kortti);
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Card className={clsx(classes.card, classes[kortti.color])}>
         <CardMedia
           className={classes.media}
-          image={imgUrl(kortti)}
+          image={a ? contentfulStore.assetUrl(a.url) : null}
           title={kortti.name}
+          aria-label={(a || {}).description ? a.description : kortti.name}
         />
         <CardContent>
           <h2 className={classes.otsikko}>{kortti.name}</h2>
