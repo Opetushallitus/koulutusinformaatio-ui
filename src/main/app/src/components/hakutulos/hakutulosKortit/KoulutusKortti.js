@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link as RouterLink } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
 import '../../../assets/styles/components/_hakutulos-box.scss';
@@ -7,8 +7,8 @@ import {
   Avatar,
   Hidden,
   Grid,
-  Link,
   Paper,
+  Link,
   Typography,
   useMediaQuery,
 } from '@material-ui/core';
@@ -54,7 +54,7 @@ const KoulutusKortti = (props) => {
   };
 
   return (
-    <Link href={props.link} underline="none">
+    <Link underline="none" component={RouterLink} to={props.link}>
       <Paper
         classes={{ root: classes.hakuTulosKorttiPaperRoot }}
         style={{
