@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { makeStyles, Box } from '@material-ui/core';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
@@ -9,7 +9,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import { colors } from '../../colors';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   breadcrump: {
     marginLeft: '0',
     paddingLeft: '0',
@@ -36,13 +36,18 @@ const useStyles = makeStyles({
     fontSize: '12px',
   },
   link: {
+    ...theme.typography.body1,
+  },
+  lastLink: {
+    cursor: 'default',
     color: colors.green,
   },
-});
+}));
 
-const Murupolku = ({ path, history }) => {
+const Murupolku = ({ path }) => {
   const matches = useMediaQuery('(max-width: 900px)');
   const { t } = useTranslation();
+  const history = useHistory();
   const classes = useStyles();
   const forwardToPage = (path) => {
     history.push(path);
@@ -59,30 +64,33 @@ const Murupolku = ({ path, history }) => {
       <li>
         <HomeOutlinedIcon className={classes.home} />
         <Box component="span" ml={2}>
-          <Link href={`/konfo/`} className={clsx(classes.link)}>
+          <Link component={RouterLink} to={''} className={classes.link}>
             {t('etusivu')}
           </Link>
         </Box>
       </li>
 
-      {shownPath.map(({ name, link }, ind) => (
-        <li key={`breadcrump-item-${ind}`}>
-          <ArrowForwardIosIcon className={classes.arrow} />
-          {ind === shownPath.length - 1 && link ? (
+      {shownPath.map(({ name, link }, ind) => {
+        const isLast = shownPath.length - 1 === ind;
+        return (
+          <li key={`breadcrump-item-${ind}`}>
+            <ArrowForwardIosIcon className={classes.arrow} />
             <Box component="span" ml={2}>
-              <Link className={clsx(classes.link)} href={`/konfo${link}`}>
+              <Link
+                component={link ? RouterLink : 'span'}
+                className={clsx(classes.link, {
+                  [classes.lastLink]: isLast,
+                })}
+                to={link}
+                underline={isLast ? 'none' : 'hover'}>
                 {name}
               </Link>
             </Box>
-          ) : (
-            <Box component="span" ml={2}>
-              {name}
-            </Box>
-          )}
-        </li>
-      ))}
+          </li>
+        );
+      })}
     </ul>
   );
 };
 
-export default withRouter(Murupolku);
+export default Murupolku;
