@@ -5,6 +5,7 @@ import { Tabs, Tab, useMediaQuery } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { SchoolOutlined, HomeWorkOutlined } from '@material-ui/icons';
 import qs from 'query-string';
+import _ from 'lodash';
 import { styles } from '../../styles';
 import { withTranslation } from 'react-i18next';
 import { useStores } from '../../hooks';
@@ -45,7 +46,9 @@ const HakutulosToggle = observer((props) => {
           labelIcon: classes.customLabelIcon,
           root: classes.hakutulosToggleTabRoot,
         }}
-        label={`${t('haku.koulutukset')} (${hakuStore.koulutusTotal})`}></Tab>
+        label={`${t('haku.koulutukset')} (${
+          _.isNil(hakuStore.koulutusTotal) ? ' ' : hakuStore.koulutusTotal
+        })`}></Tab>
       <Tab
         icon={<HomeWorkOutlined className={classes.hakuTulosTabIconMargin} />}
         classes={{
@@ -54,7 +57,7 @@ const HakutulosToggle = observer((props) => {
           root: classes.hakutulosToggleTabRoot,
         }}
         label={`${t('haku.oppilaitokset')} (${
-          hakuStore.oppilaitosTotal
+          _.isNil(hakuStore.oppilaitosTotal) ? '' : hakuStore.oppilaitosTotal
         })`}></Tab>
     </Tabs>
   );

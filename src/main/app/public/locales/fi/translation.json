@@ -87,6 +87,7 @@
     "lukio": "Lukio",
     "muut": "Muut kurssit ja koulutukset",
     "näytä": "Näytä",
+    "odota-hetki-ja-kokeile-suorita-toiminto-uudestaan": "Odota hetki ja kokeile suorita toiminto uudestaan",
     "olet-valinnut-vertailuun": "Olet valinnut vertailuun:",
     "opetuskieli": "Opetuskieli",
     "ota-vertailuun": "Ota vertailuun",
@@ -96,6 +97,7 @@
     "paikkakunnalla_plural": "paikkakunnilla",
     "paikkakunta": "Paikkakunta",
     "paikkakunta-kehoite": "Syötä paikkakunnan nimi",
+    "paivita-sivu": "Päivitä sivu",
     "poista-kaikki": "Poista kaikki",
     "poista-rajaukset": "Poista rajaukset",
     "poista-valitut-rajaimet": "Poista valitut rajaimet",
@@ -111,6 +113,7 @@
     "summary_plural": "Etsintäsi tuotti {{count}} osumaa",
     "suomi": "Suomi",
     "syota-ainakin-kolme-merkkia": "Syötä ainakin kolme merkkiä",
+    "tapahtui-tekninen-virhe" : "Tapahtui tekninen virhe",
     "tulokset-per-sivu": "Tulokset per sivu:",
     "vertaile": "Vertaile"
   },
