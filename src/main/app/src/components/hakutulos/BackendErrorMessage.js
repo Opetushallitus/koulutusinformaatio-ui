@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   Avatar,
@@ -86,7 +86,7 @@ const BackendErrorMessage = (props) => {
         </Paper>
       </Grid>
       <Grid item>
-        <Link underline="always" href="/konfo" variant="body1">
+        <Link underline="always" component={RouterLink} to="/" variant="body1">
           {t('haku.siirry-opintopolun-etusivulle')}
         </Link>
       </Grid>
