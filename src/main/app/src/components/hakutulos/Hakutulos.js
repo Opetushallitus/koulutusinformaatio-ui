@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import qs from 'query-string';
-import { withTranslation } from 'react-i18next';
-import { withStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 import { ExpandMore, ExpandLess } from '@material-ui/icons';
 import {
   Box,
@@ -12,6 +11,7 @@ import {
   Hidden,
   Grid,
   Link,
+  makeStyles,
   MenuItem,
   Paper,
   Select,
@@ -29,11 +29,60 @@ import SuodatinValinnat from './hakutulosSuodattimet/SuodatinValinnat';
 import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
 import { useStores } from '../../hooks';
 import Murupolku from '../common/Murupolku';
-import { styles } from '../../styles';
 import { theme } from '../../theme';
 
-const Hakutulos = observer((props) => {
-  const { t, classes, history } = props;
+const useStyles = makeStyles((theme) => ({
+  hakutulosSisalto: {
+    maxWidth: 1600,
+    margin: 'auto',
+  },
+  hakuTulosContentsPaper: {
+    width: '100%',
+    boxShadow: 'none',
+    [theme.breakpoints.down('xl')]: {
+      padding: theme.spacing(1, 11),
+    },
+    [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(1, 1),
+    },
+  },
+  hakuTulosNavText: {
+    margin: theme.spacing(5, 0, 7, 0),
+  },
+  hakuTulosHeaderGridRoot: {
+    marginBottom: theme.spacing(2),
+  },
+  hakuTulosBoxRoot: {
+    fontSize: 14,
+    whiteSpace: 'nowrap',
+    marginRight: theme.spacing(1),
+  },
+  hakuTulosSelect: {
+    '&:before': {
+      borderBottom: 'none',
+    },
+  },
+  hakuTulosSelectSelectMenu: {
+    overflow: 'inherit',
+  },
+  hakuTulosMenuItemRoot: {
+    paddingLeft: 12,
+  },
+  hakuTulosSelectIcon: {
+    fontSize: 20,
+  },
+  hakuTulosSortBtnRoot: {
+    marginLeft: theme.spacing(1),
+  },
+  hakuTulosSortBtnLabel: {
+    fontWeight: 600,
+    whiteSpace: 'nowrap',
+  },
+}));
+
+const Hakutulos = observer(({ history }) => {
+  const classes = useStyles();
+  const { t } = useTranslation();
   const { hakuStore, restStore } = useStores();
   const { filter, paging } = hakuStore;
   const {
@@ -52,7 +101,6 @@ const Hakutulos = observer((props) => {
     setSort(toJS(hakuStore.sort));
     setPageSize(toJS(paging.pageSize));
   }, [
-    props,
     hakuStore.sort,
     hakuStore.keyword,
     hakuStore.state,
@@ -282,6 +330,4 @@ const Hakutulos = observer((props) => {
   );
 });
 
-const HakuTulosWithStyles = withTranslation()(withStyles(styles)(Hakutulos));
-
-export default HakuTulosWithStyles;
+export default Hakutulos;
