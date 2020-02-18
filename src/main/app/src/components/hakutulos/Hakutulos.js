@@ -105,7 +105,7 @@ const Hakutulos = observer((props) => {
       case 'done':
         if (hakuStore.toggle === 'koulutus' && hakuStore.hasKoulutusResult) {
           return koulutusResult.map((r) => {
-            const link = `/konfo/koulutus/${r.oid}`;
+            const link = `/koulutus/${r.oid}`;
             return (
               <KoulutusKortti
                 key={r.oid}
@@ -129,7 +129,7 @@ const Hakutulos = observer((props) => {
           hakuStore.hasOppilaitosResult
         ) {
           return oppilaitosResult.map((r) => {
-            const link = `/konfo/oppilaitos/${r.oid}`;
+            const link = `/oppilaitos/${r.oid}`;
             return (
               <OppilaitosKortti
                 key={r.oid}

@@ -10,11 +10,9 @@ import TextBox from '../common/TextBox';
 import ToteutusList from './ToteutusList';
 import HakuKaynnissaCard from './HakuKaynnissaCard';
 import { HashLink as Link } from 'react-router-hash-link';
-import Accordion from '../common/Accordion';
-import Spacer from '../common/Spacer';
-import clsx from 'clsx';
 import { colors } from '../../colors';
 import DefaultHeroImage from '../../assets/images/herokuva_default.png';
+import Murupolku from '../common/Murupolku';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },
@@ -31,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const Koulutus = (props) => {
   const classes = useStyles();
   const { oid } = props.match.params;
-  const { restStore } = useStores();
+  const { restStore, hakuStore } = useStores();
   const { t } = useTranslation();
   const [state, setState] = useState({
     kuvaus: {},
@@ -70,6 +68,14 @@ const Koulutus = (props) => {
   return (
     <Container className={classes.container}>
       <Box display="flex" flexDirection="column" alignItems="center">
+        <Box mt={5} ml={9} alignSelf="start">
+          <Murupolku
+            path={[
+              { name: t('koulutus.hakutulos'), link: hakuStore.createHakuUrl },
+              { name: l.localize(state.tutkintoNimi) },
+            ]}
+          />
+        </Box>
         <Box mt={4}>
           {state.koulutusAla.map((ala) => (
             <Typography
