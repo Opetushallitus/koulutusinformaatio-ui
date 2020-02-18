@@ -184,7 +184,7 @@ const Sisaltohaku = observer((props) => {
           state.results.map(({ id }) => {
             const s = sivu[id];
             const u = uutinen[id];
-            console.log(u);
+            const image = (u || {}).image || {};
             return (
               <Grid item xs={12} key={id}>
                 <TulosPanel>
@@ -211,10 +211,19 @@ const Sisaltohaku = observer((props) => {
                     <CardMedia
                       className={classes.image}
                       image={
-                        contentfulStore.assetUrl(((u || {}).image || {}).url) ||
+                        contentfulStore.assetUrl(image.url) ||
                         koulutusPlaceholderImg
                       }
-                      title={t('sisaltohaku.paikanpitäjä')}
+                      title={
+                        image.description ||
+                        image.name ||
+                        t('sisaltohaku.paikanpitäjä')
+                      }
+                      aria-label={
+                        image.description ||
+                        image.name ||
+                        t('sisaltohaku.paikanpitäjä')
+                      }
                     />
                   </ButtonBase>
                 </TulosPanel>
