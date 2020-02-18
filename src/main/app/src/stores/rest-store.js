@@ -1,4 +1,4 @@
-import { observable, action, toJS /*configure*/ } from 'mobx';
+import { computed, observable, action /*configure*/ } from 'mobx';
 import superagent from 'superagent';
 import { Localizer as l } from '../tools/Utils';
 
@@ -9,6 +9,10 @@ class RestStore {
 
   constructor(urlStore) {
     this.urlStore = urlStore;
+  }
+
+  @computed get restErrorsArrLength() {
+    return this.errors.length;
   }
 
   @action
@@ -72,11 +76,14 @@ class RestStore {
   @action
   search = (promises, resultAction) => {
     const _this = this;
+    _this.errors = [];
     Promise.all(promises)
       .then((result) => {
         resultAction(result.map((r) => r.body));
       })
-      .catch(_this.handleError);
+      .catch((err) => {
+        _this.handleError(err);
+      });
   };
 
   @action

@@ -32,5 +32,6 @@ target/
 package-lock.json
 
 src/main/app/*.png
+src/main/app/.vscode/
 
 

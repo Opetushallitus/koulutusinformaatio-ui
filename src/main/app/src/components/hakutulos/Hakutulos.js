@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import qs from 'query-string';
 import { withTranslation } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
-import { ExpandMore, ExpandLess, HomeOutlined } from '@material-ui/icons';
+import { ExpandMore, ExpandLess } from '@material-ui/icons';
 import {
   Box,
   Button,
@@ -17,7 +17,6 @@ import {
   Select,
   Typography,
 } from '@material-ui/core';
-import _ from 'lodash';
 import HakutulosToggle from './HakutulosToggle';
 import KoulutusalatSuodatin from './hakutulosSuodattimet/KoulutusalatSuodatin';
 import KoulutusKortti from './hakutulosKortit/KoulutusKortti';
@@ -25,6 +24,7 @@ import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodati
 import OpetusKieliSuodatin from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import OppilaitosKortti from './hakutulosKortit/OppilaitosKortti';
 import Pagination from './Pagination';
+import BackendErrorMessage from './BackendErrorMessage';
 import SuodatinValinnat from './hakutulosSuodattimet/SuodatinValinnat';
 import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
 import { useStores } from '../../hooks';
@@ -34,7 +34,7 @@ import { theme } from '../../theme';
 
 const Hakutulos = observer((props) => {
   const { t, classes, history } = props;
-  const { hakuStore } = useStores();
+  const { hakuStore, restStore } = useStores();
   const { filter, paging } = hakuStore;
   const {
     koulutustyyppi,
@@ -54,7 +54,9 @@ const Hakutulos = observer((props) => {
   }, [
     props,
     hakuStore.sort,
+    hakuStore.keyword,
     hakuStore.state,
+    restStore.restErrorsArrLength,
     hakuStore.paging,
     paging.pageSize,
     hakuStore.koulutusResult,
@@ -94,6 +96,9 @@ const Hakutulos = observer((props) => {
 
     switch (props.hakuStoreState) {
       case 'pending':
+        if (restStore.restErrorsArrLength > 0) {
+          return <BackendErrorMessage />;
+        }
         return (
           <Grid
             container
