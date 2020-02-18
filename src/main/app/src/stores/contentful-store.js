@@ -50,7 +50,9 @@ class ContentfulStore {
   };
 
   assetUrl(url) {
-    return `${this.urlStore.urls.url('konfo-backend.content', '')}${url}`;
+    return (
+      url && `${this.urlStore.urls.url('konfo-backend.content', '')}${url}`
+    );
   }
 
   static bodyAsArray(res) {
@@ -65,6 +67,9 @@ class ContentfulStore {
       }
       if (value.slug) {
         res[value.slug] = value;
+      }
+      if (value.sivu && value.sivu.id) {
+        res[value.sivu.id] = value;
       }
       return res;
     }, {});
