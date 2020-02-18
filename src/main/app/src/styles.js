@@ -7,42 +7,10 @@ export const styles = (theme) =>
     root: {
       display: 'flex',
     },
-    // ******************************************************************
-    // General
-    // ******************************************************************
 
-    // ******************************************************************
-    // Hakutulos
-    // ******************************************************************
-    hakuTulosFiltersClearLabel: {
-      fontWeight: 600,
-      fontSize: 14,
-      textDecoration: 'underline',
-      whiteSpace: 'nowrap',
-    },
-    hakuTulosFiltersClearSizeSmall: {
-      padding: '1px 5px',
-    },
-    hakuTulosChipLabel: {
-      fontSize: 12,
-      fontWeight: 600,
-    },
-    hakuTulosChipRoot: {
-      marginBottom: 5,
-      marginRight: 5,
-      borderRadius: 5,
-      backgroundColor: '#F7F7F7',
-      border: 'none',
-    },
     hakuTulosTabIconMargin: {
       marginBottom: '0 !important',
       marginRight: theme.spacing(2),
-    },
-    suodatinValinnatGridRoot1: {
-      paddingBottom: 5,
-    },
-    suodatinValinnatGridRoot2: {
-      paddingTop: 5,
     },
     hakutulosToggleTabRoot: {
       [theme.breakpoints.between('sm', 'md')]: {

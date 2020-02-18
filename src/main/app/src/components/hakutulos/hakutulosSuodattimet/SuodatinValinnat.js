@@ -1,18 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
-import { Button, Chip, Grid } from '@material-ui/core';
+import { Button, Chip, Grid, makeStyles } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
 import qs from 'query-string';
-import { withTranslation } from 'react-i18next';
-import { styles } from '../../../styles';
+import { useTranslation } from 'react-i18next';
 import { useStores } from '../../../hooks';
 import { toJS } from 'mobx';
-import _omit from 'lodash/omit';
+import _ from 'lodash';
 
-const SuodatinValinnat = observer((props) => {
-  const { classes, i18n, history, t } = props;
+const useStyles = makeStyles((theme) => ({
+  hakuTulosChipRoot: {
+    marginBottom: 5,
+    marginRight: 5,
+    borderRadius: 5,
+    backgroundColor: '#F7F7F7',
+    border: 'none',
+  },
+  hakuTulosChipLabel: {
+    fontSize: 12,
+    fontWeight: 600,
+  },
+  suodatinValinnatGridRoot1: {
+    paddingBottom: 5,
+  },
+  suodatinValinnatGridRoot2: {
+    paddingTop: 5,
+  },
+  hakuTulosFiltersClearLabel: {
+    fontWeight: 600,
+    fontSize: 14,
+    textDecoration: 'underline',
+    whiteSpace: 'nowrap',
+  },
+  hakuTulosFiltersClearSizeSmall: {
+    padding: '1px 5px',
+  },
+}));
+
+const SuodatinValinnat = observer(({ history, location }) => {
+  const { i18n, t } = useTranslation();
+  const classes = useStyles();
   const { hakuStore } = useStores();
   const { filter } = hakuStore;
 
@@ -20,7 +48,7 @@ const SuodatinValinnat = observer((props) => {
 
   useEffect(() => {
     setFilters(toJS(filter));
-  }, [filter, props]);
+  }, [filter, location]);
 
   const handleDelete = (filterType, item) => () => {
     const search = qs.parse(history.location.search);
@@ -52,7 +80,7 @@ const SuodatinValinnat = observer((props) => {
     const search = qs.parse(history.location.search);
 
     history.replace({
-      search: qs.stringify(_omit(search, Object.keys(filters))),
+      search: qs.stringify(_.omit(search, Object.keys(filters))),
     });
     hakuStore.clearFilters();
     hakuStore.searchKoulutukset();
@@ -101,8 +129,4 @@ const SuodatinValinnat = observer((props) => {
   );
 });
 
-const OpetusKieliSuodatinWithStyles = withTranslation()(
-  withStyles(styles)(SuodatinValinnat)
-);
-
-export default withRouter(OpetusKieliSuodatinWithStyles);
+export default withRouter(SuodatinValinnat);
