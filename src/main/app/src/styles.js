@@ -7,29 +7,6 @@ export const styles = (theme) =>
     root: {
       display: 'flex',
     },
-
-    hakuTulosTabIconMargin: {
-      marginBottom: '0 !important',
-      marginRight: theme.spacing(2),
-    },
-    hakutulosToggleTabRoot: {
-      [theme.breakpoints.between('sm', 'md')]: {
-        fontSize: '0.9rem',
-      },
-      [theme.breakpoints.up('lg')]: {
-        fontSize: '1rem',
-      },
-    },
-    customWrapper: {
-      flexDirection: 'row',
-      textTransform: 'capitalize',
-      textAlign: 'left',
-    },
-    customLabelIcon: {
-      minHeight: '50px',
-      paddingLeft: 0,
-      paddingRight: theme.spacing(3),
-    },
     customIconRoot: {
       marginBottom: 0,
     },

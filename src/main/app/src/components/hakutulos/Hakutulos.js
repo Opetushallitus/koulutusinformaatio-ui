@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Hakutulos = observer(({ history }) => {
+const Hakutulos = observer(({ history, location }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const { hakuStore, restStore } = useStores();
@@ -101,6 +101,7 @@ const Hakutulos = observer(({ history }) => {
     setSort(toJS(hakuStore.sort));
     setPageSize(toJS(paging.pageSize));
   }, [
+    location,
     hakuStore.sort,
     hakuStore.keyword,
     hakuStore.state,
