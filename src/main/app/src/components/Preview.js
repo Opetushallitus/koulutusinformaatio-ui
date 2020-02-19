@@ -7,11 +7,12 @@ const Preview = observer(({ markdown }) => {
   const atLeastLetters = 200;
   return (
     <p>
-      {sentences.reduce((paragraph, sentence) =>
-        (paragraph || '').length < atLeastLetters
+      {sentences.reduce((paragraph, sentence) => {
+        return paragraph.length < atLeastLetters &&
+          sentence[0].toUpperCase() === sentence[0]
           ? paragraph + sentence
-          : paragraph
-      )}
+          : paragraph;
+      }, '')}
     </p>
   );
 });
