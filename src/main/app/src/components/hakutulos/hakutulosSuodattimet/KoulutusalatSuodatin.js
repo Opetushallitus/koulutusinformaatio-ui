@@ -3,34 +3,31 @@ import { observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import {
   Button,
-  Checkbox,
   Divider,
   Grid,
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
   Typography,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
 import qs from 'query-string';
 import _ from 'lodash';
-import { withTranslation } from 'react-i18next';
-import { styles } from '../../../styles';
+import { useTranslation } from 'react-i18next';
 import { useStores } from '../../../hooks';
 import { toJS } from 'mobx';
 import {
   SuodatinExpansionPanel,
   SuodatinExpansionPanelSummary,
   SuodatinExpansionPanelDetails,
-} from './SuodatinExpansionPanel';
+  SuodatinCheckbox,
+  SuodatinListItemText,
+} from './CutomizedMuiComponents';
 
-const KoulutusalatSuodatin = observer((props) => {
-  const { classes, i18n, history, t } = props;
+const KoulutusalatSuodatin = observer(({ history, location }) => {
+  const { i18n, t } = useTranslation();
   const { hakuStore } = useStores();
-  const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
-  const { koulutusala } = filter;
+  const { koulutusFilters, oppilaitosFilters, toggle } = hakuStore;
 
   const [koulutusAlat, setKoulutusAlat] = useState([]);
   const [valitutKoulutusAlat, setValitutKoulutusAlat] = useState([]);
@@ -49,13 +46,12 @@ const KoulutusalatSuodatin = observer((props) => {
     setKoulutusAlat(koulutusalatJS);
     setValitutKoulutusAlat(toJS(hakuStore.filter.koulutusala));
   }, [
-    props,
-    koulutusala,
-    toggle,
-    koulutusFilters.koulutusala,
-    oppilaitosFilters.koulutusala,
     hakuStore.filter.koulutusala,
     i18n.language,
+    koulutusFilters.koulutusala,
+    location,
+    oppilaitosFilters.koulutusala,
+    toggle,
   ]);
 
   const handleKoulutusalaOuterToggle = (koulutusalaTaso1) => () => {
@@ -95,7 +91,7 @@ const KoulutusalatSuodatin = observer((props) => {
       <Button
         color="secondary"
         size="small"
-        classes={{ label: classes.buttonSmallText }}
+        style={{ fontSize: 14 }}
         onClick={() => setExpandedKoulutusTaso1([])}>
         {t('haku.__kaikki_koulutusalat')}
       </Button>
@@ -109,8 +105,7 @@ const KoulutusalatSuodatin = observer((props) => {
         )}
         disabled={expandedKoulutusTaso1[1]?.count === 0}>
         <ListItemIcon>
-          <Checkbox
-            classes={{ root: classes.listItemCheckbox }}
+          <SuodatinCheckbox
             edge="start"
             checked={
               valitutKoulutusAlat.findIndex(
@@ -121,8 +116,7 @@ const KoulutusalatSuodatin = observer((props) => {
             disableRipple
           />
         </ListItemIcon>
-        <ListItemText
-          classes={{ primary: classes.hakuTulosListItemText }}
+        <SuodatinListItemText
           id={`${expandedKoulutusTaso1[0]}_text`}
           primary={
             <Grid container justify="space-between" wrap="nowrap">
@@ -155,8 +149,7 @@ const KoulutusalatSuodatin = observer((props) => {
                   ?.count === 0
               }>
               <ListItemIcon>
-                <Checkbox
-                  classes={{ root: classes.listItemCheckbox }}
+                <SuodatinCheckbox
                   edge="start"
                   checked={
                     valitutKoulutusAlat.findIndex(
@@ -167,8 +160,7 @@ const KoulutusalatSuodatin = observer((props) => {
                   disableRipple
                 />
               </ListItemIcon>
-              <ListItemText
-                classes={{ primary: classes.hakuTulosListItemText }}
+              <SuodatinListItemText
                 id={`${expandedKoulutusTaso1[0]}_${koulutusTaso2_ID}`}
                 primary={
                   <Grid container justify="space-between" wrap="nowrap">
@@ -213,8 +205,7 @@ const KoulutusalatSuodatin = observer((props) => {
                 button
                 onClick={handleKoulutusalaOuterToggle(kouutusalaArray)}
                 disabled={kouutusalaArray[1].count === 0}>
-                <ListItemText
-                  classes={{ primary: classes.hakuTulosListItemText }}
+                <SuodatinListItemText
                   id={labelId}
                   primary={
                     <Grid container justify="space-between" wrap="nowrap">
@@ -239,8 +230,4 @@ const KoulutusalatSuodatin = observer((props) => {
   );
 });
 
-const KoulutusalatSuodatinWithStyles = withTranslation()(
-  withStyles(styles)(KoulutusalatSuodatin)
-);
-
-export default withRouter(KoulutusalatSuodatinWithStyles);
+export default withRouter(KoulutusalatSuodatin);

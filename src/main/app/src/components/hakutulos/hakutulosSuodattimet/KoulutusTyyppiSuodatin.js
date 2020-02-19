@@ -3,29 +3,35 @@ import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import {
-  Checkbox,
   Grid,
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
+  makeStyles,
   Typography,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
 import qs from 'query-string';
-import { withTranslation } from 'react-i18next';
-import { styles } from '../../../styles';
+import { useTranslation } from 'react-i18next';
 import { useStores } from '../../../hooks';
 import {
   SuodatinExpansionPanel,
   SuodatinExpansionPanelSummary,
   SuodatinExpansionPanelDetails,
-} from './SuodatinExpansionPanel';
+  SuodatinCheckbox,
+  SuodatinListItemText,
+} from './CutomizedMuiComponents';
 
-const KoulutusTyyppiSuodatin = observer((props) => {
-  const { classes, i18n, history, t } = props;
+const useStyles = makeStyles((theme) => ({
+  eduTypeInnerListPadding: {
+    paddingLeft: theme.spacing(2.2),
+  },
+}));
+
+const KoulutusTyyppiSuodatin = observer(({ history, location }) => {
+  const { i18n, t } = useTranslation();
   const { hakuStore } = useStores();
+  const classes = useStyles();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
   const { koulutustyyppi } = filter;
 
@@ -40,11 +46,10 @@ const KoulutusTyyppiSuodatin = observer((props) => {
     setKoulutusTyypit(koulutusTyypitJS);
     setValitutKoulutusTyypit(toJS(koulutustyyppi));
   }, [
-    hakuStore,
     koulutusFilters.koulutusTyyppi,
     koulutustyyppi,
+    location,
     oppilaitosFilters.koulutusTyyppi,
-    props,
     toggle,
   ]);
 
@@ -97,8 +102,7 @@ const KoulutusTyyppiSuodatin = observer((props) => {
                   onClick={handleEduTypeToggle(eduTypeOuterArr)}
                   disabled={eduTypeOuterArr[1].count === 0}>
                   <ListItemIcon>
-                    <Checkbox
-                      classes={{ root: classes.listItemCheckbox }}
+                    <SuodatinCheckbox
                       edge="start"
                       checked={
                         valitutKoulutusTyypit.findIndex(
@@ -110,15 +114,15 @@ const KoulutusTyyppiSuodatin = observer((props) => {
                       inputProps={{ 'aria-labelledby': labelId }}
                     />
                   </ListItemIcon>
-                  <ListItemText
-                    classes={{ primary: classes.hakuTulosListItemText }}
+                  <SuodatinListItemText
                     id={labelId}
                     primary={
                       <Grid container justify="space-between" wrap="nowrap">
                         <Grid item>{eduTypeOuterArr[1].nimi.fi}</Grid>
                         <Grid item>{`(${eduTypeOuterArr[1].count})`}</Grid>
                       </Grid>
-                    }></ListItemText>
+                    }
+                  />
                 </ListItem>
                 {eduTypeOuterArr[1].alakoodit &&
                   Object.entries(eduTypeOuterArr[1].alakoodit).map(
@@ -133,8 +137,7 @@ const KoulutusTyyppiSuodatin = observer((props) => {
                           onClick={handleEduTypeToggle(eduTypeInnerArr)}
                           disabled={eduTypeInnerArr[1].count === 0}>
                           <ListItemIcon>
-                            <Checkbox
-                              classes={{ root: classes.listItemCheckbox }}
+                            <SuodatinCheckbox
                               edge="start"
                               checked={
                                 valitutKoulutusTyypit.findIndex(
@@ -145,8 +148,7 @@ const KoulutusTyyppiSuodatin = observer((props) => {
                               disableRipple
                             />
                           </ListItemIcon>
-                          <ListItemText
-                            classes={{ primary: classes.hakuTulosListItemText }}
+                          <SuodatinListItemText
                             id={`this ${labelId}_${eduTypeInnerArr}`}
                             primary={
                               <Grid
@@ -160,7 +162,8 @@ const KoulutusTyyppiSuodatin = observer((props) => {
                                   {`(${eduTypeInnerArr[1]?.count})`}
                                 </Grid>
                               </Grid>
-                            }></ListItemText>
+                            }
+                          />
                         </ListItem>
                       );
                     }
@@ -174,8 +177,4 @@ const KoulutusTyyppiSuodatin = observer((props) => {
   );
 });
 
-const KoulutusTyyppiSuodatinWithStyles = withTranslation()(
-  withStyles(styles)(KoulutusTyyppiSuodatin)
-);
-
-export default withRouter(KoulutusTyyppiSuodatinWithStyles);
+export default withRouter(KoulutusTyyppiSuodatin);

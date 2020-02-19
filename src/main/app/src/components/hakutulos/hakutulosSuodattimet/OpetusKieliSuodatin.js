@@ -2,29 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import {
-  Checkbox,
   Grid,
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
   Typography,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
 import qs from 'query-string';
-import { withTranslation } from 'react-i18next';
-import { styles } from '../../../styles';
+import { useTranslation } from 'react-i18next';
 import { useStores } from '../../../hooks';
 import { toJS } from 'mobx';
 import {
   SuodatinExpansionPanel,
   SuodatinExpansionPanelSummary,
   SuodatinExpansionPanelDetails,
-} from './SuodatinExpansionPanel';
+  SuodatinCheckbox,
+  SuodatinListItemText,
+} from './CutomizedMuiComponents';
 
-const OpetusKieliSuodatin = observer((props) => {
-  const { classes, i18n, history, t } = props;
+const OpetusKieliSuodatin = observer(({ history, location }) => {
+  const { i18n, t } = useTranslation();
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
   const { opetuskieli } = filter;
@@ -51,11 +49,11 @@ const OpetusKieliSuodatin = observer((props) => {
     setOpetusKielet(_opetusKielet);
     setCheckedOpetusKielet(toJS(opetuskieli));
   }, [
-    props,
-    toggle,
-    opetuskieli,
     koulutusFilters.opetusKieli,
+    location,
+    opetuskieli,
     oppilaitosFilters.opetusKieli,
+    toggle,
   ]);
 
   const handleLanguageToggle = (opetuskieliObj) => () => {
@@ -103,8 +101,7 @@ const OpetusKieliSuodatin = observer((props) => {
                 onClick={handleLanguageToggle(opetuskieliArr)}
                 disabled={opetuskieliArr[1].count === 0}>
                 <ListItemIcon>
-                  <Checkbox
-                    classes={{ root: classes.listItemCheckbox }}
+                  <SuodatinCheckbox
                     edge="start"
                     checked={
                       checkedOpetusKielet.find(
@@ -115,8 +112,7 @@ const OpetusKieliSuodatin = observer((props) => {
                     disableRipple
                   />
                 </ListItemIcon>
-                <ListItemText
-                  classes={{ primary: classes.hakuTulosListItemText }}
+                <SuodatinListItemText
                   id={labelId}
                   primary={
                     <Grid container justify="space-between" wrap="nowrap">
@@ -136,8 +132,4 @@ const OpetusKieliSuodatin = observer((props) => {
   );
 });
 
-const OpetusKieliSuodatinWithStyles = withTranslation()(
-  withStyles(styles)(OpetusKieliSuodatin)
-);
-
-export default withRouter(OpetusKieliSuodatinWithStyles);
+export default withRouter(OpetusKieliSuodatin);
