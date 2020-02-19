@@ -4,30 +4,28 @@ import { observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import {
   Button,
-  Checkbox,
   Grid,
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
   Typography,
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore, SearchOutlined } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
 import Select, { components } from 'react-select';
 import qs from 'query-string';
-import { withTranslation } from 'react-i18next';
-import { styles } from '../../../styles';
+import { useTranslation } from 'react-i18next';
 import { colors } from '../../../colors';
 import { useStores } from '../../../hooks';
 import {
   SuodatinExpansionPanel,
   SuodatinExpansionPanelSummary,
   SuodatinExpansionPanelDetails,
-} from './SuodatinExpansionPanel';
+  SuodatinCheckbox,
+  SuodatinListItemText,
+} from './CutomizedMuiComponents';
 
-const SijaintiSuodatin = observer((props) => {
-  const { classes, i18n, history, t } = props;
+const SijaintiSuodatin = observer(({ history, location }) => {
+  const { i18n, t } = useTranslation();
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
   const { sijainti, selectedsijainnit } = filter;
@@ -103,16 +101,15 @@ const SijaintiSuodatin = observer((props) => {
     setSearchHitsSijainnit(_searchHitsSijainnit);
     setCheckedMaakunnat(toJS(sijainti));
   }, [
-    props,
-    hakuStore,
+    i18n.language,
+    koulutusFilters.kunta,
+    koulutusFilters.maakunta,
+    location,
+    oppilaitosFilters.kunta,
+    oppilaitosFilters.maakunta,
+    selectedsijainnit,
     sijainti,
     toggle,
-    koulutusFilters.maakunta,
-    koulutusFilters.kunta,
-    oppilaitosFilters.maakunta,
-    oppilaitosFilters.kunta,
-    selectedsijainnit,
-    i18n.language,
   ]);
 
   const handleMaakuntaToggle = (maakuntaArr) => () => {
@@ -266,8 +263,7 @@ const SijaintiSuodatin = observer((props) => {
                     disabled={maakuntaArray[1].count === 0}
                     onClick={handleMaakuntaToggle(maakuntaArray)}>
                     <ListItemIcon>
-                      <Checkbox
-                        classes={{ root: classes.listItemCheckbox }}
+                      <SuodatinCheckbox
                         edge="start"
                         checked={
                           checkedMaakunnat.findIndex(
@@ -279,8 +275,7 @@ const SijaintiSuodatin = observer((props) => {
                         inputProps={{ 'aria-labelledby': labelId }}
                       />
                     </ListItemIcon>
-                    <ListItemText
-                      classes={{ primary: classes.hakuTulosListItemText }}
+                    <SuodatinListItemText
                       id={labelId}
                       primary={
                         <Grid container justify="space-between" wrap="nowrap">
@@ -289,7 +284,8 @@ const SijaintiSuodatin = observer((props) => {
                           </Grid>
                           <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
                         </Grid>
-                      }></ListItemText>
+                      }
+                    />
                   </ListItem>
                 );
               })}
@@ -305,8 +301,7 @@ const SijaintiSuodatin = observer((props) => {
                       disabled={maakuntaArray[1].count === 0}
                       onClick={handleMaakuntaToggle(maakuntaArray)}>
                       <ListItemIcon>
-                        <Checkbox
-                          classes={{ root: classes.listItemCheckbox }}
+                        <SuodatinCheckbox
                           edge="start"
                           checked={
                             checkedMaakunnat.findIndex(
@@ -318,8 +313,7 @@ const SijaintiSuodatin = observer((props) => {
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </ListItemIcon>
-                      <ListItemText
-                        classes={{ primary: classes.hakuTulosListItemText }}
+                      <SuodatinListItemText
                         id={labelId}
                         primary={
                           <Grid container justify="space-between" wrap="nowrap">
@@ -328,14 +322,15 @@ const SijaintiSuodatin = observer((props) => {
                             </Grid>
                             <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
                           </Grid>
-                        }></ListItemText>
+                        }
+                      />
                     </ListItem>
                   );
                 })}
               <Button
                 color="secondary"
                 size="small"
-                classes={{ label: classes.buttonSmallText }}
+                style={{ fontSize: 14 }}
                 endIcon={showRest ? <ExpandLess /> : <ExpandMore />}
                 fullWidth
                 onClick={() => handleShowRest()}>
@@ -349,8 +344,4 @@ const SijaintiSuodatin = observer((props) => {
   );
 });
 
-const SijaintiSuodatinWithStyles = withTranslation()(
-  withStyles(styles)(SijaintiSuodatin)
-);
-
-export default withRouter(SijaintiSuodatinWithStyles);
+export default withRouter(SijaintiSuodatin);

@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
-import { CssBaseline } from '@material-ui/core';
+import { CssBaseline, makeStyles } from '@material-ui/core';
 import MuiFlatPagination from 'material-ui-flat-pagination';
-import { withStyles } from '@material-ui/core/styles';
 import qs from 'query-string';
-import { styles } from '../../styles';
-import { withTranslation } from 'react-i18next';
 import { useStores } from '../../hooks';
 
-const Pagination = observer((props) => {
-  const { classes, history } = props;
+const useStyles = makeStyles((theme) => ({
+  paginationRootCurrent: {
+    fontWeight: 'bold',
+  },
+}));
+
+const Pagination = observer(({ history }) => {
+  const classes = useStyles();
   const { hakuStore } = useStores();
 
   const [total, setTotal] = useState(0);
@@ -70,6 +73,4 @@ const Pagination = observer((props) => {
   );
 });
 
-const PaginationWithStyles = withTranslation()(withStyles(styles)(Pagination));
-
-export default withTranslation()(withRouter(PaginationWithStyles));
+export default withRouter(Pagination);
