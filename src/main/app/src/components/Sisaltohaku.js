@@ -24,7 +24,7 @@ import { observer } from 'mobx-react-lite';
 import _ from 'lodash';
 import ReactiveBorder from './ReactiveBorder';
 import koulutusPlaceholderImg from '../assets/images/Opolkuhts.png';
-import Sisalto from './sivu/Sisalto';
+import Preview from './Preview';
 
 const useStyles = makeStyles({
   sisaltohaku: {
@@ -198,14 +198,7 @@ const Sisaltohaku = observer((props) => {
                       </Typography>
                       <br />
                       <Typography variant="subtitle1" color="textSecondary">
-                        {s.description ||
-                          (u && (
-                            <Sisalto
-                              content={u.content}
-                              contentfulStore={contentfulStore}
-                              excludeMedia={true}
-                            />
-                          ))}
+                        {s.description || <Preview markdown={s.content} />}
                       </Typography>
                     </CardContent>
                     <CardMedia
