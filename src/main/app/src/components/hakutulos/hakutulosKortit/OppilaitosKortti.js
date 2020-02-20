@@ -10,6 +10,7 @@ import {
   Paper,
   Typography,
   useMediaQuery,
+  useTheme,
 } from '@material-ui/core';
 import { SchoolOutlined, PublicOutlined } from '@material-ui/icons';
 import oppilaitos_img from '../../../assets/images/logo-oppilaitos.png';
@@ -18,7 +19,7 @@ import { MUI_BREAKPOINTS } from '../../../constants';
 import _ from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
-  hakuTulosKorttiPaperRoot: {
+  paperRoot: {
     width: '100%',
     marginBottom: theme.spacing(1.5),
     boxShadow: '0 0 8px 0 rgba(0,0,0,0.2)',
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(2),
     },
   },
-  oppilaitosLogoAvatar: {
+  avatarRoot: {
     borderRadius: 0,
     [theme.breakpoints.up('lg')]: {
       width: 150,
@@ -42,14 +43,12 @@ const useStyles = makeStyles((theme) => ({
       height: theme.spacing(9),
     },
   },
-  koulutusKorttiLeftMargin: {
-    marginLeft: theme.spacing(1),
-  },
 }));
 
 const OppilaitosKortti = ({ nimi, oppilaitos }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
+  const theme = useTheme();
   const muiScreenSizeMinLg = useMediaQuery(MUI_BREAKPOINTS.MIN_LG);
   const screenSizeMinCustomXs = useMediaQuery(MUI_BREAKPOINTS.MIN_XS_400);
 
@@ -81,7 +80,7 @@ const OppilaitosKortti = ({ nimi, oppilaitos }) => {
 
   return (
     <Paper
-      classes={{ root: classes.hakuTulosKorttiPaperRoot }}
+      classes={{ root: classes.paperRoot }}
       style={{ borderTop: `5px solid ${educationTypeColorCode.amm}` }}>
       <Grid
         container
@@ -113,7 +112,7 @@ const OppilaitosKortti = ({ nimi, oppilaitos }) => {
             <Hidden smUp>
               <Grid item xs>
                 <Avatar
-                  className={classes.oppilaitosLogoAvatar}
+                  classes={{ root: classes.avatarRoot }}
                   src={oppilaitos_img}
                   alt="oppilaitoksen logo"
                 />
@@ -143,7 +142,7 @@ const OppilaitosKortti = ({ nimi, oppilaitos }) => {
                   justify="flex-end"
                   alignContent="flex-end">
                   <Avatar
-                    className={classes.oppilaitosLogoAvatar}
+                    classes={{ root: classes.avatarRoot }}
                     src={oppilaitos_img}
                     alt="oppilaitoksen logo"
                   />
@@ -162,7 +161,7 @@ const OppilaitosKortti = ({ nimi, oppilaitos }) => {
                 <SchoolOutlined />
               </Grid>
               <Grid item xs={11}>
-                <Typography className={classes.koulutusKorttiLeftMargin}>
+                <Typography style={{ marginLeft: theme.spacing(1) }}>
                   {koulutusOhjelmatStr()}
                 </Typography>
               </Grid>
@@ -172,7 +171,7 @@ const OppilaitosKortti = ({ nimi, oppilaitos }) => {
                 <PublicOutlined />
               </Grid>
               <Grid item xs={11}>
-                <Typography className={classes.koulutusKorttiLeftMargin}>
+                <Typography style={{ marginLeft: theme.spacing(1) }}>
                   {paikkakunnatStr}
                 </Typography>
               </Grid>
@@ -183,7 +182,7 @@ const OppilaitosKortti = ({ nimi, oppilaitos }) => {
         <Hidden mdDown>
           <Grid item container lg={4} justify="center">
             <Avatar
-              className={classes.oppilaitosLogoAvatar}
+              classes={{ root: classes.avatarRoot }}
               src={oppilaitos_img}
               alt="oppilaitoksen logo"
             />

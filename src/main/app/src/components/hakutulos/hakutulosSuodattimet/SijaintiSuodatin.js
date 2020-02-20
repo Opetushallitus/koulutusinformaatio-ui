@@ -40,14 +40,16 @@ const SijaintiSuodatin = observer(({ history, location }) => {
   useEffect(() => {
     const maaKunnatJS =
       toggle === 'koulutus'
-        ? Object.entries(toJS(koulutusFilters.maakunta))
-        : Object.entries(toJS(oppilaitosFilters.maakunta));
+        ? Object.entries(koulutusFilters.maakunta)
+        : Object.entries(oppilaitosFilters.maakunta);
     const kunnatJS =
       toggle === 'koulutus'
-        ? Object.entries(toJS(koulutusFilters.kunta))
-        : Object.entries(toJS(oppilaitosFilters.kunta));
+        ? Object.entries(koulutusFilters.kunta)
+        : Object.entries(oppilaitosFilters.kunta);
 
-    maaKunnatJS.sort((a, b) => (a[1].nimi.fi > b[1].nimi.fi ? 1 : -1));
+    maaKunnatJS.sort((a, b) =>
+      a[1].nimi?.[i18n.language] > b[1].nimi?.[i18n.language] ? 1 : -1
+    );
     maaKunnatJS.sort((a, b) => b[1].count - a[1].count);
     const unknownMaakuntaIndex = maaKunnatJS.findIndex(
       (el) => el[0] === 'maakunta_99'
@@ -97,9 +99,9 @@ const SijaintiSuodatin = observer(({ history, location }) => {
     const copyMaakunnatJS = [...maaKunnatJS];
     setfirstFiveMaakunnat(copyMaakunnatJS.splice(0, 5));
     setRestMaakunnat(copyMaakunnatJS);
-    setSelectedSijainnit(toJS(selectedsijainnit));
+    setSelectedSijainnit(selectedsijainnit);
     setSearchHitsSijainnit(_searchHitsSijainnit);
-    setCheckedMaakunnat(toJS(sijainti));
+    setCheckedMaakunnat(sijainti);
   }, [
     i18n.language,
     koulutusFilters.kunta,

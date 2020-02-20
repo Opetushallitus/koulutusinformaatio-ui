@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import {
@@ -7,8 +6,8 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  makeStyles,
   Typography,
+  useTheme,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import qs from 'query-string';
@@ -22,16 +21,10 @@ import {
   SuodatinListItemText,
 } from './CutomizedMuiComponents';
 
-const useStyles = makeStyles((theme) => ({
-  eduTypeInnerListPadding: {
-    paddingLeft: theme.spacing(2.2),
-  },
-}));
-
 const KoulutusTyyppiSuodatin = observer(({ history, location }) => {
   const { i18n, t } = useTranslation();
   const { hakuStore } = useStores();
-  const classes = useStyles();
+  const theme = useTheme();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
   const { koulutustyyppi } = filter;
 
@@ -41,10 +34,10 @@ const KoulutusTyyppiSuodatin = observer(({ history, location }) => {
   useEffect(() => {
     const koulutusTyypitJS =
       toggle === 'koulutus'
-        ? toJS(koulutusFilters.koulutusTyyppi)
-        : toJS(oppilaitosFilters.koulutusTyyppi);
+        ? koulutusFilters.koulutusTyyppi
+        : oppilaitosFilters.koulutusTyyppi;
     setKoulutusTyypit(koulutusTyypitJS);
-    setValitutKoulutusTyypit(toJS(koulutustyyppi));
+    setValitutKoulutusTyypit(koulutustyyppi);
   }, [
     koulutusFilters.koulutusTyyppi,
     koulutustyyppi,
@@ -129,7 +122,7 @@ const KoulutusTyyppiSuodatin = observer(({ history, location }) => {
                     (eduTypeInnerArr) => {
                       return (
                         <ListItem
-                          className={classes.eduTypeInnerListPadding}
+                          style={{ paddingLeft: theme.spacing(2.2) }}
                           key={`${eduTypeOuterArr[0]}_${eduTypeInnerArr[0]}`}
                           id={`${eduTypeOuterArr[0]}_${eduTypeInnerArr[0]}`}
                           dense

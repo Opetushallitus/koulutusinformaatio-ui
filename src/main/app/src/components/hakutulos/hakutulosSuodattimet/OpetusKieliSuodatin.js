@@ -12,7 +12,6 @@ import { ExpandMore } from '@material-ui/icons';
 import qs from 'query-string';
 import { useTranslation } from 'react-i18next';
 import { useStores } from '../../../hooks';
-import { toJS } from 'mobx';
 import {
   SuodatinExpansionPanel,
   SuodatinExpansionPanelSummary,
@@ -33,10 +32,12 @@ const OpetusKieliSuodatin = observer(({ history, location }) => {
   useEffect(() => {
     const _opetusKielet =
       toggle === 'koulutus'
-        ? Object.entries(toJS(koulutusFilters.opetusKieli))
-        : Object.entries(toJS(oppilaitosFilters.opetusKieli));
+        ? Object.entries(koulutusFilters.opetusKieli)
+        : Object.entries(oppilaitosFilters.opetusKieli);
 
-    _opetusKielet.sort((a, b) => (a[1].nimi.fi > b[1].nimi.fi ? 1 : -1));
+    _opetusKielet.sort((a, b) =>
+      a[1].nimi?.[i18n.language] > b[1].nimi?.[i18n.language] ? 1 : -1
+    );
     _opetusKielet.sort((a, b) => b[1].count - a[1].count);
     const _muuKieliIndex = _opetusKielet.findIndex(
       (el) => el[0] === 'oppilaitoksenopetuskieli_9'
@@ -47,8 +48,9 @@ const OpetusKieliSuodatin = observer(({ history, location }) => {
     }
 
     setOpetusKielet(_opetusKielet);
-    setCheckedOpetusKielet(toJS(opetuskieli));
+    setCheckedOpetusKielet(opetuskieli);
   }, [
+    i18n.language,
     koulutusFilters.opetusKieli,
     location,
     opetuskieli,
