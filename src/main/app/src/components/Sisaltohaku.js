@@ -30,7 +30,6 @@ const useStyles = makeStyles({
   sisaltohaku: {
     marginTop: '40px',
   },
-  details: {},
   paper: {
     height: '60px',
     display: 'flex',
@@ -184,7 +183,7 @@ const Sisaltohaku = observer((props) => {
           state.results.map(({ id }) => {
             const s = sivu[id];
             const u = uutinen[id];
-            const image = (u || {}).image || {};
+            const image = u?.image;
             return (
               <Grid item xs={12} key={id}>
                 <TulosPanel>

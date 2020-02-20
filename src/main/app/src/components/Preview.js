@@ -3,11 +3,11 @@ import removeMd from 'remove-markdown';
 import { observer } from 'mobx-react-lite';
 
 const Preview = observer(({ markdown }) => {
-  const sentences = removeMd(markdown).match(/[^\.!\?]+[\.!\?]+/g);
+  const textAsSentences = removeMd(markdown).match(/[^\.!\?]+[\.!\?]+/g);
   const atLeastLetters = 200;
   return (
     <p>
-      {sentences.reduce((paragraph, sentence) => {
+      {textAsSentences.reduce((paragraph, sentence) => {
         return paragraph.length < atLeastLetters &&
           sentence[0].toUpperCase() === sentence[0]
           ? paragraph + sentence
