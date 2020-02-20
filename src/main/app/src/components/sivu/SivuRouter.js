@@ -52,8 +52,7 @@ const SivuRouter = observer((props) => {
         direction="row"
         justify="center"
         alignItems="center"
-        className={classes.component}
-      >
+        className={classes.component}>
         {loading ? null : (
           <Grid item xs={12} sm={6} md={6} className={classes.notFound}>
             <h1 className={classes.header1}>

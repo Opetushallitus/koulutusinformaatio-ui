@@ -4,7 +4,7 @@ import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
 import ExtensionOutlinedIcon from '@material-ui/icons/ExtensionOutlined';
 import TimelapseIcon from '@material-ui/icons/Timelapse';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core';
 import { Localizer as l } from '../../tools/Utils';
 
 const useStyles = makeStyles((theme) => ({

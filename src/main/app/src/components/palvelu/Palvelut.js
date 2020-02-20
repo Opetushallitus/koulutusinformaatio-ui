@@ -64,8 +64,7 @@ const Palvelut = observer(() => {
       className={clsx(
         classes.palvelut,
         matches ? classes.spaceOnBorders : classes.smSpaceOnBorders
-      )}
-    >
+      )}>
       <Grid container>
         <Rivi
           otsikko={t('palvelut.otsikko-muut-palvelut')}

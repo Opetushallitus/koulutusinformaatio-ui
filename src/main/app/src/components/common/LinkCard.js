@@ -44,15 +44,13 @@ const LinkCard = (props) => {
   return (
     <Paper
       className={classes.paper}
-      onClick={() => sivu && forwardToPage(sivu.id)}
-    >
+      onClick={() => sivu && forwardToPage(sivu.id)}>
       <Grid
         className={classes.grid}
         spacing={3}
         container
         justify="space-between"
-        alignItems="center"
-      >
+        alignItems="center">
         <Grid item xs={2}>
           {url ? (
             <Icon className={classes.icon}>

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Grid, Typography, Paper } from '@material-ui/core';
+import { Grid, Typography, Paper, makeStyles } from '@material-ui/core';
 import PublicIcon from '@material-ui/icons/Public';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
-import { makeStyles } from '@material-ui/styles';
 import { educationTypeColorCode } from '../../colors';
 import DiakoniaLogo from '../../assets/images/suomen_diakonia_opisto_logo.png';
 

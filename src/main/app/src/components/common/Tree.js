@@ -33,8 +33,7 @@ const Tree = ({ id, title, cardsLeft, cardsRight }) => {
         alignItems="center"
         justify="center"
         className={classes.treeContainer}
-        spacing={10}
-      >
+        spacing={10}>
         <Grid item xs={12} lg={4}>
           <LinkCardGrid id={`${id}-left`} cards={cardsLeft} />
         </Grid>

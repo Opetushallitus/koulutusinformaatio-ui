@@ -33,8 +33,7 @@ const TableOfContents = (props) => {
         to={`#${anchor}`}
         scroll={(el) =>
           el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        }
-      >
+        }>
         {value}
       </Link>
     );
@@ -81,8 +80,7 @@ const TableOfContents = (props) => {
             component: Null,
           },
         },
-      }}
-    >
+      }}>
       {content}
     </Markdown>
   );

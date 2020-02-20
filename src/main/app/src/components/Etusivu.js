@@ -75,8 +75,7 @@ const Etusivu = observer(({ history }) => {
                 <Paper
                   className={classes.info}
                   elevation={0}
-                  onClick={() => forwardToPage(info.linkki.id)}
-                >
+                  onClick={() => forwardToPage(info.linkki.id)}>
                   <span className="notification-content">
                     <Markdown>{info.content}</Markdown>
                   </span>
@@ -113,8 +112,7 @@ const Etusivu = observer(({ history }) => {
                 className={classes.showMore}
                 variant="contained"
                 onClick={(e) => setShowMore(false)}
-                color="primary"
-              >
+                color="primary">
                 {t('näytä-kaikki')}
               </Button>
             ) : null}

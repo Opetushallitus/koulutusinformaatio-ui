@@ -57,8 +57,7 @@ const Jumpotron = () => {
           container
           direction="row"
           justify="flex-start"
-          alignItems="center"
-        >
+          alignItems="center">
           <Grid item xs={12} sm={12} md={10} lg={8}>
             <ReactiveBorder>
               <Card className={classes.jumpotron}>
