@@ -7,6 +7,7 @@ import App from './App';
 import { MuiThemeProvider } from '@material-ui/core';
 import i18n from 'i18next';
 import 'typeface-open-sans';
+import superagent from 'superagent';
 
 if ('serviceWorker' in navigator) {
   if (!window.Cypress) {
@@ -25,6 +26,17 @@ if ('serviceWorker' in navigator) {
     console.log('Not registering service worker');
   }
 }
+
+window.onerror = (errorMsg, url, line, col, errorObj) => {
+  superagent.post('/konfo-backend/client-error').send({
+    'error-message': errorMsg,
+    url: url,
+    line: line,
+    col: col,
+    'user-agent': window.navigator.userAgent,
+    stack: '' + errorObj,
+  });
+};
 
 i18n.init({
   react: {
