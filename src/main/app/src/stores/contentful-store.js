@@ -68,7 +68,7 @@ class ContentfulStore {
       if (value.slug) {
         res[value.slug] = value;
       }
-      if (value.sivu && value.sivu.id) {
+      if (value.sivu?.id) {
         res[value.sivu.id] = value;
       }
       return res;
