@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import Murupolku from './common/Murupolku';
 import parse from 'url-parse';
@@ -6,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { useStores } from '../hooks';
 import {
   Button,
-  Link,
   Grid,
   Card,
   CardContent,
@@ -175,7 +175,7 @@ const Sisaltohaku = observer((props) => {
                 </span>
               </Grid>
               <Grid item xs={12}>
-                <Link href={'/'}>{t('sisaltohaku.takaisin')}</Link>
+                <Link to={'/'}>{t('sisaltohaku.takaisin')}</Link>
               </Grid>
             </React.Fragment>
           )
@@ -183,14 +183,14 @@ const Sisaltohaku = observer((props) => {
           state.results.map(({ id }) => {
             const s = sivu[id];
             const u = uutinen[id];
-            const image = u?.image;
+            const image = u?.image || {};
             return (
               <Grid item xs={12} key={id}>
                 <TulosPanel>
                   <ButtonBase
                     component={Link}
                     className={classes.root}
-                    href={`/konfo${forwardTo(s.id)}`}>
+                    to={`${forwardTo(s.id)}`}>
                     <CardContent className={classes.content}>
                       <Typography component="h4" variant="h4">
                         {s.name}
