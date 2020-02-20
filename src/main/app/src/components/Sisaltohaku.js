@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import Murupolku from './common/Murupolku';
 import parse from 'url-parse';
 import { useTranslation } from 'react-i18next';
+import MuiFlatPagination from 'material-ui-flat-pagination';
 import { useStores } from '../hooks';
 import {
   Button,
@@ -40,23 +41,6 @@ const useStyles = makeStyles({
     paddingLeft: '20px',
     backgroundColor: colors.white,
   },
-  root: {
-    padding: '15px',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
-  content: {
-    flex: '0 1 auto',
-    alignSelf: 'flex-start',
-  },
-  image: {
-    flex: '0 0 auto',
-    marginLeft: 'auto',
-    width: 228,
-    minWidth: 228,
-    height: 131,
-  },
   input: {
     borderRadius: 0,
     flex: 1,
@@ -80,7 +64,58 @@ const TulosPanel = withStyles({
   },
 })(Card);
 
+const Result = withStyles({
+  root: {
+    padding: '15px',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  image: {
+    flex: '0 0 auto',
+    marginLeft: 'auto',
+    width: 228,
+    minWidth: 228,
+    height: 131,
+  },
+  content: {
+    flex: '0 1 auto',
+    alignSelf: 'flex-start',
+  },
+})(({ id, url, image, sivu, classes, assetUrl }) => {
+  const { t } = useTranslation();
+
+  return (
+    <Grid item xs={12} key={id}>
+      <TulosPanel>
+        <ButtonBase component={Link} className={classes.root} to={url}>
+          <CardContent className={classes.content}>
+            <Typography component="h4" variant="h4">
+              {sivu.name}
+            </Typography>
+            <br />
+            <Typography variant="subtitle1" color="textSecondary">
+              {sivu.description || <Preview markdown={sivu.content} />}
+            </Typography>
+          </CardContent>
+          <CardMedia
+            className={classes.image}
+            image={assetUrl || koulutusPlaceholderImg}
+            title={
+              image.description || image.name || t('sisaltohaku.paikanpitäjä')
+            }
+            aria-label={
+              image.description || image.name || t('sisaltohaku.paikanpitäjä')
+            }
+          />
+        </ButtonBase>
+      </TulosPanel>
+    </Grid>
+  );
+});
+
 const Sisaltohaku = observer((props) => {
+  const pageSize = 50;
   const asKeywords = (s) => s.toLowerCase().split(/[ ,]+/);
   const { contentfulStore } = useStores();
   const { sivu, uutinen } = contentfulStore.data;
@@ -110,19 +145,31 @@ const Sisaltohaku = observer((props) => {
     (parse(props.location.search, true).query || {}).hakusana
   );
   const [state, setState] = useState({
+    currentOffset: undefined,
     search: hakusana,
     results: fetchResults(hakusana),
   });
   const doSearch = (event) => {
     props.history.push('/sisaltohaku/?hakusana=' + _.trim(state.search));
     event && event.preventDefault();
-    setState({ ...state, results: fetchResults(state.search) });
+    setState({
+      ...state,
+      results: fetchResults(state.search),
+      currentOffset: undefined,
+    });
   };
   const activeSearch = hakusana !== '';
   useEffect(() => {
     doSearch(null);
   }, [contentfulStore.data.loading]); /* eslint-disable-line */
 
+  const pagination = (state.results || []).length > pageSize;
+  const paginate = () => {
+    const offset = state.currentOffset || 0;
+    return pagination
+      ? state.results.slice(offset, pageSize + offset)
+      : state.results;
+  };
   return (
     <ReactiveBorder>
       <Grid
@@ -180,48 +227,33 @@ const Sisaltohaku = observer((props) => {
             </React.Fragment>
           )
         ) : (
-          state.results.map(({ id }) => {
-            const s = sivu[id];
-            const u = uutinen[id];
-            const image = u?.image || {};
-            return (
-              <Grid item xs={12} key={id}>
-                <TulosPanel>
-                  <ButtonBase
-                    component={Link}
-                    className={classes.root}
-                    to={`${forwardTo(s.id)}`}>
-                    <CardContent className={classes.content}>
-                      <Typography component="h4" variant="h4">
-                        {s.name}
-                      </Typography>
-                      <br />
-                      <Typography variant="subtitle1" color="textSecondary">
-                        {s.description || <Preview markdown={s.content} />}
-                      </Typography>
-                    </CardContent>
-                    <CardMedia
-                      className={classes.image}
-                      image={
-                        contentfulStore.assetUrl(image.url) ||
-                        koulutusPlaceholderImg
-                      }
-                      title={
-                        image.description ||
-                        image.name ||
-                        t('sisaltohaku.paikanpitäjä')
-                      }
-                      aria-label={
-                        image.description ||
-                        image.name ||
-                        t('sisaltohaku.paikanpitäjä')
-                      }
-                    />
-                  </ButtonBase>
-                </TulosPanel>
-              </Grid>
-            );
-          })
+          <>
+            {paginate().map(({ id }) => {
+              const s = sivu[id];
+              const u = uutinen[id];
+              const image = u?.image || {};
+              return (
+                <Result
+                  id={id}
+                  key={id}
+                  url={forwardTo(s.id)}
+                  sivu={s}
+                  assetUrl={contentfulStore.assetUrl(image.url)}
+                  image={image}
+                />
+              );
+            })}
+            {pagination ? (
+              <MuiFlatPagination
+                limit={pageSize}
+                offset={state.currentOffset}
+                total={state.results.length}
+                onClick={(e, offset, page) =>
+                  setState({ ...state, currentOffset: offset })
+                }
+              />
+            ) : null}
+          </>
         )}
       </Grid>
     </ReactiveBorder>
