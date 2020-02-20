@@ -10,6 +10,7 @@ import {
   Paper,
   Typography,
   useMediaQuery,
+  useTheme,
 } from '@material-ui/core';
 import { SchoolOutlined, TimelapseOutlined } from '@material-ui/icons';
 import koulutusPlaceholderImg from '../../../assets/images/Opolkuhts.png';
@@ -17,7 +18,7 @@ import { MUI_BREAKPOINTS } from '../../../constants';
 import { educationTypeColorCode } from '../../../colors';
 
 const useStyles = makeStyles((theme) => ({
-  hakuTulosKorttiPaperRoot: {
+  paperRoot: {
     width: '100%',
     marginBottom: theme.spacing(1.5),
     boxShadow: '0 0 8px 0 rgba(0,0,0,0.2)',
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(2),
     },
   },
-  koulutusKorttiAvatar: {
+  avatarRoot: {
     borderRadius: 0,
     [theme.breakpoints.up('md')]: {
       width: '80%',
@@ -37,10 +38,7 @@ const useStyles = makeStyles((theme) => ({
       height: '100%',
     },
   },
-  koulutusKorttiLeftMargin: {
-    marginLeft: theme.spacing(1),
-  },
-  koulutusKorttiImg: {
+  avatarImg: {
     margin: 'auto',
     display: 'block',
     maxWidth: '100%',
@@ -63,18 +61,19 @@ const KoulutusKortti = (props) => {
     tutkintonimikkeet,
   } = props;
   const { t, i18n } = useTranslation();
+  const theme = useTheme();
   const classes = useStyles();
   const muiScreenSizeMinSm = useMediaQuery(MUI_BREAKPOINTS.MIN_SM);
   const tutkintonimikkeetStr = tutkintonimikkeet
     .reduce((acc, current) => {
-      return acc + current.nimi.fi + ', ';
+      return acc + current.nimi?.[i18n.language] + ', ';
     }, '')
     .replace(/,\s*$/, '');
   const opintojenlaajuusStr = opintojenlaajuus?.nimi?.[i18n.language];
   const opintojenlaajuusyksikkoStr =
     opintojenlaajuusyksikko?.nimi?.[i18n.language];
   const kuvausStr = (kuvaus) => {
-    const kuvausStr = kuvaus && kuvaus.fi;
+    const kuvausStr = kuvaus && kuvaus?.[i18n.language];
 
     if (!kuvausStr) {
       return t('haku.ei_kuvausta');
@@ -89,7 +88,7 @@ const KoulutusKortti = (props) => {
   return (
     <Link underline="none" component={RouterLink} to={props.link}>
       <Paper
-        classes={{ root: classes.hakuTulosKorttiPaperRoot }}
+        classes={{ root: classes.paperRoot }}
         style={{
           borderTop: `5px solid ${educationTypeColorCode[koulutustyyppi] ||
             educationTypeColorCode.muu}`,
@@ -136,7 +135,7 @@ const KoulutusKortti = (props) => {
                     justify="flex-end"
                     style={{ paddingRight: 0 }}>
                     <Avatar
-                      classes={{ root: classes.koulutusKorttiAvatar }}
+                      classes={{ root: classes.avatarRoot }}
                       src={teemakuva || koulutusPlaceholderImg}
                       alt="haku koulutukseen"
                     />
@@ -155,7 +154,7 @@ const KoulutusKortti = (props) => {
                   <SchoolOutlined />
                 </Grid>
                 <Grid item xs={11}>
-                  <Typography className={classes.koulutusKorttiLeftMargin}>
+                  <Typography style={{ marginLeft: theme.spacing(1) }}>
                     {tutkintonimikkeetStr
                       ? tutkintonimikkeetStr
                       : t('haku.ei-tutkintonimiketta')}
@@ -167,7 +166,7 @@ const KoulutusKortti = (props) => {
                   <TimelapseOutlined />
                 </Grid>
                 <Grid item xs={11}>
-                  <Typography className={classes.koulutusKorttiLeftMargin}>
+                  <Typography style={{ marginLeft: theme.spacing(1) }}>
                     {opintojenlaajuusStr && opintojenlaajuusyksikkoStr
                       ? `${opintojenlaajuusStr} ${opintojenlaajuusyksikkoStr}`
                       : t('haku.ei-opintojenlaajuutta')}
@@ -185,8 +184,8 @@ const KoulutusKortti = (props) => {
               alignContent="center">
               <Avatar
                 classes={{
-                  root: classes.koulutusKorttiAvatar,
-                  img: classes.koulutusKorttiImg,
+                  root: classes.avatarRoot,
+                  img: classes.avatarImg,
                 }}
                 src={teemakuva || koulutusPlaceholderImg}
                 alt="haku koulutukseen"

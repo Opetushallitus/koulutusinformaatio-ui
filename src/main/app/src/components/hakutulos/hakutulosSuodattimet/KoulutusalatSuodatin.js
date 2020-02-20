@@ -15,7 +15,6 @@ import qs from 'query-string';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useStores } from '../../../hooks';
-import { toJS } from 'mobx';
 import {
   SuodatinExpansionPanel,
   SuodatinExpansionPanelSummary,
@@ -36,15 +35,15 @@ const KoulutusalatSuodatin = observer(({ history, location }) => {
   useEffect(() => {
     const koulutusalatJS =
       toggle === 'koulutus'
-        ? Object.entries(toJS(koulutusFilters.koulutusala))
-        : Object.entries(toJS(oppilaitosFilters.koulutusala));
+        ? Object.entries(koulutusFilters.koulutusala)
+        : Object.entries(oppilaitosFilters.koulutusala);
 
     koulutusalatJS.sort((a, b) =>
       a[1]?.nimi?.[i18n.language].localeCompare(b[1]?.nimi?.[i18n.language])
     );
 
     setKoulutusAlat(koulutusalatJS);
-    setValitutKoulutusAlat(toJS(hakuStore.filter.koulutusala));
+    setValitutKoulutusAlat(hakuStore.filter.koulutusala);
   }, [
     hakuStore.filter.koulutusala,
     i18n.language,
