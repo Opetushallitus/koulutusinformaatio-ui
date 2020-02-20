@@ -7,6 +7,7 @@ import { theme } from './theme';
 import App from './App';
 import { MuiThemeProvider } from '@material-ui/core';
 import i18n from 'i18next';
+import 'typeface-open-sans';
 
 if ('serviceWorker' in navigator) {
   if (!window.Cypress) {
