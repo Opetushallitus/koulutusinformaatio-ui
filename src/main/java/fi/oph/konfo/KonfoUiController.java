@@ -10,6 +10,7 @@ public class KonfoUiController {
             "/",
             "/haku",
             "/sivu/*",
+            "/sisaltohaku/*",
             "/omapolku/*",
             "/haku/*",
             "/koulutus",
