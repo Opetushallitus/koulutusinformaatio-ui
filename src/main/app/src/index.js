@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './assets/styles/styles.scss';
 import { BrowserRouter } from 'react-router-dom';
 import ScrollToTop from './ScrollToTop';
 import { theme } from './theme';
