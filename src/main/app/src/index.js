@@ -9,8 +9,21 @@ import { MuiThemeProvider } from '@material-ui/core';
 import i18n from 'i18next';
 
 if ('serviceWorker' in navigator) {
-  !window.Cypress &&
-    navigator.serviceWorker.register('./service-worker-custom.js');
+  if (!window.Cypress) {
+    console.log('Registering service worker');
+    navigator.serviceWorker
+      .register('./service-worker-custom.js', { scope: '/' })
+      .then(
+        function(registration) {
+          console.log('Service worker registration succeeded:', registration);
+        },
+        /*catch*/ function(error) {
+          console.log('Service worker registration failed:', error);
+        }
+      );
+  } else {
+    console.log('Not registering service worker');
+  }
 }
 
 i18n.init({
