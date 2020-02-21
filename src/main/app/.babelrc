@@ -1,3 +1,4 @@
 {
-  "plugins": ["@babel/plugin-proposal-optional-chaining"]
+  "plugins": ["@babel/plugin-proposal-optional-chaining", "lodash"],
+  "presets": [["@babel/env", { "targets": { "node": 6 } }]]
 }

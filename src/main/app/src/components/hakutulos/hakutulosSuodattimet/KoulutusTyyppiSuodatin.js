@@ -19,7 +19,7 @@ import {
   SuodatinExpansionPanelDetails,
   SuodatinCheckbox,
   SuodatinListItemText,
-} from './CutomizedMuiComponents';
+} from './CustomizedMuiComponents';
 
 const KoulutusTyyppiSuodatin = observer(({ history, location }) => {
   const { i18n, t } = useTranslation();

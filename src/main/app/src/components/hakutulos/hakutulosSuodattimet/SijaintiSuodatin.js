@@ -8,6 +8,7 @@ import {
   List,
   ListItem,
   ListItemIcon,
+  makeStyles,
   Typography,
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore, SearchOutlined } from '@material-ui/icons';
@@ -22,10 +23,17 @@ import {
   SuodatinExpansionPanelDetails,
   SuodatinCheckbox,
   SuodatinListItemText,
-} from './CutomizedMuiComponents';
+} from './CustomizedMuiComponents';
+
+const useStyles = makeStyles((theme) => ({
+  buttonLabel: {
+    fontSize: 14,
+  },
+}));
 
 const SijaintiSuodatin = observer(({ history, location }) => {
   const { i18n, t } = useTranslation();
+  const classes = useStyles();
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
   const { sijainti, selectedsijainnit } = filter;
@@ -332,7 +340,7 @@ const SijaintiSuodatin = observer(({ history, location }) => {
               <Button
                 color="secondary"
                 size="small"
-                style={{ fontSize: 14 }}
+                classes={{ label: classes.buttonLabel }}
                 endIcon={showRest ? <ExpandLess /> : <ExpandMore />}
                 fullWidth
                 onClick={() => handleShowRest()}>

@@ -18,7 +18,7 @@ import {
   SuodatinExpansionPanelDetails,
   SuodatinCheckbox,
   SuodatinListItemText,
-} from './CutomizedMuiComponents';
+} from './CustomizedMuiComponents';
 
 const OpetusKieliSuodatin = observer(({ history, location }) => {
   const { i18n, t } = useTranslation();

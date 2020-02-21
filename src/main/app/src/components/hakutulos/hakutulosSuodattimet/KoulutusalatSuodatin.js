@@ -8,6 +8,7 @@ import {
   List,
   ListItem,
   ListItemIcon,
+  makeStyles,
   Typography,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
@@ -21,10 +22,17 @@ import {
   SuodatinExpansionPanelDetails,
   SuodatinCheckbox,
   SuodatinListItemText,
-} from './CutomizedMuiComponents';
+} from './CustomizedMuiComponents';
+
+const useStyles = makeStyles((theme) => ({
+  buttonLabel: {
+    fontSize: 14,
+  },
+}));
 
 const KoulutusalatSuodatin = observer(({ history, location }) => {
   const { i18n, t } = useTranslation();
+  const classes = useStyles();
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle } = hakuStore;
 
@@ -90,7 +98,7 @@ const KoulutusalatSuodatin = observer(({ history, location }) => {
       <Button
         color="secondary"
         size="small"
-        style={{ fontSize: 14 }}
+        classes={{ label: classes.buttonLabel }}
         onClick={() => setExpandedKoulutusTaso1([])}>
         {t('haku.__kaikki_koulutusalat')}
       </Button>
