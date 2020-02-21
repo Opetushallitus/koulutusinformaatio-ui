@@ -71,7 +71,7 @@
     "prettier": "^1.19.1",
     "puppeteer": "^1.7.0",
     "react-app-rewired": "2.1.5",
-    "react-scripts": "3.2.0",
+    "react-scripts": "^3.4.0",
     "start-server-and-test": "^1.7.0"
   },
   "husky": {
