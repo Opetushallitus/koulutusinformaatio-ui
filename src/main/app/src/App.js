@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './assets/styles/styles.scss';
 import clsx from 'clsx';
 import { Switch, Route } from 'react-router-dom';
 import KonfoStore from './stores/konfo-store';

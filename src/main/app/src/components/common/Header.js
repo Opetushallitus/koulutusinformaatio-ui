@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import clsx from 'clsx';
 import { withTranslation } from 'react-i18next';
-import '../../assets/styles/components/_header.scss';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';

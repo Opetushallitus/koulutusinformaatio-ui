@@ -71,8 +71,7 @@ const Palvelu = observer(({ id, history }) => {
       <Card
         className={clsx(classes.card, classes[color])}
         key={palvelu.id}
-        onClick={forwardToPage}
-      >
+        onClick={forwardToPage}>
         <CardHeader
           avatar={
             <Avatar
@@ -97,8 +96,7 @@ const Palvelu = observer(({ id, history }) => {
                   component: Paragraph,
                 },
               },
-            }}
-          >
+            }}>
             {palvelu.content}
           </Markdown>
         </CardContent>

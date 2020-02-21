@@ -48,8 +48,7 @@ const SideMenu = (props) => {
           component="form"
           onSubmit={doSearch}
           className={classes.inputRoot}
-          elevation={0}
-        >
+          elevation={0}>
           <InputBase
             className={classes.input}
             value={search}
@@ -65,8 +64,7 @@ const SideMenu = (props) => {
             variant="contained"
             color="primary"
             className={classes.iconButton}
-            aria-label={t('sidebar.etsi-tietoa-opintopolusta')}
-          >
+            aria-label={t('sidebar.etsi-tietoa-opintopolusta')}>
             <SearchIcon />
           </Button>
         </Paper>
@@ -105,8 +103,7 @@ const SideMenu = (props) => {
           anchor="left"
           classes={{
             paper: classes.smDrawerPaper,
-          }}
-        >
+          }}>
           {innards}
         </Drawer>
       ) : (
@@ -117,8 +114,7 @@ const SideMenu = (props) => {
           anchor="left"
           classes={{
             paper: classes.drawerPaper,
-          }}
-        >
+          }}>
           {innards}
         </Drawer>
       )}

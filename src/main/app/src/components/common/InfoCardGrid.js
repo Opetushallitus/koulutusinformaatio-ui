@@ -1,8 +1,7 @@
 import React from 'react';
 import InfoCard from './InfoCard';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, makeStyles } from '@material-ui/core';
 import Spacer from './Spacer';
-import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
   grid: {
@@ -19,8 +18,7 @@ const InfoCardGrid = (props) => {
       className={classes.grid}
       container
       direction="column"
-      alignItems="center"
-    >
+      alignItems="center">
       <Grid item>
         <Typography variant="h2">{title}</Typography>
       </Grid>

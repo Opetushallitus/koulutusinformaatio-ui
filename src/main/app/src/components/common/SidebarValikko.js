@@ -9,7 +9,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { observer } from 'mobx-react';
 import { useStores } from '../../hooks';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -75,14 +75,12 @@ const SivuItem = (props) => {
     <ListItemLink
       role="none"
       onClick={() => onClick(id)}
-      className={classes.valikko}
-    >
+      className={classes.valikko}>
       <ListItemText
         role="menuitem"
         className={classes.valintaText}
         tabIndex="0"
-        aria-label={name}
-      >
+        aria-label={name}>
         {name}
       </ListItemText>
     </ListItemLink>
@@ -98,8 +96,7 @@ const OtsikkoItem = (props) => {
       variant="menu"
       typography="menu"
       tabIndex="0"
-      aria-label={name}
-    >
+      aria-label={name}>
       {name}
     </h2>
   );
@@ -111,14 +108,12 @@ const ValikkoItem = (props) => {
     <ListItemLink
       role="none"
       className={classes.valikko}
-      onClick={() => select(id)}
-    >
+      onClick={() => select(id)}>
       <ListItemText
         className={classes.valintaText}
         role="menuitem"
         tabIndex="0"
-        aria-label={name}
-      >
+        aria-label={name}>
         {name}
       </ListItemText>
       <ListItemIcon className={classes.valintaIconBase}>
@@ -145,8 +140,7 @@ const SidebarValikko = (props) => {
         <ListItemLink
           className={classes.parentOtsikko}
           role="none"
-          onClick={deselect}
-        >
+          onClick={deselect}>
           <ListItemIcon className={classes.parentOtsikkoIconBase}>
             <ChevronLeftIcon className={classes.parentOtsikkoIcon} />
           </ListItemIcon>

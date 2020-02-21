@@ -3,14 +3,9 @@ import Hakupalkki from './haku/Hakupalkki';
 import Haku from './haku/Haku';
 import SivuRouter from './sivu/SivuRouter';
 import Koulutus from './koulutus/Koulutus';
-import Oppilaitos from './oppilaitos/Oppilaitos';
-import Toteutus from './toteutus/Koulutus';
-import Vertailu from './vertailu/Vertailu';
-import Hakukohde from './hakukohde/Koulutus';
 import ReactiveBorder from './ReactiveBorder';
 import { Route } from 'react-router-dom';
 import AmmatillinenKoulutus from './AmmatillinenKoulutus';
-import '../assets/styles/components/_hakusivu.scss';
 
 class Hakusivu extends Component {
   constructor(props) {
@@ -41,15 +36,14 @@ class Hakusivu extends Component {
     let moveMainContent = this.state.isFilterDisplayed;
     return (
       <React.Fragment>
-        <div id="call-to-action-secondary">
+        <div style={{ margin: 'auto', paddingTop: '50px', maxWidth: '1600px' }}>
           <ReactiveBorder>
             <Hakupalkki isRajainVisible={this.moveMainContent} />
           </ReactiveBorder>
         </div>
         <main
           id="main-content"
-          className={moveMainContent ? 'move-right' : 'center-content'}
-        >
+          className={moveMainContent ? 'move-right' : 'center-content'}>
           {/*TODO: Remove below route, only used for testing purposes */}
           <Route
             exact
@@ -65,22 +59,6 @@ class Hakusivu extends Component {
           <Route
             path={'/koulutus/:oid'}
             render={(props) => <Koulutus {...props} />}
-          />
-          <Route
-            path={'/oppilaitos/:oid'}
-            render={(props) => <Oppilaitos {...props} />}
-          />
-          <Route
-            path={'/toteutus/:oid'}
-            render={(props) => <Toteutus {...props} />}
-          />
-          <Route
-            path={'/hakukohde/:oid'}
-            render={(props) => <Hakukohde {...props} />}
-          />
-          <Route
-            path={'/vertailu'}
-            render={(props) => <Vertailu {...props} />}
           />
           <Route path={'/sivu/:id'} render={(props) => <SivuRouter />} />
         </main>

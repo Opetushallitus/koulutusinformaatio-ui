@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import '../../assets/styles/components/_hakupalkki.scss';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import { Paper, makeStyles, ThemeProvider, Tooltip } from '@material-ui/core';

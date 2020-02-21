@@ -5,7 +5,7 @@ import { Typography, Box, Container } from '@material-ui/core';
 import { Localizer as l } from '../../tools/Utils';
 import { useTranslation } from 'react-i18next';
 import KoulutusInfoGrid from './KoulutusInfoGrid';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core';
 import TextBox from '../common/TextBox';
 import ToteutusList from './ToteutusList';
 import HakuKaynnissaCard from './HakuKaynnissaCard';

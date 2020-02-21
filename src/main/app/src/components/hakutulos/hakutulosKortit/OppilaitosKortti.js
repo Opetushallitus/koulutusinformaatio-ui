@@ -2,7 +2,6 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
-import '../../../assets/styles/components/_hakutulos-box.scss';
 import {
   Avatar,
   Hidden,

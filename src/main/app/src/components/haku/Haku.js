@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import parse from 'url-parse';
 import { observer, inject } from 'mobx-react';
 import Hakutulos from '../hakutulos/Hakutulos';
-import { matchPath } from 'react-router';
+import { matchPath } from 'react-router-dom';
 
 @inject('hakuStore')
 @inject('hakuehtoStore')
