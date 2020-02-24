@@ -23,6 +23,7 @@ import {
   SuodatinCheckbox,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
+import { toJS } from 'mobx';
 
 const useStyles = makeStyles((theme) => ({
   buttonLabel: {
@@ -46,11 +47,7 @@ const KoulutusalatSuodatin = observer(({ history, location }) => {
         ? Object.entries(koulutusFilters.koulutusala)
         : Object.entries(oppilaitosFilters.koulutusala);
 
-    koulutusalatJS.sort((a, b) =>
-      a[1]?.nimi?.[i18n.language].localeCompare(b[1]?.nimi?.[i18n.language])
-    );
-
-    setKoulutusAlat(koulutusalatJS);
+    setKoulutusAlat(_.orderBy(koulutusalatJS, [`[1]nimi.[${i18n.language}]`]));
     setValitutKoulutusAlat(hakuStore.filter.koulutusala);
   }, [
     hakuStore.filter.koulutusala,

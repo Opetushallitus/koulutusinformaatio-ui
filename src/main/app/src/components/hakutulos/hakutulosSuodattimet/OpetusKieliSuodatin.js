@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import qs from 'query-string';
+import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useStores } from '../../../hooks';
 import {
@@ -35,19 +36,17 @@ const OpetusKieliSuodatin = observer(({ history, location }) => {
         ? Object.entries(koulutusFilters.opetusKieli)
         : Object.entries(oppilaitosFilters.opetusKieli);
 
-    _opetusKielet.sort((a, b) =>
-      a[1].nimi?.[i18n.language] > b[1].nimi?.[i18n.language] ? 1 : -1
+    const orderedOpetusKielet = _.orderBy(
+      _opetusKielet,
+      ['[1].count', `[1].nimi.[${i18n.language}]`],
+      ['desc', 'asc']
     );
-    _opetusKielet.sort((a, b) => b[1].count - a[1].count);
-    const _muuKieliIndex = _opetusKielet.findIndex(
-      (el) => el[0] === 'oppilaitoksenopetuskieli_9'
+    const removedMuuKieli = _.remove(
+      orderedOpetusKielet,
+      (n) => n[0] === 'oppilaitoksenopetuskieli_9'
     );
 
-    if (_muuKieliIndex !== -1) {
-      _opetusKielet.push(_opetusKielet.splice(_muuKieliIndex, 1)[0]);
-    }
-
-    setOpetusKielet(_opetusKielet);
+    setOpetusKielet(_.concat(orderedOpetusKielet, removedMuuKieli));
     setCheckedOpetusKielet(opetuskieli);
   }, [
     i18n.language,

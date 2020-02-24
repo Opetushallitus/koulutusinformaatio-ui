@@ -14,6 +14,7 @@ import {
 import { ExpandLess, ExpandMore, SearchOutlined } from '@material-ui/icons';
 import Select, { components } from 'react-select';
 import qs from 'query-string';
+import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { colors } from '../../../colors';
 import { useStores } from '../../../hooks';
@@ -55,23 +56,21 @@ const SijaintiSuodatin = observer(({ history, location }) => {
         ? Object.entries(koulutusFilters.kunta)
         : Object.entries(oppilaitosFilters.kunta);
 
-    maaKunnatJS.sort((a, b) =>
-      a[1].nimi?.[i18n.language] > b[1].nimi?.[i18n.language] ? 1 : -1
+    let orderedMaakunnat = _.orderBy(
+      maaKunnatJS,
+      ['[1].count', `[1].nimi.[${i18n.language}]`],
+      ['desc', 'asc']
     );
-    maaKunnatJS.sort((a, b) => b[1].count - a[1].count);
-    const unknownMaakuntaIndex = maaKunnatJS.findIndex(
-      (el) => el[0] === 'maakunta_99'
+    const removedEiTiedossaMaakunta = _.remove(
+      orderedMaakunnat,
+      (n) => n[0] === 'maakunta_99'
     );
-    if (
-      unknownMaakuntaIndex !== -1 &&
-      maaKunnatJS[unknownMaakuntaIndex]?.[1]?.count === 0
-    ) {
-      maaKunnatJS.push(maaKunnatJS.splice(unknownMaakuntaIndex, 1)[0]);
-    }
-    const filteredKunnat = kunnatJS.filter((kunta) => kunta[1].count > 0);
-    const filteredMaaKunnat = maaKunnatJS.filter(
+    orderedMaakunnat = _.concat(orderedMaakunnat, removedEiTiedossaMaakunta);
+    const filteredMaaKunnat = orderedMaakunnat.filter(
       (maakunta) => maakunta[1].count > 0
     );
+    const filteredKunnat = kunnatJS.filter((kunta) => kunta[1].count > 0);
+
     const selectKunnat = filteredKunnat.reduce(
       (kuntaAccum, kunta, kuntaIndex) => {
         return [
@@ -104,9 +103,8 @@ const SijaintiSuodatin = observer(({ history, location }) => {
       },
       selectKunnat
     );
-    const copyMaakunnatJS = [...maaKunnatJS];
-    setfirstFiveMaakunnat(copyMaakunnatJS.splice(0, 5));
-    setRestMaakunnat(copyMaakunnatJS);
+    setfirstFiveMaakunnat(_.slice(orderedMaakunnat, 0, 5));
+    setRestMaakunnat(_.slice(orderedMaakunnat, 5, orderedMaakunnat.length));
     setSelectedSijainnit(selectedsijainnit);
     setSearchHitsSijainnit(_searchHitsSijainnit);
     setCheckedMaakunnat(sijainti);
