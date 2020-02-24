@@ -23,7 +23,6 @@ import {
   SuodatinCheckbox,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
-import { toJS } from 'mobx';
 
 const useStyles = makeStyles((theme) => ({
   buttonLabel: {
