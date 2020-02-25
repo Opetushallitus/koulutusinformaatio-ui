@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { CssBaseline, makeStyles } from '@material-ui/core';
 import MuiFlatPagination from 'material-ui-flat-pagination';
 import qs from 'query-string';
@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Pagination = observer(({ history }) => {
+const Pagination = observer(() => {
+  const history = useHistory();
   const classes = useStyles();
   const { hakuStore } = useStores();
 
@@ -73,4 +74,4 @@ const Pagination = observer(({ history }) => {
   );
 });
 
-export default withRouter(Pagination);
+export default Pagination;
