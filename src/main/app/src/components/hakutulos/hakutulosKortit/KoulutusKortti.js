@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter, Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   Avatar,
@@ -198,4 +198,4 @@ const KoulutusKortti = (props) => {
   );
 };
 
-export default withRouter(KoulutusKortti);
+export default KoulutusKortti;

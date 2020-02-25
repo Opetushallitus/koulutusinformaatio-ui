@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   Button,
   Grid,
@@ -32,7 +31,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SijaintiSuodatin = observer(({ history, location }) => {
+const SijaintiSuodatin = observer(() => {
+  const history = useHistory();
+  const location = useLocation();
   const { i18n, t } = useTranslation();
   const classes = useStyles();
   const { hakuStore } = useStores();
@@ -352,4 +353,4 @@ const SijaintiSuodatin = observer(({ history, location }) => {
   );
 });
 
-export default withRouter(SijaintiSuodatin);
+export default SijaintiSuodatin;

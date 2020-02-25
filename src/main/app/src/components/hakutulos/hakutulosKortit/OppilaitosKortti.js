@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   Avatar,
@@ -192,4 +191,4 @@ const OppilaitosKortti = ({ nimi, oppilaitos }) => {
   );
 };
 
-export default withRouter(OppilaitosKortti);
+export default OppilaitosKortti;

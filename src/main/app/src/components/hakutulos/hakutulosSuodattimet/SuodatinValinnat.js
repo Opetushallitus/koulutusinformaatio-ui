@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Button, Chip, Grid, makeStyles } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
 import qs from 'query-string';
@@ -38,7 +38,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SuodatinValinnat = observer(({ history, location }) => {
+const SuodatinValinnat = observer(() => {
+  const history = useHistory();
+  const location = useLocation();
   const { i18n, t } = useTranslation();
   const classes = useStyles();
   const { hakuStore } = useStores();
@@ -129,4 +131,4 @@ const SuodatinValinnat = observer(({ history, location }) => {
   );
 });
 
-export default withRouter(SuodatinValinnat);
+export default SuodatinValinnat;

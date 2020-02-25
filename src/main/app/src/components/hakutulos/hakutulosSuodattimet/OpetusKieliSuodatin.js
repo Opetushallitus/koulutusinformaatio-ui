@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   Grid,
   List,
@@ -21,7 +21,9 @@ import {
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 
-const OpetusKieliSuodatin = observer(({ history, location }) => {
+const OpetusKieliSuodatin = observer(() => {
+  const history = useHistory();
+  const location = useLocation();
   const { i18n, t } = useTranslation();
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
@@ -133,4 +135,4 @@ const OpetusKieliSuodatin = observer(({ history, location }) => {
   );
 });
 
-export default withRouter(OpetusKieliSuodatin);
+export default OpetusKieliSuodatin;

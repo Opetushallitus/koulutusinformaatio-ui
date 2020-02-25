@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   Button,
   Divider,
@@ -30,7 +30,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const KoulutusalatSuodatin = observer(({ history, location }) => {
+const KoulutusalatSuodatin = observer(() => {
+  const history = useHistory();
+  const location = useLocation();
   const { i18n, t } = useTranslation();
   const classes = useStyles();
   const { hakuStore } = useStores();
@@ -233,4 +235,4 @@ const KoulutusalatSuodatin = observer(({ history, location }) => {
   );
 });
 
-export default withRouter(KoulutusalatSuodatin);
+export default KoulutusalatSuodatin;

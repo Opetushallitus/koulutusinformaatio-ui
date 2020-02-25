@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Tabs, Tab, makeStyles, useMediaQuery } from '@material-ui/core';
 import { SchoolOutlined, HomeWorkOutlined } from '@material-ui/icons';
 import qs from 'query-string';
@@ -34,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HakutulosToggle = observer(({ history }) => {
+const HakutulosToggle = observer(() => {
+  const history = useHistory();
   const { t } = useTranslation();
   const classes = useStyles();
   const { hakuStore } = useStores();
@@ -87,4 +88,4 @@ const HakutulosToggle = observer(({ history }) => {
   );
 });
 
-export default withRouter(HakutulosToggle);
+export default HakutulosToggle;
