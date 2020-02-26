@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import { Paper, makeStyles, ThemeProvider, Tooltip } from '@material-ui/core';
@@ -44,7 +44,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Hakupalkki = observer(({ history }) => {
+const Hakupalkki = observer(() => {
+  const history = useHistory();
   const { t } = useTranslation();
   const classes = useStyles();
   const { hakuehtoStore } = useStores();
@@ -100,4 +101,4 @@ const Hakupalkki = observer(({ history }) => {
   );
 });
 
-export default withRouter(Hakupalkki);
+export default Hakupalkki;
