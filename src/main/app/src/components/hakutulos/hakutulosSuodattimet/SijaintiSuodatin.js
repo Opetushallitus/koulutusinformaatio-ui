@@ -1,33 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   Button,
-  Checkbox,
   Grid,
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
+  makeStyles,
   Typography,
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore, SearchOutlined } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
 import Select, { components } from 'react-select';
 import qs from 'query-string';
-import { withTranslation } from 'react-i18next';
-import { styles } from '../../../styles';
+import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { colors } from '../../../colors';
 import { useStores } from '../../../hooks';
 import {
   SuodatinExpansionPanel,
   SuodatinExpansionPanelSummary,
   SuodatinExpansionPanelDetails,
-} from './SuodatinExpansionPanel';
+  SuodatinCheckbox,
+  SuodatinListItemText,
+} from './CustomizedMuiComponents';
 
-const SijaintiSuodatin = observer((props) => {
-  const { classes, i18n, history, t } = props;
+const useStyles = makeStyles((theme) => ({
+  buttonLabel: {
+    fontSize: 14,
+  },
+}));
+
+const SijaintiSuodatin = observer(() => {
+  const history = useHistory();
+  const location = useLocation();
+  const { i18n, t } = useTranslation();
+  const classes = useStyles();
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
   const { sijainti, selectedsijainnit } = filter;
@@ -42,28 +50,28 @@ const SijaintiSuodatin = observer((props) => {
   useEffect(() => {
     const maaKunnatJS =
       toggle === 'koulutus'
-        ? Object.entries(toJS(koulutusFilters.maakunta))
-        : Object.entries(toJS(oppilaitosFilters.maakunta));
+        ? Object.entries(koulutusFilters.maakunta)
+        : Object.entries(oppilaitosFilters.maakunta);
     const kunnatJS =
       toggle === 'koulutus'
-        ? Object.entries(toJS(koulutusFilters.kunta))
-        : Object.entries(toJS(oppilaitosFilters.kunta));
+        ? Object.entries(koulutusFilters.kunta)
+        : Object.entries(oppilaitosFilters.kunta);
 
-    maaKunnatJS.sort((a, b) => (a[1].nimi.fi > b[1].nimi.fi ? 1 : -1));
-    maaKunnatJS.sort((a, b) => b[1].count - a[1].count);
-    const unknownMaakuntaIndex = maaKunnatJS.findIndex(
-      (el) => el[0] === 'maakunta_99'
+    let orderedMaakunnat = _.orderBy(
+      maaKunnatJS,
+      ['[1].count', `[1].nimi.[${i18n.language}]`],
+      ['desc', 'asc']
     );
-    if (
-      unknownMaakuntaIndex !== -1 &&
-      maaKunnatJS[unknownMaakuntaIndex]?.[1]?.count === 0
-    ) {
-      maaKunnatJS.push(maaKunnatJS.splice(unknownMaakuntaIndex, 1)[0]);
-    }
-    const filteredKunnat = kunnatJS.filter((kunta) => kunta[1].count > 0);
-    const filteredMaaKunnat = maaKunnatJS.filter(
+    const removedEiTiedossaMaakunta = _.remove(
+      orderedMaakunnat,
+      (n) => n[0] === 'maakunta_99'
+    );
+    orderedMaakunnat = _.concat(orderedMaakunnat, removedEiTiedossaMaakunta);
+    const filteredMaaKunnat = orderedMaakunnat.filter(
       (maakunta) => maakunta[1].count > 0
     );
+    const filteredKunnat = kunnatJS.filter((kunta) => kunta[1].count > 0);
+
     const selectKunnat = filteredKunnat.reduce(
       (kuntaAccum, kunta, kuntaIndex) => {
         return [
@@ -96,23 +104,21 @@ const SijaintiSuodatin = observer((props) => {
       },
       selectKunnat
     );
-    const copyMaakunnatJS = [...maaKunnatJS];
-    setfirstFiveMaakunnat(copyMaakunnatJS.splice(0, 5));
-    setRestMaakunnat(copyMaakunnatJS);
-    setSelectedSijainnit(toJS(selectedsijainnit));
+    setfirstFiveMaakunnat(_.slice(orderedMaakunnat, 0, 5));
+    setRestMaakunnat(_.slice(orderedMaakunnat, 5, orderedMaakunnat.length));
+    setSelectedSijainnit(selectedsijainnit);
     setSearchHitsSijainnit(_searchHitsSijainnit);
-    setCheckedMaakunnat(toJS(sijainti));
+    setCheckedMaakunnat(sijainti);
   }, [
-    props,
-    hakuStore,
+    i18n.language,
+    koulutusFilters.kunta,
+    koulutusFilters.maakunta,
+    location,
+    oppilaitosFilters.kunta,
+    oppilaitosFilters.maakunta,
+    selectedsijainnit,
     sijainti,
     toggle,
-    koulutusFilters.maakunta,
-    koulutusFilters.kunta,
-    oppilaitosFilters.maakunta,
-    oppilaitosFilters.kunta,
-    selectedsijainnit,
-    i18n.language,
   ]);
 
   const handleMaakuntaToggle = (maakuntaArr) => () => {
@@ -266,8 +272,7 @@ const SijaintiSuodatin = observer((props) => {
                     disabled={maakuntaArray[1].count === 0}
                     onClick={handleMaakuntaToggle(maakuntaArray)}>
                     <ListItemIcon>
-                      <Checkbox
-                        classes={{ root: classes.listItemCheckbox }}
+                      <SuodatinCheckbox
                         edge="start"
                         checked={
                           checkedMaakunnat.findIndex(
@@ -279,8 +284,7 @@ const SijaintiSuodatin = observer((props) => {
                         inputProps={{ 'aria-labelledby': labelId }}
                       />
                     </ListItemIcon>
-                    <ListItemText
-                      classes={{ primary: classes.hakuTulosListItemText }}
+                    <SuodatinListItemText
                       id={labelId}
                       primary={
                         <Grid container justify="space-between" wrap="nowrap">
@@ -289,7 +293,8 @@ const SijaintiSuodatin = observer((props) => {
                           </Grid>
                           <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
                         </Grid>
-                      }></ListItemText>
+                      }
+                    />
                   </ListItem>
                 );
               })}
@@ -305,8 +310,7 @@ const SijaintiSuodatin = observer((props) => {
                       disabled={maakuntaArray[1].count === 0}
                       onClick={handleMaakuntaToggle(maakuntaArray)}>
                       <ListItemIcon>
-                        <Checkbox
-                          classes={{ root: classes.listItemCheckbox }}
+                        <SuodatinCheckbox
                           edge="start"
                           checked={
                             checkedMaakunnat.findIndex(
@@ -318,8 +322,7 @@ const SijaintiSuodatin = observer((props) => {
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </ListItemIcon>
-                      <ListItemText
-                        classes={{ primary: classes.hakuTulosListItemText }}
+                      <SuodatinListItemText
                         id={labelId}
                         primary={
                           <Grid container justify="space-between" wrap="nowrap">
@@ -328,14 +331,15 @@ const SijaintiSuodatin = observer((props) => {
                             </Grid>
                             <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
                           </Grid>
-                        }></ListItemText>
+                        }
+                      />
                     </ListItem>
                   );
                 })}
               <Button
                 color="secondary"
                 size="small"
-                classes={{ label: classes.buttonSmallText }}
+                classes={{ label: classes.buttonLabel }}
                 endIcon={showRest ? <ExpandLess /> : <ExpandMore />}
                 fullWidth
                 onClick={() => handleShowRest()}>
@@ -349,8 +353,4 @@ const SijaintiSuodatin = observer((props) => {
   );
 });
 
-const SijaintiSuodatinWithStyles = withTranslation()(
-  withStyles(styles)(SijaintiSuodatin)
-);
-
-export default withRouter(SijaintiSuodatinWithStyles);
+export default SijaintiSuodatin;

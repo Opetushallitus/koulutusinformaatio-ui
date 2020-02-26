@@ -13,7 +13,7 @@ if ('serviceWorker' in navigator) {
   if (!window.Cypress) {
     console.log('Registering service worker');
     navigator.serviceWorker
-      .register('./service-worker-custom.js', { scope: '/' })
+      .register('./service-worker-custom.js', { scope: '/konfo/' })
       .then(
         function(registration) {
           console.log('Service worker registration succeeded:', registration);

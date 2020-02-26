@@ -1,18 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
-import { Tabs, Tab, useMediaQuery } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
+import { Tabs, Tab, makeStyles, useMediaQuery } from '@material-ui/core';
 import { SchoolOutlined, HomeWorkOutlined } from '@material-ui/icons';
 import qs from 'query-string';
 import _ from 'lodash';
-import { styles } from '../../styles';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useStores } from '../../hooks';
 import { MUI_BREAKPOINTS } from '../../constants';
 
-const HakutulosToggle = observer((props) => {
-  const { t, classes, history } = props;
+const useStyles = makeStyles((theme) => ({
+  tabIconMargin: {
+    marginBottom: '0 !important',
+    marginRight: theme.spacing(2),
+  },
+  tabWrapper: {
+    flexDirection: 'row',
+    textTransform: 'capitalize',
+    textAlign: 'left',
+  },
+  tabLabelIcon: {
+    minHeight: '50px',
+    paddingLeft: 0,
+    paddingRight: theme.spacing(3),
+  },
+  tabRoot: {
+    [theme.breakpoints.between('sm', 'md')]: {
+      fontSize: '0.9rem',
+    },
+    [theme.breakpoints.up('lg')]: {
+      fontSize: '1rem',
+    },
+  },
+}));
+
+const HakutulosToggle = observer(() => {
+  const history = useHistory();
+  const { t } = useTranslation();
+  const classes = useStyles();
   const { hakuStore } = useStores();
   const muiScreenSizeMinSm = useMediaQuery(MUI_BREAKPOINTS.MIN_SM);
 
@@ -40,21 +65,21 @@ const HakutulosToggle = observer((props) => {
       textColor="primary"
       onChange={handleSelectedTab}>
       <Tab
-        icon={<SchoolOutlined className={classes.hakuTulosTabIconMargin} />}
+        icon={<SchoolOutlined className={classes.tabIconMargin} />}
         classes={{
-          wrapper: classes.customWrapper,
-          labelIcon: classes.customLabelIcon,
-          root: classes.hakutulosToggleTabRoot,
+          wrapper: classes.tabWrapper,
+          labelIcon: classes.tabLabelIcon,
+          root: classes.tabRoot,
         }}
         label={`${t('haku.koulutukset')} (${
           _.isNil(hakuStore.koulutusTotal) ? ' ' : hakuStore.koulutusTotal
         })`}></Tab>
       <Tab
-        icon={<HomeWorkOutlined className={classes.hakuTulosTabIconMargin} />}
+        icon={<HomeWorkOutlined className={classes.tabIconMargin} />}
         classes={{
-          wrapper: classes.customWrapper,
-          labelIcon: classes.customLabelIcon,
-          root: classes.hakutulosToggleTabRoot,
+          wrapper: classes.tabWrapper,
+          labelIcon: classes.tabLabelIcon,
+          root: classes.tabRoot,
         }}
         label={`${t('haku.oppilaitokset')} (${
           _.isNil(hakuStore.oppilaitosTotal) ? '' : hakuStore.oppilaitosTotal
@@ -63,8 +88,4 @@ const HakutulosToggle = observer((props) => {
   );
 });
 
-const HakuTulosToggleWithStyles = withTranslation()(
-  withStyles(styles)(HakutulosToggle)
-);
-
-export default withTranslation()(withRouter(HakuTulosToggleWithStyles));
+export default HakutulosToggle;

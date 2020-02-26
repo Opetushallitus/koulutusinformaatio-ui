@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import qs from 'query-string';
-import { withTranslation } from 'react-i18next';
-import { withStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 import { ExpandMore, ExpandLess } from '@material-ui/icons';
 import {
   Box,
@@ -12,10 +10,12 @@ import {
   Hidden,
   Grid,
   Link,
+  makeStyles,
   MenuItem,
   Paper,
   Select,
   Typography,
+  useTheme,
 } from '@material-ui/core';
 import HakutulosToggle from './HakutulosToggle';
 import KoulutusalatSuodatin from './hakutulosSuodattimet/KoulutusalatSuodatin';
@@ -29,11 +29,54 @@ import SuodatinValinnat from './hakutulosSuodattimet/SuodatinValinnat';
 import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
 import { useStores } from '../../hooks';
 import Murupolku from '../common/Murupolku';
-import { styles } from '../../styles';
-import { theme } from '../../theme';
 
-const Hakutulos = observer((props) => {
-  const { t, classes, history } = props;
+const useStyles = makeStyles((theme) => ({
+  hakutulosSisalto: {
+    maxWidth: 1600,
+    margin: 'auto',
+  },
+  paperRoot: {
+    width: '100%',
+    boxShadow: 'none',
+    [theme.breakpoints.down('xl')]: {
+      padding: theme.spacing(1, 11),
+    },
+    [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(1, 1),
+    },
+  },
+  boxRoot: {
+    fontSize: 14,
+    whiteSpace: 'nowrap',
+    marginRight: theme.spacing(1),
+  },
+  select: {
+    '&:before': {
+      borderBottom: 'none',
+    },
+  },
+  selectIcon: {
+    fontSize: 20,
+  },
+  selectMenu: {
+    overflow: 'inherit',
+  },
+  menuItemRoot: {
+    paddingLeft: 12,
+  },
+  buttonRoot: {
+    marginLeft: theme.spacing(1),
+  },
+  buttonLabel: {
+    fontWeight: 600,
+    whiteSpace: 'nowrap',
+  },
+}));
+
+const Hakutulos = observer(({ history, location }) => {
+  const classes = useStyles();
+  const theme = useTheme();
+  const { t } = useTranslation();
   const { hakuStore, restStore } = useStores();
   const { filter, paging } = hakuStore;
   const {
@@ -49,18 +92,17 @@ const Hakutulos = observer((props) => {
 
   useEffect(() => {
     window.scroll(0, 170);
-    setSort(toJS(hakuStore.sort));
-    setPageSize(toJS(paging.pageSize));
+    setSort(hakuStore.sort);
+    setPageSize(paging.pageSize);
   }, [
-    props,
-    hakuStore.sort,
-    hakuStore.keyword,
+    location,
     hakuStore.state,
     restStore.restErrorsArrLength,
     hakuStore.paging,
     paging.pageSize,
     hakuStore.koulutusResult,
     hakuStore.oppilaitosResult,
+    hakuStore.sort,
   ]);
 
   const handleSortToggle = (sort) => {
@@ -91,8 +133,8 @@ const Hakutulos = observer((props) => {
   };
 
   const ResultList = (props) => {
-    const koulutusResult = toJS(hakuStore.koulutusResult);
-    const oppilaitosResult = toJS(hakuStore.oppilaitosResult);
+    const koulutusResult = hakuStore.koulutusResult;
+    const oppilaitosResult = hakuStore.oppilaitosResult;
 
     switch (props.hakuStoreState) {
       case 'pending':
@@ -145,7 +187,7 @@ const Hakutulos = observer((props) => {
                 link={link}
                 text1={r.kayntiosoite ? r.kayntiosoite : ''}
                 text2={r.postitoimipaikka ? r.postitoimipaikka : ''}
-                oppilaitos={toJS(r)}
+                oppilaitos={r}
               />
             );
           });
@@ -181,22 +223,20 @@ const Hakutulos = observer((props) => {
 
   return (
     <Grid className={classes.hakutulosSisalto} container>
-      <Paper
-        classes={{ root: classes.hakuTulosContentsPaper }}
-        id="hakutulos-content">
+      <Paper classes={{ root: classes.paperRoot }} id="hakutulos-content">
         <Grid
           container
           item
           xs={12}
           alignItems="center"
-          className={classes.hakuTulosNavText}>
+          style={{ margin: theme.spacing(5, 0, 7, 0) }}>
           <Murupolku path={[{ name: t('haku.otsikko') }]} />
         </Grid>
         <Grid
           container
           alignItems="flex-start"
           spacing={2}
-          classes={{ root: classes.hakuTulosHeaderGridRoot }}>
+          style={{ marginBottom: theme.spacing(2) }}>
           <Grid item lg={3} md={4} sm={12}>
             <Typography style={{ paddingTop: 10 }} variant="h5">
               {t('haku.rajaa-tuloksia')}
@@ -217,25 +257,23 @@ const Hakutulos = observer((props) => {
                 justify="flex-end"
                 style={{ paddingTop: 6 }}
                 alignItems="baseline">
-                <Box
-                  component="span"
-                  classes={{ root: classes.hakuTulosBoxRoot }}>
+                <Box component="span" classes={{ root: classes.boxRoot }}>
                   {t('haku.tulokset-per-sivu')}
                 </Box>
                 <Select
                   IconComponent={ExpandMore}
-                  className={classes.hakuTulosSelect}
+                  className={classes.select}
                   style={{ marginRight: 4 }}
                   classes={{
-                    icon: classes.hakuTulosSelectIcon,
-                    selectMenu: classes.hakuTulosSelectSelectMenu,
+                    icon: classes.selectIcon,
+                    selectMenu: classes.selectMenu,
                   }}
                   value={pageSize}
                   onChange={handlePageSizeChange}>
                   {hakuStore.pageSizeArray.map((size) => (
                     <MenuItem
                       key={size}
-                      classes={{ root: classes.hakuTulosMenuItemRoot }}
+                      classes={{ root: classes.menuItemRoot }}
                       value={size}>
                       {size}
                     </MenuItem>
@@ -244,8 +282,8 @@ const Hakutulos = observer((props) => {
                 <Button
                   endIcon={sort === 'asc' ? <ExpandMore /> : <ExpandLess />}
                   classes={{
-                    root: classes.hakuTulosSortBtnRoot,
-                    label: classes.hakuTulosSortBtnLabel,
+                    root: classes.buttonRoot,
+                    label: classes.buttonLabel,
                   }}
                   onClick={() => handleSortToggle(sort)}>
                   {sort === 'asc'
@@ -282,6 +320,4 @@ const Hakutulos = observer((props) => {
   );
 });
 
-const HakuTulosWithStyles = withTranslation()(withStyles(styles)(Hakutulos));
-
-export default HakuTulosWithStyles;
+export default Hakutulos;

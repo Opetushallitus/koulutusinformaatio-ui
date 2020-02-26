@@ -1,12 +1,20 @@
 import { withStyles } from '@material-ui/core/styles';
 import {
+  Checkbox,
   ExpansionPanel,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
+  ListItemText,
 } from '@material-ui/core';
 import { colors } from '../../../colors';
 
-const SuodatinExpansionPanel = withStyles({
+export const SuodatinCheckbox = withStyles({
+  root: {
+    padding: '0 9px 0 9px',
+  },
+})(Checkbox);
+
+export const SuodatinExpansionPanel = withStyles({
   root: {
     backgroundColor: colors.white,
     marginBottom: '16px',
@@ -21,7 +29,7 @@ const SuodatinExpansionPanel = withStyles({
   },
 })(ExpansionPanel);
 
-const SuodatinExpansionPanelSummary = withStyles({
+export const SuodatinExpansionPanelSummary = withStyles({
   root: {
     minHeight: '32px !important',
   },
@@ -30,14 +38,15 @@ const SuodatinExpansionPanelSummary = withStyles({
   },
 })(ExpansionPanelSummary);
 
-const SuodatinExpansionPanelDetails = withStyles({
+export const SuodatinExpansionPanelDetails = withStyles({
   root: {
     padding: '0 24px 16px 24px',
   },
 })(ExpansionPanelDetails);
 
-export {
-  SuodatinExpansionPanel,
-  SuodatinExpansionPanelSummary,
-  SuodatinExpansionPanelDetails,
-};
+export const SuodatinListItemText = withStyles({
+  primary: {
+    fontSize: 14,
+    color: colors.grey,
+  },
+})(ListItemText);
