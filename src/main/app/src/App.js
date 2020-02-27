@@ -12,15 +12,54 @@ import SideMenu from './components/common/SideMenu';
 import Sisaltohaku from './components/Sisaltohaku';
 import i18n from './tools/i18n';
 import { I18nextProvider } from 'react-i18next';
-import { withStyles } from '@material-ui/core';
-import { styles } from './styles';
+import { MuiThemeProvider, makeStyles } from '@material-ui/core';
+import { theme } from './theme';
+import { drawerWidth } from './constants';
 import Palvelut from './components/palvelu/Palvelut';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 
 const konfoStore = new KonfoStore();
 
-const App = (props) => {
-  const { classes } = props;
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+  },
+  content: {
+    flexGrow: 1,
+    padding: 0,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  },
+  smContent: {
+    flexGrow: 1,
+    padding: 0,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: '-100%',
+  },
+  smContentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  },
+}));
+
+const App = () => {
+  const classes = useStyles();
   const hakuStore = konfoStore.hakuStore;
   const hakuehtoStore = konfoStore.hakuehtoStore;
   const urlStore = konfoStore.urlStore;
@@ -60,31 +99,31 @@ const App = (props) => {
       vertailuStore={vertailuStore}
       contentfulStore={contentfulStore}>
       <I18nextProvider i18n={i18n} initialLanguage={'fi'}>
-        <React.Fragment>
-          <div className={classes.root}>
-            <Header toggleMenu={toggleMenu} isOpen={menuVisible} />
-            <SideMenu
-              small={matches}
-              menuVisible={menuVisible}
-              closeMenu={closeMenu}
-            />
-            <main
-              id="app-main-content"
-              className={clsx(matches ? classes.smContent : classes.content, {
-                [matches
-                  ? classes.smContentShift
-                  : classes.contentShift]: menuVisible,
-              })}>
-              {main}
-            </main>
-          </div>
-          <PalautePopup />
-        </React.Fragment>
+        <MuiThemeProvider theme={theme}>
+          <React.Fragment>
+            <div className={classes.root}>
+              <Header toggleMenu={toggleMenu} isOpen={menuVisible} />
+              <SideMenu
+                small={matches}
+                menuVisible={menuVisible}
+                closeMenu={closeMenu}
+              />
+              <main
+                id="app-main-content"
+                className={clsx(matches ? classes.smContent : classes.content, {
+                  [matches
+                    ? classes.smContentShift
+                    : classes.contentShift]: menuVisible,
+                })}>
+                {main}
+              </main>
+            </div>
+            <PalautePopup />
+          </React.Fragment>
+        </MuiThemeProvider>
       </I18nextProvider>
     </Provider>
   );
 };
 
-const AppWithStyles = withStyles(styles, { withTheme: true })(App);
-
-export default AppWithStyles;
+export default App;
