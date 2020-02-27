@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { useParams, Link as RouterLink } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { colors } from '../../colors';
 import { makeStyles } from '@material-ui/core';
@@ -35,10 +35,10 @@ const useStyles = makeStyles({
   },
 });
 
-const SivuRouter = observer((props) => {
+const SivuRouter = (props) => {
   const { t } = useTranslation();
   const { contentfulStore } = useStores();
-  const pageId = props.match.params.id;
+  const { id: pageId } = useParams();
   const classes = useStyles();
   const { sivu, sivuKooste, loading } = contentfulStore.data;
   if (sivu[pageId]) {
@@ -59,12 +59,14 @@ const SivuRouter = observer((props) => {
               {t('sisaltohaku.sivua-ei-löytynyt')}
             </h1>
             <p>{t('sisaltohaku.etsimääsi-ei-löydy')}</p>
-            <Link href={'/'}>{t('sisaltohaku.takaisin')}</Link>
+            <Link component={RouterLink} to={'/'}>
+              {t('sisaltohaku.takaisin')}
+            </Link>
           </Grid>
         )}
       </Grid>
     );
   }
-});
+};
 
-export default withRouter(SivuRouter);
+export default observer(SivuRouter);
