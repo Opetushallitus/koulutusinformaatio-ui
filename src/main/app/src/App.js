@@ -5,7 +5,6 @@ import KonfoStore from './stores/konfo-store';
 import { Provider } from 'mobx-react';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
-import Hakusivu from './components/Hakusivu';
 import Etusivu from './components/Etusivu';
 import PalautePopup from './components/palaute/PalautePopup';
 import SideMenu from './components/common/SideMenu';
@@ -17,6 +16,11 @@ import { theme } from './theme';
 import { drawerWidth } from './constants';
 import Palvelut from './components/palvelu/Palvelut';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
+import Haku from './components/haku/Haku';
+import Koulutus from './components/koulutus/Koulutus';
+import SivuRouter from './components/sivu/SivuRouter';
+import ReactiveBorder from './components/ReactiveBorder';
+import Hakupalkki from './components/haku/Hakupalkki';
 
 const konfoStore = new KonfoStore();
 
@@ -77,18 +81,39 @@ const App = () => {
   const closeMenu = () => {
     setMenuVisible(false);
   };
+  const KoulutusHakuBar = () => (
+    <div style={{ margin: 'auto', paddingTop: '50px', maxWidth: '1600px' }}>
+      <ReactiveBorder>
+        <Hakupalkki />
+      </ReactiveBorder>
+    </div>
+  );
   const main = (
     <React.Fragment>
       <Switch>
-        <Route exact path="/" component={Etusivu} />
-        <Route path="/sisaltohaku/" component={Sisaltohaku} />
-        <Route path="/" component={Hakusivu} />
+        <Route exact path="/">
+          <Etusivu />
+        </Route>
+        <Route path="/sisaltohaku/">
+          <Sisaltohaku />
+        </Route>
+        <Route path="/haku/:keyword?">
+          <KoulutusHakuBar />
+          <Haku />
+        </Route>
+        <Route path="/koulutus/:oid">
+          <KoulutusHakuBar />
+          <Koulutus />
+        </Route>
+        <Route path="/sivu/:id">
+          <KoulutusHakuBar />
+          <SivuRouter />
+        </Route>
       </Switch>
       <Palvelut />
       <Footer />
     </React.Fragment>
   );
-
   return (
     <Provider
       hakuStore={hakuStore}

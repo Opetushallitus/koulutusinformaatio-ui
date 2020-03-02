@@ -13,6 +13,7 @@ import { HashLink as Link } from 'react-router-hash-link';
 import { colors } from '../../colors';
 import DefaultHeroImage from '../../assets/images/herokuva_default.png';
 import Murupolku from '../common/Murupolku';
+import { useParams } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Koulutus = (props) => {
   const classes = useStyles();
-  const { oid } = props.match.params;
+  const { oid } = useParams();
   const { restStore, hakuStore } = useStores();
   const { t } = useTranslation();
   const [state, setState] = useState({

@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { Grid, Link, makeStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
@@ -49,7 +49,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Kortti = observer(({ id }) => {
+const Kortti = ({ id }) => {
   const classes = useStyles();
   const { contentfulStore } = useStores();
   const { asset, sivu } = contentfulStore.data;
@@ -81,8 +81,9 @@ const Kortti = observer(({ id }) => {
               <div className={classes.link} key={page.id}>
                 <Icon>chevron_right</Icon>
                 <Link
+                  component={RouterLink}
                   className={classes.linkElement}
-                  href={`/konfo${forwardTo(page.id)}`}
+                  to={forwardTo(page.id)}
                   data-cy="kortti-link">
                   {page.name}
                 </Link>
@@ -93,6 +94,6 @@ const Kortti = observer(({ id }) => {
       </Card>
     </Grid>
   );
-});
+};
 
-export default withRouter(Kortti);
+export default observer(Kortti);
