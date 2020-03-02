@@ -6,4 +6,4 @@ export const MUI_BREAKPOINTS = {
   MIN_XS_400: '(min-width:400px)',
 };
 
-export const drawerWidth = 330;
+export const DRAWER_WIDTH = 330;

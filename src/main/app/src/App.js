@@ -13,7 +13,7 @@ import i18n from './tools/i18n';
 import { I18nextProvider } from 'react-i18next';
 import { MuiThemeProvider, makeStyles } from '@material-ui/core';
 import { theme } from './theme';
-import { drawerWidth } from './constants';
+import { DRAWER_WIDTH } from './constants';
 import Palvelut from './components/palvelu/Palvelut';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import Haku from './components/haku/Haku';
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: -drawerWidth,
+    marginLeft: -DRAWER_WIDTH,
   },
   contentShift: {
     transition: theme.transitions.create('margin', {

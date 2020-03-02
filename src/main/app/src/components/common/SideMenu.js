@@ -14,15 +14,15 @@ import { observer } from 'mobx-react';
 import SidebarValikko from './SidebarValikko';
 import Murupolku from './Murupolku';
 import { colors } from '../../colors';
-import { drawerWidth } from '../../constants';
+import { DRAWER_WIDTH } from '../../constants';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
-    width: drawerWidth,
+    width: DRAWER_WIDTH,
     flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: DRAWER_WIDTH,
   },
   smDrawer: {
     width: '100%',
