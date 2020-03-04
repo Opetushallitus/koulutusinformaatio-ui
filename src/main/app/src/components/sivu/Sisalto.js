@@ -1,8 +1,6 @@
 import React from 'react';
 import { Accordion, Summary } from './Accordion';
 import Markdown from 'markdown-to-jsx';
-import Youtube from './Youtube';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { colors } from '../../colors';
 import {
   makeStyles,
@@ -15,6 +13,7 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { useStores } from '../../hooks';
+import LinkOrYoutube from './LinkOrYoutube';
 
 const useStyles = makeStyles({
   notFound: {
@@ -42,10 +41,6 @@ const useStyles = makeStyles({
   },
   card: {},
   imageContainer: {},
-  youtube: {
-    paddingTop: '0',
-    paddingBottom: '20px',
-  },
 });
 
 const Sisalto = ({ content, alwaysFullWidth, excludeMedia }) => {
@@ -90,22 +85,7 @@ const Sisalto = ({ content, alwaysFullWidth, excludeMedia }) => {
       </Link>
     ) : null;
   };
-  const LinkOrYoutube = ({ children, className, ...props }) => {
-    if (className === 'embedly-card') {
-      return (
-        <div className={classes.youtube}>
-          <Youtube {...props} />
-        </div>
-      );
-    } else {
-      return (
-        <Link target="_blank" rel="noopener" {...props}>
-          {children}
-          <OpenInNewIcon className={classes.icon} />
-        </Link>
-      );
-    }
-  };
+
   return (
     <Markdown
       options={{
