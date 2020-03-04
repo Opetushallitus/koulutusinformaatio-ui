@@ -9,13 +9,70 @@ import {
   Button,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import { styles } from '../../styles';
 import { useStores } from '../../hooks';
 import { observer } from 'mobx-react';
 import SidebarValikko from './SidebarValikko';
 import Murupolku from './Murupolku';
+import { colors } from '../../colors';
+import { DRAWER_WIDTH } from '../../constants';
 
-const useStyles = makeStyles(styles);
+const useStyles = makeStyles((theme) => ({
+  drawer: {
+    width: DRAWER_WIDTH,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: DRAWER_WIDTH,
+  },
+  smDrawer: {
+    width: '100%',
+    flexShrink: 0,
+  },
+  smDrawerPaper: {
+    width: '100%',
+  },
+  inputBackground: {
+    backgroundColor: colors.sideInputBackground,
+    paddingLeft: '20px',
+    paddingTop: '91px',
+    paddingBottom: '20px',
+  },
+  murupolku: {
+    paddingLeft: '20px',
+    paddingTop: '20px',
+    paddingBottom: '20px',
+  },
+  inputRoot: {
+    height: '38px',
+    display: 'flex',
+    alignItems: 'center',
+    boxSizing: 'border-box',
+    border: '1px solid #B2B2B2',
+    borderRadius: '2px',
+    width: 290,
+  },
+  input: {
+    borderRadius: 0,
+    marginLeft: theme.spacing(1),
+    flex: 1,
+  },
+  iconButton: {
+    minWidth: '40px',
+    maxWidth: '40px',
+    borderRadius: 0,
+  },
+  divider: {
+    height: 28,
+    margin: 4,
+  },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+  },
+}));
 
 const SideMenu = (props) => {
   const { small, menuVisible, closeMenu } = props;

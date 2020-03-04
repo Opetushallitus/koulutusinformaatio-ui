@@ -29,6 +29,7 @@ import SuodatinValinnat from './hakutulosSuodattimet/SuodatinValinnat';
 import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
 import { useStores } from '../../hooks';
 import Murupolku from '../common/Murupolku';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   hakutulosSisalto: {
@@ -73,7 +74,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Hakutulos = observer(({ history, location }) => {
+const Hakutulos = () => {
+  const history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
   const { t } = useTranslation();
@@ -87,29 +89,16 @@ const Hakutulos = observer(({ history, location }) => {
     selectedsijainnit,
   } = filter;
 
-  const [sort, setSort] = useState('');
   const [pageSize, setPageSize] = useState(0);
 
   useEffect(() => {
     window.scroll(0, 170);
-    setSort(hakuStore.sort);
     setPageSize(paging.pageSize);
-  }, [
-    location,
-    hakuStore.state,
-    restStore.restErrorsArrLength,
-    hakuStore.paging,
-    paging.pageSize,
-    hakuStore.koulutusResult,
-    hakuStore.oppilaitosResult,
-    hakuStore.sort,
-  ]);
+  }, [paging.pageSize]);
 
-  const handleSortToggle = (sort) => {
+  const handleSortToggle = () => {
     const search = qs.parse(history.location.search);
-    const newSort = sort === 'asc' ? 'desc' : 'asc';
-
-    setSort(newSort);
+    const newSort = hakuStore.sort === 'asc' ? 'desc' : 'asc';
     search.sort = newSort;
     hakuStore.toggleSort(newSort);
     history.replace({ search: qs.stringify(search) });
@@ -132,11 +121,11 @@ const Hakutulos = observer(({ history, location }) => {
     hakuStore.searchOppilaitokset();
   };
 
-  const ResultList = (props) => {
+  const ResultList = observer(() => {
     const koulutusResult = hakuStore.koulutusResult;
     const oppilaitosResult = hakuStore.oppilaitosResult;
 
-    switch (props.hakuStoreState) {
+    switch (hakuStore.state) {
       case 'pending':
         if (restStore.restErrorsArrLength > 0) {
           return <BackendErrorMessage />;
@@ -219,7 +208,7 @@ const Hakutulos = observer(({ history, location }) => {
       default:
         break;
     }
-  };
+  });
 
   return (
     <Grid className={classes.hakutulosSisalto} container>
@@ -280,13 +269,15 @@ const Hakutulos = observer(({ history, location }) => {
                   ))}
                 </Select>
                 <Button
-                  endIcon={sort === 'asc' ? <ExpandMore /> : <ExpandLess />}
+                  endIcon={
+                    hakuStore.sort === 'asc' ? <ExpandMore /> : <ExpandLess />
+                  }
                   classes={{
                     root: classes.buttonRoot,
                     label: classes.buttonLabel,
                   }}
-                  onClick={() => handleSortToggle(sort)}>
-                  {sort === 'asc'
+                  onClick={() => handleSortToggle(hakuStore.sort)}>
+                  {hakuStore.sort === 'asc'
                     ? t('haku.järjestänimi_a_ö')
                     : t('haku.järjestänimi_ö_a')}
                 </Button>
@@ -308,7 +299,7 @@ const Hakutulos = observer(({ history, location }) => {
                 koulutusala.length > 0 ||
                 selectedsijainnit.length > 0 ||
                 sijainti.length > 0) && <SuodatinValinnat />}
-              <ResultList hakuStoreState={hakuStore.state} />
+              <ResultList />
             </Grid>
             <Grid item style={{ margin: 'auto' }}>
               <Pagination />
@@ -318,6 +309,6 @@ const Hakutulos = observer(({ history, location }) => {
       </Paper>
     </Grid>
   );
-});
+};
 
-export default Hakutulos;
+export default observer(Hakutulos);

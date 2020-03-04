@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { makeStyles, Box } from '@material-ui/core';
+import { makeStyles, Box, Link } from '@material-ui/core';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
-import Link from '@material-ui/core/Link';
 import clsx from 'clsx';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
@@ -47,11 +46,7 @@ const useStyles = makeStyles((theme) => ({
 const Murupolku = ({ path }) => {
   const matches = useMediaQuery('(max-width: 900px)');
   const { t } = useTranslation();
-  const history = useHistory();
   const classes = useStyles();
-  const forwardToPage = (path) => {
-    history.push(path);
-  };
   const shownPath =
     matches && path.length !== 1
       ? path.length === 0
