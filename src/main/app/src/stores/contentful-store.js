@@ -18,9 +18,13 @@ class ContentfulStore {
     uutiset: {},
   };
 
-  forwardTo = (id) => {
+  forwardTo = (id, nullIfUnvailable) => {
     const sivu = this.data.sivu[id] || this.data.sivuKooste[id];
-    return sivu ? `/sivu/${sivu.slug || id}` : `/sivu/poistettu`;
+    return sivu
+      ? `/sivu/${sivu.slug || id}`
+      : nullIfUnvailable
+      ? null
+      : `/sivu/poistettu`;
   };
 
   murupolku = (pageId) => {
@@ -45,7 +49,7 @@ class ContentfulStore {
     const breadcrump = page ? findParent(pageId).concat([page]) : [];
     return breadcrump.map((b) => ({
       name: b.name,
-      link: this.forwardTo(b.id),
+      link: this.forwardTo(b.id, true),
     }));
   };
 
