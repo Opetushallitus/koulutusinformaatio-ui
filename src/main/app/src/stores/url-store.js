@@ -1,6 +1,6 @@
 import { observable, action, runInAction } from 'mobx';
 import { urls as ophUrls } from 'oph-urls-js';
-import { production, development } from '../oppija-urls.js';
+import { production, development } from '../urls/urls';
 import superagent from 'superagent';
 
 class UrlStore {
