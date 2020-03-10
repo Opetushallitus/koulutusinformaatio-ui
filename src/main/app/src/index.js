@@ -8,6 +8,10 @@ import { MuiThemeProvider } from '@material-ui/core';
 import i18n from 'i18next';
 import 'typeface-open-sans';
 import superagent from 'superagent';
+import configure from './urls/urlUtil';
+import rootReducer from './reducers';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
 
 if ('serviceWorker' in navigator) {
   if (!window.Cypress) {
@@ -44,15 +48,24 @@ i18n.init({
   },
   lng: 'fi',
 });
-
+configure();
+const store = configureStore({
+  reducer: rootReducer,
+});
+if (process.env.NODE_ENV !== 'production' && module.hot) {
+  module.hot.accept('./reducers', () => store.replaceReducer(rootReducer));
+}
 ReactDOM.render(
-  <BrowserRouter basename={'/konfo'}>
-    <MuiThemeProvider theme={theme}>
-      {/* TODO: ScrollToTop should be removed as currently you will 
+  <Provider store={store}>
+    <BrowserRouter basename={'/konfo'}>
+      <MuiThemeProvider theme={theme}>
+        {/* TODO: ScrollToTop should be removed as currently you will 
       always scroll to top when address changes and no scroll history is kept */}
-      <ScrollToTop />
-      <App />
-    </MuiThemeProvider>
-  </BrowserRouter>,
+        <ScrollToTop />
+        <App />
+      </MuiThemeProvider>
+    </BrowserRouter>
+    ,
+  </Provider>,
   document.getElementById('wrapper')
 );
