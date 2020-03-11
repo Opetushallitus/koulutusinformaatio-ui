@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import qs from 'query-string';
+import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useStores } from '../../../hooks';
 import {
@@ -19,16 +20,16 @@ import {
   SuodatinExpansionPanelDetails,
   SuodatinCheckbox,
   SuodatinListItemText,
+  SuodatinMobileChip,
 } from './CustomizedMuiComponents';
 
-const KoulutusTyyppiSuodatin = observer(() => {
+const KoulutusTyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
   const history = useHistory();
   const location = useLocation();
   const { i18n, t } = useTranslation();
   const { hakuStore } = useStores();
   const theme = useTheme();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
-  const { koulutustyyppi } = filter;
 
   const [koulutusTyypit, setKoulutusTyypit] = useState({});
   const [valitutKoulutusTyypit, setValitutKoulutusTyypit] = useState([]);
@@ -39,10 +40,10 @@ const KoulutusTyyppiSuodatin = observer(() => {
         ? koulutusFilters.koulutusTyyppi
         : oppilaitosFilters.koulutusTyyppi;
     setKoulutusTyypit(koulutusTyypitJS);
-    setValitutKoulutusTyypit(koulutustyyppi);
+    setValitutKoulutusTyypit(filter.koulutustyyppi);
   }, [
     koulutusFilters.koulutusTyyppi,
-    koulutustyyppi,
+    filter.koulutustyyppi,
     location,
     oppilaitosFilters.koulutusTyyppi,
     toggle,
@@ -78,10 +79,37 @@ const KoulutusTyyppiSuodatin = observer(() => {
     hakuStore.searchOppilaitokset();
   };
 
+  const SelectedKoulutustyypit = () => {
+    let selectedKoulutustyypitStr = _.map(
+      valitutKoulutusTyypit,
+      `name.${i18n.language}`
+    );
+    selectedKoulutustyypitStr = _.join(selectedKoulutustyypitStr, ', ');
+    if (_.inRange(_.size(selectedKoulutustyypitStr), 0, 16)) {
+      return selectedKoulutustyypitStr;
+    }
+    return <SuodatinMobileChip label={_.size(valitutKoulutusTyypit)} />;
+  };
+
   return (
-    <SuodatinExpansionPanel defaultExpanded={true}>
+    <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
       <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <Typography variant="subtitle1">{t('haku.koulutustyyppi')}</Typography>
+        <Grid
+          container
+          justify="space-between"
+          alignItems="center"
+          wrap="nowrap">
+          <Grid item>
+            <Typography variant="subtitle1">
+              {t('haku.koulutustyyppi')}
+            </Typography>
+          </Grid>
+          {displaySelected && (
+            <Grid item>
+              <SelectedKoulutustyypit />
+            </Grid>
+          )}
+        </Grid>
       </SuodatinExpansionPanelSummary>
       <SuodatinExpansionPanelDetails>
         <List style={{ width: '100%' }}>
@@ -170,6 +198,6 @@ const KoulutusTyyppiSuodatin = observer(() => {
       </SuodatinExpansionPanelDetails>
     </SuodatinExpansionPanel>
   );
-});
+};
 
-export default KoulutusTyyppiSuodatin;
+export default observer(KoulutusTyyppiSuodatin);

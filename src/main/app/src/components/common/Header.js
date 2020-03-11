@@ -16,9 +16,6 @@ import {
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
   inputRoot: {
     padding: '2px 4px',
     display: 'flex',

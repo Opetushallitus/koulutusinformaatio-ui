@@ -22,6 +22,7 @@ import {
   SuodatinExpansionPanelDetails,
   SuodatinCheckbox,
   SuodatinListItemText,
+  SuodatinMobileChip,
 } from './CustomizedMuiComponents';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const KoulutusalatSuodatin = observer(() => {
+const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
   const history = useHistory();
   const location = useLocation();
   const { i18n, t } = useTranslation();
@@ -192,10 +193,37 @@ const KoulutusalatSuodatin = observer(() => {
     </List>
   );
 
+  const SelectedKoulutusalat = () => {
+    let seletedKoulutusalatStr = _.map(
+      valitutKoulutusAlat,
+      `name.${i18n.language}`
+    );
+    seletedKoulutusalatStr = _.join(seletedKoulutusalatStr, ', ');
+    if (_.inRange(_.size(seletedKoulutusalatStr), 0, 20)) {
+      return seletedKoulutusalatStr;
+    }
+    return <SuodatinMobileChip label={_.size(valitutKoulutusAlat)} />;
+  };
+
   return (
-    <SuodatinExpansionPanel defaultExpanded={true}>
+    <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
       <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <Typography variant="subtitle1">{t('haku.koulutusalat')}</Typography>
+        <Grid
+          container
+          justify="space-between"
+          alignItems="baseline"
+          wrap="nowrap">
+          <Grid item>
+            <Typography variant="subtitle1">
+              {t('haku.koulutusalat')}
+            </Typography>
+          </Grid>
+          {displaySelected && (
+            <Grid item>
+              <SelectedKoulutusalat />
+            </Grid>
+          )}
+        </Grid>
       </SuodatinExpansionPanelSummary>
       <SuodatinExpansionPanelDetails>
         <List
@@ -233,6 +261,6 @@ const KoulutusalatSuodatin = observer(() => {
       </SuodatinExpansionPanelDetails>
     </SuodatinExpansionPanel>
   );
-});
+};
 
-export default KoulutusalatSuodatin;
+export default observer(KoulutusalatSuodatin);

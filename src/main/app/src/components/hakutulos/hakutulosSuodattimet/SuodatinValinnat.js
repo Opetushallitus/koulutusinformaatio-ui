@@ -10,30 +10,24 @@ import { toJS } from 'mobx';
 import _ from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
-  hakuTulosChipRoot: {
+  chipRoot: {
     marginBottom: 5,
     marginRight: 5,
     borderRadius: 5,
     backgroundColor: '#F7F7F7',
     border: 'none',
   },
-  hakuTulosChipLabel: {
+  chipLabel: {
     fontSize: 12,
     fontWeight: 600,
   },
-  suodatinValinnatGridRoot1: {
-    paddingBottom: 5,
-  },
-  suodatinValinnatGridRoot2: {
-    paddingTop: 5,
-  },
-  hakuTulosFiltersClearLabel: {
+  clearButtonLabel: {
     fontWeight: 600,
     fontSize: 14,
     textDecoration: 'underline',
     whiteSpace: 'nowrap',
   },
-  hakuTulosFiltersClearSizeSmall: {
+  clearButtonSizeSmall: {
     padding: '1px 5px',
   },
 }));
@@ -95,8 +89,8 @@ const SuodatinValinnat = observer(() => {
         size="small"
         key={`chip_${item.id}`}
         classes={{
-          root: classes.hakuTulosChipRoot,
-          label: classes.hakuTulosChipLabel,
+          root: classes.chipRoot,
+          label: classes.chipLabel,
         }}
         label={item?.name?.[i18n.language]}
         onDelete={handleDelete(entry[0], item)}
@@ -109,8 +103,8 @@ const SuodatinValinnat = observer(() => {
       container
       wrap="nowrap"
       justify="space-between"
-      classes={{ root: classes.suodatinValinnatGridRoot1 }}>
-      <Grid item classes={{ root: classes.suodatinValinnatGridRoot2 }}>
+      style={{ paddingBottom: '5px' }}>
+      <Grid item style={{ paddingTop: '5px' }}>
         {Object.entries(filters).map((entry) =>
           entry[1].length > 0 ? displayChips(entry) : ''
         )}
@@ -120,8 +114,8 @@ const SuodatinValinnat = observer(() => {
           size="small"
           startIcon={<Clear />}
           classes={{
-            label: classes.hakuTulosFiltersClearLabel,
-            sizeSmall: classes.hakuTulosFiltersClearSizeSmall,
+            label: classes.clearButtonLabel,
+            sizeSmall: classes.clearButtonSizeSmall,
           }}
           onClick={() => handleClearFilters()}>
           {t('haku.poista-valitut-rajaimet')}

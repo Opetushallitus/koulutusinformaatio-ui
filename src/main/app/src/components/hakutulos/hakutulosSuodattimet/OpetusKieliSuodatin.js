@@ -19,15 +19,15 @@ import {
   SuodatinExpansionPanelDetails,
   SuodatinCheckbox,
   SuodatinListItemText,
+  SuodatinMobileChip,
 } from './CustomizedMuiComponents';
 
-const OpetusKieliSuodatin = observer(() => {
+const OpetusKieliSuodatin = ({ expanded, elevation, displaySelected }) => {
   const history = useHistory();
   const location = useLocation();
   const { i18n, t } = useTranslation();
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
-  const { opetuskieli } = filter;
 
   const [opetusKielet, setOpetusKielet] = useState([]);
   const [checkedOpetusKielet, setCheckedOpetusKielet] = useState([]);
@@ -49,12 +49,12 @@ const OpetusKieliSuodatin = observer(() => {
     );
 
     setOpetusKielet(_.concat(orderedOpetusKielet, removedMuuKieli));
-    setCheckedOpetusKielet(opetuskieli);
+    setCheckedOpetusKielet(filter.opetuskieli);
   }, [
     i18n.language,
     koulutusFilters.opetusKieli,
     location,
-    opetuskieli,
+    filter.opetuskieli,
     oppilaitosFilters.opetusKieli,
     toggle,
   ]);
@@ -87,10 +87,38 @@ const OpetusKieliSuodatin = observer(() => {
     hakuStore.searchOppilaitokset();
   };
 
+  const SelectedOpetusKielet = () => {
+    let selectedOpetuskieletStr = _.map(
+      checkedOpetusKielet,
+      `name.${i18n.language}`
+    );
+    selectedOpetuskieletStr = _.map(selectedOpetuskieletStr, (val) =>
+      _.capitalize(val)
+    );
+    selectedOpetuskieletStr = _.join(selectedOpetuskieletStr, ', ');
+    if (_.inRange(_.size(selectedOpetuskieletStr), 0, 20)) {
+      return selectedOpetuskieletStr;
+    }
+    return <SuodatinMobileChip label={_.size(checkedOpetusKielet)} />;
+  };
+
   return (
-    <SuodatinExpansionPanel defaultExpanded={true}>
+    <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
       <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <Typography variant="subtitle1">{t('haku.opetuskieli')}</Typography>
+        <Grid
+          container
+          justify="space-between"
+          alignItems="center"
+          wrap="nowrap">
+          <Grid item>
+            <Typography variant="subtitle1">{t('haku.opetuskieli')}</Typography>
+          </Grid>
+          {displaySelected && (
+            <Grid item>
+              <SelectedOpetusKielet />
+            </Grid>
+          )}
+        </Grid>
       </SuodatinExpansionPanelSummary>
       <SuodatinExpansionPanelDetails>
         <List style={{ width: '100%' }}>
@@ -133,6 +161,6 @@ const OpetusKieliSuodatin = observer(() => {
       </SuodatinExpansionPanelDetails>
     </SuodatinExpansionPanel>
   );
-});
+};
 
-export default OpetusKieliSuodatin;
+export default observer(OpetusKieliSuodatin);

@@ -43,6 +43,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
     maxWidth: '100%',
     maxHeight: '100%',
+    position: 'relative',
+    zIndex: 0,
     [theme.breakpoints.up('sm')]: {
       objectFit: 'scale-down',
       maxHeight: 155,

@@ -23,6 +23,7 @@ import {
   SuodatinExpansionPanelDetails,
   SuodatinCheckbox,
   SuodatinListItemText,
+  SuodatinMobileChip,
 } from './CustomizedMuiComponents';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SijaintiSuodatin = observer(() => {
+const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
   const history = useHistory();
   const location = useLocation();
   const { i18n, t } = useTranslation();
@@ -106,7 +107,7 @@ const SijaintiSuodatin = observer(() => {
     );
     setfirstFiveMaakunnat(_.slice(orderedMaakunnat, 0, 5));
     setRestMaakunnat(_.slice(orderedMaakunnat, 5, orderedMaakunnat.length));
-    setSelectedSijainnit(selectedsijainnit);
+    setSelectedSijainnit(filter.selectedsijainnit);
     setSearchHitsSijainnit(_searchHitsSijainnit);
     setCheckedMaakunnat(sijainti);
   }, [
@@ -116,7 +117,7 @@ const SijaintiSuodatin = observer(() => {
     location,
     oppilaitosFilters.kunta,
     oppilaitosFilters.maakunta,
-    selectedsijainnit,
+    filter.selectedsijainnit,
     sijainti,
     toggle,
   ]);
@@ -231,10 +232,36 @@ const SijaintiSuodatin = observer(() => {
     }),
   };
 
+  const SelectedSijainnit = () => {
+    let _selectedSijainnit = _.map(checkedMaakunnat, `name.${i18n.language}`);
+    _selectedSijainnit = _.concat(
+      _selectedSijainnit,
+      _.map(selectedSijainnit, 'value')
+    );
+    let selectedSijainnitStr = _.join(_selectedSijainnit, ', ');
+    if (_.inRange(_.size(selectedSijainnitStr), 0, 20)) {
+      return selectedSijainnitStr;
+    }
+    return <SuodatinMobileChip label={_.size(_selectedSijainnit)} />;
+  };
+
   return (
-    <SuodatinExpansionPanel defaultExpanded={true}>
+    <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
       <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <Typography variant="subtitle1">{t('haku.sijainti')}</Typography>
+        <Grid
+          container
+          justify="space-between"
+          alignItems="center"
+          wrap="nowrap">
+          <Grid item>
+            <Typography variant="subtitle1">{t('haku.sijainti')}</Typography>
+          </Grid>
+          {displaySelected && (
+            <Grid item>
+              <SelectedSijainnit />
+            </Grid>
+          )}
+        </Grid>
       </SuodatinExpansionPanelSummary>
       <SuodatinExpansionPanelDetails>
         <Grid container direction="column">
@@ -351,6 +378,6 @@ const SijaintiSuodatin = observer(() => {
       </SuodatinExpansionPanelDetails>
     </SuodatinExpansionPanel>
   );
-});
+};
 
-export default SijaintiSuodatin;
+export default observer(SijaintiSuodatin);

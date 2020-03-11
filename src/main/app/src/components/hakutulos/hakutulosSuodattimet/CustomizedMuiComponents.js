@@ -1,10 +1,12 @@
 import { withStyles } from '@material-ui/core/styles';
 import {
   Checkbox,
+  Chip,
   ExpansionPanel,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
   ListItemText,
+  Slider,
 } from '@material-ui/core';
 import { colors } from '../../../colors';
 
@@ -17,14 +19,21 @@ export const SuodatinCheckbox = withStyles({
 export const SuodatinExpansionPanel = withStyles({
   root: {
     backgroundColor: colors.white,
-    marginBottom: '16px',
-    boxShadow: '0 2px 8px 0 rgba(0,0,0,0.2)',
     borderRadius: '0 !important',
     '&:before': {
       backgroundColor: colors.white,
     },
     expandIcon: {
       color: 'white',
+    },
+    '@media (min-width:960px)': {
+      marginBottom: '16px',
+      boxShadow: '0 2px 8px 0 rgba(0,0,0,0.2)',
+    },
+  },
+  expanded: {
+    '@media (max-width:960px)': {
+      margin: '0 !important',
     },
   },
 })(ExpansionPanel);
@@ -50,3 +59,23 @@ export const SuodatinListItemText = withStyles({
     color: colors.grey,
   },
 })(ListItemText);
+
+export const SuodatinMobileChip = withStyles({
+  root: {
+    borderRadius: 2,
+    color: colors.white,
+    backgroundColor: colors.green,
+    height: 28,
+    fontSize: '0.9rem',
+    cursor: 'pointer',
+  },
+  label: {
+    fontWeight: 600,
+  },
+})(Chip);
+
+export const SuodatinMobileSlider = withStyles({
+  root: {
+    width: '100%',
+  },
+})(Slider);
