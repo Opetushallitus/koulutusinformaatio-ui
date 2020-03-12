@@ -92,12 +92,14 @@ const MobileFiltersOnTopMenu = () => {
               </Typography>
             </Grid>
             <Grid item style={{ paddingRight: '10px' }}>
-              <Button
-                color="inherit"
-                classes={{ label: classes.buttonLabel }}
-                onClick={() => handleClearFilters()}>
-                {t('haku.poista-valitut')}
-              </Button>
+              {_.some(hakuStore.filter, (arr) => _.size(arr) > 0) && (
+                <Button
+                  color="inherit"
+                  classes={{ label: classes.buttonLabel }}
+                  onClick={() => handleClearFilters()}>
+                  {t('haku.poista-valitut')}
+                </Button>
+              )}
             </Grid>
           </Grid>
         </Toolbar>

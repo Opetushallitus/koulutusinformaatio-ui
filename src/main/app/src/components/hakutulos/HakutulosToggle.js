@@ -25,7 +25,10 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(3),
   },
   tabRoot: {
-    [theme.breakpoints.between('sm', 'md')]: {
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '1rem',
+    },
+    [theme.breakpoints.between('md', 'lg')]: {
       fontSize: '0.9rem',
     },
     [theme.breakpoints.up('lg')]: {
@@ -39,7 +42,7 @@ const HakutulosToggle = observer(() => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { hakuStore } = useStores();
-  const muiScreenSizeMinSm = useMediaQuery(MUI_BREAKPOINTS.MIN_SM);
+  const muiScreenSizeMinMd = useMediaQuery(MUI_BREAKPOINTS.MIN_MD);
 
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -59,7 +62,7 @@ const HakutulosToggle = observer(() => {
 
   return (
     <Tabs
-      variant={muiScreenSizeMinSm ? 'standard' : 'fullWidth'}
+      variant={muiScreenSizeMinMd ? 'standard' : 'fullWidth'}
       value={selectedTab}
       indicatorColor="primary"
       textColor="primary"

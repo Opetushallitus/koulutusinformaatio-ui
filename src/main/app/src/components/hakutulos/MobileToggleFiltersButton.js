@@ -1,8 +1,15 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
+import _ from 'lodash';
 import { FilterList } from '@material-ui/icons';
-import { Button, ButtonGroup, Hidden, makeStyles } from '@material-ui/core';
+import {
+  Badge,
+  Button,
+  ButtonGroup,
+  Hidden,
+  makeStyles,
+} from '@material-ui/core';
 import { useStores } from '../../hooks';
 import { colors } from '../../colors';
 
@@ -60,6 +67,8 @@ const MobileToggleFiltersButton = () => {
     }
   };
 
+  console.log();
+
   return (
     <Hidden mdUp>
       <ButtonGroup classes={{ root: classes.buttonGroupRoot }}>
@@ -74,7 +83,19 @@ const MobileToggleFiltersButton = () => {
           </Button>
         ) : (
           <Button
-            endIcon={<FilterList />}
+            endIcon={
+              <Badge
+                // showZero
+
+                color="error"
+                badgeContent={_.reduce(
+                  hakuStore.filter,
+                  (acc, currArr) => acc + _.size(currArr),
+                  0
+                )}>
+                <FilterList />
+              </Badge>
+            }
             classes={{
               root: classes.buttonRoot,
               label: classes.buttonLabel,

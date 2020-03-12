@@ -236,16 +236,16 @@ const Hakutulos = () => {
             </Grid>
           </Hidden>
           <Grid item container lg={9} md={8} sm={12} justify="space-between">
-            <Grid item lg={6} md={7} sm={7} xs={12}>
+            <Grid item lg={6} md={7} sm={12} xs={12}>
               <HakutulosToggle />
             </Grid>
-            <Hidden xsDown>
+            <Hidden smDown>
               <Grid
                 item
                 container
                 lg={6}
                 md={5}
-                sm={5}
+                sm
                 xs
                 justify="flex-end"
                 style={{ paddingTop: 6 }}
