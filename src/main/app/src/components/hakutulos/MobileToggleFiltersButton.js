@@ -67,8 +67,6 @@ const MobileToggleFiltersButton = () => {
     }
   };
 
-  console.log();
-
   return (
     <Hidden mdUp>
       <ButtonGroup classes={{ root: classes.buttonGroupRoot }}>
@@ -85,8 +83,6 @@ const MobileToggleFiltersButton = () => {
           <Button
             endIcon={
               <Badge
-                // showZero
-
                 color="error"
                 badgeContent={_.reduce(
                   hakuStore.filter,
