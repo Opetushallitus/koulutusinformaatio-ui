@@ -56,7 +56,7 @@ const MobileToggleFiltersButton = () => {
               root: classes.buttonRoot,
               label: classes.buttonLabel,
             }}
-            onClick={() => handleFiltersShowToggle()}>
+            onClick={handleFiltersShowToggle}>
             {buttonText()}
           </Button>
         ) : (
