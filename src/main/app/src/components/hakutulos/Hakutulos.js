@@ -18,6 +18,7 @@ import {
   useTheme,
 } from '@material-ui/core';
 import HakutulosToggle from './HakutulosToggle';
+import _ from 'lodash';
 import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
 import OpetusKieliSuodatin from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
@@ -212,6 +213,9 @@ const Hakutulos = () => {
     }
   });
 
+  const isFilterSelected = () =>
+    _.some(_.values(filter), (filterArr) => _.size(filterArr) > 0);
+
   return (
     <Grid className={classes.hakutulosSisalto} container>
       <Paper classes={{ root: classes.paperRoot }} id="hakutulos-content">
@@ -236,7 +240,7 @@ const Hakutulos = () => {
             </Grid>
           </Hidden>
           <Grid item container lg={9} md={8} sm={12} justify="space-between">
-            <Grid item lg={6} md={7} sm={12} xs={12}>
+            <Grid item lg={6} md={7} xs={12}>
               <HakutulosToggle />
             </Grid>
             <Hidden smDown>
@@ -305,11 +309,7 @@ const Hakutulos = () => {
           <Grid item container direction="column" xs>
             <Grid item>
               <Hidden smDown>
-                {(koulutustyyppi.length > 0 ||
-                  opetuskieli.length > 0 ||
-                  koulutusala.length > 0 ||
-                  selectedsijainnit.length > 0 ||
-                  sijainti.length > 0) && <SuodatinValinnat />}
+                {isFilterSelected() && <SuodatinValinnat />}
               </Hidden>
               <ResultList />
             </Grid>

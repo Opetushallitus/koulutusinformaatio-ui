@@ -42,30 +42,10 @@ const MobileToggleFiltersButton = () => {
     hakuStore.toggleHakutulosFitersHidden();
   };
 
-  const buttonText = () => {
-    if (hakuStore.toggle === 'koulutus') {
-      switch (hakuStore.koulutusTotal) {
-        case 1:
-          return t('haku.nayta_0_hakutulos', {
-            total: hakuStore.koulutusTotal,
-          });
-        default:
-          return t('haku.nayta_0_hakutulosta', {
-            total: hakuStore.koulutusTotal,
-          });
-      }
-    }
-    switch (hakuStore.oppilaitosTotal) {
-      case 1:
-        return t('haku.nayta_0_hakutulos', {
-          total: hakuStore.oppilaitosTotal,
-        });
-      default:
-        return t('haku.nayta_0_hakutulosta', {
-          total: hakuStore.oppilaitosTotal,
-        });
-    }
-  };
+  const buttonText = () =>
+    hakuStore.toggle === 'koulutus'
+      ? t('haku.nayta-hakutulos', { count: hakuStore.koulutusTotal })
+      : t('haku.nayta-hakutulos', { count: hakuStore.oppilaitosTotal });
 
   return (
     <Hidden mdUp>
@@ -84,11 +64,7 @@ const MobileToggleFiltersButton = () => {
             endIcon={
               <Badge
                 color="error"
-                badgeContent={_.reduce(
-                  hakuStore.filter,
-                  (acc, currArr) => acc + _.size(currArr),
-                  0
-                )}>
+                badgeContent={_.sumBy(_.values(hakuStore.filter), _.size)}>
                 <FilterList />
               </Badge>
             }
@@ -96,7 +72,7 @@ const MobileToggleFiltersButton = () => {
               root: classes.buttonRoot,
               label: classes.buttonLabel,
             }}
-            onClick={() => handleFiltersShowToggle()}>
+            onClick={handleFiltersShowToggle}>
             {t('haku.rajaa-tuloksia')}
           </Button>
         )}

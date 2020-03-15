@@ -30,6 +30,7 @@ const KoulutusTyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
   const { hakuStore } = useStores();
   const theme = useTheme();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
+  const VALITUT_KOULUTUSTYYPIT_MAX_CHAR_LENGTH = 16;
 
   const [koulutusTyypit, setKoulutusTyypit] = useState({});
   const [valitutKoulutusTyypit, setValitutKoulutusTyypit] = useState([]);
@@ -80,12 +81,16 @@ const KoulutusTyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
   };
 
   const SelectedKoulutustyypit = () => {
-    let selectedKoulutustyypitStr = _.map(
-      valitutKoulutusTyypit,
-      `name.${i18n.language}`
-    );
-    selectedKoulutustyypitStr = _.join(selectedKoulutustyypitStr, ', ');
-    if (_.inRange(_.size(selectedKoulutustyypitStr), 0, 16)) {
+    const selectedKoulutustyypitStr = valitutKoulutusTyypit
+      .map((kt) => kt?.['name']?.[i18n.language])
+      .join(', ');
+    if (
+      _.inRange(
+        _.size(selectedKoulutustyypitStr),
+        0,
+        VALITUT_KOULUTUSTYYPIT_MAX_CHAR_LENGTH
+      )
+    ) {
       return selectedKoulutustyypitStr;
     }
     return <SuodatinMobileChip label={_.size(valitutKoulutusTyypit)} />;

@@ -13,22 +13,17 @@ const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
   const { t } = useTranslation();
   const { hakuStore } = useStores();
   const { pageSizeArray, paging } = hakuStore;
-  const marks = _.map(pageSizeArray, (size) => {
-    return { value: size, label: _.toString(size) };
-  });
 
-  const [pageSize, setPageSize] = useState(paging.pageSize);
-
-  useEffect(() => {
-    setPageSize(paging.pageSize);
-  }, [paging.pageSize]);
+  const marks = pageSizeArray.map((size) => ({
+    value: size,
+    label: _.toString(size),
+  }));
 
   const valueText = (value) => value;
 
-  const handleSliderValueChnage = (e, newValue) => {
+  const handleSliderValueChange = (e, newValue) => {
     const search = qs.parse(history.location.search);
 
-    setPageSize(newValue);
     search.pagesize = newValue;
     search.kpage = 1;
     search.opage = 1;
@@ -53,7 +48,7 @@ const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
       </Grid>
       <Grid item xs={12} sm>
         <SuodatinMobileSlider
-          defaultValue={pageSize}
+          defaultValue={paging.pageSize}
           track={false}
           min={_.min(pageSizeArray)}
           max={_.max(pageSizeArray)}
@@ -61,7 +56,7 @@ const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
           step={null}
           getAriaValueText={valueText}
           aria-label={t('haku.tuloksia-per-sivu')}
-          onChange={handleSliderValueChnage}
+          onChange={handleSliderValueChange}
         />
       </Grid>
     </Grid>

@@ -14,12 +14,8 @@ import {
 
 const MobileOrderByExpansionMenu = ({ elevation }) => {
   const history = useHistory();
-  const location = useLocation();
   const { t } = useTranslation();
   const { hakuStore } = useStores();
-  const { sort } = hakuStore;
-
-  useEffect(() => {}, [location, sort]);
 
   const handleSortToggle = () => {
     const search = qs.parse(history.location.search);

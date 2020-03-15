@@ -28,6 +28,7 @@ const OpetusKieliSuodatin = ({ expanded, elevation, displaySelected }) => {
   const { i18n, t } = useTranslation();
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
+  const VALITUT_OPETUSKIELET_MAX_CHAR_LENGTH = 20;
 
   const [opetusKielet, setOpetusKielet] = useState([]);
   const [checkedOpetusKielet, setCheckedOpetusKielet] = useState([]);
@@ -88,15 +89,16 @@ const OpetusKieliSuodatin = ({ expanded, elevation, displaySelected }) => {
   };
 
   const SelectedOpetusKielet = () => {
-    let selectedOpetuskieletStr = _.map(
-      checkedOpetusKielet,
-      `name.${i18n.language}`
-    );
-    selectedOpetuskieletStr = _.map(selectedOpetuskieletStr, (val) =>
-      _.capitalize(val)
-    );
-    selectedOpetuskieletStr = _.join(selectedOpetuskieletStr, ', ');
-    if (_.inRange(_.size(selectedOpetuskieletStr), 0, 20)) {
+    const selectedOpetuskieletStr = checkedOpetusKielet
+      .map((kieli) => _.capitalize(kieli?.['name']?.[i18n.language]))
+      .join(', ');
+    if (
+      _.inRange(
+        _.size(selectedOpetuskieletStr),
+        0,
+        VALITUT_OPETUSKIELET_MAX_CHAR_LENGTH
+      )
+    ) {
       return selectedOpetuskieletStr;
     }
     return <SuodatinMobileChip label={_.size(checkedOpetusKielet)} />;

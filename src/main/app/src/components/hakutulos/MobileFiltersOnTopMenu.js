@@ -40,6 +40,8 @@ const useStyles = makeStyles((theme) => ({
   },
   containerRoot: {
     marginTop: 60,
+    // Calculation: Viewport height - Appbar height(60) -
+    // ToggleFilter button height(40), bottom margin(30) and top margin(20))
     maxHeight: 'calc(100vh - 60px - 30px - 40px - 20px)',
     overflowY: 'scroll',
   },
@@ -69,8 +71,8 @@ const MobileFiltersOnTopMenu = () => {
     <SwipeableDrawer
       classes={{ paperAnchorBottom: classes.paperAnchorBottom }}
       anchor="bottom"
-      onClose={() => handleFiltersShowToggle()}
-      onOpen={() => handleFiltersShowToggle()}
+      onClose={handleFiltersShowToggle}
+      onOpen={handleFiltersShowToggle}
       open={hakuStore.showHakutulosFilters}>
       <AppBar classes={{ root: classes.appBarRoot }}>
         <Toolbar variant="dense" disableGutters>
@@ -80,9 +82,7 @@ const MobileFiltersOnTopMenu = () => {
             alignItems="center"
             wrap="nowrap">
             <Grid item>
-              <IconButton
-                color="inherit"
-                onClick={() => handleFiltersShowToggle()}>
+              <IconButton color="inherit" onClick={handleFiltersShowToggle}>
                 <Close />
               </IconButton>
             </Grid>
@@ -96,7 +96,7 @@ const MobileFiltersOnTopMenu = () => {
                 <Button
                   color="inherit"
                   classes={{ label: classes.buttonLabel }}
-                  onClick={() => handleClearFilters()}>
+                  onClick={handleClearFilters}>
                   {t('haku.poista-valitut')}
                 </Button>
               )}

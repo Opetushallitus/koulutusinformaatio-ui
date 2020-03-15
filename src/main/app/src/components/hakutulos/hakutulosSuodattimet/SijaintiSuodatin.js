@@ -40,6 +40,7 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
   const { sijainti, selectedsijainnit } = filter;
+  const VALITUT_SIJAINNIT_MAX_CHAR_LENGTH = 20;
 
   const [firstFiveMaakunnat, setfirstFiveMaakunnat] = useState([]);
   const [restMaakunnat, setRestMaakunnat] = useState([]);
@@ -233,16 +234,22 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
   };
 
   const SelectedSijainnit = () => {
-    let _selectedSijainnit = _.map(checkedMaakunnat, `name.${i18n.language}`);
-    _selectedSijainnit = _.concat(
-      _selectedSijainnit,
-      _.map(selectedSijainnit, 'value')
-    );
-    let selectedSijainnitStr = _.join(_selectedSijainnit, ', ');
-    if (_.inRange(_.size(selectedSijainnitStr), 0, 20)) {
+    const selectedSijainnitStr = checkedMaakunnat
+      .map((maakunta) => maakunta?.['name']?.[i18n.language])
+      .concat(_.map(selectedSijainnit, 'value'))
+      .join(', ');
+    if (
+      _.inRange(
+        _.size(selectedSijainnitStr),
+        0,
+        VALITUT_SIJAINNIT_MAX_CHAR_LENGTH
+      )
+    ) {
       return selectedSijainnitStr;
     }
-    return <SuodatinMobileChip label={_.size(_selectedSijainnit)} />;
+    return (
+      <SuodatinMobileChip label={_.size(_.split(selectedSijainnitStr, ','))} />
+    );
   };
 
   return (
