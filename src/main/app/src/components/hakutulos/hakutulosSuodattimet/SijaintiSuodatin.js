@@ -8,7 +8,6 @@ import {
   ListItem,
   ListItemIcon,
   makeStyles,
-  Typography,
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore, SearchOutlined } from '@material-ui/icons';
 import Select, { components } from 'react-select';
@@ -17,13 +16,13 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { colors } from '../../../colors';
 import { useStores } from '../../../hooks';
+import FilterExpansionPanelSummary from './FilterExpansionPanelSummary';
 import {
   SuodatinExpansionPanel,
   SuodatinExpansionPanelSummary,
   SuodatinExpansionPanelDetails,
   SuodatinCheckbox,
   SuodatinListItemText,
-  SuodatinMobileChip,
 } from './CustomizedMuiComponents';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,8 +38,6 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
   const classes = useStyles();
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
-  const { sijainti, selectedsijainnit } = filter;
-  const VALITUT_SIJAINNIT_MAX_CHAR_LENGTH = 20;
 
   const [firstFiveMaakunnat, setfirstFiveMaakunnat] = useState([]);
   const [restMaakunnat, setRestMaakunnat] = useState([]);
@@ -48,6 +45,7 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
   const [searchHitsSijainnit, setSearchHitsSijainnit] = useState([]);
   const [selectedSijainnit, setSelectedSijainnit] = useState([]);
   const [checkedMaakunnat, setCheckedMaakunnat] = useState([]);
+  const [selectedSijainnitStr, setSelectedSijainnitStr] = useState('');
 
   useEffect(() => {
     const maaKunnatJS =
@@ -106,11 +104,18 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
       },
       selectKunnat
     );
+
     setfirstFiveMaakunnat(_.slice(orderedMaakunnat, 0, 5));
     setRestMaakunnat(_.slice(orderedMaakunnat, 5, orderedMaakunnat.length));
     setSelectedSijainnit(filter.selectedsijainnit);
     setSearchHitsSijainnit(_searchHitsSijainnit);
-    setCheckedMaakunnat(sijainti);
+    setCheckedMaakunnat(filter.sijainti);
+    setSelectedSijainnitStr(
+      filter.sijainti
+        .map((maakunta) => maakunta?.['name']?.[i18n.language])
+        .concat(_.map(filter.selectedsijainnit, 'value'))
+        .join(', ')
+    );
   }, [
     i18n.language,
     koulutusFilters.kunta,
@@ -119,7 +124,7 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
     oppilaitosFilters.kunta,
     oppilaitosFilters.maakunta,
     filter.selectedsijainnit,
-    sijainti,
+    filter.sijainti,
     toggle,
   ]);
 
@@ -233,42 +238,15 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
     }),
   };
 
-  const SelectedSijainnit = () => {
-    const selectedSijainnitStr = checkedMaakunnat
-      .map((maakunta) => maakunta?.['name']?.[i18n.language])
-      .concat(_.map(selectedSijainnit, 'value'))
-      .join(', ');
-    if (
-      _.inRange(
-        _.size(selectedSijainnitStr),
-        0,
-        VALITUT_SIJAINNIT_MAX_CHAR_LENGTH
-      )
-    ) {
-      return selectedSijainnitStr;
-    }
-    return (
-      <SuodatinMobileChip label={_.size(_.split(selectedSijainnitStr, ','))} />
-    );
-  };
-
   return (
     <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
       <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <Grid
-          container
-          justify="space-between"
-          alignItems="center"
-          wrap="nowrap">
-          <Grid item>
-            <Typography variant="subtitle1">{t('haku.sijainti')}</Typography>
-          </Grid>
-          {displaySelected && (
-            <Grid item>
-              <SelectedSijainnit />
-            </Grid>
-          )}
-        </Grid>
+        <FilterExpansionPanelSummary
+          selectedFiltersStr={selectedSijainnitStr}
+          maxCharLengthBeforeChipWithNumber={20}
+          filterName={t('haku.sijainti')}
+          displaySelected={displaySelected}
+        />
       </SuodatinExpansionPanelSummary>
       <SuodatinExpansionPanelDetails>
         <Grid container direction="column">
