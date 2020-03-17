@@ -16,7 +16,7 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { colors } from '../../../colors';
 import { useStores } from '../../../hooks';
-import FilterExpansionPanelSummary from './FilterExpansionPanelSummary';
+import SummaryContent from './SummaryContent';
 import {
   SuodatinExpansionPanel,
   SuodatinExpansionPanelSummary,
@@ -72,29 +72,24 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
     );
     const filteredKunnat = kunnatJS.filter((kunta) => kunta[1].count > 0);
 
-    const selectKunnat = filteredKunnat.reduce(
-      (kuntaAccum, kunta, kuntaIndex) => {
-        return [
-          ...kuntaAccum,
-          {
-            label: `${kunta[1]?.nimi?.[i18n.language]} (${kunta[1]?.count})`,
-            value: kunta[1]?.nimi?.[i18n.language],
-            isMaakunta: false,
-            id: kunta[0],
-            name: kunta[1]?.nimi,
-          },
-        ];
-      },
-      []
-    );
+    const selectKunnat = filteredKunnat.reduce((kuntaAccum, kunta, kuntaIndex) => {
+      return [
+        ...kuntaAccum,
+        {
+          label: `${kunta[1]?.nimi?.[i18n.language]} (${kunta[1]?.count})`,
+          value: kunta[1]?.nimi?.[i18n.language],
+          isMaakunta: false,
+          id: kunta[0],
+          name: kunta[1]?.nimi,
+        },
+      ];
+    }, []);
     const _searchHitsSijainnit = filteredMaaKunnat.reduce(
       (accumulator, maaKunta, kuntaIndex) => {
         return [
           ...accumulator,
           {
-            label: `${maaKunta[1]?.nimi?.[i18n.language]} (${
-              maaKunta[1]?.count
-            })`,
+            label: `${maaKunta[1]?.nimi?.[i18n.language]} (${maaKunta[1]?.count})`,
             value: maaKunta[1]?.nimi?.[i18n.language],
             isMaakunta: true,
             id: maaKunta[0],
@@ -148,9 +143,7 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
   };
 
   const handleSelectedSijaintiIsMaakunta = (_selectedSijainti) => {
-    if (
-      checkedMaakunnat.findIndex(({ id }) => id === _selectedSijainti.id) !== -1
-    )
+    if (checkedMaakunnat.findIndex(({ id }) => id === _selectedSijainti.id) !== -1)
       return;
     const maakuntaFilterObj = {
       id: _selectedSijainti?.id,
@@ -171,8 +164,7 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
       return handleSelectedSijaintiIsMaakunta(_selectedSijainti);
     }
 
-    const newSelectedSijainnit =
-      [...selectedSijainnit, _selectedSijainti] || [];
+    const newSelectedSijainnit = [...selectedSijainnit, _selectedSijainti] || [];
     const combinedSijainnit = [
       ...new Set(
         newSelectedSijainnit
@@ -241,7 +233,7 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
   return (
     <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
       <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <FilterExpansionPanelSummary
+        <SummaryContent
           selectedFiltersStr={selectedSijainnitStr}
           maxCharLengthBeforeChipWithNumber={20}
           filterName={t('haku.sijainti')}
@@ -300,9 +292,7 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
                       id={labelId}
                       primary={
                         <Grid container justify="space-between" wrap="nowrap">
-                          <Grid item>
-                            {maakuntaArray[1]?.nimi?.[i18n.language]}
-                          </Grid>
+                          <Grid item>{maakuntaArray[1]?.nimi?.[i18n.language]}</Grid>
                           <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
                         </Grid>
                       }
@@ -338,9 +328,7 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
                         id={labelId}
                         primary={
                           <Grid container justify="space-between" wrap="nowrap">
-                            <Grid item>
-                              {maakuntaArray[1]?.nimi?.[i18n.language]}
-                            </Grid>
+                            <Grid item>{maakuntaArray[1]?.nimi?.[i18n.language]}</Grid>
                             <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
                           </Grid>
                         }

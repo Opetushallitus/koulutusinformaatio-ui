@@ -9,20 +9,19 @@ import {
   ListItem,
   ListItemIcon,
   makeStyles,
-  Typography,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import qs from 'query-string';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useStores } from '../../../hooks';
+import SummaryContent from './SummaryContent';
 import {
   SuodatinExpansionPanel,
   SuodatinExpansionPanelSummary,
   SuodatinExpansionPanelDetails,
   SuodatinCheckbox,
   SuodatinListItemText,
-  SuodatinMobileChip,
 } from './CustomizedMuiComponents';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,11 +36,11 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
   const { i18n, t } = useTranslation();
   const classes = useStyles();
   const { hakuStore } = useStores();
-  const { koulutusFilters, oppilaitosFilters, toggle } = hakuStore;
-  const VALITUT_KOULUTUSALAT_MAX_CHAR_LENGTH = 20;
+  const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
 
   const [koulutusAlat, setKoulutusAlat] = useState([]);
   const [valitutKoulutusAlat, setValitutKoulutusAlat] = useState([]);
+  const [selectedKoulutusalatStr, setSelectedKoulutusalatStr] = useState('');
   const [expandedKoulutusTaso1, setExpandedKoulutusTaso1] = useState([]);
 
   useEffect(() => {
@@ -51,9 +50,12 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
         : Object.entries(oppilaitosFilters.koulutusala);
 
     setKoulutusAlat(_.orderBy(koulutusalatJS, [`[1]nimi.[${i18n.language}]`]));
-    setValitutKoulutusAlat(hakuStore.filter.koulutusala);
+    setValitutKoulutusAlat(filter.koulutusala);
+    setSelectedKoulutusalatStr(
+      filter.koulutusala.map((ka) => ka?.['name']?.[i18n.language]).join(', ')
+    );
   }, [
-    hakuStore.filter.koulutusala,
+    filter.koulutusala,
     i18n.language,
     koulutusFilters.koulutusala,
     location,
@@ -70,9 +72,7 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
       id: koulutusID,
       name: obj?.nimi,
     };
-    const currentIndex = valitutKoulutusAlat.findIndex(
-      ({ id }) => id === koulutusID
-    );
+    const currentIndex = valitutKoulutusAlat.findIndex(({ id }) => id === koulutusID);
     const newValitutKoulutusalat = [...valitutKoulutusAlat];
 
     if (currentIndex === -1) {
@@ -141,99 +141,67 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
       </ListItem>
       <Divider style={{ margin: '10px 0' }} />
       {expandedKoulutusTaso1[1]?.alakoodit &&
-        Object.keys(expandedKoulutusTaso1[1]?.alakoodit).map(
-          (koulutusTaso2_ID) => (
-            <ListItem
-              key={koulutusTaso2_ID}
-              dense
-              button
-              onClick={handleKoulutusalaInnerToggle(
-                koulutusTaso2_ID,
-                expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]
-              )}
-              disabled={
-                expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]
-                  ?.count === 0
-              }>
-              <ListItemIcon>
-                <SuodatinCheckbox
-                  edge="start"
-                  checked={
-                    valitutKoulutusAlat.findIndex(
-                      ({ id }) => id === koulutusTaso2_ID
-                    ) !== -1
-                  }
-                  tabIndex={-1}
-                  disableRipple
-                />
-              </ListItemIcon>
-              <SuodatinListItemText
-                id={`${expandedKoulutusTaso1[0]}_${koulutusTaso2_ID}`}
-                primary={
-                  <Grid container justify="space-between" wrap="nowrap">
-                    <Grid item>
-                      {
-                        expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]
-                          ?.nimi?.[i18n.language]
-                      }
-                    </Grid>
-                    <Grid item>
-                      {_.isNil(
-                        expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]
-                          ?.count
-                      )
-                        ? ''
-                        : `(${expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]?.count})`}
-                    </Grid>
-                  </Grid>
+        Object.keys(expandedKoulutusTaso1[1]?.alakoodit).map((koulutusTaso2_ID) => (
+          <ListItem
+            key={koulutusTaso2_ID}
+            dense
+            button
+            onClick={handleKoulutusalaInnerToggle(
+              koulutusTaso2_ID,
+              expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]
+            )}
+            disabled={
+              expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]?.count === 0
+            }>
+            <ListItemIcon>
+              <SuodatinCheckbox
+                edge="start"
+                checked={
+                  valitutKoulutusAlat.findIndex(({ id }) => id === koulutusTaso2_ID) !==
+                  -1
                 }
+                tabIndex={-1}
+                disableRipple
               />
-            </ListItem>
-          )
-        )}
+            </ListItemIcon>
+            <SuodatinListItemText
+              id={`${expandedKoulutusTaso1[0]}_${koulutusTaso2_ID}`}
+              primary={
+                <Grid container justify="space-between" wrap="nowrap">
+                  <Grid item>
+                    {
+                      expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]?.nimi?.[
+                        i18n.language
+                      ]
+                    }
+                  </Grid>
+                  <Grid item>
+                    {_.isNil(
+                      expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]?.count
+                    )
+                      ? ''
+                      : `(${expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]?.count})`}
+                  </Grid>
+                </Grid>
+              }
+            />
+          </ListItem>
+        ))}
     </List>
   );
-
-  const SelectedKoulutusalat = () => {
-    const selectedKoulutusalatStr = valitutKoulutusAlat
-      .map((ka) => ka?.['name']?.[i18n.language])
-      .join(', ');
-    if (
-      _.inRange(
-        _.size(selectedKoulutusalatStr),
-        0,
-        VALITUT_KOULUTUSALAT_MAX_CHAR_LENGTH
-      )
-    ) {
-      return selectedKoulutusalatStr;
-    }
-    return <SuodatinMobileChip label={_.size(valitutKoulutusAlat)} />;
-  };
 
   return (
     <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
       <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <Grid
-          container
-          justify="space-between"
-          alignItems="baseline"
-          wrap="nowrap">
-          <Grid item>
-            <Typography variant="subtitle1">
-              {t('haku.koulutusalat')}
-            </Typography>
-          </Grid>
-          {displaySelected && (
-            <Grid item>
-              <SelectedKoulutusalat />
-            </Grid>
-          )}
-        </Grid>
+        <SummaryContent
+          selectedFiltersStr={selectedKoulutusalatStr}
+          maxCharLengthBeforeChipWithNumber={20}
+          filterName={t('haku.koulutusalat')}
+          displaySelected={displaySelected}
+        />
       </SuodatinExpansionPanelSummary>
       <SuodatinExpansionPanelDetails>
-        <List
-          hidden={expandedKoulutusTaso1.length > 0}
-          style={{ width: '100%' }}>
+        <List hidden={expandedKoulutusTaso1.length > 0} style={{ width: '100%' }}>
           {koulutusAlat.map((kouutusalaArray) => {
             const labelId = `language-list-label-${kouutusalaArray[0]}`;
             return (
@@ -247,9 +215,7 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
                   id={labelId}
                   primary={
                     <Grid container justify="space-between" wrap="nowrap">
-                      <Grid item>
-                        {kouutusalaArray[1].nimi?.[i18n.language]}
-                      </Grid>
+                      <Grid item>{kouutusalaArray[1].nimi?.[i18n.language]}</Grid>
                       <Grid item>
                         {_.isNil(kouutusalaArray[1]?.count)
                           ? '()'

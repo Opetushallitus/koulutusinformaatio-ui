@@ -16,16 +16,10 @@ export default function({
       </Grid>
       {displaySelected && (
         <Grid item>
-          {_.inRange(
-            _.size(selectedFiltersStr),
-            0,
-            maxCharLengthBeforeChipWithNumber
-          ) ? (
+          {_.inRange(_.size(selectedFiltersStr), 0, maxCharLengthBeforeChipWithNumber) ? (
             selectedFiltersStr
           ) : (
-            <SuodatinMobileChip
-              label={_.size(_.split(selectedFiltersStr, ','))}
-            />
+            <SuodatinMobileChip label={_.size(_.split(selectedFiltersStr, ','))} />
           )}
         </Grid>
       )}

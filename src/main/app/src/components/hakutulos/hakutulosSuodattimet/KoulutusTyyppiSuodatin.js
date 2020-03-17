@@ -1,26 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { useHistory, useLocation } from 'react-router-dom';
-import {
-  Grid,
-  List,
-  ListItem,
-  ListItemIcon,
-  Typography,
-  useTheme,
-} from '@material-ui/core';
+import { Grid, List, ListItem, ListItemIcon, useTheme } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import qs from 'query-string';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useStores } from '../../../hooks';
+import SummaryContent from './SummaryContent';
 import {
   SuodatinExpansionPanel,
   SuodatinExpansionPanelSummary,
   SuodatinExpansionPanelDetails,
   SuodatinCheckbox,
   SuodatinListItemText,
-  SuodatinMobileChip,
 } from './CustomizedMuiComponents';
 
 const KoulutusTyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
@@ -30,10 +23,10 @@ const KoulutusTyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
   const { hakuStore } = useStores();
   const theme = useTheme();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
-  const VALITUT_KOULUTUSTYYPIT_MAX_CHAR_LENGTH = 16;
 
   const [koulutusTyypit, setKoulutusTyypit] = useState({});
   const [valitutKoulutusTyypit, setValitutKoulutusTyypit] = useState([]);
+  const [selectedKoulutustyypitStr, setSelectedKoulutustyypitStr] = useState('');
 
   useEffect(() => {
     const koulutusTyypitJS =
@@ -42,12 +35,16 @@ const KoulutusTyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
         : oppilaitosFilters.koulutusTyyppi;
     setKoulutusTyypit(koulutusTyypitJS);
     setValitutKoulutusTyypit(filter.koulutustyyppi);
+    setSelectedKoulutustyypitStr(
+      filter.koulutustyyppi.map((kt) => kt?.['name']?.[i18n.language]).join(', ')
+    );
   }, [
     koulutusFilters.koulutusTyyppi,
     filter.koulutustyyppi,
     location,
     oppilaitosFilters.koulutusTyyppi,
     toggle,
+    i18n.language,
   ]);
 
   const handleEduTypeToggle = (koulutustyyppiObj) => () => {
@@ -68,9 +65,7 @@ const KoulutusTyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
 
     setValitutKoulutusTyypit(newValitutKoulutusTyypit);
     const search = qs.parse(history.location.search);
-    search.koulutustyyppi = newValitutKoulutusTyypit
-      .map(({ id }) => id)
-      .join(',');
+    search.koulutustyyppi = newValitutKoulutusTyypit.map(({ id }) => id).join(',');
     search.kpage = 1;
     search.opage = 1;
     hakuStore.setKoulutusTyyppiFilter(newValitutKoulutusTyypit);
@@ -80,41 +75,15 @@ const KoulutusTyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
     hakuStore.searchOppilaitokset();
   };
 
-  const SelectedKoulutustyypit = () => {
-    const selectedKoulutustyypitStr = valitutKoulutusTyypit
-      .map((kt) => kt?.['name']?.[i18n.language])
-      .join(', ');
-    if (
-      _.inRange(
-        _.size(selectedKoulutustyypitStr),
-        0,
-        VALITUT_KOULUTUSTYYPIT_MAX_CHAR_LENGTH
-      )
-    ) {
-      return selectedKoulutustyypitStr;
-    }
-    return <SuodatinMobileChip label={_.size(valitutKoulutusTyypit)} />;
-  };
-
   return (
     <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
       <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <Grid
-          container
-          justify="space-between"
-          alignItems="center"
-          wrap="nowrap">
-          <Grid item>
-            <Typography variant="subtitle1">
-              {t('haku.koulutustyyppi')}
-            </Typography>
-          </Grid>
-          {displaySelected && (
-            <Grid item>
-              <SelectedKoulutustyypit />
-            </Grid>
-          )}
-        </Grid>
+        <SummaryContent
+          selectedFiltersStr={selectedKoulutustyypitStr}
+          maxCharLengthBeforeChipWithNumber={16}
+          filterName={t('haku.koulutustyyppi')}
+          displaySelected={displaySelected}
+        />
       </SuodatinExpansionPanelSummary>
       <SuodatinExpansionPanelDetails>
         <List style={{ width: '100%' }}>
@@ -153,49 +122,42 @@ const KoulutusTyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
                   />
                 </ListItem>
                 {eduTypeOuterArr[1].alakoodit &&
-                  Object.entries(eduTypeOuterArr[1].alakoodit).map(
-                    (eduTypeInnerArr) => {
-                      return (
-                        <ListItem
-                          style={{ paddingLeft: theme.spacing(2.2) }}
-                          key={`${eduTypeOuterArr[0]}_${eduTypeInnerArr[0]}`}
-                          id={`${eduTypeOuterArr[0]}_${eduTypeInnerArr[0]}`}
-                          dense
-                          button
-                          onClick={handleEduTypeToggle(eduTypeInnerArr)}
-                          disabled={eduTypeInnerArr[1].count === 0}>
-                          <ListItemIcon>
-                            <SuodatinCheckbox
-                              edge="start"
-                              checked={
-                                valitutKoulutusTyypit.findIndex(
-                                  ({ id }) => id === eduTypeInnerArr[0]
-                                ) !== -1
-                              }
-                              tabIndex={-1}
-                              disableRipple
-                            />
-                          </ListItemIcon>
-                          <SuodatinListItemText
-                            id={`this ${labelId}_${eduTypeInnerArr}`}
-                            primary={
-                              <Grid
-                                container
-                                justify="space-between"
-                                wrap="nowrap">
-                                <Grid item>
-                                  {eduTypeInnerArr[1]?.nimi?.[i18n.language]}
-                                </Grid>
-                                <Grid item>
-                                  {`(${eduTypeInnerArr[1]?.count})`}
-                                </Grid>
-                              </Grid>
+                  Object.entries(eduTypeOuterArr[1].alakoodit).map((eduTypeInnerArr) => {
+                    return (
+                      <ListItem
+                        style={{ paddingLeft: theme.spacing(2.2) }}
+                        key={`${eduTypeOuterArr[0]}_${eduTypeInnerArr[0]}`}
+                        id={`${eduTypeOuterArr[0]}_${eduTypeInnerArr[0]}`}
+                        dense
+                        button
+                        onClick={handleEduTypeToggle(eduTypeInnerArr)}
+                        disabled={eduTypeInnerArr[1].count === 0}>
+                        <ListItemIcon>
+                          <SuodatinCheckbox
+                            edge="start"
+                            checked={
+                              valitutKoulutusTyypit.findIndex(
+                                ({ id }) => id === eduTypeInnerArr[0]
+                              ) !== -1
                             }
+                            tabIndex={-1}
+                            disableRipple
                           />
-                        </ListItem>
-                      );
-                    }
-                  )}
+                        </ListItemIcon>
+                        <SuodatinListItemText
+                          id={`this ${labelId}_${eduTypeInnerArr}`}
+                          primary={
+                            <Grid container justify="space-between" wrap="nowrap">
+                              <Grid item>
+                                {eduTypeInnerArr[1]?.nimi?.[i18n.language]}
+                              </Grid>
+                              <Grid item>{`(${eduTypeInnerArr[1]?.count})`}</Grid>
+                            </Grid>
+                          }
+                        />
+                      </ListItem>
+                    );
+                  })}
               </React.Fragment>
             );
           })}

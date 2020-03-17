@@ -1,25 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { useHistory, useLocation } from 'react-router-dom';
-import {
-  Grid,
-  List,
-  ListItem,
-  ListItemIcon,
-  Typography,
-} from '@material-ui/core';
+import { Grid, List, ListItem, ListItemIcon } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import qs from 'query-string';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useStores } from '../../../hooks';
+import SummaryContent from './SummaryContent';
 import {
   SuodatinExpansionPanel,
   SuodatinExpansionPanelSummary,
   SuodatinExpansionPanelDetails,
   SuodatinCheckbox,
   SuodatinListItemText,
-  SuodatinMobileChip,
 } from './CustomizedMuiComponents';
 
 const OpetusKieliSuodatin = ({ expanded, elevation, displaySelected }) => {
@@ -28,10 +22,10 @@ const OpetusKieliSuodatin = ({ expanded, elevation, displaySelected }) => {
   const { i18n, t } = useTranslation();
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
-  const VALITUT_OPETUSKIELET_MAX_CHAR_LENGTH = 20;
 
   const [opetusKielet, setOpetusKielet] = useState([]);
   const [checkedOpetusKielet, setCheckedOpetusKielet] = useState([]);
+  const [selectedOpetuskieletStr, setSelectedOpetuskieletStr] = useState('');
 
   useEffect(() => {
     const _opetusKielet =
@@ -48,7 +42,11 @@ const OpetusKieliSuodatin = ({ expanded, elevation, displaySelected }) => {
       orderedOpetusKielet,
       (n) => n[0] === 'oppilaitoksenopetuskieli_9'
     );
-
+    setSelectedOpetuskieletStr(
+      filter.opetuskieli
+        .map((kieli) => _.capitalize(kieli?.['name']?.[i18n.language]))
+        .join(', ')
+    );
     setOpetusKielet(_.concat(orderedOpetusKielet, removedMuuKieli));
     setCheckedOpetusKielet(filter.opetuskieli);
   }, [
@@ -88,39 +86,15 @@ const OpetusKieliSuodatin = ({ expanded, elevation, displaySelected }) => {
     hakuStore.searchOppilaitokset();
   };
 
-  const SelectedOpetusKielet = () => {
-    const selectedOpetuskieletStr = checkedOpetusKielet
-      .map((kieli) => _.capitalize(kieli?.['name']?.[i18n.language]))
-      .join(', ');
-    if (
-      _.inRange(
-        _.size(selectedOpetuskieletStr),
-        0,
-        VALITUT_OPETUSKIELET_MAX_CHAR_LENGTH
-      )
-    ) {
-      return selectedOpetuskieletStr;
-    }
-    return <SuodatinMobileChip label={_.size(checkedOpetusKielet)} />;
-  };
-
   return (
     <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
       <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <Grid
-          container
-          justify="space-between"
-          alignItems="center"
-          wrap="nowrap">
-          <Grid item>
-            <Typography variant="subtitle1">{t('haku.opetuskieli')}</Typography>
-          </Grid>
-          {displaySelected && (
-            <Grid item>
-              <SelectedOpetusKielet />
-            </Grid>
-          )}
-        </Grid>
+        <SummaryContent
+          selectedFiltersStr={selectedOpetuskieletStr}
+          maxCharLengthBeforeChipWithNumber={20}
+          filterName={t('haku.opetuskieli')}
+          displaySelected={displaySelected}
+        />
       </SuodatinExpansionPanelSummary>
       <SuodatinExpansionPanelDetails>
         <List style={{ width: '100%' }}>
@@ -137,9 +111,8 @@ const OpetusKieliSuodatin = ({ expanded, elevation, displaySelected }) => {
                   <SuodatinCheckbox
                     edge="start"
                     checked={
-                      checkedOpetusKielet.find(
-                        ({ id }) => id === opetuskieliArr[0]
-                      ) !== undefined
+                      checkedOpetusKielet.find(({ id }) => id === opetuskieliArr[0]) !==
+                      undefined
                     }
                     tabIndex={-1}
                     disableRipple
@@ -149,9 +122,7 @@ const OpetusKieliSuodatin = ({ expanded, elevation, displaySelected }) => {
                   id={labelId}
                   primary={
                     <Grid container justify="space-between" wrap="nowrap">
-                      <Grid item>
-                        {opetuskieliArr[1]?.nimi?.[i18n.language]}
-                      </Grid>
+                      <Grid item>{opetuskieliArr[1]?.nimi?.[i18n.language]}</Grid>
                       <Grid item>{`(${opetuskieliArr[1]?.count})`}</Grid>
                     </Grid>
                   }
