@@ -202,24 +202,24 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
       </SuodatinExpansionPanelSummary>
       <SuodatinExpansionPanelDetails>
         <List hidden={expandedKoulutusTaso1.length > 0} style={{ width: '100%' }}>
-          {koulutusAlat.map((kouutusalaArray) => {
-            const labelId = `language-list-label-${kouutusalaArray[0]}`;
+          {koulutusAlat.map((koulutusalaArr) => {
+            const labelId = `language-list-label-${koulutusalaArr[0]}`;
             return (
               <ListItem
-                key={kouutusalaArray[0]}
+                key={koulutusalaArr[0]}
                 dense
                 button
-                onClick={handleKoulutusalaOuterToggle(kouutusalaArray)}
-                disabled={kouutusalaArray[1].count === 0}>
+                onClick={handleKoulutusalaOuterToggle(koulutusalaArr)}
+                disabled={koulutusalaArr[1].count === 0}>
                 <SuodatinListItemText
                   id={labelId}
                   primary={
                     <Grid container justify="space-between" wrap="nowrap">
-                      <Grid item>{kouutusalaArray[1].nimi?.[i18n.language]}</Grid>
+                      <Grid item>{koulutusalaArr[1].nimi?.[i18n.language]}</Grid>
                       <Grid item>
-                        {_.isNil(kouutusalaArray[1]?.count)
+                        {_.isNil(koulutusalaArr[1]?.count)
                           ? '()'
-                          : `(${kouutusalaArray[1]?.count})`}
+                          : `(${koulutusalaArr[1]?.count})`}
                       </Grid>
                     </Grid>
                   }
