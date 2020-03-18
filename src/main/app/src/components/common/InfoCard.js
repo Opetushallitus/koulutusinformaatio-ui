@@ -30,16 +30,12 @@ const useStyles = makeStyles({
 });
 
 const InfoCard = (props) => {
-  const { image, title, titleColor, text, buttonText } = props;
+  const { image, title, text, buttonText } = props;
   const classes = useStyles();
   return (
     <Card className={classes.card}>
       {image ? (
-        <CardMedia
-          className={classes.media}
-          image={image.url}
-          title={image.title}
-        />
+        <CardMedia className={classes.media} image={image.url} title={image.title} />
       ) : null}
       <CardContent className={classes.content}>
         {title ? (

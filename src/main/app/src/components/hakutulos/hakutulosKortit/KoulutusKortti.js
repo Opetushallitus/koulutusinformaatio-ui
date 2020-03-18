@@ -13,9 +13,9 @@ import {
   useTheme,
 } from '@material-ui/core';
 import { SchoolOutlined, TimelapseOutlined } from '@material-ui/icons';
-import koulutusPlaceholderImg from '../../../assets/images/Opolkuhts.png';
-import { MUI_BREAKPOINTS } from '../../../constants';
-import { educationTypeColorCode } from '../../../colors';
+import koulutusPlaceholderImg from '#/src/assets/images/Opolkuhts.png';
+import { MUI_BREAKPOINTS } from '#/src/constants';
+import { educationTypeColorCode } from '#/src/colors';
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {
@@ -72,8 +72,7 @@ const KoulutusKortti = (props) => {
     }, '')
     .replace(/,\s*$/, '');
   const opintojenlaajuusStr = opintojenlaajuus?.nimi?.[i18n.language];
-  const opintojenlaajuusyksikkoStr =
-    opintojenlaajuusyksikko?.nimi?.[i18n.language];
+  const opintojenlaajuusyksikkoStr = opintojenlaajuusyksikko?.nimi?.[i18n.language];
   const kuvausStr = (kuvaus) => {
     const kuvausStr = kuvaus && kuvaus?.[i18n.language];
 
@@ -95,11 +94,7 @@ const KoulutusKortti = (props) => {
           borderTop: `5px solid ${educationTypeColorCode[koulutustyyppi] ||
             educationTypeColorCode.muu}`,
         }}>
-        <Grid
-          container
-          alignItems="stretch"
-          style={{ minHeight: 210 }}
-          spacing={3}>
+        <Grid container alignItems="stretch" style={{ minHeight: 210 }} spacing={3}>
           <Grid
             container
             item
@@ -146,11 +141,7 @@ const KoulutusKortti = (props) => {
               </Grid>
             </Hidden>
 
-            <Grid
-              item
-              container
-              direction="row"
-              spacing={muiScreenSizeMinSm ? 2 : 0}>
+            <Grid item container direction="row" spacing={muiScreenSizeMinSm ? 2 : 0}>
               <Grid item container md={6} sm={6} xs={12}>
                 <Grid item xs={1}>
                   <SchoolOutlined />
@@ -178,12 +169,7 @@ const KoulutusKortti = (props) => {
             </Grid>
           </Grid>
           <Hidden only={['sm', 'md']}>
-            <Grid
-              item
-              container
-              lg={4}
-              justify="flex-end"
-              alignContent="center">
+            <Grid item container lg={4} justify="flex-end" alignContent="center">
               <Avatar
                 classes={{
                   root: classes.avatarRoot,

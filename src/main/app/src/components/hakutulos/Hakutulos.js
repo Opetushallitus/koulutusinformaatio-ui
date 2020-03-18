@@ -84,13 +84,6 @@ const Hakutulos = () => {
   const { t } = useTranslation();
   const { hakuStore, restStore } = useStores();
   const { filter, paging } = hakuStore;
-  const {
-    koulutustyyppi,
-    koulutusala,
-    opetuskieli,
-    sijainti,
-    selectedsijainnit,
-  } = filter;
 
   const [pageSize, setPageSize] = useState(0);
 
@@ -133,7 +126,15 @@ const Hakutulos = () => {
         if (restStore.restErrorsArrLength > 0) {
           return <BackendErrorMessage />;
         }
+<<<<<<< HEAD
         return <LoadingCircle />;
+=======
+        return (
+          <Grid container style={{ padding: theme.spacing(6) }} justify="center">
+            <CircularProgress size={50} disableShrink />
+          </Grid>
+        );
+>>>>>>> KTO-648: Import alias '#' as root directory added
       case 'done':
         if (hakuStore.toggle === 'koulutus' && hakuStore.hasKoulutusResult) {
           return koulutusResult.map((r) => {
@@ -156,10 +157,7 @@ const Hakutulos = () => {
             );
           });
         }
-        if (
-          hakuStore.toggle === 'oppilaitos' &&
-          hakuStore.hasOppilaitosResult
-        ) {
+        if (hakuStore.toggle === 'oppilaitos' && hakuStore.hasOppilaitosResult) {
           return oppilaitosResult.map((r) => {
             const link = `/oppilaitos/${r.oid}`;
             return (
@@ -270,9 +268,7 @@ const Hakutulos = () => {
                   ))}
                 </Select>
                 <Button
-                  endIcon={
-                    hakuStore.sort === 'asc' ? <ExpandMore /> : <ExpandLess />
-                  }
+                  endIcon={hakuStore.sort === 'asc' ? <ExpandMore /> : <ExpandLess />}
                   classes={{
                     root: classes.buttonRoot,
                     label: classes.buttonLabel,
@@ -301,9 +297,7 @@ const Hakutulos = () => {
           </Grid>
           <Grid item container direction="column" xs>
             <Grid item>
-              <Hidden smDown>
-                {isFilterSelected() && <SuodatinValinnat />}
-              </Hidden>
+              <Hidden smDown>{isFilterSelected() && <SuodatinValinnat />}</Hidden>
               <ResultList />
             </Grid>
             <Grid item style={{ margin: 'auto' }}>
