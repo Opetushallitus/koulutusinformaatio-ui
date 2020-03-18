@@ -8,7 +8,6 @@ import {
   ListItem,
   ListItemIcon,
   makeStyles,
-  Typography,
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore, SearchOutlined } from '@material-ui/icons';
 import Select, { components } from 'react-select';
@@ -17,6 +16,7 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { colors } from '../../../colors';
 import { useStores } from '../../../hooks';
+import SummaryContent from './SummaryContent';
 import {
   SuodatinExpansionPanel,
   SuodatinExpansionPanelSummary,
@@ -31,14 +31,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SijaintiSuodatin = observer(() => {
+const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
   const history = useHistory();
   const location = useLocation();
   const { i18n, t } = useTranslation();
   const classes = useStyles();
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
-  const { sijainti, selectedsijainnit } = filter;
 
   const [firstFiveMaakunnat, setfirstFiveMaakunnat] = useState([]);
   const [restMaakunnat, setRestMaakunnat] = useState([]);
@@ -46,6 +45,7 @@ const SijaintiSuodatin = observer(() => {
   const [searchHitsSijainnit, setSearchHitsSijainnit] = useState([]);
   const [selectedSijainnit, setSelectedSijainnit] = useState([]);
   const [checkedMaakunnat, setCheckedMaakunnat] = useState([]);
+  const [selectedSijainnitStr, setSelectedSijainnitStr] = useState('');
 
   useEffect(() => {
     const maaKunnatJS =
@@ -72,29 +72,24 @@ const SijaintiSuodatin = observer(() => {
     );
     const filteredKunnat = kunnatJS.filter((kunta) => kunta[1].count > 0);
 
-    const selectKunnat = filteredKunnat.reduce(
-      (kuntaAccum, kunta, kuntaIndex) => {
-        return [
-          ...kuntaAccum,
-          {
-            label: `${kunta[1]?.nimi?.[i18n.language]} (${kunta[1]?.count})`,
-            value: kunta[1]?.nimi?.[i18n.language],
-            isMaakunta: false,
-            id: kunta[0],
-            name: kunta[1]?.nimi,
-          },
-        ];
-      },
-      []
-    );
+    const selectKunnat = filteredKunnat.reduce((kuntaAccum, kunta, kuntaIndex) => {
+      return [
+        ...kuntaAccum,
+        {
+          label: `${kunta[1]?.nimi?.[i18n.language]} (${kunta[1]?.count})`,
+          value: kunta[1]?.nimi?.[i18n.language],
+          isMaakunta: false,
+          id: kunta[0],
+          name: kunta[1]?.nimi,
+        },
+      ];
+    }, []);
     const _searchHitsSijainnit = filteredMaaKunnat.reduce(
       (accumulator, maaKunta, kuntaIndex) => {
         return [
           ...accumulator,
           {
-            label: `${maaKunta[1]?.nimi?.[i18n.language]} (${
-              maaKunta[1]?.count
-            })`,
+            label: `${maaKunta[1]?.nimi?.[i18n.language]} (${maaKunta[1]?.count})`,
             value: maaKunta[1]?.nimi?.[i18n.language],
             isMaakunta: true,
             id: maaKunta[0],
@@ -104,11 +99,18 @@ const SijaintiSuodatin = observer(() => {
       },
       selectKunnat
     );
+
     setfirstFiveMaakunnat(_.slice(orderedMaakunnat, 0, 5));
     setRestMaakunnat(_.slice(orderedMaakunnat, 5, orderedMaakunnat.length));
-    setSelectedSijainnit(selectedsijainnit);
+    setSelectedSijainnit(filter.selectedsijainnit);
     setSearchHitsSijainnit(_searchHitsSijainnit);
-    setCheckedMaakunnat(sijainti);
+    setCheckedMaakunnat(filter.sijainti);
+    setSelectedSijainnitStr(
+      filter.sijainti
+        .map((maakunta) => maakunta?.['name']?.[i18n.language])
+        .concat(_.map(filter.selectedsijainnit, 'value'))
+        .join(', ')
+    );
   }, [
     i18n.language,
     koulutusFilters.kunta,
@@ -116,8 +118,8 @@ const SijaintiSuodatin = observer(() => {
     location,
     oppilaitosFilters.kunta,
     oppilaitosFilters.maakunta,
-    selectedsijainnit,
-    sijainti,
+    filter.selectedsijainnit,
+    filter.sijainti,
     toggle,
   ]);
 
@@ -141,9 +143,7 @@ const SijaintiSuodatin = observer(() => {
   };
 
   const handleSelectedSijaintiIsMaakunta = (_selectedSijainti) => {
-    if (
-      checkedMaakunnat.findIndex(({ id }) => id === _selectedSijainti.id) !== -1
-    )
+    if (checkedMaakunnat.findIndex(({ id }) => id === _selectedSijainti.id) !== -1)
       return;
     const maakuntaFilterObj = {
       id: _selectedSijainti?.id,
@@ -164,8 +164,7 @@ const SijaintiSuodatin = observer(() => {
       return handleSelectedSijaintiIsMaakunta(_selectedSijainti);
     }
 
-    const newSelectedSijainnit =
-      [...selectedSijainnit, _selectedSijainti] || [];
+    const newSelectedSijainnit = [...selectedSijainnit, _selectedSijainti] || [];
     const combinedSijainnit = [
       ...new Set(
         newSelectedSijainnit
@@ -232,9 +231,14 @@ const SijaintiSuodatin = observer(() => {
   };
 
   return (
-    <SuodatinExpansionPanel defaultExpanded={true}>
+    <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
       <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <Typography variant="subtitle1">{t('haku.sijainti')}</Typography>
+        <SummaryContent
+          selectedFiltersStr={selectedSijainnitStr}
+          maxCharLengthBeforeChipWithNumber={20}
+          filterName={t('haku.sijainti')}
+          displaySelected={displaySelected}
+        />
       </SuodatinExpansionPanelSummary>
       <SuodatinExpansionPanelDetails>
         <Grid container direction="column">
@@ -288,9 +292,7 @@ const SijaintiSuodatin = observer(() => {
                       id={labelId}
                       primary={
                         <Grid container justify="space-between" wrap="nowrap">
-                          <Grid item>
-                            {maakuntaArray[1]?.nimi?.[i18n.language]}
-                          </Grid>
+                          <Grid item>{maakuntaArray[1]?.nimi?.[i18n.language]}</Grid>
                           <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
                         </Grid>
                       }
@@ -326,9 +328,7 @@ const SijaintiSuodatin = observer(() => {
                         id={labelId}
                         primary={
                           <Grid container justify="space-between" wrap="nowrap">
-                            <Grid item>
-                              {maakuntaArray[1]?.nimi?.[i18n.language]}
-                            </Grid>
+                            <Grid item>{maakuntaArray[1]?.nimi?.[i18n.language]}</Grid>
                             <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
                           </Grid>
                         }
@@ -351,6 +351,6 @@ const SijaintiSuodatin = observer(() => {
       </SuodatinExpansionPanelDetails>
     </SuodatinExpansionPanel>
   );
-});
+};
 
-export default SijaintiSuodatin;
+export default observer(SijaintiSuodatin);

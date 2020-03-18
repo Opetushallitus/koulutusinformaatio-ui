@@ -54,6 +54,8 @@
     "palaa": "Palaa Opintopolkuun"
   },
   "haku": {
+    "aakkoset_a_o": "Aakkoset A-Ö",
+    "aakkoset_o_a": "Aakkoset Ö-A",
     "otsikko": "Hakutulokset",
     "ammatillinen": "Ammatilliset tutkinnot",
     "ei_kuvausta": "Ei kuvausta",
@@ -69,8 +71,9 @@
     "haku": "Haku",
     "hakusana": "Hakusana",
     "hakusanalla": "hakusanalla",
-    "järjestänimi_a_ö": "Järjestä: Nimi A-Ö",
-    "järjestänimi_ö_a": "Järjestä: Nimi Ö-A",
+    "jarjestanimi_a_o": "Järjestä: Nimi A-Ö",
+    "jarjestanimi_o_a": "Järjestä: Nimi Ö-A",
+    "jarjestys": "Järjestys",
     "kaikki": "Kaikki",
     "__kaikki_koulutusalat": "<< Kaikki koulutusalat",
     "kielellä": "kielellä",
@@ -88,6 +91,8 @@
     "lukio": "Lukio",
     "muut": "Muut kurssit ja koulutukset",
     "näytä": "Näytä",
+    "nayta-hakutulos_plural": "Näytä {{count}} hakutulosta", 
+    "nayta-hakutulos": "Näytä {{count}} hakutulos", 
     "odota-hetki-ja-kokeile-suorita-toiminto-uudestaan": "Odota hetki ja kokeile suorita toiminto uudestaan",
     "olet-valinnut-vertailuun": "Olet valinnut vertailuun:",
     "opetuskieli": "Opetuskieli",
@@ -101,6 +106,7 @@
     "paivita-sivu": "Päivitä sivu",
     "poista-kaikki": "Poista kaikki",
     "poista-rajaukset": "Poista rajaukset",
+    "poista-valitut": "Poista valitut",
     "poista-valitut-rajaimet": "Poista valitut rajaimet",
     "poista-vertailusta": "Poista vertailusta",
     "rajaa": "Rajaa",
@@ -116,6 +122,7 @@
     "syota-ainakin-kolme-merkkia": "Syötä ainakin kolme merkkiä",
     "tapahtui-tekninen-virhe" : "Tapahtui tekninen virhe",
     "tulokset-per-sivu": "Tulokset per sivu:",
+    "tuloksia-per-sivu": "Tuloksia per sivu",
     "vertaile": "Vertaile"
   },
   "navigaatio": {

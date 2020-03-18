@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { useHistory, useLocation } from 'react-router-dom';
-import {
-  Grid,
-  List,
-  ListItem,
-  ListItemIcon,
-  Typography,
-} from '@material-ui/core';
+import { Grid, List, ListItem, ListItemIcon } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import qs from 'query-string';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useStores } from '../../../hooks';
+import SummaryContent from './SummaryContent';
 import {
   SuodatinExpansionPanel,
   SuodatinExpansionPanelSummary,
@@ -21,16 +16,16 @@ import {
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 
-const OpetusKieliSuodatin = observer(() => {
+const OpetusKieliSuodatin = ({ expanded, elevation, displaySelected }) => {
   const history = useHistory();
   const location = useLocation();
   const { i18n, t } = useTranslation();
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
-  const { opetuskieli } = filter;
 
   const [opetusKielet, setOpetusKielet] = useState([]);
   const [checkedOpetusKielet, setCheckedOpetusKielet] = useState([]);
+  const [selectedOpetuskieletStr, setSelectedOpetuskieletStr] = useState('');
 
   useEffect(() => {
     const _opetusKielet =
@@ -47,14 +42,18 @@ const OpetusKieliSuodatin = observer(() => {
       orderedOpetusKielet,
       (n) => n[0] === 'oppilaitoksenopetuskieli_9'
     );
-
+    setSelectedOpetuskieletStr(
+      filter.opetuskieli
+        .map((kieli) => _.capitalize(kieli?.['name']?.[i18n.language]))
+        .join(', ')
+    );
     setOpetusKielet(_.concat(orderedOpetusKielet, removedMuuKieli));
-    setCheckedOpetusKielet(opetuskieli);
+    setCheckedOpetusKielet(filter.opetuskieli);
   }, [
     i18n.language,
     koulutusFilters.opetusKieli,
     location,
-    opetuskieli,
+    filter.opetuskieli,
     oppilaitosFilters.opetusKieli,
     toggle,
   ]);
@@ -88,9 +87,14 @@ const OpetusKieliSuodatin = observer(() => {
   };
 
   return (
-    <SuodatinExpansionPanel defaultExpanded={true}>
+    <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
       <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <Typography variant="subtitle1">{t('haku.opetuskieli')}</Typography>
+        <SummaryContent
+          selectedFiltersStr={selectedOpetuskieletStr}
+          maxCharLengthBeforeChipWithNumber={20}
+          filterName={t('haku.opetuskieli')}
+          displaySelected={displaySelected}
+        />
       </SuodatinExpansionPanelSummary>
       <SuodatinExpansionPanelDetails>
         <List style={{ width: '100%' }}>
@@ -107,9 +111,8 @@ const OpetusKieliSuodatin = observer(() => {
                   <SuodatinCheckbox
                     edge="start"
                     checked={
-                      checkedOpetusKielet.find(
-                        ({ id }) => id === opetuskieliArr[0]
-                      ) !== undefined
+                      checkedOpetusKielet.find(({ id }) => id === opetuskieliArr[0]) !==
+                      undefined
                     }
                     tabIndex={-1}
                     disableRipple
@@ -119,9 +122,7 @@ const OpetusKieliSuodatin = observer(() => {
                   id={labelId}
                   primary={
                     <Grid container justify="space-between" wrap="nowrap">
-                      <Grid item>
-                        {opetuskieliArr[1]?.nimi?.[i18n.language]}
-                      </Grid>
+                      <Grid item>{opetuskieliArr[1]?.nimi?.[i18n.language]}</Grid>
                       <Grid item>{`(${opetuskieliArr[1]?.count})`}</Grid>
                     </Grid>
                   }
@@ -133,6 +134,6 @@ const OpetusKieliSuodatin = observer(() => {
       </SuodatinExpansionPanelDetails>
     </SuodatinExpansionPanel>
   );
-});
+};
 
-export default OpetusKieliSuodatin;
+export default observer(OpetusKieliSuodatin);

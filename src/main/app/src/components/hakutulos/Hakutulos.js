@@ -18,15 +18,18 @@ import {
   useTheme,
 } from '@material-ui/core';
 import HakutulosToggle from './HakutulosToggle';
-import KoulutusalatSuodatin from './hakutulosSuodattimet/KoulutusalatSuodatin';
-import KoulutusKortti from './hakutulosKortit/KoulutusKortti';
+import _ from 'lodash';
 import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
 import OpetusKieliSuodatin from './hakutulosSuodattimet/OpetusKieliSuodatin';
+import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
+import KoulutusalatSuodatin from './hakutulosSuodattimet/KoulutusalatSuodatin';
+import KoulutusKortti from './hakutulosKortit/KoulutusKortti';
 import OppilaitosKortti from './hakutulosKortit/OppilaitosKortti';
 import Pagination from './Pagination';
 import BackendErrorMessage from './BackendErrorMessage';
 import SuodatinValinnat from './hakutulosSuodattimet/SuodatinValinnat';
-import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
+import MobileToggleFiltersButton from './MobileToggleFiltersButton';
+import MobileFiltersOnTopMenu from './MobileFiltersOnTopMenu';
 import { useStores } from '../../hooks';
 import Murupolku from '../common/Murupolku';
 import { useHistory } from 'react-router-dom';
@@ -210,6 +213,9 @@ const Hakutulos = () => {
     }
   });
 
+  const isFilterSelected = () =>
+    _.some(_.values(filter), (filterArr) => _.size(filterArr) > 0);
+
   return (
     <Grid className={classes.hakutulosSisalto} container>
       <Paper classes={{ root: classes.paperRoot }} id="hakutulos-content">
@@ -226,22 +232,24 @@ const Hakutulos = () => {
           alignItems="flex-start"
           spacing={2}
           style={{ marginBottom: theme.spacing(2) }}>
-          <Grid item lg={3} md={4} sm={12}>
-            <Typography style={{ paddingTop: 10 }} variant="h5">
-              {t('haku.rajaa-tuloksia')}
-            </Typography>
-          </Grid>
+          <Hidden smDown>
+            <Grid item lg={3} md={4} sm={12}>
+              <Typography style={{ paddingTop: 10 }} variant="h5">
+                {t('haku.rajaa-tuloksia')}
+              </Typography>
+            </Grid>
+          </Hidden>
           <Grid item container lg={9} md={8} sm={12} justify="space-between">
-            <Grid item lg={6} md={7} sm={7} xs={12}>
+            <Grid item lg={6} md={7} xs={12}>
               <HakutulosToggle />
             </Grid>
-            <Hidden xsDown>
+            <Hidden smDown>
               <Grid
                 item
                 container
                 lg={6}
                 md={5}
-                sm={5}
+                sm
                 xs
                 justify="flex-end"
                 style={{ paddingTop: 6 }}
@@ -278,8 +286,8 @@ const Hakutulos = () => {
                   }}
                   onClick={() => handleSortToggle(hakuStore.sort)}>
                   {hakuStore.sort === 'asc'
-                    ? t('haku.järjestänimi_a_ö')
-                    : t('haku.järjestänimi_ö_a')}
+                    ? t('haku.jarjestanimi_a_o')
+                    : t('haku.jarjestanimi_o_a')}
                 </Button>
               </Grid>
             </Hidden>
@@ -287,18 +295,22 @@ const Hakutulos = () => {
         </Grid>
         <Grid item container spacing={2}>
           <Grid item lg={3} md={4} sm={12} xs={12}>
-            <KoulutusTyyppiSuodatin />
-            <OpetusKieliSuodatin />
-            <SijaintiSuodatin />
-            <KoulutusalatSuodatin />
+            <Hidden mdUp>
+              <MobileFiltersOnTopMenu />
+            </Hidden>
+            <MobileToggleFiltersButton />
+            <Hidden smDown>
+              <KoulutusTyyppiSuodatin expanded elevation={2} />
+              <OpetusKieliSuodatin expanded elevation={2} />
+              <SijaintiSuodatin expanded elevation={2} />
+              <KoulutusalatSuodatin expanded elevation={2} />
+            </Hidden>
           </Grid>
           <Grid item container direction="column" xs>
             <Grid item>
-              {(koulutustyyppi.length > 0 ||
-                opetuskieli.length > 0 ||
-                koulutusala.length > 0 ||
-                selectedsijainnit.length > 0 ||
-                sijainti.length > 0) && <SuodatinValinnat />}
+              <Hidden smDown>
+                {isFilterSelected() && <SuodatinValinnat />}
+              </Hidden>
               <ResultList />
             </Grid>
             <Grid item style={{ margin: 'auto' }}>

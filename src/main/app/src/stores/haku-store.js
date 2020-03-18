@@ -55,6 +55,7 @@ class HakuStore {
     selectedsijainnit: [],
   };
   @observable pageSizeArray = [5, 10, 20, 30, 50];
+  @observable showHakutulosFilters = false;
 
   constructor(rest) {
     this.rest = rest;
@@ -523,6 +524,10 @@ class HakuStore {
       ? 1 === this.paging.pageKoulutus
       : 1 === this.paging.pageOppilaitos;
   }
+
+  @action toggleHakutulosFitersHidden = () => {
+    this.showHakutulosFilters = !this.showHakutulosFilters;
+  };
 }
 
 export default HakuStore;
