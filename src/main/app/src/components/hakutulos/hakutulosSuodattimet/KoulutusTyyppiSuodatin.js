@@ -4,7 +4,6 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { Grid, List, ListItem, ListItemIcon, useTheme } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import qs from 'query-string';
-import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useStores } from '../../../hooks';
 import SummaryContent from './SummaryContent';
