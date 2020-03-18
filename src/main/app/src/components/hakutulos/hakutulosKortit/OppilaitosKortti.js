@@ -10,11 +10,11 @@ import {
   useMediaQuery,
   useTheme,
 } from '@material-ui/core';
-import { SchoolOutlined, PublicOutlined } from '@material-ui/icons';
-import oppilaitos_img from '../../../assets/images/logo-oppilaitos.png';
-import { educationTypeColorCode } from '../../../colors';
-import { MUI_BREAKPOINTS } from '../../../constants';
 import _ from 'lodash';
+import { SchoolOutlined, PublicOutlined } from '@material-ui/icons';
+import oppilaitos_img from '#/src/assets/images/logo-oppilaitos.png';
+import { educationTypeColorCode } from '#/src/colors';
+import { MUI_BREAKPOINTS } from '#/src/constants';
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {
@@ -80,11 +80,7 @@ const OppilaitosKortti = ({ nimi, oppilaitos }) => {
     <Paper
       classes={{ root: classes.paperRoot }}
       style={{ borderTop: `5px solid ${educationTypeColorCode.amm}` }}>
-      <Grid
-        container
-        alignItems="center"
-        spacing={3}
-        style={{ minHeight: 180 }}>
+      <Grid container alignItems="center" spacing={3} style={{ minHeight: 180 }}>
         <Grid
           container
           item
