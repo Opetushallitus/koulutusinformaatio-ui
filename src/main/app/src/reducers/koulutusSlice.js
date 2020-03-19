@@ -6,17 +6,29 @@ import {
 } from '../api/konfoApi';
 import _ from 'lodash';
 
+const IDLE_STATUS = 'idle';
+const LOADING_STATUS = 'loading';
+
 export const initialState = {
   loading: 0,
+  status: IDLE_STATUS,
   koulutukset: {},
   jarjestajat: {},
   error: null,
 };
 
-const fetchStart = (state) => (state.loading += 1);
+const fetchStart = (state) => {
+  if (state.status === IDLE_STATUS) {
+    state.loading += 1;
+    state.status = LOADING_STATUS;
+  }
+};
 const fetchFail = (state, action) => {
-  state.loading -= 1;
-  state.error = action.payload;
+  if (state.status === LOADING_STATUS) {
+    state.loading -= 1;
+    state.error = action.payload;
+    state.status = IDLE_STATUS;
+  }
 };
 
 const koulutusSlice = createSlice({
@@ -30,16 +42,22 @@ const koulutusSlice = createSlice({
       fetchStart(state);
     },
     fetchKoulutusSuccess(state, { payload }) {
-      const { koulutus, oid } = payload;
-      state.koulutukset[oid] = koulutus;
-      state.loading -= 1;
-      state.error = null;
+      if (state.status === LOADING_STATUS) {
+        const { koulutus, oid } = payload;
+        state.koulutukset[oid] = koulutus;
+        state.loading -= 1;
+        state.error = null;
+        state.status = IDLE_STATUS;
+      }
     },
     fetchJarjestajatSuccess(state, { payload }) {
-      const { jarjestajat, oid } = payload;
-      state.jarjestajat[oid] = jarjestajat;
-      state.loading -= 1;
-      state.error = null;
+      if (state.status === LOADING_STATUS) {
+        const { jarjestajat, oid } = payload;
+        state.jarjestajat[oid] = jarjestajat;
+        state.loading -= 1;
+        state.error = null;
+        state.status = IDLE_STATUS;
+      }
     },
     fetchJarjestajatError: fetchFail,
     fetchKoulutusError: fetchFail,
