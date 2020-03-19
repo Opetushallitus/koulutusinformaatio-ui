@@ -6,12 +6,8 @@ const client = axios.create({
 });
 
 const get = async (url) => {
-  try {
-    const response = await client.get(url);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await client.get(url);
+  return response.data;
 };
 
 export const getKoulutus = (oid) =>
