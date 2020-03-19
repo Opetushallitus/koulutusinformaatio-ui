@@ -100,7 +100,7 @@ export const fetchKoulutusJarjestajat = (oid) => async (dispatch) => {
   }
 };
 
-export const fetchKoulutusAndJarjestajat = (oid) => {
+export const fetchKoulutusWithRelatedData = (oid) => {
   return (dispatch) => {
     Promise.all([
       dispatch(fetchKoulutus(oid)),
@@ -126,3 +126,7 @@ export const selectKoulutus = (state, oid) => {
     return undefined;
   }
 };
+
+export const selectLoading = (state) => state.koulutus.loading;
+export const selectJarjestajat = (state, oid) =>
+  state.koulutus.jarjestajat[oid]?.hits;

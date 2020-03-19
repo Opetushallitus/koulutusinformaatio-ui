@@ -15,8 +15,10 @@ import Murupolku from '../common/Murupolku';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
-  fetchKoulutusAndJarjestajat,
+  fetchKoulutusWithRelatedData,
   selectKoulutus,
+  selectLoading,
+  selectJarjestajat,
 } from '../../reducers/koulutusSlice';
 import LoadingCircle from '../common/LoadingCircle';
 
@@ -42,17 +44,15 @@ const Koulutus = (props) => {
     (state) => selectKoulutus(state, oid),
     shallowEqual
   );
-  const toteutukset = useSelector(
-    (state) => state.koulutus.jarjestajat[oid]?.hits
-  );
-  const koulutusLoading = useSelector((state) => state.koulutus.loading);
+  const toteutukset = useSelector((state) => selectJarjestajat(state, oid));
+  const loading = useSelector((state) => selectLoading(state));
   useEffect(() => {
     if (!koulutus) {
-      dispatch(fetchKoulutusAndJarjestajat(oid));
+      dispatch(fetchKoulutusWithRelatedData(oid));
     }
   }, [dispatch, koulutus, oid]);
 
-  return koulutusLoading ? (
+  return loading ? (
     <LoadingCircle />
   ) : (
     <Container className={classes.container}>
