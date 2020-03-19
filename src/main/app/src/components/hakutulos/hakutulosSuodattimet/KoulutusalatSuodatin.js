@@ -9,6 +9,7 @@ import {
   ListItem,
   ListItemIcon,
   makeStyles,
+  useMediaQuery,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import qs from 'query-string';
@@ -23,6 +24,7 @@ import {
   SuodatinCheckbox,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
+import { MUI_BREAKPOINTS } from '../../../constants';
 
 const useStyles = makeStyles((theme) => ({
   buttonLabel: {
@@ -37,6 +39,7 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
   const classes = useStyles();
   const { hakuStore } = useStores();
   const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
+  const muiScreenSizeMinMd = useMediaQuery(MUI_BREAKPOINTS.MIN_MD);
 
   const [koulutusAlat, setKoulutusAlat] = useState([]);
   const [valitutKoulutusAlat, setValitutKoulutusAlat] = useState([]);
@@ -204,6 +207,9 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
         <List hidden={expandedKoulutusTaso1.length > 0} style={{ width: '100%' }}>
           {koulutusAlat.map((koulutusalaArr) => {
             const labelId = `language-list-label-${koulutusalaArr[0]}`;
+            const isSelected = _.keys(koulutusalaArr[1]?.alakoodit)
+              .concat(koulutusalaArr[0])
+              .some((sf) => _.map(valitutKoulutusAlat, 'id').includes(sf));
             return (
               <ListItem
                 key={koulutusalaArr[0]}
@@ -214,7 +220,13 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
                 <SuodatinListItemText
                   id={labelId}
                   primary={
-                    <Grid container justify="space-between" wrap="nowrap">
+                    <Grid
+                      container
+                      justify="space-between"
+                      wrap="nowrap"
+                      style={
+                        isSelected && !muiScreenSizeMinMd ? { fontWeight: 600 } : {}
+                      }>
                       <Grid item>{koulutusalaArr[1].nimi?.[i18n.language]}</Grid>
                       <Grid item>
                         {_.isNil(koulutusalaArr[1]?.count)
