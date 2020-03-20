@@ -9,11 +9,11 @@ import Uutiset from './uutinen/Uutiset';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import { colors } from '../colors';
+import { colors } from '#/src/colors';
 import Button from '@material-ui/core/Button';
 import { useTranslation } from 'react-i18next';
 import ReactiveBorder from './ReactiveBorder';
-import { useStores } from '../hooks';
+import { useStores } from '#/src/hooks';
 
 const useStyles = makeStyles({
   info: {
@@ -101,9 +101,7 @@ const Etusivu = observer(({ history }) => {
             <h1 className={classes.header}>Ajankohtaista ja uutisia</h1>
           </Grid>
           <Grid container spacing={3}>
-            <Uutiset
-              uutiset={showMore ? _.take(uutislinkit, 3) : uutislinkit}
-            />
+            <Uutiset uutiset={showMore ? _.take(uutislinkit, 3) : uutislinkit} />
           </Grid>
 
           <Grid container direction="row" justify="center" alignItems="center">

@@ -55,10 +55,7 @@ const ToteutusCard = (props) => {
             <Typography variant="h4" gutterBottom>
               {tarjoajaName}
             </Typography>
-            <Typography
-              className={classes.nimikkeet}
-              variant="body1"
-              gutterBottom>
+            <Typography className={classes.nimikkeet} variant="body1" gutterBottom>
               {ammattinimikkeet}
             </Typography>
             <Typography variant="body1" paragraph>
@@ -99,7 +96,7 @@ const ToteutusCard = (props) => {
           </Grid>
         </Grid>
         <Grid item xs={3}>
-          <img className={classes.img} src={DiakoniaLogo} />
+          <img className={classes.img} alt="diaconia-logo" src={DiakoniaLogo} />
         </Grid>
       </Grid>
     </Paper>
