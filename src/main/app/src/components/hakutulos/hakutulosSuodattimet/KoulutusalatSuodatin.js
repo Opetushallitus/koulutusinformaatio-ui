@@ -209,7 +209,7 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
             const labelId = `language-list-label-${koulutusalaArr[0]}`;
             const isSelected = _.keys(koulutusalaArr[1]?.alakoodit)
               .concat(koulutusalaArr[0])
-              .some((sf) => _.map(valitutKoulutusAlat, 'id').includes(sf));
+              .some((sf) => _.find(valitutKoulutusAlat, { id: sf }));
             return (
               <ListItem
                 key={koulutusalaArr[0]}
