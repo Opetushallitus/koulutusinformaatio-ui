@@ -126,15 +126,7 @@ const Hakutulos = () => {
         if (restStore.restErrorsArrLength > 0) {
           return <BackendErrorMessage />;
         }
-<<<<<<< HEAD
         return <LoadingCircle />;
-=======
-        return (
-          <Grid container style={{ padding: theme.spacing(6) }} justify="center">
-            <CircularProgress size={50} disableShrink />
-          </Grid>
-        );
->>>>>>> KTO-648: Import alias '#' as root directory added
       case 'done':
         if (hakuStore.toggle === 'koulutus' && hakuStore.hasKoulutusResult) {
           return koulutusResult.map((r) => {
