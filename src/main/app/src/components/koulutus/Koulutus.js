@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../hooks';
-import { Typography, Box, Container } from '@material-ui/core';
+import { Typography, Box, Container, makeStyles } from '@material-ui/core';
 import { Localizer as l } from '../../tools/Utils';
 import { useTranslation } from 'react-i18next';
 import KoulutusInfoGrid from './KoulutusInfoGrid';
-import { makeStyles } from '@material-ui/core';
 import TextBox from '../common/TextBox';
 import ToteutusList from './ToteutusList';
 import HakuKaynnissaCard from './HakuKaynnissaCard';
@@ -14,6 +13,14 @@ import { colors } from '../../colors';
 import DefaultHeroImage from '../../assets/images/herokuva_default.png';
 import Murupolku from '../common/Murupolku';
 import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import {
+  fetchKoulutusWithRelatedData,
+  selectKoulutus,
+  selectLoading,
+  selectJarjestajat,
+} from '../../reducers/koulutusSlice';
+import LoadingCircle from '../common/LoadingCircle';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },
@@ -28,57 +35,38 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Koulutus = (props) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const { oid } = useParams();
-  const { restStore, hakuStore } = useStores();
+  const { hakuStore } = useStores();
   const { t } = useTranslation();
-  const [state, setState] = useState({
-    kuvaus: {},
-    koulutusAla: [],
-    tutkintoNimi: {},
-    tutkintoNimikkeet: [],
-    opintojenLaajuus: {},
-    opintojenLaajuusYksikkö: {},
-    koulutusTyyppi: '',
-    toteutukset: [],
-    lisatiedot: [],
-  });
+  const koulutus = useSelector(
+    (state) => selectKoulutus(state, oid),
+    shallowEqual
+  );
+  const toteutukset = useSelector((state) => selectJarjestajat(state, oid));
+  const loading = useSelector((state) => selectLoading(state));
   useEffect(() => {
-    async function getData() {
-      const [koulutusData, toteutukset] = await Promise.all([
-        restStore.getKoulutusPromise(oid),
-        restStore.getKoulutusJarjestajatPromise(oid),
-      ]);
-      const kuvausData = await restStore.getKuvausPromise(
-        koulutusData.koulutus.koodiUri
-      ); //TODO: Proper error handling
-      setState({
-        kuvaus: kuvausData.kuvaus,
-        koulutusAla: koulutusData.metadata.koulutusala,
-        tutkintoNimi: koulutusData.nimi,
-        tutkintoNimikkeet: koulutusData.metadata.tutkintonimike,
-        opintojenLaajuus: koulutusData.metadata.opintojenLaajuus,
-        opintojenLaajuusYksikkö: koulutusData.metadata.opintojenLaajuusyksikko,
-        koulutusTyyppi: koulutusData.metadata.tyyppi,
-        toteutukset: toteutukset.hits,
-        lisatiedot: koulutusData.metadata.lisatiedot,
-      });
+    if (!koulutus) {
+      dispatch(fetchKoulutusWithRelatedData(oid));
     }
-    getData();
-  }, [oid, restStore]);
-  return (
+  }, [dispatch, koulutus, oid]);
+
+  return loading ? (
+    <LoadingCircle />
+  ) : (
     <Container className={classes.container}>
       <Box display="flex" flexDirection="column" alignItems="center">
         <Box mt={5} ml={9} alignSelf="start">
           <Murupolku
             path={[
               { name: t('koulutus.hakutulos'), link: hakuStore.createHakuUrl },
-              { name: l.localize(state.tutkintoNimi) },
+              { name: l.localize(koulutus?.tutkintoNimi) },
             ]}
           />
         </Box>
         <Box mt={4}>
-          {state.koulutusAla.map((ala) => (
+          {koulutus?.koulutusAla?.map((ala) => (
             <Typography
               key={ala.koodiUri}
               className={classes.alatText}
@@ -90,7 +78,7 @@ const Koulutus = (props) => {
         </Box>
         <Box mt={1}>
           <Typography variant="h1" component="h2">
-            {l.localize(state.tutkintoNimi)}
+            {l.localize(koulutus?.tutkintoNimi)}
           </Typography>
         </Box>
         <Box className={classes.imageContainer} mt={7.5}>
@@ -102,11 +90,14 @@ const Koulutus = (props) => {
         </Box>
         <KoulutusInfoGrid
           className={classes.root}
-          nimikkeet={state.tutkintoNimikkeet}
-          koulutustyyppi={state.koulutusTyyppi}
-          laajuus={[state.opintojenLaajuus, state.opintojenLaajuusYksikkö]}
+          nimikkeet={koulutus?.tutkintoNimikkeet}
+          koulutustyyppi={koulutus?.koulutusTyyppi}
+          laajuus={[
+            koulutus?.opintojenLaajuus,
+            koulutus?.opintojenLaajuusYksikkö,
+          ]}
         />
-        {state.toteutukset?.length > 0 ? (
+        {toteutukset?.length > 0 ? (
           <HakuKaynnissaCard
             title={t('koulutus.haku-kaynnissa')}
             text={t('koulutus.katso-jarjestavat')}
@@ -124,11 +115,11 @@ const Koulutus = (props) => {
 
         <TextBox
           heading={t('koulutus.kuvaus')}
-          text={l.localize(state.kuvaus)}
+          text={l.localize(koulutus?.kuvaus)}
           className={classes.root}
         />
         <Box id="tarjonta">
-          <ToteutusList toteutukset={state.toteutukset} />
+          <ToteutusList toteutukset={toteutukset} />
         </Box>
         {/* {state.lisatiedot ? (
           <Box

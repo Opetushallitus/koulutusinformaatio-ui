@@ -6,6 +6,8 @@
   "dependencies": {
     "@material-ui/core": "^4.5.1",
     "@material-ui/icons": "^4.5.1",
+    "@reduxjs/toolkit": "^1.2.5",
+    "axios": "^0.19.2",
     "clsx": "^1.1.0",
     "i18next": "^11.6.0",
     "i18next-browser-languagedetector": "^2.2.3",
@@ -23,9 +25,11 @@
     "react-dom": "^16.4.2",
     "react-i18next": "^11.2.1",
     "react-lines-ellipsis": "^0.14.1",
+    "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-router-hash-link": "^1.2.2",
     "react-select": "^3.0.8",
+    "redux": "^4.0.5",
     "remove-markdown": "^0.3.0",
     "superagent": "^3.8.3",
     "typeface-open-sans": "0.0.75",
@@ -75,6 +79,7 @@
     "puppeteer": "^1.7.0",
     "react-app-rewired": "2.1.5",
     "react-scripts": "^3.4.0",
+    "redux-mock-store": "^1.5.4",
     "start-server-and-test": "^1.7.0"
   },
   "husky": {

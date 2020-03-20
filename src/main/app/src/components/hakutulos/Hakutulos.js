@@ -6,7 +6,6 @@ import { ExpandMore, ExpandLess } from '@material-ui/icons';
 import {
   Box,
   Button,
-  CircularProgress,
   Hidden,
   Grid,
   Link,
@@ -33,6 +32,7 @@ import MobileFiltersOnTopMenu from './MobileFiltersOnTopMenu';
 import { useStores } from '../../hooks';
 import Murupolku from '../common/Murupolku';
 import { useHistory } from 'react-router-dom';
+import LoadingCircle from '../common/LoadingCircle';
 
 const useStyles = makeStyles((theme) => ({
   hakutulosSisalto: {
@@ -133,14 +133,7 @@ const Hakutulos = () => {
         if (restStore.restErrorsArrLength > 0) {
           return <BackendErrorMessage />;
         }
-        return (
-          <Grid
-            container
-            style={{ padding: theme.spacing(6) }}
-            justify="center">
-            <CircularProgress size={50} disableShrink />
-          </Grid>
-        );
+        return <LoadingCircle />;
       case 'done':
         if (hakuStore.toggle === 'koulutus' && hakuStore.hasKoulutusResult) {
           return koulutusResult.map((r) => {
