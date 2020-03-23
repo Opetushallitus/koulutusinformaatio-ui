@@ -402,20 +402,24 @@ class HakuStore {
 
   @action
   updateKoulutusFilters = (restKoulutusResult) => {
-    this.koulutusFilters.opetusKieli = restKoulutusResult.filters.opetuskieli;
-    this.koulutusFilters.koulutusTyyppi = restKoulutusResult.filters.koulutustyyppi;
-    this.koulutusFilters.koulutusala = restKoulutusResult.filters.koulutusala;
-    this.koulutusFilters.maakunta = restKoulutusResult.filters.maakunta;
-    this.koulutusFilters.kunta = restKoulutusResult.filters.kunta;
+    set(this.koulutusFilters, {
+      opetusKieli: restKoulutusResult.filters.opetuskieli,
+      koulutusTyyppi: restKoulutusResult.filters.koulutustyyppi,
+      koulutusala: restKoulutusResult.filters.koulutusala,
+      maakunta: restKoulutusResult.filters.maakunta,
+      kunta: restKoulutusResult.filters.kunta,
+    });
   };
 
   @action
   updateOppilaitosFilters = (restOppilaitosResult) => {
-    this.oppilaitosFilters.opetusKieli = restOppilaitosResult.filters.opetuskieli;
-    this.oppilaitosFilters.koulutusTyyppi = restOppilaitosResult.filters.koulutustyyppi;
-    this.oppilaitosFilters.koulutusala = restOppilaitosResult.filters.koulutusala;
-    this.oppilaitosFilters.maakunta = restOppilaitosResult.filters.maakunta;
-    this.oppilaitosFilters.kunta = restOppilaitosResult.filters.kunta;
+    set(this.oppilaitosFilters, {
+      opetusKieli: restOppilaitosResult.filters.opetuskieli,
+      koulutusTyyppi: restOppilaitosResult.filters.koulutustyyppi,
+      koulutusala: restOppilaitosResult.filters.koulutusala,
+      maakunta: restOppilaitosResult.filters.maakunta,
+      kunta: restOppilaitosResult.filters.kunta,
+    });
   };
 
   @action
