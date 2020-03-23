@@ -111,9 +111,7 @@ class HakuStore {
     //TODO check allowed values
     const koulutus = filter.koulutus ? filter.koulutus.split(',') : [];
     const kieli = filter.kieli ? filter.kieli.split(',') : [];
-    const paikkakunta = filter.paikkakunta
-      ? filter.paikkakunta.toLowerCase()
-      : '';
+    const paikkakunta = filter.paikkakunta ? filter.paikkakunta.toLowerCase() : '';
 
     const change = !(
       this.filter.paikkakunta === paikkakunta &&
@@ -257,15 +255,11 @@ class HakuStore {
       this.paging.pageOppilaitos +
       '&pagesize=' +
       this.paging.pageSize +
-      (this.filter.paikkakunta
-        ? '&paikkakunta=' + this.filter.paikkakunta
-        : '') +
+      (this.filter.paikkakunta ? '&paikkakunta=' + this.filter.paikkakunta : '') +
       (this.filter.koulutus.length
         ? '&koulutustyyppi=' + this.filter.koulutus.join(',')
         : '') +
-      (this.filter.kieli.length
-        ? '&kieli=' + this.filter.kieli.join(',')
-        : '') +
+      (this.filter.kieli.length ? '&kieli=' + this.filter.kieli.join(',') : '') +
       (this.filter.opetuskieli.length
         ? '&opetuskieli=' + this.filter.opetuskieli.join(',')
         : '') +
@@ -285,15 +279,11 @@ class HakuStore {
       this.paging.pageOppilaitos +
       '&pagesize=' +
       this.paging.pageSize +
-      (this.filter.paikkakunta
-        ? '&paikkakunta=' + this.filter.paikkakunta
-        : '') +
+      (this.filter.paikkakunta ? '&paikkakunta=' + this.filter.paikkakunta : '') +
       (this.filter.koulutus.length
         ? '&koulutustyyppi=' + this.filter.koulutus.join(',')
         : '') +
-      (this.filter.kieli.length
-        ? '&kieli=' + this.filter.kieli.join(',')
-        : '') +
+      (this.filter.kieli.length ? '&kieli=' + this.filter.kieli.join(',') : '') +
       '&lng=' +
       l.getLanguage()
     );
@@ -385,45 +375,22 @@ class HakuStore {
       this.state = 'pending';
       this.rest.search(
         [
-          this.rest.searchKoulutuksetPromise(
-            this.keyword,
-            this.paging,
-            this.filter
-          ),
-          this.rest.searchOppilaitoksetPromise(
-            this.keyword,
-            this.paging,
-            this.filter
-          ),
+          this.rest.searchKoulutuksetPromise(this.keyword, this.paging, this.filter),
+          this.rest.searchOppilaitoksetPromise(this.keyword, this.paging, this.filter),
         ],
         (result) => {
           runInAction(() => {
             this.koulutusResult = result[0] ? result[0].hits : [];
             this.koulutusCount =
-              result[0] && result[0].hits.length > 0
-                ? result[0].hits.length
-                : 0;
+              result[0] && result[0].hits.length > 0 ? result[0].hits.length : 0;
             this.koulutusTotal = result[0]?.total;
-            this.koulutusFilters.opetusKieli = result[0].filters.opetuskieli;
-            this.koulutusFilters.koulutusTyyppi =
-              result[0].filters.koulutustyyppi;
-            this.koulutusFilters.koulutusala = result[0].filters.koulutusala;
-            this.koulutusFilters.maakunta = result[0].filters.maakunta;
-            this.koulutusFilters.kunta = result[0].filters.kunta;
             this.oppilaitosResult = result[1] ? result[1].hits : [];
             this.oppilaitosCount =
-              result[1] && result[1].hits.length > 0
-                ? result[1].hits.length
-                : 0;
+              result[1] && result[1].hits.length > 0 ? result[1].hits.length : 0;
             this.oppilaitosTotal = result[1]?.total;
-            this.oppilaitosFilters.opetusKieli = result[1].filters.opetuskieli;
-            this.oppilaitosFilters.koulutusTyyppi =
-              result[1].filters.koulutustyyppi;
-            this.oppilaitosFilters.koulutusala = result[1].filters.koulutusala;
-            this.oppilaitosFilters.maakunta = result[1].filters.maakunta;
-            this.oppilaitosFilters.kunta = result[1].filters.kunta;
+            this.updateKoulutusFilters(result[0]);
+            this.updateOppilaitosFilters(result[1]);
             this.state = 'done';
-
             if (onSuccess) {
               onSuccess();
             }
@@ -431,6 +398,24 @@ class HakuStore {
         }
       );
     }
+  };
+
+  @action
+  updateKoulutusFilters = (restKoulutusResult) => {
+    this.koulutusFilters.opetusKieli = restKoulutusResult.filters.opetuskieli;
+    this.koulutusFilters.koulutusTyyppi = restKoulutusResult.filters.koulutustyyppi;
+    this.koulutusFilters.koulutusala = restKoulutusResult.filters.koulutusala;
+    this.koulutusFilters.maakunta = restKoulutusResult.filters.maakunta;
+    this.koulutusFilters.kunta = restKoulutusResult.filters.kunta;
+  };
+
+  @action
+  updateOppilaitosFilters = (restOppilaitosResult) => {
+    this.oppilaitosFilters.opetusKieli = restOppilaitosResult.filters.opetuskieli;
+    this.oppilaitosFilters.koulutusTyyppi = restOppilaitosResult.filters.koulutustyyppi;
+    this.oppilaitosFilters.koulutusala = restOppilaitosResult.filters.koulutusala;
+    this.oppilaitosFilters.maakunta = restOppilaitosResult.filters.maakunta;
+    this.oppilaitosFilters.kunta = restOppilaitosResult.filters.kunta;
   };
 
   @action
@@ -451,6 +436,7 @@ class HakuStore {
             this.koulutusResult = result[0] ? result[0].hits : [];
             this.koulutusCount = result[0] ? result[0].hits.length : 0;
             this.koulutusTotal = result[0] ? result[0].total : 0;
+            this.updateKoulutusFilters(result[0]);
             this.state = 'done';
             if (onSuccess) {
               onSuccess();
@@ -479,6 +465,7 @@ class HakuStore {
             this.oppilaitosResult = result[0] ? result[0].hits : [];
             this.oppilaitosCount = result[0] ? result[0].hits.length : 0;
             this.oppilaitosTotal = result[0] ? result[0].total : 0;
+            this.updateOppilaitosFilters(result[0]);
             this.state = 'done';
             if (onSuccess) {
               onSuccess();
