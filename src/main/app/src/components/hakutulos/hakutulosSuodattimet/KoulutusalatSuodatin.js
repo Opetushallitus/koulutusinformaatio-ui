@@ -52,18 +52,12 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
         ? Object.entries(koulutusFilters.koulutusala)
         : Object.entries(oppilaitosFilters.koulutusala);
 
-    if (_.size(expandedKoulutusTaso1) > 0) {
-      const id = expandedKoulutusTaso1[0];
-      setExpandedKoulutusTaso1(_.find(koulutusalatJS, (ka) => ka[0] === id));
-    }
-
     setKoulutusAlat(_.orderBy(koulutusalatJS, [`[1]nimi.[${i18n.language}]`]));
     setValitutKoulutusAlat(filter.koulutusala);
     setSelectedKoulutusalatStr(
       filter.koulutusala.map((ka) => ka?.['name']?.[i18n.language]).join(', ')
     );
   }, [
-    expandedKoulutusTaso1,
     filter.koulutusala,
     i18n.language,
     koulutusFilters.koulutusala,
@@ -71,6 +65,14 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
     oppilaitosFilters.koulutusala,
     toggle,
   ]);
+
+  useEffect(() => {
+    if (_.size(expandedKoulutusTaso1) > 0) {
+      setExpandedKoulutusTaso1(
+        _.find(koulutusAlat, (ka) => ka[0] === expandedKoulutusTaso1[0])
+      );
+    }
+  }, [expandedKoulutusTaso1, koulutusAlat]);
 
   const handleKoulutusalaOuterToggle = (koulutusalaTaso1) => () => {
     setExpandedKoulutusTaso1(koulutusalaTaso1);
