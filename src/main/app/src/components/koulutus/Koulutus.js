@@ -12,7 +12,7 @@ import { HashLink as Link } from 'react-router-hash-link';
 import { colors } from '../../colors';
 import DefaultHeroImage from '../../assets/images/herokuva_default.png';
 import Murupolku from '../common/Murupolku';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
   fetchKoulutusWithRelatedData,
@@ -21,6 +21,7 @@ import {
   selectJarjestajat,
 } from '../../reducers/koulutusSlice';
 import LoadingCircle from '../common/LoadingCircle';
+import qs from 'query-string';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },
@@ -35,22 +36,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Koulutus = (props) => {
+  const history = useHistory();
+  const { draft } = qs.parse(history.location.search);
   const dispatch = useDispatch();
   const classes = useStyles();
   const { oid } = useParams();
   const { hakuStore } = useStores();
   const { t } = useTranslation();
-  const koulutus = useSelector(
-    (state) => selectKoulutus(state, oid),
-    shallowEqual
-  );
+  const koulutus = useSelector((state) => selectKoulutus(state, oid), shallowEqual);
   const toteutukset = useSelector((state) => selectJarjestajat(state, oid));
   const loading = useSelector((state) => selectLoading(state));
   useEffect(() => {
     if (!koulutus) {
-      dispatch(fetchKoulutusWithRelatedData(oid));
+      dispatch(fetchKoulutusWithRelatedData(oid, draft));
     }
-  }, [dispatch, koulutus, oid]);
+  }, [dispatch, koulutus, oid, draft]);
 
   return loading ? (
     <LoadingCircle />
@@ -92,10 +92,7 @@ const Koulutus = (props) => {
           className={classes.root}
           nimikkeet={koulutus?.tutkintoNimikkeet}
           koulutustyyppi={koulutus?.koulutusTyyppi}
-          laajuus={[
-            koulutus?.opintojenLaajuus,
-            koulutus?.opintojenLaajuusYksikkö,
-          ]}
+          laajuus={[koulutus?.opintojenLaajuus, koulutus?.opintojenLaajuusYksikkö]}
         />
         {toteutukset?.length > 0 ? (
           <HakuKaynnissaCard

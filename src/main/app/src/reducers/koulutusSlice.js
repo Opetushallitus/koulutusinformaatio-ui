@@ -1,9 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
-  getKoulutus,
-  getKoulutusKuvaus,
-  getKoulutusJarjestajat,
-} from '../api/konfoApi';
+import { getKoulutus, getKoulutusKuvaus, getKoulutusJarjestajat } from '../api/konfoApi';
 import _ from 'lodash';
 
 const IDLE_STATUS = 'idle';
@@ -74,14 +70,12 @@ export const {
 } = koulutusSlice.actions;
 export default koulutusSlice.reducer;
 
-export const fetchKoulutus = (oid) => async (dispatch) => {
+export const fetchKoulutus = (oid, draft) => async (dispatch) => {
   try {
     dispatch(fetchKoulutusStart());
-    const koulutusData = await getKoulutus(oid);
+    const koulutusData = await getKoulutus(oid, draft);
     if (koulutusData?.koulutustyyppi === 'amm') {
-      const koulutusKuvausData = await getKoulutusKuvaus(
-        koulutusData.koulutus.koodiUri
-      );
+      const koulutusKuvausData = await getKoulutusKuvaus(koulutusData.koulutus.koodiUri);
       _.set(koulutusData, 'metadata.kuvaus', koulutusKuvausData);
     }
     dispatch(fetchKoulutusSuccess({ oid, koulutus: koulutusData }));
@@ -100,10 +94,10 @@ export const fetchKoulutusJarjestajat = (oid) => async (dispatch) => {
   }
 };
 
-export const fetchKoulutusWithRelatedData = (oid) => {
+export const fetchKoulutusWithRelatedData = (oid, draft) => {
   return (dispatch) => {
     Promise.all([
-      dispatch(fetchKoulutus(oid)),
+      dispatch(fetchKoulutus(oid, draft)),
       dispatch(fetchKoulutusJarjestajat(oid)),
     ]);
   };
@@ -128,5 +122,4 @@ export const selectKoulutus = (state, oid) => {
 };
 
 export const selectLoading = (state) => state.koulutus.loading;
-export const selectJarjestajat = (state, oid) =>
-  state.koulutus.jarjestajat[oid]?.hits;
+export const selectJarjestajat = (state, oid) => state.koulutus.jarjestajat[oid]?.hits;
