@@ -36,7 +36,7 @@ const OpetusKieliSuodatin = ({ expanded, elevation, displaySelected }) => {
     const orderedOpetusKielet = _.orderBy(
       _opetusKielet,
       ['[1].count', `[1].nimi.[${i18n.language}]`],
-      ['desc', 'asc']
+      ['desc', 'desc']
     );
     const removedMuuKieli = _.remove(
       orderedOpetusKielet,
