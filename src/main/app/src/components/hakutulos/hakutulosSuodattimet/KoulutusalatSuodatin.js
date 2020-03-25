@@ -66,6 +66,7 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
     toggle,
   ]);
 
+  // Jos 2:n tason koulutusalan suodatin-lista avattu ja arvot muuttuu, korvataan sen storessa olevalla
   useEffect(() => {
     if (_.size(expandedKoulutusTaso1) > 0) {
       setExpandedKoulutusTaso1(
