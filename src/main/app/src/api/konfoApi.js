@@ -10,8 +10,8 @@ const get = async (url) => {
   return response.data;
 };
 
-export const getKoulutus = (oid) =>
-  get(urls.url('konfo-backend.koulutus') + oid);
+export const getKoulutus = (oid, draft) =>
+  get(urls.url('konfo-backend.koulutus') + oid + (draft ? '?draft=true' : ''));
 
 export const getKoulutusKuvaus = (uri) =>
   get(urls.url('konfo-backend.koulutus.kuvaus') + uri);

@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { Switch, Route } from 'react-router-dom';
 import KonfoStore from './stores/konfo-store';
 import { Provider } from 'mobx-react';
+import Draft from './components/common/Draft';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import Etusivu from './components/Etusivu';
@@ -127,18 +128,13 @@ const App = () => {
         <MuiThemeProvider theme={theme}>
           <React.Fragment>
             <div className={classes.root}>
+              <Draft />
               <Header toggleMenu={toggleMenu} isOpen={menuVisible} />
-              <SideMenu
-                small={matches}
-                menuVisible={menuVisible}
-                closeMenu={closeMenu}
-              />
+              <SideMenu small={matches} menuVisible={menuVisible} closeMenu={closeMenu} />
               <main
                 id="app-main-content"
                 className={clsx(matches ? classes.smContent : classes.content, {
-                  [matches
-                    ? classes.smContentShift
-                    : classes.contentShift]: menuVisible,
+                  [matches ? classes.smContentShift : classes.contentShift]: menuVisible,
                 })}>
                 {main}
               </main>
