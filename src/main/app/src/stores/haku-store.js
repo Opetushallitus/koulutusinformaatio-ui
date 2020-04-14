@@ -43,7 +43,8 @@ class HakuStore {
     pageKoulutus: 1,
     pageSize: 20,
   };
-  @observable sort = 'asc';
+  @observable order = 'desc';
+  @observable sort = 'score';
   @observable filter = {
     koulutus: [],
     koulutustyyppi: [],
@@ -56,6 +57,7 @@ class HakuStore {
   };
   @observable pageSizeArray = [5, 10, 20, 30, 50];
   @observable showHakutulosFilters = false;
+  @observable pageSortArray = ['score_desc', 'name_asc', 'name_desc'];
 
   constructor(rest) {
     this.rest = rest;
@@ -188,6 +190,13 @@ class HakuStore {
   toggleSort = (newSort) => {
     const change = this.sort !== newSort;
     this.sort = newSort;
+    return change;
+  };
+
+  @action
+  toggleOrder = (newOrder) => {
+    const change = this.order !== newOrder;
+    this.order = newOrder;
     return change;
   };
 
@@ -341,7 +350,8 @@ class HakuStore {
     this.oppilaitosResult = [];
     this.oppilaitosCount = 0;
     this.toggle = 'koulutus';
-    this.sort = 'asc';
+    this.sort = 'score';
+    this.order = 'desc';
     this.koulutusOffset = 0;
     this.koulutusTotal = 0;
     this.oppilaitosOffset = 0;
@@ -432,7 +442,8 @@ class HakuStore {
             this.keyword,
             this.paging,
             this.filter,
-            this.sort
+            this.sort,
+            this.order
           ),
         ],
         (result) => {
@@ -461,7 +472,8 @@ class HakuStore {
             this.keyword,
             this.paging,
             this.filter,
-            this.sort
+            this.sort,
+            this.order
           ),
         ],
         (result) => {

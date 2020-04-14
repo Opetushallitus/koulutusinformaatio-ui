@@ -22,7 +22,7 @@ class RestStore {
   };
 
   @action
-  searchKoulutuksetPromise = (keyword, paging, filter, sort) => {
+  searchKoulutuksetPromise = (keyword, paging, filter, sort, order) => {
     const sijainnit = filter.sijainti.concat(filter.selectedsijainnit);
     return superagent
       .get(this.urlStore.urls.url('konfo-backend.search.koulutukset'))
@@ -43,12 +43,13 @@ class RestStore {
         sijainti: sijainnit ? sijainnit.map(({ id }) => id).join(',') : '',
         lng: l.getLanguage(),
         sort: sort,
+        order: order,
       })
       .catch(this.handleError);
   };
 
   @action
-  searchOppilaitoksetPromise = (keyword, paging, filter, sort) => {
+  searchOppilaitoksetPromise = (keyword, paging, filter, sort, order) => {
     const sijainnit = filter.sijainti.concat(filter.selectedsijainnit);
     return superagent
       .get(this.urlStore.urls.url('konfo-backend.search.oppilaitokset'))
@@ -69,6 +70,7 @@ class RestStore {
         sijainti: sijainnit ? sijainnit.map(({ id }) => id).join(',') : '',
         lng: l.getLanguage(),
         sort: sort,
+        order: order,
       })
       .catch(this.handleError);
   };
@@ -129,9 +131,7 @@ class RestStore {
         } else {
           const koulutus = res.body ? res.body : undefined;
           const organisaatio =
-            res.body && res.body.organisaatio
-              ? res.body.organisaatio
-              : undefined;
+            res.body && res.body.organisaatio ? res.body.organisaatio : undefined;
           onSuccess(koulutus, organisaatio);
         }
       });
@@ -209,9 +209,7 @@ class RestStore {
   @action
   getKuvausPromise = (koulutuskoodi) => {
     return superagent
-      .get(
-        this.urlStore.urls.url('konfo-backend.koulutus.kuvaus') + koulutuskoodi
-      )
+      .get(this.urlStore.urls.url('konfo-backend.koulutus.kuvaus') + koulutuskoodi)
       .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
       .then((res) => res.body)
       .catch(this.handleError);
