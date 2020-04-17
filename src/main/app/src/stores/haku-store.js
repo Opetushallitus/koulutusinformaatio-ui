@@ -200,6 +200,22 @@ class HakuStore {
     return change;
   };
 
+  @computed get isScoreSort() {
+    return this.sort !== 'name';
+  }
+
+  @computed get isNameSort() {
+    return this.sort === 'name';
+  }
+
+  @computed get isNameSortAsc() {
+    return this.sort === 'name' && this.order === 'asc';
+  }
+
+  @computed get isNameSortDesc() {
+    return this.sort === 'name' && this.order !== 'asc';
+  }
+
   @action
   setOpetusKieliFilter = (valitutOpetusKielet = []) => {
     const change = valitutOpetusKielet !== this.filter.opetuskieli;

@@ -115,10 +115,6 @@ const Hakutulos = () => {
     const newOrder = newPageSort === 'name_asc' ? 'asc' : 'desc';
     const newSort = newPageSort === 'score_desc' ? 'score' : 'name';
 
-    console.log(newPageSort);
-    console.log(newOrder);
-    console.log(newSort);
-
     setPageSort(newPageSort);
     search.sort = newSort;
     search.order = newOrder;
@@ -127,6 +123,17 @@ const Hakutulos = () => {
     hakuStore.toggleOrder(newOrder);
     hakuStore.searchKoulutukset();
     hakuStore.searchOppilaitokset();
+  };
+
+  const getPageSortTranslationKey = (sort) => {
+    switch (sort) {
+      case 'score_desc':
+        return 'haku.jarjesta_osuvin';
+      case 'name_desc':
+        return 'haku.jarjesta_aakkoset_o_a';
+      case 'name_asc':
+        return 'haku.jarjesta_aakkoset_a_o';
+    }
   };
 
   const ResultList = observer(() => {
@@ -289,7 +296,7 @@ const Hakutulos = () => {
                       key={sort}
                       classes={{ root: classes.menuItemRoot }}
                       value={sort}>
-                      {t('haku.jarjesta_' + sort)}
+                      {t(getPageSortTranslationKey(sort))}
                     </MenuItem>
                   ))}
                 </Select>

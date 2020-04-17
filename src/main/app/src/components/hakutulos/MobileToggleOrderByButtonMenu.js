@@ -35,7 +35,6 @@ const MobileToggleOrderByButtonMenu = ({ elevation }) => {
   const { hakuStore } = useStores();
 
   const updateSortAndOrder = (newSort, newOrder) => {
-    console.log(newSort + ' ' + newOrder);
     const search = qs.parse(history.location.search);
     search.sort = newSort;
     search.order = newOrder;
@@ -47,18 +46,15 @@ const MobileToggleOrderByButtonMenu = ({ elevation }) => {
   };
 
   const toggleToScoreSort = () => {
-    if (hakuStore.sort !== 'score') {
+    if (!hakuStore.isScoreSort) {
       updateSortAndOrder('score', 'desc');
     }
   };
 
-  const toggleToNameSort = () => {
-    updateSortAndOrder('name', 'asc');
-  };
+  const toggleToNameSort = () => updateSortAndOrder('name', 'asc');
 
-  const toggleNameSortOrder = () => {
+  const toggleNameSortOrder = () =>
     updateSortAndOrder('name', hakuStore.order !== 'asc' ? 'asc' : 'desc');
-  };
 
   return (
     <Grid
@@ -76,26 +72,20 @@ const MobileToggleOrderByButtonMenu = ({ elevation }) => {
         <ButtonGroup fullWidth>
           <Button
             className={
-              hakuStore.sort !== 'name' ? classes.buttonActive : classes.buttonInactive
+              hakuStore.isScoreSort ? classes.buttonActive : classes.buttonInactive
             }
             onClick={toggleToScoreSort}>
-            {t('haku.jarjesta_mobiili_score_desc')}
+            {t('haku.jarjesta_mobiili_osuvin')}
           </Button>
           <Button
             className={
-              hakuStore.sort === 'name' ? classes.buttonActive : classes.buttonInactive
+              hakuStore.isNameSort ? classes.buttonActive : classes.buttonInactive
             }
-            onClick={hakuStore.sort === 'name' ? toggleNameSortOrder : toggleToNameSort}
-            endIcon={
-              hakuStore.sort == 'name' && hakuStore.order !== 'asc' ? (
-                <ExpandLess />
-              ) : (
-                <ExpandMore />
-              )
-            }>
-            {hakuStore.sort == 'name' && hakuStore.order !== 'asc'
-              ? t('haku.jarjesta_mobiili_name_desc')
-              : t('haku.jarjesta_mobiili_name_asc')}
+            onClick={hakuStore.isNameSort ? toggleNameSortOrder : toggleToNameSort}
+            endIcon={hakuStore.isNameSortDesc ? <ExpandLess /> : <ExpandMore />}>
+            {hakuStore.isNameSortDesc
+              ? t('haku.jarjesta_mobiili_aakkoset_o_a')
+              : t('haku.jarjesta_mobiili_aakkoset_a_o')}
           </Button>
         </ButtonGroup>
       </Grid>
