@@ -8,9 +8,7 @@ class UrlStore {
   @observable loading = true;
 
   isTest() {
-    return (
-      process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'
-    );
+    return process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
   }
 
   @action
@@ -19,10 +17,12 @@ class UrlStore {
       const url = '/konfo/rest/config/frontProperties';
       const frontProperties = await (this.isTest()
         ? Promise.resolve({
-            'konfo-backend.content':
-              'https://konfo-content.untuvaopintopolku.fi/$1',
+            'konfo-backend.content': 'https://konfo-content.untuvaopintopolku.fi/$1',
           })
-        : superagent.get(url).then((res) => res.body));
+        : superagent
+            .get(url)
+            .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
+            .then((res) => res.body));
       runInAction(() => {
         this.urls.addOverrides(frontProperties);
         this.loading = false;

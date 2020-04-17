@@ -1,11 +1,11 @@
 {
-    "compilerOptions": {
-        "experimentalDecorators": true,
-        "jsx": "react",
-        "baseUrl": ".",
-        "paths": {
-            "#/*": ["./*"]
-        }
-    },
-    "include": ["./src", "./cypress"]
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "#/*": ["./*"]
+    }
+  },
+  "include": ["./src", "./cypress"]
 }
