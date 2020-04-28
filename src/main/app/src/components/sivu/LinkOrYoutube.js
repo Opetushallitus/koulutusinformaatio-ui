@@ -37,8 +37,7 @@ const LinkOrYoutube = ({ children, className, href, ...props }) => {
             title={props.url}
             width="560"
             height="315"
-            src={`https://www.youtube.com/embed${(url.query.v &&
-              '/' + url.query.v) ||
+            src={`https://www.youtube.com/embed${(url.query.v && '/' + url.query.v) ||
               url.pathname}`}
             frameBorder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
@@ -49,7 +48,7 @@ const LinkOrYoutube = ({ children, className, href, ...props }) => {
     );
   } else {
     return (
-      <Link target="_blank" rel="noopener" {...props}>
+      <Link target="_blank" rel="noopener" {...props} href={href}>
         {children}
         <OpenInNewIcon className={classes.icon} />
       </Link>
