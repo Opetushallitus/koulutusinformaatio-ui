@@ -22,9 +22,9 @@ import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodati
 import OpetusKieliSuodatin from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
 import KoulutusalatSuodatin from './hakutulosSuodattimet/KoulutusalatSuodatin';
-import MobileOrderByExpansionMenu from './MobileOrderByExpansionMenu';
 import MobileResultsPerPageExpansionMenu from './MobileResultsPerPageExpansionMenu';
 import MobileToggleFiltersButton from './MobileToggleFiltersButton';
+import MobileToggleOrderByButtonMenu from './MobileToggleOrderByButtonMenu';
 
 const useStyles = makeStyles((theme) => ({
   paperAnchorBottom: {
@@ -76,11 +76,7 @@ const MobileFiltersOnTopMenu = () => {
       open={hakuStore.showHakutulosFilters}>
       <AppBar classes={{ root: classes.appBarRoot }}>
         <Toolbar variant="dense" disableGutters>
-          <Grid
-            container
-            justify="space-between"
-            alignItems="center"
-            wrap="nowrap">
+          <Grid container justify="space-between" alignItems="center" wrap="nowrap">
             <Grid item>
               <IconButton color="inherit" onClick={handleFiltersShowToggle}>
                 <Close />
@@ -105,11 +101,7 @@ const MobileFiltersOnTopMenu = () => {
         </Toolbar>
       </AppBar>
       <Container classes={{ root: classes.containerRoot }}>
-        <KoulutusTyyppiSuodatin
-          expanded={false}
-          elevation={0}
-          displaySelected
-        />
+        <KoulutusTyyppiSuodatin expanded={false} elevation={0} displaySelected />
         <Divider style={{ margin: '3px 0' }} />
         <OpetusKieliSuodatin expanded={false} elevation={0} displaySelected />
         <Divider style={{ margin: '3px 0' }} />
@@ -117,8 +109,7 @@ const MobileFiltersOnTopMenu = () => {
         <Divider style={{ margin: '3px 0' }} />
         <KoulutusalatSuodatin expanded={false} elevation={0} displaySelected />
         <Divider style={{ margin: '3px 0' }} />
-        <MobileOrderByExpansionMenu elevation={0} />
-        <Divider style={{ margin: '3px 0' }} />
+        <MobileToggleOrderByButtonMenu elevation={0} />
         <MobileResultsPerPageExpansionMenu elevation={0} />
       </Container>
       <MobileToggleFiltersButton />

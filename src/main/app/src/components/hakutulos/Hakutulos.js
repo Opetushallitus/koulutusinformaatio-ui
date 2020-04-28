@@ -87,20 +87,12 @@ const Hakutulos = () => {
 
   const [pageSize, setPageSize] = useState(0);
 
+  const [pageSort, setPageSort] = useState('score_desc');
+
   useEffect(() => {
     window.scroll(0, 170);
     setPageSize(paging.pageSize);
   }, [paging.pageSize]);
-
-  const handleSortToggle = () => {
-    const search = qs.parse(history.location.search);
-    const newSort = hakuStore.sort === 'asc' ? 'desc' : 'asc';
-    search.sort = newSort;
-    hakuStore.toggleSort(newSort);
-    history.replace({ search: qs.stringify(search) });
-    hakuStore.searchKoulutukset();
-    hakuStore.searchOppilaitokset();
-  };
 
   const handlePageSizeChange = (e) => {
     const search = qs.parse(history.location.search);
@@ -115,6 +107,33 @@ const Hakutulos = () => {
     hakuStore.setPagingPageSize(newPageSize);
     hakuStore.searchKoulutukset();
     hakuStore.searchOppilaitokset();
+  };
+
+  const handlePageSortChange = (e) => {
+    const search = qs.parse(history.location.search);
+    const newPageSort = e.target.value;
+    const newOrder = newPageSort === 'name_asc' ? 'asc' : 'desc';
+    const newSort = newPageSort === 'score_desc' ? 'score' : 'name';
+
+    setPageSort(newPageSort);
+    search.sort = newSort;
+    search.order = newOrder;
+    history.replace({ search: qs.stringify(search) });
+    hakuStore.toggleSort(newSort);
+    hakuStore.toggleOrder(newOrder);
+    hakuStore.searchKoulutukset();
+    hakuStore.searchOppilaitokset();
+  };
+
+  const getPageSortTranslationKey = (sort) => {
+    switch (sort) {
+      case 'score_desc':
+        return 'haku.jarjesta_osuvin';
+      case 'name_desc':
+        return 'haku.jarjesta_aakkoset_o_a';
+      case 'name_asc':
+        return 'haku.jarjesta_aakkoset_a_o';
+    }
   };
 
   const ResultList = observer(() => {
@@ -259,17 +278,28 @@ const Hakutulos = () => {
                     </MenuItem>
                   ))}
                 </Select>
-                <Button
-                  endIcon={hakuStore.sort === 'asc' ? <ExpandMore /> : <ExpandLess />}
+                <Box component="span" classes={{ root: classes.boxRoot }}>
+                  {t('haku.jarjesta')}
+                </Box>
+                <Select
+                  IconComponent={ExpandMore}
+                  className={classes.select}
+                  style={{ marginRight: 4 }}
                   classes={{
-                    root: classes.buttonRoot,
-                    label: classes.buttonLabel,
+                    icon: classes.selectIcon,
+                    selectMenu: classes.selectMenu,
                   }}
-                  onClick={() => handleSortToggle(hakuStore.sort)}>
-                  {hakuStore.sort === 'asc'
-                    ? t('haku.jarjestanimi_a_o')
-                    : t('haku.jarjestanimi_o_a')}
-                </Button>
+                  value={pageSort}
+                  onChange={handlePageSortChange}>
+                  {hakuStore.pageSortArray.map((sort) => (
+                    <MenuItem
+                      key={sort}
+                      classes={{ root: classes.menuItemRoot }}
+                      value={sort}>
+                      {t(getPageSortTranslationKey(sort))}
+                    </MenuItem>
+                  ))}
+                </Select>
               </Grid>
             </Hidden>
           </Grid>
