@@ -82,6 +82,7 @@ const Palaute = (props) => {
       event.preventDefault();
       return superagent
         .post(urlStore.urls.url('konfo-backend.palaute'))
+        .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
         .send('arvosana=' + arvosana)
         .send('palaute=' + palaute)
         .send('path=' + window.location.pathname)
@@ -104,10 +105,7 @@ const Palaute = (props) => {
                 {t('palaute.otsikko')}
               </Typography>
             </Box>
-            <IconButton
-              aria-label="close"
-              className={classes.closeButton}
-              onClick={hide}>
+            <IconButton aria-label="close" className={classes.closeButton} onClick={hide}>
               <CloseIcon />
             </IconButton>
           </DialogTitle>
