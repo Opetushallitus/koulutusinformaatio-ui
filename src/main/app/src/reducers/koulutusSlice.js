@@ -6,25 +6,12 @@ const IDLE_STATUS = 'idle';
 const LOADING_STATUS = 'loading';
 
 export const initialState = {
-  loading: 0,
-  status: IDLE_STATUS,
+  koulutusStatus: IDLE_STATUS,
+  jarjestajatStatus: IDLE_STATUS,
   koulutukset: {},
   jarjestajat: {},
-  error: null,
-};
-
-const fetchStart = (state) => {
-  if (state.status === IDLE_STATUS) {
-    state.loading += 1;
-    state.status = LOADING_STATUS;
-  }
-};
-const fetchFail = (state, action) => {
-  if (state.status === LOADING_STATUS) {
-    state.loading -= 1;
-    state.error = action.payload;
-    state.status = IDLE_STATUS;
-  }
+  koulutusError: null,
+  jarjestajatError: null,
 };
 
 const koulutusSlice = createSlice({
@@ -32,31 +19,43 @@ const koulutusSlice = createSlice({
   initialState,
   reducers: {
     fetchKoulutusStart(state) {
-      fetchStart(state);
+      if (state.koulutusStatus === IDLE_STATUS) {
+        state.koulutusStatus = LOADING_STATUS;
+      }
     },
     fetchJarjestajatStart(state) {
-      fetchStart(state);
+      if (state.jarjestajatStatus === IDLE_STATUS) {
+        state.jarjestajatStatus = LOADING_STATUS;
+      }
     },
     fetchKoulutusSuccess(state, { payload }) {
-      if (state.status === LOADING_STATUS) {
+      if (state.koulutusStatus === LOADING_STATUS) {
         const { koulutus, oid } = payload;
         state.koulutukset[oid] = koulutus;
-        state.loading -= 1;
         state.error = null;
-        state.status = IDLE_STATUS;
+        state.koulutusStatus = IDLE_STATUS;
       }
     },
     fetchJarjestajatSuccess(state, { payload }) {
-      if (state.status === LOADING_STATUS) {
+      if (state.jarjestajatStatus === LOADING_STATUS) {
         const { jarjestajat, oid } = payload;
         state.jarjestajat[oid] = jarjestajat;
-        state.loading -= 1;
         state.error = null;
-        state.status = IDLE_STATUS;
+        state.jarjestajatStatus = IDLE_STATUS;
       }
     },
-    fetchJarjestajatError: fetchFail,
-    fetchKoulutusError: fetchFail,
+    fetchJarjestajatError(state, action) {
+      if (state.jarjestajatStatus === LOADING_STATUS) {
+        state.jarjestajatError = action.payload;
+        state.jarjestajatStatus = IDLE_STATUS;
+      }
+    },
+    fetchKoulutusError(state, action) {
+      if (state.koulutusStatus === LOADING_STATUS) {
+        state.koulutusError = action.payload;
+        state.koulutusStatus = IDLE_STATUS;
+      }
+    },
   },
 });
 
