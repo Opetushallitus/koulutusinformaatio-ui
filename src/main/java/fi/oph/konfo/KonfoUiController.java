@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 public class KonfoUiController {
 
     @GetMapping(value = {
-            "/",
+            "/*",
             "/haku",
             "/sivu/*",
             "/sisaltohaku/*",
