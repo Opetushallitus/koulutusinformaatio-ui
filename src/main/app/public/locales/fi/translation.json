@@ -32,6 +32,13 @@
     "mikä-opintopolku": "Mikä on Opintopolku",
     "tietoturvaseloste": "Tietoturvaseloste"
   },
+  "ei-loydy": {
+    "404": "404",
+    "sivua-ei-löytynyt": "Sivua ei löytynyt",
+    "linkki-on-virheellinen": "Linkki on virheellinen tai vanhentunut.",
+    "takaisin": "Palaa edelliselle sivulle",
+    "etusivulle": "Palaa etusivulle"
+  },
   "sisaltohaku": {
     "otsikko": "Sisältöhaku",
     "hakusana": "Hakusana",

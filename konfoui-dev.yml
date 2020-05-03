@@ -1,6 +1,8 @@
 server:
   servlet:
     context-path: /konfo
+bucket:
+  url: https://konfo-content.untuvaopintopolku.fi/
 host:
   host-oppija: http://localhost:3006
 kartta:
