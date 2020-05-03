@@ -7,18 +7,7 @@ import org.springframework.web.bind.annotation.*;
 public class KonfoUiController {
 
     @GetMapping(value = {
-            "/*",
-            "/haku",
-            "/sivu/*",
-            "/sisaltohaku/*",
-            "/omapolku/*",
-            "/haku/*",
-            "/koulutus",
-            "/koulutus/*",
-            "/toteutus",
-            "/toteutus/*",
-            "/oppilaitos",
-            "/oppilaitos/*"})
+            "/**"})
     public String frontProperties() {
         return "/index.html";
     }
