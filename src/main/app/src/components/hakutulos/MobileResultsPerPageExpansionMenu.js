@@ -1,37 +1,43 @@
 import React from 'react';
-import { observer } from 'mobx-react';
 import { useHistory } from 'react-router-dom';
-import { Grid, Typography } from '@material-ui/core';
-import qs from 'query-string';
-import _ from 'lodash';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { useStores } from '../../hooks';
+import _ from 'lodash';
+import qs from 'query-string';
+import { Grid, Typography } from '@material-ui/core';
+import { clearOffsetAndPaging, searchAll, setSize } from '#/src/reducers/hakutulosSlice';
+import { getAPIRequestParams } from '#/src/reducers/hakutulosSliceSelector';
 import { SuodatinMobileSlider } from './hakutulosSuodattimet/CustomizedMuiComponents';
 
 const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
   const history = useHistory();
   const { t } = useTranslation();
-  const { hakuStore } = useStores();
-  const { pageSizeArray, paging } = hakuStore;
-
-  const marks = pageSizeArray.map((size) => ({
-    value: size,
-    label: _.toString(size),
+  const dispatch = useDispatch();
+  const apiRequestPaparms = useSelector(getAPIRequestParams);
+  const { pageSizeArray, size } = useSelector(
+    (state) => ({
+      pageSizeArray: state.hakutulos.pageSizeArray,
+      size: state.hakutulos.size,
+    }),
+    shallowEqual
+  );
+  const marks = pageSizeArray.map((_size) => ({
+    value: _size,
+    label: _.toString(_size),
   }));
 
   const valueText = (value) => value;
 
-  const handleSliderValueChange = (e, newValue) => {
+  const handleSliderValueChange = (e, newSize) => {
     const search = qs.parse(history.location.search);
 
-    search.pagesize = newValue;
+    search.pagesize = newSize;
     search.kpage = 1;
     search.opage = 1;
     history.replace({ search: qs.stringify(search) });
-    hakuStore.clearOffsetAndPaging();
-    hakuStore.setPagingPageSize(newValue);
-    hakuStore.searchKoulutukset();
-    hakuStore.searchOppilaitokset();
+    dispatch(clearOffsetAndPaging());
+    dispatch(setSize({ newSize }));
+    dispatch(searchAll({ ...apiRequestPaparms, size: newSize }));
   };
 
   return (
@@ -48,7 +54,7 @@ const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
       </Grid>
       <Grid item xs={12} sm>
         <SuodatinMobileSlider
-          defaultValue={paging.pageSize}
+          defaultValue={size}
           track={false}
           min={_.min(pageSizeArray)}
           max={_.max(pageSizeArray)}
@@ -63,4 +69,4 @@ const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
   );
 };
 
-export default observer(MobileResultsPerPageExpansionMenu);
+export default MobileResultsPerPageExpansionMenu;

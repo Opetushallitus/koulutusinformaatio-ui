@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { observer } from 'mobx-react';
 import { useHistory } from 'react-router-dom';
-import { CssBaseline, makeStyles } from '@material-ui/core';
-import MuiFlatPagination from 'material-ui-flat-pagination';
+import { useSelector, useDispatch } from 'react-redux';
 import qs from 'query-string';
-import { useStores } from '../../hooks';
+import MuiFlatPagination from 'material-ui-flat-pagination';
+import { CssBaseline, makeStyles } from '@material-ui/core';
+import {
+  getHakutulosPagination,
+  getAPIRequestParams,
+} from '#/src/reducers/hakutulosSliceSelector';
+import {
+  setKoulutusOffsetAndPage,
+  searchKoulutukset,
+  searchOppilaitokset,
+  setOppilaitosOffsetAndPage,
+} from '#/src/reducers/hakutulosSlice';
 
 const useStyles = makeStyles((theme) => ({
   paginationRootCurrent: {
@@ -12,66 +21,63 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Pagination = observer(() => {
+const Pagination = ({ size }) => {
   const history = useHistory();
   const classes = useStyles();
-  const { hakuStore } = useStores();
+
+  const paginationProps = useSelector(getHakutulosPagination);
+  const apiRequestParams = useSelector(getAPIRequestParams);
+  const dispatch = useDispatch();
 
   const [total, setTotal] = useState(0);
   const [offset, setOffset] = useState(10);
 
   useEffect(() => {
     setTotal(
-      hakuStore.toggle === 'koulutus'
-        ? hakuStore.koulutusTotal
-        : hakuStore.oppilaitosTotal
+      paginationProps.selectedTab === 'koulutus'
+        ? paginationProps.koulutusTotal
+        : paginationProps.oppilaitosTotal
     );
     setOffset(
-      hakuStore.toggle === 'koulutus'
-        ? hakuStore.koulutusOffset
-        : hakuStore.oppilaitosOffset
+      paginationProps.selectedTab === 'koulutus'
+        ? paginationProps.koulutusOffset
+        : paginationProps.oppilaitosOffset
     );
-  }, [
-    hakuStore.koulutusOffset,
-    hakuStore.oppilaitosOffset,
-    hakuStore.koulutusTotal,
-    hakuStore.oppilaitosTotal,
-    hakuStore.toggle,
-  ]);
+  }, [paginationProps]);
 
   const handleClick = (e, offset, page) => {
     const search = qs.parse(history.location.search);
 
     setOffset(offset);
-    if (hakuStore.toggle === 'koulutus') {
+    if (paginationProps.selectedTab === 'koulutus') {
       search.kpage = page;
       history.replace({ search: qs.stringify(search) });
-      hakuStore.setKoulutusOffset(offset);
-      hakuStore.setPagingPageKoulutus(page);
-      hakuStore.searchKoulutukset();
+      dispatch(setKoulutusOffsetAndPage({ koulutusOffset: offset, koulutusPage: page }));
+      dispatch(searchKoulutukset({ ...apiRequestParams, page, size }));
     } else {
       search.opage = page;
       history.replace({ search: qs.stringify(search) });
-      hakuStore.setOppilaitosOffset(offset);
-      hakuStore.setPagingPageOppilaitos(page);
-      hakuStore.searchOppilaitokset();
+      dispatch(
+        setOppilaitosOffsetAndPage({ oppilaitosOffset: offset, oppilaitosPage: page })
+      );
+      dispatch(searchOppilaitokset({ ...apiRequestParams, page, size }));
     }
   };
 
   return (
-    total > hakuStore.paging.pageSize && (
-      <React.Fragment>
+    total > size && (
+      <div style={{ textAlign: 'center' }}>
         <CssBaseline />
         <MuiFlatPagination
-          limit={hakuStore.paging.pageSize}
+          limit={size}
           offset={offset}
           total={total}
           onClick={(e, offset, page) => handleClick(e, offset, page)}
           classes={{ rootCurrent: classes.paginationRootCurrent }}
         />
-      </React.Fragment>
+      </div>
     )
   );
-});
+};
 
 export default Pagination;

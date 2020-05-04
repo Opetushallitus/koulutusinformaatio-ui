@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { observer } from 'mobx-react';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import Select, { components } from 'react-select';
+import qs from 'query-string';
+import _ from 'lodash';
 import {
   Button,
   Grid,
@@ -10,20 +14,25 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore, SearchOutlined } from '@material-ui/icons';
-import Select, { components } from 'react-select';
-import qs from 'query-string';
-import _ from 'lodash';
-import { useTranslation } from 'react-i18next';
-import { colors } from '../../../colors';
-import { useStores } from '../../../hooks';
-import SummaryContent from './SummaryContent';
 import {
-  SuodatinExpansionPanel,
-  SuodatinExpansionPanelSummary,
-  SuodatinExpansionPanelDetails,
+  clearOffsetAndPaging,
+  searchAll,
+  setSijainti,
+  setSelectedSijainti,
+} from '#/src/reducers/hakutulosSlice';
+import {
+  getAPIRequestParams,
+  getSijaintiFilterProps,
+} from '#/src/reducers/hakutulosSliceSelector';
+import {
   SuodatinCheckbox,
+  SuodatinExpansionPanel,
+  SuodatinExpansionPanelDetails,
+  SuodatinExpansionPanelSummary,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
+import SummaryContent from './SummaryContent';
+import { colors } from '#/src/colors';
 
 const useStyles = makeStyles((theme) => ({
   buttonLabel: {
@@ -36,8 +45,9 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
   const location = useLocation();
   const { i18n, t } = useTranslation();
   const classes = useStyles();
-  const { hakuStore } = useStores();
-  const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
+  const sijaintiFilterProps = useSelector(getSijaintiFilterProps);
+  const apiRequestParams = useSelector(getAPIRequestParams);
+  const dispatch = useDispatch();
 
   const [firstFiveMaakunnat, setfirstFiveMaakunnat] = useState([]);
   const [restMaakunnat, setRestMaakunnat] = useState([]);
@@ -48,80 +58,13 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
   const [selectedSijainnitStr, setSelectedSijainnitStr] = useState('');
 
   useEffect(() => {
-    const maaKunnatJS =
-      toggle === 'koulutus'
-        ? Object.entries(koulutusFilters.maakunta)
-        : Object.entries(oppilaitosFilters.maakunta);
-    const kunnatJS =
-      toggle === 'koulutus'
-        ? Object.entries(koulutusFilters.kunta)
-        : Object.entries(oppilaitosFilters.kunta);
-
-    let orderedMaakunnat = _.orderBy(
-      maaKunnatJS,
-      ['[1].count', `[1].nimi.[${i18n.language}]`],
-      ['desc', 'asc']
-    );
-    const removedEiTiedossaMaakunta = _.remove(
-      orderedMaakunnat,
-      (n) => n[0] === 'maakunta_99'
-    );
-    orderedMaakunnat = _.concat(orderedMaakunnat, removedEiTiedossaMaakunta);
-    const filteredMaaKunnat = orderedMaakunnat.filter(
-      (maakunta) => maakunta[1].count > 0
-    );
-    const filteredKunnat = kunnatJS.filter((kunta) => kunta[1].count > 0);
-
-    const selectKunnat = filteredKunnat.reduce((kuntaAccum, kunta, kuntaIndex) => {
-      return [
-        ...kuntaAccum,
-        {
-          label: `${kunta[1]?.nimi?.[i18n.language]} (${kunta[1]?.count})`,
-          value: kunta[1]?.nimi?.[i18n.language],
-          isMaakunta: false,
-          id: kunta[0],
-          name: kunta[1]?.nimi,
-        },
-      ];
-    }, []);
-    const _searchHitsSijainnit = filteredMaaKunnat.reduce(
-      (accumulator, maaKunta, kuntaIndex) => {
-        return [
-          ...accumulator,
-          {
-            label: `${maaKunta[1]?.nimi?.[i18n.language]} (${maaKunta[1]?.count})`,
-            value: maaKunta[1]?.nimi?.[i18n.language],
-            isMaakunta: true,
-            id: maaKunta[0],
-            name: maaKunta[1]?.nimi,
-          },
-        ];
-      },
-      selectKunnat
-    );
-
-    setfirstFiveMaakunnat(_.slice(orderedMaakunnat, 0, 5));
-    setRestMaakunnat(_.slice(orderedMaakunnat, 5, orderedMaakunnat.length));
-    setSelectedSijainnit(filter.selectedsijainnit);
-    setSearchHitsSijainnit(_searchHitsSijainnit);
-    setCheckedMaakunnat(filter.sijainti);
-    setSelectedSijainnitStr(
-      filter.sijainti
-        .map((maakunta) => maakunta?.['name']?.[i18n.language])
-        .concat(_.map(filter.selectedsijainnit, 'value'))
-        .join(', ')
-    );
-  }, [
-    i18n.language,
-    koulutusFilters.kunta,
-    koulutusFilters.maakunta,
-    location,
-    oppilaitosFilters.kunta,
-    oppilaitosFilters.maakunta,
-    filter.selectedsijainnit,
-    filter.sijainti,
-    toggle,
-  ]);
+    setfirstFiveMaakunnat(sijaintiFilterProps.firstFiveMaakunnat);
+    setRestMaakunnat(sijaintiFilterProps.restMaakunnat);
+    setSelectedSijainnit(sijaintiFilterProps.selectedSijainnit);
+    setSearchHitsSijainnit(sijaintiFilterProps.searchHitsSijainnit);
+    setCheckedMaakunnat(sijaintiFilterProps.checkedMaakunnat);
+    setSelectedSijainnitStr(sijaintiFilterProps.selectedSijainnitStr);
+  }, [sijaintiFilterProps, location]);
 
   const handleMaakuntaToggle = (maakuntaArr) => () => {
     const maakuntaFilterObj = {
@@ -139,7 +82,36 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
       newValitutMaakunnat.push(maakuntaFilterObj);
     }
     setCheckedMaakunnat(newValitutMaakunnat);
-    setHakuStoreSijaintiFilter(newValitutMaakunnat);
+    _setCheckedMaakunnat(newValitutMaakunnat);
+  };
+
+  const handleSelectedSijannitToggle = (_selectedSijainti) => {
+    if (
+      _.size(_selectedSijainti) > 0 &&
+      _selectedSijainti.constructor === Object &&
+      _selectedSijainti.isMaakunta
+    ) {
+      return handleSelectedSijaintiIsMaakunta(_selectedSijainti);
+    }
+
+    const newSelectedSijainnit = [...selectedSijainnit, _selectedSijainti] || [];
+    const selectedSijainnitStr = [
+      ...new Set(
+        newSelectedSijainnit
+          .map(({ id }) => id)
+          .concat(checkedMaakunnat.map(({ id }) => id))
+      ),
+    ].join(',');
+    const search = qs.parse(history.location.search);
+
+    setSelectedSijainnit(newSelectedSijainnit);
+    dispatch(setSelectedSijainti({ newSelectedSijainnit }));
+    search.sijainti = selectedSijainnitStr;
+    search.kpage = 1;
+    search.opage = 1;
+    history.replace({ search: qs.stringify(_.pickBy(search), _.identity) });
+    dispatch(clearOffsetAndPaging());
+    dispatch(searchAll({ ...apiRequestParams, sijainti: selectedSijainnitStr }));
   };
 
   const handleSelectedSijaintiIsMaakunta = (_selectedSijainti) => {
@@ -150,54 +122,24 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
       name: _selectedSijainti?.name,
     };
     const newValitutMaakunnat = [...checkedMaakunnat, maakuntaFilterObj];
-    setHakuStoreSijaintiFilter(newValitutMaakunnat);
+    _setCheckedMaakunnat(newValitutMaakunnat);
   };
 
-  const handleSelectedSijannitToggle = (_selectedSijainti) => {
-    const selectedSijaintitObjEntry = Object.entries(_selectedSijainti);
-
-    if (
-      selectedSijaintitObjEntry.length > 0 &&
-      _selectedSijainti.constructor === Object &&
-      _selectedSijainti.isMaakunta
-    ) {
-      return handleSelectedSijaintiIsMaakunta(_selectedSijainti);
-    }
-
-    const newSelectedSijainnit = [...selectedSijainnit, _selectedSijainti] || [];
-    const combinedSijainnit = [
-      ...new Set(
-        newSelectedSijainnit
-          .map(({ id }) => id)
-          .concat(checkedMaakunnat.map(({ id }) => id))
-      ),
-    ];
-    const search = qs.parse(history.location.search);
-
-    setSelectedSijainnit(newSelectedSijainnit);
-    search.sijainti = combinedSijainnit.join(',');
-    search.kpage = 1;
-    search.opage = 1;
-    history.replace({ search: qs.stringify(search) });
-    hakuStore.setSelectedSijaintiFilter(newSelectedSijainnit);
-    hakuStore.clearOffsetAndPaging();
-    hakuStore.searchKoulutukset();
-    hakuStore.searchOppilaitokset();
-  };
-
-  const setHakuStoreSijaintiFilter = (newValitutKunnat) => {
-    const search = qs.parse(history.location.search);
-    search.sijainti = newValitutKunnat
+  const _setCheckedMaakunnat = (newCheckedOrSelectedMaakunnat) => {
+    const newCheckedOrSelectedSijainnitStr = newCheckedOrSelectedMaakunnat
       .map(({ id }) => id)
       .concat(selectedSijainnit.map(({ id }) => id))
       .join(',');
+    const search = qs.parse(history.location.search);
+    search.sijainti = newCheckedOrSelectedSijainnitStr;
     search.kpage = 1;
     search.opage = 1;
-    history.replace({ search: qs.stringify(search) });
-    hakuStore.setSijaintiFilter(newValitutKunnat);
-    hakuStore.clearOffsetAndPaging();
-    hakuStore.searchKoulutukset();
-    hakuStore.searchOppilaitokset();
+    history.replace({ search: qs.stringify(_.pickBy(search, _.identity)) });
+    dispatch(setSijainti({ newCheckedOrSelectedMaakunnat }));
+    dispatch(clearOffsetAndPaging());
+    dispatch(
+      searchAll({ ...apiRequestParams, sijainti: newCheckedOrSelectedSijainnitStr })
+    );
   };
 
   const handleShowRest = () => {
@@ -353,4 +295,4 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
   );
 };
 
-export default observer(SijaintiSuodatin);
+export default SijaintiSuodatin;
