@@ -33,6 +33,7 @@ import {
 } from './CustomizedMuiComponents';
 import SummaryContent from './SummaryContent';
 import { colors } from '#/src/colors';
+import { Common as C } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({
   buttonLabel: {
@@ -109,7 +110,7 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
     search.sijainti = selectedSijainnitStr;
     search.kpage = 1;
     search.opage = 1;
-    history.replace({ search: qs.stringify(_.pickBy(search), _.identity) });
+    history.replace({ search: qs.stringify(C.withoutNilValues(search)) });
     dispatch(clearOffsetAndPaging());
     dispatch(searchAll({ ...apiRequestParams, sijainti: selectedSijainnitStr }));
   };
@@ -134,7 +135,7 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
     search.sijainti = newCheckedOrSelectedSijainnitStr;
     search.kpage = 1;
     search.opage = 1;
-    history.replace({ search: qs.stringify(_.pickBy(search, _.identity)) });
+    history.replace({ search: qs.stringify(C.withoutNilValues(search)) });
     dispatch(setSijainti({ newCheckedOrSelectedMaakunnat }));
     dispatch(clearOffsetAndPaging());
     dispatch(

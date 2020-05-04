@@ -28,6 +28,7 @@ import {
   getAPIRequestParams,
   getHakutulosProps,
 } from '#/src/reducers/hakutulosSliceSelector';
+import { Common as C } from '#/src/tools/Utils';
 import Murupolku from '#/src/components/common/Murupolku';
 import BackendErrorMessage from './BackendErrorMessage';
 import HakutulosResults from './HakutulosResults';
@@ -112,7 +113,7 @@ const Hakutulos = () => {
     setPageSort(newPageSort);
     search.sort = newSort;
     search.order = newOrder;
-    history.replace({ search: qs.stringify(_.pickBy(search), _.identity) });
+    history.replace({ search: qs.stringify(C.withoutNilValues(search)) });
     dispatch(setSort({ newSort }));
     dispatch(setOrder({ newOrder }));
     dispatch(searchAll({ ...apiRequestParams, order: newOrder, sort: newSort }));
@@ -125,7 +126,7 @@ const Hakutulos = () => {
     search.size = newSize;
     search.kpage = 1;
     search.opage = 1;
-    history.replace({ search: qs.stringify(_.pickBy(search), _.identity) });
+    history.replace({ search: qs.stringify(C.withoutNilValues(search)) });
     dispatch(clearOffsetAndPaging());
     dispatch(setSize({ newSize }));
     dispatch(searchAll({ ...apiRequestParams, size: newSize }));

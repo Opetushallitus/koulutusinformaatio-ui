@@ -7,6 +7,7 @@ import Hakutulos from '../hakutulos/Hakutulos';
 import { getAPIRequestParams } from '#/src/reducers/hakutulosSliceSelector';
 import { searchAll, setKeyword } from '#/src/reducers/hakutulosSlice';
 import { FILTER_TYPES } from '#/src/constants';
+import { Common as C } from '#/src/tools/Utils';
 
 const Haku = () => {
   const history = useHistory();
@@ -33,7 +34,7 @@ const Haku = () => {
       qs.parse(history.location.search, { parseNumbers: true })
     );
     if (!_.isMatch(apiRequestParams, { ...search, keyword }) && !keywordEditMode) {
-      let newSearch = _.pickBy({ ...apiRequestParams, keyword, ...search }, _.identity);
+      let newSearch = C.withoutNilValues({ ...apiRequestParams, keyword, ...search });
       dispatch(setKeyword({ keyword }));
       dispatch(searchAll(newSearch, true, true));
     }

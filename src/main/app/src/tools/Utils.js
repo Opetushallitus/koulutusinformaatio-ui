@@ -1,11 +1,17 @@
 import i18n from './i18n';
 import padStart from 'lodash/padStart';
+import _ from 'lodash';
 
+class Common {
+  // filters 'null', 'empty' and 'undefined', '0' or 'false' are valid values,
+  // does not parse numbers to strings
+  static withoutNilValues(obj) {
+    return _.pickBy(obj, _.toString);
+  }
+}
 class Localizer {
   static getLanguage() {
-    return i18n.languages && i18n.languages[0]
-      ? i18n.language.split('-')[0]
-      : 'fi';
+    return i18n.languages && i18n.languages[0] ? i18n.language.split('-')[0] : 'fi';
   }
 
   static lng(nimi, lng) {
@@ -72,9 +78,7 @@ class OsoiteParser {
     const regexp = '^.+? \\d+';
     const coreAddress = katuosoite.match(regexp);
     if (coreAddress === null) {
-      console.log(
-        'Warning: returning null for core address, input: ' + katuosoite
-      );
+      console.log('Warning: returning null for core address, input: ' + katuosoite);
     }
     return coreAddress;
   }
@@ -114,4 +118,4 @@ class FormatdDate {
   };
 }
 
-export { Parser, Localizer, OsoiteParser, TimeMillisParser, FormatdDate };
+export { Parser, Localizer, OsoiteParser, TimeMillisParser, FormatdDate, Common };

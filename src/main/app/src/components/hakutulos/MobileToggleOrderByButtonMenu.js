@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import qs from 'query-string';
-import _ from 'lodash';
 import { Grid, Typography, ButtonGroup, Button, makeStyles } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import {
@@ -12,6 +11,7 @@ import {
 } from '#/src/reducers/hakutulosSliceSelector';
 import { setSort, setOrder, searchAll } from '#/src/reducers/hakutulosSlice';
 import { colors } from '#/src/colors';
+import { Common as C } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({
   buttonActive: {
@@ -53,7 +53,7 @@ const MobileToggleOrderByButtonMenu = ({ elevation }) => {
     const search = qs.parse(history.location.search);
     search.sort = newSort;
     search.order = newOrder;
-    history.replace({ search: qs.stringify(_.pickBy(search), _.identity) });
+    history.replace({ search: qs.stringify(C.withoutNilValues(search)) });
     dispatch(setSort({ newSort }));
     dispatch(setOrder({ newOrder }));
     dispatch(searchAll({ ...apiRequstParams, order: newOrder, sort: newSort }));
