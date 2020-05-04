@@ -33,6 +33,7 @@ import {
   clearOffsetAndPaging,
 } from '#/src/reducers/hakutulosSlice';
 import { MUI_BREAKPOINTS } from '#/src/constants';
+import { Common as C } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({
   buttonLabel: {
@@ -97,7 +98,7 @@ const KoulutusalaSuodatin = ({ expanded, elevation, displaySelected }) => {
     search.koulutusala = newValitutKoulutusalatStr;
     search.kpage = 1;
     search.opage = 1;
-    history.replace({ search: qs.stringify(_.pickBy(search, _.identity)) });
+    history.replace({ search: qs.stringify(C.withoutNilValues(search)) });
     dispatch(clearOffsetAndPaging());
     dispatch(searchAll({ ...apiRequestParams, koulutusala: newValitutKoulutusalatStr }));
   };

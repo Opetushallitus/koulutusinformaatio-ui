@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import qs from 'query-string';
-import _ from 'lodash';
 import { Grid, List, ListItem, ListItemIcon } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import {
@@ -23,6 +22,7 @@ import {
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 import SummaryContent from './SummaryContent';
+import { Common as C } from '#/src/tools/Utils';
 
 const OpetuskieliSuodatin = ({ expanded, elevation, displaySelected }) => {
   const history = useHistory();
@@ -67,7 +67,7 @@ const OpetuskieliSuodatin = ({ expanded, elevation, displaySelected }) => {
     search.opetuskieli = newCheckedOpetusKieletStr;
     search.kpage = 1;
     search.opage = 1;
-    history.replace({ search: qs.stringify(_.pickBy(search, _.identity)) });
+    history.replace({ search: qs.stringify(C.withoutNilValues(search)) });
     dispatch(clearOffsetAndPaging());
     dispatch(searchAll({ ...apiRequestParams, opetuskieli: newCheckedOpetusKieletStr }));
   };

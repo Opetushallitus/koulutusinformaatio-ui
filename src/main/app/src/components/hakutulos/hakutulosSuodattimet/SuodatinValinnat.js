@@ -15,6 +15,7 @@ import {
   searchAll,
   setSelectedFilters,
 } from '#/src/reducers/hakutulosSlice';
+import { Common as C } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({
   chipRoot: {
@@ -63,7 +64,7 @@ const SuodatinValinnat = () => {
       .join(',');
 
     search[filterType] = newFilterValuesStr;
-    history.replace({ search: qs.stringify(_.pickBy(search, _.identity)) });
+    history.replace({ search: qs.stringify(C.withoutNilValues(search)) });
     dispatch(setSelectedFilters({ filterType: filterType, itemId: item?.id }));
     dispatch(searchAll({ ...apiRequestParams, [filterType]: newFilterValuesStr }));
   };
