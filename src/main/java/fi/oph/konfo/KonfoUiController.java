@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class KonfoUiController implements ErrorController {
+  private static final String PATH = "/error";
 
   @GetMapping(value = {
     "/haku",
@@ -23,7 +24,6 @@ public class KonfoUiController implements ErrorController {
   public String frontProperties() {
     return "/index.html";
   }
-  private static final String PATH = "/error";
   @GetMapping(value = PATH)
   public String notFound() {
     return "/index.html";
