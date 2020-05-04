@@ -6,6 +6,7 @@ import { Provider } from 'mobx-react';
 import Draft from './components/common/Draft';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
+import NotFound from './NotFound';
 import Etusivu from './components/Etusivu';
 import PalautePopup from './components/palaute/PalautePopup';
 import SideMenu from './components/common/SideMenu';
@@ -110,6 +111,7 @@ const App = () => {
           <KoulutusHakuBar />
           <SivuRouter />
         </Route>
+        <Route component={NotFound} />
       </Switch>
       <Palvelut />
       <Footer />
