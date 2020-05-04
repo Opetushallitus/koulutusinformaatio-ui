@@ -5,5 +5,5 @@ export const MUI_BREAKPOINTS = {
   MIN_SM: '(min-width:600px)',
   MIN_XS_400: '(min-width:400px)',
 };
-
+export const FILTER_TYPES = ['opetuskieli', 'koulutusala', 'koulutustyyppi', 'sijainti'];
 export const DRAWER_WIDTH = 330;

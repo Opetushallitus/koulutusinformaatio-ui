@@ -1,84 +1,89 @@
-import React, { useState, useEffect } from 'react';
-import { observer } from 'mobx-react';
-import { useHistory, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import qs from 'query-string';
+import _ from 'lodash';
 import { Grid, List, ListItem, ListItemIcon, useTheme } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
-import qs from 'query-string';
-import { useTranslation } from 'react-i18next';
-import { useStores } from '../../../hooks';
-import SummaryContent from './SummaryContent';
 import {
-  SuodatinExpansionPanel,
-  SuodatinExpansionPanelSummary,
-  SuodatinExpansionPanelDetails,
+  clearOffsetAndPaging,
+  searchAll,
+  setKoulutustyyppi,
+} from '#/src/reducers/hakutulosSlice';
+import {
+  getAPIRequestParams,
+  getKoulutustyyppiFilterProps,
+} from '#/src/reducers/hakutulosSliceSelector';
+import {
   SuodatinCheckbox,
+  SuodatinExpansionPanel,
+  SuodatinExpansionPanelDetails,
+  SuodatinExpansionPanelSummary,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
+import SummaryContent from './SummaryContent';
 
-const KoulutusTyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
+const KoulutustyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
   const history = useHistory();
-  const location = useLocation();
   const { i18n, t } = useTranslation();
-  const { hakuStore } = useStores();
   const theme = useTheme();
-  const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
+  const dispatch = useDispatch();
+  const koulutustyyppiFilterProps = useSelector(getKoulutustyyppiFilterProps);
+  const apiRequestParams = useSelector(getAPIRequestParams);
 
-  const [koulutusTyypit, setKoulutusTyypit] = useState({});
-  const [valitutKoulutusTyypit, setValitutKoulutusTyypit] = useState([]);
-  const [selectedKoulutustyypitStr, setSelectedKoulutustyypitStr] = useState('');
+  const [koulutusTyypit, setKoulutusTyypit] = useState([]);
+  const [checkedKoulutustyypit, setCheckedKoulutustyypit] = useState([]);
+  const [checkedKoulutustyypitStr, setCheckedKoulutustyypitStr] = useState('');
 
   useEffect(() => {
-    const koulutusTyypitJS =
-      toggle === 'koulutus'
-        ? koulutusFilters.koulutusTyyppi
-        : oppilaitosFilters.koulutusTyyppi;
-    setKoulutusTyypit(koulutusTyypitJS);
-    setValitutKoulutusTyypit(filter.koulutustyyppi);
-    setSelectedKoulutustyypitStr(
-      filter.koulutustyyppi.map((kt) => kt?.['name']?.[i18n.language]).join(', ')
-    );
-  }, [
-    koulutusFilters.koulutusTyyppi,
-    filter.koulutustyyppi,
-    location,
-    oppilaitosFilters.koulutusTyyppi,
-    toggle,
-    i18n.language,
-  ]);
+    setKoulutusTyypit(koulutustyyppiFilterProps.koulutustyyppi);
+    setCheckedKoulutustyypit(koulutustyyppiFilterProps.checkedKoulutustyypit);
+    setCheckedKoulutustyypitStr(koulutustyyppiFilterProps.checkedKoulutustyypitStr);
+  }, [koulutustyyppiFilterProps]);
 
   const handleEduTypeToggle = (koulutustyyppiObj) => () => {
     const koulutustyyppiFilterObj = {
       id: koulutustyyppiObj[0],
       name: koulutustyyppiObj[1]?.nimi,
     };
-    const currentIndex = valitutKoulutusTyypit.findIndex(
+    const currentIndex = checkedKoulutustyypit.findIndex(
       ({ id }) => id === koulutustyyppiFilterObj.id
     );
-    const newValitutKoulutusTyypit = [...valitutKoulutusTyypit];
+    const newCheckedKoulutustyypit = [...checkedKoulutustyypit];
 
     if (currentIndex === -1) {
-      newValitutKoulutusTyypit.push(koulutustyyppiFilterObj);
+      newCheckedKoulutustyypit.push(koulutustyyppiFilterObj);
     } else {
-      newValitutKoulutusTyypit.splice(currentIndex, 1);
+      newCheckedKoulutustyypit.splice(currentIndex, 1);
     }
+    const newValitutKoulutusTyypitStr = newCheckedKoulutustyypit
+      .map(({ id }) => id)
+      .join(',');
 
-    setValitutKoulutusTyypit(newValitutKoulutusTyypit);
+    setCheckedKoulutustyypit(newCheckedKoulutustyypit);
+    dispatch(
+      setKoulutustyyppi({
+        newCheckedKoulutustyypit,
+      })
+    );
+
     const search = qs.parse(history.location.search);
-    search.koulutustyyppi = newValitutKoulutusTyypit.map(({ id }) => id).join(',');
+    search.koulutustyyppi = newValitutKoulutusTyypitStr;
     search.kpage = 1;
     search.opage = 1;
-    hakuStore.setKoulutusTyyppiFilter(newValitutKoulutusTyypit);
-    history.replace({ search: qs.stringify(search) });
-    hakuStore.clearOffsetAndPaging();
-    hakuStore.searchKoulutukset();
-    hakuStore.searchOppilaitokset();
+    history.replace({ search: qs.stringify(_.pickBy(search, _.identity)) });
+    dispatch(clearOffsetAndPaging());
+    dispatch(
+      searchAll({ ...apiRequestParams, koulutustyyppi: newValitutKoulutusTyypitStr })
+    );
   };
 
   return (
     <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
       <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
         <SummaryContent
-          selectedFiltersStr={selectedKoulutustyypitStr}
+          selectedFiltersStr={checkedKoulutustyypitStr}
           maxCharLengthBeforeChipWithNumber={16}
           filterName={t('haku.koulutustyyppi')}
           displaySelected={displaySelected}
@@ -86,7 +91,7 @@ const KoulutusTyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
       </SuodatinExpansionPanelSummary>
       <SuodatinExpansionPanelDetails>
         <List style={{ width: '100%' }}>
-          {Object.entries(koulutusTyypit).map((eduTypeOuterArr) => {
+          {koulutusTyypit.map((eduTypeOuterArr) => {
             const labelId = `educationtype-outerlist-label-${eduTypeOuterArr[0]}`;
             return (
               <React.Fragment key={`fragment-${eduTypeOuterArr[0]}`}>
@@ -101,7 +106,7 @@ const KoulutusTyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
                     <SuodatinCheckbox
                       edge="start"
                       checked={
-                        valitutKoulutusTyypit.findIndex(
+                        checkedKoulutustyypit.findIndex(
                           ({ id }) => id === eduTypeOuterArr[0]
                         ) !== -1
                       }
@@ -135,7 +140,7 @@ const KoulutusTyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
                           <SuodatinCheckbox
                             edge="start"
                             checked={
-                              valitutKoulutusTyypit.findIndex(
+                              checkedKoulutustyypit.findIndex(
                                 ({ id }) => id === eduTypeInnerArr[0]
                               ) !== -1
                             }
@@ -166,4 +171,4 @@ const KoulutusTyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
   );
 };
 
-export default observer(KoulutusTyyppiSuodatin);
+export default KoulutustyyppiSuodatin;

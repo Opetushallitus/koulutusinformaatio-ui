@@ -1,96 +1,81 @@
-import React, { useState, useEffect } from 'react';
-import { observer } from 'mobx-react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { Grid, List, ListItem, ListItemIcon } from '@material-ui/core';
-import { ExpandMore } from '@material-ui/icons';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import qs from 'query-string';
 import _ from 'lodash';
-import { useTranslation } from 'react-i18next';
-import { useStores } from '../../../hooks';
-import SummaryContent from './SummaryContent';
+import { Grid, List, ListItem, ListItemIcon } from '@material-ui/core';
+import { ExpandMore } from '@material-ui/icons';
 import {
-  SuodatinExpansionPanel,
-  SuodatinExpansionPanelSummary,
-  SuodatinExpansionPanelDetails,
+  clearOffsetAndPaging,
+  searchAll,
+  setOpetuskieli,
+} from '#/src/reducers/hakutulosSlice';
+import {
+  getAPIRequestParams,
+  getOpetuskieliFilterProps,
+} from '#/src/reducers/hakutulosSliceSelector';
+import {
   SuodatinCheckbox,
+  SuodatinExpansionPanel,
+  SuodatinExpansionPanelDetails,
+  SuodatinExpansionPanelSummary,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
+import SummaryContent from './SummaryContent';
 
-const OpetusKieliSuodatin = ({ expanded, elevation, displaySelected }) => {
+const OpetuskieliSuodatin = ({ expanded, elevation, displaySelected }) => {
   const history = useHistory();
-  const location = useLocation();
   const { i18n, t } = useTranslation();
-  const { hakuStore } = useStores();
-  const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
+  const dispatch = useDispatch();
+  const opetuskieliFilterProps = useSelector(getOpetuskieliFilterProps);
+  const apiRequestParams = useSelector(getAPIRequestParams);
 
-  const [opetusKielet, setOpetusKielet] = useState([]);
+  const [sortedOpetuskielet, setSortedOpetuskielet] = useState([]);
   const [checkedOpetusKielet, setCheckedOpetusKielet] = useState([]);
-  const [selectedOpetuskieletStr, setSelectedOpetuskieletStr] = useState('');
+  const [checkedOpetuskieletStr, setCheckedOpetusKieletStr] = useState('');
 
   useEffect(() => {
-    const _opetusKielet =
-      toggle === 'koulutus'
-        ? Object.entries(koulutusFilters.opetusKieli)
-        : Object.entries(oppilaitosFilters.opetusKieli);
+    setSortedOpetuskielet(opetuskieliFilterProps.sortedOpetuskielet);
+    setCheckedOpetusKielet(opetuskieliFilterProps.checkedOpetuskielet);
+    setCheckedOpetusKieletStr(opetuskieliFilterProps.checkedOpetuskieletStr);
+  }, [opetuskieliFilterProps]);
 
-    const orderedOpetusKielet = _.orderBy(
-      _opetusKielet,
-      ['[1].count', `[1].nimi.[${i18n.language}]`],
-      ['desc', 'desc']
-    );
-    const removedMuuKieli = _.remove(
-      orderedOpetusKielet,
-      (n) => n[0] === 'oppilaitoksenopetuskieli_9'
-    );
-    setSelectedOpetuskieletStr(
-      filter.opetuskieli
-        .map((kieli) => _.capitalize(kieli?.['name']?.[i18n.language]))
-        .join(', ')
-    );
-    setOpetusKielet(_.concat(orderedOpetusKielet, removedMuuKieli));
-    setCheckedOpetusKielet(filter.opetuskieli);
-  }, [
-    i18n.language,
-    koulutusFilters.opetusKieli,
-    location,
-    filter.opetuskieli,
-    oppilaitosFilters.opetusKieli,
-    toggle,
-  ]);
-
-  const handleLanguageToggle = (opetuskieliObj) => () => {
-    const opetuskieliFilterObj = {
+  const handleCheck = (opetuskieliObj) => () => {
+    const checkedOpetuskieliObj = {
       id: opetuskieliObj[0],
       name: opetuskieliObj[1]?.nimi,
     };
     const currentIndex = checkedOpetusKielet.findIndex(
-      ({ id }) => id === opetuskieliFilterObj.id
+      ({ id }) => id === checkedOpetuskieliObj.id
     );
-    const newCheckedOpetusKielet = [...checkedOpetusKielet];
+    const newCheckedOpetuskielet = [...checkedOpetusKielet];
 
     if (currentIndex === -1) {
-      newCheckedOpetusKielet.push(opetuskieliFilterObj);
+      newCheckedOpetuskielet.push(checkedOpetuskieliObj);
     } else {
-      newCheckedOpetusKielet.splice(currentIndex, 1);
+      newCheckedOpetuskielet.splice(currentIndex, 1);
     }
+    const newCheckedOpetusKieletStr = newCheckedOpetuskielet
+      .map(({ id }) => id)
+      .join(',');
 
-    setCheckedOpetusKielet(newCheckedOpetusKielet);
+    setCheckedOpetusKielet(newCheckedOpetuskielet);
+    dispatch(setOpetuskieli({ newCheckedOpetuskielet }));
+
     const search = qs.parse(history.location.search);
-    search.opetuskieli = newCheckedOpetusKielet.map(({ id }) => id).join(',');
+    search.opetuskieli = newCheckedOpetusKieletStr;
     search.kpage = 1;
     search.opage = 1;
-    hakuStore.setOpetusKieliFilter(newCheckedOpetusKielet);
-    hakuStore.clearOffsetAndPaging();
-    history.replace({ search: qs.stringify(search) });
-    hakuStore.searchKoulutukset();
-    hakuStore.searchOppilaitokset();
+    history.replace({ search: qs.stringify(_.pickBy(search, _.identity)) });
+    dispatch(clearOffsetAndPaging());
+    dispatch(searchAll({ ...apiRequestParams, opetuskieli: newCheckedOpetusKieletStr }));
   };
-
   return (
     <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
       <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
         <SummaryContent
-          selectedFiltersStr={selectedOpetuskieletStr}
+          selectedFiltersStr={checkedOpetuskieletStr}
           maxCharLengthBeforeChipWithNumber={20}
           filterName={t('haku.opetuskieli')}
           displaySelected={displaySelected}
@@ -98,14 +83,14 @@ const OpetusKieliSuodatin = ({ expanded, elevation, displaySelected }) => {
       </SuodatinExpansionPanelSummary>
       <SuodatinExpansionPanelDetails>
         <List style={{ width: '100%' }}>
-          {opetusKielet.map((opetuskieliArr) => {
+          {sortedOpetuskielet.map((opetuskieliArr) => {
             const labelId = `language-list-label-${opetuskieliArr[0]}`;
             return (
               <ListItem
                 key={opetuskieliArr[0]}
                 dense
                 button
-                onClick={handleLanguageToggle(opetuskieliArr)}
+                onClick={handleCheck(opetuskieliArr)}
                 disabled={opetuskieliArr[1].count === 0}>
                 <ListItemIcon>
                   <SuodatinCheckbox
@@ -136,4 +121,4 @@ const OpetusKieliSuodatin = ({ expanded, elevation, displaySelected }) => {
   );
 };
 
-export default observer(OpetusKieliSuodatin);
+export default OpetuskieliSuodatin;

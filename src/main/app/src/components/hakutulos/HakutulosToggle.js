@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { observer } from 'mobx-react';
+import { useDispatch } from 'react-redux';
+import { setSelectedTab } from '#/src/reducers/hakutulosSlice';
 import { useHistory } from 'react-router-dom';
 import { Tabs, Tab, makeStyles, useMediaQuery } from '@material-ui/core';
 import { SchoolOutlined, HomeWorkOutlined } from '@material-ui/icons';
 import qs from 'query-string';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { useStores } from '../../hooks';
 import { MUI_BREAKPOINTS } from '../../constants';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,33 +37,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HakutulosToggle = observer(() => {
+const HakutulosToggle = ({ selectedTab, koulutusTotal, oppilaitosTotal }) => {
   const history = useHistory();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const classes = useStyles();
-  const { hakuStore } = useStores();
   const muiScreenSizeMinMd = useMediaQuery(MUI_BREAKPOINTS.MIN_MD);
 
-  const [selectedTab, setSelectedTab] = useState(0);
+  const [_selectedTab, _setSelectedTab] = useState(0);
 
   useEffect(() => {
-    const tab = hakuStore.toggle === 'koulutus' ? 0 : 1;
-    setSelectedTab(tab);
-  }, [hakuStore.toggle]);
+    const tab = selectedTab === 'koulutus' ? 0 : 1;
+    _setSelectedTab(tab);
+  }, [selectedTab]);
 
   const handleSelectedTab = (event, newValue) => {
-    setSelectedTab(newValue);
+    _setSelectedTab(newValue);
     const search = qs.parse(history.location.search);
-    const toggleValue = newValue === 0 ? 'koulutus' : 'oppilaitos';
-    search.toggle = toggleValue;
-    hakuStore.setToggle(toggleValue);
+    const tabValue = newValue === 0 ? 'koulutus' : 'oppilaitos';
+    const newSelectedTab = newValue === 0 ? 'koulutus' : 'oppilaitos';
+    search.tab = tabValue;
     history.replace({ search: qs.stringify(search) });
+    dispatch(setSelectedTab({ newSelectedTab }));
   };
 
   return (
     <Tabs
       variant={muiScreenSizeMinMd ? 'standard' : 'fullWidth'}
-      value={selectedTab}
+      value={_selectedTab}
       indicatorColor="primary"
       textColor="primary"
       onChange={handleSelectedTab}>
@@ -75,7 +76,7 @@ const HakutulosToggle = observer(() => {
           root: classes.tabRoot,
         }}
         label={`${t('haku.koulutukset')} (${
-          _.isNil(hakuStore.koulutusTotal) ? ' ' : hakuStore.koulutusTotal
+          _.isNil(koulutusTotal) ? 0 : koulutusTotal
         })`}></Tab>
       <Tab
         icon={<HomeWorkOutlined className={classes.tabIconMargin} />}
@@ -85,10 +86,10 @@ const HakutulosToggle = observer(() => {
           root: classes.tabRoot,
         }}
         label={`${t('haku.oppilaitokset')} (${
-          _.isNil(hakuStore.oppilaitosTotal) ? '' : hakuStore.oppilaitosTotal
+          _.isNil(oppilaitosTotal) ? 0 : oppilaitosTotal
         })`}></Tab>
     </Tabs>
   );
-});
+};
 
 export default HakutulosToggle;

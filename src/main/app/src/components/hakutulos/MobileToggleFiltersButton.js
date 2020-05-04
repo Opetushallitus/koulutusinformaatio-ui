@@ -1,17 +1,12 @@
 import React from 'react';
-import { observer } from 'mobx-react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import { FilterList } from '@material-ui/icons';
-import {
-  Badge,
-  Button,
-  ButtonGroup,
-  Hidden,
-  makeStyles,
-} from '@material-ui/core';
-import { useStores } from '../../hooks';
-import { colors } from '../../colors';
+import { Badge, Button, ButtonGroup, Hidden, makeStyles } from '@material-ui/core';
+import { colors } from '#/src/colors';
+import { toggleshowHakutulosFilters } from '#/src/reducers/hakutulosSlice';
+import { getSuodatinValinnatProps } from '#/src/reducers/hakutulosSliceSelector';
 
 const useStyles = makeStyles((theme) => ({
   buttonGroupRoot: {
@@ -36,21 +31,36 @@ const useStyles = makeStyles((theme) => ({
 const MobileToggleFiltersButton = () => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { hakuStore } = useStores();
+  const dispatch = useDispatch();
+  const suodatinValinnatProps = useSelector(getSuodatinValinnatProps);
+  const {
+    showHakutulosFilters,
+    koulutusTotal,
+    oppilaitosTotal,
+    selectedTab,
+  } = useSelector(
+    (state) => ({
+      showHakutulosFilters: state.hakutulos.showHakutulosFilters,
+      koulutusTotal: state.hakutulos.koulutusTotal,
+      oppilaitosTotal: state.hakutulos.oppilaitosTotal,
+      selectedTab: state.hakutulos.selectedTab,
+    }),
+    shallowEqual
+  );
 
   const handleFiltersShowToggle = () => {
-    hakuStore.toggleHakutulosFitersHidden();
+    dispatch(toggleshowHakutulosFilters());
   };
 
   const buttonText = () =>
-    hakuStore.toggle === 'koulutus'
-      ? t('haku.nayta-hakutulos', { count: hakuStore.koulutusTotal })
-      : t('haku.nayta-hakutulos', { count: hakuStore.oppilaitosTotal });
+    selectedTab === 'koulutus'
+      ? t('haku.nayta-hakutulos', { count: koulutusTotal })
+      : t('haku.nayta-hakutulos', { count: oppilaitosTotal });
 
   return (
     <Hidden mdUp>
       <ButtonGroup classes={{ root: classes.buttonGroupRoot }}>
-        {hakuStore.showHakutulosFilters ? (
+        {showHakutulosFilters ? (
           <Button
             classes={{
               root: classes.buttonRoot,
@@ -64,7 +74,9 @@ const MobileToggleFiltersButton = () => {
             endIcon={
               <Badge
                 color="error"
-                badgeContent={_.sumBy(_.values(hakuStore.filter), _.size)}>
+                badgeContent={_.sumBy(_.values(suodatinValinnatProps), (arr) =>
+                  _.size(arr)
+                )}>
                 <FilterList />
               </Badge>
             }
@@ -81,4 +93,4 @@ const MobileToggleFiltersButton = () => {
   );
 };
 
-export default observer(MobileToggleFiltersButton);
+export default MobileToggleFiltersButton;

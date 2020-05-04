@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { observer } from 'mobx-react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import qs from 'query-string';
+import _ from 'lodash';
 import {
   Button,
   Divider,
@@ -12,10 +15,6 @@ import {
   useMediaQuery,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
-import qs from 'query-string';
-import _ from 'lodash';
-import { useTranslation } from 'react-i18next';
-import { useStores } from '../../../hooks';
 import SummaryContent from './SummaryContent';
 import {
   SuodatinExpansionPanel,
@@ -24,7 +23,16 @@ import {
   SuodatinCheckbox,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
-import { MUI_BREAKPOINTS } from '../../../constants';
+import {
+  getKoulutusalaFilterProps,
+  getAPIRequestParams,
+} from '#/src/reducers/hakutulosSliceSelector';
+import {
+  searchAll,
+  setKoulutusala,
+  clearOffsetAndPaging,
+} from '#/src/reducers/hakutulosSlice';
+import { MUI_BREAKPOINTS } from '#/src/constants';
 
 const useStyles = makeStyles((theme) => ({
   buttonLabel: {
@@ -32,48 +40,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
+const KoulutusalaSuodatin = ({ expanded, elevation, displaySelected }) => {
   const history = useHistory();
-  const location = useLocation();
   const { i18n, t } = useTranslation();
   const classes = useStyles();
-  const { hakuStore } = useStores();
-  const { koulutusFilters, oppilaitosFilters, toggle, filter } = hakuStore;
+  const dispatch = useDispatch();
+  const koulutusalaFilterProps = useSelector(getKoulutusalaFilterProps);
+  const apiRequestParams = useSelector(getAPIRequestParams);
   const muiScreenSizeMinMd = useMediaQuery(MUI_BREAKPOINTS.MIN_MD);
 
-  const [koulutusAlat, setKoulutusAlat] = useState([]);
-  const [valitutKoulutusAlat, setValitutKoulutusAlat] = useState([]);
-  const [selectedKoulutusalatStr, setSelectedKoulutusalatStr] = useState('');
+  const [sortedKoulutusalat, setSortedKoulutusalat] = useState([]);
+  const [checkedKoulutusalat, setCheckedKoulutusalat] = useState([]);
+  const [checkedKoulutusalatStr, setCheckedKoulutusalatStr] = useState('');
   const [expandedKoulutusTaso1, setExpandedKoulutusTaso1] = useState([]);
 
   useEffect(() => {
-    const koulutusalatJS =
-      toggle === 'koulutus'
-        ? Object.entries(koulutusFilters.koulutusala)
-        : Object.entries(oppilaitosFilters.koulutusala);
-
-    setKoulutusAlat(_.orderBy(koulutusalatJS, [`[1]nimi.[${i18n.language}]`]));
-    setValitutKoulutusAlat(filter.koulutusala);
-    setSelectedKoulutusalatStr(
-      filter.koulutusala.map((ka) => ka?.['name']?.[i18n.language]).join(', ')
-    );
-  }, [
-    filter.koulutusala,
-    i18n.language,
-    koulutusFilters.koulutusala,
-    location,
-    oppilaitosFilters.koulutusala,
-    toggle,
-  ]);
+    setSortedKoulutusalat(koulutusalaFilterProps.sortedKoulutusalat);
+    setCheckedKoulutusalat(koulutusalaFilterProps.checkedKoulutusalat);
+    setCheckedKoulutusalatStr(koulutusalaFilterProps.checkedKoulutusalatStr);
+  }, [koulutusalaFilterProps]);
 
   // Jos 2:n tason koulutusalan suodatin-lista avattu ja arvot muuttuu, korvataan sen storessa olevalla
   useEffect(() => {
     if (_.size(expandedKoulutusTaso1) > 0) {
       setExpandedKoulutusTaso1(
-        _.find(koulutusAlat, (ka) => ka[0] === expandedKoulutusTaso1[0])
+        _.find(sortedKoulutusalat, (ka) => ka[0] === expandedKoulutusTaso1[0])
       );
     }
-  }, [expandedKoulutusTaso1, koulutusAlat]);
+  }, [expandedKoulutusTaso1, sortedKoulutusalat]);
 
   const handleKoulutusalaOuterToggle = (koulutusalaTaso1) => () => {
     setExpandedKoulutusTaso1(koulutusalaTaso1);
@@ -84,25 +78,28 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
       id: koulutusID,
       name: obj?.nimi,
     };
-    const currentIndex = valitutKoulutusAlat.findIndex(({ id }) => id === koulutusID);
-    const newValitutKoulutusalat = [...valitutKoulutusAlat];
+    const currentIndex = checkedKoulutusalat.findIndex(({ id }) => id === koulutusID);
+    const newCheckedKoulutusalat = [...checkedKoulutusalat];
 
     if (currentIndex === -1) {
-      newValitutKoulutusalat.push(koulutusalaFilterObj);
+      newCheckedKoulutusalat.push(koulutusalaFilterObj);
     } else {
-      newValitutKoulutusalat.splice(currentIndex, 1);
+      newCheckedKoulutusalat.splice(currentIndex, 1);
     }
 
-    setValitutKoulutusAlat(newValitutKoulutusalat);
+    const newValitutKoulutusalatStr = newCheckedKoulutusalat
+      .map(({ id }) => id)
+      .join(',');
+
+    setCheckedKoulutusalat(newCheckedKoulutusalat);
+    dispatch(setKoulutusala({ newCheckedKoulutusalat }));
     const search = qs.parse(history.location.search);
-    search.koulutusala = newValitutKoulutusalat.map(({ id }) => id).join(',');
+    search.koulutusala = newValitutKoulutusalatStr;
     search.kpage = 1;
     search.opage = 1;
-    hakuStore.setKoulutusalaFilter(newValitutKoulutusalat);
-    history.replace({ search: qs.stringify(search) });
-    hakuStore.clearOffsetAndPaging();
-    hakuStore.searchKoulutukset();
-    hakuStore.searchOppilaitokset();
+    history.replace({ search: qs.stringify(_.pickBy(search, _.identity)) });
+    dispatch(clearOffsetAndPaging());
+    dispatch(searchAll({ ...apiRequestParams, koulutusala: newValitutKoulutusalatStr }));
   };
 
   const KoulutuksetTaso2 = () => (
@@ -127,7 +124,7 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
           <SuodatinCheckbox
             edge="start"
             checked={
-              valitutKoulutusAlat.findIndex(
+              checkedKoulutusalat.findIndex(
                 ({ id }) => id === expandedKoulutusTaso1[0]
               ) !== -1
             }
@@ -169,7 +166,7 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
               <SuodatinCheckbox
                 edge="start"
                 checked={
-                  valitutKoulutusAlat.findIndex(({ id }) => id === koulutusTaso2_ID) !==
+                  checkedKoulutusalat.findIndex(({ id }) => id === koulutusTaso2_ID) !==
                   -1
                 }
                 tabIndex={-1}
@@ -206,7 +203,7 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
     <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
       <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
         <SummaryContent
-          selectedFiltersStr={selectedKoulutusalatStr}
+          selectedFiltersStr={checkedKoulutusalatStr}
           maxCharLengthBeforeChipWithNumber={20}
           filterName={t('haku.koulutusalat')}
           displaySelected={displaySelected}
@@ -214,11 +211,11 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
       </SuodatinExpansionPanelSummary>
       <SuodatinExpansionPanelDetails>
         <List hidden={expandedKoulutusTaso1.length > 0} style={{ width: '100%' }}>
-          {koulutusAlat.map((koulutusalaArr) => {
+          {sortedKoulutusalat.map((koulutusalaArr) => {
             const labelId = `language-list-label-${koulutusalaArr[0]}`;
             const isSelected = _.keys(koulutusalaArr[1]?.alakoodit)
               .concat(koulutusalaArr[0])
-              .some((sf) => _.find(valitutKoulutusAlat, { id: sf }));
+              .some((sf) => _.find(checkedKoulutusalat, { id: sf }));
             return (
               <ListItem
                 key={koulutusalaArr[0]}
@@ -255,4 +252,4 @@ const KoulutusalatSuodatin = ({ expanded, elevation, displaySelected }) => {
   );
 };
 
-export default observer(KoulutusalatSuodatin);
+export default KoulutusalaSuodatin;

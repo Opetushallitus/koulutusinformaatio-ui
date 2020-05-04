@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { observer } from 'mobx-react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { Button, Chip, Grid, makeStyles } from '@material-ui/core';
-import { Clear } from '@material-ui/icons';
-import qs from 'query-string';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { useStores } from '../../../hooks';
-import { toJS } from 'mobx';
+import { Button, Chip, Grid, makeStyles } from '@material-ui/core';
+import qs from 'query-string';
 import _ from 'lodash';
+import { Clear } from '@material-ui/icons';
+import {
+  getSuodatinValinnatProps,
+  getAPIRequestParams,
+} from '#/src/reducers/hakutulosSliceSelector';
+import {
+  clearSelectedFilters,
+  searchAll,
+  setSelectedFilters,
+} from '#/src/reducers/hakutulosSlice';
 
 const useStyles = makeStyles((theme) => ({
   chipRoot: {
@@ -32,55 +39,43 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SuodatinValinnat = observer(() => {
+const SuodatinValinnat = () => {
   const history = useHistory();
   const location = useLocation();
   const { i18n, t } = useTranslation();
   const classes = useStyles();
-  const { hakuStore } = useStores();
-  const { filter } = hakuStore;
+  const dispatch = useDispatch();
+  const suodatinValinnatProps = useSelector(getSuodatinValinnatProps);
+  const apiRequestParams = useSelector(getAPIRequestParams);
 
   const [filters, setFilters] = useState({});
 
   useEffect(() => {
-    setFilters(toJS(filter));
-  }, [filter, location]);
+    setFilters(suodatinValinnatProps);
+  }, [suodatinValinnatProps, location]);
 
   const handleDelete = (filterType, item) => () => {
     const search = qs.parse(history.location.search);
-    const _filterType =
-      filterType !== 'selectedsijainnit' ? filterType : 'sijainti';
-    const newFilters = { ...filters };
 
-    newFilters[filterType] = newFilters[filterType].filter(
-      ({ id }) => id !== item.id
-    );
-
-    search[_filterType] = newFilters[filterType]
+    const newFilterValuesStr = filters[filterType]
       .filter(({ id }) => id !== item.id)
       .map(({ id }) => id)
       .join(',');
 
-    if (!search[_filterType] || search[_filterType].length === 0) {
-      delete search[_filterType];
-    }
-
-    history.replace({ search: qs.stringify(search) });
-    hakuStore.setFilters(filterType, item);
-    hakuStore.searchKoulutukset();
-    hakuStore.searchOppilaitokset();
-    setFilters(newFilters);
+    search[filterType] = newFilterValuesStr;
+    history.replace({ search: qs.stringify(_.pickBy(search, _.identity)) });
+    dispatch(setSelectedFilters({ filterType: filterType, itemId: item?.id }));
+    dispatch(searchAll({ ...apiRequestParams, [filterType]: newFilterValuesStr }));
   };
 
   const handleClearFilters = () => {
     const search = qs.parse(history.location.search);
 
     history.replace({
-      search: qs.stringify(_.omit(search, Object.keys(filters))),
+      search: qs.stringify(_.omit(search, _.keys(filters))),
     });
-    hakuStore.clearFilters();
-    hakuStore.searchKoulutukset();
-    hakuStore.searchOppilaitokset();
+    dispatch(clearSelectedFilters());
+    dispatch(searchAll(_.omit(apiRequestParams, _.keys(filters))));
   };
 
   const displayChips = (entry) => {
@@ -123,6 +118,6 @@ const SuodatinValinnat = observer(() => {
       </Grid>
     </Grid>
   );
-});
+};
 
 export default SuodatinValinnat;
