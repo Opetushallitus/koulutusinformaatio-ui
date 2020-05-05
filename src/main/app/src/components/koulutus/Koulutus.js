@@ -5,7 +5,7 @@ import { Typography, Box, Container, makeStyles } from '@material-ui/core';
 import { Localizer as l } from '../../tools/Utils';
 import { useTranslation } from 'react-i18next';
 import KoulutusInfoGrid from './KoulutusInfoGrid';
-import TextBox from '../common/TextBox';
+import HtmlTextBox from '../common/HtmlTextBox';
 import ToteutusList from './ToteutusList';
 import HakuKaynnissaCard from './HakuKaynnissaCard';
 import { HashLink as Link } from 'react-router-hash-link';
@@ -51,6 +51,29 @@ const Koulutus = (props) => {
       dispatch(fetchKoulutusWithRelatedData(oid, draft));
     }
   }, [dispatch, koulutus, oid, draft]);
+
+  const getKuvausHtmlSection = (captionKey, localizableText) => {
+    return localizableText
+      ? '<h3>' + t(captionKey) + '</h3>' + l.localize(localizableText)
+      : '';
+  };
+
+  const createKoulutusHtml = () => {
+    if (koulutus?.suorittaneenOsaaminen || koulutus?.tyotehtavatJoissaVoiToimia) {
+      return (
+        getKuvausHtmlSection(
+          'koulutus.suorittaneenOsaaminen',
+          koulutus?.suorittaneenOsaaminen
+        ) +
+        getKuvausHtmlSection(
+          'koulutus.tyotehtavatJoissaVoiToimia',
+          koulutus?.tyotehtavatJoissaVoiToimia
+        )
+      );
+    } else {
+      return l.localize(koulutus?.kuvaus);
+    }
+  };
 
   return loading ? (
     <LoadingCircle />
@@ -110,9 +133,9 @@ const Koulutus = (props) => {
           />
         ) : null}
 
-        <TextBox
+        <HtmlTextBox
           heading={t('koulutus.kuvaus')}
-          text={l.localize(koulutus?.kuvaus)}
+          html={createKoulutusHtml()}
           className={classes.root}
         />
         <Box id="tarjonta">

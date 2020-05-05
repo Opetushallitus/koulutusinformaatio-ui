@@ -107,6 +107,9 @@ export const selectKoulutus = (state, oid) => {
   if (koulutusData) {
     return {
       kuvaus: koulutusData.metadata?.kuvaus?.kuvaus,
+      tyotehtavatJoissaVoiToimia:
+        koulutusData.metadata?.kuvaus?.tyotehtavatJoissaVoiToimia,
+      suorittaneenOsaaminen: koulutusData.metadata?.kuvaus?.suorittaneenOsaaminen,
       koulutusAla: koulutusData.metadata?.koulutusala,
       tutkintoNimi: koulutusData?.nimi,
       tutkintoNimikkeet: koulutusData.metadata?.tutkintonimike,

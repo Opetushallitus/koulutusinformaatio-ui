@@ -33,8 +33,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TextBox = (props) => {
-  const { heading, className, text } = props;
+const HtmlTextBox = (props) => {
+  const { heading, className, html } = props;
   const [isTruncated, setIsTruncated] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -62,7 +62,7 @@ const TextBox = (props) => {
       <Paper className={classes.paper}>
         <Box className={classes.textArea}>
           <HTMLEllipsis
-            unsafeHTML={text}
+            unsafeHTML={html}
             maxLine={isExpanded ? 1000 : 10}
             onReflow={reflow}
           />
@@ -79,4 +79,4 @@ const TextBox = (props) => {
   );
 };
 
-export default TextBox;
+export default HtmlTextBox;
