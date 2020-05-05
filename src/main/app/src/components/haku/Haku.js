@@ -6,7 +6,7 @@ import _ from 'lodash';
 import Hakutulos from '../hakutulos/Hakutulos';
 import { getAPIRequestParams } from '#/src/reducers/hakutulosSliceSelector';
 import { searchAll, setKeyword } from '#/src/reducers/hakutulosSlice';
-import { FILTER_TYPES } from '#/src/constants';
+import { FILTER_TYPES_ARR } from '#/src/constants';
 import { Common as C } from '#/src/tools/Utils';
 
 const Haku = () => {
@@ -18,7 +18,7 @@ const Haku = () => {
 
   function getSortedSearch(search) {
     return _.entries(_.pick(search, _.keys(apiRequestParams))).reduce((result, entry) => {
-      if (_.includes(FILTER_TYPES, entry[0])) {
+      if (_.includes(FILTER_TYPES_ARR, entry[0])) {
         return {
           ...result,
           [entry[0]]: _.join(_.sortBy(_.split(entry[1], ',')), ','),
