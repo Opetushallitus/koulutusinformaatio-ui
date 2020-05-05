@@ -186,14 +186,14 @@ const hakutulosSlice = createSlice({
                 }
                 break;
               case FILTER_TYPES.KOULUTUSTYYPPI:
-                const _koulutusFilters = _.startsWith(idsStr, 'koulutustyyppi_')
+                const koulutustyyppiFilters = _.startsWith(idsStr, 'koulutustyyppi_')
                   ? koulutusData.filters?.[key]?.amm?.alakoodit
-                  : koulutusData.filters[key];
-                state[key] = getCheckedFilterValues(idsStr, _koulutusFilters);
+                  : koulutusData.filters?.[key];
+                state[key] = getCheckedFilterValues(idsStr, koulutustyyppiFilters);
                 break;
               case FILTER_TYPES.KOULUTUSALA:
                 const koulutusalaFilters = _.entries(koulutusData?.filters?.[key]).reduce(
-                  function(result, entry) {
+                  (result, entry) => {
                     let alakoodit = _.has(entry[1], 'alakoodit')
                       ? entry[1].alakoodit
                       : {};
