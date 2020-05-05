@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { searchAPI } from '#/src/api/konfoApi';
 import _ from 'lodash';
 import { Localizer as l } from '#/src/tools/Utils';
+import { FILTER_TYPES } from '#/src/constants';
 
 const IDLE_STATUS = 'idle';
 const LOADING_STATUS = 'loading';
@@ -163,35 +164,49 @@ const hakutulosSlice = createSlice({
             state[key] = val;
           });
           _.forEach(filters, (idsStr, key) => {
-            if (key === 'sijainti') {
-              const maakunnatIds = _.split(idsStr, ',').filter((id) =>
-                _.startsWith(id, 'maakunta_')
-              );
-              const kunnatIds = _.split(idsStr, ',').filter((id) =>
-                _.startsWith(id, 'kunta_')
-              );
-              if (_.size(maakunnatIds) > 0) {
-                state.sijainti = getCheckedFilterValues(
-                  maakunnatIds.join(','),
-                  koulutusData?.filters?.maakunta
+            switch (key) {
+              case FILTER_TYPES.SIJAINTI:
+                const maakunnatIds = _.split(idsStr, ',').filter((id) =>
+                  _.startsWith(id, 'maakunta_')
                 );
-              }
-              if (_.size(kunnatIds) > 0) {
-                state.selectedSijainti = getSelectedKunnatFilterValues(
-                  kunnatIds,
-                  koulutusData?.filters?.kunta
+                const kunnatIds = _.split(idsStr, ',').filter((id) =>
+                  _.startsWith(id, 'kunta_')
                 );
-              }
-            } else if (
-              key === 'koulutustyyppi' &&
-              _.startsWith(idsStr, 'koulutustyyppi_')
-            ) {
-              state[key] = getCheckedFilterValues(
-                idsStr,
-                koulutusData.filters?.[key]?.amm?.alakoodit
-              );
-            } else {
-              state[key] = getCheckedFilterValues(idsStr, koulutusData.filters[key]);
+                if (_.size(maakunnatIds) > 0) {
+                  state.sijainti = getCheckedFilterValues(
+                    maakunnatIds.join(','),
+                    koulutusData?.filters?.maakunta
+                  );
+                }
+                if (_.size(kunnatIds) > 0) {
+                  state.selectedSijainti = getSelectedKunnatFilterValues(
+                    kunnatIds,
+                    koulutusData?.filters?.kunta
+                  );
+                }
+                break;
+              case FILTER_TYPES.KOULUTUSTYYPPI:
+                const _koulutusFilters = _.startsWith(idsStr, 'koulutustyyppi_')
+                  ? koulutusData.filters?.[key]?.amm?.alakoodit
+                  : koulutusData.filters[key];
+                state[key] = getCheckedFilterValues(idsStr, _koulutusFilters);
+                break;
+              case FILTER_TYPES.KOULUTUSALA:
+                const koulutusalaFilters = _.entries(koulutusData?.filters?.[key]).reduce(
+                  function(result, entry) {
+                    let alakoodit = _.has(entry[1], 'alakoodit')
+                      ? entry[1].alakoodit
+                      : {};
+                    return { ...result, [entry[0]]: entry[1], ...alakoodit };
+                  },
+                  {}
+                );
+                debugger;
+                state[key] = getCheckedFilterValues(idsStr, koulutusalaFilters);
+                break;
+              default:
+                state[key] = getCheckedFilterValues(idsStr, koulutusData.filters[key]);
+                break;
             }
           });
         }
