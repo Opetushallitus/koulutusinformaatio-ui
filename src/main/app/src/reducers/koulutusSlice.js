@@ -73,8 +73,8 @@ export const fetchKoulutus = (oid, draft) => async (dispatch) => {
   try {
     dispatch(fetchKoulutusStart());
     const koulutusData = await getKoulutus(oid, draft);
-    if (koulutusData?.koulutustyyppi === 'amm') {
-      const koulutusKuvausData = await getKoulutusKuvaus(koulutusData.koulutus.koodiUri);
+    if (koulutusData?.koulutustyyppi === 'amm' && koulutusData.ePerusteId) {
+      const koulutusKuvausData = await getKoulutusKuvaus(koulutusData.ePerusteId);
       _.set(koulutusData, 'metadata.kuvaus', koulutusKuvausData);
     }
     dispatch(fetchKoulutusSuccess({ oid, koulutus: koulutusData }));
