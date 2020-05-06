@@ -8,8 +8,8 @@ import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import {
   getMobileToggleOrderByButtonMenuProps,
   getAPIRequestParams,
-} from '#/src/reducers/hakutulosSliceSelector';
-import { setSort, setOrder, searchAll } from '#/src/reducers/hakutulosSlice';
+} from '#/src/store/reducers/hakutulosSliceSelector';
+import { setSort, setOrder, searchAll } from '#/src/store/reducers/hakutulosSlice';
 import { colors } from '#/src/colors';
 import { Common as C } from '#/src/tools/Utils';
 

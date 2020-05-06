@@ -20,12 +20,12 @@ import { Close } from '@material-ui/icons';
 import {
   getSuodatinValinnatProps,
   getAPIRequestParams,
-} from '#/src/reducers/hakutulosSliceSelector';
+} from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   toggleshowHakutulosFilters,
   clearSelectedFilters,
   searchAll,
-} from '#/src/reducers/hakutulosSlice';
+} from '#/src/store/reducers/hakutulosSlice';
 import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
 import OpetusKieliSuodatin from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';

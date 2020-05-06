@@ -26,12 +26,12 @@ import {
 import {
   getKoulutusalaFilterProps,
   getAPIRequestParams,
-} from '#/src/reducers/hakutulosSliceSelector';
+} from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   searchAll,
   setKoulutusala,
   clearOffsetAndPaging,
-} from '#/src/reducers/hakutulosSlice';
+} from '#/src/store/reducers/hakutulosSlice';
 import { MUI_BREAKPOINTS } from '#/src/constants';
 import { Common as C } from '#/src/tools/Utils';
 

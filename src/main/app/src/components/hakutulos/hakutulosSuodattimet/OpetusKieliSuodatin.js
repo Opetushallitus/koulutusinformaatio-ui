@@ -9,11 +9,11 @@ import {
   clearOffsetAndPaging,
   searchAll,
   setOpetuskieli,
-} from '#/src/reducers/hakutulosSlice';
+} from '#/src/store/reducers/hakutulosSlice';
 import {
   getAPIRequestParams,
   getOpetuskieliFilterProps,
-} from '#/src/reducers/hakutulosSliceSelector';
+} from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   SuodatinCheckbox,
   SuodatinExpansionPanel,

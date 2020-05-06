@@ -7,13 +7,13 @@ import { CssBaseline, makeStyles } from '@material-ui/core';
 import {
   getHakutulosPagination,
   getAPIRequestParams,
-} from '#/src/reducers/hakutulosSliceSelector';
+} from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   setKoulutusOffsetAndPage,
   searchKoulutukset,
   searchOppilaitokset,
   setOppilaitosOffsetAndPage,
-} from '#/src/reducers/hakutulosSlice';
+} from '#/src/store/reducers/hakutulosSlice';
 
 const useStyles = makeStyles((theme) => ({
   paginationRootCurrent: {

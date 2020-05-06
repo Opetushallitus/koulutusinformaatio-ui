@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import qs from 'query-string';
 import _ from 'lodash';
 import Hakutulos from '../hakutulos/Hakutulos';
-import { getAPIRequestParams } from '#/src/reducers/hakutulosSliceSelector';
-import { searchAll, setKeyword } from '#/src/reducers/hakutulosSlice';
+import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
+import { searchAll, setKeyword } from '#/src/store/reducers/hakutulosSlice';
 import { FILTER_TYPES_ARR } from '#/src/constants';
 import { Common as C } from '#/src/tools/Utils';
 

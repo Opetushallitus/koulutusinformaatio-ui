@@ -19,11 +19,11 @@ import {
   searchAll,
   setSijainti,
   setSelectedSijainti,
-} from '#/src/reducers/hakutulosSlice';
+} from '#/src/store/reducers/hakutulosSlice';
 import {
   getAPIRequestParams,
   getSijaintiFilterProps,
-} from '#/src/reducers/hakutulosSliceSelector';
+} from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   SuodatinCheckbox,
   SuodatinExpansionPanel,
