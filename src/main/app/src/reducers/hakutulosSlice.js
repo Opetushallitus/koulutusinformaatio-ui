@@ -165,6 +165,16 @@ const hakutulosSlice = createSlice({
           });
           _.forEach(filters, (idsStr, key) => {
             switch (key) {
+              case FILTER_TYPES.KOULUTUSTYYPPI:
+                const koulutustyyppiFilters = pullUpAlakoodit(
+                  koulutusData?.filters?.[key]
+                );
+                state[key] = getCheckedFilterValues(idsStr, koulutustyyppiFilters);
+                break;
+              case FILTER_TYPES.KOULUTUSALA:
+                const koulutusalaFilters = pullUpAlakoodit(koulutusData?.filters?.[key]);
+                state[key] = getCheckedFilterValues(idsStr, koulutusalaFilters);
+                break;
               case FILTER_TYPES.SIJAINTI:
                 const maakunnatIds = _.split(idsStr, ',').filter((id) =>
                   _.startsWith(id, 'maakunta_')
@@ -184,25 +194,6 @@ const hakutulosSlice = createSlice({
                     koulutusData?.filters?.kunta
                   );
                 }
-                break;
-              case FILTER_TYPES.KOULUTUSTYYPPI:
-                const koulutustyyppiFilters = _.startsWith(idsStr, 'koulutustyyppi_')
-                  ? koulutusData.filters?.[key]?.amm?.alakoodit
-                  : koulutusData.filters?.[key];
-                state[key] = getCheckedFilterValues(idsStr, koulutustyyppiFilters);
-                break;
-              case FILTER_TYPES.KOULUTUSALA:
-                const koulutusalaFilters = _.entries(koulutusData?.filters?.[key]).reduce(
-                  (result, entry) => {
-                    let alakoodit = _.has(entry[1], 'alakoodit')
-                      ? entry[1].alakoodit
-                      : {};
-                    return { ...result, [entry[0]]: entry[1], ...alakoodit };
-                  },
-                  {}
-                );
-                debugger;
-                state[key] = getCheckedFilterValues(idsStr, koulutusalaFilters);
                 break;
               default:
                 state[key] = getCheckedFilterValues(idsStr, koulutusData.filters[key]);
@@ -323,6 +314,13 @@ function getCheckedFilterValues(ids, koulutusFilters) {
       ? [...result, { id: id, name: koulutusFilters?.[id]?.nimi }]
       : result;
   }, []);
+}
+
+function pullUpAlakoodit(obj) {
+  return _.entries(obj).reduce((result, entry) => {
+    let alakoodit = _.has(entry[1], 'alakoodit') ? entry[1].alakoodit : {};
+    return { ...result, [entry[0]]: entry[1], ...alakoodit };
+  }, {});
 }
 
 function getSelectedKunnatFilterValues(kunnatIds, kunnatFilters) {
