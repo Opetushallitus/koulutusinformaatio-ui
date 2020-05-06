@@ -2,14 +2,14 @@ import i18n from './i18n';
 import padStart from 'lodash/padStart';
 import _ from 'lodash';
 
-class Common {
+export class Common {
   // filters 'null', 'empty' and 'undefined', '0' or 'false' are valid values,
   // does not parse numbers to strings
   static withoutNilValues(obj) {
     return _.pickBy(obj, _.toString);
   }
 }
-class Localizer {
+export class Localizer {
   static getLanguage() {
     return i18n.languages && i18n.languages[0] ? i18n.language.split('-')[0] : 'fi';
   }
@@ -60,7 +60,7 @@ class Localizer {
   }
 }
 
-class Parser {
+export class Parser {
   static removeHtmlTags(html) {
     if (html) {
       const div = document.createElement('div');
@@ -71,7 +71,7 @@ class Parser {
   }
 }
 
-class OsoiteParser {
+export class OsoiteParser {
   static getCoreAddress(katuosoite) {
     //Merkkejä ja välilyönnillä siitä erotettu numero, esim: Ratapiha 3, Hubert Hepolaisen Katu 888.
     //Mahdollinen jatke leikataan pois.
@@ -84,7 +84,7 @@ class OsoiteParser {
   }
 }
 
-class TimeMillisParser {
+export class TimeMillisParser {
   static millisToReadable(timemillis) {
     if (timemillis === null) {
       return '';
@@ -96,7 +96,7 @@ class TimeMillisParser {
   }
 }
 
-class FormatdDate {
+export class FormatdDate {
   static formatDateString = (dateString, format) => {
     if (!dateString) {
       return '';
@@ -117,5 +117,3 @@ class FormatdDate {
     return formattedDate;
   };
 }
-
-export { Parser, Localizer, OsoiteParser, TimeMillisParser, FormatdDate, Common };
