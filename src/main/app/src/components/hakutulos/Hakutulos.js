@@ -23,11 +23,11 @@ import {
   setSize,
   setOrder,
   setSort,
-} from '#/src/reducers/hakutulosSlice';
+} from '#/src/store/reducers/hakutulosSlice';
 import {
   getAPIRequestParams,
   getHakutulosProps,
-} from '#/src/reducers/hakutulosSliceSelector';
+} from '#/src/store/reducers/hakutulosSliceSelector';
 import { Common as C } from '#/src/tools/Utils';
 import Murupolku from '#/src/components/common/Murupolku';
 import BackendErrorMessage from './BackendErrorMessage';

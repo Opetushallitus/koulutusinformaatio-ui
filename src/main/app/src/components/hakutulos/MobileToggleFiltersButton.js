@@ -5,8 +5,8 @@ import _ from 'lodash';
 import { FilterList } from '@material-ui/icons';
 import { Badge, Button, ButtonGroup, Hidden, makeStyles } from '@material-ui/core';
 import { colors } from '#/src/colors';
-import { toggleshowHakutulosFilters } from '#/src/reducers/hakutulosSlice';
-import { getSuodatinValinnatProps } from '#/src/reducers/hakutulosSliceSelector';
+import { toggleshowHakutulosFilters } from '#/src/store/reducers/hakutulosSlice';
+import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
 
 const useStyles = makeStyles((theme) => ({
   buttonGroupRoot: {

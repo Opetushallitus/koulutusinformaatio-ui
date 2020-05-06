@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSelectedTab } from '#/src/reducers/hakutulosSlice';
+import { setSelectedTab } from '#/src/store/reducers/hakutulosSlice';
 import { useHistory } from 'react-router-dom';
 import { Tabs, Tab, makeStyles, useMediaQuery } from '@material-ui/core';
 import { SchoolOutlined, HomeWorkOutlined } from '@material-ui/icons';

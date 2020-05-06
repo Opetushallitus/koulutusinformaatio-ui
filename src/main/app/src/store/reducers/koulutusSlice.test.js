@@ -1,6 +1,6 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as api from '../api/konfoApi';
+import * as api from '#/src/api/konfoApi';
 import reducer, {
   initialState,
   fetchKoulutusStart,
@@ -59,9 +59,7 @@ describe('thunks', () => {
   });
   it('creates fetchJarjestajatStart and fetchJarjestajatSuccess when fetchKoulutusJarjestajat succeeds', async () => {
     const store = mockStore(initialState);
-    api.getKoulutusJarjestajat = jest
-      .fn()
-      .mockResolvedValueOnce(jarjestajatData);
+    api.getKoulutusJarjestajat = jest.fn().mockResolvedValueOnce(jarjestajatData);
     await store.dispatch(fetchKoulutusJarjestajat(koulutusOid));
     const expectedActions = [
       fetchJarjestajatStart(),

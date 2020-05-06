@@ -29,6 +29,7 @@
     "react-router-hash-link": "^1.2.2",
     "react-select": "^3.0.8",
     "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
     "remove-markdown": "^0.3.0",
     "superagent": "^3.8.3",
     "typeface-open-sans": "0.0.75",

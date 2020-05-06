@@ -9,11 +9,11 @@ import {
   clearOffsetAndPaging,
   searchAll,
   setKoulutustyyppi,
-} from '#/src/reducers/hakutulosSlice';
+} from '#/src/store/reducers/hakutulosSlice';
 import {
   getAPIRequestParams,
   getKoulutustyyppiFilterProps,
-} from '#/src/reducers/hakutulosSliceSelector';
+} from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   SuodatinCheckbox,
   SuodatinExpansionPanel,

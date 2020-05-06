@@ -12,7 +12,7 @@ import {
   clearOffsetAndPaging,
   clearSelectedFilters,
   setKeywordEditMode,
-} from '#/src/reducers/hakutulosSlice';
+} from '#/src/store/reducers/hakutulosSlice';
 import { colors } from '#/src/colors';
 import { theme } from '#/src/theme';
 

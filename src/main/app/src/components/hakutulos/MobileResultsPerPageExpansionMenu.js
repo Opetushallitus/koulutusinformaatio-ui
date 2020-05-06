@@ -5,8 +5,12 @@ import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import qs from 'query-string';
 import { Grid, Typography } from '@material-ui/core';
-import { clearOffsetAndPaging, searchAll, setSize } from '#/src/reducers/hakutulosSlice';
-import { getAPIRequestParams } from '#/src/reducers/hakutulosSliceSelector';
+import {
+  clearOffsetAndPaging,
+  searchAll,
+  setSize,
+} from '#/src/store/reducers/hakutulosSlice';
+import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
 import { SuodatinMobileSlider } from './hakutulosSuodattimet/CustomizedMuiComponents';
 
 const MobileResultsPerPageExpansionMenu = ({ elevation }) => {

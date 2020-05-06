@@ -19,7 +19,7 @@ import {
   selectKoulutus,
   selectLoading,
   selectJarjestajat,
-} from '../../reducers/koulutusSlice';
+} from '../../store/reducers/koulutusSlice';
 import LoadingCircle from '../common/LoadingCircle';
 import qs from 'query-string';
 

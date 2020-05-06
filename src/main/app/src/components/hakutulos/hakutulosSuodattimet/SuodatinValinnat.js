@@ -9,12 +9,12 @@ import { Clear } from '@material-ui/icons';
 import {
   getSuodatinValinnatProps,
   getAPIRequestParams,
-} from '#/src/reducers/hakutulosSliceSelector';
+} from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   clearSelectedFilters,
   searchAll,
   setSelectedFilters,
-} from '#/src/reducers/hakutulosSlice';
+} from '#/src/store/reducers/hakutulosSlice';
 import { Common as C } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({
