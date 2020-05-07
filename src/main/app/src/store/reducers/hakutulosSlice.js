@@ -10,7 +10,6 @@ const KOULUTUS = 'koulutus';
 const OPPILAITOS = 'oppilaitos';
 
 export const initialState = {
-  loading: 0,
   status: IDLE_STATUS,
   error: null,
   keyword: '',
@@ -45,20 +44,6 @@ export const initialState = {
   showHakutulosFilters: false,
 };
 
-const fetchStart = (state) => {
-  if (state.status === IDLE_STATUS) {
-    state.loading += 1;
-    state.status = LOADING_STATUS;
-  }
-};
-const fetchFail = (state, action) => {
-  if (state.status === LOADING_STATUS) {
-    state.loading -= 1;
-    state.error = action.payload;
-    state.status = IDLE_STATUS;
-  }
-};
-
 const hakutulosSlice = createSlice({
   name: 'hakutulos',
   initialState,
@@ -71,14 +56,6 @@ const hakutulosSlice = createSlice({
     },
     setSelectedTab: (state, { payload }) => {
       state.selectedTab = payload.newSelectedTab;
-    },
-    setKoulutusOffsetAndPage: (state, { payload }) => {
-      state.koulutusOffset = payload.koulutusOffset;
-      state.koulutusPage = payload.koulutusPage;
-    },
-    setOppilaitosOffsetAndPage: (state, { payload }) => {
-      state.oppilaitosOffset = payload.oppilaitosOffset;
-      state.oppilaitosPage = payload.oppilaitosPage;
     },
     setOpetuskieli: (state, { payload }) => {
       state.opetuskieli = payload.newCheckedOpetuskielet;
@@ -95,7 +72,7 @@ const hakutulosSlice = createSlice({
     setKoulutusala: (state, { payload }) => {
       state.koulutusala = payload.newCheckedKoulutusalat;
     },
-    clearOffsetAndPaging: (state, action) => {
+    clearPaging: (state, action) => {
       state.koulutusPage = 1;
       state.oppilaitosPage = 1;
       state.koulutusOffset = 0;
@@ -130,7 +107,9 @@ const hakutulosSlice = createSlice({
       state.showHakutulosFilters = !state.showHakutulosFilters;
     },
     searchAPICallStart(state) {
-      fetchStart(state);
+      if (state.status === IDLE_STATUS) {
+        state.status = LOADING_STATUS;
+      }
     },
     searchAllSuccess(state, { payload }) {
       if (state.status === LOADING_STATUS) {
@@ -209,9 +188,11 @@ const hakutulosSlice = createSlice({
     },
     searchKoulutuksetSuccess(state, { payload }) {
       if (state.status === LOADING_STATUS) {
-        const { koulutusData } = payload;
+        const { koulutusData, koulutusOffset, koulutusPage } = payload;
         state.koulutusHits = koulutusData.hits;
         state.koulutusCount = _.size(koulutusData.hits);
+        state.koulutusOffset = koulutusOffset;
+        state.koulutusPage = koulutusPage;
         state.loading -= 1;
         state.error = null;
         state.status = IDLE_STATUS;
@@ -219,15 +200,21 @@ const hakutulosSlice = createSlice({
     },
     searchOppilaitoksetSuccess(state, { payload }) {
       if (state.status === LOADING_STATUS) {
-        const { oppilaitosData } = payload;
+        const { oppilaitosData, oppilaitosOffset, oppilaitosPage } = payload;
         state.oppilaitosHits = oppilaitosData.hits;
         state.oppilaitosCount = _.size(oppilaitosData.hits);
-        state.loading -= 1;
+        state.oppilaitosOffset = oppilaitosOffset;
+        state.oppilaitosPage = oppilaitosPage;
         state.error = null;
         state.status = IDLE_STATUS;
       }
     },
-    searchAPICallError: fetchFail,
+    searchAPICallError(state, action) {
+      if (state.status === LOADING_STATUS) {
+        state.error = action.payload;
+        state.status = IDLE_STATUS;
+      }
+    },
   },
 });
 
@@ -242,15 +229,13 @@ export const {
   setKoulutusala,
   setSijainti,
   setSelectedSijainti,
-  clearOffsetAndPaging,
+  clearPaging,
   clearSelectedFilters,
   setSelectedFilters,
   setOrder,
   setSort,
   toggleshowHakutulosFilters,
   setSize,
-  setKoulutusOffsetAndPage,
-  setOppilaitosOffsetAndPage,
   searchAllSuccess,
   searchKoulutuksetSuccess,
   searchOppilaitoksetSuccess,
@@ -287,20 +272,30 @@ export const searchAll = (
     dispatch(searchAPICallError(err.toString()));
   }
 };
-export const searchKoulutukset = (requestParams) => async (dispatch) => {
+export const searchKoulutukset = ({
+  requestParams,
+  koulutusOffset,
+  koulutusPage,
+}) => async (dispatch) => {
   try {
     dispatch(searchAPICallStart());
     const koulutusData = await searchAPI.getKoulutukset(requestParams);
-    dispatch(searchKoulutuksetSuccess({ koulutusData }));
+    dispatch(searchKoulutuksetSuccess({ koulutusData, koulutusOffset, koulutusPage }));
   } catch (err) {
     dispatch(searchAPICallError(err.toString()));
   }
 };
-export const searchOppilaitokset = (requestParams) => async (dispatch) => {
+export const searchOppilaitokset = ({
+  requestParams,
+  oppilaitosOffset,
+  oppilaitosPage,
+}) => async (dispatch) => {
   try {
     dispatch(searchAPICallStart());
     const oppilaitosData = await searchAPI.getOppilaitokset(requestParams);
-    dispatch(searchOppilaitoksetSuccess({ oppilaitosData }));
+    dispatch(
+      searchOppilaitoksetSuccess({ oppilaitosData, oppilaitosOffset, oppilaitosPage })
+    );
   } catch (err) {
     dispatch(searchAPICallError(err.toString()));
   }

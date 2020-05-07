@@ -3,7 +3,6 @@ import qs from 'query-string';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import _ from 'lodash';
 import {
   Box,
   Grid,
@@ -18,7 +17,7 @@ import {
 import { ExpandMore } from '@material-ui/icons';
 import LoadingCircle from '#/src/components/common/LoadingCircle';
 import {
-  clearOffsetAndPaging,
+  clearPaging,
   searchAll,
   setSize,
   setOrder,
@@ -113,7 +112,7 @@ const Hakutulos = () => {
     setPageSort(newPageSort);
     search.sort = newSort;
     search.order = newOrder;
-    history.replace({ search: qs.stringify(C.withoutNilValues(search)) });
+    history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
     dispatch(setSort({ newSort }));
     dispatch(setOrder({ newOrder }));
     dispatch(searchAll({ ...apiRequestParams, order: newOrder, sort: newSort }));
@@ -126,8 +125,8 @@ const Hakutulos = () => {
     search.size = newSize;
     search.kpage = 1;
     search.opage = 1;
-    history.replace({ search: qs.stringify(C.withoutNilValues(search)) });
-    dispatch(clearOffsetAndPaging());
+    history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
+    dispatch(clearPaging());
     dispatch(setSize({ newSize }));
     dispatch(searchAll({ ...apiRequestParams, size: newSize }));
   };
@@ -170,13 +169,7 @@ const Hakutulos = () => {
           </Hidden>
           <Grid item container lg={9} md={8} sm={12} justify="space-between">
             <Grid item lg={6} md={7} xs={12}>
-              <HakutulosToggle
-                {..._.pick(hakutulosProps, [
-                  'selectedTab',
-                  'koulutusTotal',
-                  'oppilaitosTotal',
-                ])}
-              />
+              <HakutulosToggle />
             </Grid>
             <Hidden smDown>
               <Grid

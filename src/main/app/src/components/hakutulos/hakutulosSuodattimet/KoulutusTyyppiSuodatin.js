@@ -6,7 +6,7 @@ import qs from 'query-string';
 import { Grid, List, ListItem, ListItemIcon, useTheme } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import {
-  clearOffsetAndPaging,
+  clearPaging,
   searchAll,
   setKoulutustyyppi,
 } from '#/src/store/reducers/hakutulosSlice';
@@ -72,8 +72,8 @@ const KoulutustyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
     search.koulutustyyppi = newValitutKoulutusTyypitStr;
     search.kpage = 1;
     search.opage = 1;
-    history.replace({ search: qs.stringify(C.withoutNilValues(search)) });
-    dispatch(clearOffsetAndPaging());
+    history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
+    dispatch(clearPaging());
     dispatch(
       searchAll({ ...apiRequestParams, koulutustyyppi: newValitutKoulutusTyypitStr })
     );

@@ -1,12 +1,12 @@
 import i18n from './i18n';
 import padStart from 'lodash/padStart';
-import _ from 'lodash';
+import _fp from 'lodash/fp';
 
 export class Common {
-  // filters 'null', 'empty' and 'undefined', '0' or 'false' are valid values,
+  // filters 'null', 'empty string' or 'undefined', but '0' or 'false' are valid values,
   // does not parse numbers to strings
-  static withoutNilValues(obj) {
-    return _.pickBy(obj, _.toString);
+  static cleanRequestParams(obj) {
+    return _fp.pickBy(_fp.toString, obj);
   }
 }
 export class Localizer {

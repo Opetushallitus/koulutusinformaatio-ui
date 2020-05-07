@@ -9,10 +9,8 @@ import {
   getAPIRequestParams,
 } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
-  setKoulutusOffsetAndPage,
   searchKoulutukset,
   searchOppilaitokset,
-  setOppilaitosOffsetAndPage,
 } from '#/src/store/reducers/hakutulosSlice';
 
 const useStyles = makeStyles((theme) => ({
@@ -52,15 +50,23 @@ const Pagination = ({ size }) => {
     if (paginationProps.selectedTab === 'koulutus') {
       search.kpage = page;
       history.replace({ search: qs.stringify(search) });
-      dispatch(setKoulutusOffsetAndPage({ koulutusOffset: offset, koulutusPage: page }));
-      dispatch(searchKoulutukset({ ...apiRequestParams, page, size }));
+      dispatch(
+        searchKoulutukset({
+          requestParams: { ...apiRequestParams, page, size },
+          koulutusOffset: offset,
+          koulutusPage: page,
+        })
+      );
     } else {
       search.opage = page;
       history.replace({ search: qs.stringify(search) });
       dispatch(
-        setOppilaitosOffsetAndPage({ oppilaitosOffset: offset, oppilaitosPage: page })
+        searchOppilaitokset({
+          requestParams: { ...apiRequestParams, page, size },
+          oppilaitosOffset: offset,
+          oppilaitosPage: page,
+        })
       );
-      dispatch(searchOppilaitokset({ ...apiRequestParams, page, size }));
     }
   };
 

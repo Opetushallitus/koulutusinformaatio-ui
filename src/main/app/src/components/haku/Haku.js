@@ -17,16 +17,11 @@ const Haku = () => {
   const dispatch = useDispatch();
 
   function getSortedSearch(search) {
-    return _.entries(_.pick(search, _.keys(apiRequestParams))).reduce((result, entry) => {
-      if (_.includes(FILTER_TYPES_ARR, entry[0])) {
-        return {
-          ...result,
-          [entry[0]]: _.join(_.sortBy(_.split(entry[1], ',')), ','),
-        };
-      } else {
-        return { ...result, [entry[0]]: entry[1] };
-      }
-    }, {});
+    return _.mapValues(_.pick(search, _.keys(apiRequestParams)), (value, key) =>
+      _.includes(FILTER_TYPES_ARR, key)
+        ? _.join(_.sortBy(_.split(value, ',')), ',')
+        : value
+    );
   }
 
   useEffect(() => {
@@ -34,7 +29,7 @@ const Haku = () => {
       qs.parse(history.location.search, { parseNumbers: true })
     );
     if (!_.isMatch(apiRequestParams, { ...search, keyword }) && !keywordEditMode) {
-      let newSearch = C.withoutNilValues({ ...apiRequestParams, keyword, ...search });
+      let newSearch = C.cleanRequestParams({ ...apiRequestParams, keyword, ...search });
       dispatch(setKeyword({ keyword }));
       dispatch(searchAll(newSearch, true, true));
     }

@@ -64,7 +64,7 @@ const SuodatinValinnat = () => {
       .join(',');
 
     search[filterType] = newFilterValuesStr;
-    history.replace({ search: qs.stringify(C.withoutNilValues(search)) });
+    history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
     dispatch(setSelectedFilters({ filterType: filterType, itemId: item?.id }));
     dispatch(searchAll({ ...apiRequestParams, [filterType]: newFilterValuesStr }));
   };

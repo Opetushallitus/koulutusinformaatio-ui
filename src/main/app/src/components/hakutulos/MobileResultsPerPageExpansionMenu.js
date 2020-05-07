@@ -5,11 +5,7 @@ import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import qs from 'query-string';
 import { Grid, Typography } from '@material-ui/core';
-import {
-  clearOffsetAndPaging,
-  searchAll,
-  setSize,
-} from '#/src/store/reducers/hakutulosSlice';
+import { clearPaging, searchAll, setSize } from '#/src/store/reducers/hakutulosSlice';
 import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
 import { SuodatinMobileSlider } from './hakutulosSuodattimet/CustomizedMuiComponents';
 
@@ -39,7 +35,7 @@ const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
     search.kpage = 1;
     search.opage = 1;
     history.replace({ search: qs.stringify(search) });
-    dispatch(clearOffsetAndPaging());
+    dispatch(clearPaging());
     dispatch(setSize({ newSize }));
     dispatch(searchAll({ ...apiRequestPaparms, size: newSize }));
   };

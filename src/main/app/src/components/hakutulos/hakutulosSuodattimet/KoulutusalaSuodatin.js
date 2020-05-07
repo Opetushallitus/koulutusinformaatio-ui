@@ -30,7 +30,7 @@ import {
 import {
   searchAll,
   setKoulutusala,
-  clearOffsetAndPaging,
+  clearPaging,
 } from '#/src/store/reducers/hakutulosSlice';
 import { MUI_BREAKPOINTS } from '#/src/constants';
 import { Common as C } from '#/src/tools/Utils';
@@ -98,8 +98,8 @@ const KoulutusalaSuodatin = ({ expanded, elevation, displaySelected }) => {
     search.koulutusala = newValitutKoulutusalatStr;
     search.kpage = 1;
     search.opage = 1;
-    history.replace({ search: qs.stringify(C.withoutNilValues(search)) });
-    dispatch(clearOffsetAndPaging());
+    history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
+    dispatch(clearPaging());
     dispatch(searchAll({ ...apiRequestParams, koulutusala: newValitutKoulutusalatStr }));
   };
 

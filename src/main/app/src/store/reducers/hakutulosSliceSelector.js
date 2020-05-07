@@ -6,6 +6,9 @@ import { Localizer as l } from '#/src/tools/Utils';
 function getKeyword(state) {
   return state.hakutulos.keyword;
 }
+function getKeywordEditMode(state) {
+  return state.hakutulos.keywordEditMode;
+}
 function getKoulutusHits(state) {
   return state.hakutulos.koulutusHits;
 }
@@ -64,6 +67,18 @@ function getPageSortArray(state) {
   return state.hakutulos.pageSortArray;
 }
 //Selectors
+export const getHakupalkkiProps = createSelector(
+  [getKeyword, getKeywordEditMode, getSize, getOrder],
+  (keyword, keywordEditMode, size, order) => ({
+    keyword,
+    keywordEditMode,
+    size,
+    order,
+    showTooltip: _.inRange(_.size(keyword), 1, 3),
+    isKeyworValid: _.size(keyword) > 2,
+  })
+);
+
 export const getHakutulosProps = createSelector(
   [
     getKeyword,
@@ -119,6 +134,15 @@ export const getHakutulosProps = createSelector(
       ),
     };
   }
+);
+
+export const getHakutulosToggleProps = createSelector(
+  [getSelectedTab, getKoulutusTotal, getOppilaitosTotal],
+  (selectedTab, koulutusTotal, oppilaitosTotal) => ({
+    selectedTab: selectedTab === 'koulutus' ? 0 : 1,
+    koulutusTotal,
+    oppilaitosTotal,
+  })
 );
 
 export const getMobileToggleOrderByButtonMenuProps = createSelector(
@@ -236,7 +260,7 @@ export const getKoulutusalaFilterProps = createSelector(
         ? koulutusFilters.koulutusala
         : oppilaitosFilters.koulutusala;
     return {
-      sortedKoulutusalat: sortedKoultusalatEntries(koulutusala),
+      sortedKoulutusalat: sortedKoulutusalatEntries(koulutusala),
       selectedTab,
       checkedKoulutusalat,
       checkedKoulutusalatStr: getSelectedFiltersNamesStr(checkedKoulutusalat),
@@ -303,7 +327,7 @@ function getCheckedFiltersIdsStr(checkedfiltersArr) {
 function getSelectedFiltersNamesStr(filterArr) {
   return filterArr.map((f) => _.capitalize(f?.['name']?.[l.getLanguage()])).join(', ');
 }
-function sortedKoultusalatEntries(filterObj) {
+function sortedKoulutusalatEntries(filterObj) {
   return _.orderBy(_.entries(filterObj), `[1]nimi.[${l.getLanguage()}]`);
 }
 function getOrderedMaakunnatEntries(filterObj) {
