@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore, SearchOutlined } from '@material-ui/icons';
 import {
-  clearOffsetAndPaging,
+  clearPaging,
   searchAll,
   setSijainti,
   setSelectedSijainti,
@@ -110,8 +110,8 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
     search.sijainti = selectedSijainnitStr;
     search.kpage = 1;
     search.opage = 1;
-    history.replace({ search: qs.stringify(C.withoutNilValues(search)) });
-    dispatch(clearOffsetAndPaging());
+    history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
+    dispatch(clearPaging());
     dispatch(searchAll({ ...apiRequestParams, sijainti: selectedSijainnitStr }));
   };
 
@@ -135,9 +135,9 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
     search.sijainti = newCheckedOrSelectedSijainnitStr;
     search.kpage = 1;
     search.opage = 1;
-    history.replace({ search: qs.stringify(C.withoutNilValues(search)) });
+    history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
     dispatch(setSijainti({ newCheckedOrSelectedMaakunnat }));
-    dispatch(clearOffsetAndPaging());
+    dispatch(clearPaging());
     dispatch(
       searchAll({ ...apiRequestParams, sijainti: newCheckedOrSelectedSijainnitStr })
     );

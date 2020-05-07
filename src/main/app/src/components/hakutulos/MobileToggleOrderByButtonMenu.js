@@ -53,7 +53,7 @@ const MobileToggleOrderByButtonMenu = ({ elevation }) => {
     const search = qs.parse(history.location.search);
     search.sort = newSort;
     search.order = newOrder;
-    history.replace({ search: qs.stringify(C.withoutNilValues(search)) });
+    history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
     dispatch(setSort({ newSort }));
     dispatch(setOrder({ newOrder }));
     dispatch(searchAll({ ...apiRequstParams, order: newOrder, sort: newSort }));

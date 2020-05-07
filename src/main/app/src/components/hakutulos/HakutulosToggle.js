@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedTab } from '#/src/store/reducers/hakutulosSlice';
 import { useHistory } from 'react-router-dom';
 import { Tabs, Tab, makeStyles, useMediaQuery } from '@material-ui/core';
@@ -8,6 +8,7 @@ import qs from 'query-string';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { MUI_BREAKPOINTS } from '../../constants';
+import { getHakutulosToggleProps } from '#/src/store/reducers/hakutulosSliceSelector';
 
 const useStyles = makeStyles((theme) => ({
   tabIconMargin: {
@@ -37,26 +38,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HakutulosToggle = ({ selectedTab, koulutusTotal, oppilaitosTotal }) => {
+const HakutulosToggle = () => {
   const history = useHistory();
   const { t } = useTranslation();
+  const { selectedTab, koulutusTotal, oppilaitosTotal } = useSelector(
+    getHakutulosToggleProps
+  );
   const dispatch = useDispatch();
   const classes = useStyles();
   const muiScreenSizeMinMd = useMediaQuery(MUI_BREAKPOINTS.MIN_MD);
 
-  const [_selectedTab, _setSelectedTab] = useState(0);
-
-  useEffect(() => {
-    const tab = selectedTab === 'koulutus' ? 0 : 1;
-    _setSelectedTab(tab);
-  }, [selectedTab]);
-
   const handleSelectedTab = (event, newValue) => {
-    _setSelectedTab(newValue);
     const search = qs.parse(history.location.search);
-    const tabValue = newValue === 0 ? 'koulutus' : 'oppilaitos';
     const newSelectedTab = newValue === 0 ? 'koulutus' : 'oppilaitos';
-    search.tab = tabValue;
+    search.tab = newSelectedTab;
     history.replace({ search: qs.stringify(search) });
     dispatch(setSelectedTab({ newSelectedTab }));
   };
@@ -64,7 +59,7 @@ const HakutulosToggle = ({ selectedTab, koulutusTotal, oppilaitosTotal }) => {
   return (
     <Tabs
       variant={muiScreenSizeMinMd ? 'standard' : 'fullWidth'}
-      value={_selectedTab}
+      value={selectedTab}
       indicatorColor="primary"
       textColor="primary"
       onChange={handleSelectedTab}>

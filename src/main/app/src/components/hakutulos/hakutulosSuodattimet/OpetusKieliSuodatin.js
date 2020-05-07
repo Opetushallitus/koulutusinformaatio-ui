@@ -6,7 +6,7 @@ import qs from 'query-string';
 import { Grid, List, ListItem, ListItemIcon } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import {
-  clearOffsetAndPaging,
+  clearPaging,
   searchAll,
   setOpetuskieli,
 } from '#/src/store/reducers/hakutulosSlice';
@@ -67,8 +67,8 @@ const OpetuskieliSuodatin = ({ expanded, elevation, displaySelected }) => {
     search.opetuskieli = newCheckedOpetusKieletStr;
     search.kpage = 1;
     search.opage = 1;
-    history.replace({ search: qs.stringify(C.withoutNilValues(search)) });
-    dispatch(clearOffsetAndPaging());
+    history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
+    dispatch(clearPaging());
     dispatch(searchAll({ ...apiRequestParams, opetuskieli: newCheckedOpetusKieletStr }));
   };
   return (

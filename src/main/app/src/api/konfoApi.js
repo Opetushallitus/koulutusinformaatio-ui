@@ -24,14 +24,14 @@ export const searchAPI = {
   getKoulutukset(requestParams) {
     return client
       .get(urls.url('konfo-backend.search.koulutukset'), {
-        params: C.withoutNilValues(requestParams),
+        params: C.cleanRequestParams(requestParams),
       })
       .then((response) => response.data);
   },
   getOppilaitokset(requestParams) {
     return client
       .get(urls.url('konfo-backend.search.oppilaitokset'), {
-        params: C.withoutNilValues(requestParams),
+        params: C.cleanRequestParams(requestParams),
       })
       .then((response) => response.data);
   },
