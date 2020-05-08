@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { searchAPI } from '#/src/api/konfoApi';
 import _ from 'lodash';
-import { Localizer as l } from '#/src/tools/Utils';
-import { FILTER_TYPES } from '#/src/constants';
+import { Localizer as l, Common as C } from '#/src/tools/Utils';
+import { FILTER_TYPES, FILTER_TYPES_ARR } from '#/src/constants';
 
 const IDLE_STATUS = 'idle';
 const LOADING_STATUS = 'loading';
@@ -181,7 +181,6 @@ const hakutulosSlice = createSlice({
           });
         }
 
-        state.loading -= 1;
         state.error = null;
         state.status = IDLE_STATUS;
       }
@@ -193,7 +192,6 @@ const hakutulosSlice = createSlice({
         state.koulutusCount = _.size(koulutusData.hits);
         state.koulutusOffset = koulutusOffset;
         state.koulutusPage = koulutusPage;
-        state.loading -= 1;
         state.error = null;
         state.status = IDLE_STATUS;
       }
@@ -301,6 +299,27 @@ export const searchOppilaitokset = ({
   }
 };
 
+export const searchAllOnPageReload = ({ apiRequestParams, search, keyword }) => (
+  dispatch,
+  getState
+) => {
+  const cleanedUrlSearch = getCleanUrlSearch(search, apiRequestParams);
+  const { hakutulos } = getState();
+  if (
+    !_.isMatch(apiRequestParams, { ...cleanedUrlSearch, keyword }) &&
+    !hakutulos.keywordEditMode
+  ) {
+    dispatch(setKeyword({ keyword }));
+    dispatch(
+      searchAll(
+        C.cleanRequestParams({ ...apiRequestParams, keyword, ...cleanedUrlSearch }),
+        hakutulos.keyword !== keyword,
+        true
+      )
+    );
+  }
+};
+
 // Helpers
 function getCheckedFilterValues(ids, koulutusFilters) {
   const idsArray = _.split(ids, ',');
@@ -335,4 +354,10 @@ function getSelectedKunnatFilterValues(kunnatIds, kunnatFilters) {
         ]
       : result;
   }, []);
+}
+
+function getCleanUrlSearch(search, apiRequestParams) {
+  return _.mapValues(_.pick(search, _.keys(apiRequestParams)), (value, key) =>
+    _.includes(FILTER_TYPES_ARR, key) ? _.join(_.sortBy(_.split(value, ',')), ',') : value
+  );
 }
