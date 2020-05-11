@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getKoulutus, getKoulutusKuvaus, getKoulutusJarjestajat } from '../api/konfoApi';
+import {
+  getKoulutus,
+  getKoulutusKuvaus,
+  getKoulutusJarjestajat,
+} from '#/src/api/konfoApi';
 import _ from 'lodash';
 
 const IDLE_STATUS = 'idle';

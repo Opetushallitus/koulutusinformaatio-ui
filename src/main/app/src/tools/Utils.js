@@ -1,11 +1,17 @@
 import i18n from './i18n';
 import padStart from 'lodash/padStart';
+import _fp from 'lodash/fp';
 
-class Localizer {
+export class Common {
+  // filters 'null', 'empty string' or 'undefined', but '0' or 'false' are valid values,
+  // does not parse numbers to strings
+  static cleanRequestParams(obj) {
+    return _fp.pickBy(_fp.toString, obj);
+  }
+}
+export class Localizer {
   static getLanguage() {
-    return i18n.languages && i18n.languages[0]
-      ? i18n.language.split('-')[0]
-      : 'fi';
+    return i18n.languages && i18n.languages[0] ? i18n.language.split('-')[0] : 'fi';
   }
 
   static lng(nimi, lng) {
@@ -54,7 +60,7 @@ class Localizer {
   }
 }
 
-class Parser {
+export class Parser {
   static removeHtmlTags(html) {
     if (html) {
       const div = document.createElement('div');
@@ -65,22 +71,20 @@ class Parser {
   }
 }
 
-class OsoiteParser {
+export class OsoiteParser {
   static getCoreAddress(katuosoite) {
     //Merkkejä ja välilyönnillä siitä erotettu numero, esim: Ratapiha 3, Hubert Hepolaisen Katu 888.
     //Mahdollinen jatke leikataan pois.
     const regexp = '^.+? \\d+';
     const coreAddress = katuosoite.match(regexp);
     if (coreAddress === null) {
-      console.log(
-        'Warning: returning null for core address, input: ' + katuosoite
-      );
+      console.log('Warning: returning null for core address, input: ' + katuosoite);
     }
     return coreAddress;
   }
 }
 
-class TimeMillisParser {
+export class TimeMillisParser {
   static millisToReadable(timemillis) {
     if (timemillis === null) {
       return '';
@@ -92,7 +96,7 @@ class TimeMillisParser {
   }
 }
 
-class FormatdDate {
+export class FormatdDate {
   static formatDateString = (dateString, format) => {
     if (!dateString) {
       return '';
@@ -113,5 +117,3 @@ class FormatdDate {
     return formattedDate;
   };
 }
-
-export { Parser, Localizer, OsoiteParser, TimeMillisParser, FormatdDate };

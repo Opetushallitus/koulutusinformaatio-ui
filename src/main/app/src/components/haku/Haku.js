@@ -1,22 +1,23 @@
 import React, { useEffect } from 'react';
-import parse from 'url-parse';
-import { observer } from 'mobx-react';
+import { useHistory, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import qs from 'query-string';
 import Hakutulos from '../hakutulos/Hakutulos';
-import { useLocation, useParams } from 'react-router-dom';
-import { useStores } from '../../hooks';
+import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
+import { searchAllOnPageReload } from '#/src/store/reducers/hakutulosSlice';
 
 const Haku = () => {
-  const { hakuStore, hakuehtoStore } = useStores();
-  const location = useLocation();
+  const history = useHistory();
   const { keyword } = useParams();
+  const apiRequestParams = useSelector(getAPIRequestParams);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const search = parse(location.search);
-    hakuStore.setAll(keyword, search);
-    hakuehtoStore.setAll(keyword, search);
-  }, [hakuStore, hakuehtoStore, keyword, location.search]);
+    const search = qs.parse(history.location.search, { parseNumbers: true });
+    dispatch(searchAllOnPageReload({ apiRequestParams, search, keyword }));
+  });
 
   return <Hakutulos />;
 };
 
-export default observer(Haku);
+export default Haku;

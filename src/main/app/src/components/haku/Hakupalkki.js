@@ -1,14 +1,20 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import _ from 'lodash';
 import { Paper, makeStyles, ThemeProvider, Tooltip } from '@material-ui/core';
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
-import { useStores } from '../../hooks';
-import { colors } from '../../colors';
-import { theme } from '../../theme';
-import { observer } from 'mobx-react-lite';
+import {
+  searchAll,
+  setKeyword,
+  clearPaging,
+  clearSelectedFilters,
+  setKeywordEditMode,
+} from '#/src/store/reducers/hakutulosSlice';
+import { getHakupalkkiProps } from '#/src/store/reducers/hakutulosSliceSelector';
+import { colors } from '#/src/colors';
+import { theme } from '#/src/theme';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -44,20 +50,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Hakupalkki = observer(() => {
+const Hakupalkki = () => {
   const history = useHistory();
   const { t } = useTranslation();
   const classes = useStyles();
-  const { hakuehtoStore } = useStores();
+  const dispatch = useDispatch();
+  const {
+    keyword,
+    keywordEditMode,
+    size,
+    order,
+    showTooltip,
+    isKeyworValid,
+  } = useSelector(getHakupalkkiProps);
+
   const doSearch = (event) => {
     event.preventDefault();
-    history.push(hakuehtoStore.createHakuUrl);
+    dispatch(clearPaging());
+    dispatch(clearSelectedFilters());
+    history.push(`/haku/${keyword}?order=${order}&size=${size}`);
+    dispatch(setKeywordEditMode({ newKeywordEditMode: false }));
+    dispatch(searchAll({ keyword, size }, true));
   };
   const setSearch = (event) => {
     if (event.target.value) {
-      hakuehtoStore.keyword = event.target.value;
-    } else {
-      hakuehtoStore.keyword = '';
+      !keywordEditMode && dispatch(setKeywordEditMode({ newKeywordEditMode: true }));
+      dispatch(setKeyword({ keyword: event.target.value }));
     }
   };
   return (
@@ -69,15 +87,13 @@ const Hakupalkki = observer(() => {
         elevation={4}>
         <Tooltip
           placement="bottom-start"
-          open={_.inRange(hakuehtoStore.keyword.length, 1, 3)}
+          open={showTooltip}
           title={t('haku.syota-ainakin-kolme-merkkia')}>
           <InputBase
-            defaultValue={hakuehtoStore.keyword}
+            defaultValue={keyword}
             className={classes.input}
             onKeyPress={(event) =>
-              event.key === 'Enter' &&
-              hakuehtoStore.keyword.length > 2 &&
-              doSearch(event)
+              event.key === 'Enter' && isKeyworValid && doSearch(event)
             }
             onChange={setSearch}
             type="search"
@@ -88,7 +104,7 @@ const Hakupalkki = observer(() => {
           />
         </Tooltip>
         <Button
-          disabled={hakuehtoStore.keyword.length < 3}
+          disabled={!isKeyworValid}
           type="submit"
           variant="contained"
           color="secondary"
@@ -99,6 +115,6 @@ const Hakupalkki = observer(() => {
       </Paper>
     </ThemeProvider>
   );
-});
+};
 
 export default Hakupalkki;

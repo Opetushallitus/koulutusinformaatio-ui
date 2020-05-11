@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { observer } from 'mobx-react';
+import React, { useEffect, useState } from 'react';
 import qs from 'query-string';
 import { useTranslation } from 'react-i18next';
-import { ExpandMore, ExpandLess } from '@material-ui/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   Box,
-  Button,
-  Hidden,
   Grid,
-  Link,
+  Hidden,
   makeStyles,
   MenuItem,
   Paper,
@@ -16,23 +14,32 @@ import {
   Typography,
   useTheme,
 } from '@material-ui/core';
-import HakutulosToggle from './HakutulosToggle';
-import _ from 'lodash';
-import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
-import OpetusKieliSuodatin from './hakutulosSuodattimet/OpetusKieliSuodatin';
-import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
-import KoulutusalatSuodatin from './hakutulosSuodattimet/KoulutusalatSuodatin';
-import KoulutusKortti from './hakutulosKortit/KoulutusKortti';
-import OppilaitosKortti from './hakutulosKortit/OppilaitosKortti';
-import Pagination from './Pagination';
+import { ExpandMore } from '@material-ui/icons';
+import LoadingCircle from '#/src/components/common/LoadingCircle';
+import {
+  clearPaging,
+  searchAll,
+  setSize,
+  setOrder,
+  setSort,
+} from '#/src/store/reducers/hakutulosSlice';
+import {
+  getAPIRequestParams,
+  getHakutulosProps,
+} from '#/src/store/reducers/hakutulosSliceSelector';
+import { Common as C } from '#/src/tools/Utils';
+import Murupolku from '#/src/components/common/Murupolku';
 import BackendErrorMessage from './BackendErrorMessage';
+import HakutulosResults from './HakutulosResults';
+import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
+import KoulutustyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
+import OpetuskieliSuodatin from './hakutulosSuodattimet/OpetusKieliSuodatin';
+import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
 import SuodatinValinnat from './hakutulosSuodattimet/SuodatinValinnat';
-import MobileToggleFiltersButton from './MobileToggleFiltersButton';
+import HakutulosToggle from './HakutulosToggle';
 import MobileFiltersOnTopMenu from './MobileFiltersOnTopMenu';
-import { useStores } from '../../hooks';
-import Murupolku from '../common/Murupolku';
-import { useHistory } from 'react-router-dom';
-import LoadingCircle from '../common/LoadingCircle';
+import MobileToggleFiltersButton from './MobileToggleFiltersButton';
+import Pagination from './Pagination';
 
 const useStyles = makeStyles((theme) => ({
   hakutulosSisalto: {
@@ -82,32 +89,19 @@ const Hakutulos = () => {
   const classes = useStyles();
   const theme = useTheme();
   const { t } = useTranslation();
-  const { hakuStore, restStore } = useStores();
-  const { filter, paging } = hakuStore;
+
+  const hakutulosProps = useSelector(getHakutulosProps);
+  const apiRequestParams = useSelector(getAPIRequestParams);
+  const error = useSelector((state) => state.hakutulos.error);
+  const status = useSelector((state) => state.hakutulos.status);
+  const dispatch = useDispatch();
 
   const [pageSize, setPageSize] = useState(0);
-
   const [pageSort, setPageSort] = useState('score_desc');
 
   useEffect(() => {
-    window.scroll(0, 170);
-    setPageSize(paging.pageSize);
-  }, [paging.pageSize]);
-
-  const handlePageSizeChange = (e) => {
-    const search = qs.parse(history.location.search);
-    const newPageSize = e.target.value;
-
-    setPageSize(newPageSize);
-    search.pagesize = newPageSize;
-    search.kpage = 1;
-    search.opage = 1;
-    history.replace({ search: qs.stringify(search) });
-    hakuStore.clearOffsetAndPaging();
-    hakuStore.setPagingPageSize(newPageSize);
-    hakuStore.searchKoulutukset();
-    hakuStore.searchOppilaitokset();
-  };
+    setPageSize(hakutulosProps.size);
+  }, [hakutulosProps.size]);
 
   const handlePageSortChange = (e) => {
     const search = qs.parse(history.location.search);
@@ -118,11 +112,23 @@ const Hakutulos = () => {
     setPageSort(newPageSort);
     search.sort = newSort;
     search.order = newOrder;
-    history.replace({ search: qs.stringify(search) });
-    hakuStore.toggleSort(newSort);
-    hakuStore.toggleOrder(newOrder);
-    hakuStore.searchKoulutukset();
-    hakuStore.searchOppilaitokset();
+    history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
+    dispatch(setSort({ newSort }));
+    dispatch(setOrder({ newOrder }));
+    dispatch(searchAll({ ...apiRequestParams, order: newOrder, sort: newSort }));
+  };
+  const handlePageSizeChange = (e) => {
+    const search = qs.parse(history.location.search);
+    const newSize = e.target.value;
+
+    setPageSize(newSize);
+    search.size = newSize;
+    search.kpage = 1;
+    search.opage = 1;
+    history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
+    dispatch(clearPaging());
+    dispatch(setSize({ newSize }));
+    dispatch(searchAll({ ...apiRequestParams, size: newSize }));
   };
 
   const getPageSortTranslationKey = (sort) => {
@@ -133,90 +139,10 @@ const Hakutulos = () => {
         return 'haku.jarjesta_aakkoset_o_a';
       case 'name_asc':
         return 'haku.jarjesta_aakkoset_a_o';
+      default:
+        return '';
     }
   };
-
-  const ResultList = observer(() => {
-    const koulutusResult = hakuStore.koulutusResult;
-    const oppilaitosResult = hakuStore.oppilaitosResult;
-
-    switch (hakuStore.state) {
-      case 'pending':
-        if (restStore.restErrorsArrLength > 0) {
-          return <BackendErrorMessage />;
-        }
-        return <LoadingCircle />;
-      case 'done':
-        if (hakuStore.toggle === 'koulutus' && hakuStore.hasKoulutusResult) {
-          return koulutusResult.map((r) => {
-            const link = `/koulutus/${r.oid}`;
-            return (
-              <KoulutusKortti
-                key={r.oid}
-                oid={r.oid}
-                tyyppi={r.koulutustyyppi}
-                haettavissa={r.hakuOnKaynnissa}
-                link={link}
-                kuvaus={r.kuvaus}
-                koulutustyyppi={r.koulutustyyppi}
-                nimi={r.nimi}
-                teemakuva={r.teemakuva}
-                opintojenlaajuus={r.opintojenlaajuus}
-                opintojenlaajuusyksikko={r.opintojenlaajuusyksikko}
-                tutkintonimikkeet={r.tutkintonimikkeet || []}
-              />
-            );
-          });
-        }
-        if (hakuStore.toggle === 'oppilaitos' && hakuStore.hasOppilaitosResult) {
-          return oppilaitosResult.map((r) => {
-            const link = `/oppilaitos/${r.oid}`;
-            return (
-              <OppilaitosKortti
-                key={r.oid}
-                oid={r.oid}
-                tyyppi={r.tyyppi}
-                haettavissa={false}
-                nimi={r.nimi}
-                link={link}
-                text1={r.kayntiosoite ? r.kayntiosoite : ''}
-                text2={r.postitoimipaikka ? r.postitoimipaikka : ''}
-                oppilaitos={r}
-              />
-            );
-          });
-        }
-        return (
-          <Grid
-            container
-            alignItems="center"
-            spacing={3}
-            style={{ padding: theme.spacing(9) }}
-            direction="column">
-            <Grid item>
-              <Typography variant="h1">
-                {t('haku.ei-hakutuloksia', hakuStore.keyword)}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography paragraph>
-                {t('haku.summary', { keyword: hakuStore.keyword })}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Link underline="always" href="/konfo" variant="body1">
-                {t('haku.siirry-opintopolun-etusivulle')}
-              </Link>
-            </Grid>
-          </Grid>
-        );
-      default:
-        break;
-    }
-  });
-
-  const isFilterSelected = () =>
-    _.some(_.values(filter), (filterArr) => _.size(filterArr) > 0);
 
   return (
     <Grid className={classes.hakutulosSisalto} container>
@@ -269,7 +195,7 @@ const Hakutulos = () => {
                   }}
                   value={pageSize}
                   onChange={handlePageSizeChange}>
-                  {hakuStore.pageSizeArray.map((size) => (
+                  {hakutulosProps.pageSizeArray.map((size) => (
                     <MenuItem
                       key={size}
                       classes={{ root: classes.menuItemRoot }}
@@ -291,7 +217,7 @@ const Hakutulos = () => {
                   }}
                   value={pageSort}
                   onChange={handlePageSortChange}>
-                  {hakuStore.pageSortArray.map((sort) => (
+                  {hakutulosProps.pageSortArray.map((sort) => (
                     <MenuItem
                       key={sort}
                       classes={{ root: classes.menuItemRoot }}
@@ -311,19 +237,23 @@ const Hakutulos = () => {
             </Hidden>
             <MobileToggleFiltersButton />
             <Hidden smDown>
-              <KoulutusTyyppiSuodatin expanded elevation={2} />
-              <OpetusKieliSuodatin expanded elevation={2} />
+              <KoulutustyyppiSuodatin expanded elevation={2} />
+              <OpetuskieliSuodatin expanded elevation={2} />
               <SijaintiSuodatin expanded elevation={2} />
-              <KoulutusalatSuodatin expanded elevation={2} />
+              <KoulutusalaSuodatin expanded elevation={2} />
             </Hidden>
           </Grid>
           <Grid item container direction="column" xs>
             <Grid item>
-              <Hidden smDown>{isFilterSelected() && <SuodatinValinnat />}</Hidden>
-              <ResultList />
+              <Hidden smDown>
+                {hakutulosProps.isAnyFilterSelected && <SuodatinValinnat />}
+              </Hidden>
+              {status === 'loading' && <LoadingCircle />}
+              {status === 'idle' && error && <BackendErrorMessage />}
+              {status === 'idle' && !error && <HakutulosResults {...hakutulosProps} />}
             </Grid>
-            <Grid item style={{ margin: 'auto' }}>
-              <Pagination />
+            <Grid item>
+              <Pagination size={hakutulosProps.size} />
             </Grid>
           </Grid>
         </Grid>
@@ -332,4 +262,4 @@ const Hakutulos = () => {
   );
 };
 
-export default observer(Hakutulos);
+export default Hakutulos;
