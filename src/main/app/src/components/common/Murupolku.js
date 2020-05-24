@@ -57,12 +57,10 @@ const Murupolku = ({ path }) => {
   return (
     <ul className={clsx(classes.breadcrump)}>
       <li>
-        <HomeOutlinedIcon className={classes.home} />
-        <Box component="span" ml={2}>
-          <Link component={RouterLink} to={''} className={classes.link}>
-            {t('etusivu')}
-          </Link>
-        </Box>
+        <Link component={RouterLink} to={''} className={classes.link}>
+          <HomeOutlinedIcon className={classes.home} />
+          {t('etusivu')}
+        </Link>
       </li>
 
       {shownPath.map(({ name, link }, ind) => {
