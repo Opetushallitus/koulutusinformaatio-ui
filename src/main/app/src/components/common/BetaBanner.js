@@ -70,7 +70,6 @@ const CloseBanner = ({ onClose }) => {
 
 const BetaBanner = (props) => {
   const classes = useStyles();
-  const { t } = useTranslation();
   return (
     <Box
       display="flex"
