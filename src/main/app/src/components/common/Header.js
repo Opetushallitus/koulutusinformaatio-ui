@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MenuIcon from '@material-ui/icons/Menu';
 import { colors } from '../../colors';
@@ -14,6 +14,8 @@ import {
   AppBar,
   Toolbar,
 } from '@material-ui/core';
+import BetaBanner from '#/src/components/common/BetaBanner';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: {
@@ -42,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
   },
+  betaBanner: {
+    height: '90px',
+  },
   iconButton: {
     padding: 10,
   },
@@ -55,10 +60,14 @@ const Header = (props) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { toggleMenu, isOpen } = props;
+  const [betaBanner, setBetaBanner] = useState(true);
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar
+        position="fixed"
+        className={clsx([classes.appBar, betaBanner ? classes.betaBanner : null])}>
+        {betaBanner ? <BetaBanner onClose={() => setBetaBanner(false)} /> : null}
         <Toolbar>
           <IconButton
             color="inherit"

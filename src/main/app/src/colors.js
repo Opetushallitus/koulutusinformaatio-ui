@@ -1,4 +1,5 @@
 export const colors = {
+  betaBannerGreen: '#254905',
   green: '#378703',
   highlight: '#9cff5a',
   blue: '#006699',
