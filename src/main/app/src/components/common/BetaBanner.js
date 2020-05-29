@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 
 import CloseIcon from '@material-ui/icons/Close';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import { useStores } from '#/src/hooks';
 
 const useStyles = makeStyles({
   banner: {
@@ -40,6 +41,7 @@ const Title = () => {
 const LinkToOldOpintopolku = () => {
   const classes = useStyles();
   const { t } = useTranslation();
+  const { urlStore } = useStores();
   return (
     <Button
       variant="contained"
@@ -47,7 +49,7 @@ const LinkToOldOpintopolku = () => {
       size="small"
       className={classes.linkToOldButton}
       aria-label={t('beta-banner.siirry')}
-      href="/"
+      href={urlStore.urls.url('konfo-backend.old-oppija')}
       color="primary">
       {t('beta-banner.siirry')}
       <ArrowRightAltIcon />

@@ -12,10 +12,12 @@ public class UrlConfiguration extends OphProperties {
     public UrlConfiguration(Environment environment) {
         addFiles("/konfo-ui-oph.properties");
         this.addOverride("host-oppija", environment.getRequiredProperty("host.host-oppija"));
+        this.addOverride("host-old-oppija", environment.getRequiredProperty("host.host-old-oppija"));
         this.addOverride("kartta.host", environment.getRequiredProperty("kartta.host"));
         this.addOverride("kartta.pid", environment.getRequiredProperty("kartta.pid"));
         this.addOverride("konfo-bucket", environment.getRequiredProperty("bucket.url"));
         this.frontProperties.setProperty("konfo-backend.base-url", this.require("konfo-backend.base-url"));
+        this.frontProperties.setProperty("konfo-backend.old-oppija", this.require("konfo-backend.old-oppija"));
         this.frontProperties.setProperty("konfo-backend.search.koulutukset", this.require("konfo-backend.search.koulutukset"));
         this.frontProperties.setProperty("konfo-backend.koulutus", this.require("konfo-backend.koulutus"));
         this.frontProperties.setProperty("konfo-backend.search.oppilaitokset", this.require("konfo-backend.search.oppilaitokset"));
