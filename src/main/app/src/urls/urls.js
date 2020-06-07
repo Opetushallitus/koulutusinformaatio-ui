@@ -8,6 +8,7 @@ const production = {
   'konfo-backend.oppilaitos': '/konfo-backend/oppilaitos/',
   'konfo-backend.palaute': '/konfo-backend/palaute',
   'konfo-backend.koulutus.jarjestajat': '/konfo-backend/search/koulutus/$1/jarjestajat',
+  'konfo-backend.oppilaitos.tarjonta': '/konfo-backend/search/oppilaitos/$1/tarjonta',
   'konfo-backend.koulutus.kuvaus': '/konfo-backend/kuvaus/',
   'kartta.base-url': 'https://hkp.maanmittauslaitos.fi',
   'kartta.publish-url':
@@ -33,6 +34,8 @@ const development = {
   'konfo-backend.haku': 'https://beta.hahtuvaopintopolku.fi/konfo-backend/haku/',
   'konfo-backend.koulutus.jarjestajat':
     'https://beta.hahtuvaopintopolku.fi/konfo-backend/search/koulutus/$1/jarjestajat',
+  'konfo-backend.oppilaitos.tarjonta':
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/search/oppilaitos/$1/tarjonta',
   'kartta.base-url': 'https://hkp.maanmittauslaitos.fi',
   'kartta.publish-url':
     'https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0',

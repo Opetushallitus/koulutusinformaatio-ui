@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import qs from 'query-string';
 import MuiFlatPagination from 'material-ui-flat-pagination';
 import { CssBaseline, makeStyles } from '@material-ui/core';
+import { ChevronLeftOutlined, ChevronRightOutlined } from '@material-ui/icons';
+
 import {
   getHakutulosPagination,
   getAPIRequestParams,
@@ -14,7 +16,23 @@ import {
 } from '#/src/store/reducers/hakutulosSlice';
 
 const useStyles = makeStyles((theme) => ({
-  paginationRootCurrent: {
+  sizeSmall: {
+    padding: '1px 6px',
+    margin: '0 4px',
+  },
+  rootCurrent: {
+    backgroundColor: 'green',
+    '&:hover': {
+      backgroundColor: 'green',
+    },
+  },
+  textPrimary: {
+    color: 'white',
+  },
+  textSecondary: {
+    color: 'black',
+  },
+  text: {
     fontWeight: 'bold',
   },
 }));
@@ -79,7 +97,20 @@ const Pagination = ({ size }) => {
           offset={offset}
           total={total}
           onClick={(e, offset, page) => handleClick(e, offset, page)}
-          classes={{ rootCurrent: classes.paginationRootCurrent }}
+          classes={{
+            root: classes.root,
+            rootCurrent: classes.rootCurrent,
+            text: classes.text,
+            textPrimary: classes.textPrimary,
+            textSecondary: classes.textSecondary,
+            sizeSmall: classes.sizeSmall,
+            label: classes.label,
+          }}
+          otherPageColor="secondary"
+          currentPageColor="primary"
+          size="small"
+          previousPageLabel={<ChevronLeftOutlined />}
+          nextPageLabel={<ChevronRightOutlined />}
         />
       </div>
     )

@@ -69,10 +69,13 @@ export class Parser {
     }
     return html;
   }
+  static koodiUriToPostinumero(str = '') {
+    return str.slice(0, str.indexOf('#')).replace(/[^0-9]/g, '');
+  }
 }
 
 export class OsoiteParser {
-  static getCoreAddress(katuosoite) {
+  static getCoreAddress(katuosoite = '') {
     //Merkkejä ja välilyönnillä siitä erotettu numero, esim: Ratapiha 3, Hubert Hepolaisen Katu 888.
     //Mahdollinen jatke leikataan pois.
     const regexp = '^.+? \\d+';

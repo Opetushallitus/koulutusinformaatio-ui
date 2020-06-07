@@ -20,6 +20,7 @@ import Palvelut from './components/palvelu/Palvelut';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import Haku from './components/haku/Haku';
 import Koulutus from './components/koulutus/Koulutus';
+import Oppilaitos from './components/oppilaitos/Oppilaitos';
 import SivuRouter from './components/sivu/SivuRouter';
 import ReactiveBorder from './components/ReactiveBorder';
 import Hakupalkki from './components/haku/Hakupalkki';
@@ -106,6 +107,10 @@ const App = () => {
         <Route path="/koulutus/:oid">
           <KoulutusHakuBar />
           <Koulutus />
+        </Route>
+        <Route path="/oppilaitos/:oid">
+          <KoulutusHakuBar />
+          <Oppilaitos />
         </Route>
         <Route path="/sivu/:id">
           <KoulutusHakuBar />

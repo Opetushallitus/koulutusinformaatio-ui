@@ -20,6 +20,20 @@ export const getKoulutusKuvaus = (uri) =>
 export const getKoulutusJarjestajat = (oid) =>
   get(urls.url('konfo-backend.koulutus.jarjestajat', oid));
 
+export const getOppilaitos = (oid) => {
+  return client
+    .get(urls.url('konfo-backend.oppilaitos') + oid)
+    .then((response) => response.data);
+};
+
+export const getOppilaitosTajonta = ({ oid, requestParams }) => {
+  return client
+    .get(urls.url('konfo-backend.oppilaitos.tarjonta', oid), {
+      params: C.cleanRequestParams(requestParams),
+    })
+    .then((response) => response.data);
+};
+
 export const searchAPI = {
   getKoulutukset(requestParams) {
     return client
