@@ -78,8 +78,8 @@ export const {
 export default oppilaitosSlice.reducer;
 
 export const fetchOppilaitosTarjontaData = ({ oid }) => async (dispatch, getState) => {
+  const { oppilaitos } = getState();
   try {
-    const { oppilaitos } = getState();
     dispatch(fetchOppilaitosStart());
     const oppilaitosData = await getOppilaitos(oid);
     const tarjonta = await getOppilaitosTajonta({
