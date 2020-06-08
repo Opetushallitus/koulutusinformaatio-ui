@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import MuiFlatPagination from 'material-ui-flat-pagination';
 import { CssBaseline, makeStyles } from '@material-ui/core';
@@ -32,19 +32,20 @@ const useStyles = makeStyles((theme) => ({
 const TarjontaPagination = ({ total, oid }) => {
   const classes = useStyles();
 
-  const { page, size, offset, order } = useSelector(getTulevaTarjontaPaginationProps);
+  const { size, offset, order } = useSelector(getTulevaTarjontaPaginationProps);
   const dispatch = useDispatch();
 
-  useEffect(() => {}, [page, size, offset, order]);
-
-  const handleClick = (e, offset, page) => {
-    dispatch(
-      fetchTulevaTarjontaData({
-        oid,
-        requestParams: { page, size, order, offset },
-      })
-    );
-  };
+  const handleClick = useCallback(
+    (e, offset, page) => {
+      dispatch(
+        fetchTulevaTarjontaData({
+          oid,
+          requestParams: { page, size, order, offset },
+        })
+      );
+    },
+    [dispatch, oid, order, size]
+  );
 
   return (
     total > size && (
@@ -54,16 +55,8 @@ const TarjontaPagination = ({ total, oid }) => {
           limit={size}
           offset={offset}
           total={total}
-          onClick={(e, offset, page) => handleClick(e, offset, page)}
-          classes={{
-            root: classes.root,
-            rootCurrent: classes.rootCurrent,
-            text: classes.text,
-            textPrimary: classes.textPrimary,
-            textSecondary: classes.textSecondary,
-            sizeSmall: classes.sizeSmall,
-            label: classes.label,
-          }}
+          onClick={handleClick}
+          classes={classes}
           otherPageColor="secondary"
           currentPageColor="primary"
           size="small"

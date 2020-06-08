@@ -7,7 +7,7 @@ const LOADING_STATUS = 'loading';
 
 export const initialState = {
   status: IDLE_STATUS,
-  oppilaitokset: {},
+  oppilaitos: {},
   tarjonta: {},
   tulevaTarjonta: {},
   page: 1,
@@ -31,10 +31,9 @@ const oppilaitosSlice = createSlice({
     },
     fetchOppilaitosSuccess(state, { payload }) {
       if (state.status === LOADING_STATUS) {
-        const { oid, oppilaitosData, tarjonta, tulevaTarjonta } = payload;
-        state.oppilaitokset[oid] = oppilaitosData;
-        state.tarjonta[oid] = tarjonta;
-        state.tulevaTarjonta[oid] = tulevaTarjonta;
+        state.oppilaitos = payload.oppilaitosData;
+        state.tarjonta = payload.tarjonta;
+        state.tulevaTarjonta = payload.tulevaTarjonta;
         state.tulevaPage = 1;
         state.tulevaOffset = 0;
         state.page = 1;
@@ -44,18 +43,16 @@ const oppilaitosSlice = createSlice({
       }
     },
     fetchTarjontaSuccess(state, { payload }) {
-      const { oid, tarjonta, page, offset } = payload;
-      state.tarjonta[oid] = tarjonta;
-      state.page = page;
-      state.offset = offset;
+      state.tarjonta = payload.tarjonta;
+      state.page = payload.page;
+      state.offset = payload.offset;
       state.oppilaitosError = null;
       state.status = IDLE_STATUS;
     },
     fetchTulevaTarjontaSuccess(state, { payload }) {
-      const { oid, tulevaTarjonta, page, offset } = payload;
-      state.tulevaTarjonta[oid] = tulevaTarjonta;
-      state.tulevaPage = page;
-      state.tulevaOffset = offset;
+      state.tulevaTarjonta = payload.tulevaTarjonta;
+      state.tulevaPage = payload.page;
+      state.tulevaOffset = payload.offset;
       state.oppilaitosError = null;
       state.status = IDLE_STATUS;
     },
@@ -110,7 +107,7 @@ export const fetchOppilaitosTarjontaData = ({ oid }) => async (dispatch, getStat
 export const fetchTarjontaData = ({ oid, requestParams }) => async (dispatch) => {
   try {
     const tarjonta = await getOppilaitosTajonta({ oid, requestParams });
-    dispatch(fetchTarjontaSuccess({ oid, tarjonta, ...requestParams }));
+    dispatch(fetchTarjontaSuccess({ tarjonta, ...requestParams }));
   } catch (err) {
     dispatch(fetchOppilaitosError(err.toString()));
   }
@@ -122,7 +119,7 @@ export const fetchTulevaTarjontaData = ({ oid, requestParams }) => async (dispat
       oid,
       requestParams: { ...requestParams, tuleva: true },
     });
-    dispatch(fetchTulevaTarjontaSuccess({ oid, tulevaTarjonta, ...requestParams }));
+    dispatch(fetchTulevaTarjontaSuccess({ tulevaTarjonta, ...requestParams }));
   } catch (err) {
     dispatch(fetchOppilaitosError(err.toString()));
   }

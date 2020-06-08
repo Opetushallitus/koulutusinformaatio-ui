@@ -39,9 +39,10 @@ const Oppilaitos = (props) => {
   const classes = useStyles();
   const { oid } = useParams();
   const { t } = useTranslation();
-  const oppilaitosProps = useSelector(getOppilaitosProps(oid));
+  const { oppilaitos, tarjonta, tulevaTarjonta, status } = useSelector(
+    getOppilaitosProps
+  );
   const hakuUrl = useSelector(getHakuUrl);
-  const { oppilaitos, tarjonta, tulevaTarjonta, status } = oppilaitosProps;
 
   useEffect(() => {
     dispatch(fetchOppilaitosTarjontaData({ oid }));
@@ -76,7 +77,8 @@ const Oppilaitos = (props) => {
           className={classes.root}
           opiskelijoita={_.get(oppilaitos, 'oppilaitos.metadata.opiskelijoita', '')}
           toimipisteita={_.get(oppilaitos, 'oppilaitos.metadata.toimipisteita', '')}
-          osat={_.get(oppilaitos, 'osat', [])}
+          kotipaikat={_.map(_.get(oppilaitos, 'osat', []), 'kotipaikka')}
+          opetuskieli={_.get(oppilaitos, 'opetuskieli', [])}
           koulutusohjelmia={_.get(oppilaitos, 'koulutusohjelmia', '')}
         />
         <HtmlTextBox
@@ -88,7 +90,7 @@ const Oppilaitos = (props) => {
           <TarjontaList tarjonta={tarjonta} oid={oid} />
         </Box>
         <Box id="tulevaTarjonta">
-          <TulevaTarjontaList tarjonta={tulevaTarjonta} oid={oid} />
+          <TulevaTarjontaList tulevaTarjonta={tulevaTarjonta} oid={oid} />
         </Box>
 
         <TietoaOpiskelusta

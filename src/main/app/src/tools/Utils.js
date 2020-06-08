@@ -58,6 +58,17 @@ export class Localizer {
     }
     return defaultValue;
   }
+  static localizeSortedArrayToString(arr = []) {
+    return _fp.compose(
+      _fp.join(', '),
+      _fp.uniq,
+      _fp.map(this.localize),
+      _fp.sortBy(`nimi.${this.getLanguage()}`)
+    )(arr);
+  }
+  static getTraslationForKey(key = '') {
+    return i18n.t(key);
+  }
 }
 
 export class Parser {

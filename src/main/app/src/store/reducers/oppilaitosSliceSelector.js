@@ -1,9 +1,10 @@
 import { createSelector } from '@reduxjs/toolkit';
+import _ from 'lodash';
 import { Localizer as l } from '#/src/tools/Utils';
 
 // State data getters
 function getOppilaitokset(state) {
-  return state.oppilaitos.oppilaitokset;
+  return state.oppilaitos.oppilaitos;
 }
 function getTarjonta(state) {
   return state.oppilaitos.tarjonta;
@@ -37,6 +38,48 @@ function getTulevaOffset(state) {
 }
 
 //Selectors
+const getTarjontaProps = createSelector([getTarjonta], (_tarjonta) => {
+  const hits = _.get(_tarjonta, 'hits', []);
+  const total = _.get(_tarjonta, 'total');
+  const hasHits = _.size(hits) > 0;
+  const localizedTarjonta = _.map(hits, (t) => ({
+    toteutusName: l.localize(_.get(t, 'nimi')),
+    description: l.localize(_.get(t, 'kuvaus')),
+    locations: l.localizeSortedArrayToString(_.get(t, 'kunnat')),
+    opetustapa: l.localizeSortedArrayToString(_.get(t, 'opetusajat')),
+    price: getlocallizedmaksullisuus(
+      _.get(t, 'onkoMaksullinen'),
+      _.get(t, 'maksunMaara')
+    ),
+    tyyppi: _.get(t, 'koulutustyyppi'),
+    kuva: _.get(t, 'kuva'),
+  }));
+  return {
+    localizedTarjonta,
+    total,
+    hasHits,
+  };
+});
+const getTulevaTarjontaProps = createSelector([getTulevaTarjonta], (tulevaTarjonta) => {
+  const hits = _.get(tulevaTarjonta, 'hits', []);
+  const total = _.get(tulevaTarjonta, 'total');
+  const hitsSize = _.size(hits);
+  const localizedTulevaTarjonta = _.map(hits, (k) => ({
+    koulutusName: l.localize(_.get(k, 'nimi')),
+    tutkintonimikkeet: l.localizeSortedArrayToString(_.get(k, 'tutkintonimikkeet')),
+    koulutustyypit: l.localizeSortedArrayToString(_.get(k, 'koulutustyypit')),
+    opintojenlaajuus: `${l.localize(_.get(k, 'opintojenLaajuus'))} ${l.localize(
+      _.get(k, 'opintojenLaajuusyksikko')
+    )}`,
+    tyyppi: _.get(k, 'koulutustyyppi'),
+  }));
+  return {
+    localizedTulevaTarjonta,
+    total,
+    hitsSize,
+  };
+});
+
 export const getApiRequestParams = createSelector(
   [getPage, getSize, getOrder],
   (page, size, order) => ({
@@ -47,18 +90,15 @@ export const getApiRequestParams = createSelector(
   })
 );
 
-export const getOppilaitosProps = (oid) =>
-  createSelector(
-    [getOppilaitokset, getTarjonta, getTulevaTarjonta, getStatus],
-    (oppilaitokset, tarjonta, tulevaTarjonta, status) => {
-      return {
-        oppilaitos: oppilaitokset?.[oid],
-        tarjonta: tarjonta?.[oid],
-        tulevaTarjonta: tulevaTarjonta?.[oid],
-        status,
-      };
-    }
-  );
+export const getOppilaitosProps = createSelector(
+  [getOppilaitokset, getTarjontaProps, getTulevaTarjontaProps, getStatus],
+  (oppilaitos, tarjonta, tulevaTarjonta, status) => ({
+    oppilaitos,
+    tarjonta,
+    tulevaTarjonta,
+    status,
+  })
+);
 
 export const getTarjontaPaginationProps = createSelector(
   [getApiRequestParams, getOffset],
@@ -78,3 +118,8 @@ export const getTulevaTarjontaPaginationProps = createSelector(
     lng: l.getLanguage(),
   })
 );
+
+// Helpers
+function getlocallizedmaksullisuus(isMaksullinen, maksuAmount) {
+  return isMaksullinen ? `${maksuAmount} €` : l.getTraslationForKey('toteutus.maksuton');
+}

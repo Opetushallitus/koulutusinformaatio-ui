@@ -3,7 +3,6 @@ import { Typography, Grid, Container, makeStyles } from '@material-ui/core';
 import Spacer from '#/src/components/common/Spacer';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
-import { Localizer as l } from '#/src/tools/Utils';
 import TulevaKoulutusCard from './TulevaKoulutusCard';
 import TulevaTarjontaPagination from './TulevaTarjontaPagination';
 
@@ -16,18 +15,12 @@ const useStyles = makeStyles({
   },
 });
 
-const TulevaTarjontaList = ({ tarjonta, oid }) => {
+const TulevaTarjontaList = ({ tulevaTarjonta, oid }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const hits = _.get(tarjonta, 'hits');
-  const localizeArrayToString = (toLocalizeArray) => {
-    return _.map(toLocalizeArray, (el) => l.localize(el.nimi))
-      .sort()
-      .join(', ');
-  };
 
   function getCardWidth() {
-    switch (_.size(hits)) {
+    switch (tulevaTarjonta?.hitsSize) {
       case 1:
         return 12;
       case 2:
@@ -41,7 +34,7 @@ const TulevaTarjontaList = ({ tarjonta, oid }) => {
     <Container maxWidth="lg" className={classes.container}>
       <Typography variant="h2">{t('oppilaitos.tulevat-koulutukset')}</Typography>
       <Spacer />
-      {_.size(hits) > 0 ? (
+      {tulevaTarjonta?.hitsSize > 0 ? (
         <Grid
           container
           direction="row"
@@ -49,18 +42,14 @@ const TulevaTarjontaList = ({ tarjonta, oid }) => {
           alignContent="stretch"
           alignItems="stretch"
           spacing={1}>
-          {_.map(hits, (toteutus, i) => (
+          {_.map(_.get(tulevaTarjonta, 'localizedTulevaTarjonta'), (kts, i) => (
             <Grid item key={i} xs={getCardWidth()}>
               <TulevaKoulutusCard
-                koulutusName={l.localize(_.get(toteutus, 'nimi'))}
-                tutkintonimikkeet={localizeArrayToString(
-                  _.get(toteutus, 'tutkintonimikkeet')
-                )}
-                koulutustyypit={localizeArrayToString(_.get(toteutus, 'koulutustyypit'))}
-                opintojenlaajuus={`${l.localize(
-                  _.get(toteutus, 'opintojenLaajuus')
-                )} ${l.localize(_.get(toteutus, 'opintojenLaajuusyksikko'))}`}
-                tyyppi={_.get(toteutus, 'koulutustyyppi')}
+                koulutusName={kts?.koulutusName}
+                tutkintonimikkeet={kts?.tutkintonimikkeet}
+                koulutustyypit={kts?.koulutustyypit}
+                opintojenlaajuus={kts?.opintojenlaajuus}
+                tyyppi={kts?.tyyppi}
               />
             </Grid>
           ))}
@@ -70,7 +59,7 @@ const TulevaTarjontaList = ({ tarjonta, oid }) => {
           {t('oppilaitos.ei-toteutuksia')}
         </Typography>
       )}
-      <TulevaTarjontaPagination total={_.get(tarjonta, 'total')} oid={oid} />
+      <TulevaTarjontaPagination total={_.get(tulevaTarjonta, 'total')} oid={oid} />
     </Container>
   );
 };

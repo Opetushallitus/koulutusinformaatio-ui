@@ -49,11 +49,11 @@ const Yhteystiedot = (props) => {
     _.get(metadata, 'yhteystiedot.osoite.postinumero.nimi.fi', '')
   );
 
-  const yhteysTiedot = () => {
+  const getYhteystiedot = () => {
     if (!osoite && !postinumero && !postitoimipaikka) {
       return t('oppilaitos.ei-yhteystietoja');
     }
-    if (osoite) return _.trim(`${osoite}, ${postinumero} ${postitoimipaikka}`, ', ');
+    return _.trim(`${osoite}, ${postinumero} ${postitoimipaikka}`, ', ');
   };
 
   return (
@@ -83,7 +83,7 @@ const Yhteystiedot = (props) => {
               {nimi}
             </Typography>
             <Typography component="div" variant="body1">
-              {yhteysTiedot()}
+              {getYhteystiedot()}
             </Typography>
             <Button
               className={classes.button}

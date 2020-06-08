@@ -8,7 +8,7 @@ import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { Localizer as l } from '#/src/tools/Utils';
-import _ from 'lodash';
+import _fp from 'lodash/fp';
 
 const useStyles = makeStyles((theme) => ({
   koulutusInfoGridIcon: {
@@ -18,18 +18,20 @@ const useStyles = makeStyles((theme) => ({
 
 const OppilaitosinfoGrid = (props) => {
   const classes = useStyles();
-  const { opiskelijoita, osat, koulutusohjelmia, toimipisteita } = props;
+  const {
+    opiskelijoita,
+    kotipaikat,
+    opetuskieli,
+    koulutusohjelmia,
+    toimipisteita,
+  } = props;
   const { t } = useTranslation();
-  const paikkakunnat = _.join(
-    _.sortBy(_.uniq(_.map(osat, `kotipaikka.nimi.${l.getLanguage()}`))),
-    ', '
-  );
-  const opetuskielet = _.join(
-    _.sortBy(
-      _.uniq(_.map(_.map(osat, `opetuskieli[0].nimi.${l.getLanguage()}`), _.capitalize))
-    ),
-    ', '
-  );
+  const paikkakunnat = l.localizeSortedArrayToString(kotipaikat);
+  const opetuskielet = _fp.compose(
+    _fp.join(', '),
+    _fp.map(_fp.capitalize),
+    _fp.map(`nimi.${l.getLanguage()}`)
+  )(opetuskieli);
   const perustiedotData = [
     {
       icon: <PublicOutlinedIcon className={classes.koulutusInfoGridIcon} />,
@@ -39,7 +41,7 @@ const OppilaitosinfoGrid = (props) => {
     {
       icon: <PeopleOutlineIcon className={classes.koulutusInfoGridIcon} />,
       title: t('oppilaitos.opiskelojoita'),
-      text: _.toString(opiskelijoita),
+      text: _fp.toString(opiskelijoita),
     },
     {
       icon: <ChatBubbleOutlineIcon className={classes.koulutusInfoGridIcon} />,
@@ -49,12 +51,12 @@ const OppilaitosinfoGrid = (props) => {
     {
       icon: <HomeWorkOutlinedIcon className={classes.koulutusInfoGridIcon} />,
       title: t('oppilaitos.toimipisteita'),
-      text: _.toString(toimipisteita),
+      text: _fp.toString(toimipisteita),
     },
     {
       icon: <SchoolOutlinedIcon className={classes.koulutusInfoGridIcon} />,
       title: t('oppilaitos.tutkintoon-johtavia-koulutuksia'),
-      text: _.toString(koulutusohjelmia),
+      text: _fp.toString(koulutusohjelmia),
     },
   ];
   return (

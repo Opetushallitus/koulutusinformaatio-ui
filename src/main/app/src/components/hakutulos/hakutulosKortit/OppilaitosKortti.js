@@ -13,6 +13,7 @@ import {
   useTheme,
 } from '@material-ui/core';
 import _ from 'lodash';
+import { Localizer as l } from '#/src/tools/Utils';
 import { SchoolOutlined, PublicOutlined } from '@material-ui/icons';
 import oppilaitos_img from '#/src/assets/images/logo-oppilaitos.png';
 import { educationTypeColorCode } from '#/src/colors';
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const OppilaitosKortti = ({ nimi, oppilaitos, link }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const classes = useStyles();
   const theme = useTheme();
   const muiScreenSizeMinLg = useMediaQuery(MUI_BREAKPOINTS.MIN_LG);
@@ -103,7 +104,7 @@ const OppilaitosKortti = ({ nimi, oppilaitos, link }) => {
               alignItems="center">
               <Grid item sm={12} xs={screenSizeMinCustomXs ? 10 : 12}>
                 <Typography variant="h6" style={{ fontWeight: 'bold' }}>
-                  {nimi?.[i18n.language]}
+                  {l.localize(nimi)}
                 </Typography>
               </Grid>
               <Hidden smUp>
@@ -141,7 +142,7 @@ const OppilaitosKortti = ({ nimi, oppilaitos, link }) => {
                     <Avatar
                       classes={{ root: classes.avatarRoot }}
                       src={oppilaitos_img}
-                      alt="oppilaitoksen logo"
+                      alt={t('haku.oppilaitoksen-logo')}
                     />
                   </Grid>
                 </Hidden>
