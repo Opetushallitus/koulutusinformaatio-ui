@@ -66,7 +66,7 @@ export class Localizer {
       _fp.sortBy(`nimi.${this.getLanguage()}`)
     )(arr);
   }
-  static getTraslationForKey(key = '') {
+  static getTranslationForKey(key = '') {
     return i18n.t(key);
   }
 }

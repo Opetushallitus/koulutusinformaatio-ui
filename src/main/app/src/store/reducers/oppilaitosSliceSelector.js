@@ -47,7 +47,7 @@ const getTarjontaProps = createSelector([getTarjonta], (_tarjonta) => {
     description: l.localize(_.get(t, 'kuvaus')),
     locations: l.localizeSortedArrayToString(_.get(t, 'kunnat')),
     opetustapa: l.localizeSortedArrayToString(_.get(t, 'opetusajat')),
-    price: getlocallizedmaksullisuus(
+    price: getLocallizedmaksullisuus(
       _.get(t, 'onkoMaksullinen'),
       _.get(t, 'maksunMaara')
     ),
@@ -120,6 +120,6 @@ export const getTulevaTarjontaPaginationProps = createSelector(
 );
 
 // Helpers
-function getlocallizedmaksullisuus(isMaksullinen, maksuAmount) {
-  return isMaksullinen ? `${maksuAmount} €` : l.getTraslationForKey('toteutus.maksuton');
+function getLocallizedmaksullisuus(isMaksullinen, maksuAmount) {
+  return isMaksullinen ? `${maksuAmount} €` : l.getTranslationForKey('toteutus.maksuton');
 }
