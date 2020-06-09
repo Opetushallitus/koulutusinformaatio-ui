@@ -58,6 +58,17 @@ export class Localizer {
     }
     return defaultValue;
   }
+  static localizeSortedArrayToString(arr = []) {
+    return _fp.compose(
+      _fp.join(', '),
+      _fp.uniq,
+      _fp.map(this.localize),
+      _fp.sortBy(`nimi.${this.getLanguage()}`)
+    )(arr);
+  }
+  static getTranslationForKey(key = '') {
+    return i18n.t(key);
+  }
 }
 
 export class Parser {
@@ -69,10 +80,13 @@ export class Parser {
     }
     return html;
   }
+  static koodiUriToPostinumero(str = '') {
+    return str.slice(0, str.indexOf('#')).replace(/[^0-9]/g, '');
+  }
 }
 
 export class OsoiteParser {
-  static getCoreAddress(katuosoite) {
+  static getCoreAddress(katuosoite = '') {
     //Merkkejä ja välilyönnillä siitä erotettu numero, esim: Ratapiha 3, Hubert Hepolaisen Katu 888.
     //Mahdollinen jatke leikataan pois.
     const regexp = '^.+? \\d+';

@@ -1,6 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
+import qs from 'query-string';
 import _ from 'lodash';
 import { Localizer as l } from '#/src/tools/Utils';
+import { Common as C } from '#/src/tools/Utils';
 
 // State data getters
 function getKeyword(state) {
@@ -53,6 +55,12 @@ function getSelectedTab(state) {
 }
 function getSize(state) {
   return state.hakutulos.size;
+}
+function getKoulutusPage(state) {
+  return state.hakutulos.koulutusPage;
+}
+function getOppilaitosPage(state) {
+  return state.hakutulos.oppilaitosPage;
 }
 function getOrder(state) {
   return state.hakutulos.order;
@@ -217,6 +225,22 @@ export const getAPIRequestParams = createSelector(
       koulutusala: getCheckedFiltersIdsStr(koulutusala),
       sijainti: getCheckedFiltersIdsStr(_.concat(selectedSijainti, sijainti)),
     };
+  }
+);
+
+export const getHakuUrl = createSelector(
+  [getAPIRequestParams, getSelectedTab, getKoulutusPage, getOppilaitosPage],
+  (apiRequestParams, selectedTab, koulutusPage, oppilaitosPage) => {
+    const { keyword } = apiRequestParams;
+    const hakuParams = {
+      ...C.cleanRequestParams(_.omit(apiRequestParams, 'keyword')),
+      kpage: koulutusPage,
+      opage: oppilaitosPage,
+      selectedTab,
+    };
+    const urlStart = _.size(keyword) > 2 ? `/haku/${keyword}?` : `/haku?`;
+    const url = urlStart + qs.stringify(hakuParams, { arrayFormat: 'comma' });
+    return { url };
   }
 );
 
