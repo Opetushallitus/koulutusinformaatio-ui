@@ -44,7 +44,7 @@ const useStyles = makeStyles({
     textAlign: 'center',
     verticalAlign: 'center',
     fontSize: '0.75rem',
-    fontWeight: '600',
+    fontWeight: 600,
     color: colors.black,
     margin: '0 10px',
     lineHeight: '24px',
@@ -194,7 +194,7 @@ const Toteutus = () => {
                     rel="noopener"
                     href={l.localize(osaamisala.linkki)}>
                     {l.localize(osaamisala.otsikko)}
-                    <OpenInNewIcon className={classes.icon} />
+                    <OpenInNewIcon />
                   </Link>
                 ) : null,
             }))}
@@ -208,37 +208,48 @@ const Toteutus = () => {
           />
         ) : null}
 
-        {toteutus?.metadata?.yhteyshenkilot.length > 1000 ? (
+        {toteutus?.metadata?.yhteyshenkilot.length > 0 ? (
           <Box mt={12} display="flex" flexDirection="column" alignItems="center">
             <Typography variant="h2">{t('toteutus.yhteyshenkilot')}</Typography>
             <Spacer />
-            <Box mt={7}>
-              <Grid container>
+            <Box mt={5}>
+              <Grid container alignItems="center">
                 {toteutus.metadata.yhteyshenkilot.map((yhteyshenkilo, i) => (
-                  <Grid item key={i}>
-                    <Grid container diretion="column">
-                      <Grid item>
-                        <Typography variant="h4">
-                          {l.localize(yhteyshenkilo.nimi)}
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="body1">
-                          {l.localize(yhteyshenkilo.titteli)}
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="body1">
-                          {l.localize(yhteyshenkilo.sahkoposti)}
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="body1">
-                          {l.localize(yhteyshenkilo.puhelinnumero)}
-                        </Typography>
+                  <React.Fragment>
+                    <Grid item>
+                      <Grid container direction="column">
+                        <Grid item>
+                          <Typography variant="h4">
+                            {l.localize(yhteyshenkilo.nimi)}
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="body1">
+                            {l.localize(yhteyshenkilo.titteli)}
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="body1">
+                            {l.localize(yhteyshenkilo.sahkoposti)}
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="body1">
+                            {l.localize(yhteyshenkilo.puhelinnumero)}
+                          </Typography>
+                        </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
+                    {i + 1 !== toteutus.metadata.yhteyshenkilot.length ? (
+                      <Grid item>
+                        <Box
+                          mx={9}
+                          style={{ height: '104px' }}
+                          borderRight={`1px solid ${colors.lightGrey}`}
+                        />
+                      </Grid>
+                    ) : null}
+                  </React.Fragment>
                 ))}
               </Grid>
             </Box>
