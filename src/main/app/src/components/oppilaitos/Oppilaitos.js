@@ -39,9 +39,14 @@ const Oppilaitos = (props) => {
   const classes = useStyles();
   const { oid } = useParams();
   const { t } = useTranslation();
-  const { oppilaitos, tarjonta, tulevaTarjonta, status } = useSelector(
-    getOppilaitosProps
-  );
+  const {
+    esittelyHtml,
+    oppilaitos,
+    tarjonta,
+    tietoaOpiskelusta,
+    tulevaTarjonta,
+    status,
+  } = useSelector(getOppilaitosProps);
   const hakuUrl = useSelector(getHakuUrl);
 
   useEffect(() => {
@@ -81,27 +86,32 @@ const Oppilaitos = (props) => {
           opetuskieli={_.get(oppilaitos, 'opetuskieli', [])}
           koulutusohjelmia={_.get(oppilaitos, 'koulutusohjelmia', '')}
         />
-        <HtmlTextBox
-          heading={t('oppilaitos.esittely')}
-          html={l.localize(_.get(oppilaitos, 'oppilaitos.metadata.esittely', ''))}
-          className={classes.root}
-        />
-        <Box id="tarjonta">
-          <TarjontaList tarjonta={tarjonta} oid={oid} />
-        </Box>
-        <Box id="tulevaTarjonta">
-          <TulevaTarjontaList tulevaTarjonta={tulevaTarjonta} oid={oid} />
-        </Box>
+        {esittelyHtml && (
+          <HtmlTextBox
+            heading={t('oppilaitos.esittely')}
+            html={esittelyHtml}
+            className={classes.root}
+          />
+        )}
 
-        <TietoaOpiskelusta
-          className={classes.root}
-          heading={t('oppilaitos.tietoa-opiskelusta')}
-          tietoaOpiskelusta={_.get(
-            oppilaitos,
-            'oppilaitos.metadata.tietoaOpiskelusta',
-            []
-          )}
-        />
+        {tarjonta?.total > 0 && (
+          <Box id="tarjonta">
+            <TarjontaList tarjonta={tarjonta} oid={oid} />
+          </Box>
+        )}
+        {tulevaTarjonta?.total > 0 && (
+          <Box id="tulevaTarjonta">
+            <TulevaTarjontaList tulevaTarjonta={tulevaTarjonta} oid={oid} />
+          </Box>
+        )}
+
+        {_.size(tietoaOpiskelusta) > 0 && (
+          <TietoaOpiskelusta
+            className={classes.root}
+            heading={t('oppilaitos.tietoa-opiskelusta')}
+            tietoaOpiskelusta={tietoaOpiskelusta}
+          />
+        )}
 
         <Yhteystiedot
           className={classes.root}
