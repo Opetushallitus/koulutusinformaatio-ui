@@ -208,6 +208,16 @@ const Toteutus = () => {
           />
         ) : null}
 
+        {toteutus?.metadata?.opetus?.lisatiedot.length > 0 ? (
+          <AccordionWithTitle
+            titleTranslation="koulutus.lisätietoa"
+            data={toteutus.metadata.opetus.lisatiedot.map((lisatieto) => ({
+              title: l.localize(lisatieto.otsikko),
+              content: l.localize(lisatieto.teksti),
+            }))}
+          />
+        ) : null}
+
         {toteutus?.metadata?.yhteyshenkilot.length > 0 ? (
           <Box mt={12} display="flex" flexDirection="column" alignItems="center">
             <Typography variant="h2">{t('toteutus.yhteyshenkilot')}</Typography>
@@ -254,16 +264,6 @@ const Toteutus = () => {
               </Grid>
             </Box>
           </Box>
-        ) : null}
-
-        {toteutus?.metadata?.opetus?.lisatiedot.length > 0 ? (
-          <AccordionWithTitle
-            titleTranslation="koulutus.lisätietoa"
-            data={toteutus.metadata.opetus.lisatiedot.map((lisatieto) => ({
-              title: l.localize(lisatieto.otsikko),
-              content: l.localize(lisatieto.teksti),
-            }))}
-          />
         ) : null}
       </Box>
     </ContentWrapper>
