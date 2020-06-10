@@ -74,28 +74,27 @@ export const {
 } = oppilaitosSlice.actions;
 export default oppilaitosSlice.reducer;
 
-export const fetchOppilaitosTarjontaData = ({ oid }) => async (dispatch, getState) => {
-  const { oppilaitos } = getState();
+export const fetchOppilaitosTarjontaData = ({ oid }) => async (dispatch) => {
   try {
     dispatch(fetchOppilaitosStart());
     const oppilaitosData = await getOppilaitos(oid);
     const tarjonta = await getOppilaitosTajonta({
       oid,
       requestParams: {
-        page: oppilaitos.page,
-        size: oppilaitos.size,
+        page: initialState.page,
+        size: initialState.size,
         lng: l.getLanguage(),
-        order: oppilaitos.order,
+        order: initialState.order,
       },
     });
     const tulevaTarjonta = await getOppilaitosTajonta({
       oid,
       requestParams: {
         tuleva: true,
-        page: oppilaitos.tulevaPage,
-        size: oppilaitos.tulevaSize,
+        page: initialState.tulevaPage,
+        size: initialState.tulevaSize,
         lng: l.getLanguage(),
-        order: oppilaitos.order,
+        order: initialState.order,
       },
     });
     dispatch(fetchOppilaitosSuccess({ oid, oppilaitosData, tarjonta, tulevaTarjonta }));
