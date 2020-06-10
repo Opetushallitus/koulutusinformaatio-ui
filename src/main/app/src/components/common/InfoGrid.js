@@ -1,13 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import {
-  makeStyles,
-  Typography,
-  Grid,
-  Paper,
-  Icon,
-  Box,
-} from '@material-ui/core';
+import { makeStyles, Typography, Grid, Paper, Icon, Box } from '@material-ui/core';
 import { colors } from '../../colors';
 import Spacer from './Spacer';
 import KoulutusAsteIcon from '../../assets/images/koulutusaste.svg';
@@ -17,6 +10,7 @@ import SuunniteltuKestoIcon from '../../assets/images/suunniteltu_kesto.svg';
 import KoulutuksenLaajuusIcon from '../../assets/images/koulutuksen_laajuus.svg';
 import TutkintoonHakeminenIcon from '../../assets/images/tutkintoon_hakeminen.svg';
 import OpetusKasvatusPsykologiaIcon from '../../assets/images/opetus_kasvatus_psykologia.svg';
+import ApurahaIcon from '../../assets/images/Apuraha.svg';
 
 const iconLookupTable = {
   KoulutusAsteIcon: KoulutusAsteIcon,
@@ -26,6 +20,7 @@ const iconLookupTable = {
   KoulutuksenLaajuusIcon: KoulutuksenLaajuusIcon,
   TutkintoonHakeminenIcon: TutkintoonHakeminenIcon,
   OpetusKasvatusPsykologiaIcon: OpetusKasvatusPsykologiaIcon,
+  ApurahaIcon: ApurahaIcon,
 };
 
 const useStyles = makeStyles({
@@ -39,7 +34,7 @@ const useStyles = makeStyles({
     color: colors.black,
   },
   title: {
-    fontWeight: 700,
+    fontWeight: 600,
   },
   grid: {
     width: '70%',

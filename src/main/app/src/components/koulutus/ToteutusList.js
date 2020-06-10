@@ -1,5 +1,6 @@
 import React from 'react';
-import { Typography, Grid, Container, makeStyles } from '@material-ui/core';
+import { Typography, Grid, Container, makeStyles, Link } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
 import Spacer from '../common/Spacer';
 import { useTranslation } from 'react-i18next';
 import { Localizer as l } from '../../tools/Utils';
@@ -36,20 +37,23 @@ const ToteutusList = (props) => {
         <Grid container direction="column" spacing={1}>
           {toteutukset.map((toteutus, i) => (
             <Grid item key={i}>
-              <ToteutusCard
-                tarjoajaName={l.localize(toteutus.nimi)}
-                ammattinimikkeet={localizeArrayToString(
-                  toteutus.tutkintonimikkeet
-                )}
-                description={l.localize(toteutus.kuvaus)}
-                locations={localizeArrayToString(toteutus.kunnat)}
-                opetustapa={localizeArrayToString(toteutus.opetusajat)}
-                price={getLocalizedMaksullisuus(
-                  toteutus.onkoMaksullinen,
-                  toteutus.maksunMaara
-                )}
-                tyyppi={toteutus.koulutustyyppi}
-              />
+              <Link
+                underline="none"
+                component={RouterLink}
+                to={`/toteutus/${toteutus.toteutusOid}`}>
+                <ToteutusCard
+                  tarjoajaName={l.localize(toteutus.nimi)}
+                  ammattinimikkeet={localizeArrayToString(toteutus.tutkintonimikkeet)}
+                  description={l.localize(toteutus.kuvaus)}
+                  locations={localizeArrayToString(toteutus.kunnat)}
+                  opetustapa={localizeArrayToString(toteutus.opetusajat)}
+                  price={getLocalizedMaksullisuus(
+                    toteutus.onkoMaksullinen,
+                    toteutus.maksunMaara
+                  )}
+                  tyyppi={toteutus.koulutustyyppi}
+                />
+              </Link>
             </Grid>
           ))}
         </Grid>

@@ -24,6 +24,7 @@ import Oppilaitos from './components/oppilaitos/Oppilaitos';
 import SivuRouter from './components/sivu/SivuRouter';
 import ReactiveBorder from './components/ReactiveBorder';
 import Hakupalkki from './components/haku/Hakupalkki';
+import Toteutus from './components/toteutus/Toteutus';
 
 const konfoStore = new KonfoStore();
 
@@ -111,6 +112,10 @@ const App = () => {
         <Route path="/oppilaitos/:oid">
           <KoulutusHakuBar />
           <Oppilaitos />
+        </Route>
+        <Route path="/toteutus/:oid">
+          <KoulutusHakuBar />
+          <Toteutus />
         </Route>
         <Route path="/sivu/:id">
           <KoulutusHakuBar />
