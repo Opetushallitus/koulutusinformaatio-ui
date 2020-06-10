@@ -3,9 +3,10 @@ import { Box, Typography, Grid, Paper, Button, makeStyles } from '@material-ui/c
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import Spacer from '#/src/components/common/Spacer';
-import { format } from 'date-fns';
+import { format, isWithinInterval } from 'date-fns';
 import { Localizer as l } from '#/src/tools/Utils';
 import { useTranslation } from 'react-i18next';
+import { colors } from '#/src/colors';
 
 const useStyles = makeStyles((theme) => ({
   gridHeading: {
@@ -14,14 +15,23 @@ const useStyles = makeStyles((theme) => ({
   },
   hakuName: {
     ...theme.typography.h5,
-    fontWeight: 700,
-    color: '#1D1D1D',
+    fontWeight: '700',
+    color: colors.black,
   },
 }));
 
 const HakuCardGrid = (props) => {
+  const EI_SAHKOISTA = 'ei sähköistä';
   const classes = useStyles();
   const { type, haut, icon } = props;
+  const lomakeIsOpen = (hakuajat) =>
+    hakuajat.some((hakuaika) =>
+      isWithinInterval(new Date(), {
+        start: new Date(hakuaika.alkaa),
+        end: new Date(hakuaika.paattyy),
+      })
+    );
+
   const { t } = useTranslation();
   return (
     <Grid item>
@@ -51,7 +61,7 @@ const HakuCardGrid = (props) => {
                   height: '100%',
                   borderTop: `5px solid #43A047`,
                 }}>
-                <Box m={4} display="flex" direction="column">
+                <Box m={4}>
                   <Grid container direction="column" spacing={3}>
                     <Grid item>
                       <Grid container direction="column" spacing={1}>
@@ -85,9 +95,11 @@ const HakuCardGrid = (props) => {
                               </Typography>
                             </Grid>
                             <Grid item>
-                              <Typography variant="body1" noWrap>
-                                {format(new Date(haku.hakuajat[0].alkaa), 'd.M.y H:mm')}
-                              </Typography>
+                              {haku.hakuajat.map((hakuaika, i) => (
+                                <Typography key={i} variant="body1" noWrap>
+                                  {format(new Date(hakuaika.alkaa), 'd.M.y H:mm')}
+                                </Typography>
+                              ))}
                             </Grid>
                           </Grid>
                         </Grid>
@@ -99,9 +111,11 @@ const HakuCardGrid = (props) => {
                               </Typography>
                             </Grid>
                             <Grid item>
-                              <Typography variant="body1" noWrap>
-                                {format(new Date(haku.hakuajat[0].paattyy), 'd.M.y H:mm')}
-                              </Typography>
+                              {haku.hakuajat.map((hakuaika, i) => (
+                                <Typography key={i} variant="body1" noWrap>
+                                  {format(new Date(hakuaika.paattyy), 'd.M.y H:mm')}
+                                </Typography>
+                              ))}
                             </Grid>
                           </Grid>
                         </Grid>
@@ -141,13 +155,20 @@ const HakuCardGrid = (props) => {
                         </Grid>
                       </Grid>
                     </Grid>
-                    <Grid item>
-                      <Button variant="contained" size="large" color="primary" disabled>
-                        <Typography style={{ color: '#FFFFFF' }} variant="body1">
-                          {t('toteutus.tayta-lomake')}
-                        </Typography>
-                      </Button>
-                    </Grid>
+                    {haku.hakulomaketyyppi !== EI_SAHKOISTA ? (
+                      <Grid item>
+                        <Button
+                          variant="contained"
+                          size="large"
+                          color="primary"
+                          href={haku.hakulomakeLinkki}
+                          disabled={!lomakeIsOpen(haku.hakuajat)}>
+                          <Typography style={{ color: '#FFFFFF' }} variant="body1">
+                            {t('toteutus.tayta-lomake')}
+                          </Typography>
+                        </Button>
+                      </Grid>
+                    ) : null}
                   </Grid>
                 </Box>
               </Paper>
