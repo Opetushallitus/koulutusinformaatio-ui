@@ -94,6 +94,8 @@ export const getOppilaitosProps = createSelector(
   [getOppilaitokset, getTarjontaProps, getTulevaTarjontaProps, getStatus],
   (oppilaitos, tarjonta, tulevaTarjonta, status) => ({
     oppilaitos,
+    esittelyHtml: l.localize(_.get(oppilaitos, 'oppilaitos.metadata.esittely', '')),
+    tietoaOpiskelusta: _.get(oppilaitos, 'oppilaitos.metadata.tietoaOpiskelusta', []),
     tarjonta,
     tulevaTarjonta,
     status,
