@@ -163,7 +163,7 @@ const HakuCardGrid = (props) => {
                           color="primary"
                           href={haku.hakulomakeLinkki}
                           disabled={!lomakeIsOpen(haku.hakuajat)}>
-                          <Typography style={{ color: '#FFFFFF' }} variant="body1">
+                          <Typography style={{ color: colors.white }} variant="body1">
                             {t('toteutus.tayta-lomake')}
                           </Typography>
                         </Button>

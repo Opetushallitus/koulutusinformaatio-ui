@@ -225,7 +225,7 @@ const Toteutus = () => {
             <Box mt={5}>
               <Grid container alignItems="center">
                 {toteutus.metadata.yhteyshenkilot.map((yhteyshenkilo, i) => (
-                  <React.Fragment>
+                  <React.Fragment key={i}>
                     <Grid item>
                       <Grid container direction="column">
                         <Grid item>
