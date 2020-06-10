@@ -1,5 +1,6 @@
 import React from 'react';
-import { Typography, Grid, Container, makeStyles } from '@material-ui/core';
+import { Typography, Grid, Container, makeStyles, Link } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import Spacer from '#/src/components/common/Spacer';
@@ -29,15 +30,20 @@ const TarjontaList = ({ tarjonta, oid }) => {
         <Grid container direction="column" spacing={1}>
           {_.map(_.get(tarjonta, 'localizedTarjonta'), (tts, i) => (
             <Grid item key={i}>
-              <ToteutusCard
-                toteutusName={tts?.toteutusName}
-                description={tts?.description}
-                locations={tts?.locations}
-                opetustapa={tts?.opetustapa}
-                price={tts?.price}
-                tyyppi={tts?.tyyppi}
-                kuva={tts?.kuva}
-              />
+              <Link
+                underline="none"
+                component={RouterLink}
+                to={`/toteutus/${tts?.toteutusOid}`}>
+                <ToteutusCard
+                  toteutusName={tts?.toteutusName}
+                  description={tts?.description}
+                  locations={tts?.locations}
+                  opetustapa={tts?.opetustapa}
+                  price={tts?.price}
+                  tyyppi={tts?.tyyppi}
+                  kuva={tts?.kuva}
+                />
+              </Link>
             </Grid>
           ))}
         </Grid>
