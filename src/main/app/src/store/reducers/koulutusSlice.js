@@ -127,5 +127,7 @@ export const selectKoulutus = (state, oid) => {
   }
 };
 
-export const selectLoading = (state) => state.koulutus.loading;
+export const selectLoading = (state) =>
+  state.koulutus.koulutusStatus === LOADING_STATUS ||
+  state.koulutus.jarjestajatStatus === LOADING_STATUS;
 export const selectJarjestajat = (state, oid) => state.koulutus.jarjestajat[oid]?.hits;
