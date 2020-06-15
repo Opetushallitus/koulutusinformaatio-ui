@@ -26,9 +26,6 @@ const OskariKartta = ({ osoite, postitoimipaikka }) => {
           }
         });
 
-        channel.getAllLayers(function(layers) {
-          channel.log('GetAllLayers: ', layers);
-        });
         const x = _location.lon;
         const y = _location.lat;
         const name = _location.name;
