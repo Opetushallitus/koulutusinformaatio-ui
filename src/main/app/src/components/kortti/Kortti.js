@@ -68,11 +68,7 @@ const Kortti = ({ id }) => {
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Card className={clsx(classes.card, classes[kortti.color])}>
-        <CardMedia
-          className={classes.media}
-          image={imgUrl(kortti)}
-          title={kortti.name}
-        />
+        <CardMedia className={classes.media} image={imgUrl(kortti)} title={kortti.name} />
         <CardContent>
           <h2 className={classes.otsikko}>{kortti.name}</h2>
           {linkit.map((l) => {

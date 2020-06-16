@@ -105,8 +105,8 @@
     "lukio": "Lukio",
     "muut": "Muut kurssit ja koulutukset",
     "näytä": "Näytä",
-    "nayta-hakutulos_plural": "Näytä {{count}} hakutulosta", 
-    "nayta-hakutulos": "Näytä {{count}} hakutulos", 
+    "nayta-hakutulos_plural": "Näytä {{count}} hakutulosta",
+    "nayta-hakutulos": "Näytä {{count}} hakutulos",
     "odota-hetki-ja-kokeile-suorita-toiminto-uudestaan": "Odota hetki ja kokeile suorita toiminto uudestaan",
     "olet-valinnut-vertailuun": "Olet valinnut vertailuun:",
     "opetuskieli": "Opetuskieli",
@@ -135,7 +135,7 @@
     "summary_plural": "Etsintäsi tuotti {{count}} osumaa",
     "suomi": "Suomi",
     "syota-ainakin-kolme-merkkia": "Syötä ainakin kolme merkkiä",
-    "tapahtui-tekninen-virhe" : "Tapahtui tekninen virhe",
+    "tapahtui-tekninen-virhe": "Tapahtui tekninen virhe",
     "tulokset-per-sivu": "Tulokset per sivu:",
     "tuloksia-per-sivu": "Tuloksia per sivu",
     "vertaile": "Vertaile"
@@ -214,6 +214,7 @@
     "järjestävät-oppilaitokset": "Koulutusta järjestävät oppilaitokset",
     "lisätietoa": "Lisätietoa koulutuksesta",
     "tyyppi-amm": "Ammatillinen tutkinto",
+    "tyyppi-amk": "Ammattikorkeakoulu",
     "tarjonta": "Tutustu tarjontaan",
     "haku-kaynnissa": "Haku käynnissä",
     "katso-jarjestavat": "Katso koulutusta järjestävät oppilaitokset.",
@@ -319,6 +320,7 @@
     "häiriötiedotteet": "Häiriötiedotteet"
   },
   "toteutus": {
+    "koulutuksen-hakukohteet": "Koulutuksen hakukohteet",
     "tutustu": "Tutustu oppilaitokseen",
     "yhteystiedot": "Yhteystiedot:",
     "puhelin": "Puhelin:",
@@ -329,7 +331,7 @@
     "hae-koulutukseen": "Hae tähän koulutukseen!",
     "tietoa-hakuväylistä": "Tietoa hakuväylistä",
     "alkaa": "Koulutus alkaa",
-    "opetuskieli": "Opetuskieli",
+    "opetuskieli": "Opetuskielet",
     "opetusaika": "Opetusaika",
     "opetustapa": "Opetustapa",
     "laajuus": "Laajuus",
@@ -341,6 +343,21 @@
     "jatko-opintomahdollisuudet": "Jatko-opintomahdollisuudet",
     "stipendit": "Stipendit käytössä",
     "pääaineet": "Pääaineet",
-    "maksuton": "Maksuton"
+    "maksuton": "Maksuton",
+    "maksullisuus": "Maksullisuus",
+    "apuraha": "Apuraha",
+    "haku-kaynnisa": "Haku käynnissä",
+    "katso-hakukohteet": "Katso oppilaitoksen hakukohteet ja täytä hakemus.",
+    "nayta-hakukohteet": "Näytä hakukohteet",
+    "jatkuvahaku": "Jatkuva haku",
+    "yhteishaku": "Yhteishaku",
+    "erillishaku": "Erillishaku",
+    "ei-maksua": "Ei maksua",
+    "ei-apurahaa": "Ei apurahaa",
+    "haku-alkaa": "Haku alkaa",
+    "haku-paattyy": "Haku päättyy",
+    "opiskelupaikkoja": "Opiskelupaikkoja",
+    "tayta-lomake": "Täytä hakulomake",
+    "yhteyshenkilot": "Koulutuksen yhteyshenkilot"
   }
 }

@@ -141,22 +141,6 @@ const Koulutus = (props) => {
         <Box id="tarjonta">
           <ToteutusList toteutukset={toteutukset} />
         </Box>
-        {/* {state.lisatiedot ? (
-          <Box
-            className={clsx([classes.lisatietoa, classes.root])}
-            display="flex"
-            flexDirection="column"
-            alignItems="center">
-            <Typography variant="h2">{t('koulutus.lisätietoa')}</Typography>
-            <Spacer />
-            <Accordion
-              items={state.lisatiedot.map((lisatieto) => ({
-                title: l.localize(lisatieto.otsikko),
-                content: l.localize(lisatieto.teksti),
-              }))}
-            />
-          </Box>
-        ) : null} */}
       </Box>
     </Container>
   );

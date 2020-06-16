@@ -53,6 +53,7 @@ const getTarjontaProps = createSelector([getTarjonta], (_tarjonta) => {
     ),
     tyyppi: _.get(t, 'koulutustyyppi'),
     kuva: _.get(t, 'kuva'),
+    toteutusOid: _.get(t, 'toteutusOid'),
   }));
   return {
     localizedTarjonta,

@@ -10,6 +10,7 @@ import { theme } from './theme';
 import App from './App';
 import 'typeface-open-sans';
 import configure from './urls/urlUtil';
+import ScrollToTop from './ScrollToTop';
 
 if ('serviceWorker' in navigator) {
   if (!window.Cypress) {
@@ -52,6 +53,7 @@ ReactDOM.render(
   <Provider store={getKonfoStore()}>
     <BrowserRouter basename={'/konfo'}>
       <MuiThemeProvider theme={theme}>
+        <ScrollToTop />
         <App />
       </MuiThemeProvider>
     </BrowserRouter>

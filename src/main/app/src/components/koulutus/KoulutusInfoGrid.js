@@ -44,11 +44,7 @@ const KoulutusInfoGrid = (props) => {
     },
   ];
   return (
-    <InfoGrid
-      heading={t('koulutus.tiedot')}
-      gridData={perustiedotData}
-      {...props}
-    />
+    <InfoGrid heading={t('koulutus.tiedot')} gridData={perustiedotData} {...props} />
   );
 };
 
