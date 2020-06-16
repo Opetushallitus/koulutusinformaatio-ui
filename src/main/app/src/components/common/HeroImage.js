@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, Box } from '@material-ui/core';
-import DefaultHeroImage from '../../assets/images/herokuva_default.png';
+import DefaultHeroImage from '#/src/assets/images/herokuva_default.png';
 
 const useStyles = makeStyles({
   heroImage: { maxWidth: '100%', height: 'auto' },
