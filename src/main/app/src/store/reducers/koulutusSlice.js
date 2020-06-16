@@ -121,6 +121,7 @@ export const selectKoulutus = (state, oid) => {
       opintojenLaajuusYksikkö: koulutusData.metadata?.opintojenLaajuusyksikko,
       koulutusTyyppi: koulutusData.metadata?.tyyppi,
       lisatiedot: koulutusData.metadata?.lisatiedot,
+      teemakuva: koulutusData?.teemakuva,
     };
   } else {
     return undefined;

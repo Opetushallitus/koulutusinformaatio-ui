@@ -10,7 +10,6 @@ import ToteutusList from './ToteutusList';
 import HakuKaynnissaCard from './HakuKaynnissaCard';
 import { HashLink as Link } from 'react-router-hash-link';
 import { colors } from '../../colors';
-import DefaultHeroImage from '../../assets/images/herokuva_default.png';
 import Murupolku from '../common/Murupolku';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
@@ -22,13 +21,12 @@ import {
 } from '../../store/reducers/koulutusSlice';
 import LoadingCircle from '../common/LoadingCircle';
 import qs from 'query-string';
+import HeroImage from '#/src/components/common/HeroImage';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },
   lisatietoa: { width: '50%' },
   container: { backgroundColor: colors.white, maxWidth: '1600px' },
-  heroImage: { maxWidth: '100%', height: 'auto' },
-  imageContainer: { maxWidth: '1600px', maxHeight: '400px' },
   alatText: {
     ...theme.typography.body1,
     fontSize: '1.25rem',
@@ -104,12 +102,8 @@ const Koulutus = (props) => {
             {l.localize(koulutus?.tutkintoNimi)}
           </Typography>
         </Box>
-        <Box className={classes.imageContainer} mt={7.5}>
-          <img
-            className={classes.heroImage}
-            src={DefaultHeroImage}
-            alt="Koulutuksen teemakuva"
-          />
+        <Box mt={7.5}>
+          <HeroImage imgUrl={koulutus?.teemakuva} />
         </Box>
         <KoulutusInfoGrid
           className={classes.root}
