@@ -5,7 +5,6 @@ import { HashLink } from 'react-router-hash-link';
 import { colors } from '#/src/colors';
 import ToteutusInfoGrid from './ToteutusInfoGrid';
 import ToteutusHakukohteet from './ToteutusHakukohteet';
-import { observer } from 'mobx-react-lite';
 import clsx from 'clsx';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
@@ -31,13 +30,13 @@ import {
   selectLoading as selectKoulutusLoading,
 } from '#/src/store/reducers/koulutusSlice';
 import { useTranslation } from 'react-i18next';
-import HtmlTextBox from '../common/HtmlTextBox';
+import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 
 const useStyles = makeStyles({
   accordion: { width: '50%' },
   root: { marginTop: '100px' },
   textWithBackgroundBox: {
-    backgroundColor: '#CCFFCC',
+    backgroundColor: colors.beigeGreen,
     height: '24px',
   },
   textWithBackgroundText: {
@@ -270,4 +269,4 @@ const Toteutus = () => {
   );
 };
 
-export default observer(Toteutus);
+export default Toteutus;

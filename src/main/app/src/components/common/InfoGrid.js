@@ -1,16 +1,16 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, Typography, Grid, Paper, Icon, Box } from '@material-ui/core';
-import { colors } from '../../colors';
+import { colors } from '#/src/colors';
 import Spacer from './Spacer';
-import KoulutusAsteIcon from '../../assets/images/koulutusaste.svg';
-import KoulutusTyypitIcon from '../../assets/images/koulutustyyppi.svg';
-import TutkintoNimikeIcon from '../../assets/images/tutkintonimike.svg';
-import SuunniteltuKestoIcon from '../../assets/images/suunniteltu_kesto.svg';
-import KoulutuksenLaajuusIcon from '../../assets/images/koulutuksen_laajuus.svg';
-import TutkintoonHakeminenIcon from '../../assets/images/tutkintoon_hakeminen.svg';
-import OpetusKasvatusPsykologiaIcon from '../../assets/images/opetus_kasvatus_psykologia.svg';
-import ApurahaIcon from '../../assets/images/Apuraha.svg';
+import KoulutusAsteIcon from '#/src/assets/images/koulutusaste.svg';
+import KoulutusTyypitIcon from '#/src/assets/images/koulutustyyppi.svg';
+import TutkintoNimikeIcon from '#/src/assets/images/tutkintonimike.svg';
+import SuunniteltuKestoIcon from '#/src/assets/images/suunniteltu_kesto.svg';
+import KoulutuksenLaajuusIcon from '#/src/assets/images/koulutuksen_laajuus.svg';
+import TutkintoonHakeminenIcon from '#/src/assets/images/tutkintoon_hakeminen.svg';
+import OpetusKasvatusPsykologiaIcon from '#/src/assets/images/opetus_kasvatus_psykologia.svg';
+import ApurahaIcon from '#/src/assets/images/Apuraha.svg';
 
 const iconLookupTable = {
   KoulutusAsteIcon: KoulutusAsteIcon,

@@ -3,7 +3,6 @@ import InfoGrid from '../common/InfoGrid';
 import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
 import TimelapseIcon from '@material-ui/icons/Timelapse';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import FlagOutlinedIcon from '@material-ui/icons/FlagOutlined';
 import HourglassEmptyOutlinedIcon from '@material-ui/icons/HourglassEmptyOutlined';
 import EuroIcon from '@material-ui/icons/Euro';
@@ -81,11 +80,6 @@ const ToteutusInfoGrid = (props) => {
       title: t('koulutus.koulutuksen-laajuus'),
       text: laajuusString,
     },
-    // {
-    //   icon: <AccessTimeIcon className={classes.koulutusInfoGridIcon} />,
-    //   title: t('koulutus.suunniteltu-kesto'),
-    //   text: nimikeString,
-    // },
     {
       icon: <FlagOutlinedIcon className={classes.koulutusInfoGridIcon} />,
       title: t('toteutus.alkaa'),

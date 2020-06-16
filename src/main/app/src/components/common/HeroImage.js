@@ -7,9 +7,8 @@ const useStyles = makeStyles({
   imageContainer: { maxWidth: '1600px', maxHeight: '400px' },
 });
 
-const HeroImage = (props) => {
+const HeroImage = ({ imgUrl }) => {
   const classes = useStyles();
-  const imgUrl = props.imgUrl;
   return (
     <Box className={classes.imageContainer}>
       <img
