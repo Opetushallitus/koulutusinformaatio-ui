@@ -132,3 +132,86 @@ export const selectLoading = (state) =>
   state.koulutus.koulutusStatus === LOADING_STATUS ||
   state.koulutus.jarjestajatStatus === LOADING_STATUS;
 export const selectJarjestajat = (state, oid) => state.koulutus.jarjestajat[oid]?.hits;
+
+// This dummy object should be removed when backend implementation is ready
+export const dummySuositeltutKoulutukset = {
+  total: 3,
+  hits: [
+    {
+      oid: 100,
+      nimi: {
+        fi: 'Lääkealan perustutukinto',
+      },
+      opintojenlaajuus: {
+        nimi: {
+          fi: 180,
+        },
+      },
+      opintojenLaajuusyksikko: {
+        nimi: {
+          fi: 'osaamispistettä',
+        },
+      },
+      tutkintonimikkeet: {
+        nimi: {
+          fi: 'Lääketekniikko',
+        },
+      },
+      hakuKaynnissa: true,
+      onSuosikki: true,
+      tyyppi: 'amm',
+      teema: null,
+    },
+    {
+      oid: 200,
+      nimi: {
+        fi: 'Hammastekniikan perustutkinto',
+      },
+      opintojenlaajuus: {
+        nimi: {
+          fi: 180,
+        },
+      },
+      opintojenLaajuusyksikko: {
+        nimi: {
+          fi: 'osaamispistettä',
+        },
+      },
+      tutkintonimikkeet: {
+        nimi: {
+          fi: 'Lääketekniikko',
+        },
+      },
+      hakuKaynnissa: true,
+      onSuosikki: false,
+      tyyppi: 'kk',
+      teema: '',
+    },
+    {
+      oid: 300,
+      nimi: {
+        fi: 'Välinehuoltoalan perustutkinto',
+      },
+      opintojenlaajuus: {
+        nimi: {
+          fi: 180,
+        },
+      },
+      opintojenLaajuusyksikko: {
+        nimi: {
+          fi: 'osaamispistettä',
+        },
+      },
+      tutkintonimikkeet: {
+        nimi: {
+          fi: 'Lääketekniikko',
+        },
+      },
+      hakuKaynnissa: false,
+      onSuosikki: true,
+      tyyppi: 'amm',
+      teema:
+        'https://konfo-files.hahtuvaopintopolku.fi/koulutus-teemakuva/1.2.246.562.13.00000000000000000534/e99d4fd7-fd84-4b61-810b-714fc7099462.png',
+    },
+  ],
+};
