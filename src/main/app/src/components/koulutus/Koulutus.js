@@ -19,7 +19,7 @@ import {
   selectKoulutus,
   selectLoading,
   selectJarjestajat,
-  dummySuositeltutKoulutukset,
+  dummySuositellutKoulutukset,
 } from '#/src/store/reducers/koulutusSlice';
 import LoadingCircle from '#/src/components/common/LoadingCircle';
 import qs from 'query-string';
@@ -138,7 +138,7 @@ const Koulutus = (props) => {
           <ToteutusList toteutukset={toteutukset} />
         </Box>
         <Box id="suositukset">
-          <SuositusKoulutusList koulutukset={dummySuositeltutKoulutukset} oid={oid} />
+          <SuositusKoulutusList koulutukset={dummySuositellutKoulutukset} oid={oid} />
         </Box>
       </Box>
     </Container>

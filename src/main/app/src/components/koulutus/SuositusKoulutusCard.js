@@ -19,7 +19,7 @@ import {
 
 import { educationTypeColorCode } from '#/src/colors';
 import TextWithBackground from '#/src/components/common/TextWithBackground';
-import _kuva from '#/src/assets/images/o-EDUCATION-facebook.jpg';
+import defaultTeemakuva from '#/src/assets/images/o-EDUCATION-facebook.jpg';
 
 const useStyles = makeStyles({
   cardActions: {
@@ -51,7 +51,7 @@ const SuositusKoulutusCard = (props) => {
     onSuosikki,
     opintojenlaajuus,
     opintojenLaajuusyksikko,
-    teema,
+    teemakuva,
     tutkintonimikkeet,
   } = props;
   const classes = useStyles(props);
@@ -62,9 +62,9 @@ const SuositusKoulutusCard = (props) => {
       <CardActionArea>
         <CardMedia
           component="img"
-          alt={teema}
+          alt={teemakuva}
           height="170"
-          image={teema || _kuva}
+          image={teemakuva || defaultTeemakuva}
           title={koulutusName}
         />
         <CardContent>

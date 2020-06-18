@@ -134,7 +134,7 @@ export const selectLoading = (state) =>
 export const selectJarjestajat = (state, oid) => state.koulutus.jarjestajat[oid]?.hits;
 
 // This dummy object should be removed when backend implementation is ready
-export const dummySuositeltutKoulutukset = {
+export const dummySuositellutKoulutukset = {
   total: 3,
   hits: [
     {

@@ -42,8 +42,8 @@ const SuositusKoulutusList = ({ koulutukset, oid }) => {
           alignContent="stretch"
           alignItems="stretch"
           spacing={1}>
-          {_.map(_.get(koulutukset, 'hits'), (kts, i) => (
-            <Grid item key={i} xs={getCardWidth()}>
+          {_.map(koulutukset?.hits, (kts) => (
+            <Grid item key={kts?.oid} xs={getCardWidth()}>
               <SuositusKoulutusCard
                 koulutusName={l.localize(kts?.nimi)}
                 tutkintonimikkeet={l.localize(kts?.tutkintonimikkeet)}
@@ -51,7 +51,7 @@ const SuositusKoulutusList = ({ koulutukset, oid }) => {
                 opintojenLaajuusyksikko={l.localize(kts?.opintojenLaajuusyksikko)}
                 onSuosikki={kts?.onSuosikki}
                 hakuKaynnissa={kts?.hakuKaynnissa}
-                teema={kts?.teema}
+                teemakuva={kts?.teema}
                 tyyppi={kts?.tyyppi}
               />
             </Grid>
