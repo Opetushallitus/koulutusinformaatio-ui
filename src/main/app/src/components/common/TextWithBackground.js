@@ -22,11 +22,7 @@ const useStyles = makeStyles({
 const TextWithBackground = (props) => {
   const classes = useStyles();
   return (
-    <Box
-      className={classes.textWithBackgroundBox}
-      display="flex"
-      justifyContent="center"
-      justifyItems="center">
+    <Box className={classes.textWithBackgroundBox}>
       <div className={classes.textWithBackgroundText}>{props.children}</div>
     </Box>
   );
