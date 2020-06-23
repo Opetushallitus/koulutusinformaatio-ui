@@ -1,72 +1,28 @@
-import React, { Component } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { OsoiteParser as op, Localizer as l } from '#/src/tools/Utils';
+import { urls } from 'oph-urls-js';
 import OskariRPC from 'oskari-rpc';
-import { observer, inject } from 'mobx-react';
 
-@inject('urlStore')
-@observer
-class OskariKartta extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      channel: undefined,
-    };
-  }
-
-  componentDidMount() {
-    this.initMap();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.props = nextProps;
-    this.setLocation();
-  }
-
-  setLocation() {
-    const data = op.getCoreAddress(this.props.osoite);
-    console.log('Triggering map location search for ' + data);
-    if (this.state.channel) {
-      this.state.channel.postRequest('SearchRequest', data);
-    } else {
-      console.log(
-        'Odottamaton virhe. Karttapalvelun channel puuttuu ' +
-          this.props.urlStore.urls.url('kartta.base-url')
-      );
-    }
-  }
-
-  createChannel() {
-    const IFRAME_DOMAIN = this.props.urlStore.urls.url('kartta.base-url');
+const OskariKartta = ({ osoite, postitoimipaikka }) => {
+  function createChannel() {
+    const IFRAME_DOMAIN = urls.url('kartta.base-url');
     const iFrame = document.getElementById('publishedMap');
     const channel = OskariRPC.connect(iFrame, IFRAME_DOMAIN);
-    this.setState({ channel: channel });
     return channel;
   }
 
-  initMap() {
-    const channel = this.createChannel();
-    const _this = this;
+  const initMap = useCallback(() => {
+    const channel = createChannel();
 
-    channel.handleEvent('SearchResultEvent', function(data) {
-      if (
-        data.success &&
-        data.result &&
-        data.result.locations &&
-        data.result.locations.length > 0
-      ) {
-        let location = data.result.locations[0];
-        data.result.locations.forEach((loc) => {
-          if (
-            loc.region.toLowerCase() === _this.props.postitoimipaikka.toLowerCase() ||
-            loc.village.toLowerCase() === _this.props.postitoimipaikka.toLowerCase()
-          ) {
-            location = loc;
-          }
-        });
+    channel.handleEvent('SearchResultEvent', (data) => {
+      if (data.success && data?.result?.locations?.length > 0) {
+        const { lon, lat, name } =
+          data?.locations?.find(
+            (loc) => postitoimipaikka.toLowerCase() in [loc.region, loc.village]
+          ) ?? data.result.locations[0];
 
-        const x = location.lon;
-        const y = location.lat;
-        const name = location.name;
+        const x = lon;
+        const y = lat;
         const zoomLevel = 9;
 
         channel.postRequest('MapMoveRequest', [x, y, zoomLevel]);
@@ -84,11 +40,11 @@ class OskariKartta extends Component {
       }
     });
 
-    channel.onReady(function() {
+    channel.onReady(() => {
       //channel is now ready and listening.
       channel.log('Map is now listening');
-      const expectedOskariVersion = '1.44.3';
-      channel.isSupported(expectedOskariVersion, function(blnSupported) {
+      const expectedOskariVersion = '1.55.2';
+      channel.isSupported(expectedOskariVersion, (blnSupported) => {
         if (blnSupported) {
           channel.log(
             'Client is supported and Oskari version is ' + expectedOskariVersion
@@ -100,12 +56,12 @@ class OskariKartta extends Component {
               ') or client not supported'
           );
           // getInfo can be used to get the current Oskari version
-          channel.getInfo(function(oskariInfo) {
+          channel.getInfo((oskariInfo) => {
             channel.log('Current Oskari-instance reports version as: ', oskariInfo);
           });
         }
       });
-      channel.isSupported(function(blnSupported) {
+      channel.isSupported((blnSupported) => {
         if (!blnSupported) {
           channel.log(
             'Oskari reported client version (' +
@@ -117,21 +73,32 @@ class OskariKartta extends Component {
           channel.log('Client is supported by Oskari.');
         }
       });
-      _this.setLocation();
+      // setLocation(channel);
+      const data = op.getCoreAddress(osoite);
+      console.log('Triggering map location search for ' + data);
+      if (channel) {
+        channel.postRequest('SearchRequest', data);
+      } else {
+        console.log(
+          'Odottamaton virhe. Karttapalvelun channel puuttuu ' +
+            urls.url('kartta.base-url')
+        );
+      }
     });
-  }
+  }, [postitoimipaikka, osoite]);
 
-  render() {
-    return (
-      <iframe
-        width="100%"
-        height="100%"
-        title="kartta"
-        id="publishedMap"
-        src={this.props.urlStore.urls.url('kartta.publish-url', l.getLanguage())}
-      />
-    );
-  }
-}
+  useEffect(() => {
+    initMap();
+  }, [osoite, postitoimipaikka, initMap]);
+
+  return (
+    <iframe
+      title="kartta"
+      id="publishedMap"
+      style={{ border: 'none', width: '100%', height: '100%' }}
+      src={urls.url('kartta.publish-url', l.getLanguage())}
+    />
+  );
+};
 
 export default OskariKartta;
