@@ -14,21 +14,15 @@ const OskariKartta = ({ osoite, postitoimipaikka }) => {
   const initMap = useCallback(() => {
     const channel = createChannel();
 
-    channel.handleEvent('SearchResultEvent', function(data) {
+    channel.handleEvent('SearchResultEvent', (data) => {
       if (data.success && data?.result?.locations?.length > 0) {
-        let _location = data.result.locations[0];
-        data.result.locations.forEach((loc) => {
-          if (
-            loc.region.toLowerCase() === postitoimipaikka.toLowerCase() ||
-            loc.village.toLowerCase() === postitoimipaikka.toLowerCase()
-          ) {
-            _location = loc;
-          }
-        });
+        const { lon, lat, name } =
+          data?.locations?.find(
+            (loc) => postitoimipaikka.toLowerCase() in [loc.region, loc.village]
+          ) ?? data.result.locations[0];
 
-        const x = _location.lon;
-        const y = _location.lat;
-        const name = _location.name;
+        const x = lon;
+        const y = lat;
         const zoomLevel = 9;
 
         channel.postRequest('MapMoveRequest', [x, y, zoomLevel]);
@@ -46,11 +40,11 @@ const OskariKartta = ({ osoite, postitoimipaikka }) => {
       }
     });
 
-    channel.onReady(function() {
+    channel.onReady(() => {
       //channel is now ready and listening.
       channel.log('Map is now listening');
       const expectedOskariVersion = '1.55.2';
-      channel.isSupported(expectedOskariVersion, function(blnSupported) {
+      channel.isSupported(expectedOskariVersion, (blnSupported) => {
         if (blnSupported) {
           channel.log(
             'Client is supported and Oskari version is ' + expectedOskariVersion
@@ -62,12 +56,12 @@ const OskariKartta = ({ osoite, postitoimipaikka }) => {
               ') or client not supported'
           );
           // getInfo can be used to get the current Oskari version
-          channel.getInfo(function(oskariInfo) {
+          channel.getInfo((oskariInfo) => {
             channel.log('Current Oskari-instance reports version as: ', oskariInfo);
           });
         }
       });
-      channel.isSupported(function(blnSupported) {
+      channel.isSupported((blnSupported) => {
         if (!blnSupported) {
           channel.log(
             'Oskari reported client version (' +
