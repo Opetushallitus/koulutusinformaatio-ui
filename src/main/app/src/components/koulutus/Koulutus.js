@@ -1,25 +1,27 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useStores } from '../../hooks';
+import { useStores } from '#/src/hooks';
 import { Typography, Box, Container, makeStyles } from '@material-ui/core';
-import { Localizer as l } from '../../tools/Utils';
+import { Localizer as l } from '#/src/tools/Utils';
 import { useTranslation } from 'react-i18next';
 import KoulutusInfoGrid from './KoulutusInfoGrid';
-import HtmlTextBox from '../common/HtmlTextBox';
+import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import ToteutusList from './ToteutusList';
 import HakuKaynnissaCard from './HakuKaynnissaCard';
+import SuositusKoulutusList from './SuositusKoulutusList';
 import { HashLink as Link } from 'react-router-hash-link';
-import { colors } from '../../colors';
-import Murupolku from '../common/Murupolku';
+import { colors } from '#/src/colors';
+import Murupolku from '#/src/components/common/Murupolku';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
   fetchKoulutusWithRelatedData,
   selectKoulutus,
+  selectSuositellutKoulutukset,
   selectLoading,
   selectJarjestajat,
-} from '../../store/reducers/koulutusSlice';
-import LoadingCircle from '../common/LoadingCircle';
+} from '#/src/store/reducers/koulutusSlice';
+import LoadingCircle from '#/src/components/common/LoadingCircle';
 import qs from 'query-string';
 import HeroImage from '#/src/components/common/HeroImage';
 
@@ -42,6 +44,10 @@ const Koulutus = (props) => {
   const { hakuStore } = useStores();
   const { t } = useTranslation();
   const koulutus = useSelector((state) => selectKoulutus(state, oid), shallowEqual);
+  const suositellutKoulutukset = useSelector(
+    (state) => selectSuositellutKoulutukset(state),
+    shallowEqual
+  );
   const toteutukset = useSelector((state) => selectJarjestajat(state, oid));
   const loading = useSelector((state) => selectLoading(state));
   useEffect(() => {
@@ -134,6 +140,11 @@ const Koulutus = (props) => {
         />
         <Box id="tarjonta">
           <ToteutusList toteutukset={toteutukset} />
+        </Box>
+        {/* {suositellutKoulutukset?.total > 0 && (
+        )} */}
+        <Box id="suositukset">
+          <SuositusKoulutusList koulutukset={suositellutKoulutukset} oid={oid} />
         </Box>
       </Box>
     </Container>
