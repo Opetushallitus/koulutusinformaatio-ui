@@ -3,6 +3,7 @@ import {
   getKoulutus,
   getKoulutusKuvaus,
   getKoulutusJarjestajat,
+  getSuositellutKoulutukset,
 } from '#/src/api/konfoApi';
 import _ from 'lodash';
 
@@ -12,10 +13,13 @@ const LOADING_STATUS = 'loading';
 export const initialState = {
   koulutusStatus: IDLE_STATUS,
   jarjestajatStatus: IDLE_STATUS,
+  suositellutKoulutuksetStatus: IDLE_STATUS,
   koulutukset: {},
   jarjestajat: {},
+  suositellutKoulutukset: {},
   koulutusError: null,
   jarjestajatError: null,
+  suositellutKoulutuksetError: null,
 };
 
 const koulutusSlice = createSlice({
@@ -25,6 +29,11 @@ const koulutusSlice = createSlice({
     fetchKoulutusStart(state) {
       if (state.koulutusStatus === IDLE_STATUS) {
         state.koulutusStatus = LOADING_STATUS;
+      }
+    },
+    fetchSuositellutKoulutuksetStart(state) {
+      if (state.suositellutKoulutuksetStatus === IDLE_STATUS) {
+        state.suositellutKoulutuksetStatus = LOADING_STATUS;
       }
     },
     fetchJarjestajatStart(state) {
@@ -38,6 +47,13 @@ const koulutusSlice = createSlice({
         state.koulutukset[oid] = koulutus;
         state.error = null;
         state.koulutusStatus = IDLE_STATUS;
+      }
+    },
+    fetchSuositellutKoulutuksetSuccess(state, { payload }) {
+      if (state.suositellutKoulutuksetStatus === LOADING_STATUS) {
+        state.suositellutKoulutukset = payload.suositellutKoulutuksetData;
+        state.suositellutKoulutuksetError = null;
+        state.suositellutKoulutuksetStatus = IDLE_STATUS;
       }
     },
     fetchJarjestajatSuccess(state, { payload }) {
@@ -60,15 +76,24 @@ const koulutusSlice = createSlice({
         state.koulutusStatus = IDLE_STATUS;
       }
     },
+    fetchSuositellutKoulutuksetError(state, action) {
+      if (state.suositellutKoulutuksetStatus === LOADING_STATUS) {
+        state.suositellutKoulutuksetError = action.payload;
+        state.suositellutKoulutuksetStatus = IDLE_STATUS;
+      }
+    },
   },
 });
 
 export const {
   fetchKoulutusStart,
-  fetchKoulutusSuccess,
-  fetchKoulutusError,
+  fetchSuositellutKoulutuksetStart,
   fetchJarjestajatStart,
+  fetchKoulutusSuccess,
+  fetchSuositellutKoulutuksetSuccess,
   fetchJarjestajatSuccess,
+  fetchKoulutusError,
+  fetchSuositellutKoulutuksetError,
   fetchJarjestajatError,
 } = koulutusSlice.actions;
 export default koulutusSlice.reducer;
@@ -87,6 +112,16 @@ export const fetchKoulutus = (oid, draft) => async (dispatch) => {
   }
 };
 
+export const fetchSuositellutKoulutukset = (oid) => async (dispatch) => {
+  try {
+    dispatch(fetchSuositellutKoulutuksetStart());
+    const suositellutKoulutuksetData = await getSuositellutKoulutukset(oid);
+    dispatch(fetchSuositellutKoulutuksetSuccess({ oid, suositellutKoulutuksetData }));
+  } catch (error) {
+    dispatch();
+  }
+};
+
 export const fetchKoulutusJarjestajat = (oid) => async (dispatch) => {
   try {
     dispatch(fetchJarjestajatStart());
@@ -101,6 +136,7 @@ export const fetchKoulutusWithRelatedData = (oid, draft) => {
   return (dispatch) => {
     Promise.all([
       dispatch(fetchKoulutus(oid, draft)),
+      dispatch(fetchSuositellutKoulutukset(oid)),
       dispatch(fetchKoulutusJarjestajat(oid)),
     ]);
   };
@@ -128,90 +164,10 @@ export const selectKoulutus = (state, oid) => {
   }
 };
 
+export const selectSuositellutKoulutukset = (state) =>
+  state.koulutus.suositellutKoulutukset;
+
 export const selectLoading = (state) =>
   state.koulutus.koulutusStatus === LOADING_STATUS ||
   state.koulutus.jarjestajatStatus === LOADING_STATUS;
 export const selectJarjestajat = (state, oid) => state.koulutus.jarjestajat[oid]?.hits;
-
-// This dummy object should be removed when backend implementation is ready
-export const dummySuositellutKoulutukset = {
-  total: 3,
-  hits: [
-    {
-      oid: 100,
-      nimi: {
-        fi: 'Lääkealan perustutukinto',
-      },
-      opintojenlaajuus: {
-        nimi: {
-          fi: 180,
-        },
-      },
-      opintojenLaajuusyksikko: {
-        nimi: {
-          fi: 'osaamispistettä',
-        },
-      },
-      tutkintonimikkeet: {
-        nimi: {
-          fi: 'Lääketekniikko',
-        },
-      },
-      hakuKaynnissa: true,
-      onSuosikki: true,
-      tyyppi: 'amm',
-      teema: null,
-    },
-    {
-      oid: 200,
-      nimi: {
-        fi: 'Hammastekniikan perustutkinto',
-      },
-      opintojenlaajuus: {
-        nimi: {
-          fi: 180,
-        },
-      },
-      opintojenLaajuusyksikko: {
-        nimi: {
-          fi: 'osaamispistettä',
-        },
-      },
-      tutkintonimikkeet: {
-        nimi: {
-          fi: 'Lääketekniikko',
-        },
-      },
-      hakuKaynnissa: true,
-      onSuosikki: false,
-      tyyppi: 'kk',
-      teema: '',
-    },
-    {
-      oid: 300,
-      nimi: {
-        fi: 'Välinehuoltoalan perustutkinto',
-      },
-      opintojenlaajuus: {
-        nimi: {
-          fi: 180,
-        },
-      },
-      opintojenLaajuusyksikko: {
-        nimi: {
-          fi: 'osaamispistettä',
-        },
-      },
-      tutkintonimikkeet: {
-        nimi: {
-          fi: 'Lääketekniikko',
-        },
-      },
-      hakuKaynnissa: false,
-      onSuosikki: true,
-      tyyppi: 'amm',
-      teema:
-        'https://konfo-files.hahtuvaopintopolku.fi/koulutus-teemakuva/1.2.246.562.13.00000000000000000534/e99d4fd7-fd84-4b61-810b-714fc7099462.png',
-    },
-  ],
-};

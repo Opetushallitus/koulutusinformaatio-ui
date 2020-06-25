@@ -42,20 +42,22 @@ const SuositusKoulutusList = ({ koulutukset, oid }) => {
           alignContent="stretch"
           alignItems="stretch"
           spacing={1}>
-          {_.map(koulutukset?.hits, (kts) => (
-            <Grid item key={kts?.oid} xs={getCardWidth()}>
-              <SuositusKoulutusCard
-                koulutusName={l.localize(kts?.nimi)}
-                tutkintonimikkeet={l.localize(kts?.tutkintonimikkeet)}
-                opintojenlaajuus={l.localize(kts?.opintojenlaajuus)}
-                opintojenLaajuusyksikko={l.localize(kts?.opintojenLaajuusyksikko)}
-                onSuosikki={kts?.onSuosikki}
-                hakuKaynnissa={kts?.hakuKaynnissa}
-                teemakuva={kts?.teema}
-                tyyppi={kts?.tyyppi}
-              />
-            </Grid>
-          ))}
+          {_.map(koulutukset?.hits, (kts) => {
+            return (
+              <Grid item key={kts?.oid} xs={getCardWidth()}>
+                <SuositusKoulutusCard
+                  koulutusName={l.localize(kts?.nimi)}
+                  tutkintonimikkeet={l.localizeSortedArrayToString(kts?.tutkintonimike)}
+                  opintojenlaajuus={l.localize(kts?.opintojenLaajuus)}
+                  opintojenLaajuusyksikko={l.localize(kts?.opintojenLaajuusyksikko)}
+                  onSuosikki={kts?.onSuosikki}
+                  hakuKaynnissa={kts?.hakuKaynnissa}
+                  teemakuva={kts?.teemakuva}
+                  tyyppi={kts?.koulutustyyppi}
+                />
+              </Grid>
+            );
+          })}
         </Grid>
       ) : (
         <Typography variant="body1" paragraph>

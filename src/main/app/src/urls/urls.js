@@ -4,6 +4,7 @@ const production = {
   'konfo-backend.search.koulutukset': '/konfo-backend/search/koulutukset',
   'konfo-backend.search.oppilaitokset': '/konfo-backend/search/oppilaitokset',
   'konfo-backend.koulutus': '/konfo-backend/koulutus/',
+  'konfo-backend.suosittelu': '/konfo-beckend/suosittelu',
   'konfo-backend.toteutus': '/konfo-backend/toteutus/',
   'konfo-backend.oppilaitos': '/konfo-backend/oppilaitos/',
   'konfo-backend.palaute': '/konfo-backend/palaute',
@@ -20,6 +21,7 @@ const development = {
   'konfo-backend.old-oppija': '/',
   'konfo-backend.search.koulutukset':
     'https://beta.hahtuvaopintopolku.fi/konfo-backend/search/koulutukset',
+  'konfo-backend.suosittelu': 'https://beta.testiopintopolku.fi/konfo-backend/suosittelu',
   'konfo-backend.search.oppilaitokset':
     'https://beta.hahtuvaopintopolku.fi/konfo-backend/search/oppilaitokset',
   'konfo-backend.koulutus': 'https://beta.hahtuvaopintopolku.fi/konfo-backend/koulutus/',
