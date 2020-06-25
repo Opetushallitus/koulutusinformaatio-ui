@@ -17,9 +17,9 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
   fetchKoulutusWithRelatedData,
   selectKoulutus,
+  selectSuositellutKoulutukset,
   selectLoading,
   selectJarjestajat,
-  dummySuositellutKoulutukset,
 } from '#/src/store/reducers/koulutusSlice';
 import LoadingCircle from '#/src/components/common/LoadingCircle';
 import qs from 'query-string';
@@ -44,6 +44,10 @@ const Koulutus = (props) => {
   const { hakuStore } = useStores();
   const { t } = useTranslation();
   const koulutus = useSelector((state) => selectKoulutus(state, oid), shallowEqual);
+  const suositellutKoulutukset = useSelector(
+    (state) => selectSuositellutKoulutukset(state),
+    shallowEqual
+  );
   const toteutukset = useSelector((state) => selectJarjestajat(state, oid));
   const loading = useSelector((state) => selectLoading(state));
   useEffect(() => {
@@ -137,9 +141,11 @@ const Koulutus = (props) => {
         <Box id="tarjonta">
           <ToteutusList toteutukset={toteutukset} />
         </Box>
-        <Box id="suositukset">
-          <SuositusKoulutusList koulutukset={dummySuositellutKoulutukset} oid={oid} />
-        </Box>
+        {suositellutKoulutukset?.total > 0 && (
+          <Box id="suositukset">
+            <SuositusKoulutusList koulutukset={suositellutKoulutukset} oid={oid} />
+          </Box>
+        )}
       </Box>
     </Container>
   );
