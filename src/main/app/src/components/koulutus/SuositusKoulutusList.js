@@ -1,5 +1,6 @@
 import React from 'react';
-import { Typography, Grid, Container, makeStyles } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
+import { Typography, Grid, Container, Link, makeStyles } from '@material-ui/core';
 import Spacer from '#/src/components/common/Spacer';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
@@ -45,16 +46,21 @@ const SuositusKoulutusList = ({ koulutukset, oid }) => {
           {_.map(koulutukset?.hits, (kts) => {
             return (
               <Grid item key={kts?.oid} xs={getCardWidth()}>
-                <SuositusKoulutusCard
-                  koulutusName={l.localize(kts?.nimi)}
-                  tutkintonimikkeet={l.localizeSortedArrayToString(kts?.tutkintonimike)}
-                  opintojenlaajuus={l.localize(kts?.opintojenLaajuus)}
-                  opintojenLaajuusyksikko={l.localize(kts?.opintojenLaajuusyksikko)}
-                  onSuosikki={kts?.onSuosikki}
-                  hakuKaynnissa={kts?.hakuKaynnissa}
-                  teemakuva={kts?.teemakuva}
-                  tyyppi={kts?.koulutustyyppi}
-                />
+                <Link
+                  underline="none"
+                  component={RouterLink}
+                  to={`/koulutus/${kts?.oid}`}>
+                  <SuositusKoulutusCard
+                    koulutusName={l.localize(kts?.nimi)}
+                    tutkintonimikkeet={l.localizeSortedArrayToString(kts?.tutkintonimike)}
+                    opintojenlaajuus={l.localize(kts?.opintojenLaajuus)}
+                    opintojenLaajuusyksikko={l.localize(kts?.opintojenLaajuusyksikko)}
+                    onSuosikki={kts?.onSuosikki}
+                    hakuKaynnissa={kts?.hakuKaynnissa}
+                    teemakuva={kts?.teemakuva}
+                    tyyppi={kts?.koulutustyyppi}
+                  />
+                </Link>
               </Grid>
             );
           })}
