@@ -20,12 +20,10 @@ export const getKoulutusKuvaus = (uri) =>
 export const getKoulutusJarjestajat = (oid) =>
   get(urls.url('konfo-backend.koulutus.jarjestajat', oid));
 
-export const getSuositellutKoulutukset = (oid) => {
+export const getSuositellutKoulutukset = (requestParams) => {
   return client
     .get(urls.url('konfo-backend.suosittelu'), {
-      params: {
-        koulutukset: oid,
-      },
+      params: C.cleanRequestParams(requestParams),
     })
     .then((response) => response.data);
 };

@@ -115,7 +115,9 @@ export const fetchKoulutus = (oid, draft) => async (dispatch) => {
 export const fetchSuositellutKoulutukset = (oid) => async (dispatch) => {
   try {
     dispatch(fetchSuositellutKoulutuksetStart());
-    const suositellutKoulutuksetData = await getSuositellutKoulutukset(oid);
+    const suositellutKoulutuksetData = await getSuositellutKoulutukset({
+      koulutukset: oid,
+    });
     dispatch(fetchSuositellutKoulutuksetSuccess({ oid, suositellutKoulutuksetData }));
   } catch (error) {
     dispatch();
