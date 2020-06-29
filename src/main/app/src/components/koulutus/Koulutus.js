@@ -141,11 +141,11 @@ const Koulutus = (props) => {
         <Box id="tarjonta">
           <ToteutusList toteutukset={toteutukset} />
         </Box>
-        {/* {suositellutKoulutukset?.total > 0 && (
-        )} */}
-        <Box id="suositukset">
-          <SuositusKoulutusList koulutukset={suositellutKoulutukset} oid={oid} />
-        </Box>
+        {suositellutKoulutukset?.total > 0 && (
+          <Box id="suositukset">
+            <SuositusKoulutusList koulutukset={suositellutKoulutukset} oid={oid} />
+          </Box>
+        )}
       </Box>
     </Container>
   );
