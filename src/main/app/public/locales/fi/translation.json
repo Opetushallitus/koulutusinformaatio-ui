@@ -9,6 +9,26 @@
     "studyinfo": "Studyinfo.fi",
     "beta": "beta"
   },
+  "lomake": {
+    "tayta-lomake": "Täytä hakulomake",
+    "palaa-esittelyyn": "Palaa esittelyyn",
+    "klo": "klo",
+    "ensikertalaisille": "(joista {{ensikertalaisille}} ensikertalaisille)",
+    "valintaperusteet": "Valintaperusteet"
+  },
+  "valintaperuste": {
+    "toimitettava-viimeistään": "Toimitettava viimeistään",
+    "toimituspaikka": "Toimituspaikka",
+    "liitteet": "Tarvittavat liitteet",
+    "taulukko": "Taulukko",
+    "kuvaus": "Valintaperusteen kuvaus",
+    "valintatavat": "Valintatavat",
+    "valintakokeet": "Valintakokeet",
+    "osoite": "Osoite",
+    "alkaa": "Alkaa",
+    "paattyy": "Päättyy",
+    "lisatietoja": "Lisätietoja"
+  },
   "palvelut": {
     "otsikko-muut-palvelut": "Muut palvelut",
     "otsikko-ohjeet-ja-tuki": "Ohjeet ja tuki"
@@ -360,6 +380,7 @@
     "haku-paattyy": "Haku päättyy",
     "opiskelupaikkoja": "Opiskelupaikkoja",
     "tayta-lomake": "Täytä hakulomake",
+    "lue-valintaperusteet": "Lue valintaperusteet",
     "yhteyshenkilot": "Koulutuksen yhteyshenkilot"
   }
 }

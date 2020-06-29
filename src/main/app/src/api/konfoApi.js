@@ -30,7 +30,7 @@ export const getSuositellutKoulutukset = (requestParams) => {
 
 export const getOppilaitos = (oid) => {
   return client
-    .get(urls.url('konfo-backend.oppilaitos') + oid)
+    .get(urls.url('konfo-backend.oppilaitos', oid))
     .then((response) => response.data);
 };
 
@@ -41,7 +41,7 @@ export const getOppilaitosTajonta = ({ oid, requestParams }) => {
     })
     .then((response) => response.data);
 };
-export const getToteutus = (oid) => get(urls.url('konfo-backend.toteutus') + oid);
+export const getToteutus = (oid) => get(urls.url('konfo-backend.toteutus', oid));
 
 export const searchAPI = {
   getKoulutukset(requestParams) {

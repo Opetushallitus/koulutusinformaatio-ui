@@ -7,6 +7,7 @@ import { format, isWithinInterval } from 'date-fns';
 import { Localizer as l } from '#/src/tools/Utils';
 import { useTranslation } from 'react-i18next';
 import { colors } from '#/src/colors';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 const useStyles = makeStyles((theme) => ({
   gridHeading: {
@@ -17,6 +18,12 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.h5,
     fontWeight: '700',
     color: colors.black,
+  },
+  lomakeButtonGroup: {
+    display: 'flex',
+    '& > *': {
+      marginRight: theme.spacing(1),
+    },
   },
 }));
 
@@ -155,20 +162,34 @@ const HakuCardGrid = (props) => {
                         </Grid>
                       </Grid>
                     </Grid>
-                    {haku.hakulomaketyyppi !== EI_SAHKOISTA ? (
-                      <Grid item>
+                    <Grid item>
+                      <ButtonGroup
+                        className={classes.lomakeButtonGroup}
+                        orientation="horizontal"
+                        color="primary">
+                        {haku.hakulomaketyyppi !== EI_SAHKOISTA ? (
+                          <Button
+                            variant="contained"
+                            size="large"
+                            color="primary"
+                            href={l.localize(haku.hakulomakeLinkki)}
+                            disabled={!lomakeIsOpen(haku.hakuajat)}>
+                            <Typography style={{ color: colors.white }} variant="body1">
+                              {t('toteutus.tayta-lomake')}
+                            </Typography>
+                          </Button>
+                        ) : null}
                         <Button
-                          variant="contained"
+                          variant="outlined"
                           size="large"
                           color="primary"
-                          href={l.localize(haku.hakulomakeLinkki)}
-                          disabled={!lomakeIsOpen(haku.hakuajat)}>
-                          <Typography style={{ color: colors.white }} variant="body1">
-                            {t('toteutus.tayta-lomake')}
+                          href={`/konfo/hakukohde/${haku.hakukohdeOid}/valintaperuste/${haku.valintaperusteId}`}>
+                          <Typography style={{ color: colors.green }} variant="body1">
+                            {t('toteutus.lue-valintaperusteet')}
                           </Typography>
                         </Button>
-                      </Grid>
-                    ) : null}
+                      </ButtonGroup>
+                    </Grid>
                   </Grid>
                 </Box>
               </Paper>

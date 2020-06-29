@@ -24,6 +24,7 @@
     "query-string": "^6.11.0",
     "react": "^16.11.0",
     "react-dom": "^16.4.2",
+    "react-html-parser": "^2.0.2",
     "react-i18next": "^11.2.1",
     "react-lines-ellipsis": "^0.14.1",
     "react-redux": "^7.2.0",

@@ -21,6 +21,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import Haku from './components/haku/Haku';
 import Koulutus from './components/koulutus/Koulutus';
 import Oppilaitos from './components/oppilaitos/Oppilaitos';
+import Valintaperusteet from './components/valintaperusteet/Valintaperusteet';
 import SivuRouter from './components/sivu/SivuRouter';
 import ReactiveBorder from './components/ReactiveBorder';
 import Hakupalkki from './components/haku/Hakupalkki';
@@ -120,6 +121,10 @@ const App = () => {
         <Route path="/sivu/:id">
           <KoulutusHakuBar />
           <SivuRouter />
+        </Route>
+        <Route path="/hakukohde/:hakukohdeOid/valintaperuste/:valintaperusteOid">
+          <KoulutusHakuBar />
+          <Valintaperusteet />
         </Route>
         <Route component={NotFound} />
       </Switch>
