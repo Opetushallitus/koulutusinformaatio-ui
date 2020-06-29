@@ -5,11 +5,14 @@ const production = {
   'konfo-backend.search.oppilaitokset': '/konfo-backend/search/oppilaitokset',
   'konfo-backend.koulutus': '/konfo-backend/koulutus/',
   'konfo-backend.suosittelu': '/konfo-backend/suosittelu',
-  'konfo-backend.toteutus': '/konfo-backend/toteutus/',
-  'konfo-backend.oppilaitos': '/konfo-backend/oppilaitos/',
+  'konfo-backend.toteutus': '/konfo-backend/toteutus/$1',
+  'konfo-backend.valintaperusteet': '/konfo-backend/valintaperuste/$1',
+  'konfo-backend.oppilaitos': '/konfo-backend/oppilaitos/$1',
   'konfo-backend.palaute': '/konfo-backend/palaute',
   'konfo-backend.koulutus.jarjestajat': '/konfo-backend/search/koulutus/$1/jarjestajat',
   'konfo-backend.oppilaitos.tarjonta': '/konfo-backend/search/oppilaitos/$1/tarjonta',
+  'konfo-backend.hakukohde': '/konfo-backend/hakukohde/$1',
+  'konfo-backend.haku': '/konfo-backend/haku/$1',
   'konfo-backend.koulutus.kuvaus': '/konfo-backend/kuvaus/',
   'kartta.base-url': 'https://hkp.maanmittauslaitos.fi',
   'kartta.publish-url':
@@ -27,13 +30,16 @@ const development = {
   'konfo-backend.koulutus': 'https://beta.hahtuvaopintopolku.fi/konfo-backend/koulutus/',
   'konfo-backend.koulutus.kuvaus':
     'https://beta.hahtuvaopintopolku.fi/konfo-backend/kuvaus/',
-  'konfo-backend.toteutus': 'https://beta.hahtuvaopintopolku.fi/konfo-backend/toteutus/',
+  'konfo-backend.valintaperusteet':
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/valintaperuste/$1',
+  'konfo-backend.toteutus':
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/toteutus/$1',
   'konfo-backend.oppilaitos':
-    'https://beta.hahtuvaopintopolku.fi/konfo-backend/oppilaitos/',
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/oppilaitos/$1',
   'konfo-backend.palaute': 'https://beta.hahtuvaopintopolku.fi/konfo-backend/palaute',
   'konfo-backend.hakukohde':
-    'https://beta.hahtuvaopintopolku.fi/konfo-backend/hakukohde/',
-  'konfo-backend.haku': 'https://beta.hahtuvaopintopolku.fi/konfo-backend/haku/',
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/hakukohde/$1',
+  'konfo-backend.haku': 'https://beta.hahtuvaopintopolku.fi/konfo-backend/haku/$1',
   'konfo-backend.koulutus.jarjestajat':
     'https://beta.hahtuvaopintopolku.fi/konfo-backend/search/koulutus/$1/jarjestajat',
   'konfo-backend.oppilaitos.tarjonta':

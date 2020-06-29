@@ -64,6 +64,16 @@ export const theme = createMuiTheme({
         lineHeight: '1.5rem',
       },
     },
+    h5: {
+      color: colors.black,
+      fontSize: '1.0rem',
+      fontWeight: '700',
+      lineHeight: '1.75rem',
+      '@media (max-width:600px)': {
+        fontSize: '1.25rem',
+        lineHeight: '1.5rem',
+      },
+    },
     subtitle1: {
       fontWeight: 600,
       fontSize: '16px',

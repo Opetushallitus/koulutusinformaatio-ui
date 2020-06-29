@@ -154,7 +154,7 @@ class RestStore {
   @action
   getHaku = (oid, onSuccess) => {
     superagent
-      .get(this.urlStore.urls.url('konfo-backend.haku') + oid)
+      .get(this.urlStore.urls.url('konfo-backend.haku', oid))
       .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
       .end((err, res) => {
         if (err) {
@@ -169,7 +169,7 @@ class RestStore {
   @action
   getHakukohde = (oid, onSuccess) => {
     superagent
-      .get(this.urlStore.urls.url('konfo-backend.hakukohde') + oid)
+      .get(this.urlStore.urls.url('konfo-backend.hakukohde', oid))
       .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
       .end((err, res) => {
         if (err) {

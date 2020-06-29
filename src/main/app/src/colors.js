@@ -14,6 +14,7 @@ export const colors = {
   veryLightGreyBackground: 'rgba(0,0,0,.05)',
   sideInputBackground: '#EDF1F5',
   lightGrey: '#b2b2b2',
+  veryLightGrey: 'rgba(178,178,178,.1)',
   black: '#1D1D1D',
   textBlack: '#4F4F4F',
   lightAlphaGrey: 'rgba(178,178,178,.5)',

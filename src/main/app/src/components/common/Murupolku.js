@@ -52,7 +52,7 @@ const Murupolku = ({ path }) => {
       ? path.length === 0
         ? []
         : [{ name: '...' }, path[path.length - 1]]
-      : path;
+      : path.filter((p) => p.link);
 
   return (
     <ul className={clsx(classes.breadcrump)}>
