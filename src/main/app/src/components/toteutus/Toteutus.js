@@ -147,6 +147,10 @@ const Toteutus = () => {
               toteutus?.metadata?.opetus?.koulutuksenAlkamiskausi,
               toteutus?.metadata?.opetus?.koulutuksenAlkamisvuosi,
             ]}
+            suunniteltuKestoVuodet={toteutus?.metadata?.opetus?.suunniteltuKestoVuodet}
+            suunniteltuKestoKuukaudet={
+              toteutus?.metadata?.opetus?.suunniteltuKestoKuukaudet
+            }
             opetusaika={toteutus?.metadata?.opetus?.opetusaika}
             opetustapa={toteutus?.metadata?.opetus?.opetustapa}
             maksullisuus={[
