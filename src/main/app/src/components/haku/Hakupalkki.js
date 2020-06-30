@@ -2,8 +2,9 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Paper, makeStyles, ThemeProvider, Tooltip } from '@material-ui/core';
+import { Paper, makeStyles, ThemeProvider, Tooltip, Link } from '@material-ui/core';
 import InputBase from '@material-ui/core/InputBase';
+import { Link as RouterLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import {
   searchAll,
@@ -15,6 +16,7 @@ import {
 import { getHakupalkkiProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { colors } from '#/src/colors';
 import { theme } from '#/src/theme';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -43,10 +45,16 @@ const useStyles = makeStyles((theme) => ({
   inputRoot: {
     height: '73px',
     display: 'flex',
+    width: '100%',
     alignItems: 'center',
     boxSizing: 'border-box',
     border: '1px solid #B2B2B2',
     borderRadius: '2px',
+  },
+  link: {
+    marginTop: '10px',
+    textDecoration: 'underline',
+    color: 'white !important',
   },
 }));
 
@@ -80,39 +88,44 @@ const Hakupalkki = () => {
   };
   return (
     <ThemeProvider theme={theme}>
-      <Paper
-        component="form"
-        onSubmit={doSearch}
-        className={classes.inputRoot}
-        elevation={4}>
-        <Tooltip
-          placement="bottom-start"
-          open={showTooltip}
-          title={t('haku.syota-ainakin-kolme-merkkia')}>
-          <InputBase
-            defaultValue={keyword}
-            className={classes.input}
-            onKeyPress={(event) =>
-              event.key === 'Enter' && isKeyworValid && doSearch(event)
-            }
-            onChange={setSearch}
-            type="search"
-            placeholder={t('haku.kehoite')}
-            inputProps={{
-              'aria-label': t('haku.kehoite'),
-            }}
-          />
-        </Tooltip>
-        <Button
-          disabled={!isKeyworValid}
-          type="submit"
-          variant="contained"
-          color="secondary"
-          className={classes.iconButton}
-          aria-label={t('haku.etsi')}>
-          {t('haku.etsi')}
-        </Button>
-      </Paper>
+      <Box display="flex" flexDirection="column" alignItems="flex-end" flexGrow={1}>
+        <Paper
+          component="form"
+          onSubmit={doSearch}
+          className={classes.inputRoot}
+          elevation={4}>
+          <Tooltip
+            placement="bottom-start"
+            open={showTooltip}
+            title={t('haku.syota-ainakin-kolme-merkkia')}>
+            <InputBase
+              defaultValue={keyword}
+              className={classes.input}
+              onKeyPress={(event) =>
+                event.key === 'Enter' && isKeyworValid && doSearch(event)
+              }
+              onChange={setSearch}
+              type="search"
+              placeholder={t('haku.kehoite')}
+              inputProps={{
+                'aria-label': t('haku.kehoite'),
+              }}
+            />
+          </Tooltip>
+          <Button
+            disabled={!isKeyworValid}
+            type="submit"
+            variant="contained"
+            color="secondary"
+            className={classes.iconButton}
+            aria-label={t('haku.etsi')}>
+            {t('haku.etsi')}
+          </Button>
+        </Paper>
+        <Link component={RouterLink} to={`/haku/`} className={classes.link}>
+          {t('jumpotron.naytakaikki')}
+        </Link>
+      </Box>
     </ThemeProvider>
   );
 };
