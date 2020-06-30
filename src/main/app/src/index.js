@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import i18n from 'i18next';
 import superagent from 'superagent';
 import { MuiThemeProvider } from '@material-ui/core';
 import { getKonfoStore } from './store';
@@ -11,6 +10,8 @@ import App from './App';
 import 'typeface-open-sans';
 import configure from './urls/urlUtil';
 import ScrollToTop from './ScrollToTop';
+
+import './tools/i18n';
 
 if ('serviceWorker' in navigator) {
   if (!window.Cypress) {
@@ -41,12 +42,6 @@ window.onerror = (errorMsg, url, line, col, errorObj) => {
   });
 };
 
-i18n.init({
-  react: {
-    useSuspense: false,
-  },
-  lng: 'fi',
-});
 configure();
 
 ReactDOM.render(

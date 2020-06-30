@@ -1,29 +1,27 @@
 import i18n from 'i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
-import XHR from 'i18next-xhr-backend';
+import { initReactI18next } from 'react-i18next';
+import Backend from 'i18next-http-backend';
 
 i18n
-  .use(LanguageDetector)
-  .use(XHR)
+  .use(Backend)
+  .use(initReactI18next)
   .init({
+    lng: 'fi',
     fallbackLng: ['fi'],
-    whitelist: ['fi', 'sv', 'en'],
+    supportedLngs: ['fi', 'sv', 'en'],
     debug: process.env.NODE_ENV === 'development',
-    // saveMissing: process.env.NODE_ENV === 'development',
-    // saveMissingTo: 'all',
     load: 'languageOnly',
     interpolation: {
       escapeValue: false,
     },
-    react: {
-      wait: true,
-      bindI18n: 'languageChanged loaded',
-      bindStore: 'added removed',
-      nsMode: 'default',
-    },
     backend: {
-      loadPath: '/konfo/locales/{{lng}}/{{ns}}.json',
+      loadPath:
+        process.env.NODE_ENV === 'development'
+          ? '/konfo/locales/{{lng}}/{{ns}}.json'
+          : '/konfo-backend/translation/{{lng}}',
+      customHeaders: {
+        'Caller-Id': '1.2.246.562.10.00000000001.konfoui',
+      },
     },
   });
-
 export default i18n;
