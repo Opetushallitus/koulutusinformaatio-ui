@@ -1,22 +1,32 @@
 import React from 'react';
-import { makeStyles, Box } from '@material-ui/core';
+import { makeStyles, Card, CardMedia } from '@material-ui/core';
 import DefaultHeroImage from '#/src/assets/images/herokuva_default.png';
 
-const useStyles = makeStyles({
-  heroImage: { maxWidth: '100%', height: 'auto' },
-  imageContainer: { maxWidth: '1600px', maxHeight: '400px' },
-});
+const useStyles = makeStyles((theme) => ({
+  card: {
+    width: '850px',
+    [theme.breakpoints.down('sm')]: {
+      width: '450px',
+    },
+  },
+
+  media: {
+    display: 'block',
+    height: 0,
+    paddingTop: '56.25%',
+  },
+}));
 
 const HeroImage = ({ imgUrl }) => {
   const classes = useStyles();
   return (
-    <Box className={classes.imageContainer}>
-      <img
-        className={classes.heroImage}
-        src={imgUrl || DefaultHeroImage}
-        alt="Koulutuksen teemakuva"
-      />
-    </Box>
+    <Card className={classes.card} elevation={1}>
+      <CardMedia
+        className={classes.media}
+        image={imgUrl || DefaultHeroImage}
+        title={'Koulutuksen teemakuva'}
+        aria-label={'Koulutuksen teemakuva'}></CardMedia>
+    </Card>
   );
 };
 
