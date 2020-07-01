@@ -242,6 +242,11 @@
     "ei-toteutuksia": "Tätä koulutusta ei ole tarjolla tällä hetkellä missään oppilaitoksessa.",
     "ei-tutkintonimiketta": "Ei tutkintonimikettä",
     "ei-laajuutta": "Ei opintojenlaajuutta",
+    "kesto-vuosi": "Vuosi",
+    "kesto-vuosia": "{{vuosi}} vuotta",
+    "kesto-kuukausi": "1 kuukausi",
+    "kesto-kuukautta": "{{kk}} kuukautta",
+    "ei-kestoa": "Ei suunniteltua kestoa",
     "hakutulos": "Hakutulos",
     "sinua-saattaa-kiinnostaa-myos": "Sinua saattaa kiinnostaa myös",
     "ei-suositeltuja-koulutuksia": "Samankaltaisia koulutuksia ei löytynyt"

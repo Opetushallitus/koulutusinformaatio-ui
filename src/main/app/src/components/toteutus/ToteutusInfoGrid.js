@@ -7,6 +7,7 @@ import FlagOutlinedIcon from '@material-ui/icons/FlagOutlined';
 import HourglassEmptyOutlinedIcon from '@material-ui/icons/HourglassEmptyOutlined';
 import EuroIcon from '@material-ui/icons/Euro';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/styles';
 import { Localizer as l } from '#/src/tools/Utils';
@@ -18,6 +19,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const suunniteltuKesto = (t, vuosi, kk) => {
+  if (!vuosi && !kk) {
+    return t('koulutus.ei-kestoa');
+  } else {
+    return [
+      vuosi === '1'
+        ? t('koulutus.kesto-vuosi')
+        : vuosi
+        ? t('koulutus.kesto-vuosia', { vuosi })
+        : null,
+      kk === '1'
+        ? t('koulutus.kesto-kuukausi')
+        : kk
+        ? t('koulutus.kesto-kuukautta', { kk })
+        : null,
+    ].join('\n');
+  }
+};
+
 const ToteutusInfoGrid = (props) => {
   const classes = useStyles();
   const {
@@ -25,6 +45,8 @@ const ToteutusInfoGrid = (props) => {
     kielet,
     laajuus,
     aloitus,
+    suunniteltuKestoVuodet,
+    suunniteltuKestoKuukaudet,
     opetusaika,
     opetustapa,
     maksullisuus,
@@ -44,6 +66,11 @@ const ToteutusInfoGrid = (props) => {
   const laajuusString = !laajuus.includes(undefined)
     ? laajuus.map((elem) => l.localize(elem)).join(' ')
     : t('koulutus.ei-laajuutta');
+  const kestoString = suunniteltuKesto(
+    t,
+    suunniteltuKestoVuodet,
+    suunniteltuKestoKuukaudet
+  );
   const aloitusString = aloitus[0]
     ? format(new Date(aloitus[1]), 'd.M.y')
     : `${l.localize(aloitus[2])} ${aloitus[3]}`;
@@ -79,6 +106,11 @@ const ToteutusInfoGrid = (props) => {
       icon: <TimelapseIcon className={classes.koulutusInfoGridIcon} />,
       title: t('koulutus.koulutuksen-laajuus'),
       text: laajuusString,
+    },
+    {
+      icon: <ScheduleIcon className={classes.koulutusInfoGridIcon} />,
+      title: t('koulutus.suunniteltu-kesto'),
+      text: kestoString,
     },
     {
       icon: <FlagOutlinedIcon className={classes.koulutusInfoGridIcon} />,
