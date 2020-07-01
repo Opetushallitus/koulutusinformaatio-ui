@@ -148,7 +148,7 @@ export const selectKoulutus = (state, oid) => {
   const koulutusData = state.koulutus.koulutukset[oid];
   if (koulutusData) {
     return {
-      kuvaus: koulutusData.metadata?.kuvaus?.kuvaus,
+      kuvaus: koulutusData.metadata?.kuvaus,
       tyotehtavatJoissaVoiToimia:
         koulutusData.metadata?.kuvaus?.tyotehtavatJoissaVoiToimia,
       suorittaneenOsaaminen: koulutusData.metadata?.kuvaus?.suorittaneenOsaaminen,
