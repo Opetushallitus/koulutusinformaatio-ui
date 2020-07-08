@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import clsx from 'clsx';
 import { Switch, Route } from 'react-router-dom';
 import KonfoStore from './stores/konfo-store';
@@ -11,8 +11,6 @@ import Etusivu from './components/Etusivu';
 import PalautePopup from './components/palaute/PalautePopup';
 import SideMenu from './components/common/SideMenu';
 import Sisaltohaku from './components/Sisaltohaku';
-import i18n from './tools/i18n';
-import { I18nextProvider } from 'react-i18next';
 import { MuiThemeProvider, makeStyles } from '@material-ui/core';
 import { theme } from './theme';
 import { DRAWER_WIDTH } from './constants';
@@ -26,6 +24,7 @@ import SivuRouter from './components/sivu/SivuRouter';
 import ReactiveBorder from './components/ReactiveBorder';
 import Hakupalkki from './components/haku/Hakupalkki';
 import Toteutus from './components/toteutus/Toteutus';
+import LoadingCircle from './components/common/LoadingCircle';
 
 const konfoStore = new KonfoStore();
 
@@ -133,15 +132,15 @@ const App = () => {
     </React.Fragment>
   );
   return (
-    <Provider
-      hakuStore={hakuStore}
-      urlStore={urlStore}
-      hakuehtoStore={hakuehtoStore}
-      restStore={restStore}
-      navigaatioStore={navigaatioStore}
-      vertailuStore={vertailuStore}
-      contentfulStore={contentfulStore}>
-      <I18nextProvider i18n={i18n} initialLanguage={'fi'}>
+    <Suspense fallback={<LoadingCircle />}>
+      <Provider
+        hakuStore={hakuStore}
+        urlStore={urlStore}
+        hakuehtoStore={hakuehtoStore}
+        restStore={restStore}
+        navigaatioStore={navigaatioStore}
+        vertailuStore={vertailuStore}
+        contentfulStore={contentfulStore}>
         <MuiThemeProvider theme={theme}>
           <React.Fragment>
             <div className={classes.root}>
@@ -159,8 +158,8 @@ const App = () => {
             <PalautePopup />
           </React.Fragment>
         </MuiThemeProvider>
-      </I18nextProvider>
-    </Provider>
+      </Provider>
+    </Suspense>
   );
 };
 

@@ -7,12 +7,15 @@ import {
   Paper,
   InputBase,
   Button,
+  Box,
+  Hidden,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { useStores } from '../../hooks';
 import { observer } from 'mobx-react';
 import SidebarValikko from './SidebarValikko';
 import Murupolku from './Murupolku';
+import LanguageTab from './LanguageTab';
 import { colors } from '../../colors';
 import { DRAWER_WIDTH } from '../../constants';
 
@@ -32,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   inputBackground: {
-    backgroundColor: colors.sideInputBackground,
+    backgroundColor: colors.white,
     paddingLeft: '20px',
     paddingTop: '91px',
     paddingBottom: '20px',
@@ -101,6 +104,11 @@ const SideMenu = (props) => {
   const innards = (
     <React.Fragment>
       <div className={classes.inputBackground}>
+        <Hidden smUp>
+          <Box mt={3} mb={4}>
+            <LanguageTab />
+          </Box>
+        </Hidden>
         <Paper
           component="form"
           onSubmit={doSearch}

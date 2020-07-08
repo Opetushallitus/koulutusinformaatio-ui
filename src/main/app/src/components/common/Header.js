@@ -5,6 +5,7 @@ import { colors } from '../../colors';
 import HeaderIcon from '../../assets/images/Header.svg';
 import { Link as RouterLink } from 'react-router-dom';
 import {
+  Box,
   Chip,
   IconButton,
   Icon,
@@ -13,9 +14,11 @@ import {
   CssBaseline,
   AppBar,
   Toolbar,
+  Hidden,
 } from '@material-ui/core';
 import BetaBanner from '#/src/components/common/BetaBanner';
 import clsx from 'clsx';
+import LanguageDropDown from './LanguageDropDown';
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: {
@@ -54,6 +57,9 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  languageSelector: {
+    marginLeft: 'auto',
+  },
 }));
 
 const Header = (props) => {
@@ -88,6 +94,11 @@ const Header = (props) => {
             classes={{ label: classes.betaLabel }}
             label={t('opintopolku.beta')}
           />
+          <Hidden xsDown>
+            <Box className={classes.languageSelector}>
+              <LanguageDropDown />
+            </Box>
+          </Hidden>
         </Toolbar>
       </AppBar>
     </React.Fragment>

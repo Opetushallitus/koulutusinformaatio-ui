@@ -46,6 +46,11 @@
     "esittely": "Opintopolkun kautta voit suunnitella omia opintoja ja hakea koulutuksiin. Sivuston tiedot ja palvelut ovat luotettavia ja turvallisia.",
     "naytakaikki": "Näytä kaikki vaihtoehdot"
   },
+  "kielivalinta": {
+    "suomi": "Suomeksi",
+    "ruotsi": "På svenska",
+    "englanti": "In English"
+  },
   "uutinen": {
     "kategoria": "Uutinen"
   },
