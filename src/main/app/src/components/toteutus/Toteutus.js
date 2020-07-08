@@ -31,6 +31,7 @@ import {
 } from '#/src/store/reducers/koulutusSlice';
 import { useTranslation } from 'react-i18next';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
+import Murupolku from '#/src/components/common/Murupolku';
 
 const useStyles = makeStyles({
   accordion: { width: '50%' },
@@ -118,6 +119,9 @@ const Toteutus = () => {
         flexDirection="column"
         justifyContent="center"
         alignItems="center">
+        <Box mt={5} ml={9} alignSelf="start">
+          <Murupolku path={[{ name: l.localize(toteutus?.nimi) }]} />
+        </Box>
         <Typography style={{ marginTop: '20px' }} variant="h1">
           {l.localize(toteutus?.nimi)}
         </Typography>
