@@ -30,7 +30,10 @@ const StyledBadge = withStyles((theme) => ({
 }))(Badge);
 
 const parseHakuajat = (hakuajat) =>
-  hakuajat.map((h) => [new Date(Date.parse(h.alkaa)), new Date(Date.parse(h.paattyy))]);
+  hakuajat.map((h) => [
+    new Date(Date.parse(h.alkaa)),
+    h.paattyy ? new Date(Date.parse(h.paattyy)) : null,
+  ]);
 
 const firstOnGoingDate = (dates, now) => {
   return find(dates, ([a, l]) => a <= now && (!l || now <= l));
@@ -79,12 +82,13 @@ const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
     );
   };
   const lomakeIsOpen = (hakuajat) =>
-    hakuajat.some((hakuaika) =>
-      isWithinInterval(new Date(), {
-        start: new Date(hakuaika.alkaa),
-        end: new Date(hakuaika.paattyy),
-      })
-    );
+    hakuajat.some((hakuaika) => {
+      const now = new Date();
+      return isWithinInterval(now, {
+        start: hakuaika.alkaa ? new Date(hakuaika.alkaa) : now,
+        end: hakuaika.paattyy ? new Date(hakuaika.paattyy) : now,
+      });
+    });
   const isOpen = lomakeIsOpen(concat(haku.hakuajat, hakukohde.hakuajat));
   return (
     <>

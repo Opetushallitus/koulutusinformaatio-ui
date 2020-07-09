@@ -32,12 +32,13 @@ const HakuCardGrid = (props) => {
   const classes = useStyles();
   const { type, haut, icon } = props;
   const lomakeIsOpen = (hakuajat) =>
-    hakuajat.some((hakuaika) =>
-      isWithinInterval(new Date(), {
-        start: new Date(hakuaika.alkaa),
-        end: new Date(hakuaika.paattyy),
-      })
-    );
+    hakuajat.some((hakuaika) => {
+      const now = new Date();
+      return isWithinInterval(now, {
+        start: hakuaika.alkaa ? new Date(hakuaika.alkaa) : now,
+        end: hakuaika.paattyy ? new Date(hakuaika.paattyy) : now,
+      });
+    });
 
   const { t } = useTranslation();
   return (
@@ -118,11 +119,13 @@ const HakuCardGrid = (props) => {
                               </Typography>
                             </Grid>
                             <Grid item>
-                              {haku.hakuajat.map((hakuaika, i) => (
-                                <Typography key={i} variant="body1" noWrap>
-                                  {format(new Date(hakuaika.paattyy), 'd.M.y H:mm')}
-                                </Typography>
-                              ))}
+                              {haku.hakuajat.map((hakuaika, i) =>
+                                hakuaika.paattyy ? (
+                                  <Typography key={i} variant="body1" noWrap>
+                                    {format(new Date(hakuaika.paattyy), 'd.M.y H:mm')}
+                                  </Typography>
+                                ) : null
+                              )}
                             </Grid>
                           </Grid>
                         </Grid>
