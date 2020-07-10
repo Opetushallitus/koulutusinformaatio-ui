@@ -57,14 +57,20 @@ export const fetchToteutus = (oid) => async (dispatch) => {
   }
 };
 
+const hakuaikaVoimassa = (hakuajat) => {
+  const now = new Date();
+  return hakuajat.some(
+    (aika) =>
+      new Date(aika.alkaa) <= now && (!aika.paattyy || new Date(aika.paattyy) <= now)
+  );
+};
+
 const selectHaut = (state, oid, type) =>
   state.toteutus.toteutukset[oid]?.hakutiedot
     ?.filter((hakutieto) => hakutieto.hakutapa.nimi.fi === type)
     .map((hakutieto) => hakutieto.hakukohteet)
     .flat()
-    .filter((hakukohde) =>
-      hakukohde.hakuajat.some((aika) => new Date(aika.paattyy) > new Date())
-    );
+    .filter((hakukohde) => hakuaikaVoimassa(hakukohde.hakuajat));
 export const selectLoading = (state) => state.toteutus.status === LOADING_STATUS;
 export const selectJatkuvatHaut = (state, oid) => selectHaut(state, oid, JATKUVAHAKU);
 export const selectErillisHaut = (state, oid) => selectHaut(state, oid, ERILLISHAKU);
