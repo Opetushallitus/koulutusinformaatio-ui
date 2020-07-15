@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { urls } from 'oph-urls-js';
-import { Common as C } from '#/src/tools/Utils';
+import { Common as C, Localizer as l } from '#/src/tools/Utils';
 
 const client = axios.create({
   headers: { 'Caller-Id': '1.2.246.562.10.00000000001.konfoui' },
@@ -47,14 +47,14 @@ export const searchAPI = {
   getKoulutukset(requestParams) {
     return client
       .get(urls.url('konfo-backend.search.koulutukset'), {
-        params: C.cleanRequestParams(requestParams),
+        params: { lng: l.getLanguage(), ...C.cleanRequestParams(requestParams) },
       })
       .then((response) => response.data);
   },
   getOppilaitokset(requestParams) {
     return client
       .get(urls.url('konfo-backend.search.oppilaitokset'), {
-        params: C.cleanRequestParams(requestParams),
+        params: { lng: l.getLanguage(), ...C.cleanRequestParams(requestParams) },
       })
       .then((response) => response.data);
   },
