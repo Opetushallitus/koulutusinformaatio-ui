@@ -56,7 +56,6 @@ const LanguageDropDown = () => {
           IconComponent={iconComponent}>
           <MenuItem value={'fi'}>{t('kielivalinta.suomi')}</MenuItem>
           <MenuItem value={'sv'}>{t('kielivalinta.ruotsi')}</MenuItem>
-          <MenuItem value={'en'}>{t('kielivalinta.englanti')}</MenuItem>
         </Select>
       </FormControl>
     </Box>
