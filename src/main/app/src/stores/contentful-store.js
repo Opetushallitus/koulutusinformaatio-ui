@@ -1,22 +1,23 @@
 import { observable, action, runInAction } from 'mobx';
-import { Localizer as l } from '../tools/Utils';
 import superagent from 'superagent';
 
+const initialState = {
+  loading: true,
+  kortit: {},
+  sivu: {},
+  info: {},
+  asset: {},
+  footer: {},
+  sivuKooste: {},
+  content: {},
+  palvelut: {},
+  valikot: {},
+  ohjeetJaTuki: {},
+  uutiset: {},
+};
+
 class ContentfulStore {
-  @observable data = {
-    loading: true,
-    kortit: {},
-    sivu: {},
-    info: {},
-    asset: {},
-    footer: {},
-    sivuKooste: {},
-    content: {},
-    palvelut: {},
-    valikot: {},
-    ohjeetJaTuki: {},
-    uutiset: {},
-  };
+  @observable data = initialState;
 
   forwardTo = (id, nullIfUnvailable) => {
     const sivu = this.data.sivu[id] || this.data.sivuKooste[id];
@@ -54,9 +55,7 @@ class ContentfulStore {
   };
 
   assetUrl(url) {
-    return (
-      url && `${this.urlStore.urls.url('konfo-backend.content', '')}${url}`
-    );
+    return url && `${this.urlStore.urls.url('konfo-backend.content', '')}${url}`;
   }
 
   static bodyAsArray(res) {
@@ -87,12 +86,12 @@ class ContentfulStore {
   fetchUrl(url) {
     return superagent.get(url);
   }
-  constructor(locale, urlStore) {
-    this.locale = l.getLanguage();
+  constructor(urlStore) {
     this.urlStore = urlStore;
   }
+
   @action
-  fetchData = async () => {
+  fetchData = async (lang) => {
     if (this.data.loading) {
       this.fetchManifest()
         .then((res) => {
@@ -101,8 +100,7 @@ class ContentfulStore {
         .then((manifest) => {
           const contents = Object.entries(manifest).map(([k, v]) => [
             k,
-            this.urlStore.urls.url('konfo-backend.content', '') +
-              v[this.locale],
+            this.urlStore.urls.url('konfo-backend.content', '') + v[lang],
           ]);
           return Promise.all(
             contents.map(([key, url]) => {
@@ -120,6 +118,12 @@ class ContentfulStore {
           });
         });
     }
+  };
+
+  @action
+  reset = (lang) => {
+    this.data = initialState;
+    this.fetchData(lang);
   };
 }
 
