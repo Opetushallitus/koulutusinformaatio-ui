@@ -66,7 +66,7 @@ const Footer = () => {
   const { contentfulStore } = useStores();
   const matches = useMediaQuery('(min-width: 979px)');
   const classes = useStyles();
-  const single = (entry) => Object.values(entry)[0] || {};
+  const single = (entry) => Object.values(entry || {})[0] || {};
   const { content, contentRight, contentCenter, lopputekstit } = single(
     contentfulStore.data.footer
   );
@@ -123,11 +123,7 @@ const Footer = () => {
         <Grid container>
           <Grid item xs={12}>
             <div className={classes.hr}>
-              <img
-                alt={t('opintopolku.brand')}
-                className={classes.icon}
-                src={OPHIcon}
-              />
+              <img alt={t('opintopolku.brand')} className={classes.icon} src={OPHIcon} />
             </div>
           </Grid>
         </Grid>

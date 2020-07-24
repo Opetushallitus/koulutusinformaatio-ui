@@ -57,10 +57,10 @@ const Etusivu = observer(({ history }) => {
   const forwardToPage = (id) => {
     history.push(forwardTo(id));
   };
-  const infos = Object.values(info);
+  const infos = Object.values(info || {});
 
-  const single = (entry) => Object.values(entry)[0] || {};
-  let uutislinkit = (uutiset['etusivun-uutiset'] || {}).linkit || [];
+  const single = (entry) => Object.values(entry || {})[0] || {};
+  let uutislinkit = ((uutiset || {})['etusivun-uutiset'] || {}).linkit || [];
 
   const [showMore, setShowMore] = useState(!(uutislinkit.length > 3));
 
