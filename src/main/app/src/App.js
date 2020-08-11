@@ -25,11 +25,13 @@ import ReactiveBorder from './components/ReactiveBorder';
 import Hakupalkki from './components/haku/Hakupalkki';
 import Toteutus from './components/toteutus/Toteutus';
 import LoadingCircle from './components/common/LoadingCircle';
+import { colors } from '#/src/colors';
 
 const konfoStore = new KonfoStore();
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    backgroundColor: colors.white,
     display: 'flex',
   },
   content: {
