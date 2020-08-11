@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '#/src/hooks';
-import { Typography, Box, Container, makeStyles } from '@material-ui/core';
+import { Typography, Box, makeStyles, Hidden } from '@material-ui/core';
 import { Localizer as l } from '#/src/tools/Utils';
 import { useTranslation } from 'react-i18next';
 import KoulutusInfoGrid from './KoulutusInfoGrid';
@@ -10,7 +10,7 @@ import ToteutusList from './ToteutusList';
 import HakuKaynnissaCard from './HakuKaynnissaCard';
 import SuositusKoulutusList from './SuositusKoulutusList';
 import { HashLink as Link } from 'react-router-hash-link';
-import { colors } from '#/src/colors';
+import ContentWrapper from '#/src/components/common/ContentWrapper';
 import Murupolku from '#/src/components/common/Murupolku';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
@@ -28,7 +28,6 @@ import HeroImage from '#/src/components/common/HeroImage';
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },
   lisatietoa: { width: '50%' },
-  container: { backgroundColor: colors.white, maxWidth: '1600px' },
   alatText: {
     ...theme.typography.body1,
     fontSize: '1.25rem',
@@ -82,16 +81,18 @@ const Koulutus = (props) => {
   return loading ? (
     <LoadingCircle />
   ) : (
-    <Container className={classes.container}>
+    <ContentWrapper>
       <Box display="flex" flexDirection="column" alignItems="center">
-        <Box mt={5} ml={9} alignSelf="start">
-          <Murupolku
-            path={[
-              { name: t('koulutus.hakutulos'), link: hakuStore.createHakuUrl },
-              { name: l.localize(koulutus?.tutkintoNimi) },
-            ]}
-          />
-        </Box>
+        <Hidden smDown>
+          <Box mt={5} ml={9} alignSelf="start">
+            <Murupolku
+              path={[
+                { name: t('koulutus.hakutulos'), link: hakuStore.createHakuUrl },
+                { name: l.localize(koulutus?.tutkintoNimi) },
+              ]}
+            />
+          </Box>
+        </Hidden>
         <Box mt={4}>
           {koulutus?.koulutusAla?.map((ala) => (
             <Typography
@@ -147,7 +148,7 @@ const Koulutus = (props) => {
           </Box>
         )}
       </Box>
-    </Container>
+    </ContentWrapper>
   );
 };
 

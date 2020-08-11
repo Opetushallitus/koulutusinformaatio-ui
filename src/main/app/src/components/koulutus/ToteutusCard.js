@@ -1,12 +1,12 @@
 import React from 'react';
-import { Grid, Typography, Paper, makeStyles } from '@material-ui/core';
+import { Grid, Typography, Paper, makeStyles, Hidden } from '@material-ui/core';
 import PublicIcon from '@material-ui/icons/Public';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
 import { educationTypeColorCode } from '../../colors';
 import DiakoniaLogo from '../../assets/images/suomen_diakonia_opisto_logo.png';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   nimikkeet: {
     fontWeight: '600',
   },
@@ -24,13 +24,19 @@ const useStyles = makeStyles({
   },
   grid: {
     padding: '40px',
+    [theme.breakpoints.down('sm')]: { padding: '8px' },
   },
   img: {
     width: '180px',
-    height: '120px',
+    height: 'auto',
     float: 'right',
+    [theme.breakpoints.down('sm')]: {
+      width: '80px',
+      float: 'left',
+      marginBottom: '8px',
+    },
   },
-});
+}));
 
 const ToteutusCard = (props) => {
   const classes = useStyles(props);
@@ -51,6 +57,11 @@ const ToteutusCard = (props) => {
         alignItems="center"
         wrap="nowrap">
         <Grid item container direction="column" xs>
+          <Hidden mdUp>
+            <Grid item>
+              <img className={classes.img} alt="diaconia-logo" src={DiakoniaLogo} />
+            </Grid>
+          </Hidden>
           <Grid item>
             <Typography variant="h4" gutterBottom>
               {tarjoajaName}
@@ -58,12 +69,14 @@ const ToteutusCard = (props) => {
             <Typography className={classes.nimikkeet} variant="body1" gutterBottom>
               {ammattinimikkeet}
             </Typography>
-            <Typography variant="body1" paragraph>
-              {description}
-            </Typography>
+            <Hidden smDown>
+              <Typography variant="body1" paragraph>
+                {description}
+              </Typography>
+            </Hidden>
           </Grid>
           <Grid item container spacing={3}>
-            <Grid item>
+            <Grid item sm={6} md>
               <Grid container spacing={1} alignItems="center">
                 <Grid item className={classes.iconContainer}>
                   <PublicIcon className={classes.icon} />
@@ -73,7 +86,7 @@ const ToteutusCard = (props) => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item>
+            <Grid item sm={6} md>
               <Grid container spacing={1} alignItems="center">
                 <Grid item className={classes.iconContainer}>
                   <HourglassEmptyIcon className={classes.icon} />
@@ -83,7 +96,7 @@ const ToteutusCard = (props) => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item>
+            <Grid item sm={6} md>
               <Grid container spacing={1} alignItems="center">
                 <Grid item className={classes.iconContainer}>
                   <EuroSymbolIcon className={classes.icon} />
@@ -95,9 +108,11 @@ const ToteutusCard = (props) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={3}>
-          <img className={classes.img} alt="diaconia-logo" src={DiakoniaLogo} />
-        </Grid>
+        <Hidden smDown>
+          <Grid item>
+            <img className={classes.img} alt="diaconia-logo" src={DiakoniaLogo} />
+          </Grid>
+        </Hidden>
       </Grid>
     </Paper>
   );
