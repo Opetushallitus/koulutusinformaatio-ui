@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Typography, Box, Container, makeStyles } from '@material-ui/core';
+import { Typography, Box, Container, makeStyles, Hidden } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Localizer as l } from '#/src/tools/Utils';
 import _ from 'lodash';
@@ -58,14 +58,16 @@ const Oppilaitos = (props) => {
   ) : (
     <Container className={classes.container}>
       <Box display="flex" flexDirection="column" alignItems="center">
-        <Box alignSelf="start">
-          <Murupolku
-            path={[
-              { name: t('koulutus.hakutulos'), link: hakuUrl.url },
-              { name: l.localize(_.get(oppilaitos, 'nimi', '')) },
-            ]}
-          />
-        </Box>
+        <Hidden smDown>
+          <Box alignSelf="start">
+            <Murupolku
+              path={[
+                { name: t('koulutus.hakutulos'), link: hakuUrl.url },
+                { name: l.localize(_.get(oppilaitos, 'nimi', '')) },
+              ]}
+            />
+          </Box>
+        </Hidden>
         <Box className={classes.title}>
           <Typography variant="h1" component="h2">
             {l.localize(_.get(oppilaitos, 'nimi', ''))}

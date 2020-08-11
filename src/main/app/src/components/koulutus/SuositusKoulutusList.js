@@ -20,17 +20,6 @@ const SuositusKoulutusList = ({ koulutukset, oid }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  function getCardWidth() {
-    switch (koulutukset?.hits?.length) {
-      case 1:
-        return 12;
-      case 2:
-        return 6;
-      default:
-        return 4;
-    }
-  }
-
   return (
     <Container maxWidth="lg" className={classes.container}>
       <Typography variant="h2">{t('koulutus.sinua-saattaa-kiinnostaa-myos')}</Typography>
@@ -39,13 +28,12 @@ const SuositusKoulutusList = ({ koulutukset, oid }) => {
         <Grid
           container
           direction="row"
-          wrap="nowrap"
           alignContent="stretch"
           alignItems="stretch"
           spacing={1}>
           {_.map(koulutukset?.hits, (kts) => {
             return (
-              <Grid item key={kts?.oid} xs={getCardWidth()}>
+              <Grid item key={kts?.oid} xs={12} sm>
                 <Link
                   underline="none"
                   component={RouterLink}

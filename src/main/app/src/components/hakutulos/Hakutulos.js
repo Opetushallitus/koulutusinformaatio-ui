@@ -82,6 +82,15 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
     whiteSpace: 'nowrap',
   },
+  murupolkuContainer: {
+    margin: theme.spacing(5, 0, 7, 0),
+    [theme.breakpoints.down('md')]: {
+      margin: theme.spacing(2, 0),
+    },
+    [theme.breakpoints.down('sm')]: {
+      margin: theme.spacing(0),
+    },
+  },
 }));
 
 const Hakutulos = () => {
@@ -152,7 +161,7 @@ const Hakutulos = () => {
           item
           xs={12}
           alignItems="center"
-          style={{ margin: theme.spacing(5, 0, 7, 0) }}>
+          className={classes.murupolkuContainer}>
           <Murupolku path={[{ name: t('haku.otsikko') }]} />
         </Grid>
         <Grid

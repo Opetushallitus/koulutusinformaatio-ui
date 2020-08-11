@@ -23,12 +23,15 @@ const iconLookupTable = {
   ApurahaIcon: ApurahaIcon,
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   paper: {
     display: 'flex',
     justifyContent: 'space-evenly',
     width: '80%',
     backgroundColor: colors.limeGreenBackground,
+    [theme.breakpoints.down('sm')]: {
+      width: '95%',
+    },
   },
   text: {
     color: colors.black,
@@ -41,7 +44,7 @@ const useStyles = makeStyles({
     paddingTop: '62px',
     paddingBottom: '62px',
   },
-});
+}));
 
 const InfoGrid = (props) => {
   const { heading, gridData, className } = props;

@@ -8,6 +8,9 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: '80%',
     backgroundColor: colors.limeGreenBackground,
+    [theme.breakpoints.down('sm')]: {
+      width: '95%',
+    },
   },
   textArea: {
     margin: '60px auto',

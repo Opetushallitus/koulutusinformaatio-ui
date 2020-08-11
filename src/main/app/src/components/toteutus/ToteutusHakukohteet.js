@@ -214,7 +214,7 @@ const ToteutusHakukohteet = (props) => {
       flexDirection="column"
       alignItems="center"
       id="haut"
-      style={{ width: '80%' }}>
+      style={{ width: '100%' }}>
       <Typography variant="h2">{t('toteutus.koulutuksen-hakukohteet')}</Typography>
       <Spacer />
       <Grid container direction="column" spacing={6}>
