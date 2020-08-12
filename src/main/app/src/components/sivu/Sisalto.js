@@ -39,7 +39,7 @@ const useStyles = makeStyles({
 
 const Header = (props) => {
   return (
-    <Box mt={'60px'} mb={'25px'}>
+    <Box mt={'80px'} mb={'25px'}>
       <Typography {...props} />
     </Box>
   );
