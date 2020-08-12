@@ -90,8 +90,8 @@ const SideMenu = (props) => {
   const selectValikko = (valikko) => setSelected([...selected, valikko]);
   const popSelected = () => setSelected(selected.slice(0, -1));
   const last = (a) => (a ? a[a.length - 1] : null);
-  const single = (entry) => Object.values(entry)[0] || {};
-  const selectedValikko = last(selected) ? valikko[last(selected)] : null;
+  const single = (entry) => Object.values(entry || {})[0] || {};
+  const selectedValikko = last(selected) ? (valikko || {})[last(selected)] : null;
   const linkit = selectedValikko
     ? [selectedValikko]
     : (single(valikot).valikot || []).map((v) => valikko[v.id]);
