@@ -2,18 +2,12 @@ import React from 'react';
 import { Accordion, Summary } from './Accordion';
 import Markdown from 'markdown-to-jsx';
 import { colors } from '../../colors';
-import {
-  makeStyles,
-  Typography,
-  Grid,
-  Card,
-  CardMedia,
-  Link,
-} from '@material-ui/core';
+import { makeStyles, Typography, Grid, Card, CardMedia, Link } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { useStores } from '../../hooks';
 import LinkOrYoutube from './LinkOrYoutube';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles({
   notFound: {
@@ -43,6 +37,14 @@ const useStyles = makeStyles({
   imageContainer: {},
 });
 
+const Header = (props) => {
+  return (
+    <Box mt={'60px'} mb={'25px'}>
+      <Typography {...props} />
+    </Box>
+  );
+};
+
 const Sisalto = ({ content, alwaysFullWidth, excludeMedia }) => {
   const classes = useStyles();
   const { contentfulStore } = useStores();
@@ -58,11 +60,7 @@ const Sisalto = ({ content, alwaysFullWidth, excludeMedia }) => {
         justify="flex-start"
         alignItems="flex-start"
         className={classes.imageContainer}>
-        <Grid
-          item
-          xs={12}
-          sm={alwaysFullWidth ? 12 : 12}
-          md={alwaysFullWidth ? 12 : 12}>
+        <Grid item xs={12} sm={alwaysFullWidth ? 12 : 12} md={alwaysFullWidth ? 12 : 12}>
           <Card className={classes.card} elevation={0}>
             <CardMedia
               className={classes.media}
@@ -94,28 +92,28 @@ const Sisalto = ({ content, alwaysFullWidth, excludeMedia }) => {
             component: excludeMedia ? () => null : ImageComponent,
           },
           h1: {
-            component: Typography,
+            component: Header,
             props: {
               variant: 'h1',
               gutterBottom: true,
             },
           },
           h2: {
-            component: Typography,
+            component: Header,
             props: {
               variant: 'h2',
               gutterBottom: true,
             },
           },
           h3: {
-            component: Typography,
+            component: Header,
             props: {
               variant: 'h3',
               gutterBottom: true,
             },
           },
           h4: {
-            component: Typography,
+            component: Header,
             props: {
               variant: 'h4',
               gutterBottom: true,

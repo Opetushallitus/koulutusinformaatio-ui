@@ -14,7 +14,7 @@ import { useStores } from '../../hooks';
 const useStyles = makeStyles({
   header: {
     fontSize: '28px',
-    paddingTop: '60px',
+    paddingTop: '100px',
     paddingBottom: '28px',
     fontWeight: '700',
   },
@@ -66,14 +66,8 @@ const Palvelut = observer(() => {
         matches ? classes.spaceOnBorders : classes.smSpaceOnBorders
       )}>
       <Grid container>
-        <Rivi
-          otsikko={t('palvelut.otsikko-muut-palvelut')}
-          rivit={palvelurivit}
-        />
-        <Rivi
-          otsikko={t('palvelut.otsikko-ohjeet-ja-tuki')}
-          rivit={ohjerivit}
-        />
+        <Rivi otsikko={t('palvelut.otsikko-muut-palvelut')} rivit={palvelurivit} />
+        <Rivi otsikko={t('palvelut.otsikko-ohjeet-ja-tuki')} rivit={ohjerivit} />
       </Grid>
     </div>
   );
