@@ -1,6 +1,9 @@
 import { createSelector } from '@reduxjs/toolkit';
 import _ from 'lodash';
+import { map, flow, filter, get } from 'lodash/fp';
 import { Localizer as l } from '#/src/tools/Utils';
+
+const ACTIVE = 'AKTIIVINEN';
 
 // State data getters
 function getOppilaitokset(state) {
@@ -95,6 +98,14 @@ export const getOppilaitosProps = createSelector(
   [getOppilaitokset, getTarjontaProps, getTulevaTarjontaProps, getStatus],
   (oppilaitos, tarjonta, tulevaTarjonta, status) => ({
     oppilaitos,
+    oppilaitosOsat: flow(
+      get('osat'),
+      filter({ status: ACTIVE }),
+      map((osa) => ({
+        ...osa,
+        nimi: l.localize(osa.nimi).replace(`${l.localize(oppilaitos.nimi)}, `, ''),
+      }))
+    )(oppilaitos),
     esittelyHtml: l.localize(_.get(oppilaitos, 'oppilaitos.metadata.esittely', '')),
     tietoaOpiskelusta: _.get(oppilaitos, 'oppilaitos.metadata.tietoaOpiskelusta', []),
     tarjonta,

@@ -18,6 +18,7 @@ import TietoaOpiskelusta from './TietoaOpiskelusta';
 import Yhteystiedot from './Yhteystiedot';
 import TulevaTarjontaList from './TulevaTarjontaList';
 import DefaultHeroImage from '#/src/assets/images/herokuva_default.png';
+import OppilaitosOsaList from './OppilaitosOsaList';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },
@@ -42,6 +43,7 @@ const Oppilaitos = (props) => {
   const {
     esittelyHtml,
     oppilaitos,
+    oppilaitosOsat,
     tarjonta,
     tietoaOpiskelusta,
     tulevaTarjonta,
@@ -114,7 +116,10 @@ const Oppilaitos = (props) => {
             tietoaOpiskelusta={tietoaOpiskelusta}
           />
         )}
-
+        <OppilaitosOsaList
+          oppilaitosOsat={oppilaitosOsat}
+          title={t('oppilaitos.tutustu-toimipisteisiin')}
+        />
         <Yhteystiedot
           className={classes.root}
           heading={t('oppilaitos.yhteystiedot')}
