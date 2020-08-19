@@ -31,9 +31,7 @@ const TableOfContents = (props) => {
         className={classes.link}
         aria-label="anchor"
         to={`#${anchor}`}
-        scroll={(el) =>
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        }>
+        scroll={(el) => el.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
         {value}
       </Link>
     );
