@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import Spacer from '../common/Spacer';
 import { useTranslation } from 'react-i18next';
 import { Localizer as l } from '../../tools/Utils';
-import ToteutusCard from './ToteutusCard';
+import ToteutusCard from '#/src/components/common/ToteutusCard';
 
 const useStyles = makeStyles({
   container: {
@@ -34,7 +34,7 @@ const ToteutusList = (props) => {
       <Typography variant="h2">{t('koulutus.tarjonta')}</Typography>
       <Spacer />
       {toteutukset?.length > 0 ? (
-        <Grid container direction="column" spacing={1}>
+        <Grid container direction="column" alignItems="center" spacing={1}>
           {toteutukset.map((toteutus, i) => (
             <Grid item key={i}>
               <Link
@@ -42,7 +42,7 @@ const ToteutusList = (props) => {
                 component={RouterLink}
                 to={`/toteutus/${toteutus.toteutusOid}`}>
                 <ToteutusCard
-                  tarjoajaName={l.localize(toteutus.nimi)}
+                  heading={l.localize(toteutus.nimi)}
                   ammattinimikkeet={localizeArrayToString(toteutus.tutkintonimikkeet)}
                   description={l.localize(toteutus.kuvaus)}
                   locations={localizeArrayToString(toteutus.kunnat)}

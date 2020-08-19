@@ -139,7 +139,7 @@ const Koulutus = (props) => {
           html={createKoulutusHtml()}
           className={classes.root}
         />
-        <Box id="tarjonta">
+        <Box width="95%" id="tarjonta">
           <ToteutusList toteutukset={toteutukset} />
         </Box>
         {suositellutKoulutukset?.total > 0 && (
