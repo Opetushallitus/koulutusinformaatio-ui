@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import Spacer from '#/src/components/common/Spacer';
-import ToteutusCard from './ToteutusCard';
+import ToteutusCard from '#/src/components/common/ToteutusCard';
 import TarjontaPagination from './TarjontaPagination';
 
 const useStyles = makeStyles({
@@ -35,13 +35,13 @@ const TarjontaList = ({ tarjonta, oid }) => {
                 component={RouterLink}
                 to={`/toteutus/${tts?.toteutusOid}`}>
                 <ToteutusCard
-                  toteutusName={tts?.toteutusName}
+                  heading={tts?.toteutusName}
                   description={tts?.description}
                   locations={tts?.locations}
                   opetustapa={tts?.opetustapa}
                   price={tts?.price}
                   tyyppi={tts?.tyyppi}
-                  kuva={tts?.kuva}
+                  image={tts?.kuva}
                 />
               </Link>
             </Grid>
