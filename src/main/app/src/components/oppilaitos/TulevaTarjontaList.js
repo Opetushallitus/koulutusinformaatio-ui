@@ -19,17 +19,6 @@ const TulevaTarjontaList = ({ tulevaTarjonta, oid }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  function getCardWidth() {
-    switch (tulevaTarjonta?.hitsSize) {
-      case 1:
-        return 12;
-      case 2:
-        return 6;
-      default:
-        return 4;
-    }
-  }
-
   return (
     <Container maxWidth="lg" className={classes.container}>
       <Typography variant="h2">{t('oppilaitos.tulevat-koulutukset')}</Typography>
@@ -38,12 +27,11 @@ const TulevaTarjontaList = ({ tulevaTarjonta, oid }) => {
         <Grid
           container
           direction="row"
-          wrap="nowrap"
           alignContent="stretch"
           alignItems="stretch"
           spacing={1}>
           {_.map(_.get(tulevaTarjonta, 'localizedTulevaTarjonta'), (kts, i) => (
-            <Grid item key={i} xs={getCardWidth()}>
+            <Grid item key={i} xs={12} md={4}>
               <TulevaKoulutusCard
                 koulutusName={kts?.koulutusName}
                 tutkintonimikkeet={kts?.tutkintonimikkeet}

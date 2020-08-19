@@ -2,14 +2,7 @@ import React from 'react';
 import { Accordion, Summary } from './Accordion';
 import Markdown from 'markdown-to-jsx';
 import { colors } from '../../colors';
-import {
-  makeStyles,
-  Typography,
-  Grid,
-  Card,
-  CardMedia,
-  Link,
-} from '@material-ui/core';
+import { makeStyles, Typography, Grid, Card, CardMedia, Link } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { useStores } from '../../hooks';
@@ -58,11 +51,7 @@ const Sisalto = ({ content, alwaysFullWidth, excludeMedia }) => {
         justify="flex-start"
         alignItems="flex-start"
         className={classes.imageContainer}>
-        <Grid
-          item
-          xs={12}
-          sm={alwaysFullWidth ? 12 : 12}
-          md={alwaysFullWidth ? 12 : 12}>
+        <Grid item xs={12} sm={alwaysFullWidth ? 12 : 12} md={alwaysFullWidth ? 12 : 12}>
           <Card className={classes.card} elevation={0}>
             <CardMedia
               className={classes.media}
