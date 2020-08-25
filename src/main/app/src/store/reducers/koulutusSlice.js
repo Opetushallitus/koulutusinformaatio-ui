@@ -119,9 +119,7 @@ export const fetchSuositellutKoulutukset = (oid) => async (dispatch) => {
       koulutukset: oid,
     });
     dispatch(fetchSuositellutKoulutuksetSuccess({ oid, suositellutKoulutuksetData }));
-  } catch (error) {
-    dispatch();
-  }
+  } catch (error) {}
 };
 
 export const fetchKoulutusJarjestajat = (oid) => async (dispatch) => {
