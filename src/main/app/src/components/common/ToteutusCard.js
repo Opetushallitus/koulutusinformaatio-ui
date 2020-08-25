@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   paper: (props) => ({
     borderTop: `5px solid ${educationTypeColorCode[props.tyyppi] ||
       educationTypeColorCode.muu}`,
-    width: '100%',
+    maxWidth: '900px',
   }),
   icon: {
     fontSize: '1.1875rem',
@@ -41,12 +41,13 @@ const useStyles = makeStyles((theme) => ({
 const ToteutusCard = (props) => {
   const classes = useStyles(props);
   const {
-    tarjoajaName,
+    heading,
     ammattinimikkeet,
     description,
     locations,
     opetustapa,
     price,
+    image,
   } = props;
   return (
     <Paper className={classes.paper}>
@@ -55,20 +56,23 @@ const ToteutusCard = (props) => {
         container
         justify="space-between"
         alignItems="center"
-        wrap="nowrap">
+        wrap="nowrap"
+        spacing={3}>
         <Grid item container direction="column" xs>
           <Hidden mdUp>
             <Grid item>
-              <img className={classes.img} alt="diaconia-logo" src={DiakoniaLogo} />
+              <img className={classes.img} alt="logo" src={image || DiakoniaLogo} />
             </Grid>
           </Hidden>
           <Grid item>
             <Typography variant="h4" gutterBottom>
-              {tarjoajaName}
+              {heading}
             </Typography>
-            <Typography className={classes.nimikkeet} variant="body1" gutterBottom>
-              {ammattinimikkeet}
-            </Typography>
+            {ammattinimikkeet ? (
+              <Typography className={classes.nimikkeet} variant="body1" gutterBottom>
+                {ammattinimikkeet}
+              </Typography>
+            ) : null}
             <Hidden smDown>
               <Typography variant="body1" paragraph>
                 {description}
@@ -77,27 +81,46 @@ const ToteutusCard = (props) => {
           </Grid>
           <Grid item container spacing={3}>
             <Grid item sm={6} md>
-              <Grid container spacing={1} alignItems="center">
+              <Grid
+                container
+                direction="row"
+                spacing={1}
+                alignItems="center"
+                wrap="nowrap">
                 <Grid item className={classes.iconContainer}>
                   <PublicIcon className={classes.icon} />
                 </Grid>
                 <Grid item>
-                  <Typography variant="body1">{locations}</Typography>
+                  <Typography variant="body1" noWrap>
+                    {locations}
+                  </Typography>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item sm={6} md>
-              <Grid container spacing={1} alignItems="center">
+              <Grid
+                container
+                spacing={1}
+                alignItems="center"
+                direction="row"
+                wrap="nowrap">
                 <Grid item className={classes.iconContainer}>
                   <HourglassEmptyIcon className={classes.icon} />
                 </Grid>
                 <Grid item>
-                  <Typography variant="body1">{opetustapa}</Typography>
+                  <Typography variant="body1" noWrap>
+                    {opetustapa}
+                  </Typography>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item sm={6} md>
-              <Grid container spacing={1} alignItems="center">
+              <Grid
+                container
+                spacing={1}
+                alignItems="center"
+                direction="row"
+                wrap="nowrap">
                 <Grid item className={classes.iconContainer}>
                   <EuroSymbolIcon className={classes.icon} />
                 </Grid>
@@ -110,7 +133,7 @@ const ToteutusCard = (props) => {
         </Grid>
         <Hidden smDown>
           <Grid item>
-            <img className={classes.img} alt="diaconia-logo" src={DiakoniaLogo} />
+            <img className={classes.img} alt="logo" src={image || DiakoniaLogo} />
           </Grid>
         </Hidden>
       </Grid>
