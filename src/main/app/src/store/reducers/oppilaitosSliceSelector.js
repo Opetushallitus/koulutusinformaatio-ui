@@ -103,7 +103,7 @@ export const getOppilaitosProps = createSelector(
       filter({ status: ACTIVE }),
       map((osa) => ({
         ...osa,
-        nimi: l.localize(osa.nimi).replace(`${l.localize(oppilaitos.nimi)}, `, ''),
+        nimi: removeOppilaitosName(l.localize(osa.nimi), l.localize(oppilaitos.nimi)),
       }))
     )(oppilaitos),
     esittelyHtml: l.localize(_.get(oppilaitos, 'oppilaitos.metadata.esittely', '')),
@@ -136,4 +136,8 @@ export const getTulevaTarjontaPaginationProps = createSelector(
 // Helpers
 function getLocallizedmaksullisuus(isMaksullinen, maksuAmount) {
   return isMaksullinen ? `${maksuAmount} €` : l.getTranslationForKey('toteutus.maksuton');
+}
+
+function removeOppilaitosName(osaName, oppilaitosName) {
+  return osaName.replace(`${oppilaitosName}, `, '');
 }
