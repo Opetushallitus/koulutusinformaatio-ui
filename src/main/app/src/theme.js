@@ -157,5 +157,10 @@ export const theme = createMuiTheme({
         cursor: 'pointer',
       },
     },
+    MuiTypography: {
+      root: {
+        scrollMarginTop: '100px',
+      },
+    },
   },
 });

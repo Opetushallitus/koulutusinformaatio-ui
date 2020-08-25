@@ -4,16 +4,11 @@ import DefaultHeroImage from '#/src/assets/images/herokuva_default.png';
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    width: '850px',
-    [theme.breakpoints.down('sm')]: {
-      width: '450px',
-    },
+    maxWidth: 1200,
   },
-
   media: {
-    display: 'block',
-    height: 0,
-    paddingTop: '56.25%',
+    width: '100%',
+    height: 'auto',
   },
 }));
 
@@ -22,6 +17,7 @@ const HeroImage = ({ imgUrl }) => {
   return (
     <Card className={classes.card} elevation={1}>
       <CardMedia
+        component="img"
         className={classes.media}
         image={imgUrl || DefaultHeroImage}
         title={'Koulutuksen teemakuva'}

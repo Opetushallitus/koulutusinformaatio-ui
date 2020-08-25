@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import ContentWrapper from '../common/ContentWrapper';
-import { Box, Typography, makeStyles, Grid, Link } from '@material-ui/core';
+import { Box, Typography, makeStyles, Grid, Link, Hidden } from '@material-ui/core';
 import { HashLink } from 'react-router-hash-link';
 import { colors } from '#/src/colors';
 import ToteutusInfoGrid from './ToteutusInfoGrid';
@@ -33,8 +33,13 @@ import { useTranslation } from 'react-i18next';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import Murupolku from '#/src/components/common/Murupolku';
 
-const useStyles = makeStyles({
-  accordion: { width: '50%' },
+const useStyles = makeStyles((theme) => ({
+  accordion: {
+    width: '50%',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+  },
   root: { marginTop: '100px' },
   textWithBackgroundBox: {
     backgroundColor: colors.beigeGreen,
@@ -49,7 +54,7 @@ const useStyles = makeStyles({
     margin: '0 10px',
     lineHeight: '24px',
   },
-});
+}));
 
 const TextWithBackground = (props) => {
   const classes = useStyles();
@@ -119,9 +124,11 @@ const Toteutus = () => {
         flexDirection="column"
         justifyContent="center"
         alignItems="center">
-        <Box mt={5} ml={9} alignSelf="start">
-          <Murupolku path={[{ name: l.localize(toteutus?.nimi) }]} />
-        </Box>
+        <Hidden smDown>
+          <Box mt={5} ml={9} alignSelf="start">
+            <Murupolku path={[{ name: l.localize(toteutus?.nimi) }]} />
+          </Box>
+        </Hidden>
         <Typography style={{ marginTop: '20px' }} variant="h1">
           {l.localize(toteutus?.nimi)}
         </Typography>
