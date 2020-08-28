@@ -10,17 +10,18 @@ const OppilaitosOsaGrid = (props) => {
   return (
     <Grid justify="center" container spacing={isMobile ? 1 : 3}>
       {cards.map((card, i) => {
-        const cardElement = (
+        const cardElement = <ImageCardWithText image={card.image} cardText={card.text} />;
+
+        return (
           <Grid item key={`ImageCardWithText-${i}`}>
-            <ImageCardWithText image={card.image} cardText={card.text} />
+            {cardIsLink ? (
+              <Link component={RouterLink} to={card.link}>
+                {cardElement}
+              </Link>
+            ) : (
+              cardElement
+            )}
           </Grid>
-        );
-        return cardIsLink ? (
-          <Link component={RouterLink} to={card.link}>
-            {cardElement}
-          </Link>
-        ) : (
-          cardElement
         );
       })}
     </Grid>
