@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   },
 });
 
-const TulevaTarjontaList = ({ tulevaTarjonta, oid }) => {
+const TulevaTarjontaList = ({ tulevaTarjonta, oid, isOppilaitosOsa }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -47,7 +47,11 @@ const TulevaTarjontaList = ({ tulevaTarjonta, oid }) => {
           {t('oppilaitos.ei-toteutuksia')}
         </Typography>
       )}
-      <TulevaTarjontaPagination total={_.get(tulevaTarjonta, 'total')} oid={oid} />
+      <TulevaTarjontaPagination
+        total={_.get(tulevaTarjonta, 'total')}
+        oid={oid}
+        isOppilaitosOsa={isOppilaitosOsa}
+      />
     </Container>
   );
 };
