@@ -5,6 +5,7 @@ import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
 import { educationTypeColorCode } from '../../colors';
 import DiakoniaLogo from '../../assets/images/suomen_diakonia_opisto_logo.png';
+import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
 
 const useStyles = makeStyles((theme) => ({
   nimikkeet: {
@@ -75,7 +76,7 @@ const ToteutusCard = (props) => {
             ) : null}
             <Hidden smDown>
               <Typography variant="body1" paragraph>
-                {description}
+                <HTMLEllipsis unsafeHTML={description} maxLine={2} />
               </Typography>
             </Hidden>
           </Grid>
