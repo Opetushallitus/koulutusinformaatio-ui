@@ -39,9 +39,17 @@ const useStyles = makeStyles((theme) => ({
   buttonLabel: {
     fontSize: 14,
   },
+  noBoxShadow: {
+    boxShadow: 'none',
+  },
 }));
 
-const KoulutusalaSuodatin = ({ expanded, elevation, displaySelected }) => {
+const KoulutusalaSuodatin = ({
+  expanded,
+  elevation,
+  displaySelected,
+  summaryHidden = false,
+}) => {
   const history = useHistory();
   const { i18n, t } = useTranslation();
   const classes = useStyles();
@@ -201,16 +209,21 @@ const KoulutusalaSuodatin = ({ expanded, elevation, displaySelected }) => {
   );
 
   return (
-    <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
-      <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <SummaryContent
-          selectedFiltersStr={checkedKoulutusalatStr}
-          maxCharLengthBeforeChipWithNumber={20}
-          filterName={t('haku.koulutusalat')}
-          displaySelected={displaySelected}
-        />
-      </SuodatinExpansionPanelSummary>
-      <SuodatinExpansionPanelDetails>
+    <SuodatinExpansionPanel
+      {...(summaryHidden && { className: classes.noBoxShadow })}
+      elevation={elevation}
+      defaultExpanded={expanded}>
+      {!summaryHidden && (
+        <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
+          <SummaryContent
+            selectedFiltersStr={checkedKoulutusalatStr}
+            maxCharLengthBeforeChipWithNumber={20}
+            filterName={t('haku.koulutusalat')}
+            displaySelected={displaySelected}
+          />
+        </SuodatinExpansionPanelSummary>
+      )}
+      <SuodatinExpansionPanelDetails {...(summaryHidden && { style: { padding: 0 } })}>
         <List hidden={expandedKoulutusTaso1.length > 0} style={{ width: '100%' }}>
           {sortedKoulutusalat.map((koulutusalaArr) => {
             const labelId = `language-list-label-${koulutusalaArr[0]}`;

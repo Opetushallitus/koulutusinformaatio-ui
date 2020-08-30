@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import qs from 'query-string';
-import { Grid, List, ListItem, ListItemIcon } from '@material-ui/core';
+import { Grid, List, ListItem, ListItemIcon, makeStyles } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import {
   clearPaging,
@@ -24,12 +24,24 @@ import {
 import SummaryContent from './SummaryContent';
 import { Common as C } from '#/src/tools/Utils';
 
-const OpetuskieliSuodatin = ({ expanded, elevation, displaySelected }) => {
+const withStyles = makeStyles(() => ({
+  noBoxShadow: {
+    boxShadow: 'none',
+  },
+}));
+
+const OpetuskieliSuodatin = ({
+  expanded,
+  elevation,
+  displaySelected,
+  summaryHidden = false,
+}) => {
   const history = useHistory();
   const { i18n, t } = useTranslation();
   const dispatch = useDispatch();
   const opetuskieliFilterProps = useSelector(getOpetuskieliFilterProps);
   const apiRequestParams = useSelector(getAPIRequestParams);
+  const classes = withStyles();
 
   const [sortedOpetuskielet, setSortedOpetuskielet] = useState([]);
   const [checkedOpetusKielet, setCheckedOpetusKielet] = useState([]);
@@ -72,16 +84,21 @@ const OpetuskieliSuodatin = ({ expanded, elevation, displaySelected }) => {
     dispatch(searchAll({ ...apiRequestParams, opetuskieli: newCheckedOpetusKieletStr }));
   };
   return (
-    <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
-      <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <SummaryContent
-          selectedFiltersStr={checkedOpetuskieletStr}
-          maxCharLengthBeforeChipWithNumber={20}
-          filterName={t('haku.opetuskieli')}
-          displaySelected={displaySelected}
-        />
-      </SuodatinExpansionPanelSummary>
-      <SuodatinExpansionPanelDetails>
+    <SuodatinExpansionPanel
+      {...(summaryHidden && { className: classes.noBoxShadow })}
+      elevation={elevation}
+      defaultExpanded={expanded}>
+      {!summaryHidden && (
+        <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
+          <SummaryContent
+            selectedFiltersStr={checkedOpetuskieletStr}
+            maxCharLengthBeforeChipWithNumber={20}
+            filterName={t('haku.opetuskieli')}
+            displaySelected={displaySelected}
+          />
+        </SuodatinExpansionPanelSummary>
+      )}
+      <SuodatinExpansionPanelDetails {...(summaryHidden && { style: { padding: 0 } })}>
         <List style={{ width: '100%' }}>
           {sortedOpetuskielet.map((opetuskieliArr) => {
             const labelId = `language-list-label-${opetuskieliArr[0]}`;
