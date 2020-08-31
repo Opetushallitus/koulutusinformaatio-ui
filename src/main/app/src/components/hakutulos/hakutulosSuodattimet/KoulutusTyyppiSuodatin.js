@@ -3,7 +3,14 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import qs from 'query-string';
-import { Grid, List, ListItem, ListItemIcon, useTheme } from '@material-ui/core';
+import {
+  Grid,
+  List,
+  ListItem,
+  ListItemIcon,
+  useTheme,
+  makeStyles,
+} from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import {
   clearPaging,
@@ -24,7 +31,19 @@ import {
 import SummaryContent from './SummaryContent';
 import { Common as C } from '#/src/tools/Utils';
 
-const KoulutustyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
+const withStyles = makeStyles(() => ({
+  noBoxShadow: {
+    boxShadow: 'none',
+  },
+}));
+
+const KoulutustyyppiSuodatin = ({
+  expanded,
+  elevation,
+  displaySelected,
+  summaryHidden = false,
+}) => {
+  const classes = withStyles();
   const history = useHistory();
   const { i18n, t } = useTranslation();
   const theme = useTheme();
@@ -80,16 +99,21 @@ const KoulutustyyppiSuodatin = ({ expanded, elevation, displaySelected }) => {
   };
 
   return (
-    <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
-      <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <SummaryContent
-          selectedFiltersStr={checkedKoulutustyypitStr}
-          maxCharLengthBeforeChipWithNumber={16}
-          filterName={t('haku.koulutustyyppi')}
-          displaySelected={displaySelected}
-        />
-      </SuodatinExpansionPanelSummary>
-      <SuodatinExpansionPanelDetails>
+    <SuodatinExpansionPanel
+      {...(summaryHidden && { className: classes.noBoxShadow })}
+      elevation={elevation}
+      defaultExpanded={expanded}>
+      {!summaryHidden && (
+        <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
+          <SummaryContent
+            selectedFiltersStr={checkedKoulutustyypitStr}
+            maxCharLengthBeforeChipWithNumber={16}
+            filterName={t('haku.koulutustyyppi')}
+            displaySelected={displaySelected}
+          />
+        </SuodatinExpansionPanelSummary>
+      )}
+      <SuodatinExpansionPanelDetails {...(summaryHidden && { style: { padding: 0 } })}>
         <List style={{ width: '100%' }}>
           {koulutusTyypit.map((eduTypeOuterArr) => {
             const labelId = `educationtype-outerlist-label-${eduTypeOuterArr[0]}`;

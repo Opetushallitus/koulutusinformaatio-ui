@@ -76,14 +76,21 @@ function getPageSortArray(state) {
 }
 //Selectors
 export const getHakupalkkiProps = createSelector(
-  [getKeyword, getKeywordEditMode, getSize, getOrder],
-  (keyword, keywordEditMode, size, order) => ({
+  [
+    getKeyword,
+    getKeywordEditMode,
+    getKoulutusFilters,
+    getOppilaitosFilters,
+    getSelectedTab,
+  ],
+  (keyword, keywordEditMode, koulutusFilters, oppilaitosFilters, selectedTab) => ({
     keyword,
     keywordEditMode,
-    size,
-    order,
     showTooltip: _.inRange(_.size(keyword), 1, 3),
-    isKeyworValid: _.size(keyword) > 2,
+    isKeywordValid: _.size(keyword) > 2,
+    koulutusFilters,
+    oppilaitosFilters,
+    selectedTab,
   })
 );
 

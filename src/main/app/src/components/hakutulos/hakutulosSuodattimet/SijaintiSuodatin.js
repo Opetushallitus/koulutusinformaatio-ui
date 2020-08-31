@@ -39,9 +39,17 @@ const useStyles = makeStyles((theme) => ({
   buttonLabel: {
     fontSize: 14,
   },
+  noBoxShadow: {
+    boxShadow: 'none',
+  },
 }));
 
-const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
+const SijaintiSuodatin = ({
+  expanded,
+  elevation,
+  displaySelected,
+  summaryHidden = false,
+}) => {
   const history = useHistory();
   const location = useLocation();
   const { i18n, t } = useTranslation();
@@ -174,16 +182,21 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
   };
 
   return (
-    <SuodatinExpansionPanel elevation={elevation} defaultExpanded={expanded}>
-      <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <SummaryContent
-          selectedFiltersStr={selectedSijainnitStr}
-          maxCharLengthBeforeChipWithNumber={20}
-          filterName={t('haku.sijainti')}
-          displaySelected={displaySelected}
-        />
-      </SuodatinExpansionPanelSummary>
-      <SuodatinExpansionPanelDetails>
+    <SuodatinExpansionPanel
+      {...(summaryHidden && { className: classes.noBoxShadow })}
+      elevation={elevation}
+      defaultExpanded={expanded}>
+      {!summaryHidden && (
+        <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
+          <SummaryContent
+            selectedFiltersStr={selectedSijainnitStr}
+            maxCharLengthBeforeChipWithNumber={20}
+            filterName={t('haku.sijainti')}
+            displaySelected={displaySelected}
+          />
+        </SuodatinExpansionPanelSummary>
+      )}
+      <SuodatinExpansionPanelDetails {...(summaryHidden && { style: { padding: 0 } })}>
         <Grid container direction="column">
           <Grid item style={{ padding: '20px 0' }}>
             <Select
@@ -206,45 +219,10 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
               })}
             />
           </Grid>
-          <Grid item>
-            <List style={{ width: '100%' }}>
-              {firstFiveMaakunnat.map((maakuntaArray) => {
-                const labelId = `educationtype-outerlist-label-${maakuntaArray[0]}`;
-                return (
-                  <ListItem
-                    key={maakuntaArray[0]}
-                    id={maakuntaArray[0]}
-                    dense
-                    button
-                    disabled={maakuntaArray[1].count === 0}
-                    onClick={handleMaakuntaToggle(maakuntaArray)}>
-                    <ListItemIcon>
-                      <SuodatinCheckbox
-                        edge="start"
-                        checked={
-                          checkedMaakunnat.findIndex(
-                            ({ id }) => id === maakuntaArray[0]
-                          ) !== -1
-                        }
-                        tabIndex={-1}
-                        disableRipple
-                        inputProps={{ 'aria-labelledby': labelId }}
-                      />
-                    </ListItemIcon>
-                    <SuodatinListItemText
-                      id={labelId}
-                      primary={
-                        <Grid container justify="space-between" wrap="nowrap">
-                          <Grid item>{maakuntaArray[1]?.nimi?.[i18n.language]}</Grid>
-                          <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
-                        </Grid>
-                      }
-                    />
-                  </ListItem>
-                );
-              })}
-              {showRest &&
-                restMaakunnat.map((maakuntaArray) => {
+          {!summaryHidden && (
+            <Grid item>
+              <List style={{ width: '100%' }}>
+                {firstFiveMaakunnat.map((maakuntaArray) => {
                   const labelId = `educationtype-outerlist-label-${maakuntaArray[0]}`;
                   return (
                     <ListItem
@@ -279,17 +257,54 @@ const SijaintiSuodatin = ({ expanded, elevation, displaySelected }) => {
                     </ListItem>
                   );
                 })}
-              <Button
-                color="secondary"
-                size="small"
-                classes={{ label: classes.buttonLabel }}
-                endIcon={showRest ? <ExpandLess /> : <ExpandMore />}
-                fullWidth
-                onClick={() => handleShowRest()}>
-                {showRest ? t('haku.näytä_vähemmän') : t('haku.näytä_lisää')}
-              </Button>
-            </List>
-          </Grid>
+                {showRest &&
+                  restMaakunnat.map((maakuntaArray) => {
+                    const labelId = `educationtype-outerlist-label-${maakuntaArray[0]}`;
+                    return (
+                      <ListItem
+                        key={maakuntaArray[0]}
+                        id={maakuntaArray[0]}
+                        dense
+                        button
+                        disabled={maakuntaArray[1].count === 0}
+                        onClick={handleMaakuntaToggle(maakuntaArray)}>
+                        <ListItemIcon>
+                          <SuodatinCheckbox
+                            edge="start"
+                            checked={
+                              checkedMaakunnat.findIndex(
+                                ({ id }) => id === maakuntaArray[0]
+                              ) !== -1
+                            }
+                            tabIndex={-1}
+                            disableRipple
+                            inputProps={{ 'aria-labelledby': labelId }}
+                          />
+                        </ListItemIcon>
+                        <SuodatinListItemText
+                          id={labelId}
+                          primary={
+                            <Grid container justify="space-between" wrap="nowrap">
+                              <Grid item>{maakuntaArray[1]?.nimi?.[i18n.language]}</Grid>
+                              <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
+                            </Grid>
+                          }
+                        />
+                      </ListItem>
+                    );
+                  })}
+                <Button
+                  color="secondary"
+                  size="small"
+                  classes={{ label: classes.buttonLabel }}
+                  endIcon={showRest ? <ExpandLess /> : <ExpandMore />}
+                  fullWidth
+                  onClick={() => handleShowRest()}>
+                  {showRest ? t('haku.näytä_vähemmän') : t('haku.näytä_lisää')}
+                </Button>
+              </List>
+            </Grid>
+          )}
         </Grid>
       </SuodatinExpansionPanelDetails>
     </SuodatinExpansionPanel>
