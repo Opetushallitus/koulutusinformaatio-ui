@@ -87,7 +87,7 @@ export const getHakupalkkiProps = createSelector(
     keyword,
     keywordEditMode,
     showTooltip: _.inRange(_.size(keyword), 1, 3),
-    isKeyworValid: _.size(keyword) > 2,
+    isKeywordValid: _.size(keyword) > 2,
     koulutusFilters,
     oppilaitosFilters,
     selectedTab,

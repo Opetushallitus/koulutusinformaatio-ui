@@ -137,7 +137,7 @@ const Hakupalkki = () => {
     keyword,
     keywordEditMode,
     showTooltip,
-    isKeyworValid,
+    isKeywordValid,
     koulutusFilters,
   } = useSelector(getHakupalkkiProps);
   const requestApiParams = useSelector(getAPIRequestParams);
@@ -195,7 +195,7 @@ const Hakupalkki = () => {
   const SearchButton = () => (
     <Button
       startIcon={<SearchOutlined />}
-      disabled={!isKeyworValid}
+      disabled={!isKeywordValid}
       type="submit"
       variant="contained"
       color="secondary"
@@ -220,7 +220,7 @@ const Hakupalkki = () => {
               defaultValue={location.pathname === '/' ? '' : keyword}
               className={classes.input}
               onKeyPress={(event) =>
-                event.key === 'Enter' && isKeyworValid && doSearch(event)
+                event.key === 'Enter' && isKeywordValid && doSearch(event)
               }
               onChange={setSearch}
               type="search"
