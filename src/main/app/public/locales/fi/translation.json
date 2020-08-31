@@ -115,6 +115,7 @@
     "jarjestys": "Järjestys",
     "kaikki": "Kaikki",
     "__kaikki_koulutusalat": "<< Kaikki koulutusalat",
+    "kategoria": "Kategoria",
     "kielellä": "kielellä",
     "kielellä_plural": "kielillä",
     "korkeakoulu": "Korkeakoulut",
@@ -163,6 +164,7 @@
     "tapahtui-tekninen-virhe": "Tapahtui tekninen virhe",
     "tulokset-per-sivu": "Tulokset per sivu:",
     "tuloksia-per-sivu": "Tuloksia per sivu",
+    "valitse": "Valitse",
     "vertaile": "Vertaile"
   },
   "navigaatio": {

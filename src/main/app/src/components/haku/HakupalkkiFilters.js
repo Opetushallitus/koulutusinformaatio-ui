@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Divider, makeStyles, Typography, Box, Button } from '@material-ui/core';
-import KoulutusalaSuodatin from '../hakutulos/hakutulosSuodattimet/KoulutusalaSuodatin';
-import OpetuskieliSuodatin from '../hakutulos/hakutulosSuodattimet/OpetusKieliSuodatin';
-import SijaintiSuodatin from '../hakutulos/hakutulosSuodattimet/SijaintiSuodatin';
-import KoulutustyyppiSuodatin from '../hakutulos/hakutulosSuodattimet/KoulutusTyyppiSuodatin';
+import { useTranslation } from 'react-i18next';
+import KoulutusalaSuodatin from '#/src/components/hakutulos/hakutulosSuodattimet/KoulutusalaSuodatin';
+import OpetuskieliSuodatin from '#/src/components/hakutulos/hakutulosSuodattimet/OpetusKieliSuodatin';
+import SijaintiSuodatin from '#/src/components/hakutulos/hakutulosSuodattimet/SijaintiSuodatin';
+import KoulutustyyppiSuodatin from '#/src/components/hakutulos/hakutulosSuodattimet/KoulutusTyyppiSuodatin';
 import PopoverWithArrow from '#/src/components/common/PopoverWithArrow';
 import { ExpandLessOutlined, ExpandMoreOutlined } from '@material-ui/icons';
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 const HakupalkkiFilters = () => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const [opetuskieletAnchor, setOpetuskieletAnchor] = useState(null);
   const [koulutustyyppiAnchor, setKoulutustyyppiAnchor] = useState(null);
@@ -77,7 +79,7 @@ const HakupalkkiFilters = () => {
     <Box display="flex" justifyContent="center" className={classes.container}>
       <Box className={classes.item}>
         <Typography className={classes.header} variant="h5">
-          Kategoria
+          {t('haku.kategoria')}
         </Typography>
         <Button
           aria-describedby={koulutusalaBtnId}
@@ -85,7 +87,7 @@ const HakupalkkiFilters = () => {
           onClick={handleKoulutusalaClick}
           className={classes.expandButton}
           aria-label="Valitse">
-          Valitse
+          {t('haku.valitse')}
         </Button>
         <PopoverWithArrow
           anchorEl={koulutusalaAnchor}
@@ -99,7 +101,7 @@ const HakupalkkiFilters = () => {
       <Divider orientation="vertical" flexItem />
       <Box className={classes.item}>
         <Typography className={classes.header} variant="h5">
-          Koulutustyyppi
+          {t('haku.koulutustyyppi')}
         </Typography>
         <Button
           aria-describedby={koulutustyyppiBtnId}
@@ -107,7 +109,7 @@ const HakupalkkiFilters = () => {
           onClick={handleKoulutustyyppiClick}
           className={classes.expandButton}
           aria-label="Valitse">
-          Valitse
+          {t('haku.valitse')}
         </Button>
         <PopoverWithArrow
           id={koulutustyyppiBtnId}
@@ -122,7 +124,7 @@ const HakupalkkiFilters = () => {
 
       <Box className={classes.item}>
         <Typography className={classes.header} variant="h5">
-          Opetuskieli
+          {t('haku.opetuskieli')}
         </Typography>
         <Button
           aria-describedby={opetuskieletBtnId}
@@ -130,7 +132,7 @@ const HakupalkkiFilters = () => {
           onClick={handleOpetuskieletClick}
           className={classes.expandButton}
           aria-label="Valitse">
-          Valitse
+          {t('haku.valitse')}
         </Button>
         <PopoverWithArrow
           id={opetuskieletBtnId}
@@ -145,7 +147,7 @@ const HakupalkkiFilters = () => {
 
       <Box className={classes.item}>
         <Typography className={classes.header} variant="h5">
-          Sijainti
+          {t('haku.sijainti')}
         </Typography>
         <Button
           aria-describedby={sijaintiBtnId}
@@ -153,7 +155,7 @@ const HakupalkkiFilters = () => {
           onClick={handleSijaintiClick}
           className={classes.expandButton}
           aria-label="Valitse">
-          Valitse
+          {t('haku.valitse')}
         </Button>
         <PopoverWithArrow
           id={sijaintiBtnId}
