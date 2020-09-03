@@ -4,7 +4,6 @@ import {
   getKoulutusKuvaus,
   getKoulutusJarjestajat,
   getSuositellutKoulutukset,
-  getTutkinnonOsaKuvaus,
   getEperusteKuvaus,
 } from '#/src/api/konfoApi';
 import _ from 'lodash';
