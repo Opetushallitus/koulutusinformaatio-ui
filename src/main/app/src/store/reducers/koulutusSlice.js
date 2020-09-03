@@ -4,6 +4,8 @@ import {
   getKoulutusKuvaus,
   getKoulutusJarjestajat,
   getSuositellutKoulutukset,
+  getTutkinnonOsaKuvaus,
+  getEperusteKuvaus,
 } from '#/src/api/konfoApi';
 import _ from 'lodash';
 
@@ -105,6 +107,15 @@ export const fetchKoulutus = (oid, draft) => async (dispatch) => {
     if (koulutusData?.koulutustyyppi === 'amm' && koulutusData.ePerusteId) {
       const koulutusKuvausData = await getKoulutusKuvaus(koulutusData.ePerusteId);
       _.set(koulutusData, 'metadata.kuvaus', koulutusKuvausData);
+    } else if (koulutusData?.koulutustyyppi === 'tutkinnon-osa') {
+      const tutkinnonOsat = koulutusData?.metadata?.tutkinnonOsat ?? [];
+      const eperusteet = _.uniq(tutkinnonOsat.map((t) => t.eperusteId));
+      var e = [];
+      for (const index in eperusteet) {
+        const id = eperusteet[index];
+        e.push(await getEperusteKuvaus(id));
+      }
+      _.set(koulutusData, 'eperusteet', e);
     }
     dispatch(fetchKoulutusSuccess({ oid, koulutus: koulutusData }));
   } catch (err) {
@@ -147,6 +158,8 @@ export const selectKoulutus = (state, oid) => {
   if (koulutusData) {
     return {
       kuvaus: koulutusData.metadata?.kuvaus,
+      eperusteet: koulutusData.eperusteet,
+      tutkinnonOsat: koulutusData.metadata?.tutkinnonOsat,
       tyotehtavatJoissaVoiToimia:
         koulutusData.metadata?.kuvaus?.tyotehtavatJoissaVoiToimia,
       suorittaneenOsaaminen: koulutusData.metadata?.kuvaus?.suorittaneenOsaaminen,

@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '#/src/hooks';
-import { Typography, Box, makeStyles, Hidden } from '@material-ui/core';
+import { Link as MuiLink, Typography, Box, makeStyles, Hidden } from '@material-ui/core';
 import { Localizer as l } from '#/src/tools/Utils';
 import { useTranslation } from 'react-i18next';
+import _ from 'lodash';
 import KoulutusInfoGrid from './KoulutusInfoGrid';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import ToteutusList from './ToteutusList';
@@ -24,6 +25,10 @@ import {
 import LoadingCircle from '#/src/components/common/LoadingCircle';
 import qs from 'query-string';
 import HeroImage from '#/src/components/common/HeroImage';
+import clsx from 'clsx';
+import Spacer from '#/src/components/common/Spacer';
+import Accordion from '#/src/components/common/Accordion';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },
@@ -32,9 +37,32 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.body1,
     fontSize: '1.25rem',
   },
+  accordion: {
+    width: '50%',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+  },
 }));
 
+const AccordionWithTitle = ({ titleTranslation, data }) => {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  return (
+    <Box
+      className={clsx([classes.accordion, classes.root])}
+      display="flex"
+      flexDirection="column"
+      alignItems="center">
+      <Typography variant="h2">{t(titleTranslation)}</Typography>
+      <Spacer />
+      <Accordion items={data} />
+    </Box>
+  );
+};
+
 const Koulutus = (props) => {
+  const { urlStore } = useStores();
   const history = useHistory();
   const { draft } = qs.parse(history.location.search);
   const dispatch = useDispatch();
@@ -78,6 +106,32 @@ const Koulutus = (props) => {
     }
   };
 
+  const createTutkinnonOsaHtml = (tutkinnonOsa) => {
+    return (
+      getKuvausHtmlSection(
+        'koulutus.ammattitaitovaatimukset',
+        tutkinnonOsa.ammattitaitovaatimukset
+      ) +
+      getKuvausHtmlSection(
+        'koulutus.ammattitaidonOsoitamistavat',
+        tutkinnonOsa.ammattitaidonOsoittamistavat
+      )
+    );
+  };
+  const findEperuste = (koulutus) => (id) => {
+    return _.first(koulutus.eperusteet.filter((e) => e.id.toString() === id));
+  };
+  const findTutkinnonOsa = (eperuste) => (id) => {
+    return _.first(eperuste.tutkinnonOsat.filter((t) => t.id.toString() === id));
+  };
+
+  const findTutkinnonOsaViitteet = (eperuste) => (id) => {
+    return _.first(
+      eperuste.suoritustavat.flatMap((t) =>
+        t.tutkinnonOsaViitteet.filter((tv) => tv.id.toString() === id)
+      )
+    );
+  }; // // suoritustavat tutkinnonOsaViitteet
   return loading ? (
     <LoadingCircle />
   ) : (
@@ -133,12 +187,55 @@ const Koulutus = (props) => {
             buttonText={t('koulutus.nayta-oppilaitokset')}
           />
         ) : null}
-
-        <HtmlTextBox
-          heading={t('koulutus.kuvaus')}
-          html={createKoulutusHtml()}
-          className={classes.root}
-        />
+        {!_.isEmpty(koulutus?.kuvaus) ||
+        koulutus?.suorittaneenOsaaminen ||
+        koulutus?.tyotehtavatJoissaVoiToimia ? (
+          <HtmlTextBox
+            heading={t('koulutus.kuvaus')}
+            html={createKoulutusHtml()}
+            className={classes.root}
+          />
+        ) : null}
+        {koulutus?.tutkinnonOsat ? (
+          <AccordionWithTitle
+            titleTranslation="koulutus.kuvaus"
+            data={koulutus?.tutkinnonOsat.map(
+              ({ tutkinnonosaId, tutkinnonosaViite, eperusteId }) => {
+                const eperuste = findEperuste(koulutus)(eperusteId);
+                const tutkinnonOsa = findTutkinnonOsa(eperuste)(tutkinnonosaId);
+                const tutkinnonOsaViite = findTutkinnonOsaViitteet(eperuste)(
+                  tutkinnonosaViite
+                );
+                return {
+                  title: `${l.localize(tutkinnonOsa.nimi)}, ${
+                    tutkinnonOsaViite.laajuus
+                  } osp`,
+                  content: (
+                    <>
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: createTutkinnonOsaHtml(tutkinnonOsa),
+                        }}
+                      />
+                      <MuiLink
+                        target="_blank"
+                        rel="noopener"
+                        href={urlStore.urls.url(
+                          'eperusteet-service.eperuste.kuvaus',
+                          l.getLanguage(),
+                          eperusteId,
+                          tutkinnonosaViite
+                        )}>
+                        {t('koulutus.eperuste-linkki')}
+                        <OpenInNewIcon />
+                      </MuiLink>
+                    </>
+                  ),
+                };
+              }
+            )}
+          />
+        ) : null}
         <Box width="95%" id="tarjonta">
           <ToteutusList toteutukset={toteutukset} />
         </Box>
