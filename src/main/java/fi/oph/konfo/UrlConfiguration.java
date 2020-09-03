@@ -16,6 +16,9 @@ public class UrlConfiguration extends OphProperties {
         this.addOverride("kartta.host", environment.getRequiredProperty("kartta.host"));
         this.addOverride("kartta.pid", environment.getRequiredProperty("kartta.pid"));
         this.addOverride("konfo-bucket", environment.getRequiredProperty("bucket.url"));
+        this.addOverride("eperusteet-service.base-url", environment.getRequiredProperty("host.host-eperusteet-service"));
+
+        this.frontProperties.setProperty("eperusteet-service.eperuste.kuvaus", this.require("eperusteet-service.eperuste.kuvaus"));
         this.frontProperties.setProperty("konfo-backend.base-url", this.require("konfo-backend.base-url"));
         this.frontProperties.setProperty("konfo-backend.old-oppija", this.require("konfo-backend.old-oppija"));
         this.frontProperties.setProperty("konfo-backend.search.koulutukset", this.require("konfo-backend.search.koulutukset"));
