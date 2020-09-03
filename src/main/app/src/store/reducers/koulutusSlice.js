@@ -100,6 +100,17 @@ export const {
 } = koulutusSlice.actions;
 export default koulutusSlice.reducer;
 
+const findEperuste = (eperusteet) => (id) => {
+  return _.first(eperusteet.filter((t) => t.id.toString() === id));
+};
+const findTutkinnonOsaViitteet = (eperuste) => (id) => {
+  return _.first(
+    eperuste.suoritustavat.flatMap((t) =>
+      t.tutkinnonOsaViitteet.filter((tv) => tv.id.toString() === id)
+    )
+  );
+};
+
 export const fetchKoulutus = (oid, draft) => async (dispatch) => {
   try {
     dispatch(fetchKoulutusStart());
@@ -113,8 +124,34 @@ export const fetchKoulutus = (oid, draft) => async (dispatch) => {
       var e = [];
       for (const index in eperusteet) {
         const id = eperusteet[index];
-        e.push(await getEperusteKuvaus(id));
+        const eperuste = await getEperusteKuvaus(id);
+        e.push(eperuste);
       }
+
+      var pisteet = tutkinnonOsat
+        .map(({ eperusteId, tutkinnonosaViite }) => {
+          const viite = findTutkinnonOsaViitteet(findEperuste(e)(eperusteId))(
+            tutkinnonosaViite
+          );
+          return viite.laajuus;
+        })
+        .reduce((a, b) => a + b, 0);
+
+      _.set(koulutusData, 'metadata.opintojenLaajuusyksikko', {
+        nimi: {
+          sv: 'kompetenspoäng',
+          fi: 'osaamispistettä',
+          en: 'ECVET competence points',
+        },
+      });
+      _.set(koulutusData, 'metadata.opintojenLaajuus', {
+        nimi: {
+          sv: pisteet,
+          fi: pisteet,
+          en: pisteet,
+        },
+      });
+
       _.set(koulutusData, 'eperusteet', e);
     }
     dispatch(fetchKoulutusSuccess({ oid, koulutus: koulutusData }));
