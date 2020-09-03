@@ -131,7 +131,8 @@ const Koulutus = (props) => {
         t.tutkinnonOsaViitteet.filter((tv) => tv.id.toString() === id)
       )
     );
-  }; // // suoritustavat tutkinnonOsaViitteet
+  };
+
   return loading ? (
     <LoadingCircle />
   ) : (
