@@ -4,13 +4,14 @@ import Backend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 export const supportedLanguages = ['fi', 'sv', 'en'];
+export const defaultLanguage = 'fi';
 
 i18n
   .use(Backend)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: ['fi'],
+    fallbackLng: defaultLanguage,
     supportedLngs: supportedLanguages,
     debug: process.env.NODE_ENV === 'development',
     load: 'languageOnly',
