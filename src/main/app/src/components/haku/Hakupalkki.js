@@ -133,13 +133,9 @@ const Hakupalkki = () => {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const {
-    keyword,
-    keywordEditMode,
-    showTooltip,
-    isKeywordValid,
-    koulutusFilters,
-  } = useSelector(getHakupalkkiProps);
+  const { keyword, keywordEditMode, isKeywordValid, koulutusFilters } = useSelector(
+    getHakupalkkiProps
+  );
   const requestApiParams = useSelector(getAPIRequestParams);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -186,10 +182,8 @@ const Hakupalkki = () => {
     dispatch(searchAll(requestApiParams, true));
   };
   const setSearch = (event) => {
-    if (event.target.value) {
-      !keywordEditMode && dispatch(setKeywordEditMode({ newKeywordEditMode: true }));
-      dispatch(setKeyword({ keyword: event.target.value || '' }));
-    }
+    !keywordEditMode && dispatch(setKeywordEditMode({ newKeywordEditMode: true }));
+    dispatch(setKeyword({ keyword: event.target.value || '' }));
   };
 
   const SearchButton = () => (
@@ -214,7 +208,7 @@ const Hakupalkki = () => {
           elevation={4}>
           <Tooltip
             placement="bottom-start"
-            open={showTooltip}
+            open={!isKeywordValid}
             title={t('haku.syota-ainakin-kolme-merkkia')}>
             <InputBase
               defaultValue={location.pathname === '/' ? '' : keyword}
