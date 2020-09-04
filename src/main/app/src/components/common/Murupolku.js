@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { makeStyles, Box, Link } from '@material-ui/core';
+import { makeStyles, Box } from '@material-ui/core';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import clsx from 'clsx';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -57,10 +58,10 @@ const Murupolku = ({ path }) => {
   return (
     <ul className={clsx(classes.breadcrump)}>
       <li>
-        <Link component={RouterLink} to={''} className={classes.link}>
+        <LocalizedLink component={RouterLink} to={''} className={classes.link}>
           <HomeOutlinedIcon className={classes.home} />
           {t('etusivu')}
-        </Link>
+        </LocalizedLink>
       </li>
 
       {shownPath.map(({ name, link }, ind) => {
@@ -69,7 +70,7 @@ const Murupolku = ({ path }) => {
           <li key={`breadcrump-item-${ind}`}>
             <ArrowForwardIosIcon className={classes.arrow} />
             <Box component="span" ml={2}>
-              <Link
+              <LocalizedLink
                 component={link ? RouterLink : 'span'}
                 className={clsx(classes.link, {
                   [classes.lastLink]: isLast,
@@ -77,7 +78,7 @@ const Murupolku = ({ path }) => {
                 to={link}
                 underline={isLast ? 'none' : 'hover'}>
                 {name}
-              </Link>
+              </LocalizedLink>
             </Box>
           </li>
         );

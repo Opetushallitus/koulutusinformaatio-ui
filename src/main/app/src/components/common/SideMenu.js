@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SideMenu = (props) => {
   const { small, menuVisible, closeMenu } = props;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const history = useHistory();
   const classes = useStyles();
   const { contentfulStore } = useStores();
@@ -97,7 +97,7 @@ const SideMenu = (props) => {
     : (single(valikot).valikot || []).map((v) => valikko[v.id]);
 
   const doSearch = (event) => {
-    history.push(`/sisaltohaku/?hakusana=${search}`);
+    history.push(`/${i18n.language}/sisaltohaku/?hakusana=${search}`);
     event.preventDefault();
   };
 

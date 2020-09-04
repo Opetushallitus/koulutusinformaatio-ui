@@ -1,10 +1,11 @@
 import React from 'react';
-import { Typography, Grid, Container, makeStyles, Link } from '@material-ui/core';
+import { Typography, Grid, Container, makeStyles } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import Spacer from '../common/Spacer';
 import { useTranslation } from 'react-i18next';
 import { Localizer as l } from '../../tools/Utils';
 import ToteutusCard from '#/src/components/common/ToteutusCard';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles({
   container: {
@@ -37,7 +38,7 @@ const ToteutusList = (props) => {
         <Grid container direction="column" alignItems="center" spacing={1}>
           {toteutukset.map((toteutus, i) => (
             <Grid item key={i}>
-              <Link
+              <LocalizedLink
                 underline="none"
                 component={RouterLink}
                 to={`/toteutus/${toteutus.toteutusOid}`}>
@@ -53,7 +54,7 @@ const ToteutusList = (props) => {
                   )}
                   tyyppi={toteutus.koulutustyyppi}
                 />
-              </Link>
+              </LocalizedLink>
             </Grid>
           ))}
         </Grid>

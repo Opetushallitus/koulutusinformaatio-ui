@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Jumpotron from './Jumpotron';
-import { Route, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import _ from 'lodash';
 import Markdown from 'markdown-to-jsx';
@@ -50,12 +50,13 @@ const useStyles = makeStyles({
 const Etusivu = observer(({ history }) => {
   const { t } = useTranslation();
   const classes = useStyles();
+  const { i18n } = useTranslation();
   const { contentfulStore } = useStores();
   const { info, uutiset, kortit } = contentfulStore.data;
 
   const { forwardTo } = contentfulStore;
   const forwardToPage = (id) => {
-    history.push(forwardTo(id));
+    history.push(`/${i18n.language}${forwardTo(id)}`);
   };
   const infos = Object.values(info || {});
 
@@ -66,7 +67,7 @@ const Etusivu = observer(({ history }) => {
 
   return (
     <React.Fragment>
-      <Route exact path="/" render={() => <Jumpotron />} />
+      <Jumpotron />
       <ReactiveBorder className={classes.oikopolut}>
         <Grid container spacing={3}>
           {infos.map((info) => {

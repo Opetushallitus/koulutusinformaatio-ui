@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Typography, Grid, Container, Link, makeStyles } from '@material-ui/core';
+import { Typography, Grid, Container, makeStyles } from '@material-ui/core';
 import Spacer from '#/src/components/common/Spacer';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import { Localizer as l } from '#/src/tools/Utils';
 import SuositusKoulutusCard from './SuositusKoulutusCard';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles({
   container: {
@@ -34,7 +35,7 @@ const SuositusKoulutusList = ({ koulutukset, oid }) => {
           {_.map(koulutukset?.hits, (kts) => {
             return (
               <Grid item key={kts?.oid} xs={12} sm>
-                <Link
+                <LocalizedLink
                   underline="none"
                   component={RouterLink}
                   to={`/koulutus/${kts?.oid}`}>
@@ -48,7 +49,7 @@ const SuositusKoulutusList = ({ koulutukset, oid }) => {
                     teemakuva={kts?.teemakuva}
                     tyyppi={kts?.koulutustyyppi}
                   />
-                </Link>
+                </LocalizedLink>
               </Grid>
             );
           })}

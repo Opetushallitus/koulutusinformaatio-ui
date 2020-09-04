@@ -12,6 +12,7 @@ import { colors } from '../../colors';
 import CardHeader from '@material-ui/core/CardHeader';
 import Box from '@material-ui/core/Box';
 import { useStores } from '../../hooks';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({
   card: {
@@ -48,6 +49,7 @@ const useStyles = makeStyles({
 const Palvelu = observer(({ id, history }) => {
   const classes = useStyles();
   const { contentfulStore } = useStores();
+  const { i18n } = useTranslation();
   const { forwardTo } = contentfulStore;
   const { asset } = contentfulStore.data;
   const palvelu = contentfulStore.data.palvelu[id];
@@ -56,7 +58,7 @@ const Palvelu = observer(({ id, history }) => {
   const color = palvelu.color || 'sininen';
   const forwardToPage = () => {
     if (palvelu.linkki && palvelu.linkki.id) {
-      history.push(forwardTo(palvelu.linkki.id));
+      history.push(`/${i18n.language}${forwardTo(palvelu.linkki.id)}`);
     }
   };
   const Paragraph = ({ children }) => {

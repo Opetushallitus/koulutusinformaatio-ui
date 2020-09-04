@@ -8,7 +8,6 @@ import {
   Box,
   CircularProgress,
   Divider,
-  Link,
   makeStyles,
   Paper,
   Popover,
@@ -35,6 +34,7 @@ import { theme } from '#/src/theme';
 import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
 import HakupalkkiFilters from './HakupalkkiFilters';
 import { Common as C } from '#/src/tools/Utils';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -130,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
 const Hakupalkki = () => {
   const history = useHistory();
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
   const {
@@ -141,16 +141,17 @@ const Hakupalkki = () => {
     koulutusFilters,
   } = useSelector(getHakupalkkiProps);
   const requestApiParams = useSelector(getAPIRequestParams);
+  const etusivuPath = `/${i18n.language}/`;
 
   const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
-    if (location.pathname === '/') {
+    if (location.pathname === etusivuPath) {
       dispatch(setKeyword({ keyword: '' }));
       dispatch(clearSelectedFilters());
       dispatch(clearPaging());
     }
-  }, [location.pathname, dispatch]);
+  }, [location.pathname, etusivuPath, dispatch]);
 
   function handleClick(e) {
     dispatch(searchAll(getAPIRequestParams));
@@ -181,7 +182,7 @@ const Hakupalkki = () => {
         'sijainti',
       ])
     ).toString();
-    history.push(`/haku/${keyword}?${restParams}`);
+    history.push(`/${i18n.language}/haku/${keyword}?${restParams}`);
     dispatch(setKeywordEditMode({ newKeywordEditMode: false }));
     dispatch(searchAll(requestApiParams, true));
   };
@@ -217,7 +218,7 @@ const Hakupalkki = () => {
             open={showTooltip}
             title={t('haku.syota-ainakin-kolme-merkkia')}>
             <InputBase
-              defaultValue={location.pathname === '/' ? '' : keyword}
+              defaultValue={location.pathname === etusivuPath ? '' : keyword}
               className={classes.input}
               onKeyPress={(event) =>
                 event.key === 'Enter' && isKeywordValid && doSearch(event)
@@ -277,9 +278,9 @@ const Hakupalkki = () => {
             </Box>
           </Popover>
         )}
-        <Link component={RouterLink} to={`/haku/`} className={classes.link}>
+        <LocalizedLink component={RouterLink} to={`/haku/`} className={classes.link}>
           {t('jumpotron.naytakaikki')}
-        </Link>
+        </LocalizedLink>
       </Box>
     </ThemeProvider>
   );

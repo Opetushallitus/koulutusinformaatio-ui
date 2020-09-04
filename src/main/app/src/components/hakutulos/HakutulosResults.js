@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, Link, Typography, useTheme } from '@material-ui/core';
+import { Grid, Typography, useTheme } from '@material-ui/core';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 import _ from 'lodash';
 import KoulutusKortti from './hakutulosKortit/KoulutusKortti';
 import OppilaitosKortti from './hakutulosKortit/OppilaitosKortti';
@@ -62,9 +63,9 @@ const HakutulosResults = ({ selectedTab, koulutusHits, oppilaitosHits, keyword }
         <Typography paragraph>{t('haku.summary', { keyword: keyword })}</Typography>
       </Grid>
       <Grid item>
-        <Link underline="always" href="/konfo" variant="body1">
+        <LocalizedLink underline="always" href="/konfo" variant="body1">
           {t('haku.siirry-opintopolun-etusivulle')}
-        </Link>
+        </LocalizedLink>
       </Grid>
     </Grid>
   );

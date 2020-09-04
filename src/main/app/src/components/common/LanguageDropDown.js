@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { colors } from '#/src/colors';
 import LanguageIcon from '@material-ui/icons/Language';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import { useLocation, useHistory } from 'react-router-dom';
 
 const CustomInput = withStyles((theme) => ({
   input: {
@@ -28,12 +29,15 @@ const iconComponent = (props) => {
 
 const LanguageDropDown = () => {
   const { i18n, t } = useTranslation();
+  const location = useLocation();
+  const history = useHistory();
   const [language, setLanguage] = useState(i18n.language);
   const handleChange = (event) => {
     const newLanguage = event.target.value;
     if (newLanguage !== language) {
       setLanguage(newLanguage);
-      i18n.changeLanguage(newLanguage);
+      const newPath = location.pathname.replace(/\/(.*?)\//, `/${newLanguage}/`); // Replace first path index with new language selection
+      i18n.changeLanguage(newLanguage).then(history.push(newPath));
     }
   };
   return (

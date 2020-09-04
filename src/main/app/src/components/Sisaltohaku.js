@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 import { withRouter } from 'react-router-dom';
 import Murupolku from './common/Murupolku';
 import parse from 'url-parse';
@@ -88,7 +88,7 @@ const Result = withStyles({
   return (
     <Grid item xs={12} key={id}>
       <TulosPanel>
-        <ButtonBase component={Link} className={classes.root} to={url}>
+        <ButtonBase component={LocalizedLink} className={classes.root} to={url}>
           <CardContent className={classes.content}>
             <Typography component="h4" variant="h4">
               {sivu.name}
@@ -101,12 +101,8 @@ const Result = withStyles({
           <CardMedia
             className={classes.image}
             image={assetUrl || koulutusPlaceholderImg}
-            title={
-              image.description || image.name || t('sisaltohaku.paikanpitäjä')
-            }
-            aria-label={
-              image.description || image.name || t('sisaltohaku.paikanpitäjä')
-            }
+            title={image.description || image.name || t('sisaltohaku.paikanpitäjä')}
+            aria-label={image.description || image.name || t('sisaltohaku.paikanpitäjä')}
           />
         </ButtonBase>
       </TulosPanel>
@@ -119,7 +115,7 @@ const Sisaltohaku = observer((props) => {
   const asKeywords = (s) => s.toLowerCase().split(/[ ,]+/);
   const { contentfulStore } = useStores();
   const { sivu, uutinen } = contentfulStore.data;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const classes = useStyles();
 
   const { forwardTo } = contentfulStore;
@@ -141,16 +137,14 @@ const Sisaltohaku = observer((props) => {
       return [];
     }
   };
-  const hakusana = _.trim(
-    (parse(props.location.search, true).query || {}).hakusana
-  );
+  const hakusana = _.trim((parse(props.location.search, true).query || {}).hakusana);
   const [state, setState] = useState({
     currentOffset: undefined,
     search: hakusana,
     results: fetchResults(hakusana),
   });
   const doSearch = (event) => {
-    props.history.push('/sisaltohaku/?hakusana=' + _.trim(state.search));
+    props.history.push(`/${i18n.language}/sisaltohaku/?hakusana=${_.trim(state.search)}`);
     event && event.preventDefault();
     setState({
       ...state,
@@ -166,9 +160,7 @@ const Sisaltohaku = observer((props) => {
   const pagination = (state.results || []).length > pageSize;
   const paginate = () => {
     const offset = state.currentOffset || 0;
-    return pagination
-      ? state.results.slice(offset, pageSize + offset)
-      : state.results;
+    return pagination ? state.results.slice(offset, pageSize + offset) : state.results;
   };
   return (
     <ReactiveBorder>
@@ -192,9 +184,7 @@ const Sisaltohaku = observer((props) => {
               className={classes.input}
               defaultValue={state.search}
               onKeyPress={(event) => event.key === 'Enter' && doSearch(event)}
-              onChange={({ target }) =>
-                setState({ ...state, search: target.value })
-              }
+              onChange={({ target }) => setState({ ...state, search: target.value })}
               placeholder={t('sidebar.etsi-tietoa-opintopolusta')}
               inputProps={{
                 'aria-label': t('sidebar.etsi-tietoa-opintopolusta'),
@@ -217,12 +207,10 @@ const Sisaltohaku = observer((props) => {
                 <h1>{t('sisaltohaku.eituloksia')}</h1>
               </Grid>
               <Grid item xs={12}>
-                <span>
-                  {t('sisaltohaku.summary', { hakusana: hakusana || '' })}
-                </span>
+                <span>{t('sisaltohaku.summary', { hakusana: hakusana || '' })}</span>
               </Grid>
               <Grid item xs={12}>
-                <Link to={'/'}>{t('sisaltohaku.takaisin')}</Link>
+                <LocalizedLink to={'/'}>{t('sisaltohaku.takaisin')}</LocalizedLink>
               </Grid>
             </React.Fragment>
           )

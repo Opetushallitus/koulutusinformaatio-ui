@@ -1,11 +1,12 @@
 import React from 'react';
-import { Typography, Grid, Container, makeStyles, Link } from '@material-ui/core';
+import { Typography, Grid, Container, makeStyles } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import Spacer from '#/src/components/common/Spacer';
 import ToteutusCard from '#/src/components/common/ToteutusCard';
 import TarjontaPagination from './TarjontaPagination';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles({
   container: {
@@ -30,7 +31,7 @@ const TarjontaList = ({ tarjonta, oid }) => {
         <Grid container direction="column" spacing={1}>
           {_.map(_.get(tarjonta, 'localizedTarjonta'), (tts, i) => (
             <Grid item key={i}>
-              <Link
+              <LocalizedLink
                 underline="none"
                 component={RouterLink}
                 to={`/toteutus/${tts?.toteutusOid}`}>
@@ -43,7 +44,7 @@ const TarjontaList = ({ tarjonta, oid }) => {
                   tyyppi={tts?.tyyppi}
                   image={tts?.kuva}
                 />
-              </Link>
+              </LocalizedLink>
             </Grid>
           ))}
         </Grid>

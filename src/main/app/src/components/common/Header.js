@@ -9,13 +9,13 @@ import {
   Chip,
   IconButton,
   Icon,
-  Link,
   makeStyles,
   CssBaseline,
   AppBar,
   Toolbar,
   Hidden,
 } from '@material-ui/core';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 import BetaBanner from '#/src/components/common/BetaBanner';
 import clsx from 'clsx';
 import LanguageDropDown from './LanguageDropDown';
@@ -83,11 +83,11 @@ const Header = (props) => {
             className={classes.menuButton}>
             {isOpen ? <Icon>close</Icon> : <MenuIcon />}
           </IconButton>
-          <Link component={RouterLink} to={`/`}>
+          <LocalizedLink component={RouterLink} to={`/`}>
             <Icon className={classes.icon}>
               <img alt={t('opintopolku.brand')} src={HeaderIcon} />
             </Icon>
-          </Link>
+          </LocalizedLink>
           <Chip
             className={classes.beta}
             size="small"
