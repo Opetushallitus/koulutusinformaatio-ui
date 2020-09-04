@@ -132,13 +132,13 @@ const App = () => {
                   <KoulutusHakuBar />
                   <Valintaperusteet />
                 </Route>
+                <Route component={NotFound} />
               </Switch>
             ) : (
               <Route component={NotFound} />
             )
           }
         />
-        <Route component={NotFound} />
       </Switch>
       <Palvelut />
       <Footer />
