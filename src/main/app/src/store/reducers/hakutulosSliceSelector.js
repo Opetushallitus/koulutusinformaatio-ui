@@ -74,6 +74,9 @@ function getPageSizeArray(state) {
 function getPageSortArray(state) {
   return state.hakutulos.pageSortArray;
 }
+function getShowHakutulosFilters(state) {
+  return state.hakutulos.showHakutulosFilters;
+}
 //Selectors
 export const getHakupalkkiProps = createSelector(
   [
@@ -82,14 +85,23 @@ export const getHakupalkkiProps = createSelector(
     getKoulutusFilters,
     getOppilaitosFilters,
     getSelectedTab,
+    getShowHakutulosFilters,
   ],
-  (keyword, keywordEditMode, koulutusFilters, oppilaitosFilters, selectedTab) => ({
+  (
+    keyword,
+    keywordEditMode,
+    koulutusFilters,
+    oppilaitosFilters,
+    selectedTab,
+    showHakutulosFilters
+  ) => ({
     keyword,
     keywordEditMode,
     isKeywordValid: !_.inRange(_.size(keyword), 1, 3),
     koulutusFilters,
     oppilaitosFilters,
     selectedTab,
+    showHakutulosFilters,
   })
 );
 
