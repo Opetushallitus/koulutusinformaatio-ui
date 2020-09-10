@@ -8,12 +8,10 @@ import { Badge, Button, ButtonGroup, Hidden, makeStyles } from '@material-ui/cor
 import { colors } from '#/src/colors';
 import {
   toggleshowHakutulosFilters,
-  setKeywordEditMode,
-  searchAll,
+  executeSearchFromStartingPage,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
-import { Common as C } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({
   buttonGroupRoot: {
@@ -41,40 +39,24 @@ const MobileToggleFiltersButton = ({ isFrontPage = false }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const suodatinValinnatProps = useSelector(getSuodatinValinnatProps);
-  const requestApiParams = useSelector(getAPIRequestParams);
+  const apiRequestParams = useSelector(getAPIRequestParams);
   const {
     showHakutulosFilters,
     koulutusTotal,
     oppilaitosTotal,
     selectedTab,
-    keyword,
   } = useSelector(
     (state) => ({
       showHakutulosFilters: state.hakutulos.showHakutulosFilters,
       koulutusTotal: state.hakutulos.koulutusTotal,
       oppilaitosTotal: state.hakutulos.oppilaitosTotal,
       selectedTab: state.hakutulos.selectedTab,
-      keyword: state.hakutulos.keyword,
     }),
     shallowEqual
   );
 
   const handleFiltersShowToggle = () => {
-    if (isFrontPage) {
-      const restParams = new URLSearchParams(
-        _.pick(C.cleanRequestParams(requestApiParams), [
-          'order',
-          'size',
-          'opetuskieli',
-          'koulutustyyppi',
-          'koulutusala',
-          'sijainti',
-        ])
-      ).toString();
-      history.push(`/haku/${keyword}?${restParams}`);
-      dispatch(setKeywordEditMode({ newKeywordEditMode: false }));
-      dispatch(searchAll(requestApiParams, true));
-    }
+    isFrontPage && dispatch(executeSearchFromStartingPage({ apiRequestParams, history }));
     dispatch(toggleshowHakutulosFilters());
   };
 

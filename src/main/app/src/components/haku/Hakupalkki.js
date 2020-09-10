@@ -31,13 +31,13 @@ import {
   clearPaging,
   setKeywordEditMode,
   toggleshowHakutulosFilters,
+  executeSearchFromStartingPage,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getHakupalkkiProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { colors } from '#/src/colors';
 import { theme } from '#/src/theme';
 import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
 import HakupalkkiFilters from './HakupalkkiFilters';
-import { Common as C } from '#/src/tools/Utils';
 import MobileFiltersOnTopMenu from '../hakutulos/MobileFiltersOnTopMenu';
 
 const useStyles = makeStyles((theme) => ({
@@ -158,7 +158,7 @@ const Hakupalkki = () => {
     koulutusFilters,
     showHakutulosFilters,
   } = useSelector(getHakupalkkiProps);
-  const requestApiParams = useSelector(getAPIRequestParams);
+  const apiRequestParams = useSelector(getAPIRequestParams);
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -170,42 +170,33 @@ const Hakupalkki = () => {
     }
   }, [location.pathname, dispatch, showHakutulosFilters]);
 
-  function handleClick(e = null) {
+  function handleDesktopBtnClick(e) {
     dispatch(searchAll(getAPIRequestParams));
     dispatch(toggleshowHakutulosFilters());
-    if (e.currentTarget.ariaLabel === t('haku.rajaa')) {
-      window.scrollTo({
-        top: 250,
-        left: 0,
-        behavior: 'smooth',
-      });
-      setAnchorEl(e.currentTarget);
-    }
+    window.scrollTo({
+      top: 250,
+      left: 0,
+      behavior: 'smooth',
+    });
+    setAnchorEl(e.currentTarget);
+  }
+  function handleMobileBtnClick() {
+    dispatch(searchAll(getAPIRequestParams));
+    dispatch(toggleshowHakutulosFilters());
   }
   function handleClose() {
     setAnchorEl(null);
     dispatch(toggleshowHakutulosFilters());
   }
 
-  const open = Boolean(anchorEl);
-  const ExpandIcon = () => (open ? <ExpandLessOutlined /> : <ExpandMoreOutlined />);
-  const id = open ? 'filters-popover' : undefined;
+  const isPopoverOpen = Boolean(anchorEl);
+  const ExpandIcon = () =>
+    isPopoverOpen ? <ExpandLessOutlined /> : <ExpandMoreOutlined />;
+  const id = isPopoverOpen ? 'filters-popover' : undefined;
 
   const doSearch = (event) => {
     event.preventDefault();
-    const restParams = new URLSearchParams(
-      _.pick(C.cleanRequestParams(requestApiParams), [
-        'order',
-        'size',
-        'opetuskieli',
-        'koulutustyyppi',
-        'koulutusala',
-        'sijainti',
-      ])
-    ).toString();
-    history.push(`/haku/${keyword}?${restParams}`);
-    dispatch(setKeywordEditMode({ newKeywordEditMode: false }));
-    dispatch(searchAll(requestApiParams, true));
+    dispatch(executeSearchFromStartingPage({ apiRequestParams, history }));
   };
   const setSearch = (event) => {
     !keywordEditMode && dispatch(setKeywordEditMode({ newKeywordEditMode: true }));
@@ -254,17 +245,16 @@ const Hakupalkki = () => {
             <Hidden smDown>
               <Box component="div" className={classes.box}>
                 <Divider orientation="vertical" />
-                {/* <Hidden smDown> */}
                 <Button
                   aria-describedby={id}
                   endIcon={
-                    !anchorEl || !_.isEmpty(koulutusFilters) ? (
+                    !isPopoverOpen || !_.isEmpty(koulutusFilters) ? (
                       <ExpandIcon />
                     ) : (
                       <CircularProgress size={25} color="inherit" />
                     )
                   }
-                  onClick={handleClick}
+                  onClick={handleDesktopBtnClick}
                   className={classes.expandButton}
                   aria-label={t('haku.rajaa')}>
                   {t('haku.rajaa')}
@@ -295,7 +285,7 @@ const Hakupalkki = () => {
               <Popover
                 classes={{ paper: classes.popoverPaper, root: classes.popoverRoot }}
                 id={id}
-                open={open}
+                open={isPopoverOpen}
                 anchorEl={anchorEl}
                 onClose={handleClose}
                 PaperProps={{
@@ -328,7 +318,7 @@ const Hakupalkki = () => {
             <Button
               endIcon={<FilterList />}
               className={classes.mobileFilterButton}
-              onClick={handleClick}>
+              onClick={handleMobileBtnClick}>
               {t('haku.rajaa-tuloksia')}
             </Button>
           </Hidden>

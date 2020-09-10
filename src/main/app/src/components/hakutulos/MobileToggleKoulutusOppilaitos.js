@@ -42,7 +42,7 @@ const MobileToggleKoulutusOppilaitos = () => {
   const { selectedTab } = useSelector(getHakutulosToggleProps);
 
   function updateSelectedTab(e) {
-    const newSelectedTab = e.currentTarget.ariaLabel;
+    const newSelectedTab = e.currentTarget.dataset.id;
     const search = qs.parse(history.location.search);
     search.tab = newSelectedTab;
     history.replace({ search: qs.stringify(search) });
@@ -57,14 +57,18 @@ const MobileToggleKoulutusOppilaitos = () => {
       <SuodatinExpansionPanelDetails>
         <ButtonGroup fullWidth>
           <Button
-            aria-label="koulutus"
-            className={selectedTab === 0 ? classes.buttonActive : classes.buttonInactive}
+            data-id="koulutus"
+            className={
+              selectedTab === 'koulutus' ? classes.buttonActive : classes.buttonInactive
+            }
             onClick={updateSelectedTab}>
             {t('haku.koulutukset')}
           </Button>
           <Button
-            aria-label="oppilaitos"
-            className={selectedTab === 1 ? classes.buttonActive : classes.buttonInactive}
+            data-id="oppilaitos"
+            className={
+              selectedTab === 'oppilaitos' ? classes.buttonActive : classes.buttonInactive
+            }
             onClick={updateSelectedTab}>
             {t('haku.oppilaitokset')}
           </Button>

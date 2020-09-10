@@ -165,7 +165,7 @@ export const getHakutulosProps = createSelector(
 export const getHakutulosToggleProps = createSelector(
   [getSelectedTab, getKoulutusTotal, getOppilaitosTotal],
   (selectedTab, koulutusTotal, oppilaitosTotal) => ({
-    selectedTab: selectedTab === 'koulutus' ? 0 : 1,
+    selectedTab,
     koulutusTotal,
     oppilaitosTotal,
   })

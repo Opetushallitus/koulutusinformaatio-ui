@@ -48,9 +48,8 @@ const HakutulosToggle = () => {
   const classes = useStyles();
   const muiScreenSizeMinMd = useMediaQuery(MUI_BREAKPOINTS.MIN_MD);
 
-  const handleSelectedTab = (event, newValue) => {
+  const handleSelectedTab = (e, newSelectedTab) => {
     const search = qs.parse(history.location.search);
-    const newSelectedTab = newValue === 0 ? 'koulutus' : 'oppilaitos';
     search.tab = newSelectedTab;
     history.replace({ search: qs.stringify(search) });
     dispatch(setSelectedTab({ newSelectedTab }));
@@ -64,6 +63,7 @@ const HakutulosToggle = () => {
       textColor="primary"
       onChange={handleSelectedTab}>
       <Tab
+        value="koulutus"
         icon={<SchoolOutlined className={classes.tabIconMargin} />}
         classes={{
           wrapper: classes.tabWrapper,
@@ -74,6 +74,7 @@ const HakutulosToggle = () => {
           _.isNil(koulutusTotal) ? 0 : koulutusTotal
         })`}></Tab>
       <Tab
+        value="oppilaitos"
         icon={<HomeWorkOutlined className={classes.tabIconMargin} />}
         classes={{
           wrapper: classes.tabWrapper,
