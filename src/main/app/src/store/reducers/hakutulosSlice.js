@@ -320,6 +320,26 @@ export const searchAllOnPageReload = ({ apiRequestParams, search, keyword }) => 
   }
 };
 
+export const executeSearchFromStartingPage = ({ apiRequestParams, history }) => (
+  dispatch,
+  getState
+) => {
+  const { hakutulos } = getState();
+  const restParams = new URLSearchParams(
+    _.pick(C.cleanRequestParams(apiRequestParams), [
+      'order',
+      'size',
+      'opetuskieli',
+      'koulutustyyppi',
+      'koulutusala',
+      'sijainti',
+    ])
+  ).toString();
+  history.push(`/haku/${hakutulos.keyword}?${restParams}`);
+  dispatch(setKeywordEditMode({ newKeywordEditMode: false }));
+  dispatch(searchAll(apiRequestParams, true));
+};
+
 // Helpers
 function getCheckedFilterValues(ids, koulutusFilters) {
   const idsArray = _.split(ids, ',');
