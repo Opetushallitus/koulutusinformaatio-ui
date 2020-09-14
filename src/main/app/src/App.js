@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import KonfoStore from './stores/konfo-store';
@@ -66,6 +66,61 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const KoulutusHakuBar = () => (
+  <div style={{ margin: 'auto', paddingTop: '50px', maxWidth: '1600px' }}>
+    <ReactiveBorder>
+      <Hakupalkki />
+    </ReactiveBorder>
+  </div>
+);
+
+const TranslatedRoutes = ({ match }) => {
+  const { i18n } = useTranslation();
+  const selectedLanguage = match.params.lng;
+  useEffect(() => {
+    selectedLanguage &&
+      supportedLanguages.includes(selectedLanguage) &&
+      i18n.changeLanguage(selectedLanguage);
+  }, [i18n, selectedLanguage]);
+  return supportedLanguages.includes(selectedLanguage) ? (
+    <Switch>
+      <Route exact path="/:lng">
+        <Etusivu />
+      </Route>
+      <Route path="/:lng/sisaltohaku/">
+        <Sisaltohaku />
+      </Route>
+      <Route path="/:lng/haku/:keyword?">
+        <KoulutusHakuBar />
+        <Haku />
+      </Route>
+      <Route path="/:lng/koulutus/:oid">
+        <KoulutusHakuBar />
+        <Koulutus />
+      </Route>
+      <Route path="/:lng/oppilaitos/:oid">
+        <KoulutusHakuBar />
+        <Oppilaitos />
+      </Route>
+      <Route path="/:lng/toteutus/:oid">
+        <KoulutusHakuBar />
+        <Toteutus />
+      </Route>
+      <Route path="/:lng/sivu/:id">
+        <KoulutusHakuBar />
+        <SivuRouter />
+      </Route>
+      <Route path="/:lng/hakukohde/:hakukohdeOid/valintaperuste/:valintaperusteOid">
+        <KoulutusHakuBar />
+        <Valintaperusteet />
+      </Route>
+      <Route component={NotFound} />
+    </Switch>
+  ) : (
+    <Route component={NotFound} />
+  );
+};
+
 const App = () => {
   const classes = useStyles();
   const hakuStore = konfoStore.hakuStore;
@@ -86,59 +141,12 @@ const App = () => {
   const closeMenu = () => {
     setMenuVisible(false);
   };
-  const KoulutusHakuBar = () => (
-    <div style={{ margin: 'auto', paddingTop: '50px', maxWidth: '1600px' }}>
-      <ReactiveBorder>
-        <Hakupalkki />
-      </ReactiveBorder>
-    </div>
-  );
+
   const main = (
     <React.Fragment>
       <Switch>
         <Redirect exact from="/" to={`/${i18n.language}/`} />
-        <Route
-          path="/:lng"
-          component={({ match }) =>
-            supportedLanguages.includes(match.params.lng) ? (
-              <Switch>
-                <Route exact path="/:lng">
-                  <Etusivu />
-                </Route>
-                <Route path="/:lng/sisaltohaku/">
-                  <Sisaltohaku />
-                </Route>
-                <Route path="/:lng/haku/:keyword?">
-                  <KoulutusHakuBar />
-                  <Haku />
-                </Route>
-                <Route path="/:lng/koulutus/:oid">
-                  <KoulutusHakuBar />
-                  <Koulutus />
-                </Route>
-                <Route path="/:lng/oppilaitos/:oid">
-                  <KoulutusHakuBar />
-                  <Oppilaitos />
-                </Route>
-                <Route path="/:lng/toteutus/:oid">
-                  <KoulutusHakuBar />
-                  <Toteutus />
-                </Route>
-                <Route path="/:lng/sivu/:id">
-                  <KoulutusHakuBar />
-                  <SivuRouter />
-                </Route>
-                <Route path="/:lng/hakukohde/:hakukohdeOid/valintaperuste/:valintaperusteOid">
-                  <KoulutusHakuBar />
-                  <Valintaperusteet />
-                </Route>
-                <Route component={NotFound} />
-              </Switch>
-            ) : (
-              <Route component={NotFound} />
-            )
-          }
-        />
+        <Route path="/:lng" component={TranslatedRoutes} />
       </Switch>
       <Palvelut />
       <Footer />
