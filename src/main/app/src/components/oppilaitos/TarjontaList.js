@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   },
 });
 
-const TarjontaList = ({ tarjonta, oid }) => {
+const TarjontaList = ({ tarjonta, oid, isOppilaitosOsa }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -52,7 +52,11 @@ const TarjontaList = ({ tarjonta, oid }) => {
           {t('oppilaitos.ei-toteutuksia')}
         </Typography>
       )}
-      <TarjontaPagination total={_.get(tarjonta, 'total')} oid={oid} />
+      <TarjontaPagination
+        total={_.get(tarjonta, 'total')}
+        oid={oid}
+        isOppilaitosOsa={isOppilaitosOsa}
+      />
     </Container>
   );
 };

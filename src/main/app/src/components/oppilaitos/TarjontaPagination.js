@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TarjontaPagination = ({ total, oid }) => {
+const TarjontaPagination = ({ total, oid, isOppilaitosOsa }) => {
   const classes = useStyles();
   const { size, offset, order } = useSelector(getTarjontaPaginationProps);
   const dispatch = useDispatch();
@@ -40,10 +40,11 @@ const TarjontaPagination = ({ total, oid }) => {
         fetchTarjontaData({
           oid,
           requestParams: { page, size, order, offset },
+          isOppilaitosOsa,
         })
       );
     },
-    [dispatch, oid, order, size]
+    [dispatch, oid, order, size, isOppilaitosOsa]
   );
 
   return (

@@ -40,6 +40,7 @@ const Oppilaitos = (props) => {
   const classes = useStyles();
   const { oid } = useParams();
   const { t } = useTranslation();
+  const isOppilaitosOsa = props.oppilaitosOsa;
   const {
     esittelyHtml,
     oppilaitos,
@@ -52,8 +53,8 @@ const Oppilaitos = (props) => {
   const hakuUrl = useSelector(getHakuUrl);
 
   useEffect(() => {
-    dispatch(fetchOppilaitosTarjontaData({ oid }));
-  }, [oid, dispatch]);
+    dispatch(fetchOppilaitosTarjontaData({ oid, isOppilaitosOsa }));
+  }, [oid, dispatch, isOppilaitosOsa]);
 
   return status === 'loading' ? (
     <LoadingCircle />
@@ -100,12 +101,20 @@ const Oppilaitos = (props) => {
 
         {tarjonta?.total > 0 && (
           <Box id="tarjonta">
-            <TarjontaList tarjonta={tarjonta} oid={oid} />
+            <TarjontaList
+              tarjonta={tarjonta}
+              oid={oid}
+              isOppilaitosOsa={isOppilaitosOsa}
+            />
           </Box>
         )}
         {tulevaTarjonta?.total > 0 && (
           <Box id="tulevaTarjonta">
-            <TulevaTarjontaList tulevaTarjonta={tulevaTarjonta} oid={oid} />
+            <TulevaTarjontaList
+              tulevaTarjonta={tulevaTarjonta}
+              oid={oid}
+              isOppilaitosOsa={isOppilaitosOsa}
+            />
           </Box>
         )}
 
@@ -116,10 +125,12 @@ const Oppilaitos = (props) => {
             tietoaOpiskelusta={tietoaOpiskelusta}
           />
         )}
-        <OppilaitosOsaList
-          oppilaitosOsat={oppilaitosOsat}
-          title={t('oppilaitos.tutustu-toimipisteisiin')}
-        />
+        {isOppilaitosOsa ? null : (
+          <OppilaitosOsaList
+            oppilaitosOsat={oppilaitosOsat}
+            title={t('oppilaitos.tutustu-toimipisteisiin')}
+          />
+        )}
         <Yhteystiedot
           className={classes.root}
           heading={t('oppilaitos.yhteystiedot')}

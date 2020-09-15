@@ -8,9 +8,12 @@ const production = {
   'konfo-backend.toteutus': '/konfo-backend/toteutus/$1',
   'konfo-backend.valintaperusteet': '/konfo-backend/valintaperuste/$1',
   'konfo-backend.oppilaitos': '/konfo-backend/oppilaitos/$1',
+  'konfo-backend.oppilaitosOsa': '/konfo-backend/oppilaitoksen-osa/$1',
   'konfo-backend.palaute': '/konfo-backend/palaute',
   'konfo-backend.koulutus.jarjestajat': '/konfo-backend/search/koulutus/$1/jarjestajat',
   'konfo-backend.oppilaitos.tarjonta': '/konfo-backend/search/oppilaitos/$1/tarjonta',
+  'konfo-backend.oppilaitosOsa.tarjonta':
+    '/konfo-backend/search/oppilaitoksen-osa/$1/tarjonta',
   'konfo-backend.hakukohde': '/konfo-backend/hakukohde/$1',
   'konfo-backend.haku': '/konfo-backend/haku/$1',
   'konfo-backend.koulutus.kuvaus': '/konfo-backend/kuvaus/',
@@ -41,6 +44,8 @@ const development = {
     'https://beta.hahtuvaopintopolku.fi/konfo-backend/toteutus/$1',
   'konfo-backend.oppilaitos':
     'https://beta.hahtuvaopintopolku.fi/konfo-backend/oppilaitos/$1',
+  'konfo-backend.oppilaitosOsa':
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/oppilaitoksen-osa/$1',
   'konfo-backend.palaute': 'https://beta.hahtuvaopintopolku.fi/konfo-backend/palaute',
   'konfo-backend.hakukohde':
     'https://beta.hahtuvaopintopolku.fi/konfo-backend/hakukohde/$1',
@@ -51,6 +56,8 @@ const development = {
     'https://beta.hahtuvaopintopolku.fi/konfo-backend/search/oppilaitos/$1/tarjonta',
   'eperusteet-service.eperuste.kuvaus':
     'https://eperusteet.hahtuvaopintopolku.fi/#/$1/esitys/$2/reformi/tutkinnonosat/$3',
+  'konfo-backend.oppilaitosOsa.tarjonta':
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/search/oppilaitoksen-osa/$1/tarjonta',
   'kartta.base-url': 'https://hkp.maanmittauslaitos.fi',
   'kartta.publish-url':
     'https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0',

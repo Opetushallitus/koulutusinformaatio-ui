@@ -113,6 +113,10 @@ const App = () => {
           <KoulutusHakuBar />
           <Oppilaitos />
         </Route>
+        <Route path="/oppilaitososa/:oid">
+          <KoulutusHakuBar />
+          <Oppilaitos oppilaitosOsa />
+        </Route>
         <Route path="/toteutus/:oid">
           <KoulutusHakuBar />
           <Toteutus />
