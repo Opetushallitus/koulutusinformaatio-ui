@@ -33,6 +33,7 @@ import MobileResultsPerPageExpansionMenu from './MobileResultsPerPageExpansionMe
 import MobileToggleFiltersButton from './MobileToggleFiltersButton';
 import MobileToggleOrderByButtonMenu from './MobileToggleOrderByButtonMenu';
 import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
+import MobileToggleKoulutusOppilaitos from './MobileToggleKoulutusOppilaitos';
 
 const useStyles = makeStyles((theme) => ({
   paperAnchorBottom: {
@@ -53,9 +54,12 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 'calc(100vh - 60px - 30px - 40px - 20px)',
     overflowY: 'scroll',
   },
+  divider: {
+    margin: '3px 0',
+  },
 }));
 
-const MobileFiltersOnTopMenu = () => {
+const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
   const history = useHistory();
   const classes = useStyles();
   const { t } = useTranslation();
@@ -113,18 +117,20 @@ const MobileFiltersOnTopMenu = () => {
         </Toolbar>
       </AppBar>
       <Container classes={{ root: classes.containerRoot }}>
+        {isFrontPage && <MobileToggleKoulutusOppilaitos />}
+        {isFrontPage && <Divider className={classes.divider} />}
         <KoulutusTyyppiSuodatin expanded={false} elevation={0} displaySelected />
-        <Divider style={{ margin: '3px 0' }} />
+        <Divider className={classes.divider} />
         <OpetusKieliSuodatin expanded={false} elevation={0} displaySelected />
-        <Divider style={{ margin: '3px 0' }} />
+        <Divider className={classes.divider} />
         <SijaintiSuodatin expanded={false} elevation={0} displaySelected />
-        <Divider style={{ margin: '3px 0' }} />
+        <Divider className={classes.divider} />
         <KoulutusalaSuodatin expanded={false} elevation={0} displaySelected />
-        <Divider style={{ margin: '3px 0' }} />
-        <MobileToggleOrderByButtonMenu elevation={0} />
-        <MobileResultsPerPageExpansionMenu elevation={0} />
+        <Divider className={classes.divider} />
+        {!isFrontPage && <MobileToggleOrderByButtonMenu elevation={0} />}
+        {!isFrontPage && <MobileResultsPerPageExpansionMenu elevation={0} />}
       </Container>
-      <MobileToggleFiltersButton />
+      <MobileToggleFiltersButton isFrontPage={isFrontPage} />
     </SwipeableDrawer>
   );
 };

@@ -11,13 +11,14 @@ const OppilaitosOsaList = (props) => {
   const cardInfos = oppilaitosOsat.map((osa) => ({
     text: osa.nimi,
     image: osa?.oppilaitoksenOsa?.teemakuva || DefaultHeroImage,
+    link: `/oppilaitososa/${osa.oid}`,
   }));
   return (
     <Box mt={isMobile ? 6 : 12} display="flex" alignItems="center" flexDirection="column">
       <Typography variant="h2">{title}</Typography>
       <Spacer />
       <Box mt={isMobile ? 0 : 2}>
-        <ImageCardGrid cards={cardInfos} />
+        <ImageCardGrid cards={cardInfos} cardIsLink />
       </Box>
     </Box>
   );

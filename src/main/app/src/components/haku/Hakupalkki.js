@@ -8,16 +8,19 @@ import {
   Box,
   CircularProgress,
   Divider,
+  Hidden,
   makeStyles,
   Paper,
   Popover,
   ThemeProvider,
   Tooltip,
+  IconButton,
 } from '@material-ui/core';
 import {
   SearchOutlined,
   ExpandMoreOutlined,
   ExpandLessOutlined,
+  FilterList,
 } from '@material-ui/icons';
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
@@ -25,16 +28,17 @@ import {
   searchAll,
   setKeyword,
   clearPaging,
-  clearSelectedFilters,
   setKeywordEditMode,
+  toggleshowHakutulosFilters,
+  executeSearchFromStartingPage,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getHakupalkkiProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { colors } from '#/src/colors';
 import { theme } from '#/src/theme';
 import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
 import HakupalkkiFilters from './HakupalkkiFilters';
-import { Common as C } from '#/src/tools/Utils';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
+import MobileFiltersOnTopMenu from '../hakutulos/MobileFiltersOnTopMenu';
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -52,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '600',
     lineHeight: '27px',
   },
-  iconButton: {
+  searchButton: {
     color: colors.white,
     borderRadius: '2px',
     height: '40px',
@@ -64,6 +68,15 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     marginRight: '20px',
     marginLeft: '20px',
+  },
+  mobileFilterButton: {
+    color: colors.white,
+    paddingLeft: 0,
+    marginTop: '3px',
+    fontWeight: 600,
+  },
+  mobileIconButton: {
+    marginRight: theme.spacing(1),
   },
   expandButton: {
     height: '40px',
@@ -112,7 +125,12 @@ const useStyles = makeStyles((theme) => ({
     background: 'transparent',
   },
   inputRoot: {
-    height: '73px',
+    [theme.breakpoints.up('md')]: {
+      height: '73px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      height: '58px',
+    },
     display: 'flex',
     width: '100%',
     alignItems: 'center',
@@ -136,11 +154,11 @@ const Hakupalkki = () => {
   const {
     keyword,
     keywordEditMode,
-    showTooltip,
     isKeywordValid,
     koulutusFilters,
+    showHakutulosFilters,
   } = useSelector(getHakupalkkiProps);
-  const requestApiParams = useSelector(getAPIRequestParams);
+  const apiRequestParams = useSelector(getAPIRequestParams);
   const etusivuPath = `/${i18n.language}/`;
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -148,13 +166,14 @@ const Hakupalkki = () => {
   useEffect(() => {
     if (location.pathname === etusivuPath) {
       dispatch(setKeyword({ keyword: '' }));
-      dispatch(clearSelectedFilters());
       dispatch(clearPaging());
+      !showHakutulosFilters && setAnchorEl(null);
     }
-  }, [location.pathname, etusivuPath, dispatch]);
+  }, [location.pathname, dispatch, showHakutulosFilters, etusivuPath]);
 
-  function handleClick(e) {
+  function handleDesktopBtnClick(e) {
     dispatch(searchAll(getAPIRequestParams));
+    dispatch(toggleshowHakutulosFilters());
     window.scrollTo({
       top: 250,
       left: 0,
@@ -162,35 +181,29 @@ const Hakupalkki = () => {
     });
     setAnchorEl(e.currentTarget);
   }
+  function handleMobileBtnClick() {
+    dispatch(searchAll(getAPIRequestParams));
+    dispatch(toggleshowHakutulosFilters());
+  }
   function handleClose() {
     setAnchorEl(null);
+    dispatch(toggleshowHakutulosFilters());
   }
 
-  const open = Boolean(anchorEl);
-  const ExpandIcon = () => (open ? <ExpandLessOutlined /> : <ExpandMoreOutlined />);
-  const id = open ? 'filters-popover' : undefined;
+  const isPopoverOpen = Boolean(anchorEl);
+  const ExpandIcon = () =>
+    isPopoverOpen ? <ExpandLessOutlined /> : <ExpandMoreOutlined />;
+  const id = isPopoverOpen ? 'filters-popover' : undefined;
 
   const doSearch = (event) => {
     event.preventDefault();
-    const restParams = new URLSearchParams(
-      _.pick(C.cleanRequestParams(requestApiParams), [
-        'order',
-        'size',
-        'opetuskieli',
-        'koulutustyyppi',
-        'koulutusala',
-        'sijainti',
-      ])
-    ).toString();
-    history.push(`/${i18n.language}/haku/${keyword}?${restParams}`);
-    dispatch(setKeywordEditMode({ newKeywordEditMode: false }));
-    dispatch(searchAll(requestApiParams, true));
+    dispatch(
+      executeSearchFromStartingPage({ apiRequestParams, history, lng: i18n.language })
+    );
   };
   const setSearch = (event) => {
-    if (event.target.value) {
-      !keywordEditMode && dispatch(setKeywordEditMode({ newKeywordEditMode: true }));
-      dispatch(setKeyword({ keyword: event.target.value || '' }));
-    }
+    !keywordEditMode && dispatch(setKeywordEditMode({ newKeywordEditMode: true }));
+    dispatch(setKeyword({ keyword: event.target.value || '' }));
   };
 
   const SearchButton = () => (
@@ -200,7 +213,7 @@ const Hakupalkki = () => {
       type="submit"
       variant="contained"
       color="secondary"
-      className={classes.iconButton}
+      className={classes.searchButton}
       aria-label={t('haku.etsi')}>
       {t('haku.etsi')}
     </Button>
@@ -215,7 +228,7 @@ const Hakupalkki = () => {
           elevation={4}>
           <Tooltip
             placement="bottom-start"
-            open={showTooltip}
+            open={!isKeywordValid}
             title={t('haku.syota-ainakin-kolme-merkkia')}>
             <InputBase
               defaultValue={location.pathname === etusivuPath ? '' : keyword}
@@ -231,56 +244,88 @@ const Hakupalkki = () => {
               }}
             />
           </Tooltip>
-          {location.pathname === '/' ? (
-            <Box component="div" className={classes.box}>
-              <Divider orientation="vertical" />
-              <Button
-                aria-describedby={id}
-                endIcon={
-                  !anchorEl || !_.isEmpty(koulutusFilters) ? (
-                    <ExpandIcon />
-                  ) : (
-                    <CircularProgress size={25} color="inherit" />
-                  )
-                }
-                onClick={handleClick}
-                className={classes.expandButton}
-                aria-label={t('haku.rajaa')}>
-                {t('haku.rajaa')}
-              </Button>
-              <SearchButton />
-            </Box>
-          ) : (
-            <SearchButton />
+          {location.pathname === etusivuPath && (
+            <Hidden smDown>
+              <Box component="div" className={classes.box}>
+                <Divider orientation="vertical" />
+                <Button
+                  aria-describedby={id}
+                  endIcon={
+                    !isPopoverOpen || !_.isEmpty(koulutusFilters) ? (
+                      <ExpandIcon />
+                    ) : (
+                      <CircularProgress size={25} color="inherit" />
+                    )
+                  }
+                  onClick={handleDesktopBtnClick}
+                  className={classes.expandButton}
+                  aria-label={t('haku.rajaa')}>
+                  {t('haku.rajaa')}
+                </Button>
+              </Box>
+            </Hidden>
           )}
+          <Hidden smDown>
+            <SearchButton />
+          </Hidden>
+          <Hidden mdUp>
+            <IconButton
+              disabled={!isKeywordValid}
+              type="submit"
+              className={classes.mobileIconButton}
+              aria-label={t('haku.etsi')}>
+              <SearchOutlined />
+            </IconButton>
+          </Hidden>
         </Paper>
 
         {!_.isEmpty(koulutusFilters) && (
-          <Popover
-            classes={{ paper: classes.popoverPaper, root: classes.popoverRoot }}
-            id={id}
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handleClose}
-            PaperProps={{
-              elevation: 0,
-            }}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'center',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'center',
-            }}>
-            <Box component="div" className={classes.arrowBox}>
-              <HakupalkkiFilters />
-            </Box>
-          </Popover>
+          <>
+            <Hidden mdUp>
+              <MobileFiltersOnTopMenu isFrontPage />
+            </Hidden>
+            <Hidden smDown>
+              <Popover
+                classes={{ paper: classes.popoverPaper, root: classes.popoverRoot }}
+                id={id}
+                open={isPopoverOpen}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                PaperProps={{
+                  elevation: 0,
+                }}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'center',
+                }}>
+                <Box component="div" className={classes.arrowBox}>
+                  <HakupalkkiFilters />
+                </Box>
+              </Popover>
+            </Hidden>
+          </>
         )}
-        <LocalizedLink component={RouterLink} to={`/haku/`} className={classes.link}>
-          {t('jumpotron.naytakaikki')}
-        </LocalizedLink>
+        <Box
+          display="flex"
+          flexDirection="row-reverse"
+          width="100%"
+          justifyContent="space-between">
+          <LocalizedLink component={RouterLink} to={`/haku/`} className={classes.link}>
+            {t('jumpotron.naytakaikki')}
+          </LocalizedLink>
+          <Hidden mdUp>
+            <Button
+              endIcon={<FilterList />}
+              className={classes.mobileFilterButton}
+              onClick={handleMobileBtnClick}>
+              {t('haku.rajaa-tuloksia')}
+            </Button>
+          </Hidden>
+        </Box>
       </Box>
     </ThemeProvider>
   );

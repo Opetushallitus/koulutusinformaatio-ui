@@ -40,13 +40,28 @@ export const getOppilaitos = (oid) => {
     .then((response) => response.data);
 };
 
-export const getOppilaitosTajonta = ({ oid, requestParams }) => {
+export const getOppilaitosOsa = (oid) => {
+  return client
+    .get(urls.url('konfo-backend.oppilaitosOsa', oid))
+    .then((response) => response.data);
+};
+
+export const getOppilaitosTarjonta = ({ oid, requestParams }) => {
   return client
     .get(urls.url('konfo-backend.oppilaitos.tarjonta', oid), {
       params: C.cleanRequestParams(requestParams),
     })
     .then((response) => response.data);
 };
+
+export const getOppilaitosOsaTarjonta = ({ oid, requestParams }) => {
+  return client
+    .get(urls.url('konfo-backend.oppilaitosOsa.tarjonta', oid), {
+      params: C.cleanRequestParams(requestParams),
+    })
+    .then((response) => response.data);
+};
+
 export const getToteutus = (oid) => get(urls.url('konfo-backend.toteutus', oid));
 
 export const searchAPI = {

@@ -1,12 +1,17 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import { FilterList } from '@material-ui/icons';
 import { Badge, Button, ButtonGroup, Hidden, makeStyles } from '@material-ui/core';
 import { colors } from '#/src/colors';
-import { toggleshowHakutulosFilters } from '#/src/store/reducers/hakutulosSlice';
+import {
+  toggleshowHakutulosFilters,
+  executeSearchFromStartingPage,
+} from '#/src/store/reducers/hakutulosSlice';
 import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
+import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
 
 const useStyles = makeStyles((theme) => ({
   buttonGroupRoot: {
@@ -28,11 +33,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MobileToggleFiltersButton = () => {
+const MobileToggleFiltersButton = ({ isFrontPage = false }) => {
   const classes = useStyles();
+  const history = useHistory();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const suodatinValinnatProps = useSelector(getSuodatinValinnatProps);
+  const apiRequestParams = useSelector(getAPIRequestParams);
   const {
     showHakutulosFilters,
     koulutusTotal,
@@ -49,6 +56,7 @@ const MobileToggleFiltersButton = () => {
   );
 
   const handleFiltersShowToggle = () => {
+    isFrontPage && dispatch(executeSearchFromStartingPage({ apiRequestParams, history }));
     dispatch(toggleshowHakutulosFilters());
   };
 

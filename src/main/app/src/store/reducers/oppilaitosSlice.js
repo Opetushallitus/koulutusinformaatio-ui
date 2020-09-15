@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getOppilaitos, getOppilaitosTajonta } from '#/src/api/konfoApi';
+import {
+  getOppilaitos,
+  getOppilaitosTarjonta,
+  getOppilaitosOsa,
+  getOppilaitosOsaTarjonta,
+} from '#/src/api/konfoApi';
 import { Localizer as l } from '#/src/tools/Utils';
 
 const IDLE_STATUS = 'idle';
@@ -74,11 +79,15 @@ export const {
 } = oppilaitosSlice.actions;
 export default oppilaitosSlice.reducer;
 
-export const fetchOppilaitosTarjontaData = ({ oid }) => async (dispatch) => {
+export const fetchOppilaitosTarjontaData = ({ oid, isOppilaitosOsa }) => async (
+  dispatch
+) => {
   try {
     dispatch(fetchOppilaitosStart());
-    const oppilaitosData = await getOppilaitos(oid);
-    const tarjonta = await getOppilaitosTajonta({
+    const oppilaitosData = await (isOppilaitosOsa
+      ? getOppilaitosOsa(oid)
+      : getOppilaitos(oid));
+    const tarjontaOpts = {
       oid,
       requestParams: {
         page: initialState.page,
@@ -86,8 +95,11 @@ export const fetchOppilaitosTarjontaData = ({ oid }) => async (dispatch) => {
         lng: l.getLanguage(),
         order: initialState.order,
       },
-    });
-    const tulevaTarjonta = await getOppilaitosTajonta({
+    };
+    const tarjonta = await (isOppilaitosOsa
+      ? getOppilaitosOsaTarjonta(tarjontaOpts)
+      : getOppilaitosTarjonta(tarjontaOpts));
+    const tulevaTarjontaOpts = {
       oid,
       requestParams: {
         tuleva: true,
@@ -96,28 +108,43 @@ export const fetchOppilaitosTarjontaData = ({ oid }) => async (dispatch) => {
         lng: l.getLanguage(),
         order: initialState.order,
       },
-    });
+    };
+    const tulevaTarjonta = await (isOppilaitosOsa
+      ? getOppilaitosOsaTarjonta(tulevaTarjontaOpts)
+      : getOppilaitosTarjonta(tulevaTarjontaOpts));
     dispatch(fetchOppilaitosSuccess({ oid, oppilaitosData, tarjonta, tulevaTarjonta }));
   } catch (err) {
     dispatch(fetchOppilaitosError(err.toString()));
   }
 };
 
-export const fetchTarjontaData = ({ oid, requestParams }) => async (dispatch) => {
+export const fetchTarjontaData = ({ oid, requestParams, isOppilaitosOsa }) => async (
+  dispatch
+) => {
   try {
-    const tarjonta = await getOppilaitosTajonta({ oid, requestParams });
+    const opts = { oid, requestParams };
+    const tarjonta = await (isOppilaitosOsa
+      ? getOppilaitosOsaTarjonta(opts)
+      : getOppilaitosTarjonta(opts));
     dispatch(fetchTarjontaSuccess({ tarjonta, ...requestParams }));
   } catch (err) {
     dispatch(fetchOppilaitosError(err.toString()));
   }
 };
 
-export const fetchTulevaTarjontaData = ({ oid, requestParams }) => async (dispatch) => {
+export const fetchTulevaTarjontaData = ({
+  oid,
+  requestParams,
+  isOppilaitosOsa,
+}) => async (dispatch) => {
   try {
-    const tulevaTarjonta = await getOppilaitosTajonta({
+    const opts = {
       oid,
       requestParams: { ...requestParams, tuleva: true },
-    });
+    };
+    const tulevaTarjonta = await (isOppilaitosOsa
+      ? getOppilaitosOsaTarjonta(opts)
+      : getOppilaitosTarjonta(opts));
     dispatch(fetchTulevaTarjontaSuccess({ tulevaTarjonta, ...requestParams }));
   } catch (err) {
     dispatch(fetchOppilaitosError(err.toString()));
