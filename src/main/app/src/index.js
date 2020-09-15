@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -12,6 +12,7 @@ import configure from './urls/urlUtil';
 import ScrollToTop from './ScrollToTop';
 
 import './tools/i18n';
+import LoadingCircle from './components/common/LoadingCircle';
 
 if ('serviceWorker' in navigator) {
   if (!window.Cypress) {
@@ -45,13 +46,15 @@ window.onerror = (errorMsg, url, line, col, errorObj) => {
 configure();
 
 ReactDOM.render(
-  <Provider store={getKonfoStore()}>
-    <BrowserRouter basename={'/konfo'}>
-      <MuiThemeProvider theme={theme}>
-        <ScrollToTop />
-        <App />
-      </MuiThemeProvider>
-    </BrowserRouter>
-  </Provider>,
+  <Suspense fallback={<LoadingCircle />}>
+    <Provider store={getKonfoStore()}>
+      <BrowserRouter basename={'/konfo'}>
+        <MuiThemeProvider theme={theme}>
+          <ScrollToTop />
+          <App />
+        </MuiThemeProvider>
+      </BrowserRouter>
+    </Provider>
+  </Suspense>,
   document.getElementById('wrapper')
 );

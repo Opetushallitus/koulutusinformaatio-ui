@@ -3,12 +3,12 @@ import { useParams, Link as RouterLink } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { colors } from '../../colors';
 import { makeStyles } from '@material-ui/core';
-import Link from '@material-ui/core/Link';
 import { observer } from 'mobx-react-lite';
 import Sivu from './Sivu';
 import SivuKooste from './SivuKooste';
 import { useStores } from '../../hooks';
 import { useTranslation } from 'react-i18next';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles({
   notFound: {
@@ -55,13 +55,11 @@ const SivuRouter = (props) => {
         className={classes.component}>
         {loading ? null : (
           <Grid item xs={12} sm={6} md={6} className={classes.notFound}>
-            <h1 className={classes.header1}>
-              {t('sisaltohaku.sivua-ei-löytynyt')}
-            </h1>
+            <h1 className={classes.header1}>{t('sisaltohaku.sivua-ei-löytynyt')}</h1>
             <p>{t('sisaltohaku.etsimääsi-ei-löydy')}</p>
-            <Link component={RouterLink} to={'/'}>
+            <LocalizedLink component={RouterLink} to={'/'}>
               {t('sisaltohaku.takaisin')}
-            </Link>
+            </LocalizedLink>
           </Grid>
         )}
       </Grid>

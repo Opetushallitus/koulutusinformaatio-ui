@@ -1,17 +1,10 @@
 import React from 'react';
 import { withRouter, Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import {
-  Avatar,
-  Button,
-  Grid,
-  Link,
-  makeStyles,
-  Paper,
-  Typography,
-} from '@material-ui/core';
+import { Avatar, Button, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import { ErrorOutline } from '@material-ui/icons';
 import { colors } from '../../colors';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles((theme) => ({
   gridOuterContainerRoot: {
@@ -86,9 +79,9 @@ const BackendErrorMessage = (props) => {
         </Paper>
       </Grid>
       <Grid item>
-        <Link underline="always" component={RouterLink} to="/" variant="body1">
+        <LocalizedLink underline="always" component={RouterLink} to="/" variant="body1">
           {t('haku.siirry-opintopolun-etusivulle')}
-        </Link>
+        </LocalizedLink>
       </Grid>
     </Grid>
   );

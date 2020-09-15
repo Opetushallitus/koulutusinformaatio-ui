@@ -5,6 +5,7 @@ import { colors } from '../../colors';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../hooks';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({
   grid: {
@@ -33,18 +34,17 @@ const useStyles = makeStyles({
 const LinkCard = (props) => {
   const { contentfulStore } = useStores();
   const history = useHistory();
+  const { i18n } = useTranslation();
   const { forwardTo } = contentfulStore;
   const { icon, text, sivu } = props;
   const url = (icon || {}).url;
   const forwardToPage = (id) => {
-    history.push(forwardTo(id));
+    history.push(`/${i18n.language}${forwardTo(id)}`);
   };
 
   const classes = useStyles();
   return (
-    <Paper
-      className={classes.paper}
-      onClick={() => sivu && forwardToPage(sivu.id)}>
+    <Paper className={classes.paper} onClick={() => sivu && forwardToPage(sivu.id)}>
       <Grid
         className={classes.grid}
         spacing={3}
@@ -54,10 +54,7 @@ const LinkCard = (props) => {
         <Grid item xs={2}>
           {url ? (
             <Icon className={classes.icon}>
-              <img
-                src={contentfulStore.assetUrl(url)}
-                alt={(icon || {}).description}
-              />
+              <img src={contentfulStore.assetUrl(url)} alt={(icon || {}).description} />
             </Icon>
           ) : null}
         </Grid>

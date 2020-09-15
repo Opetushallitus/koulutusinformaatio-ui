@@ -5,7 +5,6 @@ import {
   Avatar,
   Hidden,
   Grid,
-  Link,
   makeStyles,
   Paper,
   Typography,
@@ -16,6 +15,7 @@ import { SchoolOutlined, TimelapseOutlined } from '@material-ui/icons';
 import koulutusPlaceholderImg from '#/src/assets/images/Opolkuhts.png';
 import { MUI_BREAKPOINTS } from '#/src/constants';
 import { educationTypeColorCode } from '#/src/colors';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {
@@ -87,7 +87,7 @@ const KoulutusKortti = (props) => {
   };
 
   return (
-    <Link underline="none" component={RouterLink} to={props.link}>
+    <LocalizedLink underline="none" component={RouterLink} to={props.link}>
       <Paper
         classes={{ root: classes.paperRoot }}
         style={{
@@ -182,7 +182,7 @@ const KoulutusKortti = (props) => {
           </Hidden>
         </Grid>
       </Paper>
-    </Link>
+    </LocalizedLink>
   );
 };
 

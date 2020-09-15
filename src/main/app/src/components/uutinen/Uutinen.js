@@ -43,7 +43,7 @@ const useStyles = makeStyles({
 });
 
 const Uutinen = observer(({ id, history }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const classes = useStyles();
   const { contentfulStore } = useStores();
   const { forwardTo } = contentfulStore;
@@ -61,18 +61,13 @@ const Uutinen = observer(({ id, history }) => {
   };
 
   const forwardToPage = (id) => {
-    history.push(forwardTo(id));
+    history.push(`/${i18n.language}${forwardTo(id)}`);
   };
   const timestamp = uutinen.updated || uutinen.created;
   const date = timestamp ? new Date(Date.parse(timestamp)) : null;
   const leadingZero = (d) => ('0' + d).slice(-2);
   return (
-    <Grid
-      item
-      xs={12}
-      sm={6}
-      md={4}
-      onClick={() => link && forwardToPage(link)}>
+    <Grid item xs={12} sm={6} md={4} onClick={() => link && forwardToPage(link)}>
       <Card className={classes.card} elevation={6}>
         <CardMedia
           className={classes.media}
@@ -80,11 +75,7 @@ const Uutinen = observer(({ id, history }) => {
           title={uutinen.name}
         />
         <CardContent>
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            alignItems="center">
+          <Grid container direction="row" justify="space-between" alignItems="center">
             <Grid item xs={6} className={classes.kategoria}>
               {t('uutinen.kategoria')}
             </Grid>

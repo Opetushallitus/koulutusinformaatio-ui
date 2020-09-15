@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   FormControl,
   Select,
@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { colors } from '#/src/colors';
 import LanguageIcon from '@material-ui/icons/Language';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import { useLocation, useHistory } from 'react-router-dom';
 
 const CustomInput = withStyles((theme) => ({
   input: {
@@ -28,13 +29,12 @@ const iconComponent = (props) => {
 
 const LanguageDropDown = () => {
   const { i18n, t } = useTranslation();
-  const [language, setLanguage] = useState(i18n.language);
+  const location = useLocation();
+  const history = useHistory();
   const handleChange = (event) => {
     const newLanguage = event.target.value;
-    if (newLanguage !== language) {
-      setLanguage(newLanguage);
-      i18n.changeLanguage(newLanguage);
-    }
+    const newPath = location.pathname.replace(/\/(.*?)\//, `/${newLanguage}/`); // Replace first path index with new language selection
+    history.push(newPath);
   };
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
@@ -48,7 +48,7 @@ const LanguageDropDown = () => {
             },
             getContentAnchorEl: null,
           }}
-          value={language}
+          value={i18n.language}
           onChange={handleChange}
           variant="standard"
           renderValue={(value) => value.toUpperCase()}

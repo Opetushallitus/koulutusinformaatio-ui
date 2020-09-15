@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { Grid, Link, makeStyles } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
@@ -76,13 +77,13 @@ const Kortti = ({ id }) => {
             return page ? (
               <div className={classes.link} key={page.id}>
                 <Icon>chevron_right</Icon>
-                <Link
+                <LocalizedLink
                   component={RouterLink}
                   className={classes.linkElement}
                   to={forwardTo(page.id)}
                   data-cy="kortti-link">
                   {page.name}
-                </Link>
+                </LocalizedLink>
               </div>
             ) : null;
           })}

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import ContentWrapper from '../common/ContentWrapper';
-import { Box, Typography, makeStyles, Grid, Link, Hidden } from '@material-ui/core';
+import { Box, Typography, makeStyles, Grid, Hidden } from '@material-ui/core';
 import { HashLink } from 'react-router-hash-link';
 import { colors } from '#/src/colors';
 import ToteutusInfoGrid from './ToteutusInfoGrid';
@@ -32,6 +32,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import Murupolku from '#/src/components/common/Murupolku';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -203,13 +204,13 @@ const Toteutus = () => {
               title: l.localize(osaamisala.koodi.nimi),
               content:
                 !_.isEmpty(osaamisala.linkki) && !_.isEmpty(osaamisala.otsikko) ? (
-                  <Link
+                  <LocalizedLink
                     target="_blank"
                     rel="noopener"
                     href={l.localize(osaamisala.linkki)}>
                     {l.localize(osaamisala.otsikko)}
                     <OpenInNewIcon />
-                  </Link>
+                  </LocalizedLink>
                 ) : null,
             }))}
           />

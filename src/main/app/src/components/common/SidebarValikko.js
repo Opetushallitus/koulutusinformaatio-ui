@@ -10,6 +10,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { observer } from 'mobx-react';
 import { useStores } from '../../hooks';
 import { makeStyles } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles({
   root: {
@@ -72,10 +73,7 @@ const SivuItem = (props) => {
   const classes = useStyles();
   const { name, id, onClick } = props;
   return (
-    <ListItemLink
-      role="none"
-      onClick={() => onClick(id)}
-      className={classes.valikko}>
+    <ListItemLink role="none" onClick={() => onClick(id)} className={classes.valikko}>
       <ListItemText
         role="menuitem"
         className={classes.valintaText}
@@ -105,10 +103,7 @@ const ValikkoItem = (props) => {
   const classes = useStyles();
   const { name, id, select } = props;
   return (
-    <ListItemLink
-      role="none"
-      className={classes.valikko}
-      onClick={() => select(id)}>
+    <ListItemLink role="none" className={classes.valikko} onClick={() => select(id)}>
       <ListItemText
         className={classes.valintaText}
         role="menuitem"
@@ -125,22 +120,20 @@ const ValikkoItem = (props) => {
 const SidebarValikko = (props) => {
   const classes = useStyles();
   const history = useHistory();
+  const { i18n } = useTranslation();
   const {
     contentfulStore: { forwardTo },
   } = useStores();
   const { parent, select, deselect, closeMenu, name, id, links } = props;
   const forwardToPage = (id) => {
-    history.push(forwardTo(id));
+    history.push(`/${i18n.language}${forwardTo(id)}`);
     closeMenu();
   };
 
   return (
     <List className={classes.root} aria-label="contacts">
       {parent ? (
-        <ListItemLink
-          className={classes.parentOtsikko}
-          role="none"
-          onClick={deselect}>
+        <ListItemLink className={classes.parentOtsikko} role="none" onClick={deselect}>
           <ListItemIcon className={classes.parentOtsikkoIconBase}>
             <ChevronLeftIcon className={classes.parentOtsikkoIcon} />
           </ListItemIcon>

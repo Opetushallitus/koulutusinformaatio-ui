@@ -9,7 +9,6 @@ import {
   CircularProgress,
   Divider,
   Hidden,
-  Link,
   makeStyles,
   Paper,
   Popover,
@@ -38,6 +37,7 @@ import { colors } from '#/src/colors';
 import { theme } from '#/src/theme';
 import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
 import HakupalkkiFilters from './HakupalkkiFilters';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 import MobileFiltersOnTopMenu from '../hakutulos/MobileFiltersOnTopMenu';
 
 const useStyles = makeStyles((theme) => ({
@@ -148,7 +148,7 @@ const useStyles = makeStyles((theme) => ({
 const Hakupalkki = () => {
   const history = useHistory();
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
   const {
@@ -159,16 +159,17 @@ const Hakupalkki = () => {
     showHakutulosFilters,
   } = useSelector(getHakupalkkiProps);
   const apiRequestParams = useSelector(getAPIRequestParams);
+  const etusivuPath = `/${i18n.language}/`;
 
   const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
-    if (location.pathname === '/') {
+    if (location.pathname === etusivuPath) {
       dispatch(setKeyword({ keyword: '' }));
       dispatch(clearPaging());
       !showHakutulosFilters && setAnchorEl(null);
     }
-  }, [location.pathname, dispatch, showHakutulosFilters]);
+  }, [location.pathname, dispatch, showHakutulosFilters, etusivuPath]);
 
   function handleDesktopBtnClick(e) {
     dispatch(searchAll(getAPIRequestParams));
@@ -196,7 +197,9 @@ const Hakupalkki = () => {
 
   const doSearch = (event) => {
     event.preventDefault();
-    dispatch(executeSearchFromStartingPage({ apiRequestParams, history }));
+    dispatch(
+      executeSearchFromStartingPage({ apiRequestParams, history, lng: i18n.language })
+    );
   };
   const setSearch = (event) => {
     !keywordEditMode && dispatch(setKeywordEditMode({ newKeywordEditMode: true }));
@@ -228,7 +231,7 @@ const Hakupalkki = () => {
             open={!isKeywordValid}
             title={t('haku.syota-ainakin-kolme-merkkia')}>
             <InputBase
-              defaultValue={location.pathname === '/' ? '' : keyword}
+              defaultValue={location.pathname === etusivuPath ? '' : keyword}
               className={classes.input}
               onKeyPress={(event) =>
                 event.key === 'Enter' && isKeywordValid && doSearch(event)
@@ -241,7 +244,7 @@ const Hakupalkki = () => {
               }}
             />
           </Tooltip>
-          {location.pathname === '/' && (
+          {location.pathname === etusivuPath && (
             <Hidden smDown>
               <Box component="div" className={classes.box}>
                 <Divider orientation="vertical" />
@@ -311,9 +314,9 @@ const Hakupalkki = () => {
           flexDirection="row-reverse"
           width="100%"
           justifyContent="space-between">
-          <Link component={RouterLink} to={`/haku/`} className={classes.link}>
+          <LocalizedLink component={RouterLink} to={`/haku/`} className={classes.link}>
             {t('jumpotron.naytakaikki')}
-          </Link>
+          </LocalizedLink>
           <Hidden mdUp>
             <Button
               endIcon={<FilterList />}

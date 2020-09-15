@@ -2,11 +2,12 @@ import React from 'react';
 import { Accordion, Summary } from './Accordion';
 import Markdown from 'markdown-to-jsx';
 import { colors } from '../../colors';
-import { makeStyles, Typography, Grid, Card, CardMedia, Link } from '@material-ui/core';
+import { makeStyles, Typography, Grid, Card, CardMedia } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { useStores } from '../../hooks';
 import LinkOrYoutube from './LinkOrYoutube';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles({
   notFound: {
@@ -69,9 +70,9 @@ const Sisalto = ({ content, alwaysFullWidth, excludeMedia }) => {
   };
   const SivuLink = ({ slug, children }) => {
     return sivu[slug] ? (
-      <Link component={RouterLink} to={forwardTo(slug)}>
+      <LocalizedLink component={RouterLink} to={forwardTo(slug)}>
         {isBlank(children ? children[0] : null) ? sivu[slug].name : children}
-      </Link>
+      </LocalizedLink>
     ) : null;
   };
 

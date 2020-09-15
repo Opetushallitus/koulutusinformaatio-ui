@@ -1,17 +1,17 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
-import ls from 'local-storage';
 
-const lng = ls.get('lang');
+export const supportedLanguages = ['fi', 'sv', 'en'];
+export const defaultLanguage = 'fi';
 
 i18n
   .use(Backend)
   .use(initReactI18next)
   .init({
-    lng: lng || 'fi',
-    fallbackLng: ['fi'],
-    supportedLngs: ['fi', 'sv', 'en'],
+    fallbackLng: defaultLanguage,
+    lng: defaultLanguage,
+    supportedLngs: supportedLanguages,
     debug: process.env.NODE_ENV === 'development',
     load: 'languageOnly',
     interpolation: {
@@ -27,9 +27,5 @@ i18n
       },
     },
   });
-
-i18n.on('languageChanged', async (lng) => {
-  ls.set('lang', lng);
-});
 
 export default i18n;

@@ -1,6 +1,6 @@
-import React, { useState, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import KonfoStore from './stores/konfo-store';
 import { Provider } from 'mobx-react';
 import Draft from './components/common/Draft';
@@ -24,8 +24,8 @@ import SivuRouter from './components/sivu/SivuRouter';
 import ReactiveBorder from './components/ReactiveBorder';
 import Hakupalkki from './components/haku/Hakupalkki';
 import Toteutus from './components/toteutus/Toteutus';
-import LoadingCircle from './components/common/LoadingCircle';
-
+import { useTranslation } from 'react-i18next';
+import { supportedLanguages } from '#/src/tools/i18n';
 const konfoStore = new KonfoStore();
 
 const useStyles = makeStyles((theme) => ({
@@ -66,6 +66,61 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const KoulutusHakuBar = () => (
+  <div style={{ margin: 'auto', paddingTop: '50px', maxWidth: '1600px' }}>
+    <ReactiveBorder>
+      <Hakupalkki />
+    </ReactiveBorder>
+  </div>
+);
+
+const TranslatedRoutes = ({ match }) => {
+  const { i18n } = useTranslation();
+  const selectedLanguage = match.params.lng;
+  useEffect(() => {
+    selectedLanguage &&
+      supportedLanguages.includes(selectedLanguage) &&
+      i18n.changeLanguage(selectedLanguage);
+  }, [i18n, selectedLanguage]);
+  return supportedLanguages.includes(selectedLanguage) ? (
+    <Switch>
+      <Route exact path="/:lng">
+        <Etusivu />
+      </Route>
+      <Route path="/:lng/sisaltohaku/">
+        <Sisaltohaku />
+      </Route>
+      <Route path="/:lng/haku/:keyword?">
+        <KoulutusHakuBar />
+        <Haku />
+      </Route>
+      <Route path="/:lng/koulutus/:oid">
+        <KoulutusHakuBar />
+        <Koulutus />
+      </Route>
+      <Route path="/:lng/oppilaitos/:oid">
+        <KoulutusHakuBar />
+        <Oppilaitos />
+      </Route>
+      <Route path="/:lng/toteutus/:oid">
+        <KoulutusHakuBar />
+        <Toteutus />
+      </Route>
+      <Route path="/:lng/sivu/:id">
+        <KoulutusHakuBar />
+        <SivuRouter />
+      </Route>
+      <Route path="/:lng/hakukohde/:hakukohdeOid/valintaperuste/:valintaperusteOid">
+        <KoulutusHakuBar />
+        <Valintaperusteet />
+      </Route>
+      <Route component={NotFound} />
+    </Switch>
+  ) : (
+    <Route component={NotFound} />
+  );
+};
+
 const App = () => {
   const classes = useStyles();
   const hakuStore = konfoStore.hakuStore;
@@ -75,6 +130,7 @@ const App = () => {
   const navigaatioStore = konfoStore.navigaatioStore;
   const vertailuStore = konfoStore.vertailuStore;
   const contentfulStore = konfoStore.contentfulStore;
+  const { i18n } = useTranslation();
 
   const matches = useMediaQuery('(max-width: 600px)');
 
@@ -85,85 +141,44 @@ const App = () => {
   const closeMenu = () => {
     setMenuVisible(false);
   };
-  const KoulutusHakuBar = () => (
-    <div style={{ margin: 'auto', paddingTop: '50px', maxWidth: '1600px' }}>
-      <ReactiveBorder>
-        <Hakupalkki />
-      </ReactiveBorder>
-    </div>
-  );
+
   const main = (
     <React.Fragment>
       <Switch>
-        <Route exact path="/">
-          <Etusivu />
-        </Route>
-        <Route path="/sisaltohaku/">
-          <Sisaltohaku />
-        </Route>
-        <Route path="/haku/:keyword?">
-          <KoulutusHakuBar />
-          <Haku />
-        </Route>
-        <Route path="/koulutus/:oid">
-          <KoulutusHakuBar />
-          <Koulutus />
-        </Route>
-        <Route path="/oppilaitos/:oid">
-          <KoulutusHakuBar />
-          <Oppilaitos />
-        </Route>
-        <Route path="/oppilaitososa/:oid">
-          <KoulutusHakuBar />
-          <Oppilaitos oppilaitosOsa />
-        </Route>
-        <Route path="/toteutus/:oid">
-          <KoulutusHakuBar />
-          <Toteutus />
-        </Route>
-        <Route path="/sivu/:id">
-          <KoulutusHakuBar />
-          <SivuRouter />
-        </Route>
-        <Route path="/hakukohde/:hakukohdeOid/valintaperuste/:valintaperusteOid">
-          <KoulutusHakuBar />
-          <Valintaperusteet />
-        </Route>
-        <Route component={NotFound} />
+        <Redirect exact from="/" to={`/${i18n.language}/`} />
+        <Route path="/:lng" component={TranslatedRoutes} />
       </Switch>
       <Palvelut />
       <Footer />
     </React.Fragment>
   );
   return (
-    <Suspense fallback={<LoadingCircle />}>
-      <Provider
-        hakuStore={hakuStore}
-        urlStore={urlStore}
-        hakuehtoStore={hakuehtoStore}
-        restStore={restStore}
-        navigaatioStore={navigaatioStore}
-        vertailuStore={vertailuStore}
-        contentfulStore={contentfulStore}>
-        <MuiThemeProvider theme={theme}>
-          <React.Fragment>
-            <div className={classes.root}>
-              <Draft />
-              <Header toggleMenu={toggleMenu} isOpen={menuVisible} />
-              <SideMenu small={matches} menuVisible={menuVisible} closeMenu={closeMenu} />
-              <main
-                id="app-main-content"
-                className={clsx(matches ? classes.smContent : classes.content, {
-                  [matches ? classes.smContentShift : classes.contentShift]: menuVisible,
-                })}>
-                {main}
-              </main>
-            </div>
-            <PalautePopup />
-          </React.Fragment>
-        </MuiThemeProvider>
-      </Provider>
-    </Suspense>
+    <Provider
+      hakuStore={hakuStore}
+      urlStore={urlStore}
+      hakuehtoStore={hakuehtoStore}
+      restStore={restStore}
+      navigaatioStore={navigaatioStore}
+      vertailuStore={vertailuStore}
+      contentfulStore={contentfulStore}>
+      <MuiThemeProvider theme={theme}>
+        <React.Fragment>
+          <div className={classes.root}>
+            <Draft />
+            <Header toggleMenu={toggleMenu} isOpen={menuVisible} />
+            <SideMenu small={matches} menuVisible={menuVisible} closeMenu={closeMenu} />
+            <main
+              id="app-main-content"
+              className={clsx(matches ? classes.smContent : classes.content, {
+                [matches ? classes.smContentShift : classes.contentShift]: menuVisible,
+              })}>
+              {main}
+            </main>
+          </div>
+          <PalautePopup />
+        </React.Fragment>
+      </MuiThemeProvider>
+    </Provider>
   );
 };
 
