@@ -197,9 +197,7 @@ const Hakupalkki = () => {
 
   const doSearch = (event) => {
     event.preventDefault();
-    dispatch(
-      executeSearchFromStartingPage({ apiRequestParams, history, lng: i18n.language })
-    );
+    dispatch(executeSearchFromStartingPage({ apiRequestParams, history }));
   };
   const setSearch = (event) => {
     !keywordEditMode && dispatch(setKeywordEditMode({ newKeywordEditMode: true }));

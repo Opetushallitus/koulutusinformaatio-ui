@@ -320,7 +320,7 @@ export const searchAllOnPageReload = ({ apiRequestParams, search, keyword }) => 
   }
 };
 
-export const executeSearchFromStartingPage = ({ apiRequestParams, history, lng }) => (
+export const executeSearchFromStartingPage = ({ apiRequestParams, history }) => (
   dispatch,
   getState
 ) => {
@@ -335,7 +335,7 @@ export const executeSearchFromStartingPage = ({ apiRequestParams, history, lng }
       'sijainti',
     ])
   ).toString();
-  history.push(`/${lng}/haku/${hakutulos.keyword}?${restParams}`);
+  history.push(`/${apiRequestParams.lng}/haku/${hakutulos.keyword}?${restParams}`);
   dispatch(setKeywordEditMode({ newKeywordEditMode: false }));
   dispatch(searchAll(apiRequestParams, true));
 };
