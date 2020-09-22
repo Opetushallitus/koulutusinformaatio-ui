@@ -325,6 +325,7 @@ export const executeSearchFromStartingPage = ({ apiRequestParams, history }) => 
   getState
 ) => {
   const { hakutulos } = getState();
+  const lng = apiRequestParams.lng || 'fi';
   const restParams = new URLSearchParams(
     _.pick(C.cleanRequestParams(apiRequestParams), [
       'order',
@@ -335,7 +336,7 @@ export const executeSearchFromStartingPage = ({ apiRequestParams, history }) => 
       'sijainti',
     ])
   ).toString();
-  history.push(`/${apiRequestParams.lng}/haku/${hakutulos.keyword}?${restParams}`);
+  history.push(`/${lng}/haku/${hakutulos.keyword}?${restParams}`);
   dispatch(setKeywordEditMode({ newKeywordEditMode: false }));
   dispatch(searchAll(apiRequestParams, true));
 };
