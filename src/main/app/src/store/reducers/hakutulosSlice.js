@@ -320,11 +320,12 @@ export const searchAllOnPageReload = ({ apiRequestParams, search, keyword }) => 
   }
 };
 
-export const executeSearchFromStartingPage = ({ apiRequestParams, history, lng }) => (
+export const executeSearchFromStartingPage = ({ apiRequestParams, history }) => (
   dispatch,
   getState
 ) => {
   const { hakutulos } = getState();
+  const lng = apiRequestParams.lng || 'fi';
   const restParams = new URLSearchParams(
     _.pick(C.cleanRequestParams(apiRequestParams), [
       'order',
