@@ -22,7 +22,7 @@ import {
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 import SummaryContent from './SummaryContent';
-import { Common as C } from '#/src/tools/Utils';
+import { Common as C, Localizer as l } from '#/src/tools/Utils';
 
 const withStyles = makeStyles(() => ({
   noBoxShadow: {
@@ -37,7 +37,7 @@ const OpetuskieliSuodatin = ({
   summaryHidden = false,
 }) => {
   const history = useHistory();
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const opetuskieliFilterProps = useSelector(getOpetuskieliFilterProps);
   const apiRequestParams = useSelector(getAPIRequestParams);
@@ -107,8 +107,7 @@ const OpetuskieliSuodatin = ({
                 key={opetuskieliArr[0]}
                 dense
                 button
-                onClick={handleCheck(opetuskieliArr)}
-                disabled={opetuskieliArr[1].count === 0}>
+                onClick={handleCheck(opetuskieliArr)}>
                 <ListItemIcon>
                   <SuodatinCheckbox
                     edge="start"
@@ -124,7 +123,7 @@ const OpetuskieliSuodatin = ({
                   id={labelId}
                   primary={
                     <Grid container justify="space-between" wrap="nowrap">
-                      <Grid item>{opetuskieliArr[1]?.nimi?.[i18n.language]}</Grid>
+                      <Grid item>{l.localize(opetuskieliArr[1])}</Grid>
                       <Grid item>{`(${opetuskieliArr[1]?.count})`}</Grid>
                     </Grid>
                   }

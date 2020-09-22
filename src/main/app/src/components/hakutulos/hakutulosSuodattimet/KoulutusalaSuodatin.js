@@ -33,7 +33,7 @@ import {
   clearPaging,
 } from '#/src/store/reducers/hakutulosSlice';
 import { MUI_BREAKPOINTS } from '#/src/constants';
-import { Common as C } from '#/src/tools/Utils';
+import { Common as C, Localizer as l } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({
   buttonLabel: {
@@ -51,7 +51,7 @@ const KoulutusalaSuodatin = ({
   summaryHidden = false,
 }) => {
   const history = useHistory();
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
   const koulutusalaFilterProps = useSelector(getKoulutusalaFilterProps);
@@ -127,8 +127,7 @@ const KoulutusalaSuodatin = ({
         onClick={handleKoulutusalaInnerToggle(
           expandedKoulutusTaso1[0],
           expandedKoulutusTaso1[1]
-        )}
-        disabled={expandedKoulutusTaso1[1]?.count === 0}>
+        )}>
         <ListItemIcon>
           <SuodatinCheckbox
             edge="start"
@@ -146,7 +145,7 @@ const KoulutusalaSuodatin = ({
           primary={
             <Grid container justify="space-between" wrap="nowrap">
               <Grid item style={{ fontWeight: 'bold' }}>
-                {expandedKoulutusTaso1[1]?.nimi?.[i18n.language]}
+                {l.localize(expandedKoulutusTaso1[1])}
               </Grid>
               <Grid item>
                 {_.isNil(expandedKoulutusTaso1[1]?.count)
@@ -167,10 +166,7 @@ const KoulutusalaSuodatin = ({
             onClick={handleKoulutusalaInnerToggle(
               koulutusTaso2_ID,
               expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]
-            )}
-            disabled={
-              expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]?.count === 0
-            }>
+            )}>
             <ListItemIcon>
               <SuodatinCheckbox
                 edge="start"
@@ -187,11 +183,7 @@ const KoulutusalaSuodatin = ({
               primary={
                 <Grid container justify="space-between" wrap="nowrap">
                   <Grid item>
-                    {
-                      expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID]?.nimi?.[
-                        i18n.language
-                      ]
-                    }
+                    {l.localize(expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID])}
                   </Grid>
                   <Grid item>
                     {_.isNil(
@@ -235,8 +227,7 @@ const KoulutusalaSuodatin = ({
                 key={koulutusalaArr[0]}
                 dense
                 button
-                onClick={handleKoulutusalaOuterToggle(koulutusalaArr)}
-                disabled={koulutusalaArr[1].count === 0}>
+                onClick={handleKoulutusalaOuterToggle(koulutusalaArr)}>
                 <SuodatinListItemText
                   id={labelId}
                   primary={
@@ -247,7 +238,7 @@ const KoulutusalaSuodatin = ({
                       style={
                         isSelected && !muiScreenSizeMinMd ? { fontWeight: 600 } : {}
                       }>
-                      <Grid item>{koulutusalaArr[1].nimi?.[i18n.language]}</Grid>
+                      <Grid item>{l.localize(koulutusalaArr[1])}</Grid>
                       <Grid item>
                         {_.isNil(koulutusalaArr[1]?.count)
                           ? '()'

@@ -29,7 +29,7 @@ import {
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 import SummaryContent from './SummaryContent';
-import { Common as C } from '#/src/tools/Utils';
+import { Common as C, Localizer as l } from '#/src/tools/Utils';
 
 const withStyles = makeStyles(() => ({
   noBoxShadow: {
@@ -45,7 +45,7 @@ const KoulutustyyppiSuodatin = ({
 }) => {
   const classes = withStyles();
   const history = useHistory();
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
   const theme = useTheme();
   const dispatch = useDispatch();
   const koulutustyyppiFilterProps = useSelector(getKoulutustyyppiFilterProps);
@@ -64,7 +64,7 @@ const KoulutustyyppiSuodatin = ({
   const handleEduTypeToggle = (koulutustyyppiObj) => () => {
     const koulutustyyppiFilterObj = {
       id: koulutustyyppiObj[0],
-      name: koulutustyyppiObj[1]?.nimi,
+      name: koulutustyyppiObj[1].nimi,
     };
     const currentIndex = checkedKoulutustyypit.findIndex(
       ({ id }) => id === koulutustyyppiFilterObj.id
@@ -124,8 +124,7 @@ const KoulutustyyppiSuodatin = ({
                   id={eduTypeOuterArr[0]}
                   dense
                   button
-                  onClick={handleEduTypeToggle(eduTypeOuterArr)}
-                  disabled={eduTypeOuterArr[1].count === 0}>
+                  onClick={handleEduTypeToggle(eduTypeOuterArr)}>
                   <ListItemIcon>
                     <SuodatinCheckbox
                       edge="start"
@@ -143,7 +142,7 @@ const KoulutustyyppiSuodatin = ({
                     id={labelId}
                     primary={
                       <Grid container justify="space-between" wrap="nowrap">
-                        <Grid item>{eduTypeOuterArr[1].nimi.fi}</Grid>
+                        <Grid item>{l.localize(eduTypeOuterArr[1])}</Grid>
                         <Grid item>{`(${eduTypeOuterArr[1].count})`}</Grid>
                       </Grid>
                     }
@@ -158,8 +157,7 @@ const KoulutustyyppiSuodatin = ({
                         id={`${eduTypeOuterArr[0]}_${eduTypeInnerArr[0]}`}
                         dense
                         button
-                        onClick={handleEduTypeToggle(eduTypeInnerArr)}
-                        disabled={eduTypeInnerArr[1].count === 0}>
+                        onClick={handleEduTypeToggle(eduTypeInnerArr)}>
                         <ListItemIcon>
                           <SuodatinCheckbox
                             edge="start"
@@ -176,10 +174,8 @@ const KoulutustyyppiSuodatin = ({
                           id={`this ${labelId}_${eduTypeInnerArr}`}
                           primary={
                             <Grid container justify="space-between" wrap="nowrap">
-                              <Grid item>
-                                {eduTypeInnerArr[1]?.nimi?.[i18n.language]}
-                              </Grid>
-                              <Grid item>{`(${eduTypeInnerArr[1]?.count})`}</Grid>
+                              <Grid item>{l.localize(eduTypeInnerArr[1])}</Grid>
+                              <Grid item>{`(${eduTypeInnerArr[1].count})`}</Grid>
                             </Grid>
                           }
                         />

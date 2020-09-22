@@ -33,7 +33,7 @@ import {
 } from './CustomizedMuiComponents';
 import SummaryContent from './SummaryContent';
 import { colors } from '#/src/colors';
-import { Common as C } from '#/src/tools/Utils';
+import { Common as C, Localizer as l } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({
   buttonLabel: {
@@ -52,7 +52,7 @@ const SijaintiSuodatin = ({
 }) => {
   const history = useHistory();
   const location = useLocation();
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
   const classes = useStyles();
   const sijaintiFilterProps = useSelector(getSijaintiFilterProps);
   const apiRequestParams = useSelector(getAPIRequestParams);
@@ -230,7 +230,6 @@ const SijaintiSuodatin = ({
                       id={maakuntaArray[0]}
                       dense
                       button
-                      disabled={maakuntaArray[1].count === 0}
                       onClick={handleMaakuntaToggle(maakuntaArray)}>
                       <ListItemIcon>
                         <SuodatinCheckbox
@@ -249,7 +248,7 @@ const SijaintiSuodatin = ({
                         id={labelId}
                         primary={
                           <Grid container justify="space-between" wrap="nowrap">
-                            <Grid item>{maakuntaArray[1]?.nimi?.[i18n.language]}</Grid>
+                            <Grid item>{l.localize(maakuntaArray[1])}</Grid>
                             <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
                           </Grid>
                         }
@@ -266,7 +265,6 @@ const SijaintiSuodatin = ({
                         id={maakuntaArray[0]}
                         dense
                         button
-                        disabled={maakuntaArray[1].count === 0}
                         onClick={handleMaakuntaToggle(maakuntaArray)}>
                         <ListItemIcon>
                           <SuodatinCheckbox
@@ -285,7 +283,7 @@ const SijaintiSuodatin = ({
                           id={labelId}
                           primary={
                             <Grid container justify="space-between" wrap="nowrap">
-                              <Grid item>{maakuntaArray[1]?.nimi?.[i18n.language]}</Grid>
+                              <Grid item>{l.localize(maakuntaArray[1])}</Grid>
                               <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
                             </Grid>
                           }
