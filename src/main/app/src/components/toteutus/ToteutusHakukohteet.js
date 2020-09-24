@@ -3,11 +3,13 @@ import { Box, Typography, Grid, Paper, Button, makeStyles } from '@material-ui/c
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import Spacer from '#/src/components/common/Spacer';
-import { format, isWithinInterval } from 'date-fns';
+import { format } from 'date-fns';
 import { Localizer as l } from '#/src/tools/Utils';
 import { useTranslation } from 'react-i18next';
 import { colors } from '#/src/colors';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   gridHeading: {
@@ -31,15 +33,6 @@ const HakuCardGrid = (props) => {
   const EI_SAHKOISTA = 'ei sähköistä';
   const classes = useStyles();
   const { type, haut, icon } = props;
-  const lomakeIsOpen = (hakuajat) =>
-    hakuajat.some((hakuaika) => {
-      const now = new Date();
-      return isWithinInterval(now, {
-        start: hakuaika.alkaa ? new Date(hakuaika.alkaa) : now,
-        end: hakuaika.paattyy ? new Date(hakuaika.paattyy) : now,
-      });
-    });
-
   const { t } = useTranslation();
   return (
     <Grid item>
@@ -56,7 +49,7 @@ const HakuCardGrid = (props) => {
           alignContent="center"
           justify="center"
           alignItems="center">
-          {props.haut.map((haku, i) => (
+          {haut.map((haku, i) => (
             <Grid
               key={i}
               item
@@ -176,21 +169,22 @@ const HakuCardGrid = (props) => {
                             size="large"
                             color="primary"
                             href={l.localize(haku.hakulomakeLinkki)}
-                            disabled={!lomakeIsOpen(haku.hakuajat)}>
+                            disabled={!haku.isHakuAuki}>
                             <Typography style={{ color: colors.white }} variant="body1">
                               {t('toteutus.tayta-lomake')}
                             </Typography>
                           </Button>
                         ) : null}
-                        <Button
-                          variant="outlined"
-                          size="large"
-                          color="primary"
-                          href={`/konfo/hakukohde/${haku.hakukohdeOid}/valintaperuste/${haku.valintaperusteId}`}>
-                          <Typography style={{ color: colors.green }} variant="body1">
-                            {t('toteutus.lue-valintaperusteet')}
-                          </Typography>
-                        </Button>
+                        <LocalizedLink
+                          underline="none"
+                          component={RouterLink}
+                          to={`/hakukohde/${haku.hakukohdeOid}/valintaperuste/${haku.valintaperusteId}`}>
+                          <Button variant="outlined" size="large" color="primary">
+                            <Typography style={{ color: colors.green }} variant="body1">
+                              {t('toteutus.lue-valintaperusteet')}
+                            </Typography>
+                          </Button>
+                        </LocalizedLink>
                       </ButtonGroup>
                     </Grid>
                   </Grid>

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getToteutus } from '#/src/api/konfoApi';
+import { isWithinInterval, isBefore } from 'date-fns';
 
 const IDLE_STATUS = 'idle';
 const LOADING_STATUS = 'loading';
@@ -57,12 +58,18 @@ export const fetchToteutus = (oid) => async (dispatch) => {
   }
 };
 
-const hakuaikaVoimassa = (hakuajat) => {
+const isHakuAuki = (hakuajat) =>
+  hakuajat.some((hakuaika) => {
+    const now = new Date();
+    return isWithinInterval(now, {
+      start: hakuaika.alkaa ? new Date(hakuaika.alkaa) : now,
+      end: hakuaika.paattyy ? new Date(hakuaika.paattyy) : now,
+    });
+  });
+
+const isHakuEndInFuture = (hakuajat) => {
   const now = new Date();
-  return hakuajat.some(
-    (aika) =>
-      new Date(aika.alkaa) <= now && (!aika.paattyy || new Date(aika.paattyy) <= now)
-  );
+  return hakuajat.some((aika) => isBefore(now, new Date(aika.paattyy)));
 };
 
 const selectHaut = (state, oid, type) =>
@@ -70,7 +77,8 @@ const selectHaut = (state, oid, type) =>
     ?.filter((hakutieto) => hakutieto.hakutapa.nimi.fi === type)
     .map((hakutieto) => hakutieto.hakukohteet)
     .flat()
-    .filter((hakukohde) => hakuaikaVoimassa(hakukohde.hakuajat));
+    .filter((hakukohde) => isHakuEndInFuture(hakukohde.hakuajat))
+    .map((hakukohde) => ({ ...hakukohde, isHakuAuki: isHakuAuki(hakukohde.hakuajat) }));
 export const selectLoading = (state) => state.toteutus.status === LOADING_STATUS;
 export const selectJatkuvatHaut = (state, oid) => selectHaut(state, oid, JATKUVAHAKU);
 export const selectErillisHaut = (state, oid) => selectHaut(state, oid, ERILLISHAKU);
