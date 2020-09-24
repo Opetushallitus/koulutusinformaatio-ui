@@ -175,7 +175,7 @@ const Koulutus = (props) => {
         />
         {toteutukset?.length > 0 ? (
           <HakuKaynnissaCard
-            title={t('koulutus.haku-kaynnissa')}
+            title={t('koulutus.tarjonta')}
             text={t('koulutus.katso-jarjestavat')}
             link={
               <Link
