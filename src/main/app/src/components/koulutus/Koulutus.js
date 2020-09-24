@@ -165,7 +165,10 @@ const Koulutus = (props) => {
           </Typography>
         </Box>
         <Box mt={7.5}>
-          <HeroImage imgUrl={koulutus?.teemakuva} />
+          <HeroImage
+            imgUrl={koulutus?.teemakuva}
+            altText={t('koulutus.koulutuksen-teemakuva')}
+          />
         </Box>
         <KoulutusInfoGrid
           className={classes.root}

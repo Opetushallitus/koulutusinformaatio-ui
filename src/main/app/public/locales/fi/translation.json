@@ -199,7 +199,8 @@
     "yhteystiedot": "Yhteystiedot",
     "tietoa-opiskelusta": "Tietoa opiskelusta",
     "tulevat-koulutukset": "Tulevat koulutukset",
-    "tutustu-toimipisteisiin": "Tutustu toimipisteisiin"
+    "tutustu-toimipisteisiin": "Tutustu toimipisteisiin",
+    "oppilaitoksen-teemakuva": "Oppilaitoksen teemakuva"
   },
   "koulutus": {
     "yleiskuvaus": "Yleiskuvaus",
@@ -261,7 +262,8 @@
     "ei-kestoa": "Ei suunniteltua kestoa",
     "hakutulos": "Hakutulos",
     "sinua-saattaa-kiinnostaa-myos": "Sinua saattaa kiinnostaa myös",
-    "ei-suositeltuja-koulutuksia": "Samankaltaisia koulutuksia ei löytynyt"
+    "ei-suositeltuja-koulutuksia": "Samankaltaisia koulutuksia ei löytynyt",
+    "koulutuksen-teemakuva": "Koulutuksen teemakuva"
   },
   "vertailu": {
     "takaisin-edelliselle-sivulle": "Takaisin edelliselle sivulle",
@@ -398,6 +400,7 @@
     "opiskelupaikkoja": "Opiskelupaikkoja",
     "tayta-lomake": "Täytä hakulomake",
     "lue-valintaperusteet": "Lue valintaperusteet",
-    "yhteyshenkilot": "Koulutuksen yhteyshenkilot"
+    "yhteyshenkilot": "Koulutuksen yhteyshenkilot",
+    "toteutuksen-teemakuva": "Koulutuksen teemakuva"
   }
 }

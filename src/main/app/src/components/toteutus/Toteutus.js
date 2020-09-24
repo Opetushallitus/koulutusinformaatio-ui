@@ -146,7 +146,10 @@ const Toteutus = () => {
           ))}
         </Grid>
         <Box mt={7}>
-          <HeroImage imgUrl={toteutus?.teemakuva} />
+          <HeroImage
+            imgUrl={toteutus?.teemakuva}
+            altText={t('toteutus.toteutuksen-teemakuva')}
+          />
         </Box>
         <Box mt={4}>
           <ToteutusInfoGrid

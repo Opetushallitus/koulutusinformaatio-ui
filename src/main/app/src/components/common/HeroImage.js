@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HeroImage = ({ imgUrl }) => {
+const HeroImage = ({ imgUrl, altText }) => {
   const classes = useStyles();
   return (
     <Card className={classes.card} elevation={1}>
@@ -21,7 +21,8 @@ const HeroImage = ({ imgUrl }) => {
         className={classes.media}
         image={imgUrl || DefaultHeroImage}
         title={'Koulutuksen teemakuva'}
-        aria-label={'Koulutuksen teemakuva'}></CardMedia>
+        alt={altText}
+      />
     </Card>
   );
 };
