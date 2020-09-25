@@ -17,6 +17,7 @@ export const initialState = {
   suositellutKoulutuksetStatus: IDLE_STATUS,
   koulutukset: {},
   jarjestajat: {},
+  tulevatJarjestajat: {},
   suositellutKoulutukset: {},
   koulutusError: null,
   jarjestajatError: null,
@@ -59,12 +60,14 @@ const koulutusSlice = createSlice({
     },
     fetchJarjestajatSuccess(state, { payload }) {
       if (state.jarjestajatStatus === LOADING_STATUS) {
-        const { jarjestajat, oid } = payload;
+        const { jarjestajat, tulevatJarjestajat, oid } = payload;
         state.jarjestajat[oid] = jarjestajat;
+        state.tulevatJarjestajat[oid] = tulevatJarjestajat;
         state.error = null;
         state.jarjestajatStatus = IDLE_STATUS;
       }
     },
+
     fetchJarjestajatError(state, action) {
       if (state.jarjestajatStatus === LOADING_STATUS) {
         state.jarjestajatError = action.payload;
@@ -173,7 +176,14 @@ export const fetchKoulutusJarjestajat = (oid) => async (dispatch) => {
   try {
     dispatch(fetchJarjestajatStart());
     const jarjestajatData = await getKoulutusJarjestajat(oid);
-    dispatch(fetchJarjestajatSuccess({ oid, jarjestajat: jarjestajatData }));
+    const tulevatJarjestajat = await getKoulutusJarjestajat(oid, true);
+    dispatch(
+      fetchJarjestajatSuccess({
+        oid,
+        jarjestajat: jarjestajatData,
+        tulevatJarjestajat,
+      })
+    );
   } catch (err) {
     dispatch(fetchJarjestajatError(err.toString()));
   }
@@ -220,3 +230,6 @@ export const selectLoading = (state) =>
   state.koulutus.koulutusStatus === LOADING_STATUS ||
   state.koulutus.jarjestajatStatus === LOADING_STATUS;
 export const selectJarjestajat = (state, oid) => state.koulutus.jarjestajat[oid]?.hits;
+
+export const selectTulevatJarjestajat = (state, oid) =>
+  state.koulutus.tulevatJarjestajat[oid]?.hits;
