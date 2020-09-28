@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { searchAPI } from '#/src/api/konfoApi';
+import qs from 'query-string';
 import _ from 'lodash';
 import { Localizer as l, Common as C } from '#/src/tools/Utils';
 import { FILTER_TYPES, FILTER_TYPES_ARR } from '#/src/constants';
@@ -339,6 +340,63 @@ export const executeSearchFromStartingPage = ({ apiRequestParams, history }) => 
   history.push(`/${lng}/haku/${hakutulos.keyword}?${restParams}`);
   dispatch(setKeywordEditMode({ newKeywordEditMode: false }));
   dispatch(searchAll(apiRequestParams, true));
+};
+
+export const koulutustyyppiUpdateAndSearch = ({
+  apiRequestParams,
+  parentFilterObj,
+  alakoodit,
+  clickedFilter,
+  history,
+}) => (dispatch, getState) => {
+  const { hakutulos } = getState();
+  const oldCheckedKoulutustyypit = _.clone(hakutulos.koulutustyyppi);
+  const clickedFilterId = _.get(clickedFilter, 'id');
+  const parentFilterObjId = _.get(parentFilterObj, 'id');
+  let newCheckedKoulutustyypit = [...oldCheckedKoulutustyypit];
+  const checkedIndex = _.findIndex(
+    oldCheckedKoulutustyypit,
+    ({ id }) => id === clickedFilterId
+  );
+
+  if (checkedIndex === -1) {
+    newCheckedKoulutustyypit.push(clickedFilter);
+    if (clickedFilterId === parentFilterObjId) {
+      newCheckedKoulutustyypit = _.sortBy(
+        _.uniqBy(_.concat(newCheckedKoulutustyypit, alakoodit), 'id'),
+        'id'
+      );
+    } else {
+      if (
+        _.isEqual(_.sortBy(newCheckedKoulutustyypit, 'id'), _.sortBy(alakoodit, 'id'))
+      ) {
+        newCheckedKoulutustyypit.push(parentFilterObj);
+        newCheckedKoulutustyypit = _.sortBy(
+          _.uniqBy(newCheckedKoulutustyypit, 'id'),
+          'id'
+        );
+      }
+    }
+  } else {
+    if (clickedFilterId === parentFilterObjId) {
+      newCheckedKoulutustyypit.splice(0);
+    } else {
+      _.remove(newCheckedKoulutustyypit, (elem) =>
+        _.includes([parentFilterObjId, clickedFilterId], elem.id)
+      );
+    }
+  }
+
+  const search = qs.parse(history.location.search);
+  const koulutustyyppiNewUrlParam = _.join(_.map(newCheckedKoulutustyypit, 'id'), ',');
+
+  dispatch(setKoulutustyyppi({ newCheckedKoulutustyypit }));
+  search.koulutustyyppi = koulutustyyppiNewUrlParam;
+  search.kpage = 1;
+  search.opage = 1;
+  history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
+  dispatch(clearPaging());
+  dispatch(searchAll({ ...apiRequestParams, koulutustyyppi: koulutustyyppiNewUrlParam }));
 };
 
 // Helpers

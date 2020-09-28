@@ -290,6 +290,12 @@ export const getKoulutustyyppiFilterProps = createSelector(
       selectedTab,
       checkedKoulutustyypit,
       checkedKoulutustyypitStr: getSelectedFiltersNamesStr(checkedKoulutustyypit),
+      isParentCheckboxIndeterminated: isParentCheckboxIndeterminated(
+        koulutustyyppi[0],
+        checkedKoulutustyypit
+      ),
+      alakoodit: getAlakooditArrayAsIdAndName(koulutustyyppi),
+      parentFilterObj: getParentFilterObjAsIdAndName(koulutustyyppi),
     };
   }
 );
@@ -419,4 +425,28 @@ function getSijainnitForReactReselect(kunnat, orderedMaakunnatEntries) {
     reactSelectKunnat
   );
   return searchHitsSijainnit;
+}
+
+function isParentCheckboxIndeterminated(_filter, checkedFilters) {
+  const parentId = _.get(_filter, '[0]');
+  const parentFilterChecked =
+    _.findIndex(checkedFilters, ({ id }) => id === parentId) !== -1;
+  const alakooditKeys = _.keys(_.get(_filter, '[1].alakoodit'));
+  const checkedIds = _.filter(_.map(checkedFilters, 'id'), (id) => id !== parentId);
+  const allAlakooditChecked = _.isEqual(_.sortBy(alakooditKeys), _.sortBy(checkedIds));
+  return !(parentFilterChecked || _.size(checkedFilters) === 0 || allAlakooditChecked);
+}
+
+function getAlakooditArrayAsIdAndName(obj) {
+  return _.map(_.entries(_.get(obj, '[0][1].alakoodit')), (o) => ({
+    id: o[0],
+    name: o[1].nimi,
+  }));
+}
+function getParentFilterObjAsIdAndName(arr) {
+  return arr.reduce((acc, currentVal) => {
+    acc['id'] = currentVal[0];
+    acc['name'] = _.get(currentVal, '[1].nimi');
+    return acc;
+  }, {});
 }
