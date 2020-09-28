@@ -8,8 +8,8 @@ import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: (props) => ({
-    borderTop: `5px solid ${educationTypeColorCode[props.tyyppi] ||
-      educationTypeColorCode.muu}`,
+    borderTop: `5px solid
+      ${educationTypeColorCode[props.tyyppi] || educationTypeColorCode.muu}`,
     maxWidth: '400px',
   }),
   icon: {
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 const OppilaitosCard = (props) => {
   const classes = useStyles(props);
-  const { heading, locations, image, oppilaitosOid, tyyppi } = props;
+  const { heading, locations, image, oppilaitosOid } = props;
   return (
     <Grid item xs={12} sm={6} md={4}>
       <LocalizedLink
