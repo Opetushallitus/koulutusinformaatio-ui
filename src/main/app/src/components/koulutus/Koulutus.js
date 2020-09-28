@@ -24,7 +24,7 @@ import {
 } from '#/src/store/reducers/koulutusSlice';
 import LoadingCircle from '#/src/components/common/LoadingCircle';
 import qs from 'query-string';
-import HeroImage from '#/src/components/common/HeroImage';
+import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
 import clsx from 'clsx';
 import Spacer from '#/src/components/common/Spacer';
 import Accordion from '#/src/components/common/Accordion';
@@ -165,7 +165,10 @@ const Koulutus = (props) => {
           </Typography>
         </Box>
         <Box mt={7.5}>
-          <HeroImage imgUrl={koulutus?.teemakuva} />
+          <TeemakuvaImage
+            imgUrl={koulutus?.teemakuva}
+            altText={t('koulutus.koulutuksen-teemakuva')}
+          />
         </Box>
         <KoulutusInfoGrid
           className={classes.root}

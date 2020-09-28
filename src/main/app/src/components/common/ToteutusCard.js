@@ -50,6 +50,10 @@ const ToteutusCard = (props) => {
     price,
     image,
   } = props;
+  const ToteutusImage = () => (
+    <img className={classes.img} alt={heading} src={image || DiakoniaLogo} />
+  );
+
   return (
     <Paper className={classes.paper}>
       <Grid
@@ -62,7 +66,7 @@ const ToteutusCard = (props) => {
         <Grid item container direction="column" xs>
           <Hidden mdUp>
             <Grid item>
-              <img className={classes.img} alt="logo" src={image || DiakoniaLogo} />
+              <ToteutusImage />
             </Grid>
           </Hidden>
           <Grid item>
@@ -134,7 +138,7 @@ const ToteutusCard = (props) => {
         </Grid>
         <Hidden smDown>
           <Grid item>
-            <img className={classes.img} alt="logo" src={image || DiakoniaLogo} />
+            <ToteutusImage />
           </Grid>
         </Hidden>
       </Grid>

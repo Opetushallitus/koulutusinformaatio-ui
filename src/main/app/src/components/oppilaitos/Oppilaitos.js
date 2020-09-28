@@ -17,7 +17,7 @@ import TarjontaList from './TarjontaList';
 import TietoaOpiskelusta from './TietoaOpiskelusta';
 import Yhteystiedot from './Yhteystiedot';
 import TulevaTarjontaList from './TulevaTarjontaList';
-import DefaultHeroImage from '#/src/assets/images/herokuva_default.png';
+import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
 import OppilaitosOsaList from './OppilaitosOsaList';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '1600px',
   },
   title: { marginTop: 40 },
-  heroImage: { maxWidth: '100%', height: 'auto' },
   imageContainer: { maxWidth: '1600px', maxHeight: '400px' },
   alatText: {
     ...theme.typography.body1,
@@ -77,10 +76,9 @@ const Oppilaitos = (props) => {
           </Typography>
         </Box>
         <Box className={classes.imageContainer} mt={7.5}>
-          <img
-            className={classes.heroImage}
-            src={_.get(oppilaitos, 'oppilaitos.teemakuva') || DefaultHeroImage}
-            alt="Koulutuksen teemakuva"
+          <TeemakuvaImage
+            imgUrl={oppilaitos?.oppilaitos?.teemakuva}
+            altText={t('oppilaitos.oppilaitoksen-teemakuva')}
           />
         </Box>
         <OppilaitosinfoGrid
@@ -134,9 +132,9 @@ const Oppilaitos = (props) => {
         <Yhteystiedot
           className={classes.root}
           heading={t('oppilaitos.yhteystiedot')}
-          logo={_.get(oppilaitos, 'oppilaitos.logo', DefaultHeroImage)}
-          metadata={_.get(oppilaitos, 'oppilaitos.metadata')}
-          nimi={l.localize(_.get(oppilaitos, 'nimi'))}
+          logo={oppilaitos?.oppilaitos?.logo}
+          metadata={oppilaitos?.oppilaitos?.metadata}
+          nimi={l.localize(oppilaitos?.nimi)}
         />
       </Box>
     </Container>
