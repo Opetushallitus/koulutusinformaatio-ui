@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HeroImage = ({ imgUrl, altText }) => {
+const TeemakuvaImage = ({ imgUrl, altText }) => {
   const classes = useStyles();
   return (
     <Card className={classes.card} elevation={1}>
@@ -20,11 +20,11 @@ const HeroImage = ({ imgUrl, altText }) => {
         component="img"
         className={classes.media}
         image={imgUrl || DefaultHeroImage}
-        title={'Koulutuksen teemakuva'}
+        title={altText}
         alt={altText}
       />
     </Card>
   );
 };
 
-export default HeroImage;
+export default TeemakuvaImage;

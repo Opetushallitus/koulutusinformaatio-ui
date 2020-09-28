@@ -51,7 +51,7 @@ const ToteutusCard = (props) => {
     image,
   } = props;
   const ToteutusImage = () => (
-    <img className={classes.img} alt={heading} src={image || DiakoniaLogo} /> //TODO: Oppilaitoksen logo -> <Oppilaitoksen nimi>
+    <img className={classes.img} alt={heading} src={image || DiakoniaLogo} />
   );
 
   return (

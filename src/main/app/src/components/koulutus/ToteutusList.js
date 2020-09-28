@@ -19,7 +19,6 @@ const useStyles = makeStyles({
 const ToteutusList = (props) => {
   const classes = useStyles();
   const { toteutukset } = props;
-  console.log(toteutukset);
   const { t } = useTranslation();
   const localizeArrayToString = (toLocalizeArray) => {
     return toLocalizeArray

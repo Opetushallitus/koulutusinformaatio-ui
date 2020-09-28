@@ -13,7 +13,7 @@ import Spacer from '#/src/components/common/Spacer';
 import Accordion from '#/src/components/common/Accordion';
 import { Localizer as l } from '#/src/tools/Utils';
 import HakuKaynnissaCard from '#/src/components/koulutus/HakuKaynnissaCard';
-import HeroImage from '#/src/components/common/HeroImage';
+import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import _ from 'lodash';
 import {
@@ -146,7 +146,7 @@ const Toteutus = () => {
           ))}
         </Grid>
         <Box mt={7}>
-          <HeroImage
+          <TeemakuvaImage
             imgUrl={toteutus?.teemakuva}
             altText={t('toteutus.toteutuksen-teemakuva')}
           />

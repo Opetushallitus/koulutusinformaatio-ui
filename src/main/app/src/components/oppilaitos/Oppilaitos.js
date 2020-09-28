@@ -17,7 +17,7 @@ import TarjontaList from './TarjontaList';
 import TietoaOpiskelusta from './TietoaOpiskelusta';
 import Yhteystiedot from './Yhteystiedot';
 import TulevaTarjontaList from './TulevaTarjontaList';
-import HeroImage from '#/src/components/common/HeroImage';
+import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
 import OppilaitosOsaList from './OppilaitosOsaList';
 
 const useStyles = makeStyles((theme) => ({
@@ -76,8 +76,8 @@ const Oppilaitos = (props) => {
           </Typography>
         </Box>
         <Box className={classes.imageContainer} mt={7.5}>
-          <HeroImage
-            imgUrl={_.get(oppilaitos, 'oppilaitos.teemakuva')}
+          <TeemakuvaImage
+            imgUrl={oppilaitos?.oppilaitos?.teemakuva}
             altText={t('oppilaitos.oppilaitoksen-teemakuva')}
           />
         </Box>
@@ -132,9 +132,9 @@ const Oppilaitos = (props) => {
         <Yhteystiedot
           className={classes.root}
           heading={t('oppilaitos.yhteystiedot')}
-          logo={_.get(oppilaitos, 'oppilaitos.logo')}
-          metadata={_.get(oppilaitos, 'oppilaitos.metadata')}
-          nimi={l.localize(_.get(oppilaitos, 'nimi'))}
+          logo={oppilaitos?.oppilaitos?.logo}
+          metadata={oppilaitos?.oppilaitos?.metadata}
+          nimi={l.localize(oppilaitos?.nimi)}
         />
       </Box>
     </Container>
