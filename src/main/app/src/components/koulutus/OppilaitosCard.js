@@ -1,8 +1,8 @@
 import React from 'react';
 import { Grid, Typography, Paper, makeStyles } from '@material-ui/core';
 import PublicIcon from '@material-ui/icons/Public';
-import { educationTypeColorCode } from '../../colors';
-import DiakoniaLogo from '../../assets/images/suomen_diakonia_opisto_logo.png';
+import { educationTypeColorCode } from '#/src/colors';
+import DiakoniaLogo from '#/src/assets/images/suomen_diakonia_opisto_logo.png';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
 import { Link as RouterLink } from 'react-router-dom';
 

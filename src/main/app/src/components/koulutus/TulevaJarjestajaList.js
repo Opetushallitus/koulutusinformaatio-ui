@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, Grid, Container, makeStyles } from '@material-ui/core';
-import Spacer from '../common/Spacer';
-import { Localizer as l } from '../../tools/Utils';
+import Spacer from '#/src/components/common/Spacer';
+import { Localizer as l } from '#/src/tools/Utils';
 import OppilaitosCard from './OppilaitosCard';
 import { useTranslation } from 'react-i18next';
 
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 
 const localizeArrayToString = (toLocalizeArray) => {
   return toLocalizeArray
-    .map((item) => l.localize(item.nimi))
+    .map((item) => l.localize(item))
     .sort()
     .join(', ');
 };
