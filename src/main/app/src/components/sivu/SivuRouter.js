@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link as RouterLink } from 'react-router-dom';
+import { useParams, Link as RouterLink, Redirect } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { colors } from '../../colors';
 import { makeStyles } from '@material-ui/core';
@@ -9,6 +9,7 @@ import SivuKooste from './SivuKooste';
 import { useStores } from '../../hooks';
 import { useTranslation } from 'react-i18next';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
+import LoadingCircle from '#/src/components/common/LoadingCircle';
 
 const useStyles = makeStyles({
   notFound: {
@@ -35,35 +36,55 @@ const useStyles = makeStyles({
   },
 });
 
-const SivuRouter = (props) => {
+const NotFound = ({ loading }) => {
   const { t } = useTranslation();
-  const { contentfulStore } = useStores();
-  const { id: pageId } = useParams();
   const classes = useStyles();
+  return (
+    <Grid
+      container
+      direction="row"
+      justify="center"
+      alignItems="center"
+      className={classes.component}>
+      {loading ? null : (
+        <Grid item xs={12} sm={6} md={6} className={classes.notFound}>
+          <h1 className={classes.header1}>{t('sisaltohaku.sivua-ei-löytynyt')}</h1>
+          <p>{t('sisaltohaku.etsimääsi-ei-löydy')}</p>
+          <LocalizedLink component={RouterLink} to={'/'}>
+            {t('sisaltohaku.takaisin')}
+          </LocalizedLink>
+        </Grid>
+      )}
+    </Grid>
+  );
+};
+
+const SivuRouter = (props) => {
+  const { i18n } = useTranslation();
+  const { contentfulStore } = useStores();
+  const { id: slug, lng: lngParam } = useParams();
   const { sivu, sivuKooste, loading } = contentfulStore.data;
-  if (sivu[pageId]) {
-    return <Sivu id={pageId} />;
-  } else if (sivuKooste[pageId]) {
-    return <SivuKooste id={pageId} />;
+  const { slugsToIds } = contentfulStore;
+  const idInfo = slugsToIds[slug];
+  if (lngParam !== i18n.language || loading) return <LoadingCircle />; //This eliminates an infinite loop that would happen if you pressed back button after changing language
+  if (idInfo?.language === i18n.language) {
+    if (sivu[slug]) {
+      return <Sivu id={slug} />;
+    } else if (sivuKooste[slug]) {
+      return <SivuKooste id={slug} />;
+    } else {
+      return <NotFound loading={loading} />;
+    }
   } else {
-    return (
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        className={classes.component}>
-        {loading ? null : (
-          <Grid item xs={12} sm={6} md={6} className={classes.notFound}>
-            <h1 className={classes.header1}>{t('sisaltohaku.sivua-ei-löytynyt')}</h1>
-            <p>{t('sisaltohaku.etsimääsi-ei-löydy')}</p>
-            <LocalizedLink component={RouterLink} to={'/'}>
-              {t('sisaltohaku.takaisin')}
-            </LocalizedLink>
-          </Grid>
-        )}
-      </Grid>
+    const newSlug = Object.keys(slugsToIds).find(
+      (key) =>
+        slugsToIds[key].id === idInfo?.id && slugsToIds[key]?.language === i18n.language
     );
+    if (newSlug) {
+      return <Redirect to={`/${i18n.language}/sivu/${newSlug}`} />;
+    } else {
+      return <NotFound loading={loading} />;
+    }
   }
 };
 

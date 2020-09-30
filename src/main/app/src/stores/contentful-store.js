@@ -1,8 +1,9 @@
 import { observable, action, runInAction } from 'mobx';
 import superagent from 'superagent';
+import { Localizer as l } from '#/src/tools/Utils';
 
 const initialState = {
-  loading: true,
+  loading: false,
   kortit: {},
   sivu: {},
   info: {},
@@ -17,6 +18,10 @@ const initialState = {
 };
 
 class ContentfulStore {
+  constructor(urlStore) {
+    this.urlStore = urlStore;
+    this.slugsToIds = {};
+  }
   @observable data = initialState;
 
   forwardTo = (id, nullIfUnvailable) => {
@@ -86,13 +91,22 @@ class ContentfulStore {
   fetchUrl(url) {
     return superagent.get(url);
   }
-  constructor(urlStore) {
-    this.urlStore = urlStore;
-  }
 
+  createSlugsToIds() {
+    this.slugsToIds = {
+      ...this.slugsToIds,
+      ...Object.fromEntries(
+        Object.values(this.data.sivu).map((sivu) => [
+          sivu.slug,
+          { language: l.getLanguage(), id: sivu.id },
+        ])
+      ),
+    };
+  }
   @action
   fetchData = async (lang) => {
-    if (this.data.loading) {
+    if (!this.data.loading) {
+      this.data.loading = true;
       this.fetchManifest()
         .then((res) => {
           return res.body || {};
@@ -115,8 +129,10 @@ class ContentfulStore {
         .then((all) => {
           runInAction(() => {
             this.data = Object.assign(...all);
+            this.createSlugsToIds();
           });
-        });
+        })
+        .then(() => (this.data.loading = false));
     }
   };
 
