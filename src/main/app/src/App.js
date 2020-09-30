@@ -106,6 +106,10 @@ const TranslatedRoutes = ({ match }) => {
         <KoulutusHakuBar />
         <Oppilaitos />
       </Route>
+      <Route path="/:lng/oppilaitososa/:oid">
+        <KoulutusHakuBar />
+        <Oppilaitos oppilaitosOsa />
+      </Route>
       <Route path="/:lng/toteutus/:oid">
         <KoulutusHakuBar />
         <Toteutus />
