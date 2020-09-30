@@ -79,6 +79,7 @@ const TranslatedRoutes = ({ match }) => {
   const selectedLanguage = match.params.lng;
   useEffect(() => {
     selectedLanguage &&
+      selectedLanguage !== i18n.language &&
       supportedLanguages.includes(selectedLanguage) &&
       i18n.changeLanguage(selectedLanguage);
   }, [i18n, selectedLanguage]);
@@ -123,6 +124,7 @@ const TranslatedRoutes = ({ match }) => {
 
 const App = () => {
   const classes = useStyles();
+  const { i18n } = useTranslation();
   const hakuStore = konfoStore.hakuStore;
   const hakuehtoStore = konfoStore.hakuehtoStore;
   const urlStore = konfoStore.urlStore;
@@ -130,7 +132,6 @@ const App = () => {
   const navigaatioStore = konfoStore.navigaatioStore;
   const vertailuStore = konfoStore.vertailuStore;
   const contentfulStore = konfoStore.contentfulStore;
-  const { i18n } = useTranslation();
 
   const matches = useMediaQuery('(max-width: 600px)');
 
