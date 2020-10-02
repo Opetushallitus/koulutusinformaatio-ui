@@ -87,7 +87,7 @@ const Etusivu = observer(({ history }) => {
         </Grid>
 
         <Grid container>
-          <h1 className={classes.header}>Oikopolut</h1>
+          <h1 className={classes.header}>{t('oikopolut')}</h1>
           <Grid container spacing={3}>
             {(single(kortit).kortit || []).map((k) => {
               return <Kortti id={k.id} key={k.id} />;
@@ -99,7 +99,7 @@ const Etusivu = observer(({ history }) => {
       <ReactiveBorder className={classes.uutiset}>
         <Grid container>
           <Grid item xs={12}>
-            <h1 className={classes.header}>Ajankohtaista ja uutisia</h1>
+            <h1 className={classes.header}>{t('ajankohtaista-ja-uutisia')}</h1>
           </Grid>
           <Grid container spacing={3}>
             <Uutiset uutiset={showMore ? _.take(uutislinkit, 3) : uutislinkit} />
