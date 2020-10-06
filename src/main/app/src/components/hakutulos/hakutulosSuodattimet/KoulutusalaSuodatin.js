@@ -58,19 +58,19 @@ const KoulutusalaSuodatin = ({
   const apiRequestParams = useSelector(getAPIRequestParams);
   const muiScreenSizeMinMd = useMediaQuery(MUI_BREAKPOINTS.MIN_MD);
 
-  const [expandedKoulutusTaso1, setExpandedKoulutusTaso1] = useState([]);
+  const [openedKoulutusala, setOpenedKoulutusala] = useState([]);
 
   // Jos 2:n tason koulutusalan suodatin-lista avattu ja arvot muuttuu, korvataan sen storessa olevalla
   useEffect(() => {
-    if (_.size(expandedKoulutusTaso1) > 0) {
-      setExpandedKoulutusTaso1(
-        _.find(sortedKoulutusalat, (ka) => ka[0] === expandedKoulutusTaso1[0])
+    if (_.size(openedKoulutusala) > 0) {
+      setOpenedKoulutusala(
+        _.find(sortedKoulutusalat, (ka) => ka[0] === openedKoulutusala[0])
       );
     }
-  }, [expandedKoulutusTaso1, sortedKoulutusalat]);
+  }, [openedKoulutusala, sortedKoulutusalat]);
 
   const handleKoulutusalaOuterToggle = (koulutusalaTaso1) => () => {
-    setExpandedKoulutusTaso1(koulutusalaTaso1);
+    setOpenedKoulutusala(koulutusalaTaso1);
   };
 
   const handleKoulutusalaInnerToggle = (clickedFilterId, parentFilterId) => () => {
@@ -97,77 +97,69 @@ const KoulutusalaSuodatin = ({
   }
 
   const KoulutuksetTaso2 = () => (
-    <List style={{ width: '100%' }} hidden={expandedKoulutusTaso1.length === 0}>
+    <List style={{ width: '100%' }} hidden={openedKoulutusala.length === 0}>
       <Button
         color="secondary"
         size="small"
         classes={{ label: classes.buttonLabel }}
-        onClick={() => setExpandedKoulutusTaso1([])}>
+        onClick={() => setOpenedKoulutusala([])}>
         {t('haku.__kaikki_koulutusalat')}
       </Button>
       <ListItem
-        key={expandedKoulutusTaso1[0]}
+        key={openedKoulutusala[0]}
         dense
         button
-        onClick={handleKoulutusalaInnerToggle(expandedKoulutusTaso1[0])}>
+        onClick={handleKoulutusalaInnerToggle(openedKoulutusala[0])}>
         <ListItemIcon>
           <SuodatinCheckbox
             indeterminateIcon={<IndeterminateCheckBoxOutlined />}
-            indeterminate={isIndeterminate(expandedKoulutusTaso1)}
+            indeterminate={isIndeterminate(openedKoulutusala)}
             edge="start"
             checked={
-              checkedKoulutusalat.findIndex(
-                ({ id }) => id === expandedKoulutusTaso1[0]
-              ) !== -1
+              checkedKoulutusalat.findIndex(({ id }) => id === openedKoulutusala[0]) !==
+              -1
             }
             tabIndex={-1}
             disableRipple
           />
         </ListItemIcon>
         <SuodatinListItemText
-          id={`${expandedKoulutusTaso1[0]}_text`}
+          id={`${openedKoulutusala[0]}_text`}
           primary={
             <Grid container justify="space-between" wrap="nowrap">
               <Grid item style={{ fontWeight: 'bold' }}>
-                {l.localize(expandedKoulutusTaso1[1])}
+                {l.localize(openedKoulutusala[1])}
               </Grid>
-              <Grid item>{`(${_.get(expandedKoulutusTaso1, `[1].count`) || 0})`}</Grid>
+              <Grid item>{`(${_.get(openedKoulutusala, `[1].count`) || 0})`}</Grid>
             </Grid>
           }
         />
       </ListItem>
       <Divider style={{ margin: '10px 0' }} />
-      {_.keys(_.get(expandedKoulutusTaso1, '[1].alakoodit')).map((koulutusTaso2_ID) => (
+      {_.keys(_.get(openedKoulutusala, '[1].alakoodit')).map((kaTaso2Id) => (
         <ListItem
-          key={koulutusTaso2_ID}
+          key={kaTaso2Id}
           dense
           button
-          onClick={handleKoulutusalaInnerToggle(
-            koulutusTaso2_ID,
-            expandedKoulutusTaso1[0]
-          )}>
+          onClick={handleKoulutusalaInnerToggle(kaTaso2Id, openedKoulutusala[0])}>
           <ListItemIcon>
             <SuodatinCheckbox
               edge="start"
-              checked={
-                checkedKoulutusalat.findIndex(({ id }) => id === koulutusTaso2_ID) !== -1
-              }
+              checked={checkedKoulutusalat.findIndex(({ id }) => id === kaTaso2Id) !== -1}
               tabIndex={-1}
               disableRipple
             />
           </ListItemIcon>
           <SuodatinListItemText
-            id={`${expandedKoulutusTaso1[0]}_${koulutusTaso2_ID}`}
+            id={`${openedKoulutusala[0]}_${kaTaso2Id}`}
             primary={
               <Grid container justify="space-between" wrap="nowrap">
                 <Grid item>
-                  {l.localize(expandedKoulutusTaso1[1]?.alakoodit?.[koulutusTaso2_ID])}
+                  {l.localize(openedKoulutusala[1]?.alakoodit?.[kaTaso2Id])}
                 </Grid>
                 <Grid item>
-                  {`(${_.get(
-                    expandedKoulutusTaso1,
-                    `[1].alakoodit.${koulutusTaso2_ID}.count`
-                  ) || 0})`}
+                  {`(${_.get(openedKoulutusala, `[1].alakoodit.${kaTaso2Id}.count`) ||
+                    0})`}
                 </Grid>
               </Grid>
             }
@@ -193,7 +185,7 @@ const KoulutusalaSuodatin = ({
         </SuodatinExpansionPanelSummary>
       )}
       <SuodatinExpansionPanelDetails {...(summaryHidden && { style: { padding: 0 } })}>
-        <List hidden={expandedKoulutusTaso1.length > 0} style={{ width: '100%' }}>
+        <List hidden={openedKoulutusala.length > 0} style={{ width: '100%' }}>
           {sortedKoulutusalat.map((koulutusalaArr) => {
             const labelId = `language-list-label-${koulutusalaArr[0]}`;
             const isSelected = _.keys(koulutusalaArr[1]?.alakoodit)
