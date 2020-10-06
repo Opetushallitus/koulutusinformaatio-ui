@@ -3,6 +3,7 @@ import removeMd from 'remove-markdown';
 import { observer } from 'mobx-react-lite';
 
 const Preview = observer(({ markdown }) => {
+  // eslint-disable-next-line no-useless-escape
   const textAsSentences = removeMd(markdown).match(/[^\.!\?]+[\.!\?]+/g);
   const atLeastLetters = 200;
   return (
