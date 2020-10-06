@@ -158,8 +158,7 @@ const KoulutusalaSuodatin = ({
                   {l.localize(openedKoulutusala[1]?.alakoodit?.[kaTaso2Id])}
                 </Grid>
                 <Grid item>
-                  {`(${_.get(openedKoulutusala, `[1].alakoodit.${kaTaso2Id}.count`) ||
-                    0})`}
+                  {`(${openedKoulutusala[1]?.alakoodit?.[kaTaso2Id]?.count || 0})`}
                 </Grid>
               </Grid>
             }
