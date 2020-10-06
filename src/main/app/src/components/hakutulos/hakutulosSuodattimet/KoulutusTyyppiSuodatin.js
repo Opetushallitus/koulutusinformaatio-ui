@@ -130,6 +130,7 @@ const KoulutustyyppiSuodatin = ({
                 </ListItem>
                 {_.entries(_.get(koulutustyyppiOuter, '[1].alakoodit')).map(
                   (koulutustyyppiInnerEntry) => {
+                    const labelId = `${koulutustyyppiOuter[0]}_${koulutustyyppiInnerEntry[0]}_label`;
                     return (
                       <ListItem
                         style={{ paddingLeft: theme.spacing(2.2) }}
@@ -151,10 +152,11 @@ const KoulutustyyppiSuodatin = ({
                             }
                             tabIndex={-1}
                             disableRipple
+                            inputProps={{ 'aria-labelledby': labelId }}
                           />
                         </ListItemIcon>
                         <SuodatinListItemText
-                          id={`this ${labelId}_${koulutustyyppiInnerEntry}`}
+                          id={labelId}
                           primary={
                             <Grid container justify="space-between" wrap="nowrap">
                               <Grid item>{l.localize(koulutustyyppiInnerEntry[1])}</Grid>
