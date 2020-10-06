@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import _ from 'lodash';
 import {
   Grid,
   List,
@@ -11,7 +12,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { ExpandMore, IndeterminateCheckBoxOutlined } from '@material-ui/icons';
-import { koulutustyyppiUpdateAndSearch } from '#/src/store/reducers/hakutulosSlice';
+import { twoLevelFilterUpdateAndSearch } from '#/src/store/reducers/hakutulosSlice';
 import {
   getAPIRequestParams,
   getKoulutustyyppiFilterProps,
@@ -25,6 +26,7 @@ import {
 } from './CustomizedMuiComponents';
 import SummaryContent from './SummaryContent';
 import { Localizer as l } from '#/src/tools/Utils';
+import { FILTER_TYPES } from '#/src/constants';
 
 const withStyles = makeStyles(() => ({
   noBoxShadow: {
@@ -47,27 +49,32 @@ const KoulutustyyppiSuodatin = ({
     koulutustyyppi,
     checkedKoulutustyypit,
     checkedKoulutustyypitStr,
-    isParentCheckboxIndeterminated,
-    alakoodit,
-    parentFilterObj,
+    checkedKoulutustyypitKeys,
   } = useSelector(getKoulutustyyppiFilterProps);
   const apiRequestParams = useSelector(getAPIRequestParams);
 
-  const handleKoulutustyyppiClick = (clickedKoulutustyyppiEntry) => () => {
-    const clickedFilter = {
-      id: clickedKoulutustyyppiEntry[0],
-      name: clickedKoulutustyyppiEntry[1].nimi,
-    };
+  const handleKoulutustyyppiClick = (clickedFilterId, parentFilterId) => () => {
     dispatch(
-      koulutustyyppiUpdateAndSearch({
+      twoLevelFilterUpdateAndSearch({
+        filterType: FILTER_TYPES.KOULUTUSTYYPPI,
         apiRequestParams,
-        parentFilterObj,
-        alakoodit,
-        clickedFilter,
+        clickedFilterId,
+        parentFilterId,
         history,
       })
     );
   };
+
+  function isIndeterminate(koulutustyyppiEntry = []) {
+    const alakooditKeys = _.keys(_.get(koulutustyyppiEntry, '[1].alakoodit'));
+    const areAllAlakooditChecked = _.every(alakooditKeys, (id) =>
+      _.includes(checkedKoulutustyypitKeys, id)
+    );
+    const areSomeAlakoodiChecked = _.some(alakooditKeys, (id) =>
+      _.includes(checkedKoulutustyypitKeys, id)
+    );
+    return areSomeAlakoodiChecked && !areAllAlakooditChecked;
+  }
 
   return (
     <SuodatinExpansionPanel
@@ -88,7 +95,6 @@ const KoulutustyyppiSuodatin = ({
         <List style={{ width: '100%' }}>
           {koulutustyyppi.map((koulutustyyppiOuter) => {
             const labelId = `educationtype-outerlist-label-${koulutustyyppiOuter[0]}`;
-            console.log(koulutustyyppiOuter[1]?.alakoodit);
             return (
               <React.Fragment key={`fragment-${koulutustyyppiOuter[0]}`}>
                 <ListItem
@@ -96,11 +102,11 @@ const KoulutustyyppiSuodatin = ({
                   id={koulutustyyppiOuter[0]}
                   dense
                   button
-                  onClick={handleKoulutustyyppiClick(koulutustyyppiOuter)}>
+                  onClick={handleKoulutustyyppiClick(koulutustyyppiOuter[0])}>
                   <ListItemIcon>
                     <SuodatinCheckbox
                       indeterminateIcon={<IndeterminateCheckBoxOutlined />}
-                      indeterminate={isParentCheckboxIndeterminated}
+                      indeterminate={isIndeterminate(koulutustyyppiOuter)}
                       edge="start"
                       checked={
                         checkedKoulutustyypit.findIndex(
@@ -117,50 +123,51 @@ const KoulutustyyppiSuodatin = ({
                     primary={
                       <Grid container justify="space-between" wrap="nowrap">
                         <Grid item>{l.localize(koulutustyyppiOuter[1])}</Grid>
-                        <Grid item>{`(${koulutustyyppiOuter[1].count})`}</Grid>
+                        <Grid item>{`(${koulutustyyppiOuter[1].count || 0})`}</Grid>
                       </Grid>
                     }
                   />
                 </ListItem>
-                {koulutustyyppiOuter[1].alakoodit &&
-                  Object.entries(koulutustyyppiOuter[1].alakoodit).map(
-                    (koulutustyyppiInnerEntry) => {
-                      return (
-                        <ListItem
-                          style={{ paddingLeft: theme.spacing(2.2) }}
-                          key={`${koulutustyyppiOuter[0]}_${koulutustyyppiInnerEntry[0]}`}
-                          id={`${koulutustyyppiOuter[0]}_${koulutustyyppiInnerEntry[0]}`}
-                          dense
-                          button
-                          onClick={handleKoulutustyyppiClick(koulutustyyppiInnerEntry)}>
-                          <ListItemIcon>
-                            <SuodatinCheckbox
-                              edge="start"
-                              checked={
-                                checkedKoulutustyypit.findIndex(
-                                  ({ id }) => id === koulutustyyppiInnerEntry[0]
-                                ) !== -1
-                              }
-                              tabIndex={-1}
-                              disableRipple
-                            />
-                          </ListItemIcon>
-                          <SuodatinListItemText
-                            id={`this ${labelId}_${koulutustyyppiInnerEntry}`}
-                            primary={
-                              <Grid container justify="space-between" wrap="nowrap">
-                                <Grid item>
-                                  {l.localize(koulutustyyppiInnerEntry[1])}
-                                </Grid>
-                                <Grid
-                                  item>{`(${koulutustyyppiInnerEntry[1].count})`}</Grid>
-                              </Grid>
+                {_.entries(_.get(koulutustyyppiOuter, '[1].alakoodit')).map(
+                  (koulutustyyppiInnerEntry) => {
+                    return (
+                      <ListItem
+                        style={{ paddingLeft: theme.spacing(2.2) }}
+                        key={`${koulutustyyppiOuter[0]}_${koulutustyyppiInnerEntry[0]}`}
+                        id={`${koulutustyyppiOuter[0]}_${koulutustyyppiInnerEntry[0]}`}
+                        dense
+                        button
+                        onClick={handleKoulutustyyppiClick(
+                          koulutustyyppiInnerEntry[0],
+                          koulutustyyppiOuter[0]
+                        )}>
+                        <ListItemIcon>
+                          <SuodatinCheckbox
+                            edge="start"
+                            checked={
+                              checkedKoulutustyypit.findIndex(
+                                ({ id }) => id === koulutustyyppiInnerEntry[0]
+                              ) !== -1
                             }
+                            tabIndex={-1}
+                            disableRipple
                           />
-                        </ListItem>
-                      );
-                    }
-                  )}
+                        </ListItemIcon>
+                        <SuodatinListItemText
+                          id={`this ${labelId}_${koulutustyyppiInnerEntry}`}
+                          primary={
+                            <Grid container justify="space-between" wrap="nowrap">
+                              <Grid item>{l.localize(koulutustyyppiInnerEntry[1])}</Grid>
+                              <Grid item>
+                                {`(${koulutustyyppiInnerEntry[1].count || 0})`}
+                              </Grid>
+                            </Grid>
+                          }
+                        />
+                      </ListItem>
+                    );
+                  }
+                )}
               </React.Fragment>
             );
           })}

@@ -1,4 +1,20 @@
 {
-  "plugins": ["@babel/plugin-proposal-optional-chaining", "lodash"],
-  "presets": [["@babel/env", { "targets": "> 0.25%, not dead" }]]
+  "plugins": [
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+    "@babel/plugin-proposal-optional-chaining",
+    "lodash"
+  ],
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "targets": "> 0.25%, not dead"
+      }
+    ]
+  ]
 }

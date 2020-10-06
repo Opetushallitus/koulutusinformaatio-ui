@@ -342,61 +342,70 @@ export const executeSearchFromStartingPage = ({ apiRequestParams, history }) => 
   dispatch(searchAll(apiRequestParams, true));
 };
 
-export const koulutustyyppiUpdateAndSearch = ({
+export const twoLevelFilterUpdateAndSearch = ({
+  filterType,
   apiRequestParams,
-  parentFilterObj,
-  alakoodit,
-  clickedFilter,
+  clickedFilterId,
+  parentFilterId,
   history,
 }) => (dispatch, getState) => {
   const { hakutulos } = getState();
-  const oldCheckedKoulutustyypit = _.clone(hakutulos.koulutustyyppi);
-  const clickedFilterId = _.get(clickedFilter, 'id');
-  const parentFilterObjId = _.get(parentFilterObj, 'id');
-  let newCheckedKoulutustyypit = [...oldCheckedKoulutustyypit];
+  let filterCheckedValues = _.clone(_.get(hakutulos, filterType));
+  const filterAllValues = getFilterAllValues(filterType, hakutulos);
+  const firstLevelKeys = _.keys(filterAllValues);
+  const isFirstFilterLevelId = _.includes(firstLevelKeys, clickedFilterId);
   const checkedIndex = _.findIndex(
-    oldCheckedKoulutustyypit,
+    filterCheckedValues,
     ({ id }) => id === clickedFilterId
   );
-
   if (checkedIndex === -1) {
-    newCheckedKoulutustyypit.push(clickedFilter);
-    if (clickedFilterId === parentFilterObjId) {
-      newCheckedKoulutustyypit = _.sortBy(
-        _.uniqBy(_.concat(newCheckedKoulutustyypit, alakoodit), 'id'),
-        'id'
+    if (isFirstFilterLevelId) {
+      filterCheckedValues = getCheckedOnTaso01Clicked(
+        filterAllValues,
+        clickedFilterId,
+        filterCheckedValues
       );
-    } else {
-      if (
-        _.isEqual(_.sortBy(newCheckedKoulutustyypit, 'id'), _.sortBy(alakoodit, 'id'))
-      ) {
-        newCheckedKoulutustyypit.push(parentFilterObj);
-        newCheckedKoulutustyypit = _.sortBy(
-          _.uniqBy(newCheckedKoulutustyypit, 'id'),
-          'id'
-        );
-      }
+    } else if (_.includes(firstLevelKeys, parentFilterId)) {
+      filterCheckedValues = getCheckedOnTaso02Clicked(
+        filterAllValues,
+        filterCheckedValues,
+        clickedFilterId,
+        parentFilterId
+      );
     }
   } else {
-    if (clickedFilterId === parentFilterObjId) {
-      newCheckedKoulutustyypit.splice(0);
+    if (isFirstFilterLevelId) {
+      const idsToRemove = getFilterIdsToRemove(filterAllValues, clickedFilterId);
+      _.remove(filterCheckedValues, (elem) => _.includes(idsToRemove, elem.id));
     } else {
-      _.remove(newCheckedKoulutustyypit, (elem) =>
-        _.includes([parentFilterObjId, clickedFilterId], elem.id)
+      filterCheckedValues.splice(checkedIndex, 1);
+      _.remove(filterCheckedValues, (elem) =>
+        _.includes([clickedFilterId, parentFilterId], elem.id)
       );
     }
   }
 
-  const search = qs.parse(history.location.search);
-  const koulutustyyppiNewUrlParam = _.join(_.map(newCheckedKoulutustyypit, 'id'), ',');
+  filterCheckedValues = _.sortBy(_.uniqBy(filterCheckedValues, 'id'), 'id');
 
-  dispatch(setKoulutustyyppi({ newCheckedKoulutustyypit }));
-  search.koulutustyyppi = koulutustyyppiNewUrlParam;
+  const search = qs.parse(history.location.search);
+  const filterURLParamsStr = _.join(_.map(filterCheckedValues, 'id'), ',');
+
+  switch (filterType) {
+    case FILTER_TYPES.KOULUTUSALA:
+      dispatch(setKoulutusala({ newCheckedKoulutusalat: filterCheckedValues }));
+      break;
+    case FILTER_TYPES.KOULUTUSTYYPPI:
+      dispatch(setKoulutustyyppi({ newCheckedKoulutustyypit: filterCheckedValues }));
+      break;
+    default:
+      break;
+  }
+  search[filterType] = filterURLParamsStr;
   search.kpage = 1;
   search.opage = 1;
   history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
   dispatch(clearPaging());
-  dispatch(searchAll({ ...apiRequestParams, koulutustyyppi: koulutustyyppiNewUrlParam }));
+  dispatch(searchAll({ ...apiRequestParams, [filterType]: filterURLParamsStr }));
 };
 
 // Helpers
@@ -438,5 +447,87 @@ function getSelectedKunnatFilterValues(kunnatIds, kunnatFilters) {
 function getCleanUrlSearch(search, apiRequestParams) {
   return _.mapValues(_.pick(search, _.keys(apiRequestParams)), (value, key) =>
     _.includes(FILTER_TYPES_ARR, key) ? _.join(_.sortBy(_.split(value, ',')), ',') : value
+  );
+}
+
+function getCheckedOnTaso02Clicked(
+  allFilterValues,
+  checkedValues,
+  clickedFilterId,
+  parentFilterId
+) {
+  const parentFilterObj = _.get(allFilterValues, parentFilterId);
+  const alakoodiName = _.get(parentFilterObj, `alakoodit.${clickedFilterId}.nimi`);
+  const restAlakooditKeys = _.filter(
+    _.keys(_.get(parentFilterObj, 'alakoodit')),
+    (id) => !_.isEqual(id, clickedFilterId)
+  );
+  const allRestAlakooditChecked =
+    _.size(checkedValues) > 0 &&
+    _.every(restAlakooditKeys, (id) =>
+      _.includes([..._.map(checkedValues, 'id'), clickedFilterId], id)
+    );
+  if (allRestAlakooditChecked) {
+    return [
+      ...checkedValues,
+      { id: parentFilterId, name: _.get(parentFilterObj, 'nimi') },
+      { id: clickedFilterId, name: alakoodiName },
+    ];
+  } else {
+    return [
+      ...checkedValues,
+      {
+        id: clickedFilterId,
+        name: alakoodiName,
+      },
+    ];
+  }
+}
+
+function getFilterAllValues(filterType, hakutulos) {
+  return _.isEqual(_.get(hakutulos, 'selectedTab'), KOULUTUS)
+    ? _.get(hakutulos, `koulutusFilters.${filterType}`)
+    : _.get(hakutulos, `oppilaitosFilters.${filterType}`);
+}
+
+function getCheckedOnTaso01Clicked(filterAllValues, clickedFilterId, checkedValues) {
+  return _.compact(
+    _.concat(
+      checkedValues,
+      _.reduce(
+        filterAllValues,
+        (acc, val, key) => {
+          if (key === clickedFilterId) {
+            let parentFilterObj = {
+              id: key,
+              name: _.get(val, 'nimi'),
+            };
+            let _alakoodit = _.reduce(
+              _.get(val, 'alakoodit'),
+              (acc, val, key) => {
+                return [...acc, { id: key, name: _.get(val, 'nimi') }];
+              },
+              []
+            );
+            acc = _.concat(parentFilterObj, _alakoodit);
+          }
+          return acc;
+        },
+        []
+      )
+    )
+  );
+}
+
+function getFilterIdsToRemove(filterAllValues, clickedFilterId) {
+  return _.reduce(
+    filterAllValues,
+    (acc, val, key) => {
+      if (_.isEqual(key, clickedFilterId)) {
+        acc = _.concat(acc, _.keys(_.get(val, 'alakoodit')));
+      }
+      return acc;
+    },
+    [clickedFilterId]
   );
 }
