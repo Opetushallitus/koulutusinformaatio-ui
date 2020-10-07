@@ -107,6 +107,7 @@ const KoulutusalaSuodatin = ({
       </Button>
       <ListItem
         key={openedKoulutusala[0]}
+        id={openedKoulutusala[0]}
         dense
         button
         onClick={handleKoulutusalaInnerToggle(openedKoulutusala[0])}>
@@ -121,10 +122,11 @@ const KoulutusalaSuodatin = ({
             }
             tabIndex={-1}
             disableRipple
+            inputProps={{ 'aria-labelledby': `koulutusala_${openedKoulutusala[0]}` }}
           />
         </ListItemIcon>
         <SuodatinListItemText
-          id={`${openedKoulutusala[0]}_text`}
+          id={`koulutusala_${openedKoulutusala[0]}`}
           primary={
             <Grid container justify="space-between" wrap="nowrap">
               <Grid item style={{ fontWeight: 'bold' }}>
@@ -139,6 +141,7 @@ const KoulutusalaSuodatin = ({
       {_.keys(_.get(openedKoulutusala, '[1].alakoodit')).map((kaTaso2Id) => (
         <ListItem
           key={kaTaso2Id}
+          id={kaTaso2Id}
           dense
           button
           onClick={handleKoulutusalaInnerToggle(kaTaso2Id, openedKoulutusala[0])}>
@@ -148,6 +151,7 @@ const KoulutusalaSuodatin = ({
               checked={checkedKoulutusalat.findIndex(({ id }) => id === kaTaso2Id) !== -1}
               tabIndex={-1}
               disableRipple
+              inputProps={{ 'aria-labelledby': `${openedKoulutusala[0]}_${kaTaso2Id}` }}
             />
           </ListItemIcon>
           <SuodatinListItemText
