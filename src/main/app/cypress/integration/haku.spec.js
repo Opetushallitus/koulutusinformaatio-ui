@@ -1,5 +1,7 @@
+const autoRecord = require('cypress-autorecord');
 describe('Haku', () => {
-  it('Koulutustyyppi checkboxes should work hierarchically', () => {
+  autoRecord();
+  it('[r] Koulutustyyppi checkboxes should work hierarchically', function() {
     cy.visit('/konfo/fi/haku/auto');
 
     cy.findByRole('checkbox', { name: /Ammatillinen koulutus/ }).as(
@@ -31,105 +33,42 @@ describe('Haku', () => {
 
     cy.get('@AmmatillinenKoulutus').should('be.checked');
   });
-  it('Koulutusala checkboxes should work hierarchically part1', () => {
+  it('Koulutusala checkboxes should work hierarchically', function() {
     cy.visit('/konfo/fi/haku/auto');
-    cy.findByText('Koulutusalat').as('Koulutusalat');
-    cy.get('@Koulutusalat').should('exist');
-    cy.findByText('Tekniikan alat').as('TekniikanAlatTxt');
-    cy.get('@TekniikanAlatTxt').click();
-    cy.get('@TekniikanAlatTxt').should('not.be.visible');
+    cy.findByText('Koulutusalat').should('exist');
+    cy.findByText('Tekniikan alat').click().should('not.be.visible');
 
-    cy.findByRole('button', { name: /<< Kaikki koulutusalat/i }).as(
-      'BackToLevel01'
-    );
-    cy.findByRole('checkbox', { name: /Tekniikan alat \(\d*\)/i }).as('TekniikanAlat_01_Chk_001');
+    const tekniikanAlatChk = () => cy.findByRole('checkbox', { name: /Tekniikan alat \(\d*\)/i })
+    const arkkitehtuuriJaRakentaminen = () => cy.findByRole('checkbox', { name: /Arkkitehtuuri ja rakentaminen \(\d*\)/i })
+    const materiaaliJaProsessitekniikka = () => cy.findByRole('checkbox', { name: /Materiaali- ja prosessitekniikka \(\d*\)/i })
+    const koneProsessiEnergiaSahkoTekniikka = () => cy.findByRole('checkbox', { name: /Kone-, prosessi-, energia- ja sähkötekniikka \(\d*\)/i })
+    
+    tekniikanAlatChk().check();
 
-    cy.get('@TekniikanAlat_01_Chk_001').check();
+    tekniikanAlatChk().should('have.attr', 'data-indeterminate', 'false');
+    arkkitehtuuriJaRakentaminen().should('be.checked');
+    materiaaliJaProsessitekniikka().should('be.checked');
+    koneProsessiEnergiaSahkoTekniikka().should('be.checked');
 
-    cy.findByRole('checkbox', { name: /Tekniikan alat \(\d*\)/i }).as(
-      'TekniikanAlat_01_Chk_01');
-    cy.findByRole('checkbox', { name: /Arkkitehtuuri ja rakentaminen \(\d*\)/i }).as(
-      'ArkkitehtuuriRakentaminen_02_Chk_01');
-    cy.findByRole('checkbox', { name: /Materiaali- ja prosessitekniikka \(\d*\)/i }).as(
-      'MateriaaliProsessitekniikka_02_Chk_01');
-    cy.findByRole('checkbox', { name: /Kone-, prosessi-, energia- ja sähkötekniikka \(\d*\)/i }).as(
-      'KoneProsessiEnergiaSahko_02_Chk_01');
-    cy.get('@TekniikanAlat_01_Chk_01').should('have.attr', 'data-indeterminate', 'false');
-    cy.get('@ArkkitehtuuriRakentaminen_02_Chk_01').should('be.checked');
-    cy.get('@MateriaaliProsessitekniikka_02_Chk_01').should('be.checked');
-    cy.get('@KoneProsessiEnergiaSahko_02_Chk_01').should('be.checked');
+    materiaaliJaProsessitekniikka().uncheck();
 
-    cy.get('@MateriaaliProsessitekniikka_02_Chk_01').uncheck();
+    tekniikanAlatChk().should('have.attr', 'data-indeterminate', 'true');
+    arkkitehtuuriJaRakentaminen().should('be.checked');
+    materiaaliJaProsessitekniikka().should('not.be.checked');
+    koneProsessiEnergiaSahkoTekniikka().should('be.checked');
 
-    cy.findByRole('checkbox', { name: /Tekniikan alat \(\d*\)/i }).as('TekniikanAlat_01_Chk_02');
-    cy.findByRole('checkbox', { name: /Arkkitehtuuri ja rakentaminen \(\d*\)/i }).as(
-      'ArkkitehtuuriRakentaminen_02_Chk_02');
-    cy.findByRole('checkbox', { name: /Materiaali- ja prosessitekniikka \(\d*\)/i }).as(
-      'MateriaaliProsessitekniikka_02_Chk_02');
-    cy.findByRole('checkbox', { name: /Kone-, prosessi-, energia- ja sähkötekniikka \(\d*\)/i }).as(
-      'KoneProsessiEnergiaSahko_02_Chk_02');
-    cy.get('@TekniikanAlat_01_Chk_02').should('have.attr', 'data-indeterminate', 'true');
-    cy.get('@ArkkitehtuuriRakentaminen_02_Chk_02').should('be.checked');
-    cy.get('@MateriaaliProsessitekniikka_02_Chk_02').should('not.be.checked');
-    cy.get('@KoneProsessiEnergiaSahko_02_Chk_02').should('be.checked');
+    arkkitehtuuriJaRakentaminen().check();
 
-    cy.get('@ArkkitehtuuriRakentaminen_02_Chk_02').check();
-
-    cy.findByRole('checkbox', { name: /Tekniikan alat \(\d*\)/i }).as('TekniikanAlat_01_Chk_03');
-    cy.findByRole('checkbox', { name: /Arkkitehtuuri ja rakentaminen \(\d*\)/i }).as(
-      'ArkkitehtuuriRakentaminen_02_Chk_03');
-    cy.findByRole('checkbox', { name: /Materiaali- ja prosessitekniikka \(\d*\)/i }).as(
-      'MateriaaliProsessitekniikka_02_Chk_03');
-    cy.findByRole('checkbox', { name: /Kone-, prosessi-, energia- ja sähkötekniikka \(\d*\)/i }).as(
-      'KoneProsessiEnergiaSahko_02_Chk_03');
-    cy.get('@TekniikanAlat_01_Chk_03').should('have.attr', 'data-indeterminate', 'true');
-    cy.get('@ArkkitehtuuriRakentaminen_02_Chk_03').should('be.checked');
-    cy.get('@MateriaaliProsessitekniikka_02_Chk_03').should('not.be.checked');
-    cy.get('@KoneProsessiEnergiaSahko_02_Chk_03').should('be.checked');
-  });
-
-  it('Koulutusala checkboxes should work hierarchically part2', () => {
-    cy.visit('/konfo/fi/haku/auto');
-    cy.findByText('Koulutusalat').as('Koulutusalat');
-    cy.get('@Koulutusalat').should('exist');
-    cy.findByText('Tekniikan alat').as('TekniikanAlatTxt');
-    cy.get('@TekniikanAlatTxt').click();
-    cy.get('@TekniikanAlatTxt').should('not.be.visible')
-
-    cy.findByRole('button', { name: /<< Kaikki koulutusalat/i }).as('BackToLevel01');
-    cy.findByRole('checkbox', { name: /Tekniikan alat \(\d*\)/i }).as('TekniikanAlat_01_Chk_001');
-
-    cy.get('@TekniikanAlat_01_Chk_001').check();
-
-    cy.findByRole('checkbox', { name: /Tekniikan alat \(\d*\)/i }).as('TekniikanAlat_01_Chk_01');
-    cy.findByRole('checkbox', { name: /Arkkitehtuuri ja rakentaminen \(\d*\)/i }).as(
-      'ArkkitehtuuriRakentaminen_02_Chk_01');
-    cy.findByRole('checkbox', { name: /Materiaali- ja prosessitekniikka \(\d*\)/i }).as(
-      'MateriaaliProsessitekniikka_02_Chk_01');
-    cy.findByRole('checkbox', { name: /Kone-, prosessi-, energia- ja sähkötekniikka \(\d*\)/i }).as(
-      'KoneProsessiEnergiaSahko_02_Chk_01');
-    cy.get('@TekniikanAlat_01_Chk_01').should('have.attr', 'data-indeterminate', 'false');
-    cy.get('@ArkkitehtuuriRakentaminen_02_Chk_01').should('be.checked');
-    cy.get('@MateriaaliProsessitekniikka_02_Chk_01').should('be.checked');
-    cy.get('@KoneProsessiEnergiaSahko_02_Chk_01').should('be.checked');
-
-    cy.get('@MateriaaliProsessitekniikka_02_Chk_01').uncheck();
-
-    cy.findByRole('checkbox', { name: /Tekniikan alat \(\d*\)/i }).as('TekniikanAlat_01_Chk_02');
-    cy.findByRole('checkbox', { name: /Arkkitehtuuri ja rakentaminen \(\d*\)/i }).as(
-      'ArkkitehtuuriRakentaminen_02_Chk_02');
-    cy.findByRole('checkbox', { name: /Materiaali- ja prosessitekniikka \(\d*\)/i }).as(
-      'MateriaaliProsessitekniikka_02_Chk_02');
-    cy.findByRole('checkbox', { name: /Kone-, prosessi-, energia- ja sähkötekniikka \(\d*\)/i }).as(
-      'KoneProsessiEnergiaSahko_02_Chk_02');
-    cy.get('@TekniikanAlat_01_Chk_02').should('have.attr', 'data-indeterminate', 'true');
-    cy.get('@ArkkitehtuuriRakentaminen_02_Chk_02').should('be.checked');
-    cy.get('@MateriaaliProsessitekniikka_02_Chk_02').should('not.be.checked');
-    cy.get('@KoneProsessiEnergiaSahko_02_Chk_02').should('be.checked');
-
-    cy.get('@MateriaaliProsessitekniikka_02_Chk_02').check();
-
-    cy.findByRole('checkbox', { name: /Tekniikan alat \(\d*\)/i }).as('TekniikanAlat_01_Chk_03');
-    cy.get('@TekniikanAlat_01_Chk_03').should('have.attr', 'data-indeterminate', 'false');
+    tekniikanAlatChk().should('have.attr', 'data-indeterminate', 'true');
+    arkkitehtuuriJaRakentaminen().should('be.checked');
+    materiaaliJaProsessitekniikka().should('not.be.checked');
+    koneProsessiEnergiaSahkoTekniikka().should('be.checked');
+    
+    materiaaliJaProsessitekniikka().check()
+    
+    tekniikanAlatChk().should('be.checked').should('have.attr', 'data-indeterminate', 'false')
+    arkkitehtuuriJaRakentaminen().should('be.checked');
+    materiaaliJaProsessitekniikka().should('be.checked');
+    koneProsessiEnergiaSahkoTekniikka().should('be.checked');
   });
 });
