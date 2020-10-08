@@ -12,7 +12,7 @@
 // the project's config changing)
 
 const fs = require('fs');
-const autoRecord = require('cypress-autorecord/plugin')
+const autoRecord = require('cypress-autorecord/plugin');
 const wp = require('@cypress/webpack-preprocessor');
 const alias = require('../../webpack-alias');
 

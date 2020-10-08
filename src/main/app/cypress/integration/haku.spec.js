@@ -1,7 +1,7 @@
 const autoRecord = require('cypress-autorecord');
 describe('Haku', () => {
   autoRecord();
-  it('[r] Koulutustyyppi checkboxes should work hierarchically', function() {
+  it('[r] Koulutustyyppi checkboxes should work hierarchically', function () {
     cy.visit('/konfo/fi/haku/auto');
 
     cy.findByRole('checkbox', { name: /Ammatillinen koulutus/ }).as(
@@ -33,16 +33,20 @@ describe('Haku', () => {
 
     cy.get('@AmmatillinenKoulutus').should('be.checked');
   });
-  it('Koulutusala checkboxes should work hierarchically', function() {
+  it('Koulutusala checkboxes should work hierarchically', function () {
     cy.visit('/konfo/fi/haku/auto');
     cy.findByText('Koulutusalat').should('exist');
     cy.findByText('Tekniikan alat').click().should('not.be.visible');
 
-    const tekniikanAlatChk = () => cy.findByRole('checkbox', { name: /Tekniikan alat \(\d*\)/i })
-    const arkkitehtuuriJaRakentaminen = () => cy.findByRole('checkbox', { name: /Arkkitehtuuri ja rakentaminen \(\d*\)/i })
-    const materiaaliJaProsessitekniikka = () => cy.findByRole('checkbox', { name: /Materiaali- ja prosessitekniikka \(\d*\)/i })
-    const koneProsessiEnergiaSahkoTekniikka = () => cy.findByRole('checkbox', { name: /Kone-, prosessi-, energia- ja sähkötekniikka \(\d*\)/i })
-    
+    const tekniikanAlatChk = () =>
+      cy.findByRole('checkbox', { name: /Tekniikan alat \(\d*\)/i });
+    const arkkitehtuuriJaRakentaminen = () =>
+      cy.findByRole('checkbox', { name: /Arkkitehtuuri ja rakentaminen \(\d*\)/i });
+    const materiaaliJaProsessitekniikka = () =>
+      cy.findByRole('checkbox', { name: /Materiaali- ja prosessitekniikka \(\d*\)/i });
+    const koneProsessiEnergiaSahkoTekniikka = () =>
+      cy.findByRole('checkbox', { name: /Kone-, prosessi-, energia- ja sähkötekniikka \(\d*\)/i });
+
     tekniikanAlatChk().check();
 
     tekniikanAlatChk().should('have.attr', 'data-indeterminate', 'false');
@@ -63,10 +67,10 @@ describe('Haku', () => {
     arkkitehtuuriJaRakentaminen().should('be.checked');
     materiaaliJaProsessitekniikka().should('not.be.checked');
     koneProsessiEnergiaSahkoTekniikka().should('be.checked');
-    
-    materiaaliJaProsessitekniikka().check()
-    
-    tekniikanAlatChk().should('be.checked').should('have.attr', 'data-indeterminate', 'false')
+
+    materiaaliJaProsessitekniikka().check();
+
+    tekniikanAlatChk().should('be.checked').should('have.attr', 'data-indeterminate', 'false');
     arkkitehtuuriJaRakentaminen().should('be.checked');
     materiaaliJaProsessitekniikka().should('be.checked');
     koneProsessiEnergiaSahkoTekniikka().should('be.checked');
