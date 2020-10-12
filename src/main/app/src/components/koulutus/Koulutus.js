@@ -8,6 +8,7 @@ import _ from 'lodash';
 import KoulutusInfoGrid from './KoulutusInfoGrid';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import ToteutusList from './ToteutusList';
+import TulevaJarjestajaList from './TulevaJarjestajaList';
 import HakuKaynnissaCard from './HakuKaynnissaCard';
 import SuositusKoulutusList from './SuositusKoulutusList';
 import { HashLink as Link } from 'react-router-hash-link';
@@ -21,6 +22,7 @@ import {
   selectSuositellutKoulutukset,
   selectLoading,
   selectJarjestajat,
+  selectTulevatJarjestajat,
 } from '#/src/store/reducers/koulutusSlice';
 import LoadingCircle from '#/src/components/common/LoadingCircle';
 import qs from 'query-string';
@@ -76,6 +78,7 @@ const Koulutus = (props) => {
     shallowEqual
   );
   const toteutukset = useSelector((state) => selectJarjestajat(state, oid));
+  const tulevatJarjestajat = useSelector((state) => selectTulevatJarjestajat(state, oid));
   const loading = useSelector((state) => selectLoading(state));
   useEffect(() => {
     if (!koulutus) {
@@ -246,6 +249,11 @@ const Koulutus = (props) => {
         {suositellutKoulutukset?.total > 0 && (
           <Box id="suositukset">
             <SuositusKoulutusList koulutukset={suositellutKoulutukset} oid={oid} />
+          </Box>
+        )}
+        {tulevatJarjestajat?.length > 0 && (
+          <Box width="95%" id="tulevatJarjestajat">
+            <TulevaJarjestajaList jarjestajat={tulevatJarjestajat} />
           </Box>
         )}
       </Box>
