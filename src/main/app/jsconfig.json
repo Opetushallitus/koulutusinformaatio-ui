@@ -4,8 +4,14 @@
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "#/*": ["./*"]
+      "#/*": [
+        "./*"
+      ]
     }
   },
-  "include": ["./src", "./cypress"]
+  "include": [
+    "./src",
+    "./node_modules/cypress",
+    "./cypress/**/*.js"
+  ]
 }

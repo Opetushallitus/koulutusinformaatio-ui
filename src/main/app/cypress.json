@@ -1,8 +1,9 @@
 {
-  "baseUrl": "http://localhost:3000/konfo",
+  "baseUrl": "http://localhost:3005/konfo",
   "env": {
     "NODE_ENV": "production"
   },
   "video": false,
-  "useRelativeSnapshots": true
+  "useRelativeSnapshots": true,
+  "defaultCommandTimeout": 8000
 }

@@ -285,10 +285,12 @@ export const getKoulutustyyppiFilterProps = createSelector(
       selectedTab === 'koulutus'
         ? _.entries(koulutusFilters.koulutustyyppi)
         : _.entries(oppilaitosFilters.koulutustyyppi);
+    const checkedKoulutustyypitKeys = _.map(checkedKoulutustyypit, 'id');
     return {
       koulutustyyppi,
       selectedTab,
       checkedKoulutustyypit,
+      checkedKoulutustyypitKeys,
       checkedKoulutustyypitStr: getSelectedFiltersNamesStr(checkedKoulutustyypit),
     };
   }
@@ -301,10 +303,12 @@ export const getKoulutusalaFilterProps = createSelector(
       selectedTab === 'koulutus'
         ? koulutusFilters.koulutusala
         : oppilaitosFilters.koulutusala;
+    const checkedKoulutusalatKeys = _.map(checkedKoulutusalat, 'id');
     return {
       sortedKoulutusalat: sortedKoulutusalatEntries(koulutusala),
       selectedTab,
       checkedKoulutusalat,
+      checkedKoulutusalatKeys,
       checkedKoulutusalatStr: getSelectedFiltersNamesStr(checkedKoulutusalat),
     };
   }
