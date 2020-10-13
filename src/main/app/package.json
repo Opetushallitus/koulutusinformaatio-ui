@@ -115,7 +115,10 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json}": [
-      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ],
+    "cypress/**/*.{js,json}": [
       "eslint --fix",
       "git add"
     ]

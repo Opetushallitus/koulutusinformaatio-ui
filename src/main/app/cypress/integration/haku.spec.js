@@ -1,7 +1,7 @@
 const autoRecord = require('cypress-autorecord');
 describe('Haku', () => {
   autoRecord();
-  it('[r] Koulutustyyppi checkboxes should work hierarchically', function () {
+  it('Koulutustyyppi checkboxes should work hierarchically', function() {
     cy.visit('/konfo/fi/haku/auto');
 
     cy.findByRole('checkbox', { name: /Ammatillinen koulutus/ }).as(
@@ -33,10 +33,12 @@ describe('Haku', () => {
 
     cy.get('@AmmatillinenKoulutus').should('be.checked');
   });
-  it('Koulutusala checkboxes should work hierarchically', function () {
+  it('Koulutusala checkboxes should work hierarchically', function() {
     cy.visit('/konfo/fi/haku/auto');
     cy.findByText('Koulutusalat').should('exist');
-    cy.findByText('Tekniikan alat').click().should('not.be.visible');
+    cy.findByText('Tekniikan alat')
+      .click()
+      .should('not.be.visible');
 
     const tekniikanAlatChk = () =>
       cy.findByRole('checkbox', { name: /Tekniikan alat \(\d*\)/i });
@@ -45,7 +47,9 @@ describe('Haku', () => {
     const materiaaliJaProsessitekniikka = () =>
       cy.findByRole('checkbox', { name: /Materiaali- ja prosessitekniikka \(\d*\)/i });
     const koneProsessiEnergiaSahkoTekniikka = () =>
-      cy.findByRole('checkbox', { name: /Kone-, prosessi-, energia- ja sähkötekniikka \(\d*\)/i });
+      cy.findByRole('checkbox', {
+        name: /Kone-, prosessi-, energia- ja sähkötekniikka \(\d*\)/i,
+      });
 
     tekniikanAlatChk().check();
 
@@ -70,7 +74,9 @@ describe('Haku', () => {
 
     materiaaliJaProsessitekniikka().check();
 
-    tekniikanAlatChk().should('be.checked').should('have.attr', 'data-indeterminate', 'false');
+    tekniikanAlatChk()
+      .should('be.checked')
+      .should('have.attr', 'data-indeterminate', 'false');
     arkkitehtuuriJaRakentaminen().should('be.checked');
     materiaaliJaProsessitekniikka().should('be.checked');
     koneProsessiEnergiaSahkoTekniikka().should('be.checked');
