@@ -89,8 +89,10 @@ export const koulutusData = {
       },
     },
   },
+  ePerusteId: 'dummyId',
   koulutustyyppi: 'amm',
 };
+
 export const jarjestajatData = {
   total: 3,
   hits: [

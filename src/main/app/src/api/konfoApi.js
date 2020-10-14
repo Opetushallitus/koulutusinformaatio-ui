@@ -17,9 +17,6 @@ export const getKoulutus = (oid, draft) =>
 export const getKoulutusKuvaus = (uri) =>
   get(urls.url('konfo-backend.koulutus.kuvaus') + uri);
 
-export const getTutkinnonOsaKuvaus = (uri) =>
-  get(urls.url('konfo-backend.tutkinnonosat.kuvaus', uri));
-
 export const getEperusteKuvaus = (uri) =>
   get(urls.url('konfo-backend.eperuste.kuvaus', uri));
 

@@ -5,7 +5,8 @@ import ExtensionOutlinedIcon from '@material-ui/icons/ExtensionOutlined';
 import TimelapseIcon from '@material-ui/icons/Timelapse';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
-import { Localizer as l } from '../../tools/Utils';
+import { Localizer as l } from '#/src/tools/Utils';
+import { TYYPPI_AMM_TUTKINNON_OSA } from '#/src/store/reducers/koulutusSlice';
 
 const useStyles = makeStyles((theme) => ({
   koulutusInfoGridIcon: {
@@ -17,32 +18,37 @@ const KoulutusInfoGrid = (props) => {
   const classes = useStyles();
   const { nimikkeet, koulutustyyppi, laajuus } = props;
   const { t } = useTranslation();
-  const nimikeString = nimikkeet
-    ? nimikkeet.map((nimikeObj) => l.localize(nimikeObj)).join('\n')
-    : t('koulutus.ei-tutkintonimiketta');
+
+  const perustiedotData = [];
+  if (koulutustyyppi !== TYYPPI_AMM_TUTKINNON_OSA) {
+    const nimikeString = nimikkeet
+      ? nimikkeet.map((nimikeObj) => l.localize(nimikeObj)).join('\n')
+      : t('koulutus.ei-tutkintonimiketta');
+    perustiedotData.push({
+      icon: <SchoolOutlinedIcon className={classes.koulutusInfoGridIcon} />,
+      title: t('koulutus.tutkintonimikkeet'),
+      text: nimikeString,
+    });
+  }
+
   const laajuusString = !laajuus.includes(undefined)
     ? laajuus.map((elem) => l.localize(elem)).join(' ')
     : t('koulutus.ei-laajuutta');
   const koulutusTyyppiString = koulutustyyppi
     ? t(`koulutus.tyyppi-${koulutustyyppi}`)
     : '';
-  const perustiedotData = [
-    {
-      icon: <SchoolOutlinedIcon className={classes.koulutusInfoGridIcon} />,
-      title: t('koulutus.tutkintonimikkeet'),
-      text: nimikeString,
-    },
-    {
-      icon: <ExtensionOutlinedIcon className={classes.koulutusInfoGridIcon} />,
-      title: t('koulutus.koulutustyyppi'),
-      text: koulutusTyyppiString,
-    },
-    {
-      icon: <TimelapseIcon className={classes.koulutusInfoGridIcon} />,
-      title: t('koulutus.koulutuksen-laajuus'),
-      text: laajuusString,
-    },
-  ];
+
+  perustiedotData.push({
+    icon: <ExtensionOutlinedIcon className={classes.koulutusInfoGridIcon} />,
+    title: t('koulutus.koulutustyyppi'),
+    text: koulutusTyyppiString,
+  });
+  perustiedotData.push({
+    icon: <TimelapseIcon className={classes.koulutusInfoGridIcon} />,
+    title: t('koulutus.koulutuksen-laajuus'),
+    text: laajuusString,
+  });
+
   return (
     <InfoGrid heading={t('koulutus.tiedot')} gridData={perustiedotData} {...props} />
   );

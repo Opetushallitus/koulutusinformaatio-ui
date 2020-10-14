@@ -61,6 +61,19 @@ const AccordionWithTitle = ({ titleTranslation, data }) => {
   );
 };
 
+const findEperuste = (koulutus) => (id) =>
+  _.first(koulutus.eperusteet.filter((e) => e.id === id));
+
+const findTutkinnonOsa = (eperuste) => (id) =>
+  _.first(eperuste.tutkinnonOsat.filter((t) => t.id === id));
+
+const findTutkinnonOsaViitteet = (eperuste) => (id) =>
+  _.first(
+    eperuste.suoritustavat.flatMap((t) =>
+      t.tutkinnonOsaViitteet.filter((tv) => tv.id === id)
+    )
+  );
+
 const Koulutus = (props) => {
   const { urlStore } = useStores();
   const history = useHistory();
@@ -116,20 +129,6 @@ const Koulutus = (props) => {
       getKuvausHtmlSection(
         'koulutus.ammattitaidonOsoitamistavat',
         tutkinnonOsa.ammattitaidonOsoittamistavat
-      )
-    );
-  };
-  const findEperuste = (koulutus) => (id) => {
-    return _.first(koulutus.eperusteet.filter((e) => e.id.toString() === id));
-  };
-  const findTutkinnonOsa = (eperuste) => (id) => {
-    return _.first(eperuste.tutkinnonOsat.filter((t) => t.id.toString() === id));
-  };
-
-  const findTutkinnonOsaViitteet = (eperuste) => (id) => {
-    return _.first(
-      eperuste.suoritustavat.flatMap((t) =>
-        t.tutkinnonOsaViitteet.filter((tv) => tv.id.toString() === id)
       )
     );
   };
@@ -190,8 +189,8 @@ const Koulutus = (props) => {
           <AccordionWithTitle
             titleTranslation="koulutus.kuvaus"
             data={koulutus?.tutkinnonOsat.map(
-              ({ tutkinnonosaId, tutkinnonosaViite, eperusteId }) => {
-                const eperuste = findEperuste(koulutus)(eperusteId);
+              ({ tutkinnonosaId, tutkinnonosaViite, ePerusteId }) => {
+                const eperuste = findEperuste(koulutus)(ePerusteId);
                 const tutkinnonOsa = findTutkinnonOsa(eperuste)(tutkinnonosaId);
                 const tutkinnonOsaViite = findTutkinnonOsaViitteet(eperuste)(
                   tutkinnonosaViite
@@ -213,7 +212,7 @@ const Koulutus = (props) => {
                         href={urlStore.urls.url(
                           'eperusteet-service.eperuste.kuvaus',
                           l.getLanguage(),
-                          eperusteId,
+                          ePerusteId,
                           tutkinnonosaViite
                         )}>
                         {t('koulutus.eperuste-linkki')}

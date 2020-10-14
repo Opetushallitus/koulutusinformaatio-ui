@@ -1,0 +1,118 @@
+{
+  "tila": "julkaistu",
+  "johtaaTutkintoon": false,
+  "tarjoajat": [
+    {
+      "paikkakunta": {
+        "koodiUri": "kunta_091",
+        "nimi": { "fi": "Helsinki", "sv": "Helsingfors" }
+      },
+      "nimi": { "fi": "Helsingin kaupunki", "sv": "Helsingfors stad" },
+      "oid": "1.2.246.562.10.346830761110"
+    },
+    {
+      "paikkakunta": {
+        "koodiUri": "kunta_091",
+        "nimi": { "fi": "Helsinki", "sv": "Helsingfors" }
+      },
+      "nimi": {
+        "fi": "Stadin ammatti- ja aikuisopisto",
+        "sv": "Stadin ammatti- ja aikuisopisto",
+        "en": "Stadin ammatti- ja aikuisopisto"
+      },
+      "oid": "1.2.246.562.10.52251087186"
+    }
+  ],
+  "toteutukset": [
+    {
+      "oid": "1.2.246.562.17.00000000000000000451",
+      "organisaatio": {
+        "paikkakunta": {
+          "koodiUri": "kunta_091",
+          "nimi": { "fi": "Helsinki", "sv": "Helsingfors" }
+        },
+        "nimi": {
+          "fi": "Stadin ammatti- ja aikuisopisto",
+          "sv": "Stadin ammatti- ja aikuisopisto",
+          "en": "Stadin ammatti- ja aikuisopisto"
+        },
+        "oid": "1.2.246.562.10.52251087186"
+      },
+      "nimi": { "fi": "Hevosten hyvinvoinnista huolehtiminen" },
+      "tila": "julkaistu",
+      "tarjoajat": [
+        {
+          "paikkakunta": {
+            "koodiUri": "kunta_091",
+            "nimi": { "fi": "Helsinki", "sv": "Helsingfors" }
+          },
+          "nimi": {
+            "fi": "Stadin ammatti- ja aikuisopisto, Abraham Wetterin tien toimipaikka"
+          },
+          "oid": "1.2.246.562.10.56139411567"
+        }
+      ],
+      "muokkaaja": { "oid": "1.2.246.562.24.62301161440", "nimi": "Jessika Penttinen" },
+      "modified": "2020-10-08T16:27",
+      "organisaatiot": ["1.2.246.562.10.52251087186", "1.2.246.562.10.56139411567"]
+    }
+  ],
+  "esikatselu": true,
+  "modified": "2020-10-12T12:48",
+  "nimi": { "fi": "Hevosten hyvinvoinnista huolehtiminen" },
+  "muokkaaja": { "oid": "1.2.246.562.24.62301161440", "nimi": "Jessika Penttinen" },
+  "oid": "1.2.246.562.13.00000000000000000598",
+  "kielivalinta": ["fi"],
+  "timestamp": 1602496122846,
+  "julkinen": false,
+  "organisaatiot": ["1.2.246.562.10.52251087186", "1.2.246.562.10.346830761110"],
+  "organisaatio": {
+    "paikkakunta": {
+      "koodiUri": "kunta_091",
+      "nimi": { "fi": "Helsinki", "sv": "Helsingfors" }
+    },
+    "nimi": {
+      "fi": "Stadin ammatti- ja aikuisopisto",
+      "sv": "Stadin ammatti- ja aikuisopisto",
+      "en": "Stadin ammatti- ja aikuisopisto"
+    },
+    "oid": "1.2.246.562.10.52251087186"
+  },
+  "metadata": {
+    "tyyppi": "amm-tutkinnon-osa",
+    "kuvaus": {},
+    "lisatiedot": [],
+    "tutkinnonOsat": [
+      {
+        "ePerusteId": 2357203,
+        "koulutus": {
+          "koodiUri": "koulutus_364145#7",
+          "nimi": {
+            "fi": "Hevostalouden ammattitutkinto",
+            "sv": "Yrkesexamen inom hästhushållning"
+          }
+        },
+        "tutkinnonosaId": 2448754,
+        "tutkinnonosaViite": 2449201,
+        "opintojenLaajuusNumero": 25,
+        "opintojenLaajuus": {},
+        "opintojenLaajuusyksikko": {
+          "koodiUri": "opintojenlaajuusyksikko_6",
+          "nimi": {
+            "sv": "kompetenspoäng",
+            "fi": "osaamispistettä",
+            "en": "ECVET competence points"
+          }
+        },
+        "tutkinnonOsat": {
+          "koodiUri": "tutkinnonosat_200060",
+          "nimi": {
+            "sv": "Omsorg om hästars välbefinnande",
+            "fi": "Hevosten hyvinvoinnista huolehtiminen"
+          }
+        }
+      }
+    ]
+  },
+  "koulutustyyppi": "amm-tutkinnon-osa"
+}

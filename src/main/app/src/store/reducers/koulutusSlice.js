@@ -11,6 +11,9 @@ import _ from 'lodash';
 const IDLE_STATUS = 'idle';
 const LOADING_STATUS = 'loading';
 
+export const TYYPPI_AMM = 'amm';
+export const TYYPPI_AMM_TUTKINNON_OSA = 'amm-tutkinnon-osa';
+
 export const initialState = {
   koulutusStatus: IDLE_STATUS,
   jarjestajatStatus: IDLE_STATUS,
@@ -102,27 +105,26 @@ export const {
 } = koulutusSlice.actions;
 export default koulutusSlice.reducer;
 
-const findEperuste = (eperusteet) => (id) => {
-  return _.first(eperusteet.filter((t) => t.id.toString() === id));
-};
-const findTutkinnonOsaViitteet = (eperuste) => (id) => {
-  return _.first(
+const findEperuste = (eperusteet) => (id) =>
+  _.first(eperusteet.filter((t) => t.id === id));
+
+const findTutkinnonOsaViitteet = (eperuste) => (id) =>
+  _.first(
     eperuste.suoritustavat.flatMap((t) =>
-      t.tutkinnonOsaViitteet.filter((tv) => tv.id.toString() === id)
+      t.tutkinnonOsaViitteet.filter((tv) => tv.id === id)
     )
   );
-};
 
 export const fetchKoulutus = (oid, draft) => async (dispatch) => {
   try {
     dispatch(fetchKoulutusStart());
     const koulutusData = await getKoulutus(oid, draft);
-    if (koulutusData?.koulutustyyppi === 'amm' && koulutusData.ePerusteId) {
+    if (koulutusData?.koulutustyyppi === TYYPPI_AMM && koulutusData.ePerusteId) {
       const koulutusKuvausData = await getKoulutusKuvaus(koulutusData.ePerusteId);
       _.set(koulutusData, 'metadata.kuvaus', koulutusKuvausData);
-    } else if (koulutusData?.koulutustyyppi === 'tutkinnon-osa') {
+    } else if (koulutusData?.koulutustyyppi === TYYPPI_AMM_TUTKINNON_OSA) {
       const tutkinnonOsat = koulutusData?.metadata?.tutkinnonOsat ?? [];
-      const eperusteet = _.uniq(tutkinnonOsat.map((t) => t.eperusteId));
+      const eperusteet = _.uniq(tutkinnonOsat.map((t) => t.ePerusteId));
       var e = [];
       for (const index in eperusteet) {
         const id = eperusteet[index];
@@ -131,13 +133,13 @@ export const fetchKoulutus = (oid, draft) => async (dispatch) => {
       }
 
       var pisteet = tutkinnonOsat
-        .map(({ eperusteId, tutkinnonosaViite }) => {
-          const viite = findTutkinnonOsaViitteet(findEperuste(e)(eperusteId))(
+        .map(({ ePerusteId, tutkinnonosaViite }) => {
+          const viite = findTutkinnonOsaViitteet(findEperuste(e)(ePerusteId))(
             tutkinnonosaViite
           );
           return viite.laajuus;
         })
-        .reduce((a, b) => a + b, 0);
+        .join(' + ');
 
       _.set(koulutusData, 'metadata.opintojenLaajuusyksikko', {
         nimi: {
