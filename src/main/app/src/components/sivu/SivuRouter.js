@@ -1,15 +1,16 @@
 import React from 'react';
 import { useParams, Link as RouterLink, Redirect } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import { colors } from '../../colors';
+import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { observer } from 'mobx-react-lite';
-import Sivu from './Sivu';
-import SivuKooste from './SivuKooste';
-import { useStores } from '../../hooks';
-import { useTranslation } from 'react-i18next';
+import Grid from '@material-ui/core/Grid';
+import { colors } from '#/src/colors';
+import { useStores } from '#/src/hooks';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
 import LoadingCircle from '#/src/components/common/LoadingCircle';
+import SivuKooste from './SivuKooste';
+import Sivu from './Sivu';
 
 const useStyles = makeStyles({
   notFound: {
@@ -59,15 +60,15 @@ const NotFound = ({ loading }) => {
   );
 };
 
-const SivuRouter = (props) => {
-  const { i18n } = useTranslation();
+const SivuRouter = () => {
   const { contentfulStore } = useStores();
   const { id: slug, lng: lngParam } = useParams();
   const { sivu, sivuKooste, loading } = contentfulStore.data;
-  const { slugsToIds } = contentfulStore;
+  const slugsToIds = contentfulStore.slugsToIds;
   const idInfo = slugsToIds[slug];
-  if (lngParam !== i18n.language || loading) return <LoadingCircle />; //This eliminates an infinite loop that would happen if you pressed back button after changing language
-  if (idInfo?.language === i18n.language) {
+
+  if (loading) return <LoadingCircle />;
+  if (idInfo?.language === lngParam) {
     if (sivu[slug]) {
       return <Sivu id={slug} />;
     } else if (sivuKooste[slug]) {
@@ -76,12 +77,12 @@ const SivuRouter = (props) => {
       return <NotFound loading={loading} />;
     }
   } else {
-    const newSlug = Object.keys(slugsToIds).find(
-      (key) =>
-        slugsToIds[key].id === idInfo?.id && slugsToIds[key]?.language === i18n.language
+    const newSlug = _.findKey(
+      slugsToIds,
+      (slugInfo) => slugInfo.id === idInfo?.id && slugInfo?.language === lngParam
     );
     if (newSlug) {
-      return <Redirect to={`/${i18n.language}/sivu/${newSlug}`} />;
+      return <Redirect to={`/${lngParam}/sivu/${newSlug}`} />;
     } else {
       return <NotFound loading={loading} />;
     }
