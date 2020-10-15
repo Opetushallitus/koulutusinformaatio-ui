@@ -199,7 +199,7 @@ export const fetchKoulutusWithRelatedData = (oid, draft) => {
   };
 };
 
-export const selectKoulutus = (state, oid) => {
+export const selectKoulutus = (oid) => (state) => {
   const koulutusData = state.koulutus.koulutukset[oid];
   if (koulutusData) {
     return {
@@ -229,7 +229,9 @@ export const selectSuositellutKoulutukset = (state) =>
 export const selectLoading = (state) =>
   state.koulutus.koulutusStatus === LOADING_STATUS ||
   state.koulutus.jarjestajatStatus === LOADING_STATUS;
-export const selectJarjestajat = (state, oid) => state.koulutus.jarjestajat[oid]?.hits;
+
+export const selectJarjestajat = (oid) => (state) =>
+  state.koulutus.jarjestajat[oid]?.hits;
 
 export const selectTulevatJarjestajat = (state, oid) =>
   state.koulutus.tulevatJarjestajat[oid]?.hits;

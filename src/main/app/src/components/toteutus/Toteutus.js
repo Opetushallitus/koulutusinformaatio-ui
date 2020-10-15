@@ -93,10 +93,7 @@ const Toteutus = () => {
   const toteutus = useSelector((state) => selectToteutus(state, oid), shallowEqual);
   const koulutusOid = toteutus?.koulutusOid;
   const currentLanguage = l.getLanguage();
-  const koulutus = useSelector(
-    (state) => selectKoulutus(state, koulutusOid),
-    shallowEqual
-  );
+  const koulutus = useSelector(selectKoulutus(koulutusOid), shallowEqual);
   const jatkuvatHaut = useSelector((state) => selectJatkuvatHaut(state, oid));
   const yhteisHaut = useSelector((state) => selectYhteisHaut(state, oid));
   const erillisHaut = useSelector((state) => selectErillisHaut(state, oid));

@@ -9,9 +9,7 @@ import KoulutusInfoGrid from './KoulutusInfoGrid';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import ToteutusList from './ToteutusList';
 import TulevaJarjestajaList from './TulevaJarjestajaList';
-import HakuKaynnissaCard from './HakuKaynnissaCard';
 import SuositusKoulutusList from './SuositusKoulutusList';
-import { HashLink as Link } from 'react-router-hash-link';
 import ContentWrapper from '#/src/components/common/ContentWrapper';
 import Murupolku from '#/src/components/common/Murupolku';
 import { useParams, useHistory } from 'react-router-dom';
@@ -72,12 +70,12 @@ const Koulutus = (props) => {
   const { oid } = useParams();
   const { hakuStore } = useStores();
   const { t } = useTranslation();
-  const koulutus = useSelector((state) => selectKoulutus(state, oid), shallowEqual);
+  const koulutus = useSelector(selectKoulutus(oid), shallowEqual);
   const suositellutKoulutukset = useSelector(
     (state) => selectSuositellutKoulutukset(state),
     shallowEqual
   );
-  const toteutukset = useSelector((state) => selectJarjestajat(state, oid));
+  const toteutukset = useSelector(selectJarjestajat(oid));
   const tulevatJarjestajat = useSelector((state) => selectTulevatJarjestajat(state, oid));
   const loading = useSelector((state) => selectLoading(state));
   useEffect(() => {
@@ -179,21 +177,6 @@ const Koulutus = (props) => {
           koulutustyyppi={koulutus?.koulutusTyyppi}
           laajuus={[koulutus?.opintojenLaajuus, koulutus?.opintojenLaajuusYksikkö]}
         />
-        {toteutukset?.length > 0 ? (
-          <HakuKaynnissaCard
-            title={t('koulutus.tarjonta')}
-            text={t('koulutus.katso-jarjestavat')}
-            link={
-              <Link
-                to="#tarjonta"
-                aria-label="anchor"
-                smooth
-                style={{ textDecoration: 'none' }}
-              />
-            }
-            buttonText={t('koulutus.nayta-oppilaitokset')}
-          />
-        ) : null}
         {!_.isEmpty(koulutus?.kuvaus) ||
         koulutus?.suorittaneenOsaaminen ||
         koulutus?.tyotehtavatJoissaVoiToimia ? (

@@ -1,6 +1,6 @@
 import { computed, observable, action /*configure*/ } from 'mobx';
 import superagent from 'superagent';
-import { Localizer as l } from '../tools/Utils';
+import { Localizer as l } from '#/src/tools/Utils';
 
 //configure({ enforceActions: true })
 
