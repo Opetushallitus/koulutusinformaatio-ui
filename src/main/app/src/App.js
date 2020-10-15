@@ -26,6 +26,7 @@ import Hakupalkki from './components/haku/Hakupalkki';
 import Toteutus from './components/toteutus/Toteutus';
 import { useTranslation } from 'react-i18next';
 import { supportedLanguages } from '#/src/tools/i18n';
+import { useStores } from './hooks';
 const konfoStore = new KonfoStore();
 
 const useStyles = makeStyles((theme) => ({
@@ -77,12 +78,13 @@ const KoulutusHakuBar = () => (
 const TranslatedRoutes = ({ match }) => {
   const { i18n } = useTranslation();
   const selectedLanguage = match.params.lng;
+  const { contentfulStore } = useStores();
   useEffect(() => {
-    selectedLanguage &&
-      selectedLanguage !== i18n.language &&
-      supportedLanguages.includes(selectedLanguage) &&
+    if (selectedLanguage && supportedLanguages.includes(selectedLanguage)) {
+      contentfulStore.reset(selectedLanguage);
       i18n.changeLanguage(selectedLanguage);
-  }, [i18n, selectedLanguage]);
+    }
+  }, [i18n, selectedLanguage, contentfulStore]);
   return supportedLanguages.includes(selectedLanguage) ? (
     <Switch>
       <Route exact path="/:lng">
