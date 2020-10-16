@@ -2,3 +2,5 @@ config-overrides.js
 node_modules/
 *.min.js
 rpc-client.js
+cypress/fixtures
+cypress/mocks
