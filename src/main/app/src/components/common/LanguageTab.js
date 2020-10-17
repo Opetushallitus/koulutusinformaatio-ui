@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Tabs, Tab } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { useLanguageState } from '#/src/hooks';
+import { supportedLanguages } from '#/src/tools/i18n';
+import { LANG_NAME_BY_CODE } from '#/src/constants';
 
 const LanguageTab = () => {
-  const { i18n, t } = useTranslation();
-  const [language, setLanguage] = useState(i18n.language);
+  const { t } = useTranslation();
+  const [language, setLanguage] = useLanguageState();
   const handleChange = (event, newValue) => {
-    if (newValue !== language) {
-      i18n.changeLanguage(newValue);
-      setLanguage(newValue);
-    }
+    setLanguage(newValue);
   };
 
   return (
@@ -18,9 +18,12 @@ const LanguageTab = () => {
       indicatorColor="primary"
       textColor="primary"
       onChange={handleChange}>
-      <Tab label={t('kielivalinta.suomi').toUpperCase()} value="fi" />
-      <Tab label={t('kielivalinta.ruotsi').toUpperCase()} value="sv" />
-      <Tab label={t('kielivalinta.englanti').toUpperCase()} value="en" />
+      {supportedLanguages.map((langCode) => (
+        <Tab
+          label={t(`kielivalinta.${LANG_NAME_BY_CODE[langCode]}`).toUpperCase()}
+          value={langCode}
+        />
+      ))}
     </Tabs>
   );
 };

@@ -11,13 +11,14 @@ import {
   Hidden,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import { useStores } from '../../hooks';
 import { observer } from 'mobx-react';
-import SidebarValikko from './SidebarValikko';
-import Murupolku from './Murupolku';
-import LanguageTab from './LanguageTab';
-import { colors } from '../../colors';
-import { DRAWER_WIDTH } from '../../constants';
+import Murupolku from '#/src/components/common/Murupolku';
+import SidebarValikko from '#/src/components/common/SidebarValikko';
+import LanguageTab from '#/src/components/common/LanguageTab';
+import LoadingCircle from '#/src/components/common/LoadingCircle';
+import { useStores } from '#/src/hooks';
+import { colors } from '#/src/colors';
+import { DRAWER_WIDTH } from '#/src/constants';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -86,7 +87,7 @@ const SideMenu = (props) => {
   const [selected, setSelected] = useState([]);
   const [search, setSearch] = useState('');
 
-  const { valikot, valikko } = contentfulStore.data;
+  const { valikot, valikko, loading } = contentfulStore.data;
   const selectValikko = (valikko) => setSelected([...selected, valikko]);
   const popSelected = () => setSelected(selected.slice(0, -1));
   const last = (a) => (a ? a[a.length - 1] : null);
@@ -139,23 +140,27 @@ const SideMenu = (props) => {
           <Murupolku path={[]} />
         </div>
       )}
-      {linkit.map((valikko) => {
-        const id = valikko.id;
-        const links = valikko.linkki || [];
+      {loading ? (
+        <LoadingCircle />
+      ) : (
+        linkit.map((valikko) => {
+          const id = valikko.id;
+          const links = valikko.linkki || [];
 
-        return (
-          <SidebarValikko
-            key={id}
-            id={id}
-            parent={selectedValikko}
-            name={valikko.name}
-            deselect={popSelected}
-            select={selectValikko}
-            links={links}
-            closeMenu={closeMenu}
-          />
-        );
-      })}
+          return (
+            <SidebarValikko
+              key={id}
+              id={id}
+              parent={selectedValikko}
+              name={valikko.name}
+              deselect={popSelected}
+              select={selectValikko}
+              links={links}
+              closeMenu={closeMenu}
+            />
+          );
+        })
+      )}
     </React.Fragment>
   );
   return (
