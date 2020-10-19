@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Typography, Paper, makeStyles } from '@material-ui/core';
 import PublicIcon from '@material-ui/icons/Public';
 import { educationTypeColorCode } from '#/src/colors';
-import DiakoniaLogo from '#/src/assets/images/suomen_diakonia_opisto_logo.png';
+import OppilaitosLogo from '#/src/assets/images/Opolkuhts.png';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -59,7 +59,7 @@ const OppilaitosCard = (props) => {
             direction="column"
             spacing={3}>
             <Grid item>
-              <img className={classes.img} alt="logo" src={image || DiakoniaLogo} />
+              <img className={classes.img} alt="logo" src={image || OppilaitosLogo} />
             </Grid>
             <Grid item className={classes.heading}>
               {heading}
