@@ -124,7 +124,7 @@
       "eslint --fix",
       "git add"
     ],
-    "cypress/**/*.{js,json}": [
+    "cypress/**/*.{js}": [
       "eslint --fix",
       "git add"
     ]
