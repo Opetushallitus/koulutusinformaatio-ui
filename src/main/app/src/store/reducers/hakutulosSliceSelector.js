@@ -3,6 +3,7 @@ import qs from 'query-string';
 import _ from 'lodash';
 import { Localizer as l } from '#/src/tools/Utils';
 import { Common as C } from '#/src/tools/Utils';
+import { FILTER_TYPES } from '#/src/constants';
 
 // State data getters
 function getKeyword(state) {
@@ -283,11 +284,16 @@ export const getKoulutustyyppiFilterProps = createSelector(
   (koulutusFilters, oppilaitosFilters, selectedTab, checkedKoulutustyypit) => {
     const koulutustyyppi =
       selectedTab === 'koulutus'
-        ? _.entries(koulutusFilters.koulutustyyppi)
-        : _.entries(oppilaitosFilters.koulutustyyppi);
+        ? _.entries(koulutusFilters?.[FILTER_TYPES.KOULUTUSTYYPPI])
+        : _.entries(oppilaitosFilters?.[FILTER_TYPES.KOULUTUSTYYPPI]);
+    const koulutustyyppiMuu =
+      selectedTab === 'koulutus'
+        ? _.entries(koulutusFilters?.[FILTER_TYPES.KOULUTUSTYYPPI_MUU])
+        : _.entries(oppilaitosFilters?.[FILTER_TYPES.KOULUTUSTYYPPI_MUU]);
     const checkedKoulutustyypitKeys = _.map(checkedKoulutustyypit, 'id');
     return {
       koulutustyyppi,
+      koulutustyyppiMuu,
       selectedTab,
       checkedKoulutustyypit,
       checkedKoulutustyypitKeys,
