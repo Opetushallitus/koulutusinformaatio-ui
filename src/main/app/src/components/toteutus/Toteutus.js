@@ -90,15 +90,17 @@ const Toteutus = () => {
   const { oid } = useParams();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const toteutus = useSelector((state) => selectToteutus(state, oid), shallowEqual);
-  const koulutusOid = toteutus?.koulutusOid;
   const currentLanguage = l.getLanguage();
+
+  const toteutus = useSelector(selectToteutus(oid), shallowEqual);
+  const koulutusOid = toteutus?.koulutusOid;
   const koulutus = useSelector(selectKoulutus(koulutusOid), shallowEqual);
-  const jatkuvatHaut = useSelector((state) => selectJatkuvatHaut(state, oid));
-  const yhteisHaut = useSelector((state) => selectYhteisHaut(state, oid));
-  const erillisHaut = useSelector((state) => selectErillisHaut(state, oid));
-  const koulutusLoading = useSelector((state) => selectKoulutusLoading(state));
-  const toteutusLoading = useSelector((state) => selectToteutusLoading(state));
+  const jatkuvatHaut = useSelector(selectJatkuvatHaut(oid));
+  const yhteisHaut = useSelector(selectYhteisHaut(oid));
+  const erillisHaut = useSelector(selectErillisHaut(oid));
+  const koulutusLoading = useSelector(selectKoulutusLoading);
+  const toteutusLoading = useSelector(selectToteutusLoading);
+
   const loading = koulutusLoading || toteutusLoading;
   const asiasanat =
     toteutus?.metadata?.asiasanat

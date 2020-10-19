@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getToteutus } from '#/src/api/konfoApi';
-import { isWithinInterval, isBefore } from 'date-fns';
+import { isBefore, isAfter } from 'date-fns';
 
 const IDLE_STATUS = 'idle';
 const LOADING_STATUS = 'loading';
@@ -61,26 +61,29 @@ export const fetchToteutus = (oid) => async (dispatch) => {
 const isHakuAuki = (hakuajat) =>
   hakuajat.some((hakuaika) => {
     const now = new Date();
-    return isWithinInterval(now, {
-      start: hakuaika.alkaa ? new Date(hakuaika.alkaa) : now,
-      end: hakuaika.paattyy ? new Date(hakuaika.paattyy) : now,
-    });
+    const isAfterStart = !hakuaika.alkaa || isAfter(now, new Date(hakuaika.alkaa));
+    const isBeforeEnd = !hakuaika.paattyy || isBefore(now, new Date(hakuaika.paattyy));
+    return isAfterStart && isBeforeEnd;
   });
 
 const isHakuEndInFuture = (hakuajat) => {
   const now = new Date();
-  return hakuajat.some((aika) => isBefore(now, new Date(aika.paattyy)));
+  return hakuajat.some((aika) => !aika.paattyy || isBefore(now, new Date(aika.paattyy)));
 };
 
-const selectHaut = (state, oid, type) =>
+const selectHakukohteet = (state, oid, type) =>
   state.toteutus.toteutukset[oid]?.hakutiedot
     ?.filter((hakutieto) => hakutieto.hakutapa.nimi.fi === type)
     .map((hakutieto) => hakutieto.hakukohteet)
     .flat()
     .filter((hakukohde) => isHakuEndInFuture(hakukohde.hakuajat))
     .map((hakukohde) => ({ ...hakukohde, isHakuAuki: isHakuAuki(hakukohde.hakuajat) }));
+
 export const selectLoading = (state) => state.toteutus.status === LOADING_STATUS;
-export const selectJatkuvatHaut = (state, oid) => selectHaut(state, oid, JATKUVAHAKU);
-export const selectErillisHaut = (state, oid) => selectHaut(state, oid, ERILLISHAKU);
-export const selectYhteisHaut = (state, oid) => selectHaut(state, oid, YHTEISHAKU);
-export const selectToteutus = (state, oid) => state.toteutus.toteutukset[oid];
+export const selectJatkuvatHaut = (oid) => (state) =>
+  selectHakukohteet(state, oid, JATKUVAHAKU);
+export const selectErillisHaut = (oid) => (state) =>
+  selectHakukohteet(state, oid, ERILLISHAKU);
+export const selectYhteisHaut = (oid) => (state) =>
+  selectHakukohteet(state, oid, YHTEISHAKU);
+export const selectToteutus = (oid) => (state) => state.toteutus.toteutukset[oid];
