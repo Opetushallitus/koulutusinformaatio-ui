@@ -4,7 +4,7 @@ import PublicIcon from '@material-ui/icons/Public';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
 import { educationTypeColorCode } from '../../colors';
-import DiakoniaLogo from '../../assets/images/suomen_diakonia_opisto_logo.png';
+import OppilaitosLogo from '../../assets/images/Opolkuhts.png';
 import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,7 +51,7 @@ const ToteutusCard = (props) => {
     image,
   } = props;
   const ToteutusImage = () => (
-    <img className={classes.img} alt={heading} src={image || DiakoniaLogo} />
+    <img className={classes.img} alt={heading} src={image || OppilaitosLogo} />
   );
 
   return (
