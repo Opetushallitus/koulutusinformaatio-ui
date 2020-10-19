@@ -1,7 +1,7 @@
 const autoRecord = require('cypress-autorecord');
 describe('Sivut', () => {
   autoRecord();
-  it('Language change should be reflected in URL and page content', function() {
+  it('Language change should be reflected in URL and page content', function () {
     cy.visit('/konfo/fi/sivu/paikan-vastaanotto-ja-ilmoittautuminen-korkeakouluun');
     cy.findByRole('heading', {
       name: /paikan vastaanotto ja ilmoittautuminen korkeakouluun/i,
