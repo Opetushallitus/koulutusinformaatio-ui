@@ -35,12 +35,14 @@ const withStyles = makeStyles(() => ({
   noBoxShadow: {
     boxShadow: 'none',
   },
-  buttonActive: {
-    backgroundColor: colors.green,
-    color: colors.white,
+  buttonRoot: {
     fontSize: 14,
     fontWeight: 600,
     whiteSpace: 'nowrap',
+  },
+  buttonActive: {
+    backgroundColor: colors.green,
+    color: colors.white,
     '&:hover': {
       backgroundColor: colors.green,
     },
@@ -48,9 +50,6 @@ const withStyles = makeStyles(() => ({
   buttonInactive: {
     backgroundColor: colors.white,
     color: colors.green,
-    fontSize: 14,
-    fontWeight: 600,
-    whiteSpace: 'nowrap',
   },
 }));
 
@@ -129,12 +128,13 @@ const KoulutustyyppiSuodatin = ({
               <Button
                 style={{ minWidth: '155px' }}
                 className={!isMuuSelected ? classes.buttonActive : classes.buttonInactive}
-                classes={{ label: classes.buttonTest }}
+                classes={{ root: classes.buttonRoot }}
                 onClick={() => setIsMuuSelected(false)}>
                 {t('haku.tutkintoon-johtavat')}
               </Button>
               <Button
                 className={isMuuSelected ? classes.buttonActive : classes.buttonInactive}
+                classes={{ root: classes.buttonRoot }}
                 onClick={() => setIsMuuSelected(true)}>
                 {t('haku.muut')}
               </Button>
