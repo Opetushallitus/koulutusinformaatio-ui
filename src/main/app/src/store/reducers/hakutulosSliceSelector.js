@@ -379,7 +379,7 @@ function getCheckedFiltersIdsStr(checkedfiltersArr) {
 function getSelectedFiltersNamesStr(filterArr) {
   return filterArr
     .map((f) =>
-      _.capitalize(l.localize(f?.name) || l.getTranslationForKey(`haku.${f.id}`))
+      _.capitalize(l.localize(f?.name) || l.getTranslationForKey(`haku.${f?.id}`))
     )
     .join(', ');
 }
