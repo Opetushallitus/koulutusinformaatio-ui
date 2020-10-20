@@ -377,7 +377,11 @@ function getCheckedFiltersIdsStr(checkedfiltersArr) {
   return '';
 }
 function getSelectedFiltersNamesStr(filterArr) {
-  return filterArr.map((f) => _.capitalize(f?.['name']?.[l.getLanguage()])).join(', ');
+  return filterArr
+    .map((f) =>
+      _.capitalize(l.localize(f?.name) || l.getTranslationForKey(`haku.${f.id}`))
+    )
+    .join(', ');
 }
 function sortedKoulutusalatEntries(filterObj) {
   return _.orderBy(_.entries(filterObj), `[1]nimi.[${l.getLanguage()}]`);
