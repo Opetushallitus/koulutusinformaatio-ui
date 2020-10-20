@@ -33,9 +33,9 @@ describe('Haku', () => {
 
     cy.get('@AmmatillinenKoulutus').should('be.checked');
   });
-  it("Koulutustyyppi switching between 'Tutkintoon johtaavat' and 'Muut'", function() {
+  it("Koulutustyyppi switching between 'Tutkintoon johtavat' and 'Muut'", function() {
     cy.visit('/konfo/fi/haku/auto');
-    const tutkintooJohtavatBtn = () =>
+    const tutkintoonJohtavatBtn = () =>
       cy.findByRole('button', { name: /Tutkintoon johtavat/i });
     const muutBtn = () => cy.findByRole('button', { name: /Muut/i });
     const ammatillinenKoulutusChk = () =>
@@ -52,7 +52,7 @@ describe('Haku', () => {
     erikoisammattitutkintoChk().should('be.visible');
 
     cy.get('[data-cy=koulutustyyppi-filter]').within((koulutustyyppppi) => {
-      tutkintooJohtavatBtn()
+      tutkintoonJohtavatBtn()
         .should('have.css', 'background-color', 'rgb(55, 135, 3)')
         .should('have.css', 'color', 'rgb(255, 255, 255)');
       muutBtn()
@@ -63,7 +63,7 @@ describe('Haku', () => {
         .click()
         .should('have.css', 'background-color', 'rgb(55, 135, 3)')
         .should('have.css', 'color', 'rgb(255, 255, 255)');
-      tutkintooJohtavatBtn()
+      tutkintoonJohtavatBtn()
         .should('have.css', 'background-color', 'rgb(255, 255, 255)')
         .should('have.css', 'color', 'rgb(55, 135, 3)');
       tutkinnonOsaChk().should('be.visible');
