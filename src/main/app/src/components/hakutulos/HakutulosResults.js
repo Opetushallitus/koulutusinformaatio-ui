@@ -11,42 +11,13 @@ const HakutulosResults = ({ selectedTab, koulutusHits, oppilaitosHits, keyword }
   const { t } = useTranslation();
 
   if (selectedTab === 'koulutus' && _.size(koulutusHits) > 0) {
-    return koulutusHits.map((r) => {
-      const link = `/koulutus/${r.oid}`;
-      return (
-        <KoulutusKortti
-          key={r.oid}
-          oid={r.oid}
-          tyyppi={r.koulutustyyppi}
-          haettavissa={r.hakuOnKaynnissa}
-          link={link}
-          kuvaus={r.kuvaus}
-          koulutustyyppi={r.koulutustyyppi}
-          nimi={r.nimi}
-          teemakuva={r.teemakuva}
-          opintojenlaajuus={r.opintojenlaajuus}
-          opintojenlaajuusyksikko={r.opintojenlaajuusyksikko}
-          tutkintonimikkeet={r.tutkintonimikkeet || []}
-        />
-      );
+    return koulutusHits.map((koulutus) => {
+      return <KoulutusKortti key={koulutus.oid} koulutus={koulutus} />;
     });
   }
   if (selectedTab === 'oppilaitos' && _.size(oppilaitosHits) > 0) {
-    return oppilaitosHits.map((r) => {
-      const link = `/oppilaitos/${r.oid}`;
-      return (
-        <OppilaitosKortti
-          key={r.oid}
-          oid={r.oid}
-          tyyppi={r.tyyppi}
-          haettavissa={false}
-          nimi={r.nimi}
-          link={link}
-          text1={r.kayntiosoite ? r.kayntiosoite : ''}
-          text2={r.postitoimipaikka ? r.postitoimipaikka : ''}
-          oppilaitos={r}
-        />
-      );
+    return oppilaitosHits.map((oppilaitos) => {
+      return <OppilaitosKortti key={oppilaitos.oid} oppilaitos={oppilaitos} />;
     });
   }
   return (

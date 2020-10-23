@@ -81,4 +81,40 @@ describe('Haku', () => {
     materiaaliJaProsessitekniikka().should('be.checked');
     koneProsessiEnergiaSahkoTekniikka().should('be.checked');
   });
+  it("Koulutuskortti data should be presented correctly for 'Tutkinnon osa'", function() {
+    cy.visit('/konfo/fi/haku/auto');
+
+    const searchBox = () =>
+      cy.findByRole('searchbox', { name: /etsi koulutuksia tai oppilaitoksia/i });
+    const searchButton = () => cy.findByRole('button', { name: /etsi/i });
+
+    searchBox().type('Hevosten hyvinvoinnista huolehtiminen');
+    searchButton().click();
+    cy.get('[data-cy="1.2.246.562.13.00000000000000000598"]').within((kortti) => {
+      cy.get(
+        '[data-cy="tutkintonimikkeet-1.2.246.562.13.00000000000000000598"]'
+      ).contains('Tutkinnon osa');
+      cy.get('[data-cy="opintojenlaajuus-1.2.246.562.13.00000000000000000598"]').contains(
+        '25 + 50 osaamispistettä'
+      );
+    });
+  });
+  it("Koulutuskortti data should be presented correctly for 'Osaamisala'", function() {
+    cy.visit('/konfo/fi/haku/auto');
+
+    const searchBox = () =>
+      cy.findByRole('searchbox', { name: /etsi koulutuksia tai oppilaitoksia/i });
+    const searchButton = () => cy.findByRole('button', { name: /etsi/i });
+
+    searchBox().type('Jalkojenhoidon osaamisala');
+    searchButton().click();
+    cy.get('[data-cy="1.2.246.562.13.00000000000000000615"]').within((kortti) => {
+      cy.get(
+        '[data-cy="tutkintonimikkeet-1.2.246.562.13.00000000000000000615"]'
+      ).contains('Osaamisala');
+      cy.get('[data-cy="opintojenlaajuus-1.2.246.562.13.00000000000000000615"]').contains(
+        '145 osaamispistettä'
+      );
+    });
+  });
 });
