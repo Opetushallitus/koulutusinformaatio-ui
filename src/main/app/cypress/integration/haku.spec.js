@@ -52,20 +52,13 @@ describe('Haku', () => {
     erikoisammattitutkintoChk().should('be.visible');
 
     cy.get('[data-cy=koulutustyyppi-filter]').within((koulutustyyppppi) => {
-      tutkintoonJohtavatBtn()
-        .should('have.css', 'background-color', 'rgb(55, 135, 3)')
-        .should('have.css', 'color', 'rgb(255, 255, 255)');
-      muutBtn()
-        .should('have.css', 'background-color', 'rgb(255, 255, 255)')
-        .should('have.css', 'color', 'rgb(55, 135, 3)');
+      tutkintoonJohtavatBtn().should('have.attr', 'aria-selected', 'true');
+      muutBtn().should('have.attr', 'aria-selected', 'false');
 
       muutBtn()
         .click()
-        .should('have.css', 'background-color', 'rgb(55, 135, 3)')
-        .should('have.css', 'color', 'rgb(255, 255, 255)');
-      tutkintoonJohtavatBtn()
-        .should('have.css', 'background-color', 'rgb(255, 255, 255)')
-        .should('have.css', 'color', 'rgb(55, 135, 3)');
+        .should('have.attr', 'aria-selected', 'true');
+      tutkintoonJohtavatBtn().should('have.attr', 'aria-selected', 'false');
       tutkinnonOsaChk().should('be.visible');
       osaamisalaChk().should('be.visible');
       ammatillinenPerustutkintoChk().should('not.be.visible');
