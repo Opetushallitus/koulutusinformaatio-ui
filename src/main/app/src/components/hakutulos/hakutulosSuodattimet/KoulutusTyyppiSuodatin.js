@@ -74,7 +74,9 @@ const KoulutustyyppiSuodatin = ({
   const apiRequestParams = useSelector(getAPIRequestParams);
 
   const [isMuuSelected, setIsMuuSelected] = useState(false);
-
+  const koulutustyyppiOrKoulutusTyyppiMuu = isMuuSelected
+    ? koulutustyyppiMuu
+    : koulutustyyppi;
   const handleKoulutustyyppiClick = (clickedFilterId, parentFilterId) => () => {
     dispatch(
       twoLevelFilterUpdateAndSearch({
@@ -97,12 +99,9 @@ const KoulutustyyppiSuodatin = ({
     );
     return areSomeAlakoodiChecked && !areAllAlakooditChecked;
   }
+
   function getLocalizedKoulutustyyppi(_koulutustyyppiEntry) {
     return l.localize(_koulutustyyppiEntry[1]) || t(`haku.${_koulutustyyppiEntry[0]}`);
-  }
-
-  function koulutustyyppiOrKoulutusTyyppiMuu() {
-    return isMuuSelected ? koulutustyyppiMuu : koulutustyyppi;
   }
 
   return (
@@ -129,12 +128,14 @@ const KoulutustyyppiSuodatin = ({
                 style={{ minWidth: '155px' }}
                 className={!isMuuSelected ? classes.buttonActive : classes.buttonInactive}
                 classes={{ root: classes.buttonRoot }}
+                aria-selected={!isMuuSelected}
                 onClick={() => setIsMuuSelected(false)}>
                 {t('haku.tutkintoon-johtavat')}
               </Button>
               <Button
                 className={isMuuSelected ? classes.buttonActive : classes.buttonInactive}
                 classes={{ root: classes.buttonRoot }}
+                aria-selected={isMuuSelected}
                 onClick={() => setIsMuuSelected(true)}>
                 {t('haku.muut')}
               </Button>
@@ -142,7 +143,7 @@ const KoulutustyyppiSuodatin = ({
           </Grid>
           <Grid item xs={12}>
             <List style={{ width: '100%' }}>
-              {koulutustyyppiOrKoulutusTyyppiMuu().map((koulutustyyppiOuter) => {
+              {koulutustyyppiOrKoulutusTyyppiMuu.map((koulutustyyppiOuter) => {
                 const labelId = `educationtype-outerlist-label-${koulutustyyppiOuter[0]}`;
                 return (
                   <React.Fragment key={`fragment-${koulutustyyppiOuter[0]}`}>
