@@ -22,18 +22,16 @@ const HakuKaynnissaCard = (props) => {
   return (
     <>
       <Card className={classes.card} elevation={2}>
-        <CardActionArea>
-          <CardContent className={classes.gridWrapper}>
-            <Grid container alignItems="center" justify="space-between">
-              <Grid item>
-                <Typography variant="h4" gutterBottom>
-                  {title}
-                </Typography>
-                <Typography variant="body1">{text}</Typography>
-              </Grid>
+        <CardContent className={classes.gridWrapper}>
+          <Grid container alignItems="center" justify="space-between">
+            <Grid item>
+              <Typography variant="h4" gutterBottom>
+                {title}
+              </Typography>
+              <Typography variant="body1">{text}</Typography>
             </Grid>
-          </CardContent>
-        </CardActionArea>
+          </Grid>
+        </CardContent>
         <CardActions>
           {React.cloneElement(link, {
             children: (
