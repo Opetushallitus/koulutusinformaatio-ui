@@ -18,3 +18,9 @@ export const FILTER_TYPES_ARR = [
   'sijainti',
 ];
 export const DRAWER_WIDTH = 330;
+
+export const LANG_NAME_BY_CODE = {
+  fi: 'suomi',
+  sv: 'ruotsi',
+  en: 'englanti',
+};

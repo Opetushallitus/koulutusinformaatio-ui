@@ -8,10 +8,12 @@ import {
   Box,
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { colors } from '#/src/colors';
 import LanguageIcon from '@material-ui/icons/Language';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { useLocation, useHistory } from 'react-router-dom';
+import { colors } from '#/src/colors';
+import { useLanguageState } from '#/src/hooks';
+import { supportedLanguages } from '#/src/tools/i18n';
+import { LANG_NAME_BY_CODE } from '#/src/constants';
 
 const CustomInput = withStyles((theme) => ({
   input: {
@@ -28,13 +30,10 @@ const iconComponent = (props) => {
 };
 
 const LanguageDropDown = () => {
-  const { i18n, t } = useTranslation();
-  const location = useLocation();
-  const history = useHistory();
+  const { t } = useTranslation();
+  const [language, setLanguage] = useLanguageState();
   const handleChange = (event) => {
-    const newLanguage = event.target.value;
-    const newPath = location.pathname.replace(/\/(.*?)\//, `/${newLanguage}/`); // Replace first path index with new language selection
-    history.push(newPath);
+    setLanguage(event.target.value);
   };
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
@@ -48,14 +47,17 @@ const LanguageDropDown = () => {
             },
             getContentAnchorEl: null,
           }}
-          value={i18n.language}
+          value={language}
           onChange={handleChange}
           variant="standard"
           renderValue={(value) => value.toUpperCase()}
           input={<CustomInput />}
           IconComponent={iconComponent}>
-          <MenuItem value={'fi'}>{t('kielivalinta.suomi')}</MenuItem>
-          <MenuItem value={'sv'}>{t('kielivalinta.ruotsi')}</MenuItem>
+          {supportedLanguages.map((langCode) => (
+            <MenuItem value={langCode}>
+              {t(`kielivalinta.${LANG_NAME_BY_CODE[langCode]}`)}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
     </Box>

@@ -2,7 +2,7 @@ import { observable, action, runInAction } from 'mobx';
 import superagent from 'superagent';
 
 const initialState = {
-  loading: true,
+  loading: false,
   kortit: {},
   sivu: {},
   info: {},
@@ -17,7 +17,12 @@ const initialState = {
 };
 
 class ContentfulStore {
+  constructor(urlStore) {
+    this.urlStore = urlStore;
+    this.previousFetchPromise = Promise.resolve();
+  }
   @observable data = initialState;
+  @observable slugsToIds = {};
 
   forwardTo = (id, nullIfUnvailable) => {
     const sivu = this.data.sivu[id] || this.data.sivuKooste[id];
@@ -86,43 +91,63 @@ class ContentfulStore {
   fetchUrl(url) {
     return superagent.get(url);
   }
-  constructor(urlStore) {
-    this.urlStore = urlStore;
-  }
 
-  @action
-  fetchData = async (lang) => {
-    if (this.data.loading) {
-      this.fetchManifest()
-        .then((res) => {
-          return res.body || {};
-        })
-        .then((manifest) => {
-          const contents = Object.entries(manifest).map(([k, v]) => [
-            k,
-            this.urlStore.urls.url('konfo-backend.content', '') + v[lang],
-          ]);
-          return Promise.all(
-            contents.map(([key, url]) => {
-              return this.fetchUrl(url)
-                .then(ContentfulStore.bodyAsArray)
-                .then((data) => {
-                  return { [key]: ContentfulStore.reduceToKeyValue(data) };
-                });
-            })
-          );
-        })
-        .then((all) => {
-          runInAction(() => {
-            this.data = Object.assign(...all);
-          });
+  createSlugsToIds(lang) {
+    Object.assign(
+      this.slugsToIds,
+      Object.fromEntries(
+        Object.values(this.data.sivu).map((sivu) => [
+          sivu.slug,
+          { language: lang, id: sivu.id },
+        ])
+      )
+    );
+  }
+  internalFetchData(lang) {
+    this.data.loading = true;
+    return this.fetchManifest()
+      .then((res) => {
+        return res.body || {};
+      })
+      .then((manifest) => {
+        const contents = Object.entries(manifest).map(([k, v]) => [
+          k,
+          this.urlStore.urls.url('konfo-backend.content', '') + v[lang],
+        ]);
+        return Promise.all(
+          contents.map(([key, url]) => {
+            return this.fetchUrl(url)
+              .then(ContentfulStore.bodyAsArray)
+              .then((data) => {
+                return { [key]: ContentfulStore.reduceToKeyValue(data) };
+              });
+          })
+        );
+      })
+      .then((all) => {
+        runInAction(() => {
+          Object.assign(this.data, ...all);
+          this.createSlugsToIds(lang);
         });
-    }
+      })
+      .then(() => {
+        this.data.loading = false;
+      })
+      .catch(() => {
+        this.data.loading = false;
+      });
+  }
+  @action
+  fetchData = (lang) => {
+    this.previousFetchPromise = this.previousFetchPromise.then(
+      () => this.internalFetchData(lang),
+      () => this.internalFetchData(lang)
+    );
   };
 
   @action
   reset = (lang) => {
-    this.data = initialState;
+    Object.assign(this.data, initialState);
     this.fetchData(lang);
   };
 }
