@@ -3,8 +3,8 @@ import { Grid, Typography, Paper, makeStyles, Hidden } from '@material-ui/core';
 import PublicIcon from '@material-ui/icons/Public';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
-import { educationTypeColorCode } from '../../colors';
-import OppilaitosLogo from '../../assets/images/Opolkuhts.png';
+import { educationTypeColorCode } from '#/src/colors';
+import OppilaitosLogo from '#/src/assets/images/Opolkuhts.png';
 import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
 
 const useStyles = makeStyles((theme) => ({
@@ -14,10 +14,13 @@ const useStyles = makeStyles((theme) => ({
   paper: (props) => ({
     borderTop: `5px solid ${educationTypeColorCode[props.tyyppi] ||
       educationTypeColorCode.muu}`,
-    maxWidth: '900px',
+    marginBottom: '12px',
   }),
   icon: {
     fontSize: '1.1875rem',
+  },
+  description: {
+    margin: '10px 0',
   },
   iconContainer: {
     display: 'flex',
@@ -34,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       width: '80px',
       float: 'left',
-      marginBottom: '8px',
+      marginBottom: '12px',
     },
   },
 }));
@@ -79,7 +82,7 @@ const ToteutusCard = (props) => {
               </Typography>
             ) : null}
             <Hidden smDown>
-              <Typography variant="body1" paragraph>
+              <Typography className={classes.description} variant="body1" component="div">
                 <HTMLEllipsis unsafeHTML={description} maxLine={2} />
               </Typography>
             </Hidden>

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Typography, Grid, Container, makeStyles } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
-import Spacer from '../common/Spacer';
+import Spacer from '#/src/components/common/Spacer';
 import { useTranslation } from 'react-i18next';
-import { Localizer as l } from '../../tools/Utils';
+import { Localizer as l } from '#/src/tools/Utils';
 import ToteutusCard from '#/src/components/common/ToteutusCard';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
 
@@ -13,6 +13,9 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     alignItems: 'center',
     marginTop: '100px',
+  },
+  grid: {
+    maxWidth: '900px',
   },
 });
 
@@ -35,7 +38,13 @@ const ToteutusList = (props) => {
       <Typography variant="h2">{t('koulutus.tarjonta')}</Typography>
       <Spacer />
       {toteutukset?.length > 0 ? (
-        <Grid container direction="column" alignItems="center" spacing={1}>
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          className={classes.grid}
+          alignItems="stretch"
+          spacing={1}>
           {toteutukset.map((toteutus, i) => (
             <Grid item key={i}>
               <LocalizedLink
