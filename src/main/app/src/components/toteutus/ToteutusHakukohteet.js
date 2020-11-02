@@ -34,6 +34,7 @@ const HakuCardGrid = (props) => {
   const classes = useStyles();
   const { type, haut, icon } = props;
   const { t } = useTranslation();
+
   return (
     <Grid item>
       <Box display="flex" alignItems="center">
@@ -87,25 +88,23 @@ const HakuCardGrid = (props) => {
                       />
                     </Grid>
                     <Grid item>
-                      <Grid container direction="row">
+                      <Grid container direction="row" spacing={3}>
                         <Grid item xs={6}>
-                          <Grid container direction="column">
-                            <Grid item>
-                              <Typography className={classes.gridHeading} noWrap>
-                                {t('toteutus.haku-alkaa') + ':'}
+                          <Grid item>
+                            <Typography className={classes.gridHeading} noWrap>
+                              {t('toteutus.haku-alkaa') + ':'}
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            {haku.hakuajat.map((hakuaika, i) => (
+                              <Typography key={i} variant="body1" noWrap>
+                                {format(new Date(hakuaika.alkaa), 'd.M.y H:mm')}
                               </Typography>
-                            </Grid>
-                            <Grid item>
-                              {haku.hakuajat.map((hakuaika, i) => (
-                                <Typography key={i} variant="body1" noWrap>
-                                  {format(new Date(hakuaika.alkaa), 'd.M.y H:mm')}
-                                </Typography>
-                              ))}
-                            </Grid>
+                            ))}
                           </Grid>
                         </Grid>
-                        <Grid item xs={6}>
-                          <Grid container direction="column">
+                        {haku.hakuajat?.some((hakuaika) => hakuaika.paattyy) && (
+                          <Grid item xs={6}>
                             <Grid item>
                               <Typography className={classes.gridHeading} noWrap>
                                 {t('toteutus.haku-paattyy') + ':'}
@@ -121,29 +120,23 @@ const HakuCardGrid = (props) => {
                               )}
                             </Grid>
                           </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid item>
-                      <Grid container direction="row">
+                        )}
                         <Grid item xs={6}>
-                          <Grid container direction="column">
-                            <Grid item>
-                              <Typography className={classes.gridHeading} noWrap>
-                                {t('koulutus.pohjakoulutus') + ':'}
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Typography variant="body1" noWrap>
-                                {haku.pohjakoulutusvaatimus.map((vaatimus) =>
-                                  l.localize(vaatimus)
-                                )}
-                              </Typography>
-                            </Grid>
+                          <Grid item>
+                            <Typography className={classes.gridHeading} noWrap>
+                              {t('koulutus.pohjakoulutus') + ':'}
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Typography variant="body1" noWrap>
+                              {haku.pohjakoulutusvaatimus.map((vaatimus) =>
+                                l.localize(vaatimus)
+                              )}
+                            </Typography>
                           </Grid>
                         </Grid>
-                        <Grid item xs={6}>
-                          <Grid container direction="column">
+                        {haku.aloituspaikat && (
+                          <Grid item xs={6}>
                             <Grid item>
                               <Typography className={classes.gridHeading} noWrap>
                                 {t('toteutus.opiskelupaikkoja') + ':'}
@@ -155,7 +148,7 @@ const HakuCardGrid = (props) => {
                               </Typography>
                             </Grid>
                           </Grid>
-                        </Grid>
+                        )}
                       </Grid>
                     </Grid>
                     <Grid item>
