@@ -93,15 +93,17 @@ export class OsoiteParser {
     const fullAddress = [postitoimipaikka, osoite].join(' ');
     const withoutNumber = fullAddress
       .split(' ')
-      .filter((s) => isNaN(s))
+      .filter(isNaN)
       .join(' ');
+    const withoutHouseNumber = [withoutNumber];
+    withoutHouseNumber.input = withoutNumber;
     const coreAddress = fullAddress.match(regexp);
     if (coreAddress === null) {
-      console.log('Warning: returning null for core address, input: ' + fullAddress);
+      console.warn('Warning: returning null for core address, input: ' + fullAddress);
     }
     return {
-      withHouseNumber: coreAddress,
-      withoutHouseNumber: [withoutNumber, { input: withoutNumber }],
+      address: coreAddress,
+      addressNoNumbers: withoutHouseNumber,
     };
   }
 }

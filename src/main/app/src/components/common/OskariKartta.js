@@ -1,37 +1,38 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import OskariRPC from 'oskari-rpc';
 import { urls } from 'oph-urls-js';
 import { OsoiteParser as op, Localizer as l } from '#/src/tools/Utils';
 
-const OskariKartta = ({ osoite, postitoimipaikka }) => {
-  function createChannel() {
-    const IFRAME_DOMAIN = urls.url('kartta.base-url');
-    const iFrame = document.getElementById('publishedMap');
-    const channel = OskariRPC.connect(iFrame, IFRAME_DOMAIN);
-    return channel;
-  }
+const MARKER_ID = 'OPPILAITOS';
+const ZOOM_LEVEL = 9;
 
-  const initMap = useCallback(() => {
+function createChannel() {
+  const IFRAME_DOMAIN = urls.url('kartta.base-url');
+  const iFrame = document.getElementById('publishedMap');
+  const channel = OskariRPC.connect(iFrame, IFRAME_DOMAIN);
+  return channel;
+}
+
+const OskariKartta = ({ osoite, postitoimipaikka }) => {
+  useEffect(() => {
     const channel = createChannel();
-    let noHouseNumberSearches = 0;
+    let noHouseNumberSearchDone = false;
 
     channel.handleEvent('SearchResultEvent', (data) => {
-      if (data.success && data?.result?.locations?.length > 0) {
+      if (!data?.success) return;
+      if (data?.result?.locations?.length > 0) {
         const { lon, lat, name } =
-          data?.locations?.find(
-            (loc) => postitoimipaikka.toLowerCase() in [loc.region, loc.village]
+          data?.result?.locations?.find((loc) =>
+            [loc?.region?.toLowerCase(), loc?.village?.toLowerCase()].includes(
+              postitoimipaikka.toLowerCase()
+            )
           ) ?? data.result.locations[0];
 
-        const x = lon;
-        const y = lat;
-        const zoomLevel = 9;
+        channel.postRequest('MapMoveRequest', [lon, lat, ZOOM_LEVEL]);
 
-        channel.postRequest('MapMoveRequest', [x, y, zoomLevel]);
-
-        const MARKER_ID = 'OPPILAITOS';
         const requestData = {
-          x: x,
-          y: y,
+          x: lon,
+          y: lat,
           color: 'ff0000',
           msg: name,
           shape: 2, // icon number (0-6)
@@ -39,52 +40,38 @@ const OskariKartta = ({ osoite, postitoimipaikka }) => {
         };
         channel.postRequest('MapModulePlugin.AddMarkerRequest', [requestData, MARKER_ID]);
       } else {
-        if (noHouseNumberSearches === 0) {
+        if (!noHouseNumberSearchDone) {
           channel.postRequest(
             'SearchRequest',
-            op.getCoreAddress(postitoimipaikka, osoite).withoutHouseNumber
+            op.getCoreAddress(postitoimipaikka, osoite).addressNoNumbers
           );
-          noHouseNumberSearches += 1;
+          noHouseNumberSearchDone = true;
         }
       }
     });
 
-    channel.onReady(() => {
-      //channel is now ready and listening.
+    channel.onReady((info) => {
       channel.log('Map is now listening');
       const expectedOskariVersion = '2.1.0';
-      channel.isSupported(expectedOskariVersion, (blnSupported) => {
-        if (blnSupported) {
+      if (!info.clientSupported) {
+        channel.log(
+          `Oskari reported client version (${OskariRPC.VERSION}) is not supported. 
+          The client might work, but some features are not compatible.`
+        );
+      } else {
+        if (info.version === expectedOskariVersion) {
           channel.log(
-            'Client is supported and Oskari version is ',
-            expectedOskariVersion
+            'Client is supported and Oskari version is ' + expectedOskariVersion
           );
         } else {
           channel.log(
-            'Oskari-instance is not the one we expect (' +
-              expectedOskariVersion +
-              ') or client not supported'
+            `Oskari-instance is not the one we expect (${expectedOskariVersion})`
           );
-          // getInfo can be used to get the current Oskari version
-          channel.getInfo((oskariInfo) => {
-            channel.log('Current Oskari-instance reports version as: ', oskariInfo);
-          });
+          channel.log('Current Oskari-instance reports version as: ', info);
         }
-      });
-      channel.isSupported((blnSupported) => {
-        if (!blnSupported) {
-          channel.log(
-            'Oskari reported client version (' +
-              OskariRPC.VERSION +
-              ') is not supported.' +
-              'The client might work, but some features are not compatible.'
-          );
-        } else {
-          channel.log('Client is supported by Oskari.');
-        }
-      });
+      }
 
-      const data = op.getCoreAddress(postitoimipaikka, osoite).withHouseNumber;
+      const data = op.getCoreAddress(postitoimipaikka, osoite).address;
       if (channel) {
         channel.postRequest('SearchRequest', data);
       } else {
@@ -95,10 +82,6 @@ const OskariKartta = ({ osoite, postitoimipaikka }) => {
       }
     });
   }, [postitoimipaikka, osoite]);
-
-  useEffect(() => {
-    initMap();
-  }, [osoite, postitoimipaikka, initMap]);
 
   return (
     <iframe
