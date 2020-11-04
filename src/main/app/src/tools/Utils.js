@@ -86,15 +86,23 @@ export class Parser {
 }
 
 export class OsoiteParser {
-  static getCoreAddress(katuosoite = '') {
+  static getCoreAddress(postitoimipaikka = '', osoite = '') {
     //Merkkejä ja välilyönnillä siitä erotettu numero, esim: Ratapiha 3, Hubert Hepolaisen Katu 888.
     //Mahdollinen jatke leikataan pois.
     const regexp = '^.+? \\d+';
-    const coreAddress = katuosoite.match(regexp);
+    const fullAddress = [postitoimipaikka, osoite].join(' ');
+    const withoutNumber = fullAddress
+      .split(' ')
+      .filter((s) => isNaN(s))
+      .join(' ');
+    const coreAddress = fullAddress.match(regexp);
     if (coreAddress === null) {
-      console.log('Warning: returning null for core address, input: ' + katuosoite);
+      console.log('Warning: returning null for core address, input: ' + fullAddress);
     }
-    return coreAddress;
+    return {
+      withHouseNumber: coreAddress,
+      withoutHouseNumber: [withoutNumber, { input: withoutNumber }],
+    };
   }
 }
 

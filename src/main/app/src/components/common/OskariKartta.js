@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
-import { OsoiteParser as op, Localizer as l } from '#/src/tools/Utils';
-import { urls } from 'oph-urls-js';
 import OskariRPC from 'oskari-rpc';
+import { urls } from 'oph-urls-js';
+import { OsoiteParser as op, Localizer as l } from '#/src/tools/Utils';
 
 const OskariKartta = ({ osoite, postitoimipaikka }) => {
   function createChannel() {
@@ -13,6 +13,7 @@ const OskariKartta = ({ osoite, postitoimipaikka }) => {
 
   const initMap = useCallback(() => {
     const channel = createChannel();
+    let noHouseNumberSearches = 0;
 
     channel.handleEvent('SearchResultEvent', (data) => {
       if (data.success && data?.result?.locations?.length > 0) {
@@ -37,17 +38,26 @@ const OskariKartta = ({ osoite, postitoimipaikka }) => {
           size: 4,
         };
         channel.postRequest('MapModulePlugin.AddMarkerRequest', [requestData, MARKER_ID]);
+      } else {
+        if (noHouseNumberSearches === 0) {
+          channel.postRequest(
+            'SearchRequest',
+            op.getCoreAddress(postitoimipaikka, osoite).withoutHouseNumber
+          );
+          noHouseNumberSearches += 1;
+        }
       }
     });
 
     channel.onReady(() => {
       //channel is now ready and listening.
       channel.log('Map is now listening');
-      const expectedOskariVersion = '1.55.2';
+      const expectedOskariVersion = '2.1.0';
       channel.isSupported(expectedOskariVersion, (blnSupported) => {
         if (blnSupported) {
           channel.log(
-            'Client is supported and Oskari version is ' + expectedOskariVersion
+            'Client is supported and Oskari version is ',
+            expectedOskariVersion
           );
         } else {
           channel.log(
@@ -73,15 +83,14 @@ const OskariKartta = ({ osoite, postitoimipaikka }) => {
           channel.log('Client is supported by Oskari.');
         }
       });
-      // setLocation(channel);
-      const data = op.getCoreAddress(osoite);
-      console.log('Triggering map location search for ' + data);
+
+      const data = op.getCoreAddress(postitoimipaikka, osoite).withHouseNumber;
       if (channel) {
         channel.postRequest('SearchRequest', data);
       } else {
         console.log(
-          'Odottamaton virhe. Karttapalvelun channel puuttuu ' +
-            urls.url('kartta.base-url')
+          'Odottamaton virhe. Karttapalvelun channel puuttuu',
+          urls.url('kartta.base-url')
         );
       }
     });
