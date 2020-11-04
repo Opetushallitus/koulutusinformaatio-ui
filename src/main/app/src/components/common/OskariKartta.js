@@ -88,7 +88,7 @@ const OskariKartta = ({ osoite, postitoimipaikka }) => {
       if (channel) {
         channel.postRequest('SearchRequest', data);
       } else {
-        console.log(
+        console.error(
           'Odottamaton virhe. Karttapalvelun channel puuttuu',
           urls.url('kartta.base-url')
         );
