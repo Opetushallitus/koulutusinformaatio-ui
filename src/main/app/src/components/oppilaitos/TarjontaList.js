@@ -15,6 +15,9 @@ const useStyles = makeStyles({
     alignItems: 'center',
     marginTop: '100px',
   },
+  grid: {
+    maxWidth: '900px',
+  },
 });
 
 const TarjontaList = ({ tarjonta, oid, isOppilaitosOsa }) => {
@@ -28,7 +31,7 @@ const TarjontaList = ({ tarjonta, oid, isOppilaitosOsa }) => {
       </Typography>
       <Spacer />
       {tarjonta?.hasHits ? (
-        <Grid container direction="column" spacing={1}>
+        <Grid container className={classes.grid} direction="column" spacing={1}>
           {_.map(_.get(tarjonta, 'localizedTarjonta'), (tts, i) => (
             <Grid item key={i}>
               <LocalizedLink
