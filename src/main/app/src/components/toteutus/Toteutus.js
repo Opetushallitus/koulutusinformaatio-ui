@@ -15,7 +15,7 @@ import { Localizer as l } from '#/src/tools/Utils';
 import HakuKaynnissaCard from '#/src/components/koulutus/HakuKaynnissaCard';
 import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import {
   fetchToteutus,
   selectLoading as selectToteutusLoading,
@@ -23,6 +23,7 @@ import {
   selectJatkuvatHaut,
   selectYhteisHaut,
   selectErillisHaut,
+  selectMuuHaku,
 } from '#/src/store/reducers/toteutusSlice';
 import {
   fetchKoulutusWithRelatedData,
@@ -33,6 +34,7 @@ import { useTranslation } from 'react-i18next';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import Murupolku from '#/src/components/common/Murupolku';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { ToteutusMuuHaku } from './ToteutusMuuHaku';
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -98,6 +100,7 @@ const Toteutus = () => {
   const jatkuvatHaut = useSelector(selectJatkuvatHaut(oid));
   const yhteisHaut = useSelector(selectYhteisHaut(oid));
   const erillisHaut = useSelector(selectErillisHaut(oid));
+  const muuHaku = useSelector(selectMuuHaku(oid));
   const koulutusLoading = useSelector(selectKoulutusLoading);
   const toteutusLoading = useSelector(selectToteutusLoading);
 
@@ -115,6 +118,7 @@ const Toteutus = () => {
       dispatch(fetchKoulutusWithRelatedData(toteutus.koulutusOid));
     }
   }, [toteutus, dispatch, oid, koulutus, koulutusOid]);
+
   return loading ? (
     <LoadingCircle />
   ) : (
@@ -152,6 +156,7 @@ const Toteutus = () => {
         </Box>
         <Box mt={4}>
           <ToteutusInfoGrid
+            koulutusTyyppi={koulutus?.koulutusTyyppi}
             nimikkeet={toteutus?.metadata?.ammattinimikkeet}
             kielet={toteutus?.metadata?.opetus?.opetuskieli}
             laajuus={[koulutus?.opintojenLaajuus, koulutus?.opintojenLaajuusYksikkö]}
@@ -177,7 +182,7 @@ const Toteutus = () => {
             ]}
           />
         </Box>
-        {jatkuvatHaut?.length + yhteisHaut?.length + erillisHaut?.length > 0 ? (
+        {jatkuvatHaut?.length + yhteisHaut?.length + erillisHaut?.length > 0 && (
           <HakuKaynnissaCard
             title={t('toteutus.haku-kaynnisa')}
             text={t('toteutus.katso-hakukohteet')}
@@ -191,41 +196,59 @@ const Toteutus = () => {
             }
             buttonText={t('toteutus.nayta-hakukohteet')}
           />
-        ) : null}
-        {toteutus?.metadata?.kuvaus ? (
+        )}
+        {toteutus?.metadata?.kuvaus && (
           <HtmlTextBox
             heading={t('koulutus.kuvaus')}
             html={l.localize(toteutus.metadata.kuvaus)}
             className={classes.root}
           />
-        ) : null}
-        {toteutus?.metadata?.osaamisalat ? (
+        )}
+        {toteutus?.metadata?.osaamisalat && (
           <AccordionWithTitle
             titleTranslation="koulutus.osaamisalat"
             data={toteutus.metadata.osaamisalat.map((osaamisala) => ({
               title: l.localize(osaamisala.koodi.nimi),
-              content:
-                !_.isEmpty(osaamisala.linkki) && !_.isEmpty(osaamisala.otsikko) ? (
-                  <LocalizedLink
-                    target="_blank"
-                    rel="noopener"
-                    href={l.localize(osaamisala.linkki)}>
-                    {l.localize(osaamisala.otsikko)}
-                    <OpenInNewIcon />
-                  </LocalizedLink>
-                ) : null,
+              content: !isEmpty(osaamisala.linkki) && !isEmpty(osaamisala.otsikko) && (
+                <LocalizedLink
+                  target="_blank"
+                  rel="noopener"
+                  href={l.localize(osaamisala.linkki)}>
+                  {l.localize(osaamisala.otsikko)}
+                  <OpenInNewIcon />
+                </LocalizedLink>
+              ),
             }))}
           />
-        ) : null}
-        {jatkuvatHaut?.length + yhteisHaut?.length + erillisHaut?.length > 0 ? (
+        )}
+        {jatkuvatHaut?.length + yhteisHaut?.length + erillisHaut?.length > 0 && (
           <ToteutusHakukohteet
             jatkuvatHaut={jatkuvatHaut}
             yhteisHaut={yhteisHaut}
             erillisHaut={erillisHaut}
           />
-        ) : null}
-
-        {toteutus?.metadata?.opetus?.lisatiedot.length > 0 ? (
+        )}
+        {muuHaku && (
+          <Box
+            mt={7}
+            style={{ width: '100%' }}
+            display="flex"
+            flexDirection="column"
+            alignItems="center">
+            <Typography variant="h2">{t('toteutus.ilmoittaudu-koulutukseen')}</Typography>
+            <Spacer />
+            <Grid
+              container
+              alignContent="center"
+              justify="center"
+              alignItems="center"
+              xs={12}
+              style={{ maxWidth: '800px' }}>
+              <ToteutusMuuHaku muuHaku={muuHaku} />
+            </Grid>
+          </Box>
+        )}
+        {toteutus?.metadata?.opetus?.lisatiedot.length > 0 && (
           <AccordionWithTitle
             titleTranslation="koulutus.lisätietoa"
             data={toteutus.metadata.opetus.lisatiedot.map((lisatieto) => ({
@@ -233,9 +256,9 @@ const Toteutus = () => {
               content: l.localize(lisatieto.teksti),
             }))}
           />
-        ) : null}
+        )}
 
-        {toteutus?.metadata?.yhteyshenkilot.length > 0 ? (
+        {toteutus?.metadata?.yhteyshenkilot.length > 0 && (
           <Box mt={12} display="flex" flexDirection="column" alignItems="center">
             <Typography variant="h2">{t('toteutus.yhteyshenkilot')}</Typography>
             <Spacer />
@@ -267,7 +290,7 @@ const Toteutus = () => {
                         </Grid>
                       </Grid>
                     </Grid>
-                    {i + 1 !== toteutus.metadata.yhteyshenkilot.length ? (
+                    {i + 1 !== toteutus.metadata.yhteyshenkilot.length && (
                       <Grid item>
                         <Box
                           mx={9}
@@ -275,13 +298,13 @@ const Toteutus = () => {
                           borderRight={`1px solid ${colors.lightGrey}`}
                         />
                       </Grid>
-                    ) : null}
+                    )}
                   </React.Fragment>
                 ))}
               </Grid>
             </Box>
           </Box>
-        ) : null}
+        )}
       </Box>
     </ContentWrapper>
   );

@@ -86,6 +86,20 @@ export class Parser {
 }
 
 export class OsoiteParser {
+  static parseOsoiteData(osoiteData) {
+    const osoite = Localizer.localize(osoiteData.osoite, '');
+    const postinumero = Parser.koodiUriToPostinumero(osoiteData.postinumero.koodiUri);
+    const postitoimipaikka = _fp.capitalize(
+      Localizer.localize(osoiteData.postinumero.nimi, '')
+    );
+    const yhteystiedot =
+      osoite && postinumero && postitoimipaikka
+        ? _fp.trim(`${osoite}, ${postinumero} ${postitoimipaikka}`, ', ')
+        : Localizer.getTranslationForKey('oppilaitos.ei-yhteystietoja');
+
+    return { osoite, postinumero, postitoimipaikka, yhteystiedot };
+  }
+
   static getCoreAddress(katuosoite = '') {
     //Merkkejä ja välilyönnillä siitä erotettu numero, esim: Ratapiha 3, Hubert Hepolaisen Katu 888.
     //Mahdollinen jatke leikataan pois.

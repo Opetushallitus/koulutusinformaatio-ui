@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getToteutus } from '#/src/api/konfoApi';
 import { isBefore, isAfter } from 'date-fns';
+import pick from 'lodash/pick';
 
 const IDLE_STATUS = 'idle';
 const LOADING_STATUS = 'loading';
@@ -86,4 +87,32 @@ export const selectErillisHaut = (oid) => (state) =>
   selectHakukohteet(state, oid, ERILLISHAKU);
 export const selectYhteisHaut = (oid) => (state) =>
   selectHakukohteet(state, oid, YHTEISHAKU);
+
+export const selectMuuHaku = (oid) => (state) => {
+  const toteutus = selectToteutus(oid)(state);
+  if (!toteutus?.metadata || toteutus.metadata.hakulomaketyyppi !== 'muu') {
+    return null;
+  }
+
+  const hakuAuki = isHakuAuki([toteutus.metadata.hakuaika]);
+
+  // TODO: SORA-kuvaus - atm. we only get an Id from the API but we cannot do anything with it
+  return {
+    ...pick(toteutus.metadata, [
+      'aloituspaikat',
+      'hakuaika',
+      'hakulomakeLinkki',
+      'hakutermi',
+      'lisatietoaHakeutumisesta',
+      'lisatietoaValintaperusteista',
+    ]),
+    isHakuAuki: hakuAuki,
+    nimi: toteutus.nimi,
+    // TODO: we do not get osoite from the API atm. so just use the first tarjoaja
+    // This should be replaced with osoite when we have it in the API
+    tarjoajaOid: toteutus.tarjoajat[0]?.oid,
+    tarjoajaNimi: toteutus.tarjoajat[0]?.nimi,
+  };
+};
+
 export const selectToteutus = (oid) => (state) => state.toteutus.toteutukset[oid];

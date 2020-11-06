@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/styles';
 import { Localizer as l } from '#/src/tools/Utils';
 import { format } from 'date-fns';
+import { TYYPPI_AMM_TUTKINNON_OSA } from '#/src/store/reducers/koulutusSlice';
 
 const useStyles = makeStyles((theme) => ({
   koulutusInfoGridIcon: {
@@ -38,9 +39,12 @@ const suunniteltuKesto = (t, vuosi, kk) => {
   }
 };
 
+const localizeMap = (v) => l.localize(v);
+
 const ToteutusInfoGrid = (props) => {
   const classes = useStyles();
   const {
+    koulutusTyyppi,
     nimikkeet,
     kielet,
     laajuus,
@@ -53,18 +57,10 @@ const ToteutusInfoGrid = (props) => {
     apuraha,
   } = props;
   const { t } = useTranslation();
-  const currentLanguage = l.getLanguage();
-  const nimikeString = nimikkeet
-    ? nimikkeet
-        .filter((elem) => elem.kieli === currentLanguage)
-        .map((elem) => elem.arvo)
-        .join('\n')
-    : t('koulutus.ei-tutkintonimiketta');
-  const kieliString = kielet
-    ? kielet.map((kieliObj) => l.localize(kieliObj)).join('\n')
-    : '';
+
+  const kieliString = kielet?.map(localizeMap).join('\n') ?? '';
   const laajuusString = !laajuus.includes(undefined)
-    ? laajuus.map((elem) => l.localize(elem)).join(' ')
+    ? laajuus.map(localizeMap).join(' ')
     : t('koulutus.ei-laajuutta');
   const kestoString = suunniteltuKesto(
     t,
@@ -74,12 +70,8 @@ const ToteutusInfoGrid = (props) => {
   const aloitusString = aloitus[0]
     ? format(new Date(aloitus[1]), 'd.M.y')
     : `${l.localize(aloitus[2])} ${aloitus[3]}`;
-  const opetusAikaString = opetusaika
-    ? opetusaika.map((aikaObj) => l.localize(aikaObj)).join('\n')
-    : '';
-  const opetustapaString = opetustapa
-    ? opetustapa.map((tapaObj) => l.localize(tapaObj)).join('\n')
-    : '';
+  const opetusAikaString = opetusaika?.map(localizeMap).join('\n') ?? '';
+  const opetustapaString = opetustapa?.map(localizeMap).join('\n') ?? '';
   const maksullisuusString = maksullisuus
     ? maksullisuus[0]
       ? `${maksullisuus[1]} €`
@@ -91,12 +83,25 @@ const ToteutusInfoGrid = (props) => {
       : t('toteutus.ei-apurahaa')
     : '';
 
-  const perustiedotData = [
-    {
+  const perustiedotData = [];
+
+  if (koulutusTyyppi !== TYYPPI_AMM_TUTKINNON_OSA) {
+    const currentLanguage = l.getLanguage();
+    const nimikeString = nimikkeet
+      ? nimikkeet
+          .filter((elem) => elem.kieli === currentLanguage)
+          .map((elem) => elem.arvo)
+          .join('\n')
+      : t('koulutus.ei-tutkintonimiketta');
+
+    perustiedotData.push({
       icon: <SchoolOutlinedIcon className={classes.koulutusInfoGridIcon} />,
       title: t('toteutus.tutkintonimikkeet'),
       text: nimikeString,
-    },
+    });
+  }
+
+  perustiedotData.push(
     {
       icon: <ChatBubbleOutlineIcon className={classes.koulutusInfoGridIcon} />,
       title: t('toteutus.opetuskieli'),
@@ -136,8 +141,9 @@ const ToteutusInfoGrid = (props) => {
       icon: 'ApurahaIcon',
       title: t('toteutus.apuraha'),
       text: apurahaString,
-    },
-  ];
+    }
+  );
+
   return <InfoGrid heading={t('koulutus.tiedot')} gridData={perustiedotData} />;
 };
 
