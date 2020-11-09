@@ -11,6 +11,7 @@ export const FILTER_TYPES = {
   KOULUTUSTYYPPI_MUU: 'koulutustyyppi-muu',
   OPETUSKIELI: 'opetuskieli',
   SIJAINTI: 'sijainti',
+  OPETUSTAPA: 'opetustapa',
 };
 export const FILTER_TYPES_ARR = [
   'opetuskieli',

@@ -35,6 +35,7 @@ export const initialState = {
   opetuskieli: [],
   sijainti: [],
   selectedSijainti: [],
+  opetustapa: [],
 
   size: 20,
   selectedTab: KOULUTUS,
@@ -73,6 +74,9 @@ const hakutulosSlice = createSlice({
     setKoulutusala: (state, { payload }) => {
       state.koulutusala = payload.newCheckedKoulutusalat;
     },
+    setOpetustapa: (state, { payload }) => {
+      state.opetustapa = payload.newCheckedOpetustavat;
+    },
     clearPaging: (state, action) => {
       state.koulutusPage = 1;
       state.oppilaitosPage = 1;
@@ -94,6 +98,7 @@ const hakutulosSlice = createSlice({
       state.opetuskieli = [];
       state.sijainti = [];
       state.selectedSijainti = [];
+      state.opetustapa = [];
     },
     setSize: (state, { payload }) => {
       state.size = payload.newSize;
@@ -234,6 +239,7 @@ export const {
   setKoulutusala,
   setSijainti,
   setSelectedSijainti,
+  setOpetustapa,
   clearPaging,
   clearSelectedFilters,
   setSelectedFilters,
@@ -261,6 +267,7 @@ export const searchAll = (
       'koulutustyyppi',
       'koulutusala',
       'sijainti',
+      'opetustapa',
     ]);
     const literals = _.pick(requestParams, ['size', 'order', 'sort']);
     dispatch(
@@ -341,6 +348,7 @@ export const executeSearchFromStartingPage = ({ apiRequestParams, history }) => 
       'koulutustyyppi',
       'koulutusala',
       'sijainti',
+      'opetustapa',
     ])
   ).toString();
   history.push(`/${lng}/haku/${hakutulos.keyword}?${restParams}`);
