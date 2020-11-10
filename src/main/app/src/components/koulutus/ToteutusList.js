@@ -16,16 +16,16 @@ const useStyles = makeStyles({
   },
 });
 
+const localizeArrayToString = (toLocalizeArray) =>
+  toLocalizeArray
+    ?.map((item) => l.localize(item.nimi))
+    .sort()
+    .join(', ');
+
 const ToteutusList = (props) => {
   const classes = useStyles();
   const { toteutukset } = props;
   const { t } = useTranslation();
-  const localizeArrayToString = (toLocalizeArray) => {
-    return toLocalizeArray
-      .map((item) => l.localize(item.nimi))
-      .sort()
-      .join(', ');
-  };
 
   const getLocalizedMaksullisuus = (isMaksullinen, maksuAmount) =>
     isMaksullinen ? `${maksuAmount} €` : t('toteutus.maksuton');

@@ -6,7 +6,7 @@ bucket:
 host:
   host-oppija: https://{{host_beta}}
   host-old-oppija: https://{{host_oppija}}
-  host-eperusteet-service: https://{host_eperusteet}
+  host-eperusteet-service: https://{{host_eperusteet}}
 kartta:
   host: {{konfo_ui_kartta_host}}
   pid: {{konfo_ui_kartta_pid}}
