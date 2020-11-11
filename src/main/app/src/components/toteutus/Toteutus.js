@@ -23,7 +23,6 @@ import {
   selectJatkuvatHaut,
   selectYhteisHaut,
   selectErillisHaut,
-  selectMuuHaku,
 } from '#/src/store/reducers/toteutusSlice';
 import {
   fetchKoulutusWithRelatedData,
@@ -34,7 +33,8 @@ import { useTranslation } from 'react-i18next';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import Murupolku from '#/src/components/common/Murupolku';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
-import { ToteutusMuuHaku } from './ToteutusMuuHaku';
+import { ToteutusHakuMuu } from './ToteutusHakuMuu';
+import { ToteutusHakuEiSahkoista } from './ToteutusHakuEiSahkoista';
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -100,24 +100,26 @@ const Toteutus = () => {
   const jatkuvatHaut = useSelector(selectJatkuvatHaut(oid));
   const yhteisHaut = useSelector(selectYhteisHaut(oid));
   const erillisHaut = useSelector(selectErillisHaut(oid));
-  const muuHaku = useSelector(selectMuuHaku(oid));
   const koulutusLoading = useSelector(selectKoulutusLoading);
   const toteutusLoading = useSelector(selectToteutusLoading);
 
-  const loading = koulutusLoading || toteutusLoading;
+  const loading = !koulutus || koulutusLoading || toteutusLoading;
   const asiasanat =
     toteutus?.metadata?.asiasanat
       .filter((asiasana) => asiasana.kieli === currentLanguage)
-      .map((asiasana) => asiasana.arvo) || [];
+      .map((asiasana) => asiasana.arvo) ?? [];
 
   useEffect(() => {
     if (!toteutus) {
       dispatch(fetchToteutus(oid));
     }
+    // TODO: Get rid of koulutus call here when opintolaajuus comes from toteutus -backend
     if (!koulutus && koulutusOid) {
       dispatch(fetchKoulutusWithRelatedData(toteutus.koulutusOid));
     }
   }, [toteutus, dispatch, oid, koulutus, koulutusOid]);
+
+  const opetus = toteutus?.metadata?.opetus;
 
   return loading ? (
     <LoadingCircle />
@@ -156,30 +158,22 @@ const Toteutus = () => {
         </Box>
         <Box mt={4}>
           <ToteutusInfoGrid
-            koulutusTyyppi={koulutus?.koulutusTyyppi}
+            koulutusTyyppi={toteutus?.metadata?.tyyppi}
             nimikkeet={toteutus?.metadata?.ammattinimikkeet}
-            kielet={toteutus?.metadata?.opetus?.opetuskieli}
+            kielet={opetus?.opetuskieli}
             laajuus={[koulutus?.opintojenLaajuus, koulutus?.opintojenLaajuusYksikkö]}
             aloitus={[
-              toteutus?.metadata?.opetus?.koulutuksenTarkkaAlkamisaika,
-              toteutus?.metadata?.opetus?.koulutuksenAlkamispaivamaara,
-              toteutus?.metadata?.opetus?.koulutuksenAlkamiskausi,
-              toteutus?.metadata?.opetus?.koulutuksenAlkamisvuosi,
+              opetus?.koulutuksenTarkkaAlkamisaika,
+              opetus?.koulutuksenAlkamispaivamaara,
+              opetus?.koulutuksenAlkamiskausi,
+              opetus?.koulutuksenAlkamisvuosi,
             ]}
-            suunniteltuKestoVuodet={toteutus?.metadata?.opetus?.suunniteltuKestoVuodet}
-            suunniteltuKestoKuukaudet={
-              toteutus?.metadata?.opetus?.suunniteltuKestoKuukaudet
-            }
-            opetusaika={toteutus?.metadata?.opetus?.opetusaika}
-            opetustapa={toteutus?.metadata?.opetus?.opetustapa}
-            maksullisuus={[
-              toteutus?.metadata?.opetus?.onkoMaksullinen,
-              toteutus?.metadata?.opetus?.maksunMaara,
-            ]}
-            apuraha={[
-              toteutus?.metadata?.opetus?.onkoStipendia,
-              toteutus?.metadata?.opetus?.stipendinMaara,
-            ]}
+            suunniteltuKestoVuodet={opetus?.suunniteltuKestoVuodet}
+            suunniteltuKestoKuukaudet={opetus?.suunniteltuKestoKuukaudet}
+            opetusaika={opetus?.opetusaika}
+            opetustapa={opetus?.opetustapa}
+            maksullisuus={opetus?.onkoMaksullinen && opetus?.maksunMaara}
+            apuraha={opetus?.onkoStipendia && opetus?.stipendinMaara}
           />
         </Box>
         {jatkuvatHaut?.length + yhteisHaut?.length + erillisHaut?.length > 0 && (
@@ -228,27 +222,9 @@ const Toteutus = () => {
             erillisHaut={erillisHaut}
           />
         )}
-        {muuHaku && (
-          <Box
-            mt={7}
-            style={{ width: '100%' }}
-            display="flex"
-            flexDirection="column"
-            alignItems="center">
-            <Typography variant="h2">{t('toteutus.ilmoittaudu-koulutukseen')}</Typography>
-            <Spacer />
-            <Grid
-              container
-              alignContent="center"
-              justify="center"
-              alignItems="center"
-              xs={12}
-              style={{ maxWidth: '800px' }}>
-              <ToteutusMuuHaku muuHaku={muuHaku} />
-            </Grid>
-          </Box>
-        )}
-        {toteutus?.metadata?.opetus?.lisatiedot.length > 0 && (
+        {toteutus?.hasMuuHaku && <ToteutusHakuMuu oid={toteutus?.oid} />}
+        {toteutus?.hasEiSahkoistaHaku && <ToteutusHakuEiSahkoista oid={toteutus?.oid} />}
+        {opetus?.lisatiedot.length > 0 && (
           <AccordionWithTitle
             titleTranslation="koulutus.lisätietoa"
             data={toteutus.metadata.opetus.lisatiedot.map((lisatieto) => ({
@@ -257,14 +233,13 @@ const Toteutus = () => {
             }))}
           />
         )}
-
         {toteutus?.metadata?.yhteyshenkilot.length > 0 && (
           <Box mt={12} display="flex" flexDirection="column" alignItems="center">
             <Typography variant="h2">{t('toteutus.yhteyshenkilot')}</Typography>
             <Spacer />
             <Box mt={5}>
               <Grid container alignItems="center">
-                {toteutus.metadata.yhteyshenkilot.map((yhteyshenkilo, i) => (
+                {toteutus.metadata.yhteyshenkilot.map((yhteyshenkilo, i, a) => (
                   <React.Fragment key={i}>
                     <Grid item>
                       <Grid container direction="column">
@@ -290,7 +265,7 @@ const Toteutus = () => {
                         </Grid>
                       </Grid>
                     </Grid>
-                    {i + 1 !== toteutus.metadata.yhteyshenkilot.length && (
+                    {i + 1 !== a.length && (
                       <Grid item>
                         <Box
                           mx={9}

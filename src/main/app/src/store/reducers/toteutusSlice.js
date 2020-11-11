@@ -88,12 +88,11 @@ export const selectErillisHaut = (oid) => (state) =>
 export const selectYhteisHaut = (oid) => (state) =>
   selectHakukohteet(state, oid, YHTEISHAKU);
 
+const HAKULOMAKETYYPPI_MUU = 'muu';
+const HAKULOMAKETYYPPI_EI_SAHKOISTA = 'ei sähköistä';
+
 export const selectMuuHaku = (oid) => (state) => {
   const toteutus = selectToteutus(oid)(state);
-  if (!toteutus?.metadata || toteutus.metadata.hakulomaketyyppi !== 'muu') {
-    return null;
-  }
-
   const hakuAuki = isHakuAuki([toteutus.metadata.hakuaika]);
 
   // TODO: SORA-kuvaus - atm. we only get an Id from the API but we cannot do anything with it
@@ -108,11 +107,27 @@ export const selectMuuHaku = (oid) => (state) => {
     ]),
     isHakuAuki: hakuAuki,
     nimi: toteutus.nimi,
-    // TODO: we do not get osoite from the API atm. so just use the first tarjoaja
-    // This should be replaced with osoite when we have it in the API
-    tarjoajaOid: toteutus.tarjoajat[0]?.oid,
-    tarjoajaNimi: toteutus.tarjoajat[0]?.nimi,
+    // TODO: we do not get osoite from the API atm. so just use all the tarjoajat to fetch oppilaitoksenOsat
+    // This should be replaced with just the osoite when we have it in the API
+    tarjoajat: toteutus.tarjoajat,
   };
 };
 
-export const selectToteutus = (oid) => (state) => state.toteutus.toteutukset[oid];
+export const selectEiSahkoistaHaku = (oid) => (state) => {
+  const toteutus = selectToteutus(oid)(state);
+  return {
+    ...pick(toteutus.metadata, ['lisatietoaHakeutumisesta']),
+  };
+};
+
+export const selectToteutus = (oid) => (state) => {
+  const toteutus = state.toteutus.toteutukset[oid];
+  return (
+    toteutus && {
+      ...toteutus,
+      hasMuuHaku: toteutus?.metadata?.hakulomaketyyppi === HAKULOMAKETYYPPI_MUU,
+      hasEiSahkoistaHaku:
+        toteutus?.metadata?.hakulomaketyyppi === HAKULOMAKETYYPPI_EI_SAHKOISTA,
+    }
+  );
+};

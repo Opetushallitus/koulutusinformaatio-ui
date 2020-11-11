@@ -12,7 +12,10 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/styles';
 import { Localizer as l } from '#/src/tools/Utils';
 import { format } from 'date-fns';
-import { TYYPPI_AMM_TUTKINNON_OSA } from '#/src/store/reducers/koulutusSlice';
+import {
+  TYYPPI_AMM_TUTKINNON_OSA,
+  TYYPPI_AMM_OSAAMISALA,
+} from '#/src/store/reducers/koulutusSlice';
 
 const useStyles = makeStyles((theme) => ({
   koulutusInfoGridIcon: {
@@ -23,23 +26,27 @@ const useStyles = makeStyles((theme) => ({
 const suunniteltuKesto = (t, vuosi, kk) => {
   if (!vuosi && !kk) {
     return t('koulutus.ei-kestoa');
-  } else {
-    return [
-      vuosi === '1'
-        ? t('koulutus.kesto-vuosi')
-        : vuosi
-        ? t('koulutus.kesto-vuosia', { vuosi })
-        : null,
-      kk === '1'
-        ? t('koulutus.kesto-kuukausi')
-        : kk
-        ? t('koulutus.kesto-kuukautta', { kk })
-        : null,
-    ].join('\n');
   }
+
+  return [
+    vuosi === 1
+      ? t('koulutus.kesto-vuosi')
+      : vuosi
+      ? t('koulutus.kesto-vuosia', { vuosi })
+      : null,
+    kk === 1
+      ? t('koulutus.kesto-kuukausi')
+      : kk
+      ? t('koulutus.kesto-kuukautta', { kk })
+      : null,
+  ]
+    .filter(Boolean)
+    .join('\n');
 };
 
 const localizeMap = (v) => l.localize(v);
+const hasNimike = (tyyppi) =>
+  tyyppi !== TYYPPI_AMM_TUTKINNON_OSA && tyyppi !== TYYPPI_AMM_OSAAMISALA;
 
 const ToteutusInfoGrid = (props) => {
   const classes = useStyles();
@@ -72,20 +79,12 @@ const ToteutusInfoGrid = (props) => {
     : `${l.localize(aloitus[2])} ${aloitus[3]}`;
   const opetusAikaString = opetusaika?.map(localizeMap).join('\n') ?? '';
   const opetustapaString = opetustapa?.map(localizeMap).join('\n') ?? '';
-  const maksullisuusString = maksullisuus
-    ? maksullisuus[0]
-      ? `${maksullisuus[1]} €`
-      : t('toteutus.ei-maksua')
-    : '';
-  const apurahaString = apuraha
-    ? apuraha[0]
-      ? `${apuraha[1]} €`
-      : t('toteutus.ei-apurahaa')
-    : '';
+  const maksullisuusString = maksullisuus ? `${maksullisuus} €` : t('toteutus.ei-maksua');
+  const apurahaString = apuraha ? `${apuraha} €` : t('toteutus.ei-apurahaa');
 
   const perustiedotData = [];
 
-  if (koulutusTyyppi !== TYYPPI_AMM_TUTKINNON_OSA) {
+  if (hasNimike(koulutusTyyppi)) {
     const currentLanguage = l.getLanguage();
     const nimikeString = nimikkeet
       ? nimikkeet

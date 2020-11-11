@@ -8,9 +8,9 @@ import { getHakutulosToggleProps } from '#/src/store/reducers/hakutulosSliceSele
 import { setSelectedTab } from '#/src/store/reducers/hakutulosSlice';
 import { colors } from '#/src/colors';
 import {
-  SuodatinExpansionPanel,
-  SuodatinExpansionPanelDetails,
-  SuodatinExpansionPanelSummary,
+  SuodatinAccordion,
+  SuodatinAccordionDetails,
+  SuodatinAccordionSummary,
 } from './hakutulosSuodattimet/CustomizedMuiComponents';
 import { ExpandMore } from '@material-ui/icons';
 
@@ -50,11 +50,11 @@ const MobileToggleKoulutusOppilaitos = () => {
   }
 
   return (
-    <SuodatinExpansionPanel style={{ boxShadow: 'none' }} defaultExpanded elevation={0}>
-      <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
+    <SuodatinAccordion style={{ boxShadow: 'none' }} defaultExpanded elevation={0}>
+      <SuodatinAccordionSummary expandIcon={<ExpandMore />}>
         <Typography variant="subtitle1">{t('haku.kategoria')}</Typography>
-      </SuodatinExpansionPanelSummary>
-      <SuodatinExpansionPanelDetails>
+      </SuodatinAccordionSummary>
+      <SuodatinAccordionDetails>
         <ButtonGroup fullWidth>
           <Button
             data-tab="koulutus"
@@ -73,8 +73,8 @@ const MobileToggleKoulutusOppilaitos = () => {
             {t('haku.oppilaitokset')}
           </Button>
         </ButtonGroup>
-      </SuodatinExpansionPanelDetails>
-    </SuodatinExpansionPanel>
+      </SuodatinAccordionDetails>
+    </SuodatinAccordion>
   );
 };
 

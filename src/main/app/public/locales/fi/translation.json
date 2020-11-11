@@ -250,6 +250,7 @@
     "tyyppi-amm": "Ammatillinen tutkinto",
     "tyyppi-amk": "Ammattikorkeakoulu",
     "tyyppi-amm-tutkinnon-osa": "Muu Ammatillinen koulutus",
+    "tyyppi-amm-osaamisala": "Muu Ammatillinen koulutus",
     "tarjonta": "Tutustu tarjontaan",
     "haku-kaynnissa": "Haku käynnissä",
     "katso-jarjestavat": "Katso koulutusta järjestävät oppilaitokset.",
@@ -408,6 +409,7 @@
     "ilmoittaudu-koulutukseen": "Ilmoittaudu koulutukseen",
     "lisatietoa-ilmoittautumisesta": "Lisätietoa ilmoittautumisesta",
     "lisatietoa-valintaperusteista": "Lisätietoa valintaperusteista",
-    "hakijan-terveydentila-ja-toimintakyky": "Hakijan terveydentila ja toimintakyky"
+    "hakijan-terveydentila-ja-toimintakyky": "Hakijan terveydentila ja toimintakyky",
+    "ei-sahkoista-hakua": "Ei sähköistä hakua"
   }
 }

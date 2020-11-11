@@ -19,9 +19,9 @@ import {
 } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   SuodatinCheckbox,
-  SuodatinExpansionPanel,
-  SuodatinExpansionPanelDetails,
-  SuodatinExpansionPanelSummary,
+  SuodatinAccordion,
+  SuodatinAccordionDetails,
+  SuodatinAccordionSummary,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 import SummaryContent from './SummaryContent';
@@ -77,21 +77,21 @@ const KoulutustyyppiSuodatin = ({
   }
 
   return (
-    <SuodatinExpansionPanel
+    <SuodatinAccordion
       {...(summaryHidden && { className: classes.noBoxShadow })}
       elevation={elevation}
       defaultExpanded={expanded}>
       {!summaryHidden && (
-        <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
+        <SuodatinAccordionSummary expandIcon={<ExpandMore />}>
           <SummaryContent
             selectedFiltersStr={checkedKoulutustyypitStr}
             maxCharLengthBeforeChipWithNumber={16}
             filterName={t('haku.koulutustyyppi')}
             displaySelected={displaySelected}
           />
-        </SuodatinExpansionPanelSummary>
+        </SuodatinAccordionSummary>
       )}
-      <SuodatinExpansionPanelDetails {...(summaryHidden && { style: { padding: 0 } })}>
+      <SuodatinAccordionDetails {...(summaryHidden && { style: { padding: 0 } })}>
         <List style={{ width: '100%' }}>
           {koulutustyyppi.map((koulutustyyppiOuter) => {
             const labelId = `educationtype-outerlist-label-${koulutustyyppiOuter[0]}`;
@@ -174,8 +174,8 @@ const KoulutustyyppiSuodatin = ({
             );
           })}
         </List>
-      </SuodatinExpansionPanelDetails>
-    </SuodatinExpansionPanel>
+      </SuodatinAccordionDetails>
+    </SuodatinAccordion>
   );
 };
 

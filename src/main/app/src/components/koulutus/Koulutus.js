@@ -67,21 +67,13 @@ const findEperuste = (koulutus) => (id) =>
 const findTutkinnonOsa = (eperuste) => (id) =>
   _.first(eperuste.tutkinnonOsat.filter((t) => t.id === id));
 
-const findTutkinnonOsaViitteet = (eperuste) => (id) =>
-  _.first(
-    eperuste.suoritustavat.flatMap((t) =>
-      t.tutkinnonOsaViitteet.filter((tv) => tv.id === id)
-    )
-  );
-
-const Koulutus = (props) => {
-  const { urlStore } = useStores();
+const Koulutus = () => {
   const history = useHistory();
   const { draft } = qs.parse(history.location.search);
   const dispatch = useDispatch();
   const classes = useStyles();
   const { oid } = useParams();
-  const { hakuStore } = useStores();
+  const { hakuStore, urlStore } = useStores();
   const { t } = useTranslation();
   const koulutus = useSelector(selectKoulutus(oid), shallowEqual);
   const suositellutKoulutukset = useSelector(
@@ -176,53 +168,61 @@ const Koulutus = (props) => {
           koulutustyyppi={koulutus?.koulutusTyyppi}
           laajuus={[koulutus?.opintojenLaajuus, koulutus?.opintojenLaajuusYksikkö]}
         />
-        {!_.isEmpty(koulutus?.kuvaus) ||
-        koulutus?.suorittaneenOsaaminen ||
-        koulutus?.tyotehtavatJoissaVoiToimia ? (
+        {(!_.isEmpty(koulutus?.kuvaus) ||
+          koulutus?.suorittaneenOsaaminen ||
+          koulutus?.tyotehtavatJoissaVoiToimia) && (
           <HtmlTextBox
             heading={t('koulutus.kuvaus')}
             html={createKoulutusHtml()}
             className={classes.root}
           />
-        ) : null}
+        )}
         {koulutus?.tutkinnonOsat ? (
           <AccordionWithTitle
             titleTranslation="koulutus.kuvaus"
-            data={koulutus?.tutkinnonOsat.map(
-              ({ tutkinnonosaId, tutkinnonosaViite, ePerusteId }) => {
-                const eperuste = findEperuste(koulutus)(ePerusteId);
-                const tutkinnonOsa = findTutkinnonOsa(eperuste)(tutkinnonosaId);
-                const tutkinnonOsaViite = findTutkinnonOsaViitteet(eperuste)(
-                  tutkinnonosaViite
-                );
-                return {
-                  title: `${l.localize(tutkinnonOsa.nimi)}, ${
-                    tutkinnonOsaViite.laajuus
-                  } osp`,
-                  content: (
-                    <>
-                      <span
-                        dangerouslySetInnerHTML={{
-                          __html: createTutkinnonOsaHtml(tutkinnonOsa),
-                        }}
-                      />
-                      <MuiLink
-                        target="_blank"
-                        rel="noopener"
-                        href={urlStore.urls.url(
-                          'eperusteet-service.eperuste.kuvaus',
-                          l.getLanguage(),
-                          ePerusteId,
-                          tutkinnonosaViite
-                        )}>
-                        {t('koulutus.eperuste-linkki')}
-                        <OpenInNewIcon />
-                      </MuiLink>
-                    </>
-                  ),
-                };
-              }
-            )}
+            data={koulutus?.tutkinnonOsat.map((tutkinnonOsa) => {
+              const {
+                tutkinnonosaId,
+                tutkinnonosaViite,
+                ePerusteId,
+                opintojenLaajuus,
+                opintojenLaajuusNumero,
+                opintojenLaajuusyksikko,
+                tutkinnonOsat: nimi,
+              } = tutkinnonOsa;
+              const eperuste = findEperuste(koulutus)(ePerusteId);
+              const title = [
+                `${l.localize(nimi)},`,
+                l.localize(opintojenLaajuus) || opintojenLaajuusNumero,
+                l.localize(opintojenLaajuusyksikko),
+              ].join(' ');
+              const foundTutkinnonOsa = findTutkinnonOsa(eperuste)(tutkinnonosaId);
+
+              return {
+                title,
+                content: (
+                  <>
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: createTutkinnonOsaHtml(foundTutkinnonOsa),
+                      }}
+                    />
+                    <MuiLink
+                      target="_blank"
+                      rel="noopener"
+                      href={urlStore.urls.url(
+                        'eperusteet-service.eperuste.kuvaus',
+                        l.getLanguage(),
+                        ePerusteId,
+                        tutkinnonosaViite
+                      )}>
+                      {t('koulutus.eperuste-linkki')}
+                      <OpenInNewIcon />
+                    </MuiLink>
+                  </>
+                ),
+              };
+            })}
           />
         ) : null}
         <Box width="95%" id="tarjonta">
