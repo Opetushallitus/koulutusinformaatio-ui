@@ -41,7 +41,9 @@ const OpetustapaSuodatin = ({
   const dispatch = useDispatch();
   const apiRequestParams = useSelector(getAPIRequestParams);
   const classes = withStyles();
-  const { sortedOpetustavat, checkedOpetustavat } = useSelector(getOpetustapaFilterProps);
+  const { sortedOpetustavat, checkedOpetustavat, checkedOpetustavatStr } = useSelector(
+    getOpetustapaFilterProps
+  );
 
   const handleCheck = (opetustapaObj) => () => {
     const checkedOpetustapaObj = {
@@ -59,7 +61,6 @@ const OpetustapaSuodatin = ({
       newCheckedOpetustavat.splice(currentIndex, 1);
     }
     const newCheckedOpetustavatStr = newCheckedOpetustavat.map(({ id }) => id).join(',');
-    // debugger;
 
     dispatch(setOpetustapa({ newCheckedOpetustavat }));
 
@@ -79,7 +80,7 @@ const OpetustapaSuodatin = ({
       {!summaryHidden && (
         <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
           <SummaryContent
-            selectedFiltersStr={checkedOpetustavat}
+            selectedFiltersStr={checkedOpetustavatStr}
             maxCharLengthBeforeChipWithNumber={20}
             filterName={t('haku.opetustapa')}
             displaySelected={displaySelected}
