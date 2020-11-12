@@ -30,6 +30,9 @@ const useStyles = makeStyles({
     backgroundColor: colors.white,
     paddingBottom: '100px',
   },
+  rivi: {
+    overflow: 'hidden',
+  },
 });
 
 const Palvelut = observer(() => {
@@ -47,7 +50,7 @@ const Palvelut = observer(() => {
   const Rivi = (props) => {
     return props.rivit.map((rivi) => {
       return (
-        <Grid container key={rivi.map((u) => u.id).join()}>
+        <Grid container className={classes.rivi} key={rivi.map((u) => u.id).join()}>
           <h1 className={classes.header}>{props.otsikko}</h1>
           <Grid container spacing={3}>
             {rivi.map((p) => (
@@ -66,14 +69,8 @@ const Palvelut = observer(() => {
         matches ? classes.spaceOnBorders : classes.smSpaceOnBorders
       )}>
       <Grid container>
-        <Rivi
-          otsikko={t('palvelut.otsikko-muut-palvelut')}
-          rivit={palvelurivit}
-        />
-        <Rivi
-          otsikko={t('palvelut.otsikko-ohjeet-ja-tuki')}
-          rivit={ohjerivit}
-        />
+        <Rivi otsikko={t('palvelut.otsikko-muut-palvelut')} rivit={palvelurivit} />
+        <Rivi otsikko={t('palvelut.otsikko-ohjeet-ja-tuki')} rivit={ohjerivit} />
       </Grid>
     </div>
   );
