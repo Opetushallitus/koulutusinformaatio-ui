@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Link as MuiLink, Typography, Box, makeStyles, Hidden } from '@material-ui/core';
+import { Link as MuiLink, Typography, Box, makeStyles } from '@material-ui/core';
 import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
@@ -131,16 +131,14 @@ const Koulutus = () => {
   ) : (
     <ContentWrapper>
       <Box display="flex" flexDirection="column" alignItems="center">
-        <Hidden smDown>
-          <Box mt={5} ml={9} alignSelf="start">
-            <Murupolku
-              path={[
-                { name: t('koulutus.hakutulos'), link: urls.createHakuUrl },
-                { name: l.localize(koulutus?.tutkintoNimi) },
-              ]}
-            />
-          </Box>
-        </Hidden>
+        <Box width="100%" alignSelf="start">
+          <Murupolku
+            path={[
+              { name: t('koulutus.hakutulos'), link: urls.createHakuUrl },
+              { name: l.localize(koulutus?.tutkintoNimi) },
+            ]}
+          />
+        </Box>
         <Box mt={4}>
           {koulutus?.koulutusAla?.map((ala) => (
             <Typography

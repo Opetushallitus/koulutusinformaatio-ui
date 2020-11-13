@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ContentWrapper from '../common/ContentWrapper';
-import { Box, Typography, makeStyles, Grid, Hidden } from '@material-ui/core';
+import { Box, Typography, makeStyles, Grid } from '@material-ui/core';
 import { HashLink } from 'react-router-hash-link';
 import { colors } from '#/src/colors';
 import ToteutusInfoGrid from './ToteutusInfoGrid';
@@ -133,11 +133,9 @@ const Toteutus = () => {
         flexDirection="column"
         justifyContent="center"
         alignItems="center">
-        <Hidden smDown>
-          <Box mt={5} ml={9} alignSelf="start">
-            <Murupolku path={[{ name: l.localize(toteutus?.nimi) }]} />
-          </Box>
-        </Hidden>
+        <Box width="100%" alignSelf="start">
+          <Murupolku path={[{ name: l.localize(toteutus?.nimi) }]} />
+        </Box>
         <Typography style={{ marginTop: '20px' }} variant="h1">
           {l.localize(toteutus?.nimi)}
         </Typography>
