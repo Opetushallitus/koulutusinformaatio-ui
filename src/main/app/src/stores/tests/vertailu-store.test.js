@@ -120,10 +120,7 @@ describe('VertailuStore.size', () => {
 
 describe('VertailuStore.selectItem', () => {
   it('should select item with given oid', () => {
-    const vertailuStore = new VertailuStore(
-      koulutusSelected,
-      getToteutusPromise
-    );
+    const vertailuStore = new VertailuStore(koulutusSelected, getToteutusPromise);
     vertailuStore.loadVertailuItem = (oid, cb) => cb({ oid: oid });
     vertailuStore.selectItem('1');
     expect(vertailuStore.isOidSelected('1')).toEqual(true);

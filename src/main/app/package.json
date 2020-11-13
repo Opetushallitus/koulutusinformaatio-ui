@@ -3,6 +3,18 @@
   "version": "0.1.0",
   "homepage": "/konfo",
   "private": true,
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
+    "cypress:run": "./node_modules/.bin/cypress run -b chrome",
+    "cypress:run:headless": "npm run cypress:run -- --headless",
+    "cypress:open": "./node_modules/.bin/cypress open -b chrome",
+    "test:integration": "cross-env CYPRESS_RETRIES=2 NODE_ENV=test REACT_APP_CYPRESS=true PORT=3005 ./node_modules/.bin/start-server-and-test start http://localhost:3005 cypress:run:headless",
+    "test:ci": "cross-env CI=true npm run test && cross-env CI=true npm run test:integration",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix"
+  },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
@@ -38,51 +50,6 @@
     "typeface-open-sans": "0.0.75",
     "url-parse": "^1.4.7"
   },
-  "config": {
-    "port": "3005",
-    "backendport": "3006",
-    "testport": "3482",
-    "testbackendport": "4483"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "prettier",
-      "prettier/react",
-      "plugin:cypress/recommended"
-    ],
-    "plugins": [
-      "cypress",
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": [
-        "warn",
-        {
-          "usePrettierrc": true
-        }
-      ]
-    },
-    "env": {
-      "cypress/globals": true
-    }
-  },
-  "scripts": {
-    "build": "react-app-rewired build",
-    "test": "./scripts/test.sh $PORT $BACKEND_PORT",
-    "start-for-start": "react-app-rewired start",
-    "start": "./scripts/start.sh $PORT $BACKEND_PORT",
-    "start-for-test": "cross-env BROWSER=none NODE_ENV=test react-app-rewired start",
-    "start-and-test": "start-test start-for-test $PORT run-test",
-    "run-test": "react-app-rewired test --env=jsdom",
-    "cypress:run": "./node_modules/.bin/cypress run -b chrome",
-    "cypress:run:headless": "npm run cypress:run -- --headless",
-    "cypress:open": "./node_modules/.bin/cypress open -b chrome",
-    "test:e2e": "CYPRESS_RETRIES=2 NODE_ENV=test REACT_APP_CYPRESS=true ./node_modules/.bin/start-server-and-test start http://localhost:3005 cypress:run:headless",
-    "test:ci": "CI=true npm run test:e2e",
-    "lint": "eslint src/",
-    "lint:fix": "eslint src/ --fix"
-  },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/plugin-proposal-decorators": "^7.10.5",
@@ -104,7 +71,6 @@
     "i18next": "^19.3.4",
     "lint-staged": "^10.4.0",
     "prettier": "^2.1.2",
-    "puppeteer": "^1.7.0",
     "react-app-rewired": "2.1.5",
     "react-scripts": "^3.4.3",
     "redux-mock-store": "^1.5.4",
@@ -129,15 +95,33 @@
       "git add"
     ]
   },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "prettier",
+      "prettier/react",
+      "plugin:cypress/recommended"
+    ],
+    "plugins": [
+      "cypress",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "warn",
+        {
+          "usePrettierrc": true
+        }
+      ]
+    },
+    "env": {
+      "cypress/globals": true
+    }
+  },
   "jest": {
     "moduleNameMapper": {
       "^#(.*)$": "<rootDir>$1"
-    },
-    "testPathIgnorePatterns": [
-      "<rootDir>/src/__tests__/mocks",
-      "<rootDir>/src/__tests__/headless",
-      "<rootDir>/src/__tests__/stores/haku-store*"
-    ]
+    }
   },
   "browserslist": {
     "production": [

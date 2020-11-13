@@ -9,6 +9,7 @@ const useStyles = makeStyles(() => ({
   heading: {
     fontWeight: 700,
     color: colors.green,
+    cursor: 'pointer',
   },
   icon: {
     position: 'absolute',
@@ -22,7 +23,11 @@ export const AccordionText = ({ text, title }) => {
 
   return (
     <>
-      <Typography className={classes.heading} onClick={handleChange}>
+      <Typography
+        className={classes.heading}
+        onClick={handleChange}
+        aria-expanded={isOpen}
+        role={'button'}>
         {title}
         {isOpen ? (
           <ArrowDropUp className={classes.icon} />

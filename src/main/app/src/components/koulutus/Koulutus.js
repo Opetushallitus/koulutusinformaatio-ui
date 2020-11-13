@@ -152,7 +152,7 @@ const Koulutus = () => {
           ))}
         </Box>
         <Box mt={1}>
-          <Typography variant="h1" component="h2">
+          <Typography variant="h1" component="h1">
             {l.localize(koulutus?.tutkintoNimi)}
           </Typography>
         </Box>

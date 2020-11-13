@@ -35,9 +35,7 @@ const Module = ({ module }) => {
     const gridData = data ? JSON.parse(data) : [];
     return <InfoGrid heading="Perustiedot" id={id} gridData={gridData} />;
   } else if (module.type === 'uutiset') {
-    const { name, id, showImage, greenText } = contentfulStore.data.uutiset[
-      module.id
-    ];
+    const { name, id, showImage, greenText } = contentfulStore.data.uutiset[module.id];
 
     return (
       <InfoCardGrid
@@ -88,11 +86,7 @@ const SivuKooste = ({ id }) => {
 
   return (
     <React.Fragment>
-      <main
-        id="main-content"
-        className="center-content"
-        style={pads}
-        data-cy={'sivu'}>
+      <main id="main-content" className="center-content" style={pads}>
         <Box display="flex" flexDirection="column" alignItems="center">
           <Typography variant="h1">{kooste.name}</Typography>
 
