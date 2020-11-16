@@ -56,27 +56,35 @@ export const MurupolkuFragment = (props) => {
   const classes = useStyles(props);
 
   return (
-    <LocalizedLink
-      {...(link
-        ? {
-            component: RouterLink,
-            to: link,
+    <span>
+      {!isHome ? (
+        <ArrowForwardIosIcon aria-hidden="true" className={classes.arrow} />
+      ) : (
+        ''
+      )}
+      <LocalizedLink
+        {...(link
+          ? {
+              component: RouterLink,
+              to: link,
+            }
+          : {
+              href: isLast ? window.location.href : undefined,
+            })}
+        role={isCollapsedPart ? 'button' : 'link'}
+        className={classes.link}
+        onClick={() => {
+          if (isCollapsedPart) {
+            openDrawer();
+          } else if (link) {
+            closeDrawer();
           }
-        : {
-            href: isLast ? window.location.href : undefined,
-          })}
-      className={classes.link}
-      onClick={() => {
-        if (isCollapsedPart) {
-          openDrawer();
-        } else if (link) {
-          closeDrawer();
-        }
-      }}
-      aria-current={isLast ? 'page' : undefined}>
-      {isHome ? <HomeOutlinedIcon className={classes.home} /> : ''}
-      {!isHome ? <ArrowForwardIosIcon className={classes.arrow} /> : ''}
-      {name}
-    </LocalizedLink>
+        }}
+        aria-current={isLast ? 'location' : undefined}>
+        {isHome ? <HomeOutlinedIcon aria-hidden="true" className={classes.home} /> : ''}
+
+        {name}
+      </LocalizedLink>
+    </span>
   );
 };
