@@ -2,10 +2,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Box,
+  Drawer,
   Grid,
   IconButton,
   makeStyles,
-  SwipeableDrawer,
   Toolbar,
   Typography,
 } from '@material-ui/core';
@@ -21,14 +21,20 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     height: '100%',
     width: '100%',
+    minWidth: 0,
   },
   drawerContainer: {
     overflowY: 'auto',
     padding: 0,
+    minWidth: 0,
   },
   drawerItemWrapper: {
     padding: theme.spacing(2),
     borderBottom: `1px solid ${colors.lightGrey}`,
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    paddingRight: '10px',
   },
 }));
 
@@ -36,10 +42,9 @@ export const MurupolkuDrawer = ({ path, onClose, isOpen }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   return (
-    <SwipeableDrawer
+    <Drawer
       classes={{ paperAnchorBottom: classes.drawer }}
       anchor="bottom"
-      onOpen={() => {}}
       onClose={onClose}
       open={isOpen}>
       <Box display="flex" flexDirection="column">
@@ -72,6 +77,6 @@ export const MurupolkuDrawer = ({ path, onClose, isOpen }) => {
           ))}
         </Box>
       </Box>
-    </SwipeableDrawer>
+    </Drawer>
   );
 };
