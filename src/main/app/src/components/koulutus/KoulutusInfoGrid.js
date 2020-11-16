@@ -6,10 +6,7 @@ import TimelapseIcon from '@material-ui/icons/Timelapse';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { Localizer as l } from '#/src/tools/Utils';
-import {
-  TYYPPI_AMM_TUTKINNON_OSA,
-  TYYPPI_AMM_OSAAMISALA,
-} from '#/src/store/reducers/koulutusSlice';
+import { TYYPPI_AMM_TUTKINNON_OSA, TYYPPI_AMM_OSAAMISALA } from '#/src/constants';
 
 const useStyles = makeStyles((theme) => ({
   koulutusInfoGridIcon: {

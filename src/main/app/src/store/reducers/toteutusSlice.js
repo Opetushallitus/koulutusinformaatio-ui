@@ -59,7 +59,7 @@ export const fetchToteutus = (oid) => async (dispatch) => {
   }
 };
 
-const isHakuAuki = (hakuajat) =>
+export const isHakuAuki = (hakuajat) =>
   hakuajat.some((hakuaika) => {
     const now = new Date();
     const isAfterStart = !hakuaika.alkaa || isAfter(now, new Date(hakuaika.alkaa));

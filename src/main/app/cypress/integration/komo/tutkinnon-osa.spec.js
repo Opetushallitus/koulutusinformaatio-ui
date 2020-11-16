@@ -7,8 +7,8 @@ describe('Tutkinnon osa KOMO', function () {
     // Wait for everything to load
     cy.findByRole('progressbar').should('not.exist');
     cy.get('h1').contains('(testi) Hevosten hyvinvoinnista huolehtiminen');
-    cy.contains('Muu Ammatillinen koulutus');
-    cy.contains('25 + 20 osaamispistettä');
+    cy.findByText('Muu Ammatillinen koulutus');
+    cy.findByText('25 + 20 osaamispistettä');
     cy.get('[aria-expanded=false]').contains('Hevosten hyvinvoinnista');
   });
 

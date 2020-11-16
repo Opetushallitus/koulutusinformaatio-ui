@@ -7,13 +7,14 @@ import {
   getEperusteKuvaus,
 } from '#/src/api/konfoApi';
 import _ from 'lodash';
+import {
+  TYYPPI_AMM,
+  TYYPPI_AMM_TUTKINNON_OSA,
+  TYYPPI_AMM_OSAAMISALA,
+} from '#/src/constants';
 
 const IDLE_STATUS = 'idle';
 const LOADING_STATUS = 'loading';
-
-export const TYYPPI_AMM = 'amm';
-export const TYYPPI_AMM_TUTKINNON_OSA = 'amm-tutkinnon-osa';
-export const TYYPPI_AMM_OSAAMISALA = 'amm-osaamisala';
 
 export const initialState = {
   koulutusStatus: IDLE_STATUS,

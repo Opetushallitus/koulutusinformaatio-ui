@@ -24,3 +24,7 @@ export const LANG_NAME_BY_CODE = {
   sv: 'ruotsi',
   en: 'englanti',
 };
+
+export const TYYPPI_AMM = 'amm';
+export const TYYPPI_AMM_TUTKINNON_OSA = 'amm-tutkinnon-osa';
+export const TYYPPI_AMM_OSAAMISALA = 'amm-osaamisala';

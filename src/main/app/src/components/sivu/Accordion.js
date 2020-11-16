@@ -1,5 +1,8 @@
-import { withStyles } from '@material-ui/core';
-import { Accordion as MuiAccordion, AccordionSummary } from '@material-ui/core';
+import {
+  Accordion as MuiAccordion,
+  AccordionSummary,
+  withStyles,
+} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React from 'react';

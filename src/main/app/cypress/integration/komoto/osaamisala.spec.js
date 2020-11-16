@@ -9,9 +9,13 @@ describe('Osaamisala KOMOTO', function () {
     // Wait for everything to load
     cy.findByRole('progressbar').should('not.exist');
     cy.get('h1').contains('Hevosten kengittämisen osaamisala');
-    cy.contains('100 osaamispistettä');
+    cy.findByText('100 osaamispistettä');
     cy.get('h2').contains('Ilmoittaudu koulutukseen');
-    cy.get('a[href="http://www.google.fi"]').contains('Ilmoittaudu koulutukseen');
+    cy.findByRole('link', { name: /ilmoittaudu koulutukseen/i }).should(
+      'have.attr',
+      'href',
+      'http://www.google.fi'
+    );
   });
 
   it('Tutkinnon osa KOMO kuvaus accordions work', function () {

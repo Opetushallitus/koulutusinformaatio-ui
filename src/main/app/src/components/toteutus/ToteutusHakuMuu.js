@@ -1,5 +1,6 @@
 import { getOppilaitosOsa } from '#/src/api/konfoApi';
 import { colors } from '#/src/colors';
+import { AccordionText } from '#/src/components/common/AccordionText';
 import LoadingCircle from '#/src/components/common/LoadingCircle';
 import Spacer from '#/src/components/common/Spacer';
 import { selectMuuHaku } from '#/src/store/reducers/toteutusSlice';
@@ -10,7 +11,6 @@ import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useSelector } from 'react-redux';
-import { AccordionText } from '../common/AccordionText';
 
 const useStyles = makeStyles((theme) => ({
   hakuName: {
@@ -56,6 +56,7 @@ export const ToteutusHakuMuu = ({ oid }) => {
 
   return (
     <Box
+      id="haut"
       mt={7}
       style={{ width: '100%' }}
       display="flex"

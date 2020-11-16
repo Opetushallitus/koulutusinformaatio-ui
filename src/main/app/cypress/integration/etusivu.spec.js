@@ -5,6 +5,6 @@ describe('Etusivu', function () {
     cy.visit('/');
 
     cy.get('a[href*="/sivu/ammatillinen-koulutus"]').click();
-    cy.get('h1').first().contains('Ammatillinen koulutus');
+    cy.get('h1').contains('Ammatillinen koulutus');
   });
 });

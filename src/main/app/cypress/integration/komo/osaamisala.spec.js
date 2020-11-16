@@ -7,8 +7,8 @@ describe('Osaamisala KOMO', function () {
     // Wait for everything to load
     cy.findByRole('progressbar').should('not.exist');
     cy.get('h1').contains('Hevosten kengittämisen osaamisala');
-    cy.contains('Muu Ammatillinen koulutus');
-    cy.contains('100 osaamispistettä');
+    cy.findByText('Muu Ammatillinen koulutus');
+    cy.findByText('100 osaamispistettä');
     cy.get('h3').contains('Tutkinnon suorittaneen osaaminen');
   });
 });

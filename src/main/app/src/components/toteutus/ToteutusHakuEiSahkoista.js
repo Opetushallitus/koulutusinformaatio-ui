@@ -58,7 +58,7 @@ export const ToteutusHakuEiSahkoista = ({ oid }) => {
             </Grid>
             <Grid item>
               <Typography variant="body1" component="div">
-                {ReactHtmlParser(l.localize(eiSahkoistaData.lisatietoaHakeutumisesta))}
+                {ReactHtmlParser(l.localize(eiSahkoistaData?.lisatietoaHakeutumisesta))}
               </Typography>
             </Grid>
           </Grid>
