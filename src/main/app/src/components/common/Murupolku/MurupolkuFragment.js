@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
@@ -17,30 +17,38 @@ const useStyles = makeStyles((theme) => ({
   arrow: {
     display: 'inline',
     color: colors.lightGrey,
-    marginLeft: '18px',
-    marginRight: '18px',
+    marginLeft: '16px',
+    marginRight: '16px',
     fontSize: '12px',
   },
-  mobileItemWrapper: {
-    padding: theme.spacing(2),
-    borderBottom: `1px solid ${colors.lightGrey}`,
-  },
-  link: ({ isLast, link }) => ({
+  link: ({ isLast, isHome, link }) => ({
     ...theme.typography.body1,
     display: 'inline',
     cursor: 'default',
     '&:hover': {
       textDecoration: 'none',
     },
-    ...(link != null && {
+    ...(link && {
       cursor: 'pointer',
     }),
-    ...(isLast && {
-      cursor: 'pointer',
-      fontWeight: 600,
-      color: colors.green,
-    }),
+    ...(isLast &&
+      !isHome && {
+        cursor: 'pointer',
+        fontWeight: 600,
+        color: colors.green,
+      }),
   }),
+  collapsedPart: {
+    ...theme.typography.body1,
+    cursor: 'pointer',
+    border: `1px solid ${colors.lightGrey}`,
+    padding: '2px 12px',
+    lineHeight: '24px',
+    minWidth: 0,
+    '&:hover': {
+      borderColor: colors.green,
+    },
+  },
 }));
 
 export const MurupolkuFragment = (props) => {
@@ -62,29 +70,27 @@ export const MurupolkuFragment = (props) => {
       ) : (
         ''
       )}
-      <LocalizedLink
-        {...(link
-          ? {
-              component: RouterLink,
-              to: link,
-            }
-          : {
-              href: isLast ? window.location.href : undefined,
-            })}
-        role={isCollapsedPart ? 'button' : 'link'}
-        className={classes.link}
-        onClick={() => {
-          if (isCollapsedPart) {
-            openDrawer();
-          } else if (link) {
-            closeDrawer();
-          }
-        }}
-        aria-current={isLast ? 'location' : undefined}>
-        {isHome ? <HomeOutlinedIcon aria-hidden="true" className={classes.home} /> : ''}
-
-        {name}
-      </LocalizedLink>
+      {isCollapsedPart ? (
+        <Button className={classes.collapsedPart} onClick={openDrawer}>
+          {name}
+        </Button>
+      ) : (
+        <LocalizedLink
+          {...(link
+            ? {
+                component: RouterLink,
+                to: link,
+              }
+            : {
+                href: isLast ? window.location.href : undefined,
+              })}
+          className={classes.link}
+          onClick={closeDrawer}
+          aria-current={isLast ? 'location' : undefined}>
+          {isHome ? <HomeOutlinedIcon aria-hidden="true" className={classes.home} /> : ''}
+          {name}
+        </LocalizedLink>
+      )}
     </span>
   );
 };

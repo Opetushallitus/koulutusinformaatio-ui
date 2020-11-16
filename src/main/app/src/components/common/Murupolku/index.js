@@ -6,11 +6,11 @@ import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import { MurupolkuDrawer } from './MurupolkuDrawer';
 import { MurupolkuFragment } from './MurupolkuFragment';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   breadcrumb: {
     display: 'flex',
-    marginLeft: '0',
-    paddingLeft: '0',
+    paddingTop: 0,
+    paddingLeft: 0,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
@@ -31,7 +31,7 @@ const useStyles = makeStyles(() => ({
 
 const useCollapsingPath = (path) => {
   const theme = useTheme();
-  const isNarrow = useMediaQuery(theme.breakpoints.down('md'));
+  const isNarrow = useMediaQuery(theme.breakpoints.down('sm'));
 
   if (isNarrow && path.length > 2) {
     return [_.first(path), { name: '...', isCollapsedPart: true }, _.last(path)];

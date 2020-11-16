@@ -15,6 +15,7 @@ import { MurupolkuFragment } from './MurupolkuFragment';
 
 const useStyles = makeStyles((theme) => ({
   drawerToolbar: {
+    ...theme.mixins.toolbar,
     color: colors.white,
     backgroundColor: theme.palette.primary.main,
   },
