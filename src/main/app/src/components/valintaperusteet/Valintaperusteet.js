@@ -21,6 +21,8 @@ import Sora from '#/src/components/valintaperusteet/Sora';
 import Sisallysluottelo from '#/src/components/valintaperusteet/Sisallysluettelo';
 import { isEmpty, concat } from 'lodash';
 import Paluu from '#/src/components/valintaperusteet/Paluu';
+import { useSelector } from 'react-redux';
+import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -91,6 +93,7 @@ const Valintaperusteet = () => {
   const [hakukohde, setHakukohde] = useState();
   const [toteutus, setToteutus] = useState();
   const [haku, setHaku] = useState();
+  const hakuUrl = useSelector(getHakuUrl);
 
   useEffect(() => {
     async function getData() {
@@ -125,7 +128,7 @@ const Valintaperusteet = () => {
       <Row>
         <Murupolku
           path={[
-            { name: t('koulutus.hakutulos'), link: urls.createHakuUrl },
+            { name: t('koulutus.hakutulos'), link: hakuUrl.url },
             { name: l.localize(valintaperuste?.nimi) },
           ]}
         />
