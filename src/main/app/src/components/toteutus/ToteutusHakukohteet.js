@@ -77,6 +77,11 @@ const HakuCardGrid = (props) => {
                             {l.localize(haku.hakulomakeKuvaus)}
                           </Typography>
                         </Grid>
+                        <Grid item>
+                          <Typography variant="body1" noWrap>
+                            {l.localize(haku.jarjestyspaikka?.nimi)}
+                          </Typography>
+                        </Grid>
                       </Grid>
                     </Grid>
                     <Grid item>
