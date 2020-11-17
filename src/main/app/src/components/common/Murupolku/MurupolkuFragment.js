@@ -30,12 +30,11 @@ const useStyles = makeStyles((theme) => ({
     },
     ...(link && {
       cursor: 'pointer',
+      color: colors.green,
     }),
     ...(isLast &&
       !isHome && {
-        cursor: 'pointer',
         fontWeight: 600,
-        color: colors.green,
       }),
   }),
   collapsedPart: {
