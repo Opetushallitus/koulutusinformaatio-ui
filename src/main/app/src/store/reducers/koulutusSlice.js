@@ -7,11 +7,7 @@ import {
   getEperusteKuvaus,
 } from '#/src/api/konfoApi';
 import _ from 'lodash';
-import {
-  TYYPPI_AMM,
-  TYYPPI_AMM_TUTKINNON_OSA,
-  TYYPPI_AMM_OSAAMISALA,
-} from '#/src/constants';
+import { KOULUTUS_TYYPPI } from '#/src/constants';
 
 const IDLE_STATUS = 'idle';
 const LOADING_STATUS = 'loading';
@@ -112,12 +108,13 @@ export const fetchKoulutus = (oid, draft) => async (dispatch) => {
     dispatch(fetchKoulutusStart());
     const koulutusData = await getKoulutus(oid, draft);
     if (
-      (koulutusData?.koulutustyyppi === TYYPPI_AMM && koulutusData.ePerusteId) ||
-      (koulutusData?.koulutustyyppi === TYYPPI_AMM_OSAAMISALA && koulutusData.ePerusteId)
+      (koulutusData?.koulutustyyppi === KOULUTUS_TYYPPI.AMM && koulutusData.ePerusteId) ||
+      (koulutusData?.koulutustyyppi === KOULUTUS_TYYPPI.AMM_OSAAMISALA &&
+        koulutusData.ePerusteId)
     ) {
       const koulutusKuvausData = await getKoulutusKuvaus(koulutusData.ePerusteId);
       _.set(koulutusData, 'metadata.kuvaus', koulutusKuvausData);
-    } else if (koulutusData?.koulutustyyppi === TYYPPI_AMM_TUTKINNON_OSA) {
+    } else if (koulutusData?.koulutustyyppi === KOULUTUS_TYYPPI.AMM_TUTKINNON_OSA) {
       const tutkinnonOsat = koulutusData?.metadata?.tutkinnonOsat ?? [];
       const eperusteet = _.uniq(tutkinnonOsat.map((t) => t.ePerusteId));
 

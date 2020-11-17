@@ -175,11 +175,18 @@ const Toteutus = () => {
             apuraha={opetus?.onkoStipendia && opetus?.stipendinMaara}
           />
         </Box>
-        {/* TODO: What to show for open muuhaku? */}
-        {jatkuvatHaut?.length + yhteisHaut?.length + erillisHaut?.length > 0 && (
+        {toteutus?.isHakuAuki && (
           <HakuKaynnissaCard
-            title={t('toteutus.haku-kaynnisa')}
-            text={t('toteutus.katso-hakukohteet')}
+            title={
+              toteutus.isHakuAuki === 'hakukohde'
+                ? t('toteutus.haku-kaynnissa')
+                : t('toteutus.ilmoittautuminen-kaynnissa')
+            }
+            text={
+              toteutus.isHakuAuki === 'hakukohde'
+                ? t('toteutus.katso-hakukohteet')
+                : t('toteutus.katso-ilmoittautumisen-ohjeet')
+            }
             link={
               <HashLink
                 to="#haut"
@@ -188,7 +195,11 @@ const Toteutus = () => {
                 style={{ textDecoration: 'none' }}
               />
             }
-            buttonText={t('toteutus.nayta-hakukohteet')}
+            buttonText={
+              toteutus.isHakuAuki === 'hakukohde'
+                ? t('toteutus.nayta-hakukohteet')
+                : t('toteutus.nayta-ohjeet')
+            }
           />
         )}
         {toteutus?.metadata?.kuvaus && (

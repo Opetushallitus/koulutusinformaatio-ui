@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { HAKULOMAKE_TYYPPI } from '#/src/constants';
 import { getToteutus } from '#/src/api/konfoApi';
 import { isBefore, isAfter } from 'date-fns';
 import pick from 'lodash/pick';
@@ -94,9 +95,6 @@ export const selectHakukohteet = (oid) => (state) => {
   };
 };
 
-const HAKULOMAKETYYPPI_MUU = 'muu';
-const HAKULOMAKETYYPPI_EI_SAHKOISTA = 'ei sähköistä';
-
 export const selectMuuHaku = (oid) => (state) => {
   const toteutus = selectToteutus(oid)(state);
   const hakuAuki = isHakuAuki([toteutus.metadata.hakuaika]);
@@ -127,11 +125,11 @@ export const selectEiSahkoistaHaku = (oid) => (state) => {
 };
 
 const isAnyHakuAuki = (toteutus) => {
-  if (toteutus?.metadata?.hakulomaketyyppi === HAKULOMAKETYYPPI_EI_SAHKOISTA) {
-    return false;
+  if (toteutus?.metadata?.hakulomaketyyppi === HAKULOMAKE_TYYPPI.EI_SAHKOISTA) {
+    return null;
   }
-  if (toteutus?.metadata?.hakulomaketyyppi === HAKULOMAKETYYPPI_MUU) {
-    return isHakuAuki([toteutus.metadata.hakuaika]);
+  if (toteutus?.metadata?.hakulomaketyyppi === HAKULOMAKE_TYYPPI.MUU) {
+    return isHakuAuki([toteutus.metadata.hakuaika]) ? 'ilmoittautuminen' : null;
   }
 
   const hakuKohdeAuki = toteutus.hakutiedot
@@ -139,7 +137,7 @@ const isAnyHakuAuki = (toteutus) => {
     .flat()
     .some((hakukohde) => isHakuAuki(hakukohde.hakuajat));
 
-  return hakuKohdeAuki;
+  return hakuKohdeAuki ? 'hakukohde' : null;
 };
 
 export const selectToteutus = (oid) => (state) => {
@@ -147,9 +145,9 @@ export const selectToteutus = (oid) => (state) => {
   return (
     toteutus && {
       ...toteutus,
-      hasMuuHaku: toteutus?.metadata?.hakulomaketyyppi === HAKULOMAKETYYPPI_MUU,
+      hasMuuHaku: toteutus?.metadata?.hakulomaketyyppi === HAKULOMAKE_TYYPPI.MUU,
       hasEiSahkoistaHaku:
-        toteutus?.metadata?.hakulomaketyyppi === HAKULOMAKETYYPPI_EI_SAHKOISTA,
+        toteutus?.metadata?.hakulomaketyyppi === HAKULOMAKE_TYYPPI.EI_SAHKOISTA,
       isHakuAuki: isAnyHakuAuki(toteutus),
     }
   );
