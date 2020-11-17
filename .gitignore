@@ -29,7 +29,6 @@ yarn-error.log*
 etc/
 node/
 target/
-package-lock.json
 
 src/main/app/*.png
 src/main/app/.vscode/
