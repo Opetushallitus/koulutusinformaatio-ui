@@ -138,7 +138,7 @@ const Koulutus = (props) => {
         <Box width="100%" alignSelf="start">
           <Murupolku
             path={[
-              { name: t('koulutus.hakutulos'), link: hakuUrl.url },
+              { name: t('haku.otsikko'), link: hakuUrl.url },
               { name: l.localize(koulutus?.tutkintoNimi) },
             ]}
           />

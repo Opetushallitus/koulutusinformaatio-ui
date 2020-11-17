@@ -128,7 +128,7 @@ const Valintaperusteet = () => {
       <Row>
         <Murupolku
           path={[
-            { name: t('koulutus.hakutulos'), link: hakuUrl.url },
+            { name: t('haku.otsikko'), link: hakuUrl.url },
             { name: l.localize(valintaperuste?.nimi) },
           ]}
         />
