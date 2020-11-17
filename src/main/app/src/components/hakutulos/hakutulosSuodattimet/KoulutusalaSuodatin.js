@@ -176,6 +176,7 @@ const KoulutusalaSuodatin = ({
     <SuodatinExpansionPanel
       {...(summaryHidden && { className: classes.noBoxShadow })}
       elevation={elevation}
+      data-cy="koulutusalat-filter"
       defaultExpanded={expanded}>
       {!summaryHidden && (
         <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>

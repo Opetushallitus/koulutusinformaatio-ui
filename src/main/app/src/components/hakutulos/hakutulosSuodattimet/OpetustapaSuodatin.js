@@ -76,6 +76,7 @@ const OpetustapaSuodatin = ({
     <SuodatinExpansionPanel
       {...(summaryHidden && { className: classes.noBoxShadow })}
       elevation={elevation}
+      data-cy="opetustapa-filter"
       defaultExpanded={expanded}>
       {!summaryHidden && (
         <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
@@ -90,7 +91,7 @@ const OpetustapaSuodatin = ({
       <SuodatinExpansionPanelDetails {...(summaryHidden && { style: { padding: 0 } })}>
         <List style={{ width: '100%' }}>
           {sortedOpetustavat.map((opetustapaArr) => {
-            const labelId = `language-list-label-${opetustapaArr[0]}`;
+            const labelId = `opetustapa-filter-${opetustapaArr[0]}`;
             return (
               <ListItem
                 key={opetustapaArr[0]}
@@ -106,6 +107,7 @@ const OpetustapaSuodatin = ({
                     }
                     tabIndex={-1}
                     disableRipple
+                    inputProps={{ 'aria-labelledby': labelId }}
                   />
                 </ListItemIcon>
                 <SuodatinListItemText

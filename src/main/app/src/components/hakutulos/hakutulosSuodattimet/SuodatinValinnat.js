@@ -84,6 +84,7 @@ const SuodatinValinnat = () => {
     return entry[1].map((item) => (
       <Chip
         size="small"
+        data-cy={`chip-${item?.id}`}
         key={`chip_${item.id}`}
         classes={{
           root: classes.chipRoot,
