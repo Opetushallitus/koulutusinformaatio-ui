@@ -72,8 +72,8 @@ const isHakuEndInFuture = (hakuajat) => {
   return hakuajat.some((aika) => !aika.paattyy || isBefore(now, new Date(aika.paattyy)));
 };
 
-const selectHakukohteet = (state, oid, type) =>
-  state.toteutus.toteutukset[oid]?.hakutiedot
+const getHakukohteetWithType = (toteutus, type) =>
+  toteutus.hakutiedot
     ?.filter((hakutieto) => hakutieto.hakutapa.nimi.fi === type)
     .map((hakutieto) => hakutieto.hakukohteet)
     .flat()
@@ -81,12 +81,18 @@ const selectHakukohteet = (state, oid, type) =>
     .map((hakukohde) => ({ ...hakukohde, isHakuAuki: isHakuAuki(hakukohde.hakuajat) }));
 
 export const selectLoading = (state) => state.toteutus.status === LOADING_STATUS;
-export const selectJatkuvatHaut = (oid) => (state) =>
-  selectHakukohteet(state, oid, JATKUVAHAKU);
-export const selectErillisHaut = (oid) => (state) =>
-  selectHakukohteet(state, oid, ERILLISHAKU);
-export const selectYhteisHaut = (oid) => (state) =>
-  selectHakukohteet(state, oid, YHTEISHAKU);
+export const selectHakukohteet = (oid) => (state) => {
+  const toteutus = selectToteutus(oid)(state);
+  if (!toteutus || toteutus.hasMuuHaku || toteutus.hasEiSahkoistaHaku) {
+    return {};
+  }
+
+  return {
+    jatkuvatHaut: getHakukohteetWithType(toteutus, JATKUVAHAKU),
+    erillisHaut: getHakukohteetWithType(toteutus, ERILLISHAKU),
+    yhteisHaut: getHakukohteetWithType(toteutus, YHTEISHAKU),
+  };
+};
 
 const HAKULOMAKETYYPPI_MUU = 'muu';
 const HAKULOMAKETYYPPI_EI_SAHKOISTA = 'ei sähköistä';
@@ -120,6 +126,22 @@ export const selectEiSahkoistaHaku = (oid) => (state) => {
   };
 };
 
+const isAnyHakuAuki = (toteutus) => {
+  if (toteutus?.metadata?.hakulomaketyyppi === HAKULOMAKETYYPPI_EI_SAHKOISTA) {
+    return false;
+  }
+  if (toteutus?.metadata?.hakulomaketyyppi === HAKULOMAKETYYPPI_MUU) {
+    return isHakuAuki([toteutus.metadata.hakuaika]);
+  }
+
+  const hakuKohdeAuki = toteutus.hakutiedot
+    ?.map((hakutieto) => hakutieto.hakukohteet)
+    .flat()
+    .some((hakukohde) => isHakuAuki(hakukohde.hakuajat));
+
+  return hakuKohdeAuki;
+};
+
 export const selectToteutus = (oid) => (state) => {
   const toteutus = state.toteutus.toteutukset[oid];
   return (
@@ -128,6 +150,7 @@ export const selectToteutus = (oid) => (state) => {
       hasMuuHaku: toteutus?.metadata?.hakulomaketyyppi === HAKULOMAKETYYPPI_MUU,
       hasEiSahkoistaHaku:
         toteutus?.metadata?.hakulomaketyyppi === HAKULOMAKETYYPPI_EI_SAHKOISTA,
+      isHakuAuki: isAnyHakuAuki(toteutus),
     }
   );
 };

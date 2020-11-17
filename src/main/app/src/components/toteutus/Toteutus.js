@@ -15,14 +15,12 @@ import { Localizer as l } from '#/src/tools/Utils';
 import HakuKaynnissaCard from '#/src/components/koulutus/HakuKaynnissaCard';
 import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import isEmpty from 'lodash/isEmpty';
+import _ from 'lodash';
 import {
   fetchToteutus,
   selectLoading as selectToteutusLoading,
   selectToteutus,
-  selectJatkuvatHaut,
-  selectYhteisHaut,
-  selectErillisHaut,
+  selectHakukohteet,
 } from '#/src/store/reducers/toteutusSlice';
 import {
   fetchKoulutusWithRelatedData,
@@ -97,9 +95,10 @@ const Toteutus = () => {
   const toteutus = useSelector(selectToteutus(oid), shallowEqual);
   const koulutusOid = toteutus?.koulutusOid;
   const koulutus = useSelector(selectKoulutus(koulutusOid), shallowEqual);
-  const jatkuvatHaut = useSelector(selectJatkuvatHaut(oid));
-  const yhteisHaut = useSelector(selectYhteisHaut(oid));
-  const erillisHaut = useSelector(selectErillisHaut(oid));
+  const { jatkuvatHaut, yhteisHaut, erillisHaut } = useSelector(
+    selectHakukohteet(oid),
+    shallowEqual
+  );
   const koulutusLoading = useSelector(selectKoulutusLoading);
   const toteutusLoading = useSelector(selectToteutusLoading);
 
@@ -176,6 +175,7 @@ const Toteutus = () => {
             apuraha={opetus?.onkoStipendia && opetus?.stipendinMaara}
           />
         </Box>
+        {/* TODO: What to show for open muuhaku? */}
         {jatkuvatHaut?.length + yhteisHaut?.length + erillisHaut?.length > 0 && (
           <HakuKaynnissaCard
             title={t('toteutus.haku-kaynnisa')}
@@ -203,7 +203,7 @@ const Toteutus = () => {
             titleTranslation="koulutus.osaamisalat"
             data={toteutus.metadata.osaamisalat.map((osaamisala) => ({
               title: l.localize(osaamisala.koodi.nimi),
-              content: !isEmpty(osaamisala.linkki) && !isEmpty(osaamisala.otsikko) && (
+              content: !_.isEmpty(osaamisala.linkki) && !_.isEmpty(osaamisala.otsikko) && (
                 <LocalizedLink
                   target="_blank"
                   rel="noopener"
