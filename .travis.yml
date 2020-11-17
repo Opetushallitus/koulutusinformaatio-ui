@@ -23,7 +23,9 @@ matrix:
 
       before_install:
         - cd src/main/app
-        - npm i
+        
+      install:
+        - npm ci --no-audit --prefer-offline
 
       script:
         - npm run test:ci

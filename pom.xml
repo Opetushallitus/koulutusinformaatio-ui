@@ -101,10 +101,13 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>npm install</id>
+                        <id>npm ci</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
+                        <configuration>
+                            <arguments>ci --no-audit --prefer-offline</arguments>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>Build frontend</id>
@@ -118,7 +121,7 @@
                 </executions>
                 <configuration>
                     <nodeVersion>v13.12.0</nodeVersion>
-                    <npmVersion>3.10.10</npmVersion>
+                    <npmVersion>6.1.0</npmVersion>
                     <failOnError>true</failOnError>
                     <workingDirectory>src/main/app</workingDirectory>
                 </configuration>
