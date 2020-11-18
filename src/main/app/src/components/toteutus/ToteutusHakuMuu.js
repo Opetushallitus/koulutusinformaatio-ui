@@ -145,6 +145,7 @@ export const ToteutusHakuMuu = ({ oid }) => {
                   variant="contained"
                   size="large"
                   color="primary"
+                  target="_blank"
                   href={l.localize(muuHaku.hakulomakeLinkki)}
                   disabled={!muuHaku.isHakuAuki}>
                   <Typography style={{ color: colors.white }} variant="body1">

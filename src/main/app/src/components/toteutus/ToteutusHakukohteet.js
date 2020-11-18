@@ -10,6 +10,7 @@ import { colors } from '#/src/colors';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
 import { Link as RouterLink } from 'react-router-dom';
+import { HAKULOMAKE_TYYPPI } from '#/src/constants';
 
 const useStyles = makeStyles((theme) => ({
   gridHeading: {
@@ -30,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const HakuCardGrid = (props) => {
-  const EI_SAHKOISTA = 'ei sähköistä';
   const classes = useStyles();
   const { type, haut, icon } = props;
   const { t } = useTranslation();
@@ -156,18 +156,19 @@ const HakuCardGrid = (props) => {
                         className={classes.lomakeButtonGroup}
                         orientation="horizontal"
                         color="primary">
-                        {haku.hakulomaketyyppi !== EI_SAHKOISTA ? (
+                        {haku.hakulomaketyyppi !== HAKULOMAKE_TYYPPI.EI_SAHKOISTA && (
                           <Button
                             variant="contained"
                             size="large"
                             color="primary"
+                            target="_blank"
                             href={l.localize(haku.hakulomakeLinkki)}
                             disabled={!haku.isHakuAuki}>
                             <Typography style={{ color: colors.white }} variant="body1">
                               {t('toteutus.tayta-lomake')}
                             </Typography>
                           </Button>
-                        ) : null}
+                        )}
                         <LocalizedLink
                           underline="none"
                           component={RouterLink}
