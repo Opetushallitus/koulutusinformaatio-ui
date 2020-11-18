@@ -2,7 +2,7 @@ const autoRecord = require('cypress-autorecord');
 describe('Haku', () => {
   autoRecord();
   it('Koulutustyyppi checkboxes should work hierarchically', function () {
-    cy.visit('/konfo/fi/haku/auto');
+    cy.visit('/fi/haku/auto');
 
     cy.findByRole('checkbox', { name: /Ammatillinen koulutus/ }).as(
       'AmmatillinenKoulutus'
@@ -34,7 +34,7 @@ describe('Haku', () => {
     cy.get('@AmmatillinenKoulutus').should('be.checked');
   });
   it("Koulutustyyppi switching between 'Tutkintoon johtavat' and 'Muut'", function () {
-    cy.visit('/konfo/fi/haku/auto');
+    cy.visit('/fi/haku/auto');
     const tutkintoonJohtavatBtn = () =>
       cy.findByRole('button', { name: /Tutkintoon johtavat/i });
     const muutBtn = () => cy.findByRole('button', { name: /Muut/i });
@@ -74,7 +74,7 @@ describe('Haku', () => {
     });
   });
   it('Koulutusala checkboxes should work hierarchically', function () {
-    cy.visit('/konfo/fi/haku/auto');
+    cy.visit('/fi/haku/auto');
     cy.findByText('Koulutusalat').should('exist');
     cy.findByText('Tekniikan alat').click().should('not.be.visible');
 
@@ -95,10 +95,8 @@ describe('Haku', () => {
 
         tekniikanAlatChk().should('have.attr', 'data-indeterminate', 'false');
         arkkitehtuuriJaRakentaminen().should('be.checked');
-        materiaaliJaProsessitekniikka().should('be.checked');
         koneProsessiEnergiaSahkoTekniikka().should('be.checked');
-
-        materiaaliJaProsessitekniikka().uncheck();
+        materiaaliJaProsessitekniikka().should('be.checked').uncheck();
 
         tekniikanAlatChk().should('have.attr', 'data-indeterminate', 'true');
         arkkitehtuuriJaRakentaminen().should('be.checked');
@@ -109,10 +107,8 @@ describe('Haku', () => {
 
         tekniikanAlatChk().should('have.attr', 'data-indeterminate', 'true');
         arkkitehtuuriJaRakentaminen().should('be.checked');
-        materiaaliJaProsessitekniikka().should('not.be.checked');
         koneProsessiEnergiaSahkoTekniikka().should('be.checked');
-
-        materiaaliJaProsessitekniikka().check();
+        materiaaliJaProsessitekniikka().should('not.be.checked').check();
 
         tekniikanAlatChk()
           .should('be.checked')
@@ -123,7 +119,7 @@ describe('Haku', () => {
       });
   });
   it('Opetustapa filter checkboxes and mobile summary view', function () {
-    cy.visit('/konfo/fi/haku/auto');
+    cy.visit('/fi/haku/auto');
     const etaopetusChk = () => cy.findByRole('checkbox', { name: /Etäopetus \(\d*\)/i });
     const verkkoOpiskeluChk = () =>
       cy.findByRole('checkbox', { name: /Verkko-opiskelu \(\d*\)/i });

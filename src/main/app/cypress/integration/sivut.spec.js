@@ -2,7 +2,7 @@ const autoRecord = require('cypress-autorecord');
 describe('Sivut', () => {
   autoRecord();
   it('Language change should be reflected in URL and page content', function () {
-    cy.visit('/konfo/fi/sivu/paikan-vastaanotto-ja-ilmoittautuminen-korkeakouluun');
+    cy.visit('/fi/sivu/paikan-vastaanotto-ja-ilmoittautuminen-korkeakouluun');
     cy.findByRole('heading', {
       name: /paikan vastaanotto ja ilmoittautuminen korkeakouluun/i,
     });
@@ -20,7 +20,7 @@ describe('Sivut', () => {
     cy.go('back');
     cy.url().should(
       'include',
-      '/konfo/fi/sivu/paikan-vastaanotto-ja-ilmoittautuminen-korkeakouluun'
+      '/fi/sivu/paikan-vastaanotto-ja-ilmoittautuminen-korkeakouluun'
     );
     cy.findByRole('heading', {
       name: /paikan vastaanotto ja ilmoittautuminen korkeakouluun/i,
@@ -35,6 +35,6 @@ describe('Sivut', () => {
       '/sv/sivu/mottagande-av-studieplats-i-gemensam-ansoekan-och-anmaelning-till-hoegskolor'
     );
     cy.findByRole('menuitem', { name: 'Sökandes hälsa och funktionsförmåga' }).click();
-    cy.url().should('include', '/konfo/sv/sivu/soekandes-haelsa-och-funktionsfoermaga');
+    cy.url().should('include', '/sv/sivu/soekandes-haelsa-och-funktionsfoermaga');
   });
 });
