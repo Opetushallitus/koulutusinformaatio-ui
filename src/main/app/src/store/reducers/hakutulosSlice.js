@@ -500,9 +500,7 @@ function getCheckedOnTaso02Clicked(
 
 function getFilterAllValues(filterType, hakutulos) {
   const _tab =
-    _.get(hakutulos, 'selectedTab') === KOULUTUS
-      ? 'koulutusFilters'
-      : 'oppilaitosFilters';
+    hakutulos?.selectedTab === KOULUTUS ? 'koulutusFilters' : 'oppilaitosFilters';
   return _.reduce(
     hakutulos?.[_tab],
     (acc, val, key) => {
