@@ -64,7 +64,17 @@ const Oppilaitos = (props) => {
           <Murupolku
             path={[
               { name: t('haku.otsikko'), link: hakuUrl.url },
-              { name: l.localize(oppilaitos ?? '') },
+              ...(isOppilaitosOsa
+                ? [
+                    {
+                      name: l.localize(oppilaitos?.oppilaitos),
+                      link: `/oppilaitos/${oppilaitos?.oppilaitos?.oid}`,
+                    },
+                  ]
+                : []),
+              {
+                name: l.localize(oppilaitos),
+              },
             ]}
           />
         </Box>

@@ -31,6 +31,7 @@ import { useTranslation } from 'react-i18next';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import Murupolku from '#/src/components/common/Murupolku';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import { ToteutusHakuMuu } from './ToteutusHakuMuu';
 import { ToteutusHakuEiSahkoista } from './ToteutusHakuEiSahkoista';
 
@@ -123,6 +124,7 @@ const Toteutus = () => {
   }, [toteutus, dispatch, oid, koulutus, koulutusOid, koulutusNotFetched]);
 
   const opetus = toteutus?.metadata?.opetus;
+  const hakuUrl = useSelector(getHakuUrl);
 
   return loading ? (
     <LoadingCircle />
@@ -134,7 +136,16 @@ const Toteutus = () => {
         justifyContent="center"
         alignItems="center">
         <Box width="100%" alignSelf="start">
-          <Murupolku path={[{ name: l.localize(toteutus?.nimi) }]} />
+          <Murupolku
+            path={[
+              { name: t('haku.otsikko'), link: hakuUrl.url },
+              {
+                name: l.localize(koulutus?.tutkintoNimi),
+                link: `/koulutus/${toteutus?.koulutusOid}`,
+              },
+              { name: l.localize(toteutus?.nimi) },
+            ]}
+          />
         </Box>
         <Typography style={{ marginTop: '20px' }} variant="h1">
           {l.localize(toteutus?.nimi)}
