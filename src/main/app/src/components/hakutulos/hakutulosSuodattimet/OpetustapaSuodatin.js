@@ -45,10 +45,10 @@ const OpetustapaSuodatin = ({
     getOpetustapaFilterProps
   );
 
-  const handleCheck = (opetustapaObj) => () => {
+  const handleCheck = (opetustapaKey, opetustapaValue) => () => {
     const checkedOpetustapaObj = {
-      id: opetustapaObj[0],
-      name: opetustapaObj[1]?.nimi,
+      id: opetustapaKey,
+      name: opetustapaValue?.nimi,
     };
     const currentIndex = checkedOpetustavat.findIndex(
       ({ id }) => id === checkedOpetustapaObj.id
@@ -90,21 +90,18 @@ const OpetustapaSuodatin = ({
       )}
       <SuodatinExpansionPanelDetails {...(summaryHidden && { style: { padding: 0 } })}>
         <List style={{ width: '100%' }}>
-          {sortedOpetustavat.map((opetustapaArr) => {
-            const labelId = `opetustapa-filter-${opetustapaArr[0]}`;
+          {sortedOpetustavat.map(([opetustapaKey, opetustapaValue]) => {
+            const labelId = `opetustapa-filter-${opetustapaKey}`;
             return (
               <ListItem
-                key={opetustapaArr[0]}
+                key={opetustapaKey}
                 dense
                 button
-                onClick={handleCheck(opetustapaArr)}>
+                onClick={handleCheck(opetustapaKey, opetustapaValue)}>
                 <ListItemIcon>
                   <SuodatinCheckbox
                     edge="start"
-                    checked={
-                      checkedOpetustavat.find(({ id }) => id === opetustapaArr[0]) !==
-                      undefined
-                    }
+                    checked={checkedOpetustavat.some(({ id }) => id === opetustapaKey)}
                     tabIndex={-1}
                     disableRipple
                     inputProps={{ 'aria-labelledby': labelId }}
@@ -114,8 +111,8 @@ const OpetustapaSuodatin = ({
                   id={labelId}
                   primary={
                     <Grid container justify="space-between" wrap="nowrap">
-                      <Grid item>{l.localize(opetustapaArr[1])}</Grid>
-                      <Grid item>{`(${opetustapaArr[1]?.count})`}</Grid>
+                      <Grid item>{l.localize(opetustapaValue)}</Grid>
+                      <Grid item>{`(${opetustapaValue?.count})`}</Grid>
                     </Grid>
                   }
                 />
