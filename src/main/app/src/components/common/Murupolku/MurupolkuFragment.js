@@ -34,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
     }),
     ...(isLast &&
       !isHome && {
+        color: theme.palette.text.primary,
+        pointerEvents: 'none',
         fontWeight: 600,
       }),
   }),
