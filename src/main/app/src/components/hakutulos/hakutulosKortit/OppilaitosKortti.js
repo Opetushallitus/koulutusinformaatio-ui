@@ -112,7 +112,7 @@ const OppilaitosKortti = ({ nimi, oppilaitos, link }) => {
                   <Avatar
                     classes={{ root: classes.avatarRoot }}
                     src={oppilaitos_img}
-                    alt="oppilaitoksen logo"
+                    alt={t('haku.oppilaitoksen-logo')}
                   />
                 </Grid>
               </Hidden>
@@ -182,7 +182,7 @@ const OppilaitosKortti = ({ nimi, oppilaitos, link }) => {
               <Avatar
                 classes={{ root: classes.avatarRoot }}
                 src={oppilaitos_img}
-                alt="oppilaitoksen logo"
+                alt={t('haku.oppilaitoksen-logo')}
               />
             </Grid>
           </Hidden>

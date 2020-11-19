@@ -105,6 +105,7 @@
     "kehoite": "Etsi koulutuksia tai oppilaitoksia",
     "oppilaitokset": "Oppilaitokset",
     "haku": "Haku",
+    "haku-koulutukseen": "Haku koulutukseen",
     "hakusana": "Hakusana",
     "hakusanalla": "hakusanalla",
     "jarjesta": "Järjestä:",
@@ -138,7 +139,7 @@
     "odota-hetki-ja-kokeile-suorita-toiminto-uudestaan": "Odota hetki ja kokeile suorita toiminto uudestaan",
     "olet-valinnut-vertailuun": "Olet valinnut vertailuun:",
     "opetuskieli": "Opetuskieli",
-    "oppilaitoksen-logo": "oppilaitoksen logo",
+    "oppilaitoksen-logo": "Oppilaitoksen logo",
     "ota-vertailuun": "Ota vertailuun",
     "näytä_lisää": "Näytä lisää",
     "näytä_vähemmän": "Näytä vähemmän",
@@ -202,7 +203,8 @@
     "tietoa-opiskelusta": "Tietoa opiskelusta",
     "tulevat-koulutukset": "Tulevat koulutukset",
     "tutustu-toimipisteisiin": "Tutustu toimipisteisiin",
-    "oppilaitoksen-teemakuva": "Oppilaitoksen teemakuva"
+    "oppilaitoksen-teemakuva": "Oppilaitoksen teemakuva",
+    "oppilaitoksen-logo": "Oppilaitoksen logo"
   },
   "koulutus": {
     "yleiskuvaus": "Yleiskuvaus",

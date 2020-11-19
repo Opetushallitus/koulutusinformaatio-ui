@@ -91,8 +91,9 @@ const KoulutusKortti = (props) => {
       <Paper
         classes={{ root: classes.paperRoot }}
         style={{
-          borderTop: `5px solid ${educationTypeColorCode[koulutustyyppi] ||
-            educationTypeColorCode.muu}`,
+          borderTop: `5px solid ${
+            educationTypeColorCode[koulutustyyppi] || educationTypeColorCode.muu
+          }`,
         }}>
         <Grid container alignItems="stretch" style={{ minHeight: 210 }} spacing={3}>
           <Grid
@@ -134,7 +135,7 @@ const KoulutusKortti = (props) => {
                     <Avatar
                       classes={{ root: classes.avatarRoot }}
                       src={teemakuva || koulutusPlaceholderImg}
-                      alt="haku koulutukseen"
+                      alt={t('haku.haku-koulutukseen')}
                     />
                   </Grid>
                 </Hidden>
@@ -176,7 +177,7 @@ const KoulutusKortti = (props) => {
                   img: classes.avatarImg,
                 }}
                 src={teemakuva || koulutusPlaceholderImg}
-                alt="haku koulutukseen"
+                alt={t('haku.haku-koulutukseen')}
               />
             </Grid>
           </Hidden>
