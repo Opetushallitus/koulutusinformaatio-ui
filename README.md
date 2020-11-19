@@ -4,13 +4,40 @@ Konfo-UI on luotu create-react-app:lla. Backend, jonka ainoa tehtävä on jakaa 
 
 [![Build status](https://travis-ci.org/Opetushallitus/konfo-ui.svg?branch=master)](https://travis-ci.org/Opetushallitus/konfo-ui)
 
-## Vaatimukset
+## Käyttöliittymän kehittäminen
 
-Lokaalia ajoa varten Konfo-backendin pitää vastata osoitteessa:
+TL;DR
 
-http://localhost:3006
+    cd src/main/app
+    npm i
+    npm start
 
-(Porttia voi myös vaihtaa, ks. käyttöliittymän kehittäminen)
+Kehityksen aikana käyttöliittymää kannattaa ajaa pelkästään nodella, jolloin muutokset näkyvät suoraan selaimessa. TL;DR ohjeilla käyttöliittymä aukeaa osoitteeseen:
+
+http://localhost:3000/
+
+Portteja voi vaihtaa ajamalla:
+
+`PORT=5555 npm start`
+
+Tai esim. kirjaamalla .env.local -tiedostoon `PORT=5555`
+
+## Testit
+
+Selainta vasten ajettavat testit (cypress) olettavat kälin löytyvän ajossa portista `3005`. käyttöliittymätestit käynnistyy komennolla:
+
+    cd src/main/app
+    npm run cypress:open
+
+### Yksikkötestit
+
+`npm test`
+
+Yksikkötestit nimetään päätteellä `.test.js` ja ne luodaan niihin kansioihin missä niiden testaama koodi sijaitsee.
+
+### Lint
+
+Lintin voi ajaa komennolla `npm run lint`, tai automaattisen fiksauksen kanssa `npm run lint:fix`. Lint ajetaan myös huskyn pre-commit hookkina.
 
 ## Buildaus ja käynnistys
 
@@ -29,50 +56,3 @@ tai komennolla:
 Sovellus aukeaa osoitteeseen:
 
 http://localhost:8080/
-
-## Käyttöliittymän kehittäminen
-
-Kehityksen aikana käyttöliittymää kannattaa ajaa pelkästään nodella, jolloin muutokset näkyvät suoraan selaimessa.
-
-`cd src/main/app`
-
-Ensimmäisellä kerralla `npm rebuild node-sass`
-
-`npm start`
-
-Käyttöliittymä aukeaa osoitteeseen:
-
-http://localhost:3005/
-
-Portteja voi vaihtaa ajamalla:
-
-`PORT=5555 BACKEND_PORT=5556 npm start`
-
-## Testit
-
-Käyttöliittymätestit (cypress) käynnistyy komennolla: 
-
-    cd src/main/app
-    npm run cypress:open
-    
-Muut testit löytyvät hakemistosta `src/main/app/src/__tests__`.
-Nimetään yksikkötestit päätteellä `.test.js` ja laitetaan ne sopiviin hakemistoihin.
-Lisäksi projektissa on headless-selaintestejä, jotka käyttävät Puppeteer-kirjastoa. Laitetaan ne hakemistoon
-`src/main/app/src/__tests__/headless/`. Mock-datan luontiin tarvittavat javascript-luokat ja muut testityökalut
-voi laittaa hakemistoon `src/main/app/src/__tests__/mocks`, joka skipataan testejä ajettaessa.
-
-Testit voi ajaa default porteissa komennolla
-
-`npm test`
-
-tai tietyissä porteissa
-
-`PORT=5555 BACKEND_PORT=5556 npm test`
-
-Jos haluaa ajaa testit ilman watchia, annetaan lisäksi parametriksi `CI=true`.
-
-Linttaukset voi ajaa komennola
-`npm run lint`
-tai automaattisen fiksauksen kanssa
-`npm run lint:fix`
-Linttaukset ajetaan automaattisesti, kun koodia koitetaan committaa.

@@ -26,3 +26,14 @@ export const LANG_NAME_BY_CODE = {
   sv: 'ruotsi',
   en: 'englanti',
 };
+
+export const KOULUTUS_TYYPPI = {
+  AMM: 'amm',
+  AMM_TUTKINNON_OSA: 'amm-tutkinnon-osa',
+  AMM_OSAAMISALA: 'amm-osaamisala',
+};
+
+export const HAKULOMAKE_TYYPPI = {
+  EI_SAHKOISTA: 'ei sähköistä',
+  MUU: 'muu',
+};

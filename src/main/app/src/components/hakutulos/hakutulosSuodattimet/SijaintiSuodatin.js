@@ -26,9 +26,9 @@ import {
 } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   SuodatinCheckbox,
-  SuodatinExpansionPanel,
-  SuodatinExpansionPanelDetails,
-  SuodatinExpansionPanelSummary,
+  SuodatinAccordion,
+  SuodatinAccordionDetails,
+  SuodatinAccordionSummary,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 import SummaryContent from './SummaryContent';
@@ -182,21 +182,21 @@ const SijaintiSuodatin = ({
   };
 
   return (
-    <SuodatinExpansionPanel
+    <SuodatinAccordion
       {...(summaryHidden && { className: classes.noBoxShadow })}
       elevation={elevation}
       defaultExpanded={expanded}>
       {!summaryHidden && (
-        <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
+        <SuodatinAccordionSummary expandIcon={<ExpandMore />}>
           <SummaryContent
             selectedFiltersStr={selectedSijainnitStr}
             maxCharLengthBeforeChipWithNumber={20}
             filterName={t('haku.sijainti')}
             displaySelected={displaySelected}
           />
-        </SuodatinExpansionPanelSummary>
+        </SuodatinAccordionSummary>
       )}
-      <SuodatinExpansionPanelDetails {...(summaryHidden && { style: { padding: 0 } })}>
+      <SuodatinAccordionDetails {...(summaryHidden && { style: { padding: 0 } })}>
         <Grid container direction="column">
           <Grid item style={{ padding: '20px 0' }}>
             <Select
@@ -304,8 +304,8 @@ const SijaintiSuodatin = ({
             </Grid>
           )}
         </Grid>
-      </SuodatinExpansionPanelDetails>
-    </SuodatinExpansionPanel>
+      </SuodatinAccordionDetails>
+    </SuodatinAccordion>
   );
 };
 

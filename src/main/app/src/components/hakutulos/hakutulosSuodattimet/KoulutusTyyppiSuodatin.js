@@ -21,9 +21,9 @@ import {
 } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   SuodatinCheckbox,
-  SuodatinExpansionPanel,
-  SuodatinExpansionPanelDetails,
-  SuodatinExpansionPanelSummary,
+  SuodatinAccordion,
+  SuodatinAccordionDetails,
+  SuodatinAccordionSummary,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 import SummaryContent from './SummaryContent';
@@ -105,22 +105,22 @@ const KoulutustyyppiSuodatin = ({
   }
 
   return (
-    <SuodatinExpansionPanel
+    <SuodatinAccordion
       {...(summaryHidden && { className: classes.noBoxShadow })}
       elevation={elevation}
       data-cy="koulutustyyppi-filter"
       defaultExpanded={expanded}>
       {!summaryHidden && (
-        <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
+        <SuodatinAccordionSummary expandIcon={<ExpandMore />}>
           <SummaryContent
             selectedFiltersStr={checkedKoulutustyypitStr}
             maxCharLengthBeforeChipWithNumber={16}
             filterName={t('haku.koulutustyyppi')}
             displaySelected={displaySelected}
           />
-        </SuodatinExpansionPanelSummary>
+        </SuodatinAccordionSummary>
       )}
-      <SuodatinExpansionPanelDetails {...(summaryHidden && { style: { padding: 0 } })}>
+      <SuodatinAccordionDetails {...(summaryHidden && { style: { padding: 0 } })}>
         <Grid container>
           <Grid item xs={12} style={{ padding: '20px 0' }}>
             <ButtonGroup fullWidth>
@@ -232,8 +232,8 @@ const KoulutustyyppiSuodatin = ({
             </List>
           </Grid>
         </Grid>
-      </SuodatinExpansionPanelDetails>
-    </SuodatinExpansionPanel>
+      </SuodatinAccordionDetails>
+    </SuodatinAccordion>
   );
 };
 

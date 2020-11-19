@@ -2,9 +2,9 @@ import { withStyles } from '@material-ui/core/styles';
 import {
   Checkbox,
   Chip,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   ListItemText,
   Slider,
 } from '@material-ui/core';
@@ -16,7 +16,7 @@ export const SuodatinCheckbox = withStyles({
   },
 })(Checkbox);
 
-export const SuodatinExpansionPanel = withStyles({
+export const SuodatinAccordion = withStyles({
   root: {
     backgroundColor: colors.white,
     borderRadius: '0 !important',
@@ -36,22 +36,22 @@ export const SuodatinExpansionPanel = withStyles({
       margin: '0 !important',
     },
   },
-})(ExpansionPanel);
+})(Accordion);
 
-export const SuodatinExpansionPanelSummary = withStyles({
+export const SuodatinAccordionSummary = withStyles({
   root: {
     minHeight: '32px !important',
   },
   content: {
     margin: '0 !important',
   },
-})(ExpansionPanelSummary);
+})(AccordionSummary);
 
-export const SuodatinExpansionPanelDetails = withStyles({
+export const SuodatinAccordionDetails = withStyles({
   root: {
     padding: '0 24px 16px 24px',
   },
-})(ExpansionPanelDetails);
+})(AccordionDetails);
 
 export const SuodatinListItemText = withStyles({
   primary: {

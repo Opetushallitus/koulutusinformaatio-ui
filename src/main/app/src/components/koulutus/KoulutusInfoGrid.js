@@ -6,7 +6,7 @@ import TimelapseIcon from '@material-ui/icons/Timelapse';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { Localizer as l } from '#/src/tools/Utils';
-import { TYYPPI_AMM_TUTKINNON_OSA } from '#/src/store/reducers/koulutusSlice';
+import { KOULUTUS_TYYPPI } from '#/src/constants';
 
 const useStyles = makeStyles((theme) => ({
   koulutusInfoGridIcon: {
@@ -14,13 +14,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const hasNimike = (tyyppi) =>
+  tyyppi !== KOULUTUS_TYYPPI.AMM_TUTKINNON_OSA &&
+  tyyppi !== KOULUTUS_TYYPPI.AMM_OSAAMISALA;
+
 const KoulutusInfoGrid = (props) => {
   const classes = useStyles();
   const { nimikkeet, koulutustyyppi, laajuus } = props;
   const { t } = useTranslation();
 
   const perustiedotData = [];
-  if (koulutustyyppi !== TYYPPI_AMM_TUTKINNON_OSA) {
+  if (hasNimike(koulutustyyppi)) {
     const nimikeString = nimikkeet
       ? nimikkeet.map((nimikeObj) => l.localize(nimikeObj)).join('\n')
       : t('koulutus.ei-tutkintonimiketta');

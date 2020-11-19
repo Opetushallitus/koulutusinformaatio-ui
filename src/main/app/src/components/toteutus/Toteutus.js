@@ -20,9 +20,7 @@ import {
   fetchToteutus,
   selectLoading as selectToteutusLoading,
   selectToteutus,
-  selectJatkuvatHaut,
-  selectYhteisHaut,
-  selectErillisHaut,
+  selectHakukohteet,
 } from '#/src/store/reducers/toteutusSlice';
 import {
   fetchKoulutusWithRelatedData,
@@ -33,6 +31,8 @@ import { useTranslation } from 'react-i18next';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import Murupolku from '#/src/components/common/Murupolku';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { ToteutusHakuMuu } from './ToteutusHakuMuu';
+import { ToteutusHakuEiSahkoista } from './ToteutusHakuEiSahkoista';
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -95,26 +95,31 @@ const Toteutus = () => {
   const toteutus = useSelector(selectToteutus(oid), shallowEqual);
   const koulutusOid = toteutus?.koulutusOid;
   const koulutus = useSelector(selectKoulutus(koulutusOid), shallowEqual);
-  const jatkuvatHaut = useSelector(selectJatkuvatHaut(oid));
-  const yhteisHaut = useSelector(selectYhteisHaut(oid));
-  const erillisHaut = useSelector(selectErillisHaut(oid));
+  const { jatkuvatHaut, yhteisHaut, erillisHaut } = useSelector(
+    selectHakukohteet(oid),
+    shallowEqual
+  );
   const koulutusLoading = useSelector(selectKoulutusLoading);
   const toteutusLoading = useSelector(selectToteutusLoading);
 
-  const loading = koulutusLoading || toteutusLoading;
+  const loading = !koulutus || koulutusLoading || toteutusLoading;
   const asiasanat =
     toteutus?.metadata?.asiasanat
       .filter((asiasana) => asiasana.kieli === currentLanguage)
-      .map((asiasana) => asiasana.arvo) || [];
+      .map((asiasana) => asiasana.arvo) ?? [];
 
   useEffect(() => {
     if (!toteutus) {
       dispatch(fetchToteutus(oid));
     }
+    // TODO: Get rid of koulutus call here when opintolaajuus comes from toteutus -backend
     if (!koulutus && koulutusOid) {
       dispatch(fetchKoulutusWithRelatedData(toteutus.koulutusOid));
     }
   }, [toteutus, dispatch, oid, koulutus, koulutusOid]);
+
+  const opetus = toteutus?.metadata?.opetus;
+
   return loading ? (
     <LoadingCircle />
   ) : (
@@ -152,35 +157,36 @@ const Toteutus = () => {
         </Box>
         <Box mt={4}>
           <ToteutusInfoGrid
+            koulutusTyyppi={toteutus?.metadata?.tyyppi}
             nimikkeet={toteutus?.metadata?.ammattinimikkeet}
-            kielet={toteutus?.metadata?.opetus?.opetuskieli}
+            kielet={opetus?.opetuskieli}
             laajuus={[koulutus?.opintojenLaajuus, koulutus?.opintojenLaajuusYksikkö]}
             aloitus={[
-              toteutus?.metadata?.opetus?.koulutuksenTarkkaAlkamisaika,
-              toteutus?.metadata?.opetus?.koulutuksenAlkamispaivamaara,
-              toteutus?.metadata?.opetus?.koulutuksenAlkamiskausi,
-              toteutus?.metadata?.opetus?.koulutuksenAlkamisvuosi,
+              opetus?.koulutuksenTarkkaAlkamisaika,
+              opetus?.koulutuksenAlkamispaivamaara,
+              opetus?.koulutuksenAlkamiskausi,
+              opetus?.koulutuksenAlkamisvuosi,
             ]}
-            suunniteltuKestoVuodet={toteutus?.metadata?.opetus?.suunniteltuKestoVuodet}
-            suunniteltuKestoKuukaudet={
-              toteutus?.metadata?.opetus?.suunniteltuKestoKuukaudet
-            }
-            opetusaika={toteutus?.metadata?.opetus?.opetusaika}
-            opetustapa={toteutus?.metadata?.opetus?.opetustapa}
-            maksullisuus={[
-              toteutus?.metadata?.opetus?.onkoMaksullinen,
-              toteutus?.metadata?.opetus?.maksunMaara,
-            ]}
-            apuraha={[
-              toteutus?.metadata?.opetus?.onkoStipendia,
-              toteutus?.metadata?.opetus?.stipendinMaara,
-            ]}
+            suunniteltuKestoVuodet={opetus?.suunniteltuKestoVuodet}
+            suunniteltuKestoKuukaudet={opetus?.suunniteltuKestoKuukaudet}
+            opetusaika={opetus?.opetusaika}
+            opetustapa={opetus?.opetustapa}
+            maksullisuus={opetus?.onkoMaksullinen && opetus?.maksunMaara}
+            apuraha={opetus?.onkoStipendia && opetus?.stipendinMaara}
           />
         </Box>
-        {jatkuvatHaut?.length + yhteisHaut?.length + erillisHaut?.length > 0 ? (
+        {toteutus?.isHakuAuki && (
           <HakuKaynnissaCard
-            title={t('toteutus.haku-kaynnisa')}
-            text={t('toteutus.katso-hakukohteet')}
+            title={
+              toteutus.isHakuAuki === 'hakukohde'
+                ? t('toteutus.haku-kaynnissa')
+                : t('toteutus.ilmoittautuminen-kaynnissa')
+            }
+            text={
+              toteutus.isHakuAuki === 'hakukohde'
+                ? t('toteutus.katso-hakukohteet')
+                : t('toteutus.katso-ilmoittautumisen-ohjeet')
+            }
             link={
               <HashLink
                 to="#haut"
@@ -189,43 +195,47 @@ const Toteutus = () => {
                 style={{ textDecoration: 'none' }}
               />
             }
-            buttonText={t('toteutus.nayta-hakukohteet')}
+            buttonText={
+              toteutus.isHakuAuki === 'hakukohde'
+                ? t('toteutus.nayta-hakukohteet')
+                : t('toteutus.nayta-ohjeet')
+            }
           />
-        ) : null}
-        {toteutus?.metadata?.kuvaus ? (
+        )}
+        {toteutus?.metadata?.kuvaus && (
           <HtmlTextBox
             heading={t('koulutus.kuvaus')}
             html={l.localize(toteutus.metadata.kuvaus)}
             className={classes.root}
           />
-        ) : null}
-        {toteutus?.metadata?.osaamisalat ? (
+        )}
+        {toteutus?.metadata?.osaamisalat && (
           <AccordionWithTitle
             titleTranslation="koulutus.osaamisalat"
             data={toteutus.metadata.osaamisalat.map((osaamisala) => ({
               title: l.localize(osaamisala.koodi.nimi),
-              content:
-                !_.isEmpty(osaamisala.linkki) && !_.isEmpty(osaamisala.otsikko) ? (
-                  <LocalizedLink
-                    target="_blank"
-                    rel="noopener"
-                    href={l.localize(osaamisala.linkki)}>
-                    {l.localize(osaamisala.otsikko)}
-                    <OpenInNewIcon />
-                  </LocalizedLink>
-                ) : null,
+              content: !_.isEmpty(osaamisala.linkki) && !_.isEmpty(osaamisala.otsikko) && (
+                <LocalizedLink
+                  target="_blank"
+                  rel="noopener"
+                  href={l.localize(osaamisala.linkki)}>
+                  {l.localize(osaamisala.otsikko)}
+                  <OpenInNewIcon />
+                </LocalizedLink>
+              ),
             }))}
           />
-        ) : null}
-        {jatkuvatHaut?.length + yhteisHaut?.length + erillisHaut?.length > 0 ? (
+        )}
+        {jatkuvatHaut?.length + yhteisHaut?.length + erillisHaut?.length > 0 && (
           <ToteutusHakukohteet
             jatkuvatHaut={jatkuvatHaut}
             yhteisHaut={yhteisHaut}
             erillisHaut={erillisHaut}
           />
-        ) : null}
-
-        {toteutus?.metadata?.opetus?.lisatiedot.length > 0 ? (
+        )}
+        {toteutus?.hasMuuHaku && <ToteutusHakuMuu oid={toteutus?.oid} />}
+        {toteutus?.hasEiSahkoistaHaku && <ToteutusHakuEiSahkoista oid={toteutus?.oid} />}
+        {opetus?.lisatiedot.length > 0 && (
           <AccordionWithTitle
             titleTranslation="koulutus.lisätietoa"
             data={toteutus.metadata.opetus.lisatiedot.map((lisatieto) => ({
@@ -233,15 +243,14 @@ const Toteutus = () => {
               content: l.localize(lisatieto.teksti),
             }))}
           />
-        ) : null}
-
-        {toteutus?.metadata?.yhteyshenkilot.length > 0 ? (
+        )}
+        {toteutus?.metadata?.yhteyshenkilot.length > 0 && (
           <Box mt={12} display="flex" flexDirection="column" alignItems="center">
             <Typography variant="h2">{t('toteutus.yhteyshenkilot')}</Typography>
             <Spacer />
             <Box mt={5}>
               <Grid container alignItems="center">
-                {toteutus.metadata.yhteyshenkilot.map((yhteyshenkilo, i) => (
+                {toteutus.metadata.yhteyshenkilot.map((yhteyshenkilo, i, a) => (
                   <React.Fragment key={i}>
                     <Grid item>
                       <Grid container direction="column">
@@ -267,7 +276,7 @@ const Toteutus = () => {
                         </Grid>
                       </Grid>
                     </Grid>
-                    {i + 1 !== toteutus.metadata.yhteyshenkilot.length ? (
+                    {i + 1 !== a.length && (
                       <Grid item>
                         <Box
                           mx={9}
@@ -275,13 +284,13 @@ const Toteutus = () => {
                           borderRight={`1px solid ${colors.lightGrey}`}
                         />
                       </Grid>
-                    ) : null}
+                    )}
                   </React.Fragment>
                 ))}
               </Grid>
             </Box>
           </Box>
-        ) : null}
+        )}
       </Box>
     </ContentWrapper>
   );
