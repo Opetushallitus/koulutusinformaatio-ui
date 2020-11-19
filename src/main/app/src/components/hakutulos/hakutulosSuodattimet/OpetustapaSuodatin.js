@@ -16,9 +16,9 @@ import {
 } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   SuodatinCheckbox,
-  SuodatinExpansionPanel,
-  SuodatinExpansionPanelDetails,
-  SuodatinExpansionPanelSummary,
+  SuodatinAccordion,
+  SuodatinAccordionDetails,
+  SuodatinAccordionSummary,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 import SummaryContent from './SummaryContent';
@@ -73,22 +73,22 @@ const OpetustapaSuodatin = ({
     dispatch(searchAll({ ...apiRequestParams, opetustapa: newCheckedOpetustavatStr }));
   };
   return (
-    <SuodatinExpansionPanel
+    <SuodatinAccordion
       {...(summaryHidden && { className: classes.noBoxShadow })}
       elevation={elevation}
       data-cy="opetustapa-filter"
       defaultExpanded={expanded}>
       {!summaryHidden && (
-        <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
+        <SuodatinAccordionSummary expandIcon={<ExpandMore />}>
           <SummaryContent
             selectedFiltersStr={checkedOpetustavatStr}
             maxCharLengthBeforeChipWithNumber={20}
             filterName={t('haku.opetustapa')}
             displaySelected={displaySelected}
           />
-        </SuodatinExpansionPanelSummary>
+        </SuodatinAccordionSummary>
       )}
-      <SuodatinExpansionPanelDetails {...(summaryHidden && { style: { padding: 0 } })}>
+      <SuodatinAccordionDetails {...(summaryHidden && { style: { padding: 0 } })}>
         <List style={{ width: '100%' }}>
           {sortedOpetustavat.map(([opetustapaKey, opetustapaValue]) => {
             const labelId = `opetustapa-filter-${opetustapaKey}`;
@@ -120,8 +120,8 @@ const OpetustapaSuodatin = ({
             );
           })}
         </List>
-      </SuodatinExpansionPanelDetails>
-    </SuodatinExpansionPanel>
+      </SuodatinAccordionDetails>
+    </SuodatinAccordion>
   );
 };
 
