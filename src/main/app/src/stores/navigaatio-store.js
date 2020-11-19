@@ -1,5 +1,6 @@
 import { observable, computed, action } from 'mobx';
 
+// TODO: This is a dead store, remove it and any unit tests when unit tests are a part of CI (KTO-913 merge)
 class NavigaatioStore {
   @observable oid = '';
 
@@ -14,9 +15,7 @@ class NavigaatioStore {
 
   @computed get oids() {
     const haku = this.hakuStore;
-    const result = haku.toggleKoulutus
-      ? haku.koulutusResult
-      : haku.oppilaitosResult;
+    const result = haku.toggleKoulutus ? haku.koulutusResult : haku.oppilaitosResult;
     return result.map((r) => r.oid);
   }
 

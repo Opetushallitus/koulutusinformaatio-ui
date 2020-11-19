@@ -2,8 +2,7 @@ import { computed, observable, action /*configure*/ } from 'mobx';
 import superagent from 'superagent';
 import { Localizer as l } from '#/src/tools/Utils';
 
-//configure({ enforceActions: true })
-
+// TODO: This is a dead store, remove it and any unit tests when unit tests are a part of CI (KTO-913 merge)
 class RestStore {
   @observable errors = [];
 

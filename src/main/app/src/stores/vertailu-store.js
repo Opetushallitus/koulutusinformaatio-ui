@@ -1,6 +1,7 @@
 import { observable, action, computed } from 'mobx';
 import { Localizer as l } from '../tools/Utils';
 
+// TODO: This is a dead store, remove it and any unit tests when unit tests are a part of CI (KTO-913 merge)
 class VertailuStore {
   constructor(hakuStore, restStore) {
     this.hakuStore = hakuStore;
@@ -42,9 +43,8 @@ class VertailuStore {
 
   isOidLoaded = (oid) => {
     return (
-      this.vertailuList.findIndex(
-        (item) => item.oid === oid && item.loaded === true
-      ) !== -1
+      this.vertailuList.findIndex((item) => item.oid === oid && item.loaded === true) !==
+      -1
     );
   };
 
@@ -69,9 +69,7 @@ class VertailuStore {
       if (!this.isOidLoaded(oid)) {
         this.rest.getToteutusPromise(oid).then(
           (result) => {
-            const i = this.vertailuListKoulutus.findIndex(
-              (item) => item.oid === oid
-            );
+            const i = this.vertailuListKoulutus.findIndex((item) => item.oid === oid);
             if (result.body.result.koulutus[oid]) {
               this.vertailuListKoulutus[i] = {
                 ...this.vertailuListKoulutus[i],

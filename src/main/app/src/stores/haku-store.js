@@ -12,6 +12,7 @@ const emptyFilter = {
   selectedsijainnit: [],
 };
 
+// TODO: This is a dead store, remove it and any unit tests when unit tests are a part of CI (KTO-913 merge)
 class HakuStore {
   @observable state = 'pending';
   @observable keyword = '';

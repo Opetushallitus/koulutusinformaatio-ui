@@ -1,6 +1,7 @@
 import { observable, computed, action } from 'mobx';
 import { Localizer as l } from '../tools/Utils';
 
+// TODO: This is a dead store, remove it and any unit tests when unit tests are a part of CI (KTO-913 merge)
 class HakuehtoStore {
   @observable keyword = '';
   @observable filter = {
@@ -51,15 +52,11 @@ class HakuehtoStore {
   setFilter = (filter) => {
     this.filter.koulutus = filter.koulutus ? filter.koulutus.split(',') : [];
     this.filter.kieli = filter.kieli ? filter.kieli.split(',') : [];
-    this.filter.paikkakunta = filter.paikkakunta
-      ? filter.paikkakunta.toLowerCase()
-      : '';
+    this.filter.paikkakunta = filter.paikkakunta ? filter.paikkakunta.toLowerCase() : '';
   };
 
   @computed get createHakuUrl() {
-    return (
-      '/haku' + (this.keywordSet ? '/' + this.keyword : '') + this.searchParams
-    );
+    return '/haku' + (this.keywordSet ? '/' + this.keyword : '') + this.searchParams;
   }
 
   @computed get searchParams() {
