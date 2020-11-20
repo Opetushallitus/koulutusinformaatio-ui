@@ -124,7 +124,7 @@ export const selectEiSahkoistaHaku = (oid) => (state) => {
   };
 };
 
-const isAnyHakuAuki = (toteutus) => {
+const getHakuAukiType = (toteutus) => {
   if (toteutus?.metadata?.hakulomaketyyppi === HAKULOMAKE_TYYPPI.EI_SAHKOISTA) {
     return null;
   }
@@ -148,7 +148,7 @@ export const selectToteutus = (oid) => (state) => {
       hasMuuHaku: toteutus?.metadata?.hakulomaketyyppi === HAKULOMAKE_TYYPPI.MUU,
       hasEiSahkoistaHaku:
         toteutus?.metadata?.hakulomaketyyppi === HAKULOMAKE_TYYPPI.EI_SAHKOISTA,
-      isHakuAuki: isAnyHakuAuki(toteutus),
+      hakuAukiType: getHakuAukiType(toteutus),
     }
   );
 };

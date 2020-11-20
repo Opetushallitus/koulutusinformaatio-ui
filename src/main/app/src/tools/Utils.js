@@ -1,6 +1,8 @@
-import i18n from './i18n';
-import padStart from 'lodash/padStart';
 import _fp from 'lodash/fp';
+import padStart from 'lodash/padStart';
+import stripTags from 'striptags';
+import i18n from './i18n';
+import ReactHtmlParser from 'react-html-parser';
 
 export class Common {
   // filters 'null', 'empty string' or 'undefined', but '0' or 'false' are valid values,
@@ -117,10 +119,7 @@ export class TimeMillisParser {
     if (timemillis === null) {
       return '';
     }
-    return new Date(timemillis)
-      .toLocaleString()
-      .replace(/\//g, '.')
-      .replace(',', ' klo');
+    return new Date(timemillis).toLocaleString().replace(/\//g, '.').replace(',', ' klo');
   }
 }
 
@@ -145,3 +144,34 @@ export class FormatdDate {
     return formattedDate;
   };
 }
+
+const ALLOWED_HTML_TAGS = [
+  'b',
+  'blockquote',
+  'br',
+  'code',
+  'em',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'hr',
+  'i',
+  'li',
+  'ol',
+  'p',
+  'pre',
+  's',
+  'sup',
+  'sub',
+  'strong',
+  'strike',
+  'ul',
+];
+
+export const sanitizeHTML = (html) => stripTags(html, ALLOWED_HTML_TAGS);
+
+export const sanitizedHTMLParser = (html, ...rest) =>
+  ReactHtmlParser(sanitizeHTML(html), ...rest);

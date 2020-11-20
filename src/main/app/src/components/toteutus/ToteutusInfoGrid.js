@@ -26,16 +26,8 @@ const suunniteltuKesto = (t, vuosi, kk) => {
   }
 
   return [
-    vuosi === 1
-      ? t('koulutus.kesto-vuosi')
-      : vuosi
-      ? t('koulutus.kesto-vuosia', { vuosi })
-      : null,
-    kk === 1
-      ? t('koulutus.kesto-kuukausi')
-      : kk
-      ? t('koulutus.kesto-kuukautta', { kk })
-      : null,
+    vuosi && t('koulutus.kesto-vuosi', { count: vuosi }),
+    kk && t('koulutus.kesto-kuukausi', { count: kk }),
   ]
     .filter(Boolean)
     .join('\n');
