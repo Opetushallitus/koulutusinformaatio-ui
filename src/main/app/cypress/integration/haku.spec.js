@@ -142,8 +142,8 @@ describe('Haku', () => {
         verkkoOpiskeluChk().should('exist').should('not.be.checked');
       });
   });
-  it("Koulutuskortti data should be presented correctly for 'Tutkinnon osa'", function() {
-    cy.visit('/konfo/fi/haku/auto');
+  it("Koulutuskortti data should be presented correctly for 'Tutkinnon osa'", function () {
+    cy.visit('/fi/haku/auto');
 
     const searchBox = () =>
       cy.findByRole('searchbox', { name: /etsi koulutuksia tai oppilaitoksia/i });
@@ -160,8 +160,8 @@ describe('Haku', () => {
       );
     });
   });
-  it("Koulutuskortti data should be presented correctly for 'Osaamisala'", function() {
-    cy.visit('/konfo/fi/haku/auto');
+  it("Koulutuskortti data should be presented correctly for 'Osaamisala'", function () {
+    cy.visit('/fi/haku/auto');
 
     const searchBox = () =>
       cy.findByRole('searchbox', { name: /etsi koulutuksia tai oppilaitoksia/i });
