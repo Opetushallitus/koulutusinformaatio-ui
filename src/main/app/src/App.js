@@ -78,16 +78,25 @@ const KoulutusHakuBar = () => (
   </div>
 );
 
-const TranslatedRoutes = ({ match }) => {
+const TranslatedRoutes = ({ match, location }) => {
   const { i18n } = useTranslation();
   const selectedLanguage = match.params.lng;
+
   const { contentfulStore } = useStores();
   useEffect(() => {
-    if (selectedLanguage && supportedLanguages.includes(selectedLanguage)) {
+    if (supportedLanguages.includes(selectedLanguage)) {
       contentfulStore.reset(selectedLanguage);
       i18n.changeLanguage(selectedLanguage);
     }
   }, [i18n, selectedLanguage, contentfulStore]);
+
+  if (!supportedLanguages.includes(selectedLanguage)) {
+    const newLocation = {
+      ...location,
+      pathname: '/fi' + location.pathname,
+    };
+    return <Redirect to={newLocation} />;
+  }
   return supportedLanguages.includes(selectedLanguage) ? (
     <Switch>
       <Route exact path="/:lng">
@@ -146,16 +155,6 @@ const App = () => {
     setMenuVisible(false);
   };
 
-  const main = (
-    <React.Fragment>
-      <Switch>
-        <Redirect exact from="/" to={`/${i18n.language}/`} />
-        <Route path="/:lng" component={TranslatedRoutes} />
-      </Switch>
-      <Palvelut />
-      <Footer />
-    </React.Fragment>
-  );
   return (
     <Provider contentfulStore={contentfulStore}>
       <MuiThemeProvider theme={theme}>
@@ -169,7 +168,9 @@ const App = () => {
               className={clsx(matches ? classes.smContent : classes.content, {
                 [matches ? classes.smContentShift : classes.contentShift]: menuVisible,
               })}>
-              {main}
+              <Route path="/:lng?" component={TranslatedRoutes} />
+              <Palvelut />
+              <Footer />
             </main>
           </div>
           <PalautePopup />
