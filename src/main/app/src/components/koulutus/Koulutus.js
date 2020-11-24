@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useStores } from '#/src/hooks';
 import { Link as MuiLink, Typography, Box, makeStyles, Hidden } from '@material-ui/core';
 import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
 import { useTranslation } from 'react-i18next';
@@ -74,7 +73,6 @@ const Koulutus = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { oid } = useParams();
-  const { hakuStore } = useStores();
   const { t } = useTranslation();
 
   // TODO: There is absolutely no error handling atm.
@@ -137,7 +135,7 @@ const Koulutus = () => {
           <Box mt={5} ml={9} alignSelf="start">
             <Murupolku
               path={[
-                { name: t('koulutus.hakutulos'), link: hakuStore.createHakuUrl },
+                { name: t('koulutus.hakutulos'), link: urls.createHakuUrl },
                 { name: l.localize(koulutus?.tutkintoNimi) },
               ]}
             />
