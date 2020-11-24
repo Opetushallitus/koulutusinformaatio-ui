@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
+  Accordion as MuiAccordion,
+  AccordionSummary,
+  AccordionDetails,
   Typography,
   makeStyles,
 } from '@material-ui/core';
@@ -38,8 +38,8 @@ const Accordion = (props) => {
   return (
     <div className={classes.root}>
       {items.map((item, i) => (
-        <ExpansionPanel className={classes.panel} elevation={0} key={i}>
-          <ExpansionPanelSummary
+        <MuiAccordion className={classes.panel} elevation={0} key={i}>
+          <AccordionSummary
             classes={{
               root: classes.test,
               expanded: classes.expanded,
@@ -50,11 +50,11 @@ const Accordion = (props) => {
             aria-controls={`panel${i}a-content`}
             id={`panel${i}a-header`}>
             <Typography className={classes.heading}>{item.title}</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
+          </AccordionSummary>
+          <AccordionDetails>
             <Typography>{item.content}</Typography>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
+          </AccordionDetails>
+        </MuiAccordion>
       ))}
     </div>
   );

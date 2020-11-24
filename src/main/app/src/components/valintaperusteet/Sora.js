@@ -1,7 +1,6 @@
 import { Typography, Box } from '@material-ui/core';
 import React from 'react';
-import ReactHtmlParser from 'react-html-parser';
-import { Localizer as l } from '#/src/tools/Utils';
+import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
 import { first } from 'lodash';
 import Grid from '@material-ui/core/Grid';
 import hyphenated from '#/src/components/valintaperusteet/hyphenated';
@@ -36,7 +35,7 @@ const Sora = ({ metadata: { kuvaus }, nimi }) => {
               {l.localize(nimi)}
             </Typography>
           </Box>
-          {ReactHtmlParser(html, {
+          {sanitizedHTMLParser(html, {
             transform: tagHeaders,
           })}
         </Grid>

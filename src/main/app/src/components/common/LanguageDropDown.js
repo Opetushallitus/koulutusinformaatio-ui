@@ -54,7 +54,7 @@ const LanguageDropDown = () => {
           input={<CustomInput />}
           IconComponent={iconComponent}>
           {supportedLanguages.map((langCode) => (
-            <MenuItem value={langCode}>
+            <MenuItem key={langCode} value={langCode}>
               {t(`kielivalinta.${LANG_NAME_BY_CODE[langCode]}`)}
             </MenuItem>
           ))}

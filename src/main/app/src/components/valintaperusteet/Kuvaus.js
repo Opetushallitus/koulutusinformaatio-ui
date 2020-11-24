@@ -11,13 +11,12 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Localizer as l } from '#/src/tools/Utils';
+import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
 import { first, last, isEmpty } from 'lodash';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import { colors } from '#/src/colors';
 import Spacer from '#/src/components/common/Spacer';
-import ReactHtmlParser from 'react-html-parser';
 import hyphenated from '#/src/components/valintaperusteet/hyphenated';
 
 const StyledTableRow = withStyles((theme) => ({
@@ -60,7 +59,7 @@ const Teksti = ({ data }) => {
   const html = data[lang] || first(Object.values(data));
   return (
     <Grid item xs={12} sm={12} md={12}>
-      {ReactHtmlParser(html, {
+      {sanitizedHTMLParser(html, {
         transform: tagHeaders,
       })}
     </Grid>
@@ -171,7 +170,7 @@ export const KuvausSisallysluettelo = (kuvaus) => (Lnk) => {
   };
   const lang = l.getLanguage();
   const html = kuvaus[lang] || first(Object.values(kuvaus));
-  return ReactHtmlParser(html, {
+  return sanitizedHTMLParser(html, {
     transform: onlyHeaders,
   });
 };
@@ -191,7 +190,7 @@ const Kuvaus = ({ kuvaus, valintatavat }) => {
             </Typography>
             <Spacer />
           </Box>
-          {ReactHtmlParser(html, {
+          {sanitizedHTMLParser(html, {
             transform: tagHeaders,
           })}
         </Grid>

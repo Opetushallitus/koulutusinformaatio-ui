@@ -18,12 +18,12 @@ if ('serviceWorker' in navigator) {
   if (!window.Cypress) {
     console.log('Registering service worker');
     navigator.serviceWorker
-      .register('./service-worker-custom.js', { scope: '/konfo/' })
+      .register('/konfo/service-worker-custom.js', { scope: '/konfo/' })
       .then(
-        function(registration) {
+        function (registration) {
           console.log('Service worker registration succeeded:', registration);
         },
-        /*catch*/ function(error) {
+        /*catch*/ function (error) {
           console.log('Service worker registration failed:', error);
         }
       );
