@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/styles';
 import { Localizer as l } from '#/src/tools/Utils';
 import { format } from 'date-fns';
+import { KOULUTUS_TYYPPI } from '#/src/constants';
 
 const useStyles = makeStyles((theme) => ({
   koulutusInfoGridIcon: {
@@ -22,25 +23,25 @@ const useStyles = makeStyles((theme) => ({
 const suunniteltuKesto = (t, vuosi, kk) => {
   if (!vuosi && !kk) {
     return t('koulutus.ei-kestoa');
-  } else {
-    return [
-      vuosi === '1'
-        ? t('koulutus.kesto-vuosi')
-        : vuosi
-        ? t('koulutus.kesto-vuosia', { vuosi })
-        : null,
-      kk === '1'
-        ? t('koulutus.kesto-kuukausi')
-        : kk
-        ? t('koulutus.kesto-kuukautta', { kk })
-        : null,
-    ].join('\n');
   }
+
+  return [
+    vuosi && t('koulutus.kesto-vuosi', { count: vuosi }),
+    kk && t('koulutus.kesto-kuukausi', { count: kk }),
+  ]
+    .filter(Boolean)
+    .join('\n');
 };
+
+const localizeMap = (v) => l.localize(v);
+const hasNimike = (tyyppi) =>
+  tyyppi !== KOULUTUS_TYYPPI.AMM_TUTKINNON_OSA &&
+  tyyppi !== KOULUTUS_TYYPPI.AMM_OSAAMISALA;
 
 const ToteutusInfoGrid = (props) => {
   const classes = useStyles();
   const {
+    koulutusTyyppi,
     nimikkeet,
     kielet,
     laajuus,
@@ -53,18 +54,10 @@ const ToteutusInfoGrid = (props) => {
     apuraha,
   } = props;
   const { t } = useTranslation();
-  const currentLanguage = l.getLanguage();
-  const nimikeString = nimikkeet
-    ? nimikkeet
-        .filter((elem) => elem.kieli === currentLanguage)
-        .map((elem) => elem.arvo)
-        .join('\n')
-    : t('koulutus.ei-tutkintonimiketta');
-  const kieliString = kielet
-    ? kielet.map((kieliObj) => l.localize(kieliObj)).join('\n')
-    : '';
+
+  const kieliString = kielet?.map(localizeMap).join('\n') ?? '';
   const laajuusString = !laajuus.includes(undefined)
-    ? laajuus.map((elem) => l.localize(elem)).join(' ')
+    ? laajuus.map(localizeMap).join(' ')
     : t('koulutus.ei-laajuutta');
   const kestoString = suunniteltuKesto(
     t,
@@ -74,29 +67,30 @@ const ToteutusInfoGrid = (props) => {
   const aloitusString = aloitus[0]
     ? format(new Date(aloitus[1]), 'd.M.y')
     : `${l.localize(aloitus[2])} ${aloitus[3]}`;
-  const opetusAikaString = opetusaika
-    ? opetusaika.map((aikaObj) => l.localize(aikaObj)).join('\n')
-    : '';
-  const opetustapaString = opetustapa
-    ? opetustapa.map((tapaObj) => l.localize(tapaObj)).join('\n')
-    : '';
-  const maksullisuusString = maksullisuus
-    ? maksullisuus[0]
-      ? `${maksullisuus[1]} €`
-      : t('toteutus.ei-maksua')
-    : '';
-  const apurahaString = apuraha
-    ? apuraha[0]
-      ? `${apuraha[1]} €`
-      : t('toteutus.ei-apurahaa')
-    : '';
+  const opetusAikaString = opetusaika?.map(localizeMap).join('\n') ?? '';
+  const opetustapaString = opetustapa?.map(localizeMap).join('\n') ?? '';
+  const maksullisuusString = maksullisuus ? `${maksullisuus} €` : t('toteutus.ei-maksua');
+  const apurahaString = apuraha ? `${apuraha} €` : t('toteutus.ei-apurahaa');
 
-  const perustiedotData = [
-    {
+  const perustiedotData = [];
+
+  if (hasNimike(koulutusTyyppi)) {
+    const currentLanguage = l.getLanguage();
+    const nimikeString = nimikkeet
+      ? nimikkeet
+          .filter((elem) => elem.kieli === currentLanguage)
+          .map((elem) => elem.arvo)
+          .join('\n')
+      : t('koulutus.ei-tutkintonimiketta');
+
+    perustiedotData.push({
       icon: <SchoolOutlinedIcon className={classes.koulutusInfoGridIcon} />,
       title: t('toteutus.tutkintonimikkeet'),
       text: nimikeString,
-    },
+    });
+  }
+
+  perustiedotData.push(
     {
       icon: <ChatBubbleOutlineIcon className={classes.koulutusInfoGridIcon} />,
       title: t('toteutus.opetuskieli'),
@@ -136,8 +130,9 @@ const ToteutusInfoGrid = (props) => {
       icon: 'ApurahaIcon',
       title: t('toteutus.apuraha'),
       text: apurahaString,
-    },
-  ];
+    }
+  );
+
   return <InfoGrid heading={t('koulutus.tiedot')} gridData={perustiedotData} />;
 };
 

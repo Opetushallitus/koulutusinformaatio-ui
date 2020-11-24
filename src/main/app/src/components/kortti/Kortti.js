@@ -58,35 +58,35 @@ const Kortti = ({ id }) => {
   const kortti = contentfulStore.data.kortti[id];
 
   const linkit = kortti.linkit || [];
-  const imgUrl = (uutinen) => {
-    const assetForEntry = (entry) => {
-      const image = entry.image || {};
-      return image ? asset[image.id] : null;
-    };
-    const a = assetForEntry(uutinen);
+  const getImgUrl = (uutinen) => {
+    const a = asset[uutinen.image?.id];
     return a ? contentfulStore.assetUrl(a.url) : null;
   };
+
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Card className={clsx(classes.card, classes[kortti.color])}>
-        <CardMedia className={classes.media} image={imgUrl(kortti)} title={kortti.name} />
+        <CardMedia
+          className={classes.media}
+          image={getImgUrl(kortti)}
+          title={kortti.name}
+        />
         <CardContent>
           <h2 className={classes.otsikko}>{kortti.name}</h2>
-          {linkit.map((l) => {
-            const page = sivu[(l || {}).id];
-            return page ? (
+          {linkit
+            .map((l) => sivu[l?.id])
+            .filter(Boolean)
+            .map((page) => (
               <div className={classes.link} key={page.id}>
                 <Icon>chevron_right</Icon>
                 <LocalizedLink
                   component={RouterLink}
                   className={classes.linkElement}
-                  to={forwardTo(page.id)}
-                  data-cy="kortti-link">
+                  to={forwardTo(page.id)}>
                   {page.name}
                 </LocalizedLink>
               </div>
-            ) : null;
-          })}
+            ))}
         </CardContent>
       </Card>
     </Grid>

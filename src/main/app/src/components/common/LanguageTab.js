@@ -20,6 +20,7 @@ const LanguageTab = () => {
       onChange={handleChange}>
       {supportedLanguages.map((langCode) => (
         <Tab
+          key={langCode}
           label={t(`kielivalinta.${LANG_NAME_BY_CODE[langCode]}`).toUpperCase()}
           value={langCode}
         />

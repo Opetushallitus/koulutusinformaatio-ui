@@ -7,12 +7,10 @@ import {
   getEperusteKuvaus,
 } from '#/src/api/konfoApi';
 import _ from 'lodash';
+import { KOULUTUS_TYYPPI } from '#/src/constants';
 
 const IDLE_STATUS = 'idle';
 const LOADING_STATUS = 'loading';
-
-export const TYYPPI_AMM = 'amm';
-export const TYYPPI_AMM_TUTKINNON_OSA = 'amm-tutkinnon-osa';
 
 export const initialState = {
   koulutusStatus: IDLE_STATUS,
@@ -105,49 +103,34 @@ export const {
 } = koulutusSlice.actions;
 export default koulutusSlice.reducer;
 
-const findEperuste = (eperusteet) => (id) =>
-  _.first(eperusteet.filter((t) => t.id === id));
-
-const findTutkinnonOsaViitteet = (eperuste) => (id) =>
-  _.first(
-    eperuste.suoritustavat.flatMap((t) =>
-      t.tutkinnonOsaViitteet.filter((tv) => tv.id === id)
-    )
-  );
-
 export const fetchKoulutus = (oid, draft) => async (dispatch) => {
   try {
     dispatch(fetchKoulutusStart());
     const koulutusData = await getKoulutus(oid, draft);
-    if (koulutusData?.koulutustyyppi === TYYPPI_AMM && koulutusData.ePerusteId) {
+    if (
+      (koulutusData?.koulutustyyppi === KOULUTUS_TYYPPI.AMM && koulutusData.ePerusteId) ||
+      (koulutusData?.koulutustyyppi === KOULUTUS_TYYPPI.AMM_OSAAMISALA &&
+        koulutusData.ePerusteId)
+    ) {
       const koulutusKuvausData = await getKoulutusKuvaus(koulutusData.ePerusteId);
       _.set(koulutusData, 'metadata.kuvaus', koulutusKuvausData);
-    } else if (koulutusData?.koulutustyyppi === TYYPPI_AMM_TUTKINNON_OSA) {
+    } else if (koulutusData?.koulutustyyppi === KOULUTUS_TYYPPI.AMM_TUTKINNON_OSA) {
       const tutkinnonOsat = koulutusData?.metadata?.tutkinnonOsat ?? [];
       const eperusteet = _.uniq(tutkinnonOsat.map((t) => t.ePerusteId));
-      var e = [];
+
+      let e = [];
       for (const index in eperusteet) {
         const id = eperusteet[index];
         const eperuste = await getEperusteKuvaus(id);
         e.push(eperuste);
       }
 
-      var pisteet = tutkinnonOsat
-        .map(({ ePerusteId, tutkinnonosaViite }) => {
-          const viite = findTutkinnonOsaViitteet(findEperuste(e)(ePerusteId))(
-            tutkinnonosaViite
-          );
-          return viite.laajuus;
-        })
+      let yksikko = tutkinnonOsat[0]?.opintojenLaajuusyksikko;
+      let pisteet = tutkinnonOsat
+        .map((tutkinnonOsa) => tutkinnonOsa.opintojenLaajuusNumero)
         .join(' + ');
 
-      _.set(koulutusData, 'metadata.opintojenLaajuusyksikko', {
-        nimi: {
-          sv: 'kompetenspoäng',
-          fi: 'osaamispistettä',
-          en: 'ECVET competence points',
-        },
-      });
+      _.set(koulutusData, 'metadata.opintojenLaajuusyksikko', yksikko);
       _.set(koulutusData, 'metadata.opintojenLaajuus', {
         nimi: {
           sv: pisteet,

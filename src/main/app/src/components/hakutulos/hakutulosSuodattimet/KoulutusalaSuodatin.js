@@ -16,9 +16,9 @@ import {
 import { ExpandMore, IndeterminateCheckBoxOutlined } from '@material-ui/icons';
 import SummaryContent from './SummaryContent';
 import {
-  SuodatinExpansionPanel,
-  SuodatinExpansionPanelSummary,
-  SuodatinExpansionPanelDetails,
+  SuodatinAccordion,
+  SuodatinAccordionSummary,
+  SuodatinAccordionDetails,
   SuodatinCheckbox,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
@@ -173,21 +173,21 @@ const KoulutusalaSuodatin = ({
   );
 
   return (
-    <SuodatinExpansionPanel
+    <SuodatinAccordion
       {...(summaryHidden && { className: classes.noBoxShadow })}
       elevation={elevation}
       defaultExpanded={expanded}>
       {!summaryHidden && (
-        <SuodatinExpansionPanelSummary expandIcon={<ExpandMore />}>
+        <SuodatinAccordionSummary expandIcon={<ExpandMore />}>
           <SummaryContent
             selectedFiltersStr={checkedKoulutusalatStr}
             maxCharLengthBeforeChipWithNumber={20}
             filterName={t('haku.koulutusalat')}
             displaySelected={displaySelected}
           />
-        </SuodatinExpansionPanelSummary>
+        </SuodatinAccordionSummary>
       )}
-      <SuodatinExpansionPanelDetails {...(summaryHidden && { style: { padding: 0 } })}>
+      <SuodatinAccordionDetails {...(summaryHidden && { style: { padding: 0 } })}>
         <List hidden={openedKoulutusala.length > 0} style={{ width: '100%' }}>
           {sortedKoulutusalat.map((koulutusalaArr) => {
             const labelId = `language-list-label-${koulutusalaArr[0]}`;
@@ -220,8 +220,8 @@ const KoulutusalaSuodatin = ({
           })}
         </List>
         <KoulutuksetTaso2 />
-      </SuodatinExpansionPanelDetails>
-    </SuodatinExpansionPanel>
+      </SuodatinAccordionDetails>
+    </SuodatinAccordion>
   );
 };
 
