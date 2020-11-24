@@ -1,13 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, Typography, useTheme } from '@material-ui/core';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
 import _ from 'lodash';
 import KoulutusKortti from './hakutulosKortit/KoulutusKortti';
 import OppilaitosKortti from './hakutulosKortit/OppilaitosKortti';
+import EmptyResult from '#/src/components/common/EmptyResult';
 
 const HakutulosResults = ({ selectedTab, koulutusHits, oppilaitosHits, keyword }) => {
-  const theme = useTheme();
   const { t } = useTranslation();
 
   if (selectedTab === 'koulutus' && _.size(koulutusHits) > 0) {
@@ -21,24 +19,10 @@ const HakutulosResults = ({ selectedTab, koulutusHits, oppilaitosHits, keyword }
     });
   }
   return (
-    <Grid
-      container
-      alignItems="center"
-      spacing={3}
-      style={{ padding: theme.spacing(9) }}
-      direction="column">
-      <Grid item>
-        <Typography variant="h1">{t('haku.ei-hakutuloksia', keyword)}</Typography>
-      </Grid>
-      <Grid item>
-        <Typography paragraph>{t('haku.summary', { keyword: keyword })}</Typography>
-      </Grid>
-      <Grid item>
-        <LocalizedLink underline="always" href="/konfo" variant="body1">
-          {t('haku.siirry-opintopolun-etusivulle')}
-        </LocalizedLink>
-      </Grid>
-    </Grid>
+    <EmptyResult
+      header={t('haku.ei-hakutuloksia')}
+      text={t('haku.summary', { keyword: keyword })}
+    />
   );
 };
 
