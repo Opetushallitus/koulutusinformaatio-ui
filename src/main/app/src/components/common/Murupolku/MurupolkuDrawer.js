@@ -13,6 +13,8 @@ import { Close } from '@material-ui/icons';
 import { colors } from '#/src/colors';
 import { MurupolkuFragment } from './MurupolkuFragment';
 
+const FRAGMENT_INDENT_STEP = 10;
+
 const useStyles = makeStyles((theme) => ({
   drawerToolbar: {
     ...theme.mixins.toolbar,
@@ -35,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
-    paddingRight: '10px',
   },
 }));
 
@@ -66,7 +67,9 @@ export const MurupolkuDrawer = ({ path, onClose, isOpen }) => {
         </Toolbar>
         <Box className={classes.drawerContainer}>
           {path.map(({ name, link, isHome }, index) => (
-            <Box className={classes.drawerItemWrapper}>
+            <Box
+              className={classes.drawerItemWrapper}
+              style={{ textIndent: `${index * FRAGMENT_INDENT_STEP}px` }}>
               <MurupolkuFragment
                 name={name}
                 link={link}

@@ -7,22 +7,24 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
 import { colors } from '#/src/colors';
 
+const BREADCRUMB_ICON_SPACING = '14px';
+
 const useStyles = makeStyles((theme) => ({
   home: {
     display: 'inline',
+    marginRight: BREADCRUMB_ICON_SPACING,
     verticalAlign: 'text-bottom',
-    marginRight: '10px',
     fontSize: '22px',
   },
   arrow: {
     display: 'inline',
+    marginRight: BREADCRUMB_ICON_SPACING,
     color: colors.lightGrey,
-    marginLeft: '16px',
-    marginRight: '16px',
     fontSize: '12px',
   },
   link: ({ isLast, isHome, link }) => ({
     ...theme.typography.body1,
+    marginRight: BREADCRUMB_ICON_SPACING,
     display: 'inline',
     cursor: 'default',
     '&:hover': {
@@ -41,12 +43,13 @@ const useStyles = makeStyles((theme) => ({
   }),
   collapsedPart: {
     ...theme.typography.body1,
+    marginRight: BREADCRUMB_ICON_SPACING,
     cursor: 'pointer',
     border: `1px solid ${colors.lightGrey}`,
     padding: '2px 12px',
     lineHeight: '24px',
     minWidth: 0,
-    '&:hover': {
+    '&:hover, &:active': {
       borderColor: colors.green,
     },
   },
