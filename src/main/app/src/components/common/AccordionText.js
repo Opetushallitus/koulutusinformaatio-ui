@@ -3,7 +3,7 @@ import { Collapse, makeStyles, Typography } from '@material-ui/core';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import React, { useState } from 'react';
-import ReactHtmlParser from 'react-html-parser';
+import { sanitizedHTMLParser } from '#/src/tools/Utils';
 
 const useStyles = makeStyles(() => ({
   heading: {
@@ -37,7 +37,7 @@ export const AccordionText = ({ text, title }) => {
       </Typography>
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
         <Typography variant="body1" component="div">
-          {ReactHtmlParser(text)}
+          {sanitizedHTMLParser(text)}
         </Typography>
       </Collapse>
     </>

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '#/src/hooks';
 import { Link as MuiLink, Typography, Box, makeStyles, Hidden } from '@material-ui/core';
-import { Localizer as l } from '#/src/tools/Utils';
+import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import KoulutusInfoGrid from './KoulutusInfoGrid';
@@ -29,6 +29,7 @@ import clsx from 'clsx';
 import Spacer from '#/src/components/common/Spacer';
 import Accordion from '#/src/components/common/Accordion';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import { urls } from 'oph-urls-js';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },
@@ -73,8 +74,10 @@ const Koulutus = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { oid } = useParams();
-  const { hakuStore, urlStore } = useStores();
+  const { hakuStore } = useStores();
   const { t } = useTranslation();
+
+  // TODO: There is absolutely no error handling atm.
   const koulutus = useSelector(selectKoulutus(oid), shallowEqual);
   const suositellutKoulutukset = useSelector(
     (state) => selectSuositellutKoulutukset(state),
@@ -202,15 +205,11 @@ const Koulutus = () => {
                 title,
                 content: (
                   <>
-                    <span
-                      dangerouslySetInnerHTML={{
-                        __html: createTutkinnonOsaHtml(foundTutkinnonOsa),
-                      }}
-                    />
+                    {sanitizedHTMLParser(createTutkinnonOsaHtml(foundTutkinnonOsa))}
                     <MuiLink
                       target="_blank"
                       rel="noopener"
-                      href={urlStore.urls.url(
+                      href={urls.url(
                         'eperusteet-service.eperuste.kuvaus',
                         l.getLanguage(),
                         ePerusteId,
