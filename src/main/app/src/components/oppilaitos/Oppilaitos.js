@@ -12,7 +12,7 @@ import { colors } from '#/src/colors';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import Murupolku from '#/src/components/common/Murupolku';
 import LoadingCircle from '#/src/components/common/LoadingCircle';
-import EmptyResult from '#/src/components/common/EmptyResult';
+import NotFound from '#/src/NotFound';
 import OppilaitosinfoGrid from './OppilaitosinfoGrid';
 import TarjontaList from './TarjontaList';
 import TietoaOpiskelusta from './TietoaOpiskelusta';
@@ -55,7 +55,7 @@ const Oppilaitos = (props) => {
 
   const OppilaitosData = () => {
     if (oppilaitosError) {
-      return <EmptyResult header={t('oppilaitos.oppilaitoksen-tietoja-ei-loydetty')} />;
+      return <NotFound />;
     }
     return (
       <Container className={classes.container}>
@@ -85,8 +85,8 @@ const Oppilaitos = (props) => {
             className={classes.root}
             opiskelijoita={oppilaitos?.oppilaitos?.metadata?.opiskelijoita ?? ''}
             toimipisteita={oppilaitos?.oppilaitos?.metadata?.toimipisteita ?? ''}
-            kotipaikat={_.map(_.get(oppilaitos, 'osat', []), 'kotipaikka')}
-            opetuskieli={_.get(oppilaitos, 'opetuskieli', [])}
+            kotipaikat={_.map(oppilaitos?.osat, 'kotipaikka')}
+            opetuskieli={oppilaitos?.opetuskieli ?? []}
             koulutusohjelmia={oppilaitos?.koulutusohjelmia ?? ''}
           />
           {esittelyHtml && (
