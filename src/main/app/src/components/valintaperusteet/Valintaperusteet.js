@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useStores } from '../../hooks';
+import { urls } from 'oph-urls-js';
 import { makeStyles } from '@material-ui/core';
 import { Localizer as l } from '../../tools/Utils';
 import { useTranslation } from 'react-i18next';
@@ -46,22 +46,22 @@ const fetchUrl = (oid, url) => {
     : Promise.resolve(defaultObj);
 };
 
-const getValintaperusteet = async (urlStore, oid) => {
-  return fetchUrl(oid, urlStore.urls.url('konfo-backend.valintaperusteet', oid));
+const getValintaperusteet = async (oid) => {
+  return fetchUrl(oid, urls.url('konfo-backend.valintaperusteet', oid));
 };
-const getHakukohde = async (urlStore, oid) => {
-  return fetchUrl(oid, urlStore.urls.url('konfo-backend.hakukohde', oid));
+const getHakukohde = async (oid) => {
+  return fetchUrl(oid, urls.url('konfo-backend.hakukohde', oid));
 };
-const getHaku = async (urlStore, oid) => {
-  return fetchUrl(oid, urlStore.urls.url('konfo-backend.haku', oid));
+const getHaku = async (oid) => {
+  return fetchUrl(oid, urls.url('konfo-backend.haku', oid));
 };
-const getToteutus = async (urlStore, oid) => {
-  return fetchUrl(oid, urlStore.urls.url('konfo-backend.toteutus', oid));
+const getToteutus = async (oid) => {
+  return fetchUrl(oid, urls.url('konfo-backend.toteutus', oid));
 };
 
-/*const getOppilaitos = async (urlStore, oid) => {
+/*const getOppilaitos = async (oid) => {
   return superagent
-    .get(urlStore.urls.url('konfo-backend.oppilaitos', oid))
+    .get(urls.url('konfo-backend.oppilaitos', oid))
     .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
     .then((res) => res.body)
     .catch((error) => console.log(error));
@@ -86,7 +86,6 @@ const Row = ({ children }) => {
 const Valintaperusteet = () => {
   const classes = useStyles();
   const { hakukohdeOid, valintaperusteOid } = useParams();
-  const { urlStore } = useStores();
   const { t } = useTranslation();
   const [valintaperuste, setValintaperuste] = useState();
   const [hakukohde, setHakukohde] = useState();
@@ -95,12 +94,12 @@ const Valintaperusteet = () => {
 
   useEffect(() => {
     async function getData() {
-      const v = getValintaperusteet(urlStore, valintaperusteOid);
-      const h = await getHakukohde(urlStore, hakukohdeOid);
+      const v = getValintaperusteet(valintaperusteOid);
+      const h = await getHakukohde(hakukohdeOid);
       setHakukohde(h);
-      const hk = await getHaku(urlStore, h.hakuOid);
+      const hk = await getHaku(h.hakuOid);
       setHaku(hk);
-      setToteutus(await getToteutus(urlStore, h.toteutus.oid));
+      setToteutus(await getToteutus(h.toteutus.oid));
       setValintaperuste(await v);
     }
 
@@ -112,7 +111,6 @@ const Valintaperusteet = () => {
     setValintaperuste,
     setHakukohde,
     setHaku,
-    urlStore,
   ]);
 
   const loading = !valintaperuste || !hakukohde || !haku || !toteutus;
@@ -127,7 +125,7 @@ const Valintaperusteet = () => {
       <Row>
         <Murupolku
           path={[
-            { name: t('koulutus.hakutulos'), link: 'hakuStore.createHakuUrl' },
+            { name: t('koulutus.hakutulos'), link: urls.createHakuUrl },
             { name: l.localize(valintaperuste?.nimi) },
           ]}
         />

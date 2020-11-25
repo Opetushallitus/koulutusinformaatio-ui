@@ -38,7 +38,7 @@ const ImageCardWithText = (props) => {
   const { image, cardText } = props;
   return (
     <div className={classes.root}>
-      <img src={image} alt="" className={classes.img} />
+      <img src={image} alt={cardText} className={classes.img} />
       <Box display="flex" alignItems="center" component="span" className={classes.box}>
         <Typography variant="body1" className={classes.text}>
           {cardText}
