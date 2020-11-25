@@ -30,16 +30,19 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       textDecoration: 'none',
     },
-    ...(link && {
-      cursor: 'pointer',
-      color: colors.green,
-    }),
-    ...(isLast &&
-      !isHome && {
-        color: theme.palette.text.primary,
-        pointerEvents: 'none',
-        fontWeight: 600,
-      }),
+    ...(link
+      ? {
+          cursor: 'pointer',
+          color: colors.green,
+        }
+      : {}),
+    ...(isLast && !isHome
+      ? {
+          color: theme.palette.text.primary,
+          pointerEvents: 'none',
+          fontWeight: 600,
+        }
+      : {}),
   }),
   collapsedPart: {
     ...theme.typography.body1,
@@ -69,11 +72,7 @@ export const MurupolkuFragment = (props) => {
 
   return (
     <span>
-      {!isHome ? (
-        <ArrowForwardIosIcon aria-hidden="true" className={classes.arrow} />
-      ) : (
-        ''
-      )}
+      {!isHome && <ArrowForwardIosIcon aria-hidden="true" className={classes.arrow} />}
       {isCollapsedPart ? (
         <Button className={classes.collapsedPart} onClick={openDrawer}>
           {name}
@@ -91,7 +90,7 @@ export const MurupolkuFragment = (props) => {
           className={classes.link}
           onClick={closeDrawer}
           aria-current={isLast ? 'location' : undefined}>
-          {isHome ? <HomeOutlinedIcon aria-hidden="true" className={classes.home} /> : ''}
+          {isHome && <HomeOutlinedIcon aria-hidden="true" className={classes.home} />}
           {name}
         </LocalizedLink>
       )}
