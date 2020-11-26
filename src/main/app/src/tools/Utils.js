@@ -1,5 +1,5 @@
 import _fp from 'lodash/fp';
-import padStart from 'lodash/padStart';
+import { format } from 'date-fns';
 import stripTags from 'striptags';
 import i18n from './i18n';
 import ReactHtmlParser from 'react-html-parser';
@@ -134,27 +134,23 @@ export const TimeMillisParser = {
   },
 };
 
-export const FormatDate = {
-  formatDateString(dateString, format) {
-    if (!dateString) {
-      return '';
-    }
+export function formatDateString(dateString, dateFormat = 'd.M.y HH:mm') {
+  if (!dateString) {
+    return '';
+  }
 
-    const [date, time = ''] = dateString.split('T');
-    const [year, month, day] = date.split('-');
-    const [hour = '0', minute = '0'] = time.split(':');
+  const klo = i18n.t('lomake.klo');
 
-    let formattedDate = format;
+  if (klo !== '') {
+    dateFormat = "d.M.y 'klo' HH:mm";
+  }
 
-    formattedDate = formattedDate.replace(/DD/g, padStart(day, 2, '0'));
-    formattedDate = formattedDate.replace(/MM/g, padStart(month, 2, '0'));
-    formattedDate = formattedDate.replace(/YYYY/g, year);
-    formattedDate = formattedDate.replace(/HH/g, padStart(hour, 2, '0'));
-    formattedDate = formattedDate.replace(/mm/g, padStart(minute, 2, '0'));
+  return format(new Date(dateString), dateFormat);
+}
 
-    return formattedDate;
-  },
-};
+export function formatDateRange(start, end) {
+  return `${formatDateString(start)} \u2013 ${end ? formatDateString(end) : ''}`;
+}
 
 const ALLOWED_HTML_TAGS = [
   'b',

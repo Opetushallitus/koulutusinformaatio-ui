@@ -2,18 +2,11 @@ import React from 'react';
 import { Box, Card, CardContent, Grid, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
-import { Localizer as l } from '#/src/tools/Utils';
+import { formatDateString, Localizer as l, Parser as p } from '#/src/tools/Utils';
 import { colors } from '#/src/colors';
 import Spacer from '#/src/components/common/Spacer';
 import hyphenated from '#/src/components/valintaperusteet/hyphenated';
 
-const formatHakuaika = (a, klo) => {
-  const toString = (d) =>
-    `${d.getDay()}.${d.getMonth()}.${d.getFullYear()} ${klo} ${String(
-      d.getHours()
-    ).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-  return `${toString(a)}`;
-};
 const Osoite = ({ alkaa, paattyy, lisatietoja, osoite, postinumero }) => {
   const { t } = useTranslation();
   return (
@@ -33,17 +26,13 @@ const Osoite = ({ alkaa, paattyy, lisatietoja, osoite, postinumero }) => {
       <Grid item xs={6}>
         <Box py={1}>
           <Typography variant="h5">{t('valintaperuste.alkaa')}</Typography>
-          <Typography variant="body1">
-            {formatHakuaika(new Date(Date.parse(alkaa)), t('lomake.klo'))}
-          </Typography>
+          <Typography variant="body1">{formatDateString(alkaa)}</Typography>
         </Box>
       </Grid>
       <Grid item xs={6}>
         <Box py={1}>
           <Typography variant="h5">{t('valintaperuste.paattyy')}</Typography>
-          <Typography variant="body1">
-            {formatHakuaika(new Date(Date.parse(paattyy)), t('lomake.klo'))}
-          </Typography>
+          <Typography variant="body1">{formatDateString(paattyy)}</Typography>
         </Box>
       </Grid>
       {!_.isEmpty(lisatietoja) ? (

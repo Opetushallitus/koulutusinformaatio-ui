@@ -10,19 +10,12 @@ import {
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { groupBy, sortBy, first, uniq, isEmpty } from 'lodash';
-import { Localizer as l } from '#/src/tools/Utils';
+import { formatDateString, Localizer as l } from '#/src/tools/Utils';
 import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
 import { colors } from '#/src/colors';
 import Spacer from '#/src/components/common/Spacer';
 import hyphenated from '#/src/components/valintaperusteet/hyphenated';
 
-const formatHakuaika = (a, klo) => {
-  const toString = (d) =>
-    `${d.getDay()}.${d.getMonth()}.${d.getFullYear()} ${klo} ${String(
-      d.getHours()
-    ).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-  return `${toString(a)}`;
-};
 const Osoite = ({ toimitusaika, sahkoposti, osoite, postinumero }) => {
   const { t } = useTranslation();
   return (
@@ -51,9 +44,7 @@ const Osoite = ({ toimitusaika, sahkoposti, osoite, postinumero }) => {
           <Typography variant="h5">
             {t('valintaperuste.toimitettava-viimeistään')}
           </Typography>
-          <Typography variant="body1">
-            {formatHakuaika(new Date(Date.parse(toimitusaika)), t('lomake.klo'))}
-          </Typography>
+          <Typography variant="body1">{formatDateString(toimitusaika)}</Typography>
         </Box>
       </Grid>
     </>

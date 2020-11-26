@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import { Grid, Box, Card, CardContent, CardActions, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
-import { Localizer as l } from '../../tools/Utils';
+import { formatDateRange, Localizer as l } from '../../tools/Utils';
 import { first, find, concat } from 'lodash';
 import Spacer from '#/src/components/common/Spacer';
 import { colors } from '#/src/colors';
@@ -39,13 +39,6 @@ const firstOnGoingDate = (dates, now) => {
   return find(dates, ([a, l]) => a <= now && (!l || now <= l));
 };
 
-const formatHakuaika = ([a, l], klo) => {
-  const toString = (d) =>
-    `${d.getDay()}.${d.getMonth()}.${d.getFullYear()} ${klo} ${String(
-      d.getHours()
-    ).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-  return `${toString(a)} ${l ? ' - ' + toString(l) : ''}`;
-};
 const LomakeButton = ({ children, ...props }) => {
   return (
     <Button
@@ -115,7 +108,7 @@ const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
             <Grid item xs={12}>
               <Row title={'Haku:'}>{l.localize(haku?.nimi)}</Row>
               <Row title={'Hakuaika:'}>
-                {hakuaika ? formatHakuaika(hakuaika, t('lomake.klo')) : '-'}
+                {hakuaika ? formatDateRange(hakuaika[0], hakuaika[1]) : '-'}
               </Row>
               {aloituspaikat ? (
                 <Row title={'Opiskelupaikkoja:'}>
