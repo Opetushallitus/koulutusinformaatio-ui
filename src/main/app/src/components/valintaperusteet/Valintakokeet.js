@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Card, CardContent, Grid, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { first, isEmpty } from 'lodash';
+import _ from 'lodash';
 import { Localizer as l } from '#/src/tools/Utils';
 import { colors } from '#/src/colors';
 import Spacer from '#/src/components/common/Spacer';
@@ -16,13 +16,6 @@ const formatHakuaika = (a, klo) => {
 };
 const Osoite = ({ alkaa, paattyy, lisatietoja, osoite, postinumero }) => {
   const { t } = useTranslation();
-  const postinumeroAsString = () => {
-    return postinumero
-      ? `, ${first(postinumero.koodiUri.replace('posti_', '').split('#'))} ${l.localize(
-          postinumero.nimi
-        )}`
-      : null;
-  };
   return (
     <>
       {postinumero ? (
@@ -31,7 +24,7 @@ const Osoite = ({ alkaa, paattyy, lisatietoja, osoite, postinumero }) => {
             <Box py={1}>
               <Typography variant="h5">{t('valintaperuste.osoite')}</Typography>
               <Typography variant="body1">
-                {`${l.localize(osoite)}${postinumeroAsString()}`}
+                {l.localizeOsoite(osoite, postinumero)}
               </Typography>
             </Box>
           </Grid>
@@ -53,7 +46,7 @@ const Osoite = ({ alkaa, paattyy, lisatietoja, osoite, postinumero }) => {
           </Typography>
         </Box>
       </Grid>
-      {!isEmpty(lisatietoja) ? (
+      {!_.isEmpty(lisatietoja) ? (
         <>
           <Grid item xs={12}>
             <Box py={1}>
@@ -70,7 +63,7 @@ const Osoite = ({ alkaa, paattyy, lisatietoja, osoite, postinumero }) => {
 };
 
 export const ValintakokeetSisallysluettelo = (valintakokeet) => (Lnk) => {
-  return !isEmpty(valintakokeet)
+  return !_.isEmpty(valintakokeet)
     ? valintakokeet.map(({ tyyppi: { nimi } }, index) => {
         return Lnk(l.localize(nimi), index + 1, true);
       })

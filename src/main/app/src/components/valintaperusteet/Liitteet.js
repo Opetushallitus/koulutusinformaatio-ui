@@ -25,13 +25,6 @@ const formatHakuaika = (a, klo) => {
 };
 const Osoite = ({ toimitusaika, sahkoposti, osoite, postinumero }) => {
   const { t } = useTranslation();
-  const postinumeroAsString = () => {
-    return postinumero
-      ? `, ${first(postinumero.koodiUri.replace('posti_', '').split('#'))} ${l.localize(
-          postinumero.nimi
-        )}`
-      : null;
-  };
   return (
     <>
       <Grid item xs={12}>
@@ -46,7 +39,7 @@ const Osoite = ({ toimitusaika, sahkoposti, osoite, postinumero }) => {
             <Box m={1}>
               <Typography variant="h5">{t('valintaperuste.toimituspaikka')}</Typography>
               <Typography variant="body1">
-                {`${sahkoposti} - ${l.localize(osoite)}${postinumeroAsString()}`}
+                {`${sahkoposti} - ${l.localizeOsoite(osoite, postinumero)}`}
               </Typography>
             </Box>
           </Grid>

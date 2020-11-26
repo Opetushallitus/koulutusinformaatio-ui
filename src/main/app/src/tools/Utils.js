@@ -61,6 +61,21 @@ export const Localizer = {
   getTranslationForKey(key = '') {
     return i18n.t(key);
   },
+  localizePostitoimialueByKoodi(postinumeroKoodi) {
+    return postinumeroKoodi
+      ? `, ${Parser.koodiUriToPostinumero(
+          postinumeroKoodi?.koodiUri
+        )} ${Localizer.localize(postinumeroKoodi?.nimi)}`
+      : '';
+  },
+  localizeOsoite(katuosoite, postinumeroKoodi) {
+    if (!katuosoite || !postinumeroKoodi) {
+      return '';
+    }
+    return `${Localizer.localize(katuosoite)}${Localizer.localizePostitoimialueByKoodi(
+      postinumeroKoodi
+    )}`;
+  },
 };
 
 export const Parser = {
@@ -73,7 +88,7 @@ export const Parser = {
     return html;
   },
   koodiUriToPostinumero(str = '') {
-    return str.slice(0, str.indexOf('#')).replace(/[^0-9]/g, '');
+    return str.match(/^posti_(\d+)/)?.[1] ?? '';
   },
 };
 
