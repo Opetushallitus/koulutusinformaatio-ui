@@ -116,11 +116,11 @@ const Toteutus = () => {
       dispatch(fetchToteutus(oid));
     }
     // TODO: Get rid of koulutus call here when opintolaajuus comes from toteutus -backend
-    if (!koulutus && koulutusOid) {
+    if (!koulutus && koulutusOid && koulutusNotFetched) {
       dispatch(fetchKoulutusWithRelatedData(toteutus.koulutusOid));
       setKoulutusNotFetched(false);
     }
-  }, [toteutus, dispatch, oid, koulutus, koulutusOid]);
+  }, [toteutus, dispatch, oid, koulutus, koulutusOid, koulutusNotFetched]);
 
   const opetus = toteutus?.metadata?.opetus;
 
