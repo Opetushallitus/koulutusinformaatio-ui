@@ -1,15 +1,22 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import { Grid, Box, Card, CardContent, CardActions, Typography } from '@material-ui/core';
+import _ from 'lodash';
+import {
+  Grid,
+  Badge,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardActions,
+  Typography,
+  withStyles,
+  makeStyles,
+} from '@material-ui/core';
+import { isWithinInterval } from 'date-fns';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import { formatDateRange, Localizer as l } from '../../tools/Utils';
-import { first, find, concat } from 'lodash';
+import { formatDateRange, Localizer as l } from '#/src/tools/Utils';
 import Spacer from '#/src/components/common/Spacer';
 import { colors } from '#/src/colors';
-import Badge from '@material-ui/core/Badge';
-import { withStyles } from '@material-ui/core/styles';
-import { isWithinInterval } from 'date-fns';
 
 const useStyles = makeStyles({
   card: {
@@ -36,7 +43,7 @@ const parseHakuajat = (hakuajat) =>
   ]);
 
 const firstOnGoingDate = (dates, now) => {
-  return find(dates, ([a, l]) => a <= now && (!l || now <= l));
+  return _.find(dates, ([a, l]) => a <= now && (!l || now <= l));
 };
 
 const LomakeButton = ({ children, ...props }) => {
@@ -52,12 +59,12 @@ const LomakeButton = ({ children, ...props }) => {
   );
 };
 
-const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
+export const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const hakuajat = parseHakuajat(haku.hakuajat);
   const now = new Date();
-  const hakuaika = firstOnGoingDate(hakuajat, now) || first(hakuajat);
+  const hakuaika = firstOnGoingDate(hakuajat, now) || _.first(hakuajat);
   const aloituspaikat = hakukohde.aloituspaikat;
   const ensikertalaisille = hakukohde.ensikertalaisenAloituspaikat;
   const Row = ({ title, children }) => {
@@ -82,7 +89,7 @@ const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
         end: hakuaika.paattyy ? new Date(hakuaika.paattyy) : now,
       });
     });
-  const isOpen = lomakeIsOpen(concat(haku.hakuajat, hakukohde.hakuajat));
+  const isOpen = lomakeIsOpen(_.concat(haku.hakuajat, hakukohde.hakuajat));
   return (
     <>
       <Box pb={2}>
@@ -143,5 +150,3 @@ const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
     </>
   );
 };
-
-export default Lomake;

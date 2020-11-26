@@ -1,8 +1,7 @@
-import { Typography, Box } from '@material-ui/core';
 import React from 'react';
+import _ from 'lodash';
+import { Typography, Box, Grid } from '@material-ui/core';
 import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
-import { first } from 'lodash';
-import Grid from '@material-ui/core/Grid';
 import hyphenated from '#/src/components/valintaperusteet/hyphenated';
 
 const Headers = ['h1', 'h2', 'h3', 'h4', 'h5'];
@@ -22,9 +21,9 @@ const tagHeaders = (node) => {
   }
 };
 
-const Sora = ({ metadata: { kuvaus }, nimi }) => {
+export const Sora = ({ metadata: { kuvaus }, nimi }) => {
   const lang = l.getLanguage();
-  const html = kuvaus[lang] || first(Object.values(kuvaus));
+  const html = kuvaus[lang] || _.first(Object.values(kuvaus));
 
   return (
     <>
@@ -43,5 +42,3 @@ const Sora = ({ metadata: { kuvaus }, nimi }) => {
     </>
   );
 };
-
-export default Sora;

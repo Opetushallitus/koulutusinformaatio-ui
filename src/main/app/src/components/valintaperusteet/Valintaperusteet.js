@@ -1,29 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { urls } from 'oph-urls-js';
-import { makeStyles } from '@material-ui/core';
-import { Localizer as l } from '../../tools/Utils';
-import { useTranslation } from 'react-i18next';
-import Murupolku from '../common/Murupolku';
-import { useParams } from 'react-router-dom';
-import { LoadingCircle } from '../common/LoadingCircle';
-import superagent from 'superagent';
-import Lomake from '#/src/components/valintaperusteet/Lomake';
-import Kuvaus, { KuvausSisallysluettelo } from '#/src/components/valintaperusteet/Kuvaus';
-import Liiteet, {
-  LiitteetSisallysluettelo,
-} from '#/src/components/valintaperusteet/Liitteet';
-import Grid from '@material-ui/core/Grid';
-import Valintakokeet, {
-  ValintakokeetSisallysluettelo,
-} from '#/src/components/valintaperusteet/Valintakokeet';
-import Sora from '#/src/components/valintaperusteet/Sora';
-import Sisallysluottelo from '#/src/components/valintaperusteet/Sisallysluettelo';
-import { isEmpty, concat } from 'lodash';
-import Paluu from '#/src/components/valintaperusteet/Paluu';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import _ from 'lodash';
+import { useParams } from 'react-router-dom';
+import superagent from 'superagent';
+import { makeStyles, Grid } from '@material-ui/core';
+
+import { Localizer as l } from '#/src/tools/Utils';
+import Murupolku from '#/src/components/common/Murupolku';
+import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import { getKoulutus } from '#/src/api/konfoApi';
+
+import { Sisallysluettelo } from './Sisallysluettelo';
+import { Lomake } from './Lomake';
+import { Paluu } from './Paluu';
+import { Liitteet, LiitteetSisallysluettelo } from './Liitteet';
+import { Sora } from './Sora';
+import { Valintakokeet, ValintakokeetSisallysluettelo } from './Valintakokeet';
+import { Kuvaus, KuvausSisallysluettelo } from './Kuvaus';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -61,14 +58,6 @@ const getHaku = async (oid) => {
 const getToteutus = async (oid) => {
   return fetchUrl(oid, urls.url('konfo-backend.toteutus', oid));
 };
-
-/*const getOppilaitos = async (oid) => {
-  return superagent
-    .get(urls.url('konfo-backend.oppilaitos', oid))
-    .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
-    .then((res) => res.body)
-    .catch((error) => console.log(error));
-};*/
 
 const Row = ({ children }) => {
   const classes = useStyles();
@@ -153,30 +142,33 @@ const Valintaperusteet = () => {
         </Grid>
         <Grid item xs={12} sm={12} md={3} />
         <Grid item xs={12} sm={12} md={3}>
-          <Sisallysluottelo>
+          <Sisallysluettelo>
             {[
               (l) => l(t('valintaperuste.kuvaus')),
               KuvausSisallysluettelo(kuvaus),
               ValintakokeetSisallysluettelo(
-                concat(hakukohde.valintakokeet, valintaperuste.valintakokeet)
+                _.concat(hakukohde.valintakokeet, valintaperuste.valintakokeet)
               ),
               (ll) =>
                 valintaperuste.sorakuvaus
                   ? ll(l.localize(valintaperuste.sorakuvaus.nimi))
                   : null,
               (l) =>
-                !isEmpty(hakukohde.liitteet) ? l(t('valintaperuste.liitteet')) : null,
+                !_.isEmpty(hakukohde.liitteet) ? l(t('valintaperuste.liitteet')) : null,
               LiitteetSisallysluettelo(hakukohde.liitteet),
             ]}
-          </Sisallysluottelo>
+          </Sisallysluettelo>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
           <Kuvaus kuvaus={kuvaus} valintatavat={valintatavat} />
           <Valintakokeet
-            valintakokeet={concat(hakukohde.valintakokeet, valintaperuste.valintakokeet)}
+            valintakokeet={_.concat(
+              hakukohde.valintakokeet,
+              valintaperuste.valintakokeet
+            )}
           />
           {valintaperuste.sorakuvaus ? <Sora {...valintaperuste.sorakuvaus} /> : null}
-          <Liiteet {...hakukohde} />
+          <Liitteet {...hakukohde} />
           <Paluu paluuLinkki={paluuLinkki} />
         </Grid>
       </Grid>

@@ -1,8 +1,7 @@
 import { HashLink as Link } from 'react-router-hash-link';
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { Grid, makeStyles } from '@material-ui/core';
 import { colors } from '#/src/colors';
-import Grid from '@material-ui/core/Grid';
 import hyphenated from '#/src/components/valintaperusteet/hyphenated';
 
 const useStyles = makeStyles({
@@ -43,7 +42,7 @@ const Lnk = (text, index, addIndexToAnchor) => {
     </Link>
   );
 };
-const Sisallysluottelo = ({ children }) => {
+export const Sisallysluettelo = ({ children }) => {
   return (
     <Grid container direction="row" justify="center" alignItems="center">
       <Grid item xs={10} sm={10} md={10}>
@@ -53,4 +52,4 @@ const Sisallysluottelo = ({ children }) => {
   );
 };
 
-export default Sisallysluottelo;
+export default Sisallysluettelo;

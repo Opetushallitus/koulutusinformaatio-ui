@@ -59,7 +59,7 @@ export const ValintakokeetSisallysluettelo = (valintakokeet) => (Lnk) => {
     : null;
 };
 
-const Valintakokeet = ({ valintakokeet }) => {
+export const Valintakokeet = ({ valintakokeet }) => {
   const { t } = useTranslation();
   return (
     <>
@@ -115,5 +115,3 @@ const Valintakokeet = ({ valintakokeet }) => {
     </>
   );
 };
-
-export default Valintakokeet;

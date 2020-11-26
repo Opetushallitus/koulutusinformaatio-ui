@@ -11,10 +11,9 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import _ from 'lodash';
+import { Grid, withStyles } from '@material-ui/core';
 import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
-import { first, last, isEmpty } from 'lodash';
-import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core/styles';
 import { colors } from '#/src/colors';
 import Spacer from '#/src/components/common/Spacer';
 import hyphenated from '#/src/components/valintaperusteet/hyphenated';
@@ -56,7 +55,7 @@ const tagHeaders = (node) => {
 
 const Teksti = ({ data }) => {
   const lang = l.getLanguage();
-  const html = data[lang] || first(Object.values(data));
+  const html = data[lang] || _.first(Object.values(data));
   return (
     <Grid item xs={12} sm={12} md={12}>
       {sanitizedHTMLParser(html, {
@@ -68,10 +67,10 @@ const Teksti = ({ data }) => {
 const Taulukko = ({ data: { rows } }) => {
   const { t } = useTranslation();
   const subTables = (rows || []).reduce((total, row) => {
-    if (row.isHeader || isEmpty(total)) {
+    if (row.isHeader || _.isEmpty(total)) {
       total.push({ header: [], body: [] });
     }
-    const { header, body } = last(total);
+    const { header, body } = _.last(total);
     (row.isHeader ? header : body).push(row);
     return total;
   }, []);
@@ -81,12 +80,12 @@ const Taulukko = ({ data: { rows } }) => {
         const spanCells = header.map((r) => ({
           ...r,
           columns: r.columns.reduce((total, head) => {
-            if (isEmpty(total) || !isEmpty(l.localize(head?.text))) {
+            if (_.isEmpty(total) || !_.isEmpty(l.localize(head?.text))) {
               total.push({ span: 1, ...head });
             } else {
               total[total.length - 1] = {
                 span: ++total[total.length - 1].span,
-                ...last(total),
+                ..._.last(total),
               };
             }
             return total;
@@ -169,16 +168,16 @@ export const KuvausSisallysluettelo = (kuvaus) => (Lnk) => {
     }
   };
   const lang = l.getLanguage();
-  const html = kuvaus[lang] || first(Object.values(kuvaus));
+  const html = kuvaus[lang] || _.first(Object.values(kuvaus));
   return sanitizedHTMLParser(html, {
     transform: onlyHeaders,
   });
 };
 
-const Kuvaus = ({ kuvaus, valintatavat }) => {
+export const Kuvaus = ({ kuvaus, valintatavat }) => {
   const { t } = useTranslation();
   const lang = l.getLanguage();
-  const html = kuvaus[lang] || first(Object.values(kuvaus));
+  const html = kuvaus[lang] || _.first(Object.values(kuvaus));
 
   return (
     <>
@@ -201,5 +200,3 @@ const Kuvaus = ({ kuvaus, valintatavat }) => {
     </>
   );
 };
-
-export default Kuvaus;
