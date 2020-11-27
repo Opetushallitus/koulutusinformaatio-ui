@@ -65,7 +65,7 @@ const KoulutusKortti = ({ koulutus }) => {
       l
         .localize(koulutus?.kuvaus)
         .replaceAll('</li>', ',</li>')
-        .replace('.,</li>', '.</li>')
+        .replaceAll('.,</li>', '.</li>')
         .replace(/<[^>]*>/gm, ''),
       { length: 255 }
     ) || t('haku.ei_kuvausta');
