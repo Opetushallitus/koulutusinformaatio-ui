@@ -39,6 +39,9 @@ function getTulevaSize(state) {
 function getTulevaOffset(state) {
   return state.oppilaitos.tulevaOffset;
 }
+function getOppilaitosError(state) {
+  return state.oppilaitos.oppilaitosError;
+}
 
 //Selectors
 const getTarjontaProps = createSelector([getTarjonta], (_tarjonta) => {
@@ -95,8 +98,14 @@ export const getApiRequestParams = createSelector(
 );
 
 export const getOppilaitosProps = createSelector(
-  [getOppilaitokset, getTarjontaProps, getTulevaTarjontaProps, getStatus],
-  (oppilaitos, tarjonta, tulevaTarjonta, status) => ({
+  [
+    getOppilaitokset,
+    getTarjontaProps,
+    getTulevaTarjontaProps,
+    getStatus,
+    getOppilaitosError,
+  ],
+  (oppilaitos, tarjonta, tulevaTarjonta, status, oppilaitosError) => ({
     oppilaitos,
     oppilaitosOsat: flow(
       get('osat'),
@@ -111,6 +120,7 @@ export const getOppilaitosProps = createSelector(
     tarjonta,
     tulevaTarjonta,
     status,
+    oppilaitosError,
   })
 );
 
