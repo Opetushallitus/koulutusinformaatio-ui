@@ -63,6 +63,13 @@ export const getOppilaitosOsaTarjonta = ({ oid, requestParams }) => {
 
 export const getToteutus = (oid) => get(urls.url('konfo-backend.toteutus', oid));
 
+export const getHaku = (oid) => get(urls.url('konfo-backend.haku', oid));
+
+export const getHakukohde = (oid) => get(urls.url('konfo-backend.hakukohde', oid));
+
+export const getValintaperuste = (oid) =>
+  get(urls.url('konfo-backend.valintaperusteet', oid));
+
 export const searchAPI = {
   getKoulutukset(requestParams) {
     return client

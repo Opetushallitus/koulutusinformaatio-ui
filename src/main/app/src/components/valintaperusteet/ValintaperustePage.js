@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { observer } from 'mobx-react-lite';
-import { urls } from 'oph-urls-js';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import { useParams } from 'react-router-dom';
-import superagent from 'superagent';
 import { makeStyles, Grid } from '@material-ui/core';
+import { useQuery } from 'react-query';
 
 import { Localizer as l } from '#/src/tools/Utils';
 import Murupolku from '#/src/components/common/Murupolku';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
-import { getKoulutus } from '#/src/api/konfoApi';
+
+import {
+  getKoulutus,
+  getToteutus,
+  getHaku,
+  getHakukohde,
+  getValintaperuste,
+} from '#/src/api/konfoApi';
 
 import { Sisallysluettelo } from './Sisallysluettelo';
 import { Lomake } from './Lomake';
@@ -28,36 +33,6 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: '10px',
   },
 }));
-const defaultObj = { metadata: { kuvaus: {}, valintatavat: [] } };
-const handleResponse = (res) => {
-  return res.body || defaultObj;
-};
-const handleError = (res) => {
-  console.log(res);
-  return defaultObj;
-};
-const fetchUrl = (oid, url) => {
-  return oid
-    ? superagent
-        .get(url)
-        .retry(2, (err, res) => false)
-        .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
-        .then(handleResponse, handleError)
-    : Promise.resolve(defaultObj);
-};
-
-const getValintaperusteet = async (oid) => {
-  return fetchUrl(oid, urls.url('konfo-backend.valintaperusteet', oid));
-};
-const getHakukohde = async (oid) => {
-  return fetchUrl(oid, urls.url('konfo-backend.hakukohde', oid));
-};
-const getHaku = async (oid) => {
-  return fetchUrl(oid, urls.url('konfo-backend.haku', oid));
-};
-const getToteutus = async (oid) => {
-  return fetchUrl(oid, urls.url('konfo-backend.toteutus', oid));
-};
 
 const Row = ({ children }) => {
   const classes = useStyles();
@@ -75,47 +50,48 @@ const Row = ({ children }) => {
   );
 };
 
-const Valintaperusteet = () => {
+const getValintaperustePageData = async ({ hakukohdeOid }) => {
+  // TODO: Backend should return most of the data using getValintaperuste()
+  const hakukohde = await getHakukohde(hakukohdeOid);
+  const {
+    hakuOid,
+    toteutus: hakukohdeToteutus,
+    valintaperuste: hakukohdeValintaperuste,
+  } = hakukohde ?? {};
+  const valintaperuste = await getValintaperuste(hakukohdeValintaperuste?.id);
+  const haku = await getHaku(hakuOid);
+  const toteutus = await getToteutus(hakukohdeToteutus?.oid);
+  const koulutus = await getKoulutus(toteutus?.koulutusOid);
+
+  return { koulutus, toteutus, haku, hakukohde, valintaperuste };
+};
+
+const useValintaperustePageData = ({ hakukohdeOid }) => {
+  return useQuery(
+    ['getValintaperustePageData', { hakukohdeOid }],
+    (key, props) => getValintaperustePageData(props),
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
+};
+
+export const ValintaperustePage = () => {
   const classes = useStyles();
-  const { hakukohdeOid, valintaperusteOid } = useParams();
+  const { hakukohdeOid } = useParams();
   const { t } = useTranslation();
-  const [valintaperuste, setValintaperuste] = useState();
-  const [hakukohde, setHakukohde] = useState();
-  const [toteutus, setToteutus] = useState();
-  const [koulutus, setKoulutus] = useState();
-  const [haku, setHaku] = useState();
   const hakuUrl = useSelector(getHakuUrl);
 
-  useEffect(() => {
-    async function getData() {
-      const v = getValintaperusteet(valintaperusteOid);
-      const h = await getHakukohde(hakukohdeOid);
-      setHakukohde(h);
-      const hk = await getHaku(h.hakuOid);
-      setHaku(hk);
-      const t = await getToteutus(h.toteutus.oid);
-      setToteutus(t);
-      const k = await getKoulutus(t?.koulutusOid);
-      setKoulutus(k);
-      setValintaperuste(await v);
-    }
-
-    getData();
-  }, [
-    setToteutus,
+  const { data = {}, isFetching } = useValintaperustePageData({
     hakukohdeOid,
-    valintaperusteOid,
-    setValintaperuste,
-    setHakukohde,
-    setHaku,
-  ]);
+  });
+  const { valintaperuste, koulutus, toteutus, haku, hakukohde } = data;
 
-  const loading = !valintaperuste || !hakukohde || !haku || !toteutus;
   const {
     metadata: { kuvaus, valintatavat },
   } = valintaperuste || { metadata: { kuvaus: {}, valintatavat: [] } };
   const paluuLinkki = hakukohde && `/toteutus/${hakukohde.toteutusOid}`;
-  return loading ? (
+  return isFetching ? (
     <LoadingCircle />
   ) : (
     <>
@@ -175,5 +151,3 @@ const Valintaperusteet = () => {
     </>
   );
 };
-
-export default observer(Valintaperusteet);
