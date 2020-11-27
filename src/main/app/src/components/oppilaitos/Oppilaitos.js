@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Typography, Box, Container, makeStyles } from '@material-ui/core';
+import { Typography, Box, Container, Hidden, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Localizer as l } from '#/src/tools/Utils';
 import _ from 'lodash';
