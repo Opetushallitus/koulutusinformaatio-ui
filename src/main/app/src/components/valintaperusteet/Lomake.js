@@ -15,7 +15,6 @@ import {
 import { isWithinInterval } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { formatDateRange, Localizer as l } from '#/src/tools/Utils';
-import Spacer from '#/src/components/common/Spacer';
 import { colors } from '#/src/colors';
 
 const useStyles = makeStyles({
@@ -59,6 +58,31 @@ const LomakeButton = ({ children, ...props }) => {
   );
 };
 
+const Row = ({ title, children }) => {
+  return (
+    <Grid container spacing={2}>
+      <Grid item xs={3}>
+        <Typography variant="body2" component="p">
+          {title}
+          {':'}
+        </Typography>
+      </Grid>
+      <Grid item xs={9}>
+        {children}
+      </Grid>
+    </Grid>
+  );
+};
+
+const lomakeIsOpen = (hakuajat) =>
+  hakuajat.some((hakuaika) => {
+    const now = new Date();
+    return isWithinInterval(now, {
+      start: hakuaika.alkaa ? new Date(hakuaika.alkaa) : now,
+      end: hakuaika.paattyy ? new Date(hakuaika.paattyy) : now,
+    });
+  });
+
 export const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -67,28 +91,7 @@ export const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
   const hakuaika = firstOnGoingDate(hakuajat, now) || _.first(hakuajat);
   const aloituspaikat = hakukohde.aloituspaikat;
   const ensikertalaisille = hakukohde.ensikertalaisenAloituspaikat;
-  const Row = ({ title, children }) => {
-    return (
-      <Grid container spacing={2}>
-        <Grid item xs={3}>
-          <Typography variant="body2" component="p">
-            {title}
-          </Typography>
-        </Grid>
-        <Grid item xs={9}>
-          {children}
-        </Grid>
-      </Grid>
-    );
-  };
-  const lomakeIsOpen = (hakuajat) =>
-    hakuajat.some((hakuaika) => {
-      const now = new Date();
-      return isWithinInterval(now, {
-        start: hakuaika.alkaa ? new Date(hakuaika.alkaa) : now,
-        end: hakuaika.paattyy ? new Date(hakuaika.paattyy) : now,
-      });
-    });
+
   const isOpen = lomakeIsOpen(_.concat(haku.hakuajat, hakukohde.hakuajat));
   return (
     <>
@@ -96,7 +99,6 @@ export const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
         <Typography variant="h1" component="h1">
           {t('lomake.valintaperusteet')}
         </Typography>
-        <Spacer />
       </Box>
       <Card className={classes.card} elevation={2}>
         <CardContent>
@@ -104,29 +106,29 @@ export const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
             <Grid item>
               <Typography variant="h4" component="h4">
                 {l.localize(hakukohde?.nimi)}
-                {isOpen ? (
+                {isOpen && (
                   <StyledBadge
-                    badgeContent={t('toteutus.haku-kaynnisa')}
+                    badgeContent={t('valintaperuste.haku-kaynnissa')}
                     color="secondary"
                   />
-                ) : null}
+                )}
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Row title={'Haku:'}>{l.localize(haku?.nimi)}</Row>
-              <Row title={'Hakuaika:'}>
+              <Row title={t('valintaperuste.haku')}>{l.localize(haku?.nimi)}</Row>
+              <Row title={t('valintaperuste.hakuaika')}>
                 {hakuaika ? formatDateRange(hakuaika[0], hakuaika[1]) : '-'}
               </Row>
-              {aloituspaikat ? (
-                <Row title={'Opiskelupaikkoja:'}>
+              {Boolean(aloituspaikat) && (
+                <Row title={t('valintaperuste.opiskelupaikkoja')}>
                   {`${aloituspaikat} ${
                     ensikertalaisille
                       ? t('lomake.ensikertalaisille', { ensikertalaisille })
                       : ''
                   }`}
                 </Row>
-              ) : null}
-              <Row title={'Pohjakoulutus:'}>-</Row>
+              )}
+              <Row title={t('valintaperuste.pohjakoulutus')}>-</Row>
             </Grid>
           </Grid>
         </CardContent>
