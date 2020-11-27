@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Typography, Box, Container, Hidden, makeStyles } from '@material-ui/core';
+import { Typography, Box, Container, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Localizer as l } from '#/src/tools/Utils';
 import _ from 'lodash';
@@ -60,19 +60,27 @@ const Oppilaitos = (props) => {
     return (
       <Container className={classes.container}>
         <Box display="flex" flexDirection="column" alignItems="center">
-          <Hidden smDown>
-            <Box alignSelf="start">
-              <Murupolku
-                path={[
-                  { name: t('koulutus.hakutulos'), link: hakuUrl.url },
-                  { name: l.localize(oppilaitos) },
-                ]}
-              />
-            </Box>
-          </Hidden>
+          <Box width="100%" alignSelf="start">
+            <Murupolku
+              path={[
+                { name: t('haku.otsikko'), link: hakuUrl.url },
+                ...(isOppilaitosOsa
+                  ? [
+                      {
+                        name: l.localize(oppilaitos?.oppilaitos),
+                        link: `/oppilaitos/${oppilaitos?.oppilaitos?.oid}`,
+                      },
+                    ]
+                  : []),
+                {
+                  name: l.localize(oppilaitos),
+                },
+              ]}
+            />
+          </Box>
           <Box className={classes.title}>
             <Typography variant="h1" component="h2">
-              {l.localize(oppilaitos)}
+              {l.localize(_.get(oppilaitos, 'nimi', ''))}
             </Typography>
           </Box>
           <Box className={classes.imageContainer} mt={7.5}>
@@ -83,11 +91,11 @@ const Oppilaitos = (props) => {
           </Box>
           <OppilaitosinfoGrid
             className={classes.root}
-            opiskelijoita={oppilaitos?.oppilaitos?.metadata?.opiskelijoita ?? ''}
-            toimipisteita={oppilaitos?.oppilaitos?.metadata?.toimipisteita ?? ''}
-            kotipaikat={_.map(oppilaitos?.osat, 'kotipaikka')}
-            opetuskieli={oppilaitos?.opetuskieli ?? []}
-            koulutusohjelmia={oppilaitos?.koulutusohjelmia ?? ''}
+            opiskelijoita={_.get(oppilaitos, 'oppilaitos.metadata.opiskelijoita', '')}
+            toimipisteita={_.get(oppilaitos, 'oppilaitos.metadata.toimipisteita', '')}
+            kotipaikat={_.map(_.get(oppilaitos, 'osat', []), 'kotipaikka')}
+            opetuskieli={_.get(oppilaitos, 'opetuskieli', [])}
+            koulutusohjelmia={_.get(oppilaitos, 'koulutusohjelmia', '')}
           />
           {esittelyHtml && (
             <HtmlTextBox
@@ -134,7 +142,7 @@ const Oppilaitos = (props) => {
             heading={t('oppilaitos.yhteystiedot')}
             logo={oppilaitos?.oppilaitos?.logo}
             metadata={oppilaitos?.oppilaitos?.metadata}
-            nimi={l.localize(oppilaitos)}
+            nimi={l.localize(oppilaitos?.nimi)}
           />
         </Box>
       </Container>
