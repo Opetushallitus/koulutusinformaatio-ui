@@ -80,7 +80,7 @@ const Oppilaitos = (props) => {
           </Box>
           <Box className={classes.title}>
             <Typography variant="h1" component="h2">
-              {l.localize(_.get(oppilaitos, 'nimi', ''))}
+              {l.localize(oppilaitos)}
             </Typography>
           </Box>
           <Box className={classes.imageContainer} mt={7.5}>
@@ -91,11 +91,11 @@ const Oppilaitos = (props) => {
           </Box>
           <OppilaitosinfoGrid
             className={classes.root}
-            opiskelijoita={_.get(oppilaitos, 'oppilaitos.metadata.opiskelijoita', '')}
-            toimipisteita={_.get(oppilaitos, 'oppilaitos.metadata.toimipisteita', '')}
-            kotipaikat={_.map(_.get(oppilaitos, 'osat', []), 'kotipaikka')}
-            opetuskieli={_.get(oppilaitos, 'opetuskieli', [])}
-            koulutusohjelmia={_.get(oppilaitos, 'koulutusohjelmia', '')}
+            opiskelijoita={oppilaitos?.oppilaitos?.metadata?.opiskelijoita ?? ''}
+            toimipisteita={oppilaitos?.oppilaitos?.metadata?.toimipisteita ?? ''}
+            kotipaikat={_.map(oppilaitos?.osat, 'kotipaikka')}
+            opetuskieli={oppilaitos?.opetuskieli ?? []}
+            koulutusohjelmia={oppilaitos?.koulutusohjelmia ?? ''}
           />
           {esittelyHtml && (
             <HtmlTextBox
@@ -142,7 +142,7 @@ const Oppilaitos = (props) => {
             heading={t('oppilaitos.yhteystiedot')}
             logo={oppilaitos?.oppilaitos?.logo}
             metadata={oppilaitos?.oppilaitos?.metadata}
-            nimi={l.localize(oppilaitos?.nimi)}
+            nimi={l.localize(oppilaitos)}
           />
         </Box>
       </Container>
