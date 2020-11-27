@@ -117,6 +117,7 @@ export const Valintakokeet = ({ valintakokeet }) => {
                   </>
                 )}
                 <Accordion
+                  ContentWrapper="div"
                   items={tilaisuudet.map(
                     (
                       {
