@@ -1,7 +1,8 @@
 import React from 'react';
 import ImageCardWithText from '#/src/components/common/ImageCardWithText';
-import { Grid, useTheme, useMediaQuery, Link } from '@material-ui/core';
+import { Grid, useTheme, useMediaQuery } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
+import LocalizedLink from './LocalizedLink';
 
 const OppilaitosOsaGrid = (props) => {
   const { cards, cardIsLink } = props;
@@ -15,9 +16,9 @@ const OppilaitosOsaGrid = (props) => {
         return (
           <Grid item key={`ImageCardWithText-${i}`}>
             {cardIsLink ? (
-              <Link component={RouterLink} to={card.link}>
+              <LocalizedLink component={RouterLink} to={card.link}>
                 {cardElement}
-              </Link>
+              </LocalizedLink>
             ) : (
               cardElement
             )}

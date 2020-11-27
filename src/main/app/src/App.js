@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   content: {
+    minWidth: 0,
     flexGrow: 1,
     padding: 0,
     transition: theme.transitions.create('margin', {
@@ -51,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
   },
   smContent: {
+    minWidth: 0,
     flexGrow: 1,
     padding: 0,
     transition: theme.transitions.create('margin', {
@@ -105,6 +107,10 @@ const TranslatedRoutes = ({ match }) => {
       <Route path="/:lng/oppilaitos/:oid">
         <KoulutusHakuBar />
         <Oppilaitos />
+      </Route>
+      <Route path="/:lng/oppilaitososa/:oid">
+        <KoulutusHakuBar />
+        <Oppilaitos oppilaitosOsa />
       </Route>
       <Route path="/:lng/toteutus/:oid">
         <KoulutusHakuBar />

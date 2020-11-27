@@ -21,6 +21,9 @@ import Sora from '#/src/components/valintaperusteet/Sora';
 import Sisallysluottelo from '#/src/components/valintaperusteet/Sisallysluettelo';
 import { isEmpty, concat } from 'lodash';
 import Paluu from '#/src/components/valintaperusteet/Paluu';
+import { useSelector } from 'react-redux';
+import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
+import { getKoulutus } from '#/src/api/konfoApi';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -90,7 +93,9 @@ const Valintaperusteet = () => {
   const [valintaperuste, setValintaperuste] = useState();
   const [hakukohde, setHakukohde] = useState();
   const [toteutus, setToteutus] = useState();
+  const [koulutus, setKoulutus] = useState();
   const [haku, setHaku] = useState();
+  const hakuUrl = useSelector(getHakuUrl);
 
   useEffect(() => {
     async function getData() {
@@ -99,7 +104,10 @@ const Valintaperusteet = () => {
       setHakukohde(h);
       const hk = await getHaku(h.hakuOid);
       setHaku(hk);
-      setToteutus(await getToteutus(h.toteutus.oid));
+      const t = await getToteutus(h.toteutus.oid);
+      setToteutus(t);
+      const k = await getKoulutus(t?.koulutusOid);
+      setKoulutus(k);
       setValintaperuste(await v);
     }
 
@@ -125,7 +133,9 @@ const Valintaperusteet = () => {
       <Row>
         <Murupolku
           path={[
-            { name: t('koulutus.hakutulos'), link: urls.createHakuUrl },
+            { name: t('haku.otsikko'), link: hakuUrl.url },
+            { name: l.localize(koulutus?.nimi), link: `/koulutus/${koulutus?.oid}` },
+            { name: l.localize(toteutus?.nimi), link: `/toteutus/${toteutus?.oid}` },
             { name: l.localize(valintaperuste?.nimi) },
           ]}
         />
