@@ -128,7 +128,7 @@ const TranslatedRoutes = ({ match, location }) => {
         <KoulutusHakuBar />
         <SivuRouter />
       </Route>
-      <Route exact path="/:lng/hakukohde/:hakukohdeOid/valintaperuste/:valintaperusteOid">
+      <Route exact path="/:lng/hakukohde/:hakukohdeOid/valintaperuste">
         <KoulutusHakuBar />
         <ValintaperustePage />
       </Route>
