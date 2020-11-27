@@ -24,10 +24,18 @@
     "kuvaus": "Valintaperusteen kuvaus",
     "valintatavat": "Valintatavat",
     "valintakokeet": "Valintakokeet",
-    "osoite": "Osoite",
+    "osoite": "Järjestyspaikka",
     "alkaa": "Alkaa",
     "paattyy": "Päättyy",
-    "lisatietoja": "Lisätietoja"
+    "lisatietoja": "Lisätietoja",
+    "tilaisuus": "Tilaisuus",
+    "valmistautumisohjeet-hakijalle": "Materiaali- ja valmistautumisohjeet hakijalle",
+    "ohjeet-erityisjarjestelyihin": "Ohjeet yksilöllisiin erityisjärjestelyihin",
+    "haku-kaynnissa": "Haku käynnissä",
+    "haku": "Haku",
+    "hakuaika": "Hakuaika",
+    "opiskelupaikkoja": "Opiskelupaikkoja",
+    "pohjakoulutus": "Pohjakoulutus"
   },
   "palvelut": {
     "otsikko-muut-palvelut": "Muut palvelut",
