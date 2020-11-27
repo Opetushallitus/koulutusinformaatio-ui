@@ -13,10 +13,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import { Grid, withStyles } from '@material-ui/core';
-import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
+import { Localizer as l, sanitizedHTMLParser, toId } from '#/src/tools/Utils';
 import { colors } from '#/src/colors';
 import Spacer from '#/src/components/common/Spacer';
-import hyphenated from '#/src/components/valintaperusteet/hyphenated';
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
@@ -41,7 +40,7 @@ const isHeader = (tag) => Headers.includes(tag);
 const tagHeaders = (node) => {
   if (isHeader(node.name)) {
     const text = node.children[0].data;
-    const id = hyphenated(text);
+    const id = toId(text);
     const isH1 = 'h1' === node.name;
     return (
       <Box pt={isH1 ? 0.5 : 0} key={id}>
@@ -184,7 +183,7 @@ export const Kuvaus = ({ kuvaus, valintatavat }) => {
       <Grid container spacing={2} justify="flex-start" alignItems="flex-start">
         <Grid item xs={12} sm={12} md={12}>
           <Box py={2}>
-            <Typography id={hyphenated(t('valintaperuste.kuvaus'))} variant="h1">
+            <Typography id={toId(t('valintaperuste.kuvaus'))} variant="h1">
               {t('valintaperuste.kuvaus')}
             </Typography>
             <Spacer />

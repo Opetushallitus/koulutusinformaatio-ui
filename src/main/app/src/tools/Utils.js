@@ -182,3 +182,5 @@ export const sanitizeHTML = (html) => stripTags(html, ALLOWED_HTML_TAGS);
 
 export const sanitizedHTMLParser = (html, ...rest) =>
   ReactHtmlParser(sanitizeHTML(html), ...rest);
+
+export const toId = _fp.kebabCase;

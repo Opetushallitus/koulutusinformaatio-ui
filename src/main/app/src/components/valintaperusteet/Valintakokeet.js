@@ -2,10 +2,14 @@ import React from 'react';
 import _ from 'lodash';
 import { Box, Card, CardContent, Grid, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { formatDateString, Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
+import {
+  formatDateString,
+  Localizer as l,
+  sanitizedHTMLParser,
+  toId,
+} from '#/src/tools/Utils';
 import { colors } from '#/src/colors';
 import Spacer from '#/src/components/common/Spacer';
-import hyphenated from '#/src/components/valintaperusteet/hyphenated';
 import Accordion from '#/src/components/common/Accordion';
 
 const renderLocalizedHTML = (transObj) => sanitizedHTMLParser(l.localize(transObj));
@@ -91,9 +95,7 @@ export const Valintakokeet = ({ valintakokeet }) => {
                 marginBottom: '20px',
               }}>
               <CardContent>
-                <Typography
-                  id={`${hyphenated(localizedTyyppi)}-${index + 1}`}
-                  variant="body1">
+                <Typography id={`${toId(localizedTyyppi)}-${index + 1}`} variant="body1">
                   {localizedTyyppi}
                 </Typography>
                 <SubHeading>{l.localize(nimi)}</SubHeading>

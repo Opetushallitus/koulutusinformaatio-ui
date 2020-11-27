@@ -11,10 +11,9 @@ import {
 } from '@material-ui/core';
 import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
 import { useTranslation } from 'react-i18next';
-import { formatDateString, Localizer as l } from '#/src/tools/Utils';
+import { formatDateString, Localizer as l, toId } from '#/src/tools/Utils';
 import { colors } from '#/src/colors';
 import Spacer from '#/src/components/common/Spacer';
-import hyphenated from '#/src/components/valintaperusteet/hyphenated';
 
 const Osoite = ({ toimitusaika, sahkoposti, osoite, postinumero }) => {
   const { t } = useTranslation();
@@ -98,7 +97,7 @@ export const Liitteet = ({ liitteet }) => {
   return !_.isEmpty(tyyppiJaLiite) ? (
     <>
       <Box py={2}>
-        <Typography id={hyphenated(t('valintaperuste.liitteet'))} variant="h2">
+        <Typography id={toId(t('valintaperuste.liitteet'))} variant="h2">
           {t('valintaperuste.liitteet')}
         </Typography>
         <Spacer />
@@ -115,7 +114,7 @@ export const Liitteet = ({ liitteet }) => {
         return (
           <div key={`liitteet-${tyyppi}`}>
             <Box py={2}>
-              <Typography id={hyphenated(tyyppi)} variant="h4">
+              <Typography id={toId(tyyppi)} variant="h4">
                 {tyyppi}
               </Typography>
             </Box>

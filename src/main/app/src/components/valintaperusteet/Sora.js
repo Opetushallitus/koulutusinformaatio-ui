@@ -1,15 +1,14 @@
 import React from 'react';
 import _ from 'lodash';
 import { Typography, Box, Grid } from '@material-ui/core';
-import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
-import hyphenated from '#/src/components/valintaperusteet/hyphenated';
+import { Localizer as l, sanitizedHTMLParser, toId } from '#/src/tools/Utils';
 
 const Headers = ['h1', 'h2', 'h3', 'h4', 'h5'];
 const isHeader = (tag) => Headers.includes(tag);
 const tagHeaders = (node) => {
   if (isHeader(node.name)) {
     const text = node.children[0].data;
-    const id = hyphenated(text);
+    const id = toId(text);
     const isH1 = 'h1' === node.name;
     return (
       <Box pb={0.33} pt={isH1 ? 0.5 : 0} key={id}>
@@ -30,7 +29,7 @@ export const Sora = ({ metadata: { kuvaus }, nimi }) => {
       <Grid container spacing={2} justify="flex-start" alignItems="flex-start">
         <Grid item xs={12} sm={12} md={12}>
           <Box py={2}>
-            <Typography id={hyphenated(l.localize(nimi))} variant="h2">
+            <Typography id={toId(l.localize(nimi))} variant="h2">
               {l.localize(nimi)}
             </Typography>
           </Box>

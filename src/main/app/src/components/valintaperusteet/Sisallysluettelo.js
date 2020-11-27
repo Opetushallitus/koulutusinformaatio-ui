@@ -2,7 +2,7 @@ import { HashLink as Link } from 'react-router-hash-link';
 import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
 import { colors } from '#/src/colors';
-import hyphenated from '#/src/components/valintaperusteet/hyphenated';
+import { toId } from '#/src/tools/Utils';
 
 const useStyles = makeStyles({
   link: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 
 const Lnk = (text, index, addIndexToAnchor) => {
   const classes = useStyles();
-  const anchor = hyphenated(text);
+  const anchor = toId(text);
   return (
     <Link
       key={`${anchor}-${index}`}
