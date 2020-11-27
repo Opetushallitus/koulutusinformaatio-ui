@@ -61,8 +61,14 @@ const KoulutusKortti = ({ koulutus }) => {
   const muiScreenSizeMinSm = useMediaQuery(MUI_BREAKPOINTS.MIN_SM);
 
   const kuvaus =
-    _.truncate(l.localize(koulutus?.kuvaus).replace(/<[^>]*>/gm, ''), { length: 255 }) ||
-    t('haku.ei_kuvausta');
+    _.truncate(
+      l
+        .localize(koulutus?.kuvaus)
+        .replaceAll('</li>', ',</li>')
+        .replace('.,</li>', '.</li>')
+        .replace(/<[^>]*>/gm, ''),
+      { length: 255 }
+    ) || t('haku.ei_kuvausta');
 
   const tutkintoNimikkeet = isOsaamisalaOrTutkinnonOsa()
     ? t(`haku.${koulutus?.koulutustyyppi}`)
