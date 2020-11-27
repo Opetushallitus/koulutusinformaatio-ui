@@ -27,6 +27,7 @@ import Toteutus from './components/toteutus/Toteutus';
 import { useTranslation } from 'react-i18next';
 import { supportedLanguages } from '#/src/tools/i18n';
 import { useStores } from './hooks';
+
 const konfoStore = new KonfoStore();
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   content: {
+    minWidth: 0,
     flexGrow: 1,
     padding: 0,
     transition: theme.transitions.create('margin', {
@@ -50,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
   },
   smContent: {
+    minWidth: 0,
     flexGrow: 1,
     padding: 0,
     transition: theme.transitions.create('margin', {
@@ -105,6 +108,10 @@ const TranslatedRoutes = ({ match }) => {
         <KoulutusHakuBar />
         <Oppilaitos />
       </Route>
+      <Route path="/:lng/oppilaitososa/:oid">
+        <KoulutusHakuBar />
+        <Oppilaitos oppilaitosOsa />
+      </Route>
       <Route path="/:lng/toteutus/:oid">
         <KoulutusHakuBar />
         <Toteutus />
@@ -127,12 +134,6 @@ const TranslatedRoutes = ({ match }) => {
 const App = () => {
   const classes = useStyles();
   const { i18n } = useTranslation();
-  const hakuStore = konfoStore.hakuStore;
-  const hakuehtoStore = konfoStore.hakuehtoStore;
-  const urlStore = konfoStore.urlStore;
-  const restStore = konfoStore.restStore;
-  const navigaatioStore = konfoStore.navigaatioStore;
-  const vertailuStore = konfoStore.vertailuStore;
   const contentfulStore = konfoStore.contentfulStore;
 
   const matches = useMediaQuery('(max-width: 600px)');
@@ -156,14 +157,7 @@ const App = () => {
     </React.Fragment>
   );
   return (
-    <Provider
-      hakuStore={hakuStore}
-      urlStore={urlStore}
-      hakuehtoStore={hakuehtoStore}
-      restStore={restStore}
-      navigaatioStore={navigaatioStore}
-      vertailuStore={vertailuStore}
-      contentfulStore={contentfulStore}>
+    <Provider contentfulStore={contentfulStore}>
       <MuiThemeProvider theme={theme}>
         <React.Fragment>
           <div className={classes.root}>

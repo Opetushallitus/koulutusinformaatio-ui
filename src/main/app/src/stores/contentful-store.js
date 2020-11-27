@@ -1,5 +1,6 @@
 import { observable, action, runInAction } from 'mobx';
 import superagent from 'superagent';
+import { urls } from 'oph-urls-js';
 
 const initialState = {
   loading: false,
@@ -17,8 +18,7 @@ const initialState = {
 };
 
 class ContentfulStore {
-  constructor(urlStore) {
-    this.urlStore = urlStore;
+  constructor() {
     this.previousFetchPromise = Promise.resolve();
   }
   @observable data = initialState;
@@ -60,7 +60,7 @@ class ContentfulStore {
   };
 
   assetUrl(url) {
-    return url && `${this.urlStore.urls.url('konfo-backend.content', '')}${url}`;
+    return url && `${urls.url('konfo-backend.content', '')}${url}`;
   }
 
   static bodyAsArray(res) {
@@ -84,9 +84,7 @@ class ContentfulStore {
   }
 
   fetchManifest() {
-    return superagent.get(
-      this.urlStore.urls.url('konfo-backend.content', 'manifest.json')
-    );
+    return superagent.get(urls.url('konfo-backend.content', 'manifest.json'));
   }
   fetchUrl(url) {
     return superagent.get(url);
@@ -112,7 +110,7 @@ class ContentfulStore {
       .then((manifest) => {
         const contents = Object.entries(manifest).map(([k, v]) => [
           k,
-          this.urlStore.urls.url('konfo-backend.content', '') + v[lang],
+          urls.url('konfo-backend.content', '') + v[lang],
         ]);
         return Promise.all(
           contents.map(([key, url]) => {

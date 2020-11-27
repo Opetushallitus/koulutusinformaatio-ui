@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ContentWrapper from '../common/ContentWrapper';
-import { Box, Typography, makeStyles, Grid, Hidden } from '@material-ui/core';
+import { Box, Typography, makeStyles, Grid } from '@material-ui/core';
 import { HashLink } from 'react-router-hash-link';
 import { colors } from '#/src/colors';
 import ToteutusInfoGrid from './ToteutusInfoGrid';
@@ -31,6 +31,7 @@ import { useTranslation } from 'react-i18next';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import Murupolku from '#/src/components/common/Murupolku';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import { ToteutusHakuMuu } from './ToteutusHakuMuu';
 import { ToteutusHakuEiSahkoista } from './ToteutusHakuEiSahkoista';
 
@@ -92,6 +93,7 @@ const Toteutus = () => {
   const { t } = useTranslation();
   const currentLanguage = l.getLanguage();
 
+  // TODO: There is absolutely no error handling atm.
   const toteutus = useSelector(selectToteutus(oid), shallowEqual);
   const koulutusOid = toteutus?.koulutusOid;
   const koulutus = useSelector(selectKoulutus(koulutusOid), shallowEqual);
@@ -99,10 +101,12 @@ const Toteutus = () => {
     selectHakukohteet(oid),
     shallowEqual
   );
-  const koulutusLoading = useSelector(selectKoulutusLoading);
   const toteutusLoading = useSelector(selectToteutusLoading);
+  const [koulutusNotFetched, setKoulutusNotFetched] = useState(!koulutus);
+  const koulutusLoading =
+    useSelector(selectKoulutusLoading) || (!koulutus && koulutusNotFetched);
 
-  const loading = !koulutus || koulutusLoading || toteutusLoading;
+  const loading = koulutusLoading || toteutusLoading;
   const asiasanat =
     toteutus?.metadata?.asiasanat
       .filter((asiasana) => asiasana.kieli === currentLanguage)
@@ -113,12 +117,14 @@ const Toteutus = () => {
       dispatch(fetchToteutus(oid));
     }
     // TODO: Get rid of koulutus call here when opintolaajuus comes from toteutus -backend
-    if (!koulutus && koulutusOid) {
+    if (!koulutus && koulutusOid && koulutusNotFetched) {
       dispatch(fetchKoulutusWithRelatedData(toteutus.koulutusOid));
+      setKoulutusNotFetched(false);
     }
-  }, [toteutus, dispatch, oid, koulutus, koulutusOid]);
+  }, [toteutus, dispatch, oid, koulutus, koulutusOid, koulutusNotFetched]);
 
   const opetus = toteutus?.metadata?.opetus;
+  const hakuUrl = useSelector(getHakuUrl);
 
   return loading ? (
     <LoadingCircle />
@@ -129,11 +135,18 @@ const Toteutus = () => {
         flexDirection="column"
         justifyContent="center"
         alignItems="center">
-        <Hidden smDown>
-          <Box mt={5} ml={9} alignSelf="start">
-            <Murupolku path={[{ name: l.localize(toteutus?.nimi) }]} />
-          </Box>
-        </Hidden>
+        <Box width="100%" alignSelf="start">
+          <Murupolku
+            path={[
+              { name: t('haku.otsikko'), link: hakuUrl.url },
+              {
+                name: l.localize(koulutus?.tutkintoNimi),
+                link: `/koulutus/${toteutus?.koulutusOid}`,
+              },
+              { name: l.localize(toteutus?.nimi) },
+            ]}
+          />
+        </Box>
         <Typography style={{ marginTop: '20px' }} variant="h1">
           {l.localize(toteutus?.nimi)}
         </Typography>
@@ -175,15 +188,15 @@ const Toteutus = () => {
             apuraha={opetus?.onkoStipendia && opetus?.stipendinMaara}
           />
         </Box>
-        {toteutus?.isHakuAuki && (
+        {toteutus?.hakuAukiType && (
           <HakuKaynnissaCard
             title={
-              toteutus.isHakuAuki === 'hakukohde'
+              toteutus.hakuAukiType === 'hakukohde'
                 ? t('toteutus.haku-kaynnissa')
                 : t('toteutus.ilmoittautuminen-kaynnissa')
             }
             text={
-              toteutus.isHakuAuki === 'hakukohde'
+              toteutus.hakuAukiType === 'hakukohde'
                 ? t('toteutus.katso-hakukohteet')
                 : t('toteutus.katso-ilmoittautumisen-ohjeet')
             }
@@ -196,7 +209,7 @@ const Toteutus = () => {
               />
             }
             buttonText={
-              toteutus.isHakuAuki === 'hakukohde'
+              toteutus.hakuAukiType === 'hakukohde'
                 ? t('toteutus.nayta-hakukohteet')
                 : t('toteutus.nayta-ohjeet')
             }

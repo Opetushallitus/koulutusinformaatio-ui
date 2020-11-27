@@ -3,6 +3,7 @@ import { urls as ophUrls } from 'oph-urls-js';
 import { production, development } from '../urls/urls';
 import superagent from 'superagent';
 
+// TODO: This content should be refactored to somewhere else
 class UrlStore {
   @observable urls = ophUrls;
   @observable loading = true;

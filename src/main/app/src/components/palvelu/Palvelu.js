@@ -73,6 +73,12 @@ const Palvelu = observer(({ id, history }) => {
       <Card
         className={clsx(classes.card, classes[color])}
         key={palvelu.id}
+        tabIndex="0"
+        onKeyPress={(event) => {
+          if (event.key === 'Enter') {
+            forwardToPage();
+          }
+        }}
         onClick={forwardToPage}>
         <CardHeader
           avatar={

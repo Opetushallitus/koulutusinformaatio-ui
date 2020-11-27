@@ -72,11 +72,13 @@ const KoulutusKortti = ({ koulutus }) => {
 
   function getOpintojenLaajuus() {
     const tutkinnotOsat = koulutus?.tutkinnonOsat || [];
-    const opintojenLaajuusNumero = `${koulutus?.opintojenLaajuusNumero ||
+    const opintojenLaajuusNumero = `${
+      koulutus?.opintojenLaajuusNumero ||
       tutkinnotOsat
         .reduce((acc, val) => [...acc, val?.opintojenLaajuusNumero], [])
         .join(' + ') ||
-      ''} `.trim();
+      ''
+    } `.trim();
     const opintojenLaajuusYksikko =
       l.localize(
         koulutus?.opintojenLaajuusyksikko ||
@@ -143,7 +145,9 @@ const KoulutusKortti = ({ koulutus }) => {
                     <Avatar
                       classes={{ root: classes.avatarRoot }}
                       src={koulutus?.teemakuva || koulutusPlaceholderImg}
-                      alt={`${l.localize(koulutus)} ${t('haku.teemakuva')}`}
+                      alt={`${l.localize(koulutus)} ${t(
+                        'koulutus.koulutuksen-teemakuva'
+                      )}`}
                     />
                   </Grid>
                 </Hidden>
@@ -189,7 +193,7 @@ const KoulutusKortti = ({ koulutus }) => {
                   img: classes.avatarImg,
                 }}
                 src={koulutus?.teemakuva || koulutusPlaceholderImg}
-                alt={`${l.localize(koulutus)} ${t('haku.teemakuva')}`}
+                alt={`${l.localize(koulutus)} ${t('koulutus.koulutuksen-teemakuva')}`}
               />
             </Grid>
           </Hidden>

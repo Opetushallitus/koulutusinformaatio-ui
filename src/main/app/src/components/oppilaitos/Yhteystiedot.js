@@ -77,7 +77,7 @@ const Yhteystiedot = (props) => {
             <img
               className={classes.logoImage}
               src={logo || DefaultHeroImage}
-              alt="Oppilaitoksen logo"
+              alt={t('oppilaitos.oppilaitoksen-logo')}
             />
             <Typography className={classes.text} component="div" variant="body1">
               {nimi}

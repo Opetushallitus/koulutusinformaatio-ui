@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import Star from '@material-ui/icons/Star';
-import { useStores } from '../../hooks';
+import { urls } from 'oph-urls-js';
 
 const useStyles = makeStyles((theme) => ({
   fullWidth: {
@@ -63,7 +63,6 @@ const useStyles = makeStyles((theme) => ({
 const Palaute = (props) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { urlStore } = useStores();
   const [palauteAnnettu, setPalauteAnnettu] = useState(false);
   const { open, hide } = props;
   const palaa = (event) => {
@@ -81,7 +80,7 @@ const Palaute = (props) => {
     const handleSubmit = (event, arvosana, palaute) => {
       event.preventDefault();
       return superagent
-        .post(urlStore.urls.url('konfo-backend.palaute'))
+        .post(urls.url('konfo-backend.palaute'))
         .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
         .send('arvosana=' + arvosana)
         .send('palaute=' + palaute)

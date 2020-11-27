@@ -1,31 +1,24 @@
-import i18n from './i18n';
-import padStart from 'lodash/padStart';
 import _fp from 'lodash/fp';
+import padStart from 'lodash/padStart';
+import stripTags from 'striptags';
+import i18n from './i18n';
+import ReactHtmlParser from 'react-html-parser';
 
-export class Common {
+export const Common = {
   // filters 'null', 'empty string' or 'undefined', but '0' or 'false' are valid values,
   // does not parse numbers to strings
-  static cleanRequestParams(obj) {
-    return _fp.pickBy(_fp.toString, obj);
-  }
-}
-export class Localizer {
-  static getLanguage() {
+  cleanRequestParams: _fp.pickBy(_fp.toString),
+};
+
+export const Localizer = {
+  getLanguage() {
     return i18n.languages && i18n.languages[0] ? i18n.language.split('-')[0] : 'fi';
-  }
-
-  static lng(nimi, lng) {
-    if (nimi['kieli_' + lng]) {
-      return nimi['kieli_' + lng];
-    } else if (nimi[lng]) {
-      return nimi[lng];
-    } else {
-      return false;
-    }
-  }
-
-  static translate(nimi, defaultValue = '') {
-    const lng = this.getLanguage();
+  },
+  lng(nimi, lng) {
+    return nimi?.['kieli_' + lng] || nimi?.[lng] || false;
+  },
+  translate(nimi, defaultValue = '') {
+    const lng = Localizer.getLanguage();
     if ('en' === lng) {
       return (
         Localizer.lng(nimi, 'en') ||
@@ -48,45 +41,44 @@ export class Localizer {
         defaultValue
       );
     }
-  }
-
-  static localize(obj, defaultValue = '') {
+  },
+  localize(obj, defaultValue = '') {
     if (obj) {
       return obj.nimi
         ? Localizer.translate(obj.nimi, defaultValue)
         : Localizer.translate(obj, defaultValue);
     }
     return defaultValue;
-  }
-  static localizeSortedArrayToString(arr = []) {
+  },
+  localizeSortedArrayToString(arr = []) {
     return _fp.compose(
       _fp.join(', '),
       _fp.uniq,
       _fp.map(this.localize),
       _fp.sortBy(`nimi.${this.getLanguage()}`)
     )(arr);
-  }
-  static getTranslationForKey(key = '') {
+  },
+  getTranslationForKey(key = '') {
     return i18n.t(key);
-  }
-}
+  },
+};
 
-export class Parser {
-  static removeHtmlTags(html) {
+export const Parser = {
+  removeHtmlTags(html) {
     if (html) {
       const div = document.createElement('div');
       div.innerHTML = html;
       return div.innerText;
     }
     return html;
-  }
-  static koodiUriToPostinumero(str = '') {
+  },
+  koodiUriToPostinumero(str = '') {
     return str.slice(0, str.indexOf('#')).replace(/[^0-9]/g, '');
-  }
-}
+  },
+};
 
-export class OsoiteParser {
-  static parseOsoiteData(osoiteData) {
+export const OsoiteParser = {
+  parseOsoiteData(osoiteData) {
     const osoite = Localizer.localize(osoiteData.osoite, '');
     const postinumero = Parser.koodiUriToPostinumero(osoiteData.postinumero.koodiUri);
     const postitoimipaikka = _fp.capitalize(
@@ -98,9 +90,8 @@ export class OsoiteParser {
         : Localizer.getTranslationForKey('oppilaitos.ei-yhteystietoja');
 
     return { osoite, postinumero, postitoimipaikka, yhteystiedot };
-  }
-
-  static getCoreAddress(postitoimipaikka = '', osoite = '') {
+  },
+  getCoreAddress(postitoimipaikka = '', osoite = '') {
     //Merkkejä ja välilyönnillä siitä erotettu numero, esim: Ratapiha 3, Hubert Hepolaisen Katu 888.
     //Mahdollinen jatke leikataan pois.
     const regexp = '^.+? \\d+';
@@ -119,17 +110,17 @@ export class OsoiteParser {
   }
 }
 
-export class TimeMillisParser {
-  static millisToReadable(timemillis) {
+export const TimeMillisParser = {
+  millisToReadable(timemillis) {
     if (timemillis === null) {
       return '';
     }
     return new Date(timemillis).toLocaleString().replace(/\//g, '.').replace(',', ' klo');
-  }
-}
+  },
+};
 
-export class FormatdDate {
-  static formatDateString = (dateString, format) => {
+export const FormatDate = {
+  formatDateString(dateString, format) {
     if (!dateString) {
       return '';
     }
@@ -147,5 +138,36 @@ export class FormatdDate {
     formattedDate = formattedDate.replace(/mm/g, padStart(minute, 2, '0'));
 
     return formattedDate;
-  };
-}
+  },
+};
+
+const ALLOWED_HTML_TAGS = [
+  'b',
+  'blockquote',
+  'br',
+  'code',
+  'em',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'hr',
+  'i',
+  'li',
+  'ol',
+  'p',
+  'pre',
+  's',
+  'sup',
+  'sub',
+  'strong',
+  'strike',
+  'ul',
+];
+
+export const sanitizeHTML = (html) => stripTags(html, ALLOWED_HTML_TAGS);
+
+export const sanitizedHTMLParser = (html, ...rest) =>
+  ReactHtmlParser(sanitizeHTML(html), ...rest);
