@@ -30,7 +30,7 @@
     "mobx": "^4.3.1",
     "mobx-react": "6.1.4",
     "mobx-react-lite": "^1.5.1",
-    "oph-urls-js": "github:Opetushallitus/oph-urls-js#master",
+    "oph-urls-js": "Opetushallitus/oph-urls-js#master",
     "oskari-rpc": "^2.1.0",
     "query-string": "^6.11.0",
     "react": "^16.11.0",
