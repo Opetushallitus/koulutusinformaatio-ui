@@ -1,5 +1,5 @@
 import { observable, action, runInAction } from 'mobx';
-import superagent from 'superagent';
+import axios from 'axios';
 import { urls } from 'oph-urls-js';
 
 const initialState = {
@@ -84,10 +84,10 @@ class ContentfulStore {
   }
 
   fetchManifest() {
-    return superagent.get(urls.url('konfo-backend.content', 'manifest.json'));
+    return axios.get(urls.url('konfo-backend.content', 'manifest.json'));
   }
   fetchUrl(url) {
-    return superagent.get(url);
+    return axios.get(url);
   }
 
   createSlugsToIds(lang) {
