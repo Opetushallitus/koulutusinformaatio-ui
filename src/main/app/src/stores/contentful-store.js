@@ -64,7 +64,7 @@ class ContentfulStore {
   }
 
   static bodyAsArray(res) {
-    return res.body ? res.body : [];
+    return res.data ? res.data : [];
   }
 
   static reduceToKeyValue(values) {
@@ -105,7 +105,7 @@ class ContentfulStore {
     this.data.loading = true;
     return this.fetchManifest()
       .then((res) => {
-        return res.body || {};
+        return res.data || {};
       })
       .then((manifest) => {
         const contents = Object.entries(manifest).map(([k, v]) => [
