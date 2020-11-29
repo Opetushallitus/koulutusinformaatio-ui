@@ -24,8 +24,6 @@
     "clsx": "^1.1.0",
     "date-fns": "^2.14.0",
     "i18next-http-backend": "^1.0.21",
-    "jschannel": "1.0.2",
-    "local-storage": "^2.0.0",
     "lodash": "^4.17.20",
     "markdown-to-jsx": "^6.11.4",
     "material-ui-flat-pagination": "^4.1.0",
@@ -48,7 +46,6 @@
     "redux": "^4.0.5",
     "remove-markdown": "^0.3.0",
     "striptags": "^3.1.1",
-    "superagent": "^3.8.3",
     "typeface-open-sans": "0.0.75",
     "url-parse": "^1.4.7"
   },
