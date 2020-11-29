@@ -122,8 +122,8 @@ export const OsoiteParser = {
       address: coreAddress,
       addressNoNumbers: withoutHouseNumber,
     };
-  }
-}
+  },
+};
 
 export const TimeMillisParser = {
   millisToReadable(timemillis) {

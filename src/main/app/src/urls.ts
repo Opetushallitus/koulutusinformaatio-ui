@@ -1,3 +1,8 @@
+import { urls } from 'oph-urls-js';
+
+const CALLER_ID = '1.2.246.562.10.00000000001.konfoui';
+
+// TODO: Add all missing urls to spring boot wrapper and remove production url overrides from here
 const production = {
   'konfo-backend.base-url': '/',
   'konfo-backend.old-oppija': '/',
@@ -26,6 +31,7 @@ const production = {
 const development = {
   ...production,
   'konfo-backend.old-oppija': '/',
+  'konfo-backend.content': 'https://konfo-content.untuvaopintopolku.fi/$1',
   'konfo-backend.suosittelu': 'https://beta.testiopintopolku.fi/konfo-backend/suosittelu',
   'eperusteet-service.eperuste.kuvaus':
     'https://eperusteet.hahtuvaopintopolku.fi/#/$1/esitys/$2/reformi/tutkinnonosat/$3',
@@ -34,4 +40,12 @@ const development = {
     'https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0',
 };
 
-export { production, development };
+export const configureUrls = async () => {
+  const { NODE_ENV } = process.env;
+  urls.addCallerId(CALLER_ID);
+  if (['development', 'test'].includes(NODE_ENV)) {
+    urls.addProperties(development);
+  } else {
+    await urls.load('/konfo/rest/config/frontProperties', { overrides: production });
+  }
+};
