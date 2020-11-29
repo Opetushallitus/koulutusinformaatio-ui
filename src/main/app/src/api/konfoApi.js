@@ -86,3 +86,6 @@ export const searchAPI = {
       .then((response) => response.data);
   },
 };
+
+export const postClientError = (errorData) =>
+  client.post('/konfo-backend/client-error', errorData);
