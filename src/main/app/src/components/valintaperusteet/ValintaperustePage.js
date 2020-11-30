@@ -90,7 +90,8 @@ export const ValintaperustePage = () => {
   const {
     metadata: { kuvaus, valintatavat },
   } = valintaperuste || { metadata: { kuvaus: {}, valintatavat: [] } };
-  const paluuLinkki = hakukohde && `/toteutus/${hakukohde.toteutusOid}`;
+  const toteutusLink = toteutus && `/toteutus/${toteutus.oid}`;
+
   return isFetching ? (
     <LoadingCircle />
   ) : (
@@ -100,7 +101,7 @@ export const ValintaperustePage = () => {
           path={[
             { name: t('haku.otsikko'), link: hakuUrl.url },
             { name: l.localize(koulutus?.nimi), link: `/koulutus/${koulutus?.oid}` },
-            { name: l.localize(toteutus?.nimi), link: `/toteutus/${toteutus?.oid}` },
+            { name: l.localize(toteutus?.nimi), link: toteutusLink },
             { name: l.localize(valintaperuste?.nimi) },
           ]}
         />
@@ -113,8 +114,8 @@ export const ValintaperustePage = () => {
         className={classes.container}>
         <Grid item xs={12} sm={12} md={3} />
         <Grid item xs={12} sm={12} md={6}>
-          <Paluu paluuLinkki={paluuLinkki} />
-          <Lomake haku={haku} hakukohde={hakukohde} paluuLinkki={paluuLinkki} />
+          <Paluu paluuLinkki={toteutusLink} />
+          <Lomake haku={haku} hakukohde={hakukohde} paluuLinkki={toteutusLink} />
         </Grid>
         <Grid item xs={12} sm={12} md={3} />
         <Grid item xs={12} sm={12} md={3}>
@@ -145,7 +146,7 @@ export const ValintaperustePage = () => {
           />
           {valintaperuste.sorakuvaus ? <Sora {...valintaperuste.sorakuvaus} /> : null}
           <Liitteet {...hakukohde} />
-          <Paluu paluuLinkki={paluuLinkki} />
+          <Paluu paluuLinkki={toteutusLink} />
         </Grid>
       </Grid>
     </>
