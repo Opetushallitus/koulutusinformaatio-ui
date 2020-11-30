@@ -3,7 +3,6 @@ import _ from 'lodash';
 import {
   Grid,
   Badge,
-  Box,
   Button,
   Card,
   CardContent,
@@ -25,7 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-const StyledBadge = withStyles((theme) => ({
+const StyledBadge = withStyles(() => ({
   badge: {
     right: -75,
     border: `2px solid ${colors.beigeGreen}`,
@@ -70,7 +69,7 @@ const Row = ({ title, children }) => {
         </Typography>
       </Grid>
       <Grid item xs={9}>
-        {children}
+        <Typography style={{ fontWeight: 600 }}>{children}</Typography>
       </Grid>
     </Grid>
   );
@@ -88,64 +87,59 @@ export const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
   const isOpen = isHakuAuki(_.concat(haku.hakuajat, hakukohde.hakuajat));
 
   return (
-    <>
-      <Box pb={2}>
-        <Typography variant="h1" component="h1">
-          {t('lomake.valintaperusteet')}
-        </Typography>
-      </Box>
-      <Card className={classes.card} elevation={2}>
-        <CardContent>
-          <Grid container direction="row" spacing={4}>
-            <Grid item>
-              <Typography variant="h4" component="h4">
-                {l.localize(hakukohde?.nimi)}
-                {isOpen && (
-                  <StyledBadge
-                    badgeContent={t('valintaperuste.haku-kaynnissa')}
-                    color="secondary"
-                  />
-                )}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Row title={t('valintaperuste.haku')}>{l.localize(haku?.nimi)}</Row>
-              <Row title={t('valintaperuste.hakuaika')}>
-                {hakuaika ? formatDateRange(hakuaika[0], hakuaika[1]) : '-'}
-              </Row>
-              {Boolean(aloituspaikat) && (
-                <Row title={t('valintaperuste.opiskelupaikkoja')}>
-                  {`${aloituspaikat} ${
-                    ensikertalaisille
-                      ? t('lomake.ensikertalaisille', { ensikertalaisille })
-                      : ''
-                  }`}
-                </Row>
+    <Card className={classes.card} elevation={2}>
+      <CardContent>
+        <Grid container direction="row" spacing={4}>
+          <Grid item>
+            <Typography variant="h4" component="h4">
+              {l.localize(hakukohde?.nimi)}
+              {isOpen && (
+                <StyledBadge
+                  badgeContent={t('valintaperuste.haku-kaynnissa')}
+                  color="secondary"
+                />
               )}
-              <Row title={t('valintaperuste.pohjakoulutus')}>-</Row>
-            </Grid>
+            </Typography>
           </Grid>
-        </CardContent>
-        <CardActions>
-          <Grid container direction="row" spacing={2}>
-            <Grid item>
-              <LomakeButton
-                href={l.localize(hakukohde.hakulomakeLinkki)}
-                disabled={!isOpen}>
-                {t('lomake.tayta-lomake')}
+          <Grid item xs={12}>
+            <Row title={t('valintaperuste.haku')}>{l.localize(haku?.nimi)}</Row>
+            <Row title={t('valintaperuste.hakuaika')}>
+              {hakuaika ? formatDateRange(hakuaika[0], hakuaika[1]) : '-'}
+            </Row>
+            {Boolean(aloituspaikat) && (
+              <Row title={t('valintaperuste.opiskelupaikkoja')}>
+                {`${aloituspaikat} ${
+                  ensikertalaisille
+                    ? t('lomake.ensikertalaisille', { ensikertalaisille })
+                    : ''
+                }`}
+              </Row>
+            )}
+            <Row title={t('valintaperuste.pohjakoulutus')}>-</Row>
+          </Grid>
+        </Grid>
+      </CardContent>
+      <CardActions>
+        <Grid container direction="row" spacing={2}>
+          <Grid item>
+            <LomakeButton
+              href={l.localize(hakukohde.hakulomakeLinkki)}
+              disabled={!isOpen}>
+              {t('lomake.tayta-lomake')}
+            </LomakeButton>
+          </Grid>
+          <Grid item>
+            <LocalizedLink
+              component={RouterLink}
+              to={paluuLinkki}
+              style={{ textDecoration: 'none' }}>
+              <LomakeButton variant="outlined">
+                {t('lomake.palaa-esittelyyn')}
               </LomakeButton>
-            </Grid>
-            <Grid item>
-              <LocalizedLink
-                component={RouterLink}
-                to={paluuLinkki}
-                style={{ textDecoration: 'none' }}>
-                <LomakeButton>{t('lomake.palaa-esittelyyn')}</LomakeButton>
-              </LocalizedLink>
-            </Grid>
+            </LocalizedLink>
           </Grid>
-        </CardActions>
-      </Card>
-    </>
+        </Grid>
+      </CardActions>
+    </Card>
   );
 };

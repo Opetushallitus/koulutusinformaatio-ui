@@ -15,7 +15,6 @@ import _ from 'lodash';
 import { Grid, withStyles } from '@material-ui/core';
 import { Localizer as l, sanitizedHTMLParser, toId } from '#/src/tools/Utils';
 import { colors } from '#/src/colors';
-import Spacer from '#/src/components/common/Spacer';
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
@@ -24,12 +23,14 @@ const StyledTableRow = withStyles((theme) => ({
     },
   },
 }))(TableRow);
+
 const HeaderCell = withStyles((theme) => ({
   head: {
     backgroundColor: colors.green,
     color: colors.white,
   },
 }))(TableCell);
+
 const SubHeaderCell = withStyles((theme) => ({
   head: {
     fontWeight: 'bold',
@@ -65,6 +66,7 @@ const Teksti = ({ data }) => {
 };
 const Taulukko = ({ data: { rows } }) => {
   const { t } = useTranslation();
+
   const subTables = (rows || []).reduce((total, row) => {
     if (row.isHeader || _.isEmpty(total)) {
       total.push({ header: [], body: [] });
@@ -73,6 +75,7 @@ const Taulukko = ({ data: { rows } }) => {
     (row.isHeader ? header : body).push(row);
     return total;
   }, []);
+
   return (
     <TableContainer component={Paper}>
       {subTables.map(({ header, body }, index) => {
@@ -183,10 +186,9 @@ export const Kuvaus = ({ kuvaus, valintatavat }) => {
       <Grid container spacing={2} justify="flex-start" alignItems="flex-start">
         <Grid item xs={12} sm={12} md={12}>
           <Box py={2}>
-            <Typography id={toId(t('valintaperuste.kuvaus'))} variant="h1">
+            <Typography id={toId(t('valintaperuste.kuvaus'))} variant="h2">
               {t('valintaperuste.kuvaus')}
             </Typography>
-            <Spacer />
           </Box>
           {sanitizedHTMLParser(html, {
             transform: tagHeaders,

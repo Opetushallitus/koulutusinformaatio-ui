@@ -2,15 +2,14 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
+import { makeStyles, Grid, Box, Typography } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
-import { makeStyles, Grid } from '@material-ui/core';
 import { useQuery } from 'react-query';
 
 import { Localizer as l } from '#/src/tools/Utils';
 import Murupolku from '#/src/components/common/Murupolku';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
-
 import {
   getKoulutus,
   getToteutus,
@@ -115,7 +114,14 @@ export const ValintaperustePage = () => {
         <Grid item xs={12} sm={12} md={3} />
         <Grid item xs={12} sm={12} md={6}>
           <Paluu paluuLinkki={toteutusLink} />
-          <Lomake haku={haku} hakukohde={hakukohde} paluuLinkki={toteutusLink} />
+          <Box pb={2}>
+            <Typography variant="h1" component="h1">
+              {t('lomake.valintaperusteet')}
+            </Typography>
+          </Box>
+          <Box pb={2}>
+            <Lomake haku={haku} hakukohde={hakukohde} paluuLinkki={toteutusLink} />
+          </Box>
         </Grid>
         <Grid item xs={12} sm={12} md={3} />
         <Grid item xs={12} sm={12} md={3}>
@@ -146,7 +152,6 @@ export const ValintaperustePage = () => {
           />
           {valintaperuste.sorakuvaus ? <Sora {...valintaperuste.sorakuvaus} /> : null}
           <Liitteet {...hakukohde} />
-          <Paluu paluuLinkki={toteutusLink} />
         </Grid>
       </Grid>
     </>
