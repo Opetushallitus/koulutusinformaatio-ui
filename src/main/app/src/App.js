@@ -102,34 +102,34 @@ const TranslatedRoutes = ({ match, location }) => {
       <Route exact path="/:lng">
         <Etusivu />
       </Route>
-      <Route path="/:lng/sisaltohaku/">
+      <Route exact path="/:lng/sisaltohaku/">
         <Sisaltohaku />
       </Route>
-      <Route path="/:lng/haku/:keyword?">
+      <Route exact path="/:lng/haku/:keyword?">
         <KoulutusHakuBar />
         <Haku />
       </Route>
-      <Route path="/:lng/koulutus/:oid">
+      <Route exact path="/:lng/koulutus/:oid">
         <KoulutusHakuBar />
         <Koulutus />
       </Route>
-      <Route path="/:lng/oppilaitos/:oid">
+      <Route exact path="/:lng/oppilaitos/:oid">
         <KoulutusHakuBar />
         <Oppilaitos />
       </Route>
-      <Route path="/:lng/oppilaitososa/:oid">
+      <Route exact path="/:lng/oppilaitososa/:oid">
         <KoulutusHakuBar />
         <Oppilaitos oppilaitosOsa />
       </Route>
-      <Route path="/:lng/toteutus/:oid">
+      <Route exact path="/:lng/toteutus/:oid">
         <KoulutusHakuBar />
         <Toteutus />
       </Route>
-      <Route path="/:lng/sivu/:id">
+      <Route exact path="/:lng/sivu/:id">
         <KoulutusHakuBar />
         <SivuRouter />
       </Route>
-      <Route path="/:lng/hakukohde/:hakukohdeOid/valintaperuste/:valintaperusteOid">
+      <Route exact path="/:lng/hakukohde/:hakukohdeOid/valintaperuste/:valintaperusteOid">
         <KoulutusHakuBar />
         <Valintaperusteet />
       </Route>
@@ -142,7 +142,6 @@ const TranslatedRoutes = ({ match, location }) => {
 
 const App = () => {
   const classes = useStyles();
-  const { i18n } = useTranslation();
   const contentfulStore = konfoStore.contentfulStore;
 
   const matches = useMediaQuery('(max-width: 600px)');
