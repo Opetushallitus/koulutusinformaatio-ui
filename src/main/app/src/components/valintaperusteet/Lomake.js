@@ -14,8 +14,10 @@ import {
 } from '@material-ui/core';
 import { isWithinInterval } from 'date-fns';
 import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
 import { formatDateRange, Localizer as l } from '#/src/tools/Utils';
 import { colors } from '#/src/colors';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles({
   card: {
@@ -142,9 +144,12 @@ export const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
               </LomakeButton>
             </Grid>
             <Grid item>
-              <LomakeButton href={`/konfo${paluuLinkki}`} variant="outlined">
-                {t('lomake.palaa-esittelyyn')}
-              </LomakeButton>
+              <LocalizedLink
+                component={RouterLink}
+                to={paluuLinkki}
+                style={{ textDecoration: 'none' }}>
+                <LomakeButton>{t('lomake.palaa-esittelyyn')}</LomakeButton>
+              </LocalizedLink>
             </Grid>
           </Grid>
         </CardActions>
