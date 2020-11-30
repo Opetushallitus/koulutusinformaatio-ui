@@ -1,9 +1,9 @@
 {
   "Tutkinnon osa KOMOTO renders properly": {
-    "timestamp": 1605512659586,
+    "timestamp": 1606735852628,
     "routes": [
       {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/toteutus/1.2.246.562.17.00000000000000000469",
+        "url": "http://localhost:3005/konfo-backend/toteutus/1.2.246.562.17.00000000000000000469",
         "method": "GET",
         "status": 200,
         "headers": {},
@@ -51,7 +51,7 @@
               "oid": "1.2.246.562.10.94620157316"
             }
           ],
-          "modified": "2020-11-13T16:04",
+          "modified": "2020-11-20T09:46",
           "koulutusOid": "1.2.246.562.13.00000000000000000622",
           "nimi": {
             "fi": "(testi) Hevosten hyvinvoinnista huolehtiminen"
@@ -64,7 +64,7 @@
           "kielivalinta": [
             "fi"
           ],
-          "timestamp": 1605276293456,
+          "timestamp": 1606379736879,
           "organisaatiot": [
             "1.2.246.562.10.594252633210",
             "1.2.246.562.10.67603619189",
@@ -96,7 +96,7 @@
             },
             "hakuaika": {
               "alkaa": "2020-11-10T00:00",
-              "paattyy": "2020-11-18T00:00"
+              "paattyy": "2020-12-17T00:00"
             },
             "ammattinimikkeet": [],
             "asiasanat": [
@@ -127,7 +127,9 @@
               "koulutuksenAlkamisvuosi": 2020,
               "lisatiedot": [],
               "suunniteltuKestoKuukaudet": 0,
-              "opetustapaKuvaus": {},
+              "opetustapaKuvaus": {
+                "fi": "Joo"
+              },
               "opetuskieletKuvaus": {
                 "fi": "Tarkempi opetuskuvaus"
               },
@@ -253,7 +255,7 @@
         }
       },
       {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/koulutus/1.2.246.562.13.00000000000000000622",
+        "url": "http://localhost:3005/konfo-backend/koulutus/1.2.246.562.13.00000000000000000622",
         "method": "GET",
         "status": 200,
         "headers": {},
@@ -356,7 +358,7 @@
                 "oid": "1.2.246.562.24.16838104094",
                 "nimi": "Antti Sarjanoja"
               },
-              "modified": "2020-11-13T16:04",
+              "modified": "2020-11-20T09:46",
               "organisaatiot": [
                 "1.2.246.562.10.594252633210",
                 "1.2.246.562.10.67603619189",
@@ -378,7 +380,7 @@
           "kielivalinta": [
             "fi"
           ],
-          "timestamp": 1605276296854,
+          "timestamp": 1606379592677,
           "julkinen": false,
           "organisaatiot": [
             "1.2.246.562.10.594252633210",
@@ -471,7 +473,7 @@
         }
       },
       {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/search/koulutus/1.2.246.562.13.00000000000000000622/jarjestajat",
+        "url": "http://localhost:3005/konfo-backend/search/koulutus/1.2.246.562.13.00000000000000000622/jarjestajat",
         "method": "GET",
         "status": 200,
         "headers": {},
@@ -494,280 +496,8 @@
                 }
               ],
               "nimi": {
-                "sv": "Koulutuskeskus Salpaus",
-                "fi": "Koulutuskeskus Salpaus",
-                "en": "Koulutuskeskus Salpaus"
-              },
-              "kuva": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.39218317368/e59fb6eb-c68b-4223-a7d0-4536bc4381d3.jpg",
-              "oppilaitosOid": "1.2.246.562.10.81934895871",
-              "onkoMaksullinen": false,
-              "kunnat": [
-                {
-                  "koodiUri": "kunta_398",
-                  "nimi": {
-                    "sv": "Lahtis",
-                    "fi": "Lahti"
-                  }
-                },
-                {
-                  "koodiUri": "kunta_111",
-                  "nimi": {
-                    "sv": "Heinola",
-                    "fi": "Heinola"
-                  }
-                }
-              ],
-              "tutkintonimikkeet": null,
-              "oppilaitosTila": "julkaistu",
-              "koulutustyyppi": "amm"
-            }
-          ]
-        }
-      },
-      {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/koulutus/1.2.246.562.13.00000000000000000622",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": {
-          "tila": "julkaistu",
-          "johtaaTutkintoon": false,
-          "tarjoajat": [
-            {
-              "paikkakunta": {
-                "koodiUri": "kunta_398",
-                "nimi": {
-                  "sv": "Lahtis",
-                  "fi": "Lahti"
-                }
-              },
-              "nimi": {
-                "fi": "Koulutuskeskus Salpaus -kuntayhtymä"
-              },
-              "oid": "1.2.246.562.10.594252633210"
-            },
-            {
-              "paikkakunta": {
-                "koodiUri": "kunta_398",
-                "nimi": {
-                  "sv": "Lahtis",
-                  "fi": "Lahti"
-                }
-              },
-              "nimi": {
                 "fi": "Koulutuskeskus Salpaus",
                 "sv": "Koulutuskeskus Salpaus",
-                "en": "Koulutuskeskus Salpaus"
-              },
-              "oid": "1.2.246.562.10.81934895871"
-            }
-          ],
-          "toteutukset": [
-            {
-              "oid": "1.2.246.562.17.00000000000000000469",
-              "organisaatio": {
-                "paikkakunta": {
-                  "koodiUri": "kunta_398",
-                  "nimi": {
-                    "sv": "Lahtis",
-                    "fi": "Lahti"
-                  }
-                },
-                "nimi": {
-                  "fi": "Koulutuskeskus Salpaus -kuntayhtymä"
-                },
-                "oid": "1.2.246.562.10.594252633210"
-              },
-              "nimi": {
-                "fi": "(testi) Hevosten hyvinvoinnista huolehtiminen"
-              },
-              "tila": "julkaistu",
-              "tarjoajat": [
-                {
-                  "paikkakunta": {
-                    "koodiUri": "kunta_398",
-                    "nimi": {
-                      "sv": "Lahtis",
-                      "fi": "Lahti"
-                    }
-                  },
-                  "nimi": {
-                    "fi": "Koulutuskeskus Salpaus,  Lahti, Jokimaa"
-                  },
-                  "oid": "1.2.246.562.10.67603619189"
-                },
-                {
-                  "paikkakunta": {
-                    "koodiUri": "kunta_398",
-                    "nimi": {
-                      "sv": "Lahtis",
-                      "fi": "Lahti"
-                    }
-                  },
-                  "nimi": {
-                    "fi": "Koulutuskeskus Salpaus, Nastola, Villähde"
-                  },
-                  "oid": "1.2.246.562.10.76662434703"
-                },
-                {
-                  "paikkakunta": {
-                    "koodiUri": "kunta_111",
-                    "nimi": {
-                      "sv": "Heinola",
-                      "fi": "Heinola"
-                    }
-                  },
-                  "nimi": {
-                    "fi": "Koulutuskeskus Salpaus, Heinola"
-                  },
-                  "oid": "1.2.246.562.10.94620157316"
-                }
-              ],
-              "muokkaaja": {
-                "oid": "1.2.246.562.24.16838104094",
-                "nimi": "Antti Sarjanoja"
-              },
-              "modified": "2020-11-13T16:04",
-              "organisaatiot": [
-                "1.2.246.562.10.594252633210",
-                "1.2.246.562.10.67603619189",
-                "1.2.246.562.10.76662434703",
-                "1.2.246.562.10.94620157316"
-              ]
-            }
-          ],
-          "esikatselu": true,
-          "modified": "2020-11-06T09:21",
-          "nimi": {
-            "fi": "(testi) Hevosten hyvinvoinnista huolehtiminen"
-          },
-          "muokkaaja": {
-            "oid": "1.2.246.562.24.16838104094",
-            "nimi": "Antti Sarjanoja"
-          },
-          "oid": "1.2.246.562.13.00000000000000000622",
-          "kielivalinta": [
-            "fi"
-          ],
-          "timestamp": 1605276296854,
-          "julkinen": false,
-          "organisaatiot": [
-            "1.2.246.562.10.594252633210",
-            "1.2.246.562.10.81934895871"
-          ],
-          "organisaatio": {
-            "paikkakunta": {
-              "koodiUri": "kunta_398",
-              "nimi": {
-                "sv": "Lahtis",
-                "fi": "Lahti"
-              }
-            },
-            "nimi": {
-              "fi": "Koulutuskeskus Salpaus -kuntayhtymä"
-            },
-            "oid": "1.2.246.562.10.594252633210"
-          },
-          "metadata": {
-            "tyyppi": "amm-tutkinnon-osa",
-            "kuvaus": {},
-            "lisatiedot": [],
-            "tutkinnonOsat": [
-              {
-                "ePerusteId": 2357203,
-                "koulutus": {
-                  "koodiUri": "koulutus_364145#7",
-                  "nimi": {
-                    "fi": "Hevostalouden ammattitutkinto",
-                    "sv": "Yrkesexamen inom hästhushållning"
-                  }
-                },
-                "tutkinnonosaId": 2448754,
-                "tutkinnonosaViite": 2449201,
-                "opintojenLaajuusNumero": 25,
-                "opintojenLaajuus": {},
-                "opintojenLaajuusyksikko": {
-                  "koodiUri": "opintojenlaajuusyksikko_6",
-                  "nimi": {
-                    "sv": "kompetenspoäng",
-                    "fi": "osaamispistettä",
-                    "en": "ECVET competence points"
-                  }
-                },
-                "tutkinnonOsat": {
-                  "koodiUri": "tutkinnonosat_200060",
-                  "nimi": {
-                    "sv": "Omsorg om hästars välbefinnande",
-                    "fi": "Hevosten hyvinvoinnista huolehtiminen"
-                  }
-                }
-              },
-              {
-                "ePerusteId": 2357203,
-                "koulutus": {
-                  "koodiUri": "koulutus_364145#7",
-                  "nimi": {
-                    "fi": "Hevostalouden ammattitutkinto",
-                    "sv": "Yrkesexamen inom hästhushållning"
-                  }
-                },
-                "tutkinnonosaId": 2572106,
-                "tutkinnonosaViite": 2569404,
-                "opintojenLaajuusNumero": 20,
-                "opintojenLaajuus": {
-                  "nimi": {
-                    "fi": "20"
-                  },
-                  "koodiUri": "opintojenlaajuus_20"
-                },
-                "opintojenLaajuusyksikko": {
-                  "koodiUri": "opintojenlaajuusyksikko_6",
-                  "nimi": {
-                    "sv": "kompetenspoäng",
-                    "fi": "osaamispistettä",
-                    "en": "ECVET competence points"
-                  }
-                },
-                "tutkinnonOsat": {
-                  "koodiUri": "tutkinnonosat_200079",
-                  "nimi": {
-                    "fi": "Hevosten kouluttaminen",
-                    "sv": "Utbildning av hästar"
-                  }
-                }
-              }
-            ]
-          },
-          "koulutustyyppi": "amm-tutkinnon-osa"
-        }
-      },
-      {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/search/koulutus/1.2.246.562.13.00000000000000000622/jarjestajat",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": {
-          "total": 1,
-          "hits": [
-            {
-              "maksunMaara": null,
-              "kuvaus": {
-                "fi": "<p>Testikuvaus</p>"
-              },
-              "toteutusOid": "1.2.246.562.17.00000000000000000469",
-              "opetusajat": [
-                {
-                  "koodiUri": "opetusaikakk_5#1",
-                  "nimi": {
-                    "fi": "Ajankohdasta riippumaton"
-                  }
-                }
-              ],
-              "nimi": {
-                "sv": "Koulutuskeskus Salpaus",
-                "fi": "Koulutuskeskus Salpaus",
                 "en": "Koulutuskeskus Salpaus"
               },
               "kuva": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.39218317368/e59fb6eb-c68b-4223-a7d0-4536bc4381d3.jpg",
@@ -867,14 +597,6 @@
         ]
       },
       {
-        "fixtureId": "2dc5275de0c4f6a1b273782e713a0e7d",
-        "url": "https://konfo-content.untuvaopintopolku.fi/1596792142276/fi/sivu.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null
-      },
-      {
         "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/sivuKooste.json",
         "method": "GET",
         "status": 200,
@@ -922,6 +644,14 @@
             ]
           }
         ]
+      },
+      {
+        "fixtureId": "04727099c168ad4ac3e7ee32bd4bbf35",
+        "url": "https://konfo-content.untuvaopintopolku.fi/1596792142276/fi/sivu.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null
       },
       {
         "url": "https://konfo-content.untuvaopintopolku.fi/1594889859462/fi/kortti.json",
@@ -1020,14 +750,6 @@
             "color": "polku"
           }
         ]
-      },
-      {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1580997016376/fi/info.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": []
       },
       {
         "url": "https://konfo-content.untuvaopintopolku.fi/1596805168746/fi/asset.json",
@@ -1439,6 +1161,14 @@
         ]
       },
       {
+        "url": "https://konfo-content.untuvaopintopolku.fi/1580997016376/fi/info.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": []
+      },
+      {
         "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/footer.json",
         "method": "GET",
         "status": 200,
@@ -1454,6 +1184,262 @@
             "contentCenter": "\n[Tietoturvaselosteet](https://opintopolku.fi/wp/tietosuojaseloste/ \"siirry tietosuojaselosteisiin\")",
             "lopputekstit": "Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja koulutuksistaan Opintopolku.fi-palvelussa. Tietojen oikeellisuuden voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.",
             "content": "Opintopolku sisältää tietoa tutkinnoista, ammateista sekä opiskelusta eri oppilaitoksissa. Sen kautta voi sekä löytää koulutusvaihtoehtoja että hakea niihin."
+          }
+        ]
+      },
+      {
+        "url": "https://konfo-content.untuvaopintopolku.fi/1580997016376/fi/esittely.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": []
+      },
+      {
+        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/content.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": [
+          {
+            "id": "5G7gPGrKkbQckP5J99cmK9",
+            "name": "Ammatillinen koulutus -tekstiosio",
+            "type": "content",
+            "created": "2020-02-03T11:44:46.919Z",
+            "updated": "2020-02-17T13:01:59.766Z",
+            "content": "Ammatillisia tutkintoja ovat ammatilliset perustutkinnot, ammattitutkinnot ja erikoisammattitutkinnot.  Ammatillisissa opilaitoksissa voi opiskella myös erilaisia tutkintoon johtamattomia opintokokonaisuuksia.\n\nAmmatilliseen koulutukseen voi hakea ympäri vuoden jatkuvan haun kautta. Jos haet ammatilliseen perustutkintokoulutukseen peruskoulusta tai lukiosta, niin haet pääasiassa yhteishaun kautta. Ammattitutkintoihin ja erikoisammattitutkintoihin haet aina jatkuvan haun kautta.\n  \nVoit suorittaa perus-, ammatti- tai erikoisammattitutkintoja tai tutkinnon osia myös työvoimakoulutuksena. Ammatillinen työvoimakoulutus on tarkoitettu ensisijaisesti työttömille tai työttömyysuhan alaisille aikuisille, jotka ovat suorittaneet oppivelvollisuutensa. Opiskelijaksi ottamisessa käytetään työ- ja elinkeinopalvelun työvoimapoliittinen harkinta."
+          }
+        ]
+      },
+      {
+        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/uutinen.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": [
+          {
+            "id": "2FVXGU4vkgkJLJSz8Dmato",
+            "name": "Mikä on jatkuva haku?",
+            "type": "uutinen",
+            "created": "2020-01-03T08:51:25.649Z",
+            "updated": "2020-02-17T13:02:11.273Z",
+            "sivu": {
+              "id": "4rhJZGOhrb7DLKpnPV5Cao",
+              "name": "Jatkuva haku koulutukseen",
+              "type": "sivu"
+            },
+            "image": {
+              "id": "1aK73aWQFCeW9E6n3Qvncw",
+              "url": "bjsyfobsxzam/1aK73aWQFCeW9E6n3Qvncw/89f95b998ff72ed27547dc8893ca630d/Metallitekniikan_opiskelija.jpg.jpg",
+              "description": "Kontekniikan opiskelija tarkkailee näyttöruudulta asennustietoja. ",
+              "original": "//images.ctfassets.net/bjsyfobsxzam/1aK73aWQFCeW9E6n3Qvncw/89f95b998ff72ed27547dc8893ca630d/Metallitekniikan_opiskelija.jpg",
+              "type": "asset",
+              "name": "Konetekniikan opiskelija, valokuvaaja Jyrki Vesa "
+            },
+            "content": "__Mikä on jatkuva haku?__\n\nJatkuva haku tarkoittaa, että koulutuksiin voi hakea ympäri vuoden. Hakuajat vaihtelevat oppilaitoksittain ja koulutuksittain. Saat lisää tietoa koulutuksista, joihin voi hakea jatkuvan haun kautta oppilaitosten verkkosivuilta tai Opintopolusta.\n\nLue lisää jatkuvasta hausta ammatilliseen koulutukseen"
+          },
+          {
+            "id": "3fNg4FUq9Y3ujdqsNKpHby",
+            "name": "Uutinen Beta",
+            "type": "uutinen",
+            "created": "2020-02-03T11:44:36.589Z",
+            "updated": "2020-02-17T13:01:43.511Z",
+            "sivu": {
+              "id": "6vGteqPJ1A1TOQx4dfIUzM",
+              "name": "Miten Opintopolkua kehitetään",
+              "type": "sivu"
+            },
+            "image": {
+              "id": "12LNzRJUlDEqu7EmXUPWEF",
+              "url": "bjsyfobsxzam/12LNzRJUlDEqu7EmXUPWEF/8b7daa5d5ca4726f7cd86e26f29446e1/Screenshot_2019-10-01_at_10.09.16.png.jpg",
+              "description": "",
+              "original": "//images.ctfassets.net/bjsyfobsxzam/12LNzRJUlDEqu7EmXUPWEF/8b7daa5d5ca4726f7cd86e26f29446e1/Screenshot_2019-10-01_at_10.09.16.png",
+              "type": "asset",
+              "name": "Screenshot 2019-10-01 at 10.09.16"
+            },
+            "content": "__Mikä on Opintopolun Beta-versio?__\n\n\nOpintopolku uudistuu vuoden 2020 aikana. Ensimmäisenä otamme käyttöön Opintopolun Beta-version, jossa on aluksi tietoa ammatillisesta koulutuksesta. Koulutustarjonnassa löytyy tutkintoon johtavia ammatillisia koulutuksia, oppilaitokset alkavat lisätä omaa jatkuvien hakujen tarjontaa vähitellen. \n\nBeta kehittyy koko ajan ja sinulla on mahdollisuus antaa palautetta uudesta Opintopolusta. Klikkaa siis sivulla olevaa vihreää palautehymiötä ja kerro mitä pidit uudistuvasta Opintopolusta.\n\nLue lisää Opintopolun kehittämisestä\n"
+          },
+          {
+            "id": "1zhhfsfaAj9H1Qt0bzFf7b",
+            "name": "Häiriö ",
+            "type": "uutinen",
+            "created": "2020-01-03T08:51:24.107Z",
+            "updated": "2020-02-03T11:44:53.887Z",
+            "sivu": {
+              "id": "75LUvZLRmvRvLli4oCYBTi",
+              "name": "Ammatillinen koulutus",
+              "type": "sivuKooste"
+            },
+            "image": {
+              "id": "5K0QVq6C9gLM0HbudxPnWy",
+              "url": "bjsyfobsxzam/5K0QVq6C9gLM0HbudxPnWy/31fece07e7d7763f4682569655a9567a/olafs-castle-1710288_640.jpg.jpg",
+              "description": "",
+              "original": "//images.ctfassets.net/bjsyfobsxzam/5K0QVq6C9gLM0HbudxPnWy/31fece07e7d7763f4682569655a9567a/olafs-castle-1710288_640.jpg",
+              "type": "asset",
+              "name": "olafs-castle-1710288 640"
+            },
+            "content": "Häiriö tiedotteiden lataamisessa."
+          },
+          {
+            "id": "4yHqAqxRMzjyUzUXeSLbzJ",
+            "name": "Uutisen otsikko",
+            "type": "uutinen",
+            "created": "2020-01-03T08:51:34.969Z",
+            "updated": "2020-02-03T11:44:33.191Z",
+            "image": {
+              "id": "3p31bFzEUEkxtE2fAT7NQY",
+              "url": "bjsyfobsxzam/3p31bFzEUEkxtE2fAT7NQY/04076fca5652e8951d4233f1471e3635/Screenshot_2019-10-01_at_10.09.36.png.jpg",
+              "description": "",
+              "original": "//images.ctfassets.net/bjsyfobsxzam/3p31bFzEUEkxtE2fAT7NQY/04076fca5652e8951d4233f1471e3635/Screenshot_2019-10-01_at_10.09.36.png",
+              "type": "asset",
+              "name": "Screenshot 2019-10-01 at 10.09.36"
+            },
+            "content": "Jotain uutisia"
+          }
+        ]
+      },
+      {
+        "url": "https://konfo-content.untuvaopintopolku.fi/1587477941420/fi/valikot.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": [
+          {
+            "id": "2nVR8h3O8Xtb8QDIVEp9Ly",
+            "name": "Päätason valikot",
+            "type": "valikot",
+            "created": "2020-01-03T08:51:13.180Z",
+            "updated": "2020-04-21T14:05:42.292Z",
+            "valikot": [
+              {
+                "id": "2SyYwgyUpy5EHsNa5PR80T",
+                "name": "Löydä oma polkusi",
+                "type": "valikko"
+              },
+              {
+                "id": "2J2lCJoP7ZQmmwazg5m1uA",
+                "name": "Hae koulutukseen",
+                "type": "valikko"
+              },
+              {
+                "id": "2CAwGpNrdHbNjxpiHhktBk",
+                "name": "Ajankohtaista",
+                "type": "valikko"
+              },
+              {
+                "id": "5F8QSVVmN4VUJadHS7xGRJ",
+                "name": "Ohjeet ja tuki",
+                "type": "valikko"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/lehti.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": [
+          {
+            "id": "2PUAYZ0kIOEXi8G4zaiWRx",
+            "name": "Kasvatusalat",
+            "type": "lehti",
+            "created": "2020-01-03T08:51:20.486Z",
+            "updated": "2020-02-17T13:02:06.054Z",
+            "sivu": {
+              "id": "5vxdk7QRPGKbfgk8u1Vbpn",
+              "name": "Hae koulutukseen",
+              "type": "sivu"
+            },
+            "icon": {
+              "id": "5uwfwoBuYBjnByFQgOiYEv",
+              "url": "bjsyfobsxzam/5uwfwoBuYBjnByFQgOiYEv/c295ba606e3c4a5146e25660bbb8a524/koulutustyyppi.svg",
+              "description": "",
+              "original": "//images.ctfassets.net/bjsyfobsxzam/5uwfwoBuYBjnByFQgOiYEv/c295ba606e3c4a5146e25660bbb8a524/koulutustyyppi.svg",
+              "type": "asset",
+              "name": "koulutustyyppi"
+            }
+          },
+          {
+            "id": "16X0EWOCJmt9Ldstq7sxA2",
+            "name": "Humanistiset ja taidealat",
+            "type": "lehti",
+            "created": "2020-01-03T08:51:20.124Z",
+            "updated": "2020-02-17T13:02:05.400Z",
+            "sivu": {
+              "id": "3w91aIHe1ygiwM9rpVzuXP",
+              "name": "Opinnot ammatillisessa koulutuksessa",
+              "type": "sivu"
+            },
+            "icon": {
+              "id": "WaaxZ1I2Md1NhjXOELllr",
+              "url": "bjsyfobsxzam/WaaxZ1I2Md1NhjXOELllr/3e0499728602e02eb91a1f22cdd094d5/koulutusaste.svg",
+              "description": "",
+              "original": "//images.ctfassets.net/bjsyfobsxzam/WaaxZ1I2Md1NhjXOELllr/3e0499728602e02eb91a1f22cdd094d5/koulutusaste.svg",
+              "type": "asset",
+              "name": "koulutusaste"
+            }
+          },
+          {
+            "id": "7oXTjne24qgok8MENryy3u",
+            "name": "Yhteiskunnalliset alat",
+            "type": "lehti",
+            "created": "2020-01-03T08:51:19.609Z",
+            "updated": "2020-02-17T13:02:04.792Z"
+          },
+          {
+            "id": "nYvb8EzCl3AJNwyVHwoft",
+            "name": "Kauppa ja halliinto",
+            "type": "lehti",
+            "created": "2020-01-03T08:51:19.103Z",
+            "updated": "2020-02-17T13:02:04.204Z"
+          },
+          {
+            "id": "7dlGV8p0qvapI0G1LHaM6h",
+            "name": "Luonnontieteet",
+            "type": "lehti",
+            "created": "2020-01-03T08:51:18.718Z",
+            "updated": "2020-02-17T13:02:03.591Z"
+          },
+          {
+            "id": "mMs2Egm5ZYOyOOvpGGW8Z",
+            "name": "Tietojenkäsittely ja tietoliikenne (ICT)",
+            "type": "lehti",
+            "created": "2020-01-03T08:51:18.167Z",
+            "updated": "2020-02-17T13:02:02.976Z"
+          },
+          {
+            "id": "7arc9OK0qjy7GYr02YEsCg",
+            "name": "Tekniikat alat",
+            "type": "lehti",
+            "created": "2020-01-03T08:51:17.587Z",
+            "updated": "2020-02-17T13:02:02.424Z"
+          },
+          {
+            "id": "3MrA3M1939k9n9aENzlAvH",
+            "name": "Maa- ja metsätalous",
+            "type": "lehti",
+            "created": "2020-01-03T08:51:16.847Z",
+            "updated": "2020-02-17T13:02:01.920Z"
+          },
+          {
+            "id": "7TzWVIagUNqpRDHizk4Az",
+            "name": "Terveys- ja hyvinvointialat",
+            "type": "lehti",
+            "created": "2020-01-03T08:51:16.430Z",
+            "updated": "2020-02-17T13:02:01.347Z"
+          },
+          {
+            "id": "0wVS1WSJfsdF8NPG9J8Cc",
+            "name": "Palvelualat",
+            "type": "lehti",
+            "created": "2020-01-03T08:51:16.027Z",
+            "updated": "2020-02-17T13:02:00.824Z"
           }
         ]
       },
@@ -1795,262 +1781,6 @@
         ]
       },
       {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1580997016376/fi/esittely.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": []
-      },
-      {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1587477941420/fi/valikot.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": [
-          {
-            "id": "2nVR8h3O8Xtb8QDIVEp9Ly",
-            "name": "Päätason valikot",
-            "type": "valikot",
-            "created": "2020-01-03T08:51:13.180Z",
-            "updated": "2020-04-21T14:05:42.292Z",
-            "valikot": [
-              {
-                "id": "2SyYwgyUpy5EHsNa5PR80T",
-                "name": "Löydä oma polkusi",
-                "type": "valikko"
-              },
-              {
-                "id": "2J2lCJoP7ZQmmwazg5m1uA",
-                "name": "Hae koulutukseen",
-                "type": "valikko"
-              },
-              {
-                "id": "2CAwGpNrdHbNjxpiHhktBk",
-                "name": "Ajankohtaista",
-                "type": "valikko"
-              },
-              {
-                "id": "5F8QSVVmN4VUJadHS7xGRJ",
-                "name": "Ohjeet ja tuki",
-                "type": "valikko"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/uutinen.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": [
-          {
-            "id": "2FVXGU4vkgkJLJSz8Dmato",
-            "name": "Mikä on jatkuva haku?",
-            "type": "uutinen",
-            "created": "2020-01-03T08:51:25.649Z",
-            "updated": "2020-02-17T13:02:11.273Z",
-            "sivu": {
-              "id": "4rhJZGOhrb7DLKpnPV5Cao",
-              "name": "Jatkuva haku koulutukseen",
-              "type": "sivu"
-            },
-            "image": {
-              "id": "1aK73aWQFCeW9E6n3Qvncw",
-              "url": "bjsyfobsxzam/1aK73aWQFCeW9E6n3Qvncw/89f95b998ff72ed27547dc8893ca630d/Metallitekniikan_opiskelija.jpg.jpg",
-              "description": "Kontekniikan opiskelija tarkkailee näyttöruudulta asennustietoja. ",
-              "original": "//images.ctfassets.net/bjsyfobsxzam/1aK73aWQFCeW9E6n3Qvncw/89f95b998ff72ed27547dc8893ca630d/Metallitekniikan_opiskelija.jpg",
-              "type": "asset",
-              "name": "Konetekniikan opiskelija, valokuvaaja Jyrki Vesa "
-            },
-            "content": "__Mikä on jatkuva haku?__\n\nJatkuva haku tarkoittaa, että koulutuksiin voi hakea ympäri vuoden. Hakuajat vaihtelevat oppilaitoksittain ja koulutuksittain. Saat lisää tietoa koulutuksista, joihin voi hakea jatkuvan haun kautta oppilaitosten verkkosivuilta tai Opintopolusta.\n\nLue lisää jatkuvasta hausta ammatilliseen koulutukseen"
-          },
-          {
-            "id": "3fNg4FUq9Y3ujdqsNKpHby",
-            "name": "Uutinen Beta",
-            "type": "uutinen",
-            "created": "2020-02-03T11:44:36.589Z",
-            "updated": "2020-02-17T13:01:43.511Z",
-            "sivu": {
-              "id": "6vGteqPJ1A1TOQx4dfIUzM",
-              "name": "Miten Opintopolkua kehitetään",
-              "type": "sivu"
-            },
-            "image": {
-              "id": "12LNzRJUlDEqu7EmXUPWEF",
-              "url": "bjsyfobsxzam/12LNzRJUlDEqu7EmXUPWEF/8b7daa5d5ca4726f7cd86e26f29446e1/Screenshot_2019-10-01_at_10.09.16.png.jpg",
-              "description": "",
-              "original": "//images.ctfassets.net/bjsyfobsxzam/12LNzRJUlDEqu7EmXUPWEF/8b7daa5d5ca4726f7cd86e26f29446e1/Screenshot_2019-10-01_at_10.09.16.png",
-              "type": "asset",
-              "name": "Screenshot 2019-10-01 at 10.09.16"
-            },
-            "content": "__Mikä on Opintopolun Beta-versio?__\n\n\nOpintopolku uudistuu vuoden 2020 aikana. Ensimmäisenä otamme käyttöön Opintopolun Beta-version, jossa on aluksi tietoa ammatillisesta koulutuksesta. Koulutustarjonnassa löytyy tutkintoon johtavia ammatillisia koulutuksia, oppilaitokset alkavat lisätä omaa jatkuvien hakujen tarjontaa vähitellen. \n\nBeta kehittyy koko ajan ja sinulla on mahdollisuus antaa palautetta uudesta Opintopolusta. Klikkaa siis sivulla olevaa vihreää palautehymiötä ja kerro mitä pidit uudistuvasta Opintopolusta.\n\nLue lisää Opintopolun kehittämisestä\n"
-          },
-          {
-            "id": "1zhhfsfaAj9H1Qt0bzFf7b",
-            "name": "Häiriö ",
-            "type": "uutinen",
-            "created": "2020-01-03T08:51:24.107Z",
-            "updated": "2020-02-03T11:44:53.887Z",
-            "sivu": {
-              "id": "75LUvZLRmvRvLli4oCYBTi",
-              "name": "Ammatillinen koulutus",
-              "type": "sivuKooste"
-            },
-            "image": {
-              "id": "5K0QVq6C9gLM0HbudxPnWy",
-              "url": "bjsyfobsxzam/5K0QVq6C9gLM0HbudxPnWy/31fece07e7d7763f4682569655a9567a/olafs-castle-1710288_640.jpg.jpg",
-              "description": "",
-              "original": "//images.ctfassets.net/bjsyfobsxzam/5K0QVq6C9gLM0HbudxPnWy/31fece07e7d7763f4682569655a9567a/olafs-castle-1710288_640.jpg",
-              "type": "asset",
-              "name": "olafs-castle-1710288 640"
-            },
-            "content": "Häiriö tiedotteiden lataamisessa."
-          },
-          {
-            "id": "4yHqAqxRMzjyUzUXeSLbzJ",
-            "name": "Uutisen otsikko",
-            "type": "uutinen",
-            "created": "2020-01-03T08:51:34.969Z",
-            "updated": "2020-02-03T11:44:33.191Z",
-            "image": {
-              "id": "3p31bFzEUEkxtE2fAT7NQY",
-              "url": "bjsyfobsxzam/3p31bFzEUEkxtE2fAT7NQY/04076fca5652e8951d4233f1471e3635/Screenshot_2019-10-01_at_10.09.36.png.jpg",
-              "description": "",
-              "original": "//images.ctfassets.net/bjsyfobsxzam/3p31bFzEUEkxtE2fAT7NQY/04076fca5652e8951d4233f1471e3635/Screenshot_2019-10-01_at_10.09.36.png",
-              "type": "asset",
-              "name": "Screenshot 2019-10-01 at 10.09.36"
-            },
-            "content": "Jotain uutisia"
-          }
-        ]
-      },
-      {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/content.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": [
-          {
-            "id": "5G7gPGrKkbQckP5J99cmK9",
-            "name": "Ammatillinen koulutus -tekstiosio",
-            "type": "content",
-            "created": "2020-02-03T11:44:46.919Z",
-            "updated": "2020-02-17T13:01:59.766Z",
-            "content": "Ammatillisia tutkintoja ovat ammatilliset perustutkinnot, ammattitutkinnot ja erikoisammattitutkinnot.  Ammatillisissa opilaitoksissa voi opiskella myös erilaisia tutkintoon johtamattomia opintokokonaisuuksia.\n\nAmmatilliseen koulutukseen voi hakea ympäri vuoden jatkuvan haun kautta. Jos haet ammatilliseen perustutkintokoulutukseen peruskoulusta tai lukiosta, niin haet pääasiassa yhteishaun kautta. Ammattitutkintoihin ja erikoisammattitutkintoihin haet aina jatkuvan haun kautta.\n  \nVoit suorittaa perus-, ammatti- tai erikoisammattitutkintoja tai tutkinnon osia myös työvoimakoulutuksena. Ammatillinen työvoimakoulutus on tarkoitettu ensisijaisesti työttömille tai työttömyysuhan alaisille aikuisille, jotka ovat suorittaneet oppivelvollisuutensa. Opiskelijaksi ottamisessa käytetään työ- ja elinkeinopalvelun työvoimapoliittinen harkinta."
-          }
-        ]
-      },
-      {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/lehti.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": [
-          {
-            "id": "2PUAYZ0kIOEXi8G4zaiWRx",
-            "name": "Kasvatusalat",
-            "type": "lehti",
-            "created": "2020-01-03T08:51:20.486Z",
-            "updated": "2020-02-17T13:02:06.054Z",
-            "sivu": {
-              "id": "5vxdk7QRPGKbfgk8u1Vbpn",
-              "name": "Hae koulutukseen",
-              "type": "sivu"
-            },
-            "icon": {
-              "id": "5uwfwoBuYBjnByFQgOiYEv",
-              "url": "bjsyfobsxzam/5uwfwoBuYBjnByFQgOiYEv/c295ba606e3c4a5146e25660bbb8a524/koulutustyyppi.svg",
-              "description": "",
-              "original": "//images.ctfassets.net/bjsyfobsxzam/5uwfwoBuYBjnByFQgOiYEv/c295ba606e3c4a5146e25660bbb8a524/koulutustyyppi.svg",
-              "type": "asset",
-              "name": "koulutustyyppi"
-            }
-          },
-          {
-            "id": "16X0EWOCJmt9Ldstq7sxA2",
-            "name": "Humanistiset ja taidealat",
-            "type": "lehti",
-            "created": "2020-01-03T08:51:20.124Z",
-            "updated": "2020-02-17T13:02:05.400Z",
-            "sivu": {
-              "id": "3w91aIHe1ygiwM9rpVzuXP",
-              "name": "Opinnot ammatillisessa koulutuksessa",
-              "type": "sivu"
-            },
-            "icon": {
-              "id": "WaaxZ1I2Md1NhjXOELllr",
-              "url": "bjsyfobsxzam/WaaxZ1I2Md1NhjXOELllr/3e0499728602e02eb91a1f22cdd094d5/koulutusaste.svg",
-              "description": "",
-              "original": "//images.ctfassets.net/bjsyfobsxzam/WaaxZ1I2Md1NhjXOELllr/3e0499728602e02eb91a1f22cdd094d5/koulutusaste.svg",
-              "type": "asset",
-              "name": "koulutusaste"
-            }
-          },
-          {
-            "id": "7oXTjne24qgok8MENryy3u",
-            "name": "Yhteiskunnalliset alat",
-            "type": "lehti",
-            "created": "2020-01-03T08:51:19.609Z",
-            "updated": "2020-02-17T13:02:04.792Z"
-          },
-          {
-            "id": "nYvb8EzCl3AJNwyVHwoft",
-            "name": "Kauppa ja halliinto",
-            "type": "lehti",
-            "created": "2020-01-03T08:51:19.103Z",
-            "updated": "2020-02-17T13:02:04.204Z"
-          },
-          {
-            "id": "7dlGV8p0qvapI0G1LHaM6h",
-            "name": "Luonnontieteet",
-            "type": "lehti",
-            "created": "2020-01-03T08:51:18.718Z",
-            "updated": "2020-02-17T13:02:03.591Z"
-          },
-          {
-            "id": "mMs2Egm5ZYOyOOvpGGW8Z",
-            "name": "Tietojenkäsittely ja tietoliikenne (ICT)",
-            "type": "lehti",
-            "created": "2020-01-03T08:51:18.167Z",
-            "updated": "2020-02-17T13:02:02.976Z"
-          },
-          {
-            "id": "7arc9OK0qjy7GYr02YEsCg",
-            "name": "Tekniikat alat",
-            "type": "lehti",
-            "created": "2020-01-03T08:51:17.587Z",
-            "updated": "2020-02-17T13:02:02.424Z"
-          },
-          {
-            "id": "3MrA3M1939k9n9aENzlAvH",
-            "name": "Maa- ja metsätalous",
-            "type": "lehti",
-            "created": "2020-01-03T08:51:16.847Z",
-            "updated": "2020-02-17T13:02:01.920Z"
-          },
-          {
-            "id": "7TzWVIagUNqpRDHizk4Az",
-            "name": "Terveys- ja hyvinvointialat",
-            "type": "lehti",
-            "created": "2020-01-03T08:51:16.430Z",
-            "updated": "2020-02-17T13:02:01.347Z"
-          },
-          {
-            "id": "0wVS1WSJfsdF8NPG9J8Cc",
-            "name": "Palvelualat",
-            "type": "lehti",
-            "created": "2020-01-03T08:51:16.027Z",
-            "updated": "2020-02-17T13:02:00.824Z"
-          }
-        ]
-      },
-      {
         "url": "https://konfo-content.untuvaopintopolku.fi/1581944186497/fi/kortit.json",
         "method": "GET",
         "status": 200,
@@ -2078,39 +1808,6 @@
                 "id": "5tEqiycmzoHBmNTXtLvZDl",
                 "name": "Asioi verkossa",
                 "type": "kortti"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/palvelut.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": [
-          {
-            "id": "33sOZUdzfJ79NkoV39qB1Y",
-            "name": "Palvelut",
-            "type": "palvelut",
-            "created": "2020-01-03T08:51:32.516Z",
-            "updated": "2020-02-17T13:02:18.184Z",
-            "linkit": [
-              {
-                "id": "3ogdy5DQZGcBhuAJDHK0wY",
-                "name": "eHOKS",
-                "type": "palvelu"
-              },
-              {
-                "id": "5utPy4Rqb9ca5jhVtw67Ob",
-                "name": "ePerusteet",
-                "type": "palvelu"
-              },
-              {
-                "id": "4gy1IvD9tNJWmowFzpqHSE",
-                "name": "Europassi",
-                "type": "palvelu"
               }
             ]
           }
@@ -2236,45 +1933,6 @@
         ]
       },
       {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186497/fi/ohjeetJaTuki.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": [
-          {
-            "id": "aXr4hmMFRFT90k028T3n5",
-            "name": "Ohjeet ja tuki",
-            "type": "ohjeetJaTuki",
-            "created": "2020-01-03T08:51:13.688Z",
-            "updated": "2020-02-17T13:01:45.882Z",
-            "linkit": [
-              {
-                "id": "3L6ZIIaEdLfIYsS6fni6GQ",
-                "name": "Neuvonta ja ohjaus",
-                "type": "palvelu"
-              },
-              {
-                "id": "1iGCaePEDip1LulX0Sp5kb",
-                "name": "Kysytyimmät kysymykset",
-                "type": "palvelu"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/search/koulutus/1.2.246.562.13.00000000000000000622/jarjestajat?tuleva=true",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": {
-          "total": 0,
-          "hits": []
-        }
-      },
-      {
         "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/uutiset.json",
         "method": "GET",
         "status": 200,
@@ -2369,6 +2027,39 @@
         ]
       },
       {
+        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/palvelut.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": [
+          {
+            "id": "33sOZUdzfJ79NkoV39qB1Y",
+            "name": "Palvelut",
+            "type": "palvelut",
+            "created": "2020-01-03T08:51:32.516Z",
+            "updated": "2020-02-17T13:02:18.184Z",
+            "linkit": [
+              {
+                "id": "3ogdy5DQZGcBhuAJDHK0wY",
+                "name": "eHOKS",
+                "type": "palvelu"
+              },
+              {
+                "id": "5utPy4Rqb9ca5jhVtw67Ob",
+                "name": "ePerusteet",
+                "type": "palvelu"
+              },
+              {
+                "id": "4gy1IvD9tNJWmowFzpqHSE",
+                "name": "Europassi",
+                "type": "palvelu"
+              }
+            ]
+          }
+        ]
+      },
+      {
         "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/infoGrid.json",
         "method": "GET",
         "status": 200,
@@ -2386,7 +2077,35 @@
         ]
       },
       {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/search/koulutus/1.2.246.562.13.00000000000000000622/jarjestajat?tuleva=true",
+        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186497/fi/ohjeetJaTuki.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": [
+          {
+            "id": "aXr4hmMFRFT90k028T3n5",
+            "name": "Ohjeet ja tuki",
+            "type": "ohjeetJaTuki",
+            "created": "2020-01-03T08:51:13.688Z",
+            "updated": "2020-02-17T13:01:45.882Z",
+            "linkit": [
+              {
+                "id": "3L6ZIIaEdLfIYsS6fni6GQ",
+                "name": "Neuvonta ja ohjaus",
+                "type": "palvelu"
+              },
+              {
+                "id": "1iGCaePEDip1LulX0Sp5kb",
+                "name": "Kysytyimmät kysymykset",
+                "type": "palvelu"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "url": "http://localhost:3005/konfo-backend/search/koulutus/1.2.246.562.13.00000000000000000622/jarjestajat?tuleva=true",
         "method": "GET",
         "status": 200,
         "headers": {},
@@ -2397,23 +2116,210 @@
         }
       },
       {
-        "fixtureId": "a2387f1c800e6140e215e2e9614c6187",
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/eperuste/2357203",
+        "fixtureId": "42f1895c01d98c9d4b97c5ef82ff5185",
+        "url": "http://localhost:3005/konfo-backend/eperuste/2357203",
         "method": "GET",
         "status": 200,
         "headers": {},
         "body": null
       },
       {
-        "fixtureId": "58cce2ca5eb6f27d9a172412bf11be77",
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/eperuste/2357203",
+        "url": "http://localhost:3005/konfo-backend/oppilaitoksen-osa/1.2.246.562.10.76662434703",
         "method": "GET",
         "status": 200,
         "headers": {},
-        "body": null
+        "body": null,
+        "response": {
+          "koulutusohjelmia": 0,
+          "organisaatiotyyppi": [
+            {
+              "koodiUri": "organisaatiotyyppi_03",
+              "nimi": {
+                "sv": "Verksamhetsställe",
+                "fi": "Toimipiste"
+              }
+            }
+          ],
+          "oppilaitos": {
+            "koulutusohjelmia": 0,
+            "organisaatiotyyppi": [
+              {
+                "koodiUri": "organisaatiotyyppi_02",
+                "nimi": {
+                  "sv": "Läroanstalt",
+                  "fi": "Oppilaitos"
+                }
+              }
+            ],
+            "oppilaitos": {
+              "tila": "julkaistu",
+              "teemakuva": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-teemakuva/1.2.246.562.10.67500058267/8362c8c9-b538-43e4-8a5e-f0399221c8d1.png",
+              "logo": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.39218317368/e59fb6eb-c68b-4223-a7d0-4536bc4381d3.jpg",
+              "modified": "2020-06-11T19:37",
+              "muokkaaja": {
+                "oid": "1.2.246.562.24.40260215789",
+                "nimi": "Dmitry Marokhonov"
+              },
+              "kielivalinta": [
+                "fi",
+                "sv"
+              ],
+              "organisaatio": {
+                "paikkakunta": {
+                  "koodiUri": "kunta_092",
+                  "nimi": {
+                    "sv": "Vanda",
+                    "fi": "Vantaa"
+                  }
+                },
+                "nimi": {
+                  "fi": "Vantaan ammattiopisto Varia",
+                  "sv": "Vantaan ammattiopisto Varia",
+                  "en": "Vantaan ammattiopisto Varia"
+                },
+                "oid": "1.2.246.562.10.67500058267"
+              },
+              "metadata": {
+                "tietoaOpiskelusta": [],
+                "yhteystiedot": {
+                  "osoite": {
+                    "osoite": {
+                      "fi": "Paasikivenkatu 7",
+                      "sv": "Tennistie 1"
+                    },
+                    "postinumero": {
+                      "koodiUri": "posti_15110#2",
+                      "nimi": {
+                        "sv": "LAHTI",
+                        "fi": "LAHTI"
+                      }
+                    }
+                  },
+                  "wwwSivu": {},
+                  "puhelinnumero": {},
+                  "sahkoposti": {}
+                },
+                "esittely": {
+                  "fi": "<h3>Tässä olisi tekstiä header1</h3><p><strong>Bold</strong></p><p><em>italic</em></p><p><u>underline</u></p><h4>otsikko 2</h4><ul><li>lista itemi 1</li><li>lista itemi 2</li><li></li></ul><ol><li>numerolista 1</li><li>numerolista 2</li><li>numerolista 3</li><li></li></ol><p>teksti jossa linkki</p>",
+                  "sv": "<h3>Tässä olisi tekstiä header1</h3><p><strong>Bold</strong></p><p><em>italic</em></p><p><u>underline</u></p><h4>otsikko 2</h4><ul><li>lista itemi 1</li><li>lista itemi 2</li><li></li></ul><ol><li>numerolista 1</li><li>numerolista 2</li><li>numerolista 3</li><li></li></ol><p>teksti jossa linkki</p>"
+                },
+                "opiskelijoita": 100,
+                "toimipisteita": 3
+              }
+            },
+            "nimi": {
+              "fi": "Koulutuskeskus Salpaus",
+              "sv": "Koulutuskeskus Salpaus",
+              "en": "Koulutuskeskus Salpaus"
+            },
+            "oid": "1.2.246.562.10.81934895871",
+            "oppilaitostyyppi": {
+              "koodiUri": "oppilaitostyyppi_21#1",
+              "nimi": {
+                "en": "Vocational institutions",
+                "sv": "Yrkesläroanstalter",
+                "fi": "Ammatilliset oppilaitokset"
+              }
+            },
+            "status": "AKTIIVINEN",
+            "timestamp": 1606379793779,
+            "opetuskieli": [
+              {
+                "koodiUri": "oppilaitoksenopetuskieli_1#1",
+                "nimi": {
+                  "sv": "finska",
+                  "fi": "suomi"
+                }
+              }
+            ],
+            "kotipaikka": {
+              "koodiUri": "kunta_398",
+              "nimi": {
+                "sv": "Lahtis",
+                "fi": "Lahti"
+              }
+            }
+          },
+          "nimi": {
+            "fi": "Koulutuskeskus Salpaus, Nastola, Villähde"
+          },
+          "oid": "1.2.246.562.10.76662434703",
+          "status": "AKTIIVINEN",
+          "oppilaitoksenOsa": {
+            "tila": "julkaistu",
+            "teemakuva": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitoksen-osa-teemakuva/1.2.246.562.10.76662434703/b12c2a03-d2b6-4a09-92f4-747f44496d74.jpg",
+            "modified": "2020-08-19T14:56",
+            "muokkaaja": {
+              "oid": "1.2.246.562.24.70120706382",
+              "nimi": "Mikael Harju"
+            },
+            "kielivalinta": [
+              "fi",
+              "sv"
+            ],
+            "organisaatio": {
+              "paikkakunta": {
+                "koodiUri": "kunta_398",
+                "nimi": {
+                  "sv": "Lahtis",
+                  "fi": "Lahti"
+                }
+              },
+              "nimi": {
+                "fi": "Koulutuskeskus Salpaus, Nastola, Villähde"
+              },
+              "oid": "1.2.246.562.10.76662434703"
+            },
+            "metadata": {
+              "yhteystiedot": {
+                "osoite": {
+                  "osoite": {
+                    "fi": "Kaarisilta ry, Villähteentie 458",
+                    "sv": "Kaarisilta ry, Villähteentie 458"
+                  },
+                  "postinumero": {
+                    "koodiUri": "posti_15540#2",
+                    "nimi": {
+                      "fi": "VILLÄHDE",
+                      "sv": "VILLÄHDE"
+                    }
+                  }
+                },
+                "wwwSivu": {},
+                "puhelinnumero": {},
+                "sahkoposti": {}
+              },
+              "opiskelijoita": 100,
+              "kampus": {
+                "fi": "adsasd",
+                "sv": "test"
+              },
+              "esittely": {
+                "fi": "<p>asdasaasasasd</p>",
+                "sv": "<p>testitestiesti</p>"
+              }
+            }
+          },
+          "opetuskieli": [
+            {
+              "koodiUri": "oppilaitoksenopetuskieli_1#1",
+              "nimi": {
+                "sv": "finska",
+                "fi": "suomi"
+              }
+            }
+          ],
+          "kotipaikka": {
+            "koodiUri": "kunta_398",
+            "nimi": {
+              "sv": "Lahtis",
+              "fi": "Lahti"
+            }
+          }
+        }
       },
       {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/oppilaitoksen-osa/1.2.246.562.10.67603619189",
+        "url": "http://localhost:3005/konfo-backend/oppilaitoksen-osa/1.2.246.562.10.67603619189",
         "method": "GET",
         "status": 200,
         "headers": {},
@@ -2518,8 +2424,8 @@
               }
             },
             "nimi": {
-              "sv": "Koulutuskeskus Salpaus",
               "fi": "Koulutuskeskus Salpaus",
+              "sv": "Koulutuskeskus Salpaus",
               "en": "Koulutuskeskus Salpaus"
             },
             "oid": "1.2.246.562.10.81934895871",
@@ -2532,7 +2438,7 @@
               }
             },
             "status": "AKTIIVINEN",
-            "timestamp": 1605080381309,
+            "timestamp": 1606379793779,
             "opetuskieli": [
               {
                 "koodiUri": "oppilaitoksenopetuskieli_1#1",
@@ -2553,377 +2459,17 @@
         }
       },
       {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/oppilaitoksen-osa/1.2.246.562.10.76662434703",
+        "url": "http://localhost:3005/konfo-backend/oppilaitoksen-osa/1.2.246.562.10.94620157316",
         "method": "GET",
         "status": 200,
         "headers": {},
         "body": null,
         "response": {
-          "koulutusohjelmia": 0,
-          "organisaatiotyyppi": [
-            {
-              "koodiUri": "organisaatiotyyppi_03",
-              "nimi": {
-                "sv": "Verksamhetsställe",
-                "fi": "Toimipiste"
-              }
-            }
-          ],
-          "oppilaitos": {
-            "koulutusohjelmia": 0,
-            "organisaatiotyyppi": [
-              {
-                "koodiUri": "organisaatiotyyppi_02",
-                "nimi": {
-                  "sv": "Läroanstalt",
-                  "fi": "Oppilaitos"
-                }
-              }
-            ],
-            "oppilaitos": {
-              "tila": "julkaistu",
-              "teemakuva": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-teemakuva/1.2.246.562.10.67500058267/8362c8c9-b538-43e4-8a5e-f0399221c8d1.png",
-              "logo": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.39218317368/e59fb6eb-c68b-4223-a7d0-4536bc4381d3.jpg",
-              "modified": "2020-06-11T19:37",
-              "muokkaaja": {
-                "oid": "1.2.246.562.24.40260215789",
-                "nimi": "Dmitry Marokhonov"
-              },
-              "kielivalinta": [
-                "fi",
-                "sv"
-              ],
-              "organisaatio": {
-                "paikkakunta": {
-                  "koodiUri": "kunta_092",
-                  "nimi": {
-                    "sv": "Vanda",
-                    "fi": "Vantaa"
-                  }
-                },
-                "nimi": {
-                  "fi": "Vantaan ammattiopisto Varia",
-                  "sv": "Vantaan ammattiopisto Varia",
-                  "en": "Vantaan ammattiopisto Varia"
-                },
-                "oid": "1.2.246.562.10.67500058267"
-              },
-              "metadata": {
-                "tietoaOpiskelusta": [],
-                "yhteystiedot": {
-                  "osoite": {
-                    "osoite": {
-                      "fi": "Paasikivenkatu 7",
-                      "sv": "Tennistie 1"
-                    },
-                    "postinumero": {
-                      "koodiUri": "posti_15110#2",
-                      "nimi": {
-                        "sv": "LAHTI",
-                        "fi": "LAHTI"
-                      }
-                    }
-                  },
-                  "wwwSivu": {},
-                  "puhelinnumero": {},
-                  "sahkoposti": {}
-                },
-                "esittely": {
-                  "fi": "<h3>Tässä olisi tekstiä header1</h3><p><strong>Bold</strong></p><p><em>italic</em></p><p><u>underline</u></p><h4>otsikko 2</h4><ul><li>lista itemi 1</li><li>lista itemi 2</li><li></li></ul><ol><li>numerolista 1</li><li>numerolista 2</li><li>numerolista 3</li><li></li></ol><p>teksti jossa linkki</p>",
-                  "sv": "<h3>Tässä olisi tekstiä header1</h3><p><strong>Bold</strong></p><p><em>italic</em></p><p><u>underline</u></p><h4>otsikko 2</h4><ul><li>lista itemi 1</li><li>lista itemi 2</li><li></li></ul><ol><li>numerolista 1</li><li>numerolista 2</li><li>numerolista 3</li><li></li></ol><p>teksti jossa linkki</p>"
-                },
-                "opiskelijoita": 100,
-                "toimipisteita": 3
-              }
-            },
-            "nimi": {
-              "sv": "Koulutuskeskus Salpaus",
-              "fi": "Koulutuskeskus Salpaus",
-              "en": "Koulutuskeskus Salpaus"
-            },
-            "oid": "1.2.246.562.10.81934895871",
-            "oppilaitostyyppi": {
-              "koodiUri": "oppilaitostyyppi_21#1",
-              "nimi": {
-                "en": "Vocational institutions",
-                "sv": "Yrkesläroanstalter",
-                "fi": "Ammatilliset oppilaitokset"
-              }
-            },
-            "status": "AKTIIVINEN",
-            "timestamp": 1605080381309,
-            "opetuskieli": [
-              {
-                "koodiUri": "oppilaitoksenopetuskieli_1#1",
-                "nimi": {
-                  "sv": "finska",
-                  "fi": "suomi"
-                }
-              }
-            ],
-            "kotipaikka": {
-              "koodiUri": "kunta_398",
-              "nimi": {
-                "sv": "Lahtis",
-                "fi": "Lahti"
-              }
-            }
-          },
-          "nimi": {
-            "fi": "Koulutuskeskus Salpaus, Nastola, Villähde"
-          },
-          "oid": "1.2.246.562.10.76662434703",
-          "status": "AKTIIVINEN",
-          "oppilaitoksenOsa": {
-            "tila": "julkaistu",
-            "teemakuva": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitoksen-osa-teemakuva/1.2.246.562.10.76662434703/b12c2a03-d2b6-4a09-92f4-747f44496d74.jpg",
-            "modified": "2020-08-19T14:56",
-            "muokkaaja": {
-              "oid": "1.2.246.562.24.70120706382",
-              "nimi": "Mikael Harju"
-            },
-            "kielivalinta": [
-              "fi",
-              "sv"
-            ],
-            "organisaatio": {
-              "paikkakunta": {
-                "koodiUri": "kunta_398",
-                "nimi": {
-                  "sv": "Lahtis",
-                  "fi": "Lahti"
-                }
-              },
-              "nimi": {
-                "fi": "Koulutuskeskus Salpaus, Nastola, Villähde"
-              },
-              "oid": "1.2.246.562.10.76662434703"
-            },
-            "metadata": {
-              "yhteystiedot": {
-                "osoite": {
-                  "osoite": {
-                    "fi": "Kaarisilta ry, Villähteentie 458",
-                    "sv": "Kaarisilta ry, Villähteentie 458"
-                  },
-                  "postinumero": {
-                    "koodiUri": "posti_15540#2",
-                    "nimi": {
-                      "fi": "VILLÄHDE",
-                      "sv": "VILLÄHDE"
-                    }
-                  }
-                },
-                "wwwSivu": {},
-                "puhelinnumero": {},
-                "sahkoposti": {}
-              },
-              "opiskelijoita": 100,
-              "kampus": {
-                "fi": "adsasd",
-                "sv": "test"
-              },
-              "esittely": {
-                "fi": "<p>asdasaasasasd</p>",
-                "sv": "<p>testitestiesti</p>"
-              }
-            }
-          },
-          "opetuskieli": [
-            {
-              "koodiUri": "oppilaitoksenopetuskieli_1#1",
-              "nimi": {
-                "sv": "finska",
-                "fi": "suomi"
-              }
-            }
-          ],
-          "kotipaikka": {
-            "koodiUri": "kunta_398",
-            "nimi": {
-              "sv": "Lahtis",
-              "fi": "Lahti"
-            }
-          }
-        }
-      },
-      {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/oppilaitoksen-osa/1.2.246.562.10.94620157316",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": {
-          "koulutusohjelmia": 0,
-          "organisaatiotyyppi": [
-            {
-              "koodiUri": "organisaatiotyyppi_03",
-              "nimi": {
-                "sv": "Verksamhetsställe",
-                "fi": "Toimipiste"
-              }
-            }
-          ],
-          "oppilaitos": {
-            "koulutusohjelmia": 0,
-            "organisaatiotyyppi": [
-              {
-                "koodiUri": "organisaatiotyyppi_02",
-                "nimi": {
-                  "sv": "Läroanstalt",
-                  "fi": "Oppilaitos"
-                }
-              }
-            ],
-            "oppilaitos": {
-              "tila": "julkaistu",
-              "teemakuva": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-teemakuva/1.2.246.562.10.67500058267/8362c8c9-b538-43e4-8a5e-f0399221c8d1.png",
-              "logo": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.39218317368/e59fb6eb-c68b-4223-a7d0-4536bc4381d3.jpg",
-              "modified": "2020-06-11T19:37",
-              "muokkaaja": {
-                "oid": "1.2.246.562.24.40260215789",
-                "nimi": "Dmitry Marokhonov"
-              },
-              "kielivalinta": [
-                "fi",
-                "sv"
-              ],
-              "organisaatio": {
-                "paikkakunta": {
-                  "koodiUri": "kunta_092",
-                  "nimi": {
-                    "sv": "Vanda",
-                    "fi": "Vantaa"
-                  }
-                },
-                "nimi": {
-                  "fi": "Vantaan ammattiopisto Varia",
-                  "sv": "Vantaan ammattiopisto Varia",
-                  "en": "Vantaan ammattiopisto Varia"
-                },
-                "oid": "1.2.246.562.10.67500058267"
-              },
-              "metadata": {
-                "tietoaOpiskelusta": [],
-                "yhteystiedot": {
-                  "osoite": {
-                    "osoite": {
-                      "fi": "Paasikivenkatu 7",
-                      "sv": "Tennistie 1"
-                    },
-                    "postinumero": {
-                      "koodiUri": "posti_15110#2",
-                      "nimi": {
-                        "sv": "LAHTI",
-                        "fi": "LAHTI"
-                      }
-                    }
-                  },
-                  "wwwSivu": {},
-                  "puhelinnumero": {},
-                  "sahkoposti": {}
-                },
-                "esittely": {
-                  "fi": "<h3>Tässä olisi tekstiä header1</h3><p><strong>Bold</strong></p><p><em>italic</em></p><p><u>underline</u></p><h4>otsikko 2</h4><ul><li>lista itemi 1</li><li>lista itemi 2</li><li></li></ul><ol><li>numerolista 1</li><li>numerolista 2</li><li>numerolista 3</li><li></li></ol><p>teksti jossa linkki</p>",
-                  "sv": "<h3>Tässä olisi tekstiä header1</h3><p><strong>Bold</strong></p><p><em>italic</em></p><p><u>underline</u></p><h4>otsikko 2</h4><ul><li>lista itemi 1</li><li>lista itemi 2</li><li></li></ul><ol><li>numerolista 1</li><li>numerolista 2</li><li>numerolista 3</li><li></li></ol><p>teksti jossa linkki</p>"
-                },
-                "opiskelijoita": 100,
-                "toimipisteita": 3
-              }
-            },
-            "nimi": {
-              "sv": "Koulutuskeskus Salpaus",
-              "fi": "Koulutuskeskus Salpaus",
-              "en": "Koulutuskeskus Salpaus"
-            },
-            "oid": "1.2.246.562.10.81934895871",
-            "oppilaitostyyppi": {
-              "koodiUri": "oppilaitostyyppi_21#1",
-              "nimi": {
-                "en": "Vocational institutions",
-                "sv": "Yrkesläroanstalter",
-                "fi": "Ammatilliset oppilaitokset"
-              }
-            },
-            "status": "AKTIIVINEN",
-            "timestamp": 1605080381309,
-            "opetuskieli": [
-              {
-                "koodiUri": "oppilaitoksenopetuskieli_1#1",
-                "nimi": {
-                  "sv": "finska",
-                  "fi": "suomi"
-                }
-              }
-            ],
-            "kotipaikka": {
-              "koodiUri": "kunta_398",
-              "nimi": {
-                "sv": "Lahtis",
-                "fi": "Lahti"
-              }
-            }
-          },
           "nimi": {
             "fi": "Koulutuskeskus Salpaus, Heinola"
           },
-          "oid": "1.2.246.562.10.94620157316",
           "status": "AKTIIVINEN",
-          "oppilaitoksenOsa": {
-            "tila": "julkaistu",
-            "teemakuva": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitoksen-osa-teemakuva/1.2.246.562.10.94620157316/d81b0004-c614-4b4c-8d27-814825ad5a07.jpg",
-            "modified": "2020-08-19T15:00",
-            "muokkaaja": {
-              "oid": "1.2.246.562.24.70120706382",
-              "nimi": "Mikael Harju"
-            },
-            "kielivalinta": [
-              "fi",
-              "sv"
-            ],
-            "organisaatio": {
-              "paikkakunta": {
-                "koodiUri": "kunta_111",
-                "nimi": {
-                  "sv": "Heinola",
-                  "fi": "Heinola"
-                }
-              },
-              "nimi": {
-                "fi": "Koulutuskeskus Salpaus, Heinola"
-              },
-              "oid": "1.2.246.562.10.94620157316"
-            },
-            "metadata": {
-              "yhteystiedot": {
-                "osoite": {
-                  "osoite": {
-                    "fi": "Opintie 1",
-                    "sv": "Opintie 1"
-                  },
-                  "postinumero": {
-                    "koodiUri": "posti_18200#2",
-                    "nimi": {
-                      "fi": "HEINOLA",
-                      "sv": "HEINOLA"
-                    }
-                  }
-                },
-                "wwwSivu": {},
-                "puhelinnumero": {},
-                "sahkoposti": {}
-              },
-              "opiskelijoita": 100,
-              "kampus": {
-                "fi": "testi",
-                "sv": "test"
-              },
-              "esittely": {
-                "fi": "<p>asd jalskdj akldjskl alksdj klajsdlk ajklsdjakl </p>",
-                "sv": "<p>asd jalskdj akldjskl alksdj klajsdlk ajklsdjakl </p>"
-              }
-            }
-          },
+          "oid": "1.2.246.562.10.94620157316",
           "opetuskieli": [
             {
               "koodiUri": "oppilaitoksenopetuskieli_1#1",
@@ -2938,6 +2484,116 @@
             "nimi": {
               "sv": "Heinola",
               "fi": "Heinola"
+            }
+          },
+          "organisaatiotyyppi": [
+            {
+              "koodiUri": "organisaatiotyyppi_03",
+              "nimi": {
+                "sv": "Verksamhetsställe",
+                "fi": "Toimipiste"
+              }
+            }
+          ],
+          "koulutusohjelmia": 0,
+          "oppilaitos": {
+            "koulutusohjelmia": 0,
+            "organisaatiotyyppi": [
+              {
+                "koodiUri": "organisaatiotyyppi_02",
+                "nimi": {
+                  "sv": "Läroanstalt",
+                  "fi": "Oppilaitos"
+                }
+              }
+            ],
+            "oppilaitos": {
+              "tila": "julkaistu",
+              "teemakuva": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-teemakuva/1.2.246.562.10.67500058267/8362c8c9-b538-43e4-8a5e-f0399221c8d1.png",
+              "logo": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.39218317368/e59fb6eb-c68b-4223-a7d0-4536bc4381d3.jpg",
+              "modified": "2020-06-11T19:37",
+              "muokkaaja": {
+                "oid": "1.2.246.562.24.40260215789",
+                "nimi": "Dmitry Marokhonov"
+              },
+              "kielivalinta": [
+                "fi",
+                "sv"
+              ],
+              "organisaatio": {
+                "paikkakunta": {
+                  "koodiUri": "kunta_092",
+                  "nimi": {
+                    "sv": "Vanda",
+                    "fi": "Vantaa"
+                  }
+                },
+                "nimi": {
+                  "fi": "Vantaan ammattiopisto Varia",
+                  "sv": "Vantaan ammattiopisto Varia",
+                  "en": "Vantaan ammattiopisto Varia"
+                },
+                "oid": "1.2.246.562.10.67500058267"
+              },
+              "metadata": {
+                "tietoaOpiskelusta": [],
+                "yhteystiedot": {
+                  "osoite": {
+                    "osoite": {
+                      "fi": "Paasikivenkatu 7",
+                      "sv": "Tennistie 1"
+                    },
+                    "postinumero": {
+                      "koodiUri": "posti_15110#2",
+                      "nimi": {
+                        "sv": "LAHTI",
+                        "fi": "LAHTI"
+                      }
+                    }
+                  },
+                  "wwwSivu": {},
+                  "puhelinnumero": {},
+                  "sahkoposti": {}
+                },
+                "esittely": {
+                  "fi": "<h3>Tässä olisi tekstiä header1</h3><p><strong>Bold</strong></p><p><em>italic</em></p><p><u>underline</u></p><h4>otsikko 2</h4><ul><li>lista itemi 1</li><li>lista itemi 2</li><li></li></ul><ol><li>numerolista 1</li><li>numerolista 2</li><li>numerolista 3</li><li></li></ol><p>teksti jossa linkki</p>",
+                  "sv": "<h3>Tässä olisi tekstiä header1</h3><p><strong>Bold</strong></p><p><em>italic</em></p><p><u>underline</u></p><h4>otsikko 2</h4><ul><li>lista itemi 1</li><li>lista itemi 2</li><li></li></ul><ol><li>numerolista 1</li><li>numerolista 2</li><li>numerolista 3</li><li></li></ol><p>teksti jossa linkki</p>"
+                },
+                "opiskelijoita": 100,
+                "toimipisteita": 3
+              }
+            },
+            "nimi": {
+              "fi": "Koulutuskeskus Salpaus",
+              "sv": "Koulutuskeskus Salpaus",
+              "en": "Koulutuskeskus Salpaus"
+            },
+            "oid": "1.2.246.562.10.81934895871",
+            "oppilaitostyyppi": {
+              "koodiUri": "oppilaitostyyppi_21#1",
+              "nimi": {
+                "en": "Vocational institutions",
+                "sv": "Yrkesläroanstalter",
+                "fi": "Ammatilliset oppilaitokset"
+              }
+            },
+            "status": "AKTIIVINEN",
+            "timestamp": 1606379793779,
+            "opetuskieli": [
+              {
+                "koodiUri": "oppilaitoksenopetuskieli_1#1",
+                "nimi": {
+                  "sv": "finska",
+                  "fi": "suomi"
+                }
+              }
+            ],
+            "kotipaikka": {
+              "koodiUri": "kunta_398",
+              "nimi": {
+                "sv": "Lahtis",
+                "fi": "Lahti"
+              }
             }
           }
         }

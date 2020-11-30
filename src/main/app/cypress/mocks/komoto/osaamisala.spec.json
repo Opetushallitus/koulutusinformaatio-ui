@@ -1,7 +1,165 @@
 {
   "Osaamisala KOMOTO renders properly": {
-    "timestamp": 1605512652631,
+    "timestamp": 1606735868696,
     "routes": [
+      {
+        "url": "http://localhost:3005/konfo-backend/toteutus/1.2.246.562.17.00000000000000000471",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": {
+          "tila": "julkaistu",
+          "tarjoajat": [
+            {
+              "paikkakunta": {
+                "koodiUri": "kunta_398",
+                "nimi": {
+                  "sv": "Lahtis",
+                  "fi": "Lahti"
+                }
+              },
+              "nimi": {
+                "fi": "Koulutuskeskus Salpaus,  Lahti, Jokimaa"
+              },
+              "oid": "1.2.246.562.10.67603619189"
+            },
+            {
+              "paikkakunta": {
+                "koodiUri": "kunta_016",
+                "nimi": {
+                  "fi": "Asikkala",
+                  "sv": "Asikkala"
+                }
+              },
+              "nimi": {
+                "fi": "Koulutuskeskus Salpaus, Asikkala"
+              },
+              "oid": "1.2.246.562.10.74534804344"
+            }
+          ],
+          "modified": "2020-11-19T12:02",
+          "koulutusOid": "1.2.246.562.13.00000000000000000623",
+          "nimi": {
+            "fi": "Hevosten kengittämisen osaamisala"
+          },
+          "muokkaaja": {
+            "oid": "1.2.246.562.24.16838104094",
+            "nimi": "Antti Sarjanoja"
+          },
+          "oid": "1.2.246.562.17.00000000000000000471",
+          "kielivalinta": [
+            "fi"
+          ],
+          "timestamp": 1606379736879,
+          "organisaatiot": [
+            "1.2.246.562.10.594252633210",
+            "1.2.246.562.10.67603619189",
+            "1.2.246.562.10.74534804344"
+          ],
+          "organisaatio": {
+            "paikkakunta": {
+              "koodiUri": "kunta_398",
+              "nimi": {
+                "sv": "Lahtis",
+                "fi": "Lahti"
+              }
+            },
+            "nimi": {
+              "fi": "Koulutuskeskus Salpaus -kuntayhtymä"
+            },
+            "oid": "1.2.246.562.10.594252633210"
+          },
+          "metadata": {
+            "aloituspaikat": 123,
+            "kuvaus": {
+              "fi": "<p>Olen testikuvaus </p><p></p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras orci nunc, mollis ut dolor quis, mollis auctor felis. Nunc euismod iaculis auctor. Sed erat ante, fermentum quis efficitur eget, suscipit sed tortor. Morbi sed iaculis risus, euismod feugiat leo. Etiam nibh arcu, bibendum vel metus eu, tincidunt ultrices leo. Vivamus eu aliquet lorem. Nulla at est iaculis, maximus purus non, finibus sem. Donec tristique, sem sed gravida sollicitudin, ex sem sodales orci, at tristique sem ex ac nulla.</p>"
+            },
+            "hakutermi": "ilmoittautuminen",
+            "hakulomaketyyppi": "muu",
+            "hakulomakeLinkki": {
+              "fi": "http://www.google.fi"
+            },
+            "hakuaika": {
+              "alkaa": "2020-11-02T00:00",
+              "paattyy": "2020-11-08T00:00"
+            },
+            "ammattinimikkeet": [],
+            "asiasanat": [
+              {
+                "kieli": "fi",
+                "arvo": "asdf "
+              }
+            ],
+            "lisatietoaValintaperusteista": {
+              "fi": "<p>Lisätietoa<em> valintaperusteista</em></p><p></p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras orci nunc, mollis ut dolor quis, mollis auctor felis. Nunc euismod iaculis auctor. Sed erat ante, fermentum quis efficitur eget, suscipit sed tortor. Morbi sed iaculis risus, euismod feugiat leo. Etiam nibh arcu, bibendum vel metus eu, tincidunt ultrices leo. Vivamus eu aliquet lorem. Nulla at est iaculis, maximus purus non, finibus sem. Donec tristique, sem sed gravida sollicitudin, ex sem sodales orci, at tristique sem ex ac nulla.</p>"
+            },
+            "lisatietoaHakeutumisesta": {
+              "fi": "<p>Lisätietoa <strong>ilmoittautumisesta</strong></p><p></p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras orci nunc, mollis ut dolor quis, mollis auctor felis. Nunc euismod iaculis auctor. Sed erat ante, fermentum quis efficitur eget, suscipit sed tortor. Morbi sed iaculis risus, euismod feugiat leo. Etiam nibh arcu, bibendum vel metus eu, tincidunt ultrices leo. Vivamus eu aliquet lorem. Nulla at est iaculis, maximus purus non, finibus sem. Donec tristique, sem sed gravida sollicitudin, ex sem sodales orci, at tristique sem ex ac nulla.</p>"
+            },
+            "opetus": {
+              "maksunMaara": 123,
+              "maksullisuusKuvaus": {
+                "fi": "Juu"
+              },
+              "suunniteltuKestoKuvaus": {
+                "fi": "Kuvaus"
+              },
+              "koulutuksenAlkamiskausi": {
+                "koodiUri": "kausi_s#1",
+                "nimi": {
+                  "sv": "Höst",
+                  "en": "Autumn",
+                  "fi": "Syksy"
+                }
+              },
+              "suunniteltuKestoVuodet": 2,
+              "onkoStipendia": false,
+              "koulutuksenAlkamisvuosi": 2021,
+              "lisatiedot": [],
+              "suunniteltuKestoKuukaudet": 1,
+              "opetustapaKuvaus": {},
+              "opetuskieletKuvaus": {
+                "fi": "Kuvaus"
+              },
+              "stipendinKuvaus": {},
+              "opetustapa": [
+                {
+                  "koodiUri": "opetuspaikkakk_1#1",
+                  "nimi": {
+                    "fi": "Lähiopetus",
+                    "sv": "Närundervisning",
+                    "en": "Contact teaching"
+                  }
+                }
+              ],
+              "onkoMaksullinen": true,
+              "opetusaikaKuvaus": {},
+              "opetuskieli": [
+                {
+                  "koodiUri": "oppilaitoksenopetuskieli_1#1",
+                  "nimi": {
+                    "sv": "finska",
+                    "fi": "suomi"
+                  }
+                }
+              ],
+              "opetusaika": [
+                {
+                  "koodiUri": "opetusaikakk_1#1",
+                  "nimi": {
+                    "sv": "Dagundervisning",
+                    "en": "Day time teaching",
+                    "fi": "Päiväopetus"
+                  }
+                }
+              ]
+            },
+            "yhteyshenkilot": [],
+            "tyyppi": "amm-osaamisala"
+          }
+        }
+      },
       {
         "url": "https://konfo-content.untuvaopintopolku.fi/manifest.json",
         "method": "GET",
@@ -88,13 +246,14 @@
         }
       },
       {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/toteutus/1.2.246.562.17.00000000000000000471",
+        "url": "http://localhost:3005/konfo-backend/koulutus/1.2.246.562.13.00000000000000000623",
         "method": "GET",
         "status": 200,
         "headers": {},
         "body": null,
         "response": {
           "tila": "julkaistu",
+          "johtaaTutkintoon": false,
           "tarjoajat": [
             {
               "paikkakunta": {
@@ -105,26 +264,89 @@
                 }
               },
               "nimi": {
-                "fi": "Koulutuskeskus Salpaus,  Lahti, Jokimaa"
+                "fi": "Koulutuskeskus Salpaus -kuntayhtymä"
               },
-              "oid": "1.2.246.562.10.67603619189"
+              "oid": "1.2.246.562.10.594252633210"
             },
             {
               "paikkakunta": {
-                "koodiUri": "kunta_016",
+                "koodiUri": "kunta_398",
                 "nimi": {
-                  "fi": "Asikkala",
-                  "sv": "Asikkala"
+                  "sv": "Lahtis",
+                  "fi": "Lahti"
                 }
               },
               "nimi": {
-                "fi": "Koulutuskeskus Salpaus, Asikkala"
+                "fi": "Koulutuskeskus Salpaus",
+                "sv": "Koulutuskeskus Salpaus",
+                "en": "Koulutuskeskus Salpaus"
               },
-              "oid": "1.2.246.562.10.74534804344"
+              "oid": "1.2.246.562.10.81934895871"
             }
           ],
-          "modified": "2020-11-13T13:30",
-          "koulutusOid": "1.2.246.562.13.00000000000000000623",
+          "toteutukset": [
+            {
+              "oid": "1.2.246.562.17.00000000000000000471",
+              "organisaatio": {
+                "paikkakunta": {
+                  "koodiUri": "kunta_398",
+                  "nimi": {
+                    "sv": "Lahtis",
+                    "fi": "Lahti"
+                  }
+                },
+                "nimi": {
+                  "fi": "Koulutuskeskus Salpaus -kuntayhtymä"
+                },
+                "oid": "1.2.246.562.10.594252633210"
+              },
+              "nimi": {
+                "fi": "Hevosten kengittämisen osaamisala"
+              },
+              "tila": "julkaistu",
+              "tarjoajat": [
+                {
+                  "paikkakunta": {
+                    "koodiUri": "kunta_398",
+                    "nimi": {
+                      "sv": "Lahtis",
+                      "fi": "Lahti"
+                    }
+                  },
+                  "nimi": {
+                    "fi": "Koulutuskeskus Salpaus,  Lahti, Jokimaa"
+                  },
+                  "oid": "1.2.246.562.10.67603619189"
+                },
+                {
+                  "paikkakunta": {
+                    "koodiUri": "kunta_016",
+                    "nimi": {
+                      "fi": "Asikkala",
+                      "sv": "Asikkala"
+                    }
+                  },
+                  "nimi": {
+                    "fi": "Koulutuskeskus Salpaus, Asikkala"
+                  },
+                  "oid": "1.2.246.562.10.74534804344"
+                }
+              ],
+              "muokkaaja": {
+                "oid": "1.2.246.562.24.16838104094",
+                "nimi": "Antti Sarjanoja"
+              },
+              "modified": "2020-11-19T12:02",
+              "organisaatiot": [
+                "1.2.246.562.10.594252633210",
+                "1.2.246.562.10.67603619189",
+                "1.2.246.562.10.74534804344"
+              ]
+            }
+          ],
+          "esikatselu": true,
+          "modified": "2020-11-10T12:46",
+          "ePerusteId": 2357203,
           "nimi": {
             "fi": "Hevosten kengittämisen osaamisala"
           },
@@ -132,15 +354,22 @@
             "oid": "1.2.246.562.24.16838104094",
             "nimi": "Antti Sarjanoja"
           },
-          "oid": "1.2.246.562.17.00000000000000000471",
+          "oid": "1.2.246.562.13.00000000000000000623",
           "kielivalinta": [
             "fi"
           ],
-          "timestamp": 1605267042112,
+          "koulutus": {
+            "koodiUri": "koulutus_364145#7",
+            "nimi": {
+              "fi": "Hevostalouden ammattitutkinto",
+              "sv": "Yrkesexamen inom hästhushållning"
+            }
+          },
+          "timestamp": 1606379592677,
+          "julkinen": false,
           "organisaatiot": [
             "1.2.246.562.10.594252633210",
-            "1.2.246.562.10.67603619189",
-            "1.2.246.562.10.74534804344"
+            "1.2.246.562.10.81934895871"
           ],
           "organisaatio": {
             "paikkakunta": {
@@ -156,80 +385,51 @@
             "oid": "1.2.246.562.10.594252633210"
           },
           "metadata": {
-            "aloituspaikat": 123,
-            "kuvaus": {
-              "fi": "<p>Olen testikuvaus </p><p></p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras orci nunc, mollis ut dolor quis, mollis auctor felis. Nunc euismod iaculis auctor. Sed erat ante, fermentum quis efficitur eget, suscipit sed tortor. Morbi sed iaculis risus, euismod feugiat leo. Etiam nibh arcu, bibendum vel metus eu, tincidunt ultrices leo. Vivamus eu aliquet lorem. Nulla at est iaculis, maximus purus non, finibus sem. Donec tristique, sem sed gravida sollicitudin, ex sem sodales orci, at tristique sem ex ac nulla.</p>"
-            },
-            "hakutermi": "ilmoittautuminen",
-            "hakulomaketyyppi": "muu",
-            "hakulomakeLinkki": {
-              "fi": "http://www.google.fi"
-            },
-            "hakuaika": {
-              "alkaa": "2020-11-14T00:00",
-              "paattyy": "2020-11-20T00:00"
-            },
-            "ammattinimikkeet": [],
-            "asiasanat": [
-              {
-                "kieli": "fi",
-                "arvo": "asdf "
+            "tyyppi": "amm-osaamisala",
+            "kuvaus": {},
+            "lisatiedot": [],
+            "osaamisala": {
+              "koodiUri": "osaamisala_2263",
+              "nimi": {
+                "fi": "Hevosten kengittämisen osaamisala",
+                "sv": "Kompetensområdet för skoning av hästar"
               }
-            ],
-            "lisatietoaValintaperusteista": {
-              "fi": "<p>Lisätietoa<em> valintaperusteista</em></p><p></p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras orci nunc, mollis ut dolor quis, mollis auctor felis. Nunc euismod iaculis auctor. Sed erat ante, fermentum quis efficitur eget, suscipit sed tortor. Morbi sed iaculis risus, euismod feugiat leo. Etiam nibh arcu, bibendum vel metus eu, tincidunt ultrices leo. Vivamus eu aliquet lorem. Nulla at est iaculis, maximus purus non, finibus sem. Donec tristique, sem sed gravida sollicitudin, ex sem sodales orci, at tristique sem ex ac nulla.</p>"
             },
-            "lisatietoaHakeutumisesta": {
-              "fi": "<p>Lisätietoa <strong>ilmoittautumisesta</strong></p><p></p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras orci nunc, mollis ut dolor quis, mollis auctor felis. Nunc euismod iaculis auctor. Sed erat ante, fermentum quis efficitur eget, suscipit sed tortor. Morbi sed iaculis risus, euismod feugiat leo. Etiam nibh arcu, bibendum vel metus eu, tincidunt ultrices leo. Vivamus eu aliquet lorem. Nulla at est iaculis, maximus purus non, finibus sem. Donec tristique, sem sed gravida sollicitudin, ex sem sodales orci, at tristique sem ex ac nulla.</p>"
+            "opintojenLaajuus": {
+              "nimi": {
+                "fi": "100"
+              },
+              "koodiUri": "opintojenlaajuus_100"
             },
-            "opetus": {
+            "opintojenLaajuusyksikko": {
+              "koodiUri": "opintojenlaajuusyksikko_6",
+              "nimi": {
+                "sv": "kompetenspoäng",
+                "fi": "osaamispistettä",
+                "en": "ECVET competence points"
+              }
+            },
+            "opintojenLaajuusNumero": 100
+          },
+          "koulutustyyppi": "amm-osaamisala"
+        }
+      },
+      {
+        "url": "http://localhost:3005/konfo-backend/search/koulutus/1.2.246.562.13.00000000000000000623/jarjestajat",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": {
+          "total": 1,
+          "hits": [
+            {
               "maksunMaara": 123,
-              "maksullisuusKuvaus": {
-                "fi": "Juu"
+              "kuvaus": {
+                "fi": "<p>Olen testikuvaus </p><p></p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras orci nunc, mollis ut dolor quis, mollis auctor felis. Nunc euismod iaculis auctor. Sed erat ante, fermentum quis efficitur eget, suscipit sed tortor. Morbi sed iaculis risus, euismod feugiat leo. Etiam nibh arcu, bibendum vel metus eu, tincidunt ultrices leo. Vivamus eu aliquet lorem. Nulla at est iaculis, maximus purus non, finibus sem. Donec tristique, sem sed gravida sollicitudin, ex sem sodales orci, at tristique sem ex ac nulla.</p>"
               },
-              "suunniteltuKestoKuvaus": {
-                "fi": "Kuvaus"
-              },
-              "koulutuksenAlkamiskausi": {
-                "koodiUri": "kausi_s#1",
-                "nimi": {
-                  "sv": "Höst",
-                  "en": "Autumn",
-                  "fi": "Syksy"
-                }
-              },
-              "suunniteltuKestoVuodet": 2,
-              "onkoStipendia": false,
-              "koulutuksenAlkamisvuosi": 2021,
-              "lisatiedot": [],
-              "suunniteltuKestoKuukaudet": 1,
-              "opetustapaKuvaus": {},
-              "opetuskieletKuvaus": {
-                "fi": "Kuvaus"
-              },
-              "stipendinKuvaus": {},
-              "opetustapa": [
-                {
-                  "koodiUri": "opetuspaikkakk_1#1",
-                  "nimi": {
-                    "fi": "Lähiopetus",
-                    "sv": "Närundervisning",
-                    "en": "Contact teaching"
-                  }
-                }
-              ],
-              "onkoMaksullinen": true,
-              "opetusaikaKuvaus": {},
-              "opetuskieli": [
-                {
-                  "koodiUri": "oppilaitoksenopetuskieli_1#1",
-                  "nimi": {
-                    "sv": "finska",
-                    "fi": "suomi"
-                  }
-                }
-              ],
-              "opetusaika": [
+              "toteutusOid": "1.2.246.562.17.00000000000000000471",
+              "opetusajat": [
                 {
                   "koodiUri": "opetusaikakk_1#1",
                   "nimi": {
@@ -238,11 +438,36 @@
                     "fi": "Päiväopetus"
                   }
                 }
-              ]
-            },
-            "yhteyshenkilot": [],
-            "tyyppi": "amm-osaamisala"
-          }
+              ],
+              "nimi": {
+                "fi": "Koulutuskeskus Salpaus",
+                "sv": "Koulutuskeskus Salpaus",
+                "en": "Koulutuskeskus Salpaus"
+              },
+              "kuva": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.39218317368/e59fb6eb-c68b-4223-a7d0-4536bc4381d3.jpg",
+              "oppilaitosOid": "1.2.246.562.10.81934895871",
+              "onkoMaksullinen": true,
+              "kunnat": [
+                {
+                  "koodiUri": "kunta_398",
+                  "nimi": {
+                    "sv": "Lahtis",
+                    "fi": "Lahti"
+                  }
+                },
+                {
+                  "koodiUri": "kunta_016",
+                  "nimi": {
+                    "fi": "Asikkala",
+                    "sv": "Asikkala"
+                  }
+                }
+              ],
+              "tutkintonimikkeet": null,
+              "oppilaitosTila": "julkaistu",
+              "koulutustyyppi": "amm"
+            }
+          ]
         }
       },
       {
@@ -365,25 +590,6 @@
         ]
       },
       {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/footer.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": [
-          {
-            "id": "6CuSL4nupT3xGqasfSC045",
-            "name": "Footer",
-            "type": "footer",
-            "created": "2020-01-03T08:51:31.641Z",
-            "updated": "2020-02-17T13:02:17.630Z",
-            "contentCenter": "\n[Tietoturvaselosteet](https://opintopolku.fi/wp/tietosuojaseloste/ \"siirry tietosuojaselosteisiin\")",
-            "lopputekstit": "Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja koulutuksistaan Opintopolku.fi-palvelussa. Tietojen oikeellisuuden voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.",
-            "content": "Opintopolku sisältää tietoa tutkinnoista, ammateista sekä opiskelusta eri oppilaitoksissa. Sen kautta voi sekä löytää koulutusvaihtoehtoja että hakea niihin."
-          }
-        ]
-      },
-      {
         "url": "https://konfo-content.untuvaopintopolku.fi/1594889859462/fi/kortti.json",
         "method": "GET",
         "status": 200,
@@ -480,239 +686,6 @@
             "color": "polku"
           }
         ]
-      },
-      {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/koulutus/1.2.246.562.13.00000000000000000623",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": {
-          "tila": "julkaistu",
-          "johtaaTutkintoon": false,
-          "tarjoajat": [
-            {
-              "paikkakunta": {
-                "koodiUri": "kunta_398",
-                "nimi": {
-                  "sv": "Lahtis",
-                  "fi": "Lahti"
-                }
-              },
-              "nimi": {
-                "fi": "Koulutuskeskus Salpaus -kuntayhtymä"
-              },
-              "oid": "1.2.246.562.10.594252633210"
-            },
-            {
-              "paikkakunta": {
-                "koodiUri": "kunta_398",
-                "nimi": {
-                  "sv": "Lahtis",
-                  "fi": "Lahti"
-                }
-              },
-              "nimi": {
-                "fi": "Koulutuskeskus Salpaus",
-                "sv": "Koulutuskeskus Salpaus",
-                "en": "Koulutuskeskus Salpaus"
-              },
-              "oid": "1.2.246.562.10.81934895871"
-            }
-          ],
-          "toteutukset": [
-            {
-              "oid": "1.2.246.562.17.00000000000000000471",
-              "organisaatio": {
-                "paikkakunta": {
-                  "koodiUri": "kunta_398",
-                  "nimi": {
-                    "sv": "Lahtis",
-                    "fi": "Lahti"
-                  }
-                },
-                "nimi": {
-                  "fi": "Koulutuskeskus Salpaus -kuntayhtymä"
-                },
-                "oid": "1.2.246.562.10.594252633210"
-              },
-              "nimi": {
-                "fi": "Hevosten kengittämisen osaamisala"
-              },
-              "tila": "julkaistu",
-              "tarjoajat": [
-                {
-                  "paikkakunta": {
-                    "koodiUri": "kunta_398",
-                    "nimi": {
-                      "sv": "Lahtis",
-                      "fi": "Lahti"
-                    }
-                  },
-                  "nimi": {
-                    "fi": "Koulutuskeskus Salpaus,  Lahti, Jokimaa"
-                  },
-                  "oid": "1.2.246.562.10.67603619189"
-                },
-                {
-                  "paikkakunta": {
-                    "koodiUri": "kunta_016",
-                    "nimi": {
-                      "fi": "Asikkala",
-                      "sv": "Asikkala"
-                    }
-                  },
-                  "nimi": {
-                    "fi": "Koulutuskeskus Salpaus, Asikkala"
-                  },
-                  "oid": "1.2.246.562.10.74534804344"
-                }
-              ],
-              "muokkaaja": {
-                "oid": "1.2.246.562.24.16838104094",
-                "nimi": "Antti Sarjanoja"
-              },
-              "modified": "2020-11-13T13:30",
-              "organisaatiot": [
-                "1.2.246.562.10.594252633210",
-                "1.2.246.562.10.67603619189",
-                "1.2.246.562.10.74534804344"
-              ]
-            }
-          ],
-          "esikatselu": true,
-          "modified": "2020-11-10T12:46",
-          "ePerusteId": 2357203,
-          "nimi": {
-            "fi": "Hevosten kengittämisen osaamisala"
-          },
-          "muokkaaja": {
-            "oid": "1.2.246.562.24.16838104094",
-            "nimi": "Antti Sarjanoja"
-          },
-          "oid": "1.2.246.562.13.00000000000000000623",
-          "kielivalinta": [
-            "fi"
-          ],
-          "koulutus": {
-            "koodiUri": "koulutus_364145#7",
-            "nimi": {
-              "fi": "Hevostalouden ammattitutkinto",
-              "sv": "Yrkesexamen inom hästhushållning"
-            }
-          },
-          "timestamp": 1605267045386,
-          "julkinen": false,
-          "organisaatiot": [
-            "1.2.246.562.10.594252633210",
-            "1.2.246.562.10.81934895871"
-          ],
-          "organisaatio": {
-            "paikkakunta": {
-              "koodiUri": "kunta_398",
-              "nimi": {
-                "sv": "Lahtis",
-                "fi": "Lahti"
-              }
-            },
-            "nimi": {
-              "fi": "Koulutuskeskus Salpaus -kuntayhtymä"
-            },
-            "oid": "1.2.246.562.10.594252633210"
-          },
-          "metadata": {
-            "tyyppi": "amm-osaamisala",
-            "kuvaus": {},
-            "lisatiedot": [],
-            "osaamisala": {
-              "koodiUri": "osaamisala_2263",
-              "nimi": {
-                "fi": "Hevosten kengittämisen osaamisala",
-                "sv": "Kompetensområdet för skoning av hästar"
-              }
-            },
-            "opintojenLaajuus": {
-              "nimi": {
-                "fi": "100"
-              },
-              "koodiUri": "opintojenlaajuus_100"
-            },
-            "opintojenLaajuusyksikko": {
-              "koodiUri": "opintojenlaajuusyksikko_6",
-              "nimi": {
-                "sv": "kompetenspoäng",
-                "fi": "osaamispistettä",
-                "en": "ECVET competence points"
-              }
-            },
-            "opintojenLaajuusNumero": 100
-          },
-          "koulutustyyppi": "amm-osaamisala"
-        }
-      },
-      {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/search/koulutus/1.2.246.562.13.00000000000000000623/jarjestajat",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": {
-          "total": 1,
-          "hits": [
-            {
-              "maksunMaara": 123,
-              "kuvaus": {
-                "fi": "<p>Olen testikuvaus </p><p></p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras orci nunc, mollis ut dolor quis, mollis auctor felis. Nunc euismod iaculis auctor. Sed erat ante, fermentum quis efficitur eget, suscipit sed tortor. Morbi sed iaculis risus, euismod feugiat leo. Etiam nibh arcu, bibendum vel metus eu, tincidunt ultrices leo. Vivamus eu aliquet lorem. Nulla at est iaculis, maximus purus non, finibus sem. Donec tristique, sem sed gravida sollicitudin, ex sem sodales orci, at tristique sem ex ac nulla.</p>"
-              },
-              "toteutusOid": "1.2.246.562.17.00000000000000000471",
-              "opetusajat": [
-                {
-                  "koodiUri": "opetusaikakk_1#1",
-                  "nimi": {
-                    "sv": "Dagundervisning",
-                    "en": "Day time teaching",
-                    "fi": "Päiväopetus"
-                  }
-                }
-              ],
-              "nimi": {
-                "sv": "Koulutuskeskus Salpaus",
-                "fi": "Koulutuskeskus Salpaus",
-                "en": "Koulutuskeskus Salpaus"
-              },
-              "kuva": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.39218317368/e59fb6eb-c68b-4223-a7d0-4536bc4381d3.jpg",
-              "oppilaitosOid": "1.2.246.562.10.81934895871",
-              "onkoMaksullinen": true,
-              "kunnat": [
-                {
-                  "koodiUri": "kunta_398",
-                  "nimi": {
-                    "sv": "Lahtis",
-                    "fi": "Lahti"
-                  }
-                },
-                {
-                  "koodiUri": "kunta_016",
-                  "nimi": {
-                    "fi": "Asikkala",
-                    "sv": "Asikkala"
-                  }
-                }
-              ],
-              "tutkintonimikkeet": null,
-              "oppilaitosTila": "julkaistu",
-              "koulutustyyppi": "amm"
-            }
-          ]
-        }
-      },
-      {
-        "fixtureId": "ccd3b591f792f6ea9b79bf5f0062a2fd",
-        "url": "https://konfo-content.untuvaopintopolku.fi/1596792142276/fi/sivu.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null
       },
       {
         "url": "https://konfo-content.untuvaopintopolku.fi/1596805168746/fi/asset.json",
@@ -1124,7 +1097,34 @@
         ]
       },
       {
+        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/footer.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": [
+          {
+            "id": "6CuSL4nupT3xGqasfSC045",
+            "name": "Footer",
+            "type": "footer",
+            "created": "2020-01-03T08:51:31.641Z",
+            "updated": "2020-02-17T13:02:17.630Z",
+            "contentCenter": "\n[Tietoturvaselosteet](https://opintopolku.fi/wp/tietosuojaseloste/ \"siirry tietosuojaselosteisiin\")",
+            "lopputekstit": "Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja koulutuksistaan Opintopolku.fi-palvelussa. Tietojen oikeellisuuden voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.",
+            "content": "Opintopolku sisältää tietoa tutkinnoista, ammateista sekä opiskelusta eri oppilaitoksissa. Sen kautta voi sekä löytää koulutusvaihtoehtoja että hakea niihin."
+          }
+        ]
+      },
+      {
         "url": "https://konfo-content.untuvaopintopolku.fi/1580997016376/fi/esittely.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": []
+      },
+      {
+        "url": "https://konfo-content.untuvaopintopolku.fi/1580997016376/fi/info.json",
         "method": "GET",
         "status": 200,
         "headers": {},
@@ -1469,14 +1469,6 @@
         ]
       },
       {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1580997016376/fi/info.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": []
-      },
-      {
         "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/content.json",
         "method": "GET",
         "status": 200,
@@ -1616,39 +1608,6 @@
               "name": "Screenshot 2019-10-01 at 10.09.36"
             },
             "content": "Jotain uutisia"
-          }
-        ]
-      },
-      {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186497/fi/kortit.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": [
-          {
-            "id": "2Z5sKI5Ou9MWHuPfi5KdUX",
-            "name": "Kortit",
-            "type": "kortit",
-            "created": "2020-01-03T08:51:33.352Z",
-            "updated": "2020-02-17T13:01:37.937Z",
-            "kortit": [
-              {
-                "id": "2sWYz0kv6pOSOmsNih4FtU",
-                "name": "Löydä oma polkusi",
-                "type": "kortti"
-              },
-              {
-                "id": "5kIHZZYJd91LVwjpJfsa16",
-                "name": "Hae koulutukseen",
-                "type": "kortti"
-              },
-              {
-                "id": "5tEqiycmzoHBmNTXtLvZDl",
-                "name": "Asioi verkossa",
-                "type": "kortti"
-              }
-            ]
           }
         ]
       },
@@ -1852,6 +1811,39 @@
         ]
       },
       {
+        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186497/fi/kortit.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": [
+          {
+            "id": "2Z5sKI5Ou9MWHuPfi5KdUX",
+            "name": "Kortit",
+            "type": "kortit",
+            "created": "2020-01-03T08:51:33.352Z",
+            "updated": "2020-02-17T13:01:37.937Z",
+            "kortit": [
+              {
+                "id": "2sWYz0kv6pOSOmsNih4FtU",
+                "name": "Löydä oma polkusi",
+                "type": "kortti"
+              },
+              {
+                "id": "5kIHZZYJd91LVwjpJfsa16",
+                "name": "Hae koulutukseen",
+                "type": "kortti"
+              },
+              {
+                "id": "5tEqiycmzoHBmNTXtLvZDl",
+                "name": "Asioi verkossa",
+                "type": "kortti"
+              }
+            ]
+          }
+        ]
+      },
+      {
         "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/palvelut.json",
         "method": "GET",
         "status": 200,
@@ -1909,23 +1901,6 @@
                 "type": "palvelu"
               }
             ]
-          }
-        ]
-      },
-      {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/infoGrid.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": [
-          {
-            "id": "6086RR5LUS2CdrV0C1mx2e",
-            "name": "Ammatillinen koulutus",
-            "type": "infoGrid",
-            "created": "2020-01-03T08:51:23.672Z",
-            "updated": "2020-02-17T13:02:08.978Z",
-            "data": "[{\"icon\":\"KoulutusAsteIcon\",\"text\":\"Toinen aste\",\"title\":\"Koulutusaste:\"},{\"icon\":\"KoulutusTyypitIcon\",\"text\":\"Ammatilliset tutkinnot Täydennyskoulutukset Valmentava koulutus Avoimet opinnot\",\"title\":\"Koulutustyypit:\"},{\"icon\":\"TutkintoNimikeIcon\",\"text\":\"Perustutkinto Ammattitutkinto Erikoistammattitutkinto\",\"title\":\"Tutkintotasot:\"},{\"icon\":\"SuunniteltuKestoIcon\",\"text\":\"1-3 vuotta\",\"title\":\"Suunniteltu kesto:\"},{\"icon\":\"KoulutuksenLaajuusIcon\",\"text\":\"150-180 osaamispistettä / tutkintotaso\",\"title\":\"Tutkintojen laajuus:\"},{\"icon\":\"TutkintoonHakeminenIcon\",\"text\":\"Yhteishaku Jatkuva haku\",\"title\":\"Tutkintoon hakeminen:\"}]"
           }
         ]
       },
@@ -2049,232 +2024,32 @@
         ]
       },
       {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/koulutus/1.2.246.562.13.00000000000000000623",
+        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/infoGrid.json",
         "method": "GET",
         "status": 200,
         "headers": {},
         "body": null,
-        "response": {
-          "tila": "julkaistu",
-          "johtaaTutkintoon": false,
-          "tarjoajat": [
-            {
-              "paikkakunta": {
-                "koodiUri": "kunta_398",
-                "nimi": {
-                  "sv": "Lahtis",
-                  "fi": "Lahti"
-                }
-              },
-              "nimi": {
-                "fi": "Koulutuskeskus Salpaus -kuntayhtymä"
-              },
-              "oid": "1.2.246.562.10.594252633210"
-            },
-            {
-              "paikkakunta": {
-                "koodiUri": "kunta_398",
-                "nimi": {
-                  "sv": "Lahtis",
-                  "fi": "Lahti"
-                }
-              },
-              "nimi": {
-                "fi": "Koulutuskeskus Salpaus",
-                "sv": "Koulutuskeskus Salpaus",
-                "en": "Koulutuskeskus Salpaus"
-              },
-              "oid": "1.2.246.562.10.81934895871"
-            }
-          ],
-          "toteutukset": [
-            {
-              "oid": "1.2.246.562.17.00000000000000000471",
-              "organisaatio": {
-                "paikkakunta": {
-                  "koodiUri": "kunta_398",
-                  "nimi": {
-                    "sv": "Lahtis",
-                    "fi": "Lahti"
-                  }
-                },
-                "nimi": {
-                  "fi": "Koulutuskeskus Salpaus -kuntayhtymä"
-                },
-                "oid": "1.2.246.562.10.594252633210"
-              },
-              "nimi": {
-                "fi": "Hevosten kengittämisen osaamisala"
-              },
-              "tila": "julkaistu",
-              "tarjoajat": [
-                {
-                  "paikkakunta": {
-                    "koodiUri": "kunta_398",
-                    "nimi": {
-                      "sv": "Lahtis",
-                      "fi": "Lahti"
-                    }
-                  },
-                  "nimi": {
-                    "fi": "Koulutuskeskus Salpaus,  Lahti, Jokimaa"
-                  },
-                  "oid": "1.2.246.562.10.67603619189"
-                },
-                {
-                  "paikkakunta": {
-                    "koodiUri": "kunta_016",
-                    "nimi": {
-                      "fi": "Asikkala",
-                      "sv": "Asikkala"
-                    }
-                  },
-                  "nimi": {
-                    "fi": "Koulutuskeskus Salpaus, Asikkala"
-                  },
-                  "oid": "1.2.246.562.10.74534804344"
-                }
-              ],
-              "muokkaaja": {
-                "oid": "1.2.246.562.24.16838104094",
-                "nimi": "Antti Sarjanoja"
-              },
-              "modified": "2020-11-13T13:30",
-              "organisaatiot": [
-                "1.2.246.562.10.594252633210",
-                "1.2.246.562.10.67603619189",
-                "1.2.246.562.10.74534804344"
-              ]
-            }
-          ],
-          "esikatselu": true,
-          "modified": "2020-11-10T12:46",
-          "ePerusteId": 2357203,
-          "nimi": {
-            "fi": "Hevosten kengittämisen osaamisala"
-          },
-          "muokkaaja": {
-            "oid": "1.2.246.562.24.16838104094",
-            "nimi": "Antti Sarjanoja"
-          },
-          "oid": "1.2.246.562.13.00000000000000000623",
-          "kielivalinta": [
-            "fi"
-          ],
-          "koulutus": {
-            "koodiUri": "koulutus_364145#7",
-            "nimi": {
-              "fi": "Hevostalouden ammattitutkinto",
-              "sv": "Yrkesexamen inom hästhushållning"
-            }
-          },
-          "timestamp": 1605267045386,
-          "julkinen": false,
-          "organisaatiot": [
-            "1.2.246.562.10.594252633210",
-            "1.2.246.562.10.81934895871"
-          ],
-          "organisaatio": {
-            "paikkakunta": {
-              "koodiUri": "kunta_398",
-              "nimi": {
-                "sv": "Lahtis",
-                "fi": "Lahti"
-              }
-            },
-            "nimi": {
-              "fi": "Koulutuskeskus Salpaus -kuntayhtymä"
-            },
-            "oid": "1.2.246.562.10.594252633210"
-          },
-          "metadata": {
-            "tyyppi": "amm-osaamisala",
-            "kuvaus": {},
-            "lisatiedot": [],
-            "osaamisala": {
-              "koodiUri": "osaamisala_2263",
-              "nimi": {
-                "fi": "Hevosten kengittämisen osaamisala",
-                "sv": "Kompetensområdet för skoning av hästar"
-              }
-            },
-            "opintojenLaajuus": {
-              "nimi": {
-                "fi": "100"
-              },
-              "koodiUri": "opintojenlaajuus_100"
-            },
-            "opintojenLaajuusyksikko": {
-              "koodiUri": "opintojenlaajuusyksikko_6",
-              "nimi": {
-                "sv": "kompetenspoäng",
-                "fi": "osaamispistettä",
-                "en": "ECVET competence points"
-              }
-            },
-            "opintojenLaajuusNumero": 100
-          },
-          "koulutustyyppi": "amm-osaamisala"
-        }
+        "response": [
+          {
+            "id": "6086RR5LUS2CdrV0C1mx2e",
+            "name": "Ammatillinen koulutus",
+            "type": "infoGrid",
+            "created": "2020-01-03T08:51:23.672Z",
+            "updated": "2020-02-17T13:02:08.978Z",
+            "data": "[{\"icon\":\"KoulutusAsteIcon\",\"text\":\"Toinen aste\",\"title\":\"Koulutusaste:\"},{\"icon\":\"KoulutusTyypitIcon\",\"text\":\"Ammatilliset tutkinnot Täydennyskoulutukset Valmentava koulutus Avoimet opinnot\",\"title\":\"Koulutustyypit:\"},{\"icon\":\"TutkintoNimikeIcon\",\"text\":\"Perustutkinto Ammattitutkinto Erikoistammattitutkinto\",\"title\":\"Tutkintotasot:\"},{\"icon\":\"SuunniteltuKestoIcon\",\"text\":\"1-3 vuotta\",\"title\":\"Suunniteltu kesto:\"},{\"icon\":\"KoulutuksenLaajuusIcon\",\"text\":\"150-180 osaamispistettä / tutkintotaso\",\"title\":\"Tutkintojen laajuus:\"},{\"icon\":\"TutkintoonHakeminenIcon\",\"text\":\"Yhteishaku Jatkuva haku\",\"title\":\"Tutkintoon hakeminen:\"}]"
+          }
+        ]
       },
       {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/search/koulutus/1.2.246.562.13.00000000000000000623/jarjestajat",
+        "fixtureId": "88e95888096d616d04abd2a155f635c3",
+        "url": "https://konfo-content.untuvaopintopolku.fi/1596792142276/fi/sivu.json",
         "method": "GET",
         "status": 200,
         "headers": {},
-        "body": null,
-        "response": {
-          "total": 1,
-          "hits": [
-            {
-              "maksunMaara": 123,
-              "kuvaus": {
-                "fi": "<p>Olen testikuvaus </p><p></p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras orci nunc, mollis ut dolor quis, mollis auctor felis. Nunc euismod iaculis auctor. Sed erat ante, fermentum quis efficitur eget, suscipit sed tortor. Morbi sed iaculis risus, euismod feugiat leo. Etiam nibh arcu, bibendum vel metus eu, tincidunt ultrices leo. Vivamus eu aliquet lorem. Nulla at est iaculis, maximus purus non, finibus sem. Donec tristique, sem sed gravida sollicitudin, ex sem sodales orci, at tristique sem ex ac nulla.</p>"
-              },
-              "toteutusOid": "1.2.246.562.17.00000000000000000471",
-              "opetusajat": [
-                {
-                  "koodiUri": "opetusaikakk_1#1",
-                  "nimi": {
-                    "sv": "Dagundervisning",
-                    "en": "Day time teaching",
-                    "fi": "Päiväopetus"
-                  }
-                }
-              ],
-              "nimi": {
-                "sv": "Koulutuskeskus Salpaus",
-                "fi": "Koulutuskeskus Salpaus",
-                "en": "Koulutuskeskus Salpaus"
-              },
-              "kuva": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.39218317368/e59fb6eb-c68b-4223-a7d0-4536bc4381d3.jpg",
-              "oppilaitosOid": "1.2.246.562.10.81934895871",
-              "onkoMaksullinen": true,
-              "kunnat": [
-                {
-                  "koodiUri": "kunta_398",
-                  "nimi": {
-                    "sv": "Lahtis",
-                    "fi": "Lahti"
-                  }
-                },
-                {
-                  "koodiUri": "kunta_016",
-                  "nimi": {
-                    "fi": "Asikkala",
-                    "sv": "Asikkala"
-                  }
-                }
-              ],
-              "tutkintonimikkeet": null,
-              "oppilaitosTila": "julkaistu",
-              "koulutustyyppi": "amm"
-            }
-          ]
-        }
+        "body": null
       },
       {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/kuvaus/2357203",
+        "url": "http://localhost:3005/konfo-backend/kuvaus/2357203",
         "method": "GET",
         "status": 200,
         "headers": {},
@@ -2300,7 +2075,7 @@
         }
       },
       {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/search/koulutus/1.2.246.562.13.00000000000000000623/jarjestajat?tuleva=true",
+        "url": "http://localhost:3005/konfo-backend/search/koulutus/1.2.246.562.13.00000000000000000623/jarjestajat?tuleva=true",
         "method": "GET",
         "status": 200,
         "headers": {},
@@ -2311,184 +2086,7 @@
         }
       },
       {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/kuvaus/2357203",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": {
-          "id": 2357203,
-          "kuvaus": {
-            "_tunniste": "9e6144b2-8bf1-4f43-af9a-95f65ec55dda",
-            "fi": "<p>Hevostalouden ammattitutkinnon suorittaneella on hevostalouden ammattityöntekijältä vaadittava osaaminen. Tutkinnon suorittanut osaa huolehtia hevosten hyvinvoinnista, käsitellä hevosia turvallisesti sekä toimia alan yritystoiminnassa työntekijänä tai yrittäjänä. Osaamisalakohtaisen erikoistumisen mukaan hevostalouden ammattitutkinnon suorittanut osaa toimia hevoskasvatuksen tai hevosavusteisten palvelujen tuottajana, ravivalmennuksen työtehtävissä, ratsuhevosen kouluttamisen ja valmennuksen tehtävissä, hevosten kengittämisen, hevosvarusteiden valmistamisen, hevoshieronnan tai ratsastuksenopettamisen työtehtävissä.</p>",
-            "sv": "<p>I yrkesexamen inom hästhushållning påvisar examinanderna att de har det kunnande som krävs av en yrkesverksam person inom hästhushållning. De som har avlagt yrkesexamen inom hästhushållning har kunnande i omsorg om hästars välbefinnande, säker hantering av hästar samt företagsverksamhet. Genom specialisering inom kompetensområden kan de som avlagt yrkesexamen inom hästhushållning arbeta med produktion av tjänster inom hästuppfödning eller hästunderstödd verksamhet, travträning, utbildning och träning av ridhästar, skoning av hästar, tillverkning av hästutrustning, hästmassage eller ridundervisning.</p>",
-            "_id": "4434126"
-          },
-          "tyotehtavatJoissaVoiToimia": {
-            "fi": "<p>Hevostalouden ammattitutkinnon suorittanut voi toimia toimia hevoskasvatuksen tai hevosavusteisten palvelujen tuottajana, ravivalmennuksen työtehtävissä, ratsuhevosen kouluttamisen ja valmennuksen tehtävissä, hevosten kengittämisen, hevosvarusteiden valmistamisen, hevoshieronnan tai ratsastuksenopettamisen työtehtävissä.</p>",
-            "en": "<p>Holders of the Further Vocational Qualification in Horse Care and Management are skilled in work tasks involving providing horse care and management or equine-assisted services, the training of trotters, training and coaching riding horses, shoeing, tack-making, equine massage services or riding instruction.</p>",
-            "_id": "5930978"
-          },
-          "suorittaneenOsaaminen": {
-            "fi": "<p>Hevostalouden ammattitutkinnon suorittaneella on hevostalouden ammattityöntekijältä vaadittava osaaminen. Tutkinnon suorittanut osaa huolehtia hevosten hyvinvoinnista, käsitellä hevosia turvallisesti sekä toimia alan yritystoiminnassa työntekijänä tai yrittäjänä. Osaamisalakohtaisen erikoistumisen mukaan hevostalouden ammattitutkinnon suorittanut osaa toimia hevoskasvatuksen tai hevosavusteisten palvelujen tuottajana, ravivalmennuksen työtehtävissä, ratsuhevosen kouluttamisen ja valmennuksen tehtävissä, hevosten kengittämisen, hevosvarusteiden valmistamisen, hevoshieronnan tai ratsastuksenopettamisen työtehtävissä.</p>",
-            "en": "<p>Holders of the Further Vocational Qualification in Horse Care and Management have the competence required from professionals in horse care and management. Qualification holders are skilled in looking after horses' wellbeing, handling horses safely and working as employees or entrepreneurs in companies in the sector. Based on their competence area specific specialisation, qualification holders are skilled in work tasks involving providing horse care and management or equine-assisted services, the training of trotters, training and coaching riding horses, shoeing, tack-making, equine massage services or riding instruction.</p>",
-            "_id": "5930977"
-          }
-        }
-      },
-      {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/search/koulutus/1.2.246.562.13.00000000000000000623/jarjestajat?tuleva=true",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": {
-          "total": 0,
-          "hits": []
-        }
-      },
-      {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/oppilaitoksen-osa/1.2.246.562.10.67603619189",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": {
-          "nimi": {
-            "fi": "Koulutuskeskus Salpaus,  Lahti, Jokimaa"
-          },
-          "status": "AKTIIVINEN",
-          "oid": "1.2.246.562.10.67603619189",
-          "opetuskieli": [
-            {
-              "koodiUri": "oppilaitoksenopetuskieli_1#1",
-              "nimi": {
-                "sv": "finska",
-                "fi": "suomi"
-              }
-            }
-          ],
-          "kotipaikka": {
-            "koodiUri": "kunta_398",
-            "nimi": {
-              "sv": "Lahtis",
-              "fi": "Lahti"
-            }
-          },
-          "organisaatiotyyppi": [
-            {
-              "koodiUri": "organisaatiotyyppi_03",
-              "nimi": {
-                "sv": "Verksamhetsställe",
-                "fi": "Toimipiste"
-              }
-            }
-          ],
-          "koulutusohjelmia": 0,
-          "oppilaitos": {
-            "koulutusohjelmia": 0,
-            "organisaatiotyyppi": [
-              {
-                "koodiUri": "organisaatiotyyppi_02",
-                "nimi": {
-                  "sv": "Läroanstalt",
-                  "fi": "Oppilaitos"
-                }
-              }
-            ],
-            "oppilaitos": {
-              "tila": "julkaistu",
-              "teemakuva": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-teemakuva/1.2.246.562.10.67500058267/8362c8c9-b538-43e4-8a5e-f0399221c8d1.png",
-              "logo": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.39218317368/e59fb6eb-c68b-4223-a7d0-4536bc4381d3.jpg",
-              "modified": "2020-06-11T19:37",
-              "muokkaaja": {
-                "oid": "1.2.246.562.24.40260215789",
-                "nimi": "Dmitry Marokhonov"
-              },
-              "kielivalinta": [
-                "fi",
-                "sv"
-              ],
-              "organisaatio": {
-                "paikkakunta": {
-                  "koodiUri": "kunta_092",
-                  "nimi": {
-                    "sv": "Vanda",
-                    "fi": "Vantaa"
-                  }
-                },
-                "nimi": {
-                  "fi": "Vantaan ammattiopisto Varia",
-                  "sv": "Vantaan ammattiopisto Varia",
-                  "en": "Vantaan ammattiopisto Varia"
-                },
-                "oid": "1.2.246.562.10.67500058267"
-              },
-              "metadata": {
-                "tietoaOpiskelusta": [],
-                "yhteystiedot": {
-                  "osoite": {
-                    "osoite": {
-                      "fi": "Paasikivenkatu 7",
-                      "sv": "Tennistie 1"
-                    },
-                    "postinumero": {
-                      "koodiUri": "posti_15110#2",
-                      "nimi": {
-                        "sv": "LAHTI",
-                        "fi": "LAHTI"
-                      }
-                    }
-                  },
-                  "wwwSivu": {},
-                  "puhelinnumero": {},
-                  "sahkoposti": {}
-                },
-                "esittely": {
-                  "fi": "<h3>Tässä olisi tekstiä header1</h3><p><strong>Bold</strong></p><p><em>italic</em></p><p><u>underline</u></p><h4>otsikko 2</h4><ul><li>lista itemi 1</li><li>lista itemi 2</li><li></li></ul><ol><li>numerolista 1</li><li>numerolista 2</li><li>numerolista 3</li><li></li></ol><p>teksti jossa linkki</p>",
-                  "sv": "<h3>Tässä olisi tekstiä header1</h3><p><strong>Bold</strong></p><p><em>italic</em></p><p><u>underline</u></p><h4>otsikko 2</h4><ul><li>lista itemi 1</li><li>lista itemi 2</li><li></li></ul><ol><li>numerolista 1</li><li>numerolista 2</li><li>numerolista 3</li><li></li></ol><p>teksti jossa linkki</p>"
-                },
-                "opiskelijoita": 100,
-                "toimipisteita": 3
-              }
-            },
-            "nimi": {
-              "sv": "Koulutuskeskus Salpaus",
-              "fi": "Koulutuskeskus Salpaus",
-              "en": "Koulutuskeskus Salpaus"
-            },
-            "oid": "1.2.246.562.10.81934895871",
-            "oppilaitostyyppi": {
-              "koodiUri": "oppilaitostyyppi_21#1",
-              "nimi": {
-                "en": "Vocational institutions",
-                "sv": "Yrkesläroanstalter",
-                "fi": "Ammatilliset oppilaitokset"
-              }
-            },
-            "status": "AKTIIVINEN",
-            "timestamp": 1605080381309,
-            "opetuskieli": [
-              {
-                "koodiUri": "oppilaitoksenopetuskieli_1#1",
-                "nimi": {
-                  "sv": "finska",
-                  "fi": "suomi"
-                }
-              }
-            ],
-            "kotipaikka": {
-              "koodiUri": "kunta_398",
-              "nimi": {
-                "sv": "Lahtis",
-                "fi": "Lahti"
-              }
-            }
-          }
-        }
-      },
-      {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/oppilaitoksen-osa/1.2.246.562.10.74534804344",
+        "url": "http://localhost:3005/konfo-backend/oppilaitoksen-osa/1.2.246.562.10.74534804344",
         "method": "GET",
         "status": 200,
         "headers": {},
@@ -2593,8 +2191,8 @@
               }
             },
             "nimi": {
-              "sv": "Koulutuskeskus Salpaus",
               "fi": "Koulutuskeskus Salpaus",
+              "sv": "Koulutuskeskus Salpaus",
               "en": "Koulutuskeskus Salpaus"
             },
             "oid": "1.2.246.562.10.81934895871",
@@ -2607,7 +2205,147 @@
               }
             },
             "status": "AKTIIVINEN",
-            "timestamp": 1605080381309,
+            "timestamp": 1606379793779,
+            "opetuskieli": [
+              {
+                "koodiUri": "oppilaitoksenopetuskieli_1#1",
+                "nimi": {
+                  "sv": "finska",
+                  "fi": "suomi"
+                }
+              }
+            ],
+            "kotipaikka": {
+              "koodiUri": "kunta_398",
+              "nimi": {
+                "sv": "Lahtis",
+                "fi": "Lahti"
+              }
+            }
+          }
+        }
+      },
+      {
+        "url": "http://localhost:3005/konfo-backend/oppilaitoksen-osa/1.2.246.562.10.67603619189",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": {
+          "nimi": {
+            "fi": "Koulutuskeskus Salpaus,  Lahti, Jokimaa"
+          },
+          "status": "AKTIIVINEN",
+          "oid": "1.2.246.562.10.67603619189",
+          "opetuskieli": [
+            {
+              "koodiUri": "oppilaitoksenopetuskieli_1#1",
+              "nimi": {
+                "sv": "finska",
+                "fi": "suomi"
+              }
+            }
+          ],
+          "kotipaikka": {
+            "koodiUri": "kunta_398",
+            "nimi": {
+              "sv": "Lahtis",
+              "fi": "Lahti"
+            }
+          },
+          "organisaatiotyyppi": [
+            {
+              "koodiUri": "organisaatiotyyppi_03",
+              "nimi": {
+                "sv": "Verksamhetsställe",
+                "fi": "Toimipiste"
+              }
+            }
+          ],
+          "koulutusohjelmia": 0,
+          "oppilaitos": {
+            "koulutusohjelmia": 0,
+            "organisaatiotyyppi": [
+              {
+                "koodiUri": "organisaatiotyyppi_02",
+                "nimi": {
+                  "sv": "Läroanstalt",
+                  "fi": "Oppilaitos"
+                }
+              }
+            ],
+            "oppilaitos": {
+              "tila": "julkaistu",
+              "teemakuva": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-teemakuva/1.2.246.562.10.67500058267/8362c8c9-b538-43e4-8a5e-f0399221c8d1.png",
+              "logo": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.39218317368/e59fb6eb-c68b-4223-a7d0-4536bc4381d3.jpg",
+              "modified": "2020-06-11T19:37",
+              "muokkaaja": {
+                "oid": "1.2.246.562.24.40260215789",
+                "nimi": "Dmitry Marokhonov"
+              },
+              "kielivalinta": [
+                "fi",
+                "sv"
+              ],
+              "organisaatio": {
+                "paikkakunta": {
+                  "koodiUri": "kunta_092",
+                  "nimi": {
+                    "sv": "Vanda",
+                    "fi": "Vantaa"
+                  }
+                },
+                "nimi": {
+                  "fi": "Vantaan ammattiopisto Varia",
+                  "sv": "Vantaan ammattiopisto Varia",
+                  "en": "Vantaan ammattiopisto Varia"
+                },
+                "oid": "1.2.246.562.10.67500058267"
+              },
+              "metadata": {
+                "tietoaOpiskelusta": [],
+                "yhteystiedot": {
+                  "osoite": {
+                    "osoite": {
+                      "fi": "Paasikivenkatu 7",
+                      "sv": "Tennistie 1"
+                    },
+                    "postinumero": {
+                      "koodiUri": "posti_15110#2",
+                      "nimi": {
+                        "sv": "LAHTI",
+                        "fi": "LAHTI"
+                      }
+                    }
+                  },
+                  "wwwSivu": {},
+                  "puhelinnumero": {},
+                  "sahkoposti": {}
+                },
+                "esittely": {
+                  "fi": "<h3>Tässä olisi tekstiä header1</h3><p><strong>Bold</strong></p><p><em>italic</em></p><p><u>underline</u></p><h4>otsikko 2</h4><ul><li>lista itemi 1</li><li>lista itemi 2</li><li></li></ul><ol><li>numerolista 1</li><li>numerolista 2</li><li>numerolista 3</li><li></li></ol><p>teksti jossa linkki</p>",
+                  "sv": "<h3>Tässä olisi tekstiä header1</h3><p><strong>Bold</strong></p><p><em>italic</em></p><p><u>underline</u></p><h4>otsikko 2</h4><ul><li>lista itemi 1</li><li>lista itemi 2</li><li></li></ul><ol><li>numerolista 1</li><li>numerolista 2</li><li>numerolista 3</li><li></li></ol><p>teksti jossa linkki</p>"
+                },
+                "opiskelijoita": 100,
+                "toimipisteita": 3
+              }
+            },
+            "nimi": {
+              "fi": "Koulutuskeskus Salpaus",
+              "sv": "Koulutuskeskus Salpaus",
+              "en": "Koulutuskeskus Salpaus"
+            },
+            "oid": "1.2.246.562.10.81934895871",
+            "oppilaitostyyppi": {
+              "koodiUri": "oppilaitostyyppi_21#1",
+              "nimi": {
+                "en": "Vocational institutions",
+                "sv": "Yrkesläroanstalter",
+                "fi": "Ammatilliset oppilaitokset"
+              }
+            },
+            "status": "AKTIIVINEN",
+            "timestamp": 1606379793779,
             "opetuskieli": [
               {
                 "koodiUri": "oppilaitoksenopetuskieli_1#1",
