@@ -10,6 +10,10 @@ export const Common = {
   cleanRequestParams: _fp.pickBy(_fp.toString),
 };
 
+export const koodiUriToPostinumero = (str = '') => {
+  return str.match(/^posti_(\d+)/)?.[1] ?? '';
+};
+
 export const Localizer = {
   getLanguage() {
     return i18n.languages && i18n.languages[0] ? i18n.language.split('-')[0] : 'fi';
@@ -63,9 +67,9 @@ export const Localizer = {
   },
   localizePostitoimialueByKoodi(postinumeroKoodi) {
     return postinumeroKoodi
-      ? `, ${Parser.koodiUriToPostinumero(
-          postinumeroKoodi?.koodiUri
-        )} ${Localizer.localize(postinumeroKoodi?.nimi)}`
+      ? `, ${koodiUriToPostinumero(postinumeroKoodi?.koodiUri)} ${Localizer.localize(
+          postinumeroKoodi?.nimi
+        )}`
       : '';
   },
   localizeOsoite(katuosoite, postinumeroKoodi) {
@@ -78,24 +82,10 @@ export const Localizer = {
   },
 };
 
-export const Parser = {
-  removeHtmlTags(html) {
-    if (html) {
-      const div = document.createElement('div');
-      div.innerHTML = html;
-      return div.innerText;
-    }
-    return html;
-  },
-  koodiUriToPostinumero(str = '') {
-    return str.match(/^posti_(\d+)/)?.[1] ?? '';
-  },
-};
-
 export const OsoiteParser = {
   parseOsoiteData(osoiteData) {
     const osoite = Localizer.localize(osoiteData.osoite, '');
-    const postinumero = Parser.koodiUriToPostinumero(osoiteData.postinumero.koodiUri);
+    const postinumero = koodiUriToPostinumero(osoiteData.postinumero.koodiUri);
     const postitoimipaikka = _fp.capitalize(
       Localizer.localize(osoiteData.postinumero.nimi, '')
     );
@@ -122,15 +112,6 @@ export const OsoiteParser = {
       address: coreAddress,
       addressNoNumbers: withoutHouseNumber,
     };
-  },
-};
-
-export const TimeMillisParser = {
-  millisToReadable(timemillis) {
-    if (timemillis === null) {
-      return '';
-    }
-    return new Date(timemillis).toLocaleString().replace(/\//g, '.').replace(',', ' klo');
   },
 };
 
