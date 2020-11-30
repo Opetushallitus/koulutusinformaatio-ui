@@ -11,6 +11,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
 import { Link as RouterLink } from 'react-router-dom';
 import { HAKULOMAKE_TYYPPI } from '#/src/constants';
+import { useOppilaitosOsoite } from '#/src/tools/UseOppilaitosOsoiteHook';
 
 const useStyles = makeStyles((theme) => ({
   gridHeading: {
@@ -34,6 +35,14 @@ const HakuCardGrid = (props) => {
   const classes = useStyles();
   const { type, haut, icon } = props;
   const { t } = useTranslation();
+
+  const oppilaitosOids = haut.map((haku) => haku.jarjestyspaikka?.oid).filter(Boolean);
+  const osoitteet = useOppilaitosOsoite(oppilaitosOids);
+
+  function getJarjestyspaikkaYhteystiedot(jarjestyspaikka, osoitteet) {
+    return osoitteet.find((osoite) => osoite.oppilaitosOid === jarjestyspaikka.oid)
+      ?.yhteystiedot;
+  }
 
   return (
     <Grid item>
@@ -81,6 +90,19 @@ const HakuCardGrid = (props) => {
                           <Grid item>
                             <Typography variant="body1">
                               {l.localize(haku.jarjestyspaikka.nimi)}
+                            </Typography>
+                          </Grid>
+                        )}
+                        {!!getJarjestyspaikkaYhteystiedot(
+                          haku.jarjestyspaikka,
+                          osoitteet
+                        ) && (
+                          <Grid item>
+                            <Typography variant="body1">
+                              {getJarjestyspaikkaYhteystiedot(
+                                haku.jarjestyspaikka,
+                                osoitteet
+                              )}
                             </Typography>
                           </Grid>
                         )}
