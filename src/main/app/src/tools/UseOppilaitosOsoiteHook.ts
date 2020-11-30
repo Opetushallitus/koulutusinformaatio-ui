@@ -20,7 +20,7 @@ async function fetchOsoitteet(
   }
 }
 
-export const useOppilaitosOsoite = (oids: String[]) => {
+export const useOppilaitosOsoite = (oppilaitosOids: String[]) => {
   const [osoitteet, setOsoitteet] = useState([] as any[]);
   const [dataNotFetched, setDataNotFetched] = useState(true);
 
@@ -28,7 +28,7 @@ export const useOppilaitosOsoite = (oids: String[]) => {
     if (dataNotFetched) {
       (async () => {
         try {
-          await fetchOsoitteet(oids, setOsoitteet);
+          await fetchOsoitteet(oppilaitosOids, setOsoitteet);
         } catch (e) {
           console.error(e);
         } finally {
@@ -36,7 +36,7 @@ export const useOppilaitosOsoite = (oids: String[]) => {
         }
       })();
     }
-  }, [oids, dataNotFetched, osoitteet]);
+  }, [oppilaitosOids, dataNotFetched, osoitteet]);
 
   return osoitteet;
 };
