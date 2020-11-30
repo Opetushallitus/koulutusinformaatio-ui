@@ -81,7 +81,7 @@ export const ValintaperustePage = () => {
   const { t } = useTranslation();
   const hakuUrl = useSelector(getHakuUrl);
 
-  const { data = {}, isFetching } = useValintaperustePageData({
+  const { data = {}, isFetching, error } = useValintaperustePageData({
     hakukohdeOid,
   });
   const { valintaperuste, koulutus, toteutus, haku, hakukohde } = data;
@@ -91,69 +91,68 @@ export const ValintaperustePage = () => {
   } = valintaperuste || { metadata: { kuvaus: {}, valintatavat: [] } };
   const toteutusLink = toteutus && `/toteutus/${toteutus.oid}`;
 
+  const valintakokeet = _.concat(hakukohde?.valintakokeet, valintaperuste?.valintakokeet);
+
   return isFetching ? (
     <LoadingCircle />
   ) : (
-    <>
-      <Row>
-        <Murupolku
-          path={[
-            { name: t('haku.otsikko'), link: hakuUrl.url },
-            { name: l.localize(koulutus?.nimi), link: `/koulutus/${koulutus?.oid}` },
-            { name: l.localize(toteutus?.nimi), link: toteutusLink },
-            { name: l.localize(valintaperuste?.nimi) },
-          ]}
-        />
-      </Row>
-      <Grid
-        container
-        direction="row"
-        spacing={0}
-        justify="flex-start"
-        className={classes.container}>
-        <Grid item xs={12} sm={12} md={3} />
-        <Grid item xs={12} sm={12} md={6}>
-          <Paluu paluuLinkki={toteutusLink} />
-          <Box pb={2}>
-            <Typography variant="h1" component="h1">
-              {t('lomake.valintaperusteet')}
-            </Typography>
-          </Box>
-          <Box pb={2}>
-            <Lomake haku={haku} hakukohde={hakukohde} paluuLinkki={toteutusLink} />
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={12} md={3} />
-        <Grid item xs={12} sm={12} md={3}>
-          <Sisallysluettelo>
-            {[
-              (l) => l(t('valintaperuste.kuvaus')),
-              KuvausSisallysluettelo(kuvaus),
-              ValintakokeetSisallysluettelo(
-                _.concat(hakukohde.valintakokeet, valintaperuste.valintakokeet)
-              ),
-              (ll) =>
-                valintaperuste.sorakuvaus
-                  ? ll(l.localize(valintaperuste.sorakuvaus.nimi))
-                  : null,
-              (l) =>
-                !_.isEmpty(hakukohde.liitteet) ? l(t('valintaperuste.liitteet')) : null,
-              LiitteetSisallysluettelo(hakukohde.liitteet),
+    !error && (
+      <>
+        <Row>
+          <Murupolku
+            path={[
+              { name: t('haku.otsikko'), link: hakuUrl.url },
+              { name: l.localize(koulutus?.nimi), link: `/koulutus/${koulutus?.oid}` },
+              { name: l.localize(toteutus?.nimi), link: toteutusLink },
+              { name: l.localize(valintaperuste?.nimi) },
             ]}
-          </Sisallysluettelo>
-        </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-          <Kuvaus kuvaus={kuvaus} valintatavat={valintatavat} />
-          <Valintakokeet
-            valintakokeet={_.concat(
-              hakukohde.valintakokeet,
-              valintaperuste.valintakokeet
-            )}
           />
-          {valintaperuste.sorakuvaus ? <Sora {...valintaperuste.sorakuvaus} /> : null}
-          <Liitteet {...hakukohde} />
+        </Row>
+        <Grid
+          container
+          direction="row"
+          spacing={0}
+          justify="flex-start"
+          className={classes.container}>
+          <Grid item xs={12} sm={12} md={3} />
+          <Grid item xs={12} sm={12} md={6}>
+            <Paluu paluuLinkki={toteutusLink} />
+            <Box pb={2}>
+              <Typography variant="h1" component="h1">
+                {t('lomake.valintaperusteet')}
+              </Typography>
+            </Box>
+            <Box pb={2}>
+              <Lomake haku={haku} hakukohde={hakukohde} paluuLinkki={toteutusLink} />
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={12} md={3} />
+          <Grid item xs={12} sm={12} md={3}>
+            <Sisallysluettelo>
+              {[
+                (l) => l(t('valintaperuste.kuvaus')),
+                KuvausSisallysluettelo(kuvaus),
+                ValintakokeetSisallysluettelo(valintakokeet),
+                (ll) =>
+                  valintaperuste.sorakuvaus
+                    ? ll(l.localize(valintaperuste.sorakuvaus.nimi))
+                    : null,
+                (l) =>
+                  !_.isEmpty(hakukohde?.liitteet)
+                    ? l(t('valintaperuste.liitteet'))
+                    : null,
+                LiitteetSisallysluettelo(hakukohde?.liitteet),
+              ]}
+            </Sisallysluettelo>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <Kuvaus kuvaus={kuvaus} valintatavat={valintatavat} />
+            <Valintakokeet valintakokeet={valintakokeet} />
+            {valintaperuste.sorakuvaus ? <Sora {...valintaperuste.sorakuvaus} /> : null}
+            <Liitteet {...hakukohde} />
+          </Grid>
         </Grid>
-      </Grid>
-    </>
+      </>
+    )
   );
 };

@@ -65,8 +65,7 @@ describe('Murupolku', function () {
   });
 
   it('Should show correct breadcrumb for valintaperuste', function () {
-    const url =
-      '/fi/hakukohde/1.2.246.562.20.00000000000000000429/valintaperuste/4a1037c9-290c-48c1-a726-9833e1b2d749';
+    const url = '/fi/hakukohde/1.2.246.562.20.00000000000000000429/valintaperuste';
     cy.visit(url);
 
     assertBreadcrumb({
