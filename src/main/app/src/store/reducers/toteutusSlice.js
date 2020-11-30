@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { HAKULOMAKE_TYYPPI } from '#/src/constants';
 import { getToteutus } from '#/src/api/konfoApi';
-import { isBefore, isAfter } from 'date-fns';
+import { isHakuAuki, isHakuEndInFuture } from '#/src/tools/hakuaikaUtils';
 import pick from 'lodash/pick';
 
 const IDLE_STATUS = 'idle';
@@ -58,19 +58,6 @@ export const fetchToteutus = (oid) => async (dispatch) => {
   } catch (err) {
     dispatch(fetchToteutusFail(err.toString()));
   }
-};
-
-export const isHakuAuki = (hakuajat) =>
-  hakuajat.some((hakuaika) => {
-    const now = new Date();
-    const isAfterStart = !hakuaika.alkaa || isAfter(now, new Date(hakuaika.alkaa));
-    const isBeforeEnd = !hakuaika.paattyy || isBefore(now, new Date(hakuaika.paattyy));
-    return isAfterStart && isBeforeEnd;
-  });
-
-const isHakuEndInFuture = (hakuajat) => {
-  const now = new Date();
-  return hakuajat.some((aika) => !aika.paattyy || isBefore(now, new Date(aika.paattyy)));
 };
 
 const getHakukohteetWithType = (toteutus, type) =>

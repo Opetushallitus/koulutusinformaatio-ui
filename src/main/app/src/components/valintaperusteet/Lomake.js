@@ -12,10 +12,10 @@ import {
   withStyles,
   makeStyles,
 } from '@material-ui/core';
-import { isWithinInterval } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { formatDateRange, Localizer as l } from '#/src/tools/Utils';
+import { isHakuAuki } from '#/src/tools/hakuaikaUtils';
 import { colors } from '#/src/colors';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
 
@@ -76,15 +76,6 @@ const Row = ({ title, children }) => {
   );
 };
 
-const lomakeIsOpen = (hakuajat) =>
-  hakuajat.some((hakuaika) => {
-    const now = new Date();
-    return isWithinInterval(now, {
-      start: hakuaika.alkaa ? new Date(hakuaika.alkaa) : now,
-      end: hakuaika.paattyy ? new Date(hakuaika.paattyy) : now,
-    });
-  });
-
 export const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -94,7 +85,8 @@ export const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
   const aloituspaikat = hakukohde.aloituspaikat;
   const ensikertalaisille = hakukohde.ensikertalaisenAloituspaikat;
 
-  const isOpen = lomakeIsOpen(_.concat(haku.hakuajat, hakukohde.hakuajat));
+  const isOpen = isHakuAuki(_.concat(haku.hakuajat, hakukohde.hakuajat));
+
   return (
     <>
       <Box pb={2}>
