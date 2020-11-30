@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 export interface OppilaitosOsoite {
   oppilaitosOid: string;
-  yhteystiedot: any;
+  yhteystiedot: string;
 }
 
 async function fetchOsoitteet(
