@@ -79,7 +79,7 @@ const HakuCardGrid = (props) => {
                         </Grid>
                         {haku.jarjestyspaikka && (
                           <Grid item>
-                            <Typography variant="body1" noWrap>
+                            <Typography variant="body1">
                               {l.localize(haku.jarjestyspaikka.nimi)}
                             </Typography>
                           </Grid>
