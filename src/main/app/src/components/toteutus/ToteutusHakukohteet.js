@@ -36,7 +36,7 @@ const HakuCardGrid = (props) => {
   const { type, haut, icon } = props;
   const { t } = useTranslation();
 
-  const oppilaitosOids = haut.map((haku) => haku.jarjestyspaikka?.oid).filter(Boolean);
+  const oppilaitosOids = haut.map((haku) => haku.jarjestyspaikka?.oid);
   const osoitteet = useOppilaitosOsoite(oppilaitosOids);
 
   function getJarjestyspaikkaYhteystiedot(jarjestyspaikka, osoitteet) {
