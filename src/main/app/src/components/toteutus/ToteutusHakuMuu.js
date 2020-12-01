@@ -1,16 +1,16 @@
-import { getOppilaitosOsa } from '#/src/api/konfoApi';
 import { colors } from '#/src/colors';
 import { AccordionText } from '#/src/components/common/AccordionText';
 import LoadingCircle from '#/src/components/common/LoadingCircle';
 import Spacer from '#/src/components/common/Spacer';
 import { selectMuuHaku } from '#/src/store/reducers/toteutusSlice';
-import { Localizer as l, OsoiteParser } from '#/src/tools/Utils';
+import { Localizer as l } from '#/src/tools/Utils';
 import { Box, Button, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import PublicIcon from '@material-ui/icons/Public';
 import { format } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useSelector } from 'react-redux';
+import { useOppilaitosOsoite } from '#/src/tools/UseOppilaitosOsoiteHook';
 
 const useStyles = makeStyles((theme) => ({
   hakuName: {
@@ -23,36 +23,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function getTarjoajaYhteystiedot(osoitteet, tarjoajat) {
+  return osoitteet.map((osoite) => {
+    let tarjoajaNimi = tarjoajat.find((tarjoaja) => tarjoaja.oid === osoite.oppilaitosOid)
+      ?.nimi;
+    return `${l.localize(tarjoajaNimi)} · ${osoite.yhteystiedot}`;
+  });
+}
+
 export const ToteutusHakuMuu = ({ oid }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const [osoitteet, setOsoitteet] = useState();
   const muuHaku = useSelector(selectMuuHaku(oid), shallowEqual);
 
-  // TODO: This whole useEffect will be obsolete when toteutus -api provides osoite for tarjoajas
-  useEffect(() => {
-    if (!osoitteet) {
-      (async () => {
-        try {
-          const oppilaitosDatas = await Promise.all(
-            muuHaku.tarjoajat.map((tarjoaja) => getOppilaitosOsa(tarjoaja.oid))
-          );
-          const osoitteet = oppilaitosDatas.map((data, i) => {
-            // NOTE: Prioritize using oppilaitoksenOsa, otherwise the address of main oppilaitos is found inside oppilaitos-property
-            const osoiteData = (data?.oppilaitoksenOsa || data?.oppilaitos?.oppilaitos)
-              .metadata.yhteystiedot.osoite;
-            const { yhteystiedot } = OsoiteParser.parseOsoiteData(osoiteData);
-            return `${l.localize(muuHaku.tarjoajat[i].nimi)} · ${yhteystiedot}`;
-          });
-
-          setOsoitteet(osoitteet);
-        } catch (e) {
-          console.error(e);
-          setOsoitteet([]);
-        }
-      })();
-    }
-  }, [osoitteet, muuHaku]);
+  const oppilaitosOids = muuHaku.tarjoajat.map((tarjoaja) => tarjoaja.oid);
+  const osoitteet = useOppilaitosOsoite(oppilaitosOids);
+  const yhteystiedot = getTarjoajaYhteystiedot(osoitteet, muuHaku.tarjoajat);
 
   return (
     <Box
@@ -72,7 +58,7 @@ export const ToteutusHakuMuu = ({ oid }) => {
         alignItems="center"
         xs={12}
         style={{ maxWidth: '800px' }}>
-        {!osoitteet ? (
+        {!yhteystiedot ? (
           <LoadingCircle />
         ) : (
           <Paper style={{ padding: '30px', width: '100%' }}>
@@ -110,7 +96,7 @@ export const ToteutusHakuMuu = ({ oid }) => {
                   </Grid>
                 </Grid>
               )}
-              {osoitteet?.map((osoite, index) => (
+              {yhteystiedot?.map((osoite, index) => (
                 <Grid key={index} container item direction="row">
                   <PublicIcon style={{ marginRight: '10px' }} />
                   <Typography variant="body1">{osoite}</Typography>
