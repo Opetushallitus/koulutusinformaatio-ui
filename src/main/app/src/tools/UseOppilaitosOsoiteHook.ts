@@ -32,11 +32,11 @@ export const useOppilaitosOsoite = (oppilaitosOids: String[]) => {
       (async () => {
         try {
           const data = await fetchOsoitteet(oppilaitosOids);
+          setDataNotFetched(false);
           setOsoitteet(data);
         } catch (e) {
-          console.error(e);
-        } finally {
           setDataNotFetched(false);
+          console.error(e);
         }
       })();
     }
