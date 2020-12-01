@@ -5,6 +5,14 @@ import { colors } from '#/src/colors';
 import { toId } from '#/src/tools/Utils';
 
 const useStyles = makeStyles({
+  toc: {
+    position: 'sticky',
+    alignSelf: 'flex-start',
+    height: 'auto',
+    top: '90px',
+    paddingTop: '30px',
+    paddingBottom: '10px',
+  },
   link: {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -43,8 +51,14 @@ const Lnk = (text, index, addIndexToAnchor) => {
   );
 };
 export const Sisallysluettelo = ({ children }) => {
+  const classes = useStyles();
   return (
-    <Grid container direction="row" justify="center" alignItems="center">
+    <Grid
+      container
+      direction="row"
+      justify="center"
+      alignItems="center"
+      className={classes.toc}>
       <Grid item xs={10} sm={10} md={10}>
         {children.map((l, i) => l((t, index, addIndex) => Lnk(t, index || i, addIndex)))}
       </Grid>
