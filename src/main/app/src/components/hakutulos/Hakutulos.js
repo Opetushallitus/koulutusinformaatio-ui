@@ -15,7 +15,7 @@ import {
   useTheme,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
-import LoadingCircle from '#/src/components/common/LoadingCircle';
+import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import {
   clearPaging,
   searchAll,
@@ -35,7 +35,7 @@ import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
 import KoulutustyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
 import OpetuskieliSuodatin from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
-import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
+import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
 import SuodatinValinnat from './hakutulosSuodattimet/SuodatinValinnat';
 import HakutulosToggle from './HakutulosToggle';
 import MobileFiltersOnTopMenu from './MobileFiltersOnTopMenu';

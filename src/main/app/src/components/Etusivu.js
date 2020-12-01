@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 import { useTranslation } from 'react-i18next';
 import ReactiveBorder from './ReactiveBorder';
 import { useStores } from '#/src/hooks';
-import LoadingCircle from '#/src/components/common/LoadingCircle';
+import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 
 const useStyles = makeStyles({
   info: {

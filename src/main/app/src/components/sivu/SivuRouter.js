@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import { colors } from '#/src/colors';
 import { useStores } from '#/src/hooks';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
-import LoadingCircle from '#/src/components/common/LoadingCircle';
+import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import SivuKooste from './SivuKooste';
 import Sivu from './Sivu';
 

@@ -8,7 +8,7 @@ import ToteutusHakukohteet from './ToteutusHakukohteet';
 import clsx from 'clsx';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import LoadingCircle from '#/src/components/common/LoadingCircle';
+import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import Spacer from '#/src/components/common/Spacer';
 import Accordion from '#/src/components/common/Accordion';
 import { Localizer as l } from '#/src/tools/Utils';

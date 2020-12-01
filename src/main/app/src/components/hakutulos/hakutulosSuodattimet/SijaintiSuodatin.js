@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Select, { components } from 'react-select';
 import qs from 'query-string';
 import _ from 'lodash';
 import {
   Button,
+  CircularProgress,
   Grid,
   List,
   ListItem,
@@ -23,6 +24,7 @@ import {
 import {
   getAPIRequestParams,
   getSijaintiFilterProps,
+  getIsLoading,
 } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   SuodatinCheckbox,
@@ -35,7 +37,7 @@ import SummaryContent from './SummaryContent';
 import { colors } from '#/src/colors';
 import { Common as C, Localizer as l } from '#/src/tools/Utils';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   buttonLabel: {
     fontSize: 14,
   },
@@ -44,36 +46,68 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SijaintiSuodatin = ({
+const customStyles = {
+  control: (provided, state) => ({
+    ...provided,
+    minHeight: '34px',
+    borderRadius: '2px',
+    cursor: 'text',
+  }),
+  indicatorSeparator: (provided, state) => ({
+    ...provided,
+    display: 'none',
+  }),
+  indicatorContainer: (provided, state) => ({
+    ...provided,
+    padding: '6px',
+  }),
+};
+
+// Overridden react-select components
+const DropdownIndicator = (props) => (
+  <components.DropdownIndicator {...props}>
+    <SearchOutlined />
+  </components.DropdownIndicator>
+);
+
+const LoadingIndicator = () => <CircularProgress size={25} color="inherit" />;
+
+const Option = ({ data, innerProps, isFocused }) => (
+  // innerProps contain interaction functions e.g. onClick
+  <ListItem dense button {...innerProps} selected={isFocused}>
+    <SuodatinCheckbox
+      checked={data?.checked}
+      disableRipple
+      role="presentation"
+      style={{ pointerEvents: 'none' }}
+    />
+    {data?.label}
+  </ListItem>
+);
+
+export const SijaintiSuodatin = ({
   expanded,
   elevation,
   displaySelected,
   summaryHidden = false,
 }) => {
   const history = useHistory();
-  const location = useLocation();
   const { t } = useTranslation();
   const classes = useStyles();
-  const sijaintiFilterProps = useSelector(getSijaintiFilterProps);
+  const loading = useSelector(getIsLoading);
+  const sijaintiFilterProps = useSelector(getSijaintiFilterProps) || {};
+  const {
+    firstFiveMaakunnat,
+    restMaakunnat,
+    selectedSijainnit,
+    searchHitsSijainnit = [],
+    checkedMaakunnat,
+    selectedSijainnitStr = '',
+  } = sijaintiFilterProps;
   const apiRequestParams = useSelector(getAPIRequestParams);
   const dispatch = useDispatch();
 
-  const [firstFiveMaakunnat, setfirstFiveMaakunnat] = useState([]);
-  const [restMaakunnat, setRestMaakunnat] = useState([]);
   const [showRest, setShowRest] = useState(false);
-  const [searchHitsSijainnit, setSearchHitsSijainnit] = useState([]);
-  const [selectedSijainnit, setSelectedSijainnit] = useState([]);
-  const [checkedMaakunnat, setCheckedMaakunnat] = useState([]);
-  const [selectedSijainnitStr, setSelectedSijainnitStr] = useState('');
-
-  useEffect(() => {
-    setfirstFiveMaakunnat(sijaintiFilterProps.firstFiveMaakunnat);
-    setRestMaakunnat(sijaintiFilterProps.restMaakunnat);
-    setSelectedSijainnit(sijaintiFilterProps.selectedSijainnit);
-    setSearchHitsSijainnit(sijaintiFilterProps.searchHitsSijainnit);
-    setCheckedMaakunnat(sijaintiFilterProps.checkedMaakunnat);
-    setSelectedSijainnitStr(sijaintiFilterProps.selectedSijainnitStr);
-  }, [sijaintiFilterProps, location]);
 
   const handleMaakuntaToggle = (maakuntaArr) => () => {
     const maakuntaFilterObj = {
@@ -90,30 +124,25 @@ const SijaintiSuodatin = ({
     } else {
       newValitutMaakunnat.push(maakuntaFilterObj);
     }
+
     setCheckedMaakunnat(newValitutMaakunnat);
-    _setCheckedMaakunnat(newValitutMaakunnat);
   };
 
-  const handleSelectedSijannitToggle = (_selectedSijainti) => {
-    if (
-      _.size(_selectedSijainti) > 0 &&
-      _selectedSijainti.constructor === Object &&
-      _selectedSijainti.isMaakunta
-    ) {
-      return handleSelectedSijaintiIsMaakunta(_selectedSijainti);
+  const handleSelectedSijannitToggle = (selected) => {
+    if (selected?.isMaakunta) {
+      return handleSelectedSijaintiIsMaakunta(selected);
     }
 
-    const newSelectedSijainnit = [...selectedSijainnit, _selectedSijainti] || [];
-    const selectedSijainnitStr = [
-      ...new Set(
-        newSelectedSijainnit
-          .map(({ id }) => id)
-          .concat(checkedMaakunnat.map(({ id }) => id))
-      ),
-    ].join(',');
+    const wasSelected = selectedSijainnit.some(({ id }) => id === selected.id);
+    const newSelectedSijainnit = wasSelected
+      ? selectedSijainnit.filter(({ id }) => id !== selected.id)
+      : [...selectedSijainnit, selected] || [];
+    const selectedSijainnitStr = newSelectedSijainnit
+      .map(({ id }) => id)
+      .concat(checkedMaakunnat.map(({ id }) => id))
+      .join(',');
     const search = qs.parse(history.location.search);
 
-    setSelectedSijainnit(newSelectedSijainnit);
     dispatch(setSelectedSijainti({ newSelectedSijainnit }));
     search.sijainti = selectedSijainnitStr;
     search.kpage = 1;
@@ -123,18 +152,21 @@ const SijaintiSuodatin = ({
     dispatch(searchAll({ ...apiRequestParams, sijainti: selectedSijainnitStr }));
   };
 
-  const handleSelectedSijaintiIsMaakunta = (_selectedSijainti) => {
-    if (checkedMaakunnat.findIndex(({ id }) => id === _selectedSijainti.id) !== -1)
-      return;
+  const handleSelectedSijaintiIsMaakunta = (selected) => {
+    const wasSelected = checkedMaakunnat.some(({ id }) => id === selected.id);
+
     const maakuntaFilterObj = {
-      id: _selectedSijainti?.id,
-      name: _selectedSijainti?.name,
+      id: selected?.id,
+      name: selected?.name,
     };
-    const newValitutMaakunnat = [...checkedMaakunnat, maakuntaFilterObj];
-    _setCheckedMaakunnat(newValitutMaakunnat);
+    const newValitutMaakunnat = wasSelected
+      ? checkedMaakunnat.filter(({ id }) => id !== selected.id)
+      : [...checkedMaakunnat, maakuntaFilterObj];
+
+    setCheckedMaakunnat(newValitutMaakunnat);
   };
 
-  const _setCheckedMaakunnat = (newCheckedOrSelectedMaakunnat) => {
+  const setCheckedMaakunnat = (newCheckedOrSelectedMaakunnat) => {
     const newCheckedOrSelectedSijainnitStr = newCheckedOrSelectedMaakunnat
       .map(({ id }) => id)
       .concat(selectedSijainnit.map(({ id }) => id))
@@ -151,35 +183,35 @@ const SijaintiSuodatin = ({
     );
   };
 
-  const handleShowRest = () => {
-    setShowRest(!showRest);
-  };
-
-  const DropdownIndicator = (props) => {
-    return (
-      components.DropdownIndicator && (
-        <components.DropdownIndicator {...props}>
-          <SearchOutlined />
-        </components.DropdownIndicator>
-      )
-    );
-  };
-
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      minHeight: '34px',
-      borderRadius: '2px',
-    }),
-    indicatorSeparator: (provided, state) => ({
-      ...provided,
-      display: 'none',
-    }),
-    indicatorContainer: (provided, state) => ({
-      ...provided,
-      padding: '6px',
-    }),
-  };
+  const groupedSijainnit = useMemo(
+    () => [
+      {
+        label: t('haku.kaupungit-tai-kunnat'),
+        options: _.sortBy(
+          searchHitsSijainnit
+            .filter((hit) => !hit.isMaakunta)
+            .map((hit) => ({
+              ...hit,
+              checked: selectedSijainnit.some((selected) => selected.id === hit.id),
+            })),
+          (v) => v.label
+        ),
+      },
+      {
+        label: t('haku.maakunnat'),
+        options: _.sortBy(
+          searchHitsSijainnit
+            .filter((hit) => hit.isMaakunta)
+            .map((hit) => ({
+              ...hit,
+              checked: checkedMaakunnat.some((selected) => selected.id === hit.id),
+            })),
+          (v) => v.label
+        ),
+      },
+    ],
+    [searchHitsSijainnit, selectedSijainnit, checkedMaakunnat, t]
+  );
 
   return (
     <SuodatinAccordion
@@ -200,14 +232,15 @@ const SijaintiSuodatin = ({
         <Grid container direction="column">
           <Grid item style={{ padding: '20px 0' }}>
             <Select
-              components={{ DropdownIndicator }}
+              components={{ DropdownIndicator, LoadingIndicator, Option }}
               styles={customStyles}
               value=""
+              isLoading={loading}
               name="district-search"
-              options={searchHitsSijainnit}
+              options={groupedSijainnit}
               className="basic-multi-select"
               classNamePrefix="select"
-              placeholder="Etsi paikkakunta tai alue"
+              placeholder={t('haku.etsi-paikkakunta-tai-alue')}
               onChange={(e) => handleSelectedSijannitToggle(e)}
               theme={(theme) => ({
                 ...theme,
@@ -242,6 +275,7 @@ const SijaintiSuodatin = ({
                           tabIndex={-1}
                           disableRipple
                           inputProps={{ 'aria-labelledby': labelId }}
+                          style={{ pointerEvents: 'none' }}
                         />
                       </ListItemIcon>
                       <SuodatinListItemText
@@ -297,7 +331,7 @@ const SijaintiSuodatin = ({
                   classes={{ label: classes.buttonLabel }}
                   endIcon={showRest ? <ExpandLess /> : <ExpandMore />}
                   fullWidth
-                  onClick={() => handleShowRest()}>
+                  onClick={() => setShowRest(!showRest)}>
                   {showRest ? t('haku.näytä_vähemmän') : t('haku.näytä_lisää')}
                 </Button>
               </List>
@@ -308,5 +342,3 @@ const SijaintiSuodatin = ({
     </SuodatinAccordion>
   );
 };
-
-export default SijaintiSuodatin;
