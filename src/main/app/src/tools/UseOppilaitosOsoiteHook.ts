@@ -24,7 +24,7 @@ async function fetchOsoitteet(oppilaitosOids: String[]) {
 }
 
 export const useOppilaitosOsoite = (oppilaitosOids: String[]) => {
-  const [osoitteet, setOsoitteet] = useState<OppilaitosOsoite[]>();
+  const [osoitteet, setOsoitteet] = useState<OppilaitosOsoite[]>([]);
   const [dataNotFetched, setDataNotFetched] = useState(true);
 
   useEffect(() => {
