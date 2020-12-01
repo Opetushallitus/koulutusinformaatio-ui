@@ -59,162 +59,162 @@ const HakuCardGrid = (props) => {
           alignContent="center"
           justify="center"
           alignItems="center">
-          {haut.map((haku, i) => (
-            <Grid
-              key={i}
-              item
-              xs={12}
-              lg={6}
-              style={{ maxWidth: '624px', height: '390px' }}>
-              <Paper
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  borderTop: `5px solid #43A047`,
-                }}>
-                <Box m={4}>
-                  <Grid container direction="column" spacing={3}>
-                    <Grid item>
-                      <Grid container direction="column" spacing={1}>
-                        <Grid item>
-                          <Typography className={classes.hakuName}>
-                            {l.localize(haku.nimi)}
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Typography variant="body1" noWrap>
-                            {l.localize(haku.hakulomakeKuvaus)}
-                          </Typography>
-                        </Grid>
-                        {haku.jarjestyspaikka && (
+          {haut.map((haku, i) => {
+            const jarjestyspaikkaYhteystiedot = getJarjestyspaikkaYhteystiedot(
+              haku.jarjestyspaikka,
+              osoitteet
+            );
+            return (
+              <Grid
+                key={i}
+                item
+                xs={12}
+                lg={6}
+                style={{ maxWidth: '624px', height: '390px' }}>
+                <Paper
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    borderTop: `5px solid #43A047`,
+                  }}>
+                  <Box m={4}>
+                    <Grid container direction="column" spacing={3}>
+                      <Grid item>
+                        <Grid container direction="column" spacing={1}>
                           <Grid item>
-                            <Typography variant="body1">
-                              {l.localize(haku.jarjestyspaikka.nimi)}
-                            </Typography>
-                          </Grid>
-                        )}
-                        {!!getJarjestyspaikkaYhteystiedot(
-                          haku.jarjestyspaikka,
-                          osoitteet
-                        ) && (
-                          <Grid item>
-                            <Typography variant="body1">
-                              {getJarjestyspaikkaYhteystiedot(
-                                haku.jarjestyspaikka,
-                                osoitteet
-                              )}
-                            </Typography>
-                          </Grid>
-                        )}
-                      </Grid>
-                    </Grid>
-                    <Grid item>
-                      <div
-                        style={{
-                          height: '0px',
-                          borderTop: '1px solid #B2B2B2',
-                        }}
-                      />
-                    </Grid>
-                    <Grid item>
-                      <Grid container direction="row" spacing={3}>
-                        <Grid item xs={6}>
-                          <Grid item>
-                            <Typography className={classes.gridHeading} noWrap>
-                              {t('toteutus.haku-alkaa') + ':'}
-                            </Typography>
-                          </Grid>
-                          <Grid item>
-                            {haku.hakuajat.map((hakuaika, i) => (
-                              <Typography key={i} variant="body1" noWrap>
-                                {format(new Date(hakuaika.alkaa), 'd.M.y H:mm')}
-                              </Typography>
-                            ))}
-                          </Grid>
-                        </Grid>
-                        {haku.hakuajat?.some((hakuaika) => hakuaika.paattyy) && (
-                          <Grid item xs={6}>
-                            <Grid item>
-                              <Typography className={classes.gridHeading} noWrap>
-                                {t('toteutus.haku-paattyy') + ':'}
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              {haku.hakuajat.map((hakuaika, i) =>
-                                hakuaika.paattyy ? (
-                                  <Typography key={i} variant="body1" noWrap>
-                                    {format(new Date(hakuaika.paattyy), 'd.M.y H:mm')}
-                                  </Typography>
-                                ) : null
-                              )}
-                            </Grid>
-                          </Grid>
-                        )}
-                        <Grid item xs={6}>
-                          <Grid item>
-                            <Typography className={classes.gridHeading} noWrap>
-                              {t('koulutus.pohjakoulutus') + ':'}
+                            <Typography className={classes.hakuName}>
+                              {l.localize(haku.nimi)}
                             </Typography>
                           </Grid>
                           <Grid item>
                             <Typography variant="body1" noWrap>
-                              {haku.pohjakoulutusvaatimus.map((vaatimus) =>
-                                l.localize(vaatimus)
-                              )}
+                              {l.localize(haku.hakulomakeKuvaus)}
                             </Typography>
                           </Grid>
+                          {haku.jarjestyspaikka && (
+                            <Grid item>
+                              <Typography variant="body1">
+                                {l.localize(haku.jarjestyspaikka.nimi)}
+                              </Typography>
+                            </Grid>
+                          )}
+                          {!!jarjestyspaikkaYhteystiedot && (
+                            <Grid item>
+                              <Typography variant="body1">
+                                {jarjestyspaikkaYhteystiedot}
+                              </Typography>
+                            </Grid>
+                          )}
                         </Grid>
-                        {haku.aloituspaikat && (
+                      </Grid>
+                      <Grid item>
+                        <div
+                          style={{
+                            height: '0px',
+                            borderTop: '1px solid #B2B2B2',
+                          }}
+                        />
+                      </Grid>
+                      <Grid item>
+                        <Grid container direction="row" spacing={3}>
                           <Grid item xs={6}>
                             <Grid item>
                               <Typography className={classes.gridHeading} noWrap>
-                                {t('toteutus.opiskelupaikkoja') + ':'}
+                                {t('toteutus.haku-alkaa') + ':'}
+                              </Typography>
+                            </Grid>
+                            <Grid item>
+                              {haku.hakuajat.map((hakuaika, i) => (
+                                <Typography key={i} variant="body1" noWrap>
+                                  {format(new Date(hakuaika.alkaa), 'd.M.y H:mm')}
+                                </Typography>
+                              ))}
+                            </Grid>
+                          </Grid>
+                          {haku.hakuajat?.some((hakuaika) => hakuaika.paattyy) && (
+                            <Grid item xs={6}>
+                              <Grid item>
+                                <Typography className={classes.gridHeading} noWrap>
+                                  {t('toteutus.haku-paattyy') + ':'}
+                                </Typography>
+                              </Grid>
+                              <Grid item>
+                                {haku.hakuajat.map((hakuaika, i) =>
+                                  hakuaika.paattyy ? (
+                                    <Typography key={i} variant="body1" noWrap>
+                                      {format(new Date(hakuaika.paattyy), 'd.M.y H:mm')}
+                                    </Typography>
+                                  ) : null
+                                )}
+                              </Grid>
+                            </Grid>
+                          )}
+                          <Grid item xs={6}>
+                            <Grid item>
+                              <Typography className={classes.gridHeading} noWrap>
+                                {t('koulutus.pohjakoulutus') + ':'}
                               </Typography>
                             </Grid>
                             <Grid item>
                               <Typography variant="body1" noWrap>
-                                {haku.aloituspaikat}
+                                {haku.pohjakoulutusvaatimus.map((vaatimus) =>
+                                  l.localize(vaatimus)
+                                )}
                               </Typography>
                             </Grid>
                           </Grid>
-                        )}
+                          {haku.aloituspaikat && (
+                            <Grid item xs={6}>
+                              <Grid item>
+                                <Typography className={classes.gridHeading} noWrap>
+                                  {t('toteutus.opiskelupaikkoja') + ':'}
+                                </Typography>
+                              </Grid>
+                              <Grid item>
+                                <Typography variant="body1" noWrap>
+                                  {haku.aloituspaikat}
+                                </Typography>
+                              </Grid>
+                            </Grid>
+                          )}
+                        </Grid>
+                      </Grid>
+                      <Grid item>
+                        <ButtonGroup
+                          className={classes.lomakeButtonGroup}
+                          orientation="horizontal"
+                          color="primary">
+                          {haku.hakulomaketyyppi !== HAKULOMAKE_TYYPPI.EI_SAHKOISTA && (
+                            <Button
+                              variant="contained"
+                              size="large"
+                              color="primary"
+                              target="_blank"
+                              href={l.localize(haku.hakulomakeLinkki)}
+                              disabled={!haku.isHakuAuki}>
+                              <Typography style={{ color: colors.white }} variant="body1">
+                                {t('toteutus.tayta-lomake')}
+                              </Typography>
+                            </Button>
+                          )}
+                          <LocalizedLink
+                            underline="none"
+                            component={RouterLink}
+                            to={`/hakukohde/${haku.hakukohdeOid}/valintaperuste/${haku.valintaperusteId}`}>
+                            <Button variant="outlined" size="large" color="primary">
+                              <Typography style={{ color: colors.green }} variant="body1">
+                                {t('toteutus.lue-valintaperusteet')}
+                              </Typography>
+                            </Button>
+                          </LocalizedLink>
+                        </ButtonGroup>
                       </Grid>
                     </Grid>
-                    <Grid item>
-                      <ButtonGroup
-                        className={classes.lomakeButtonGroup}
-                        orientation="horizontal"
-                        color="primary">
-                        {haku.hakulomaketyyppi !== HAKULOMAKE_TYYPPI.EI_SAHKOISTA && (
-                          <Button
-                            variant="contained"
-                            size="large"
-                            color="primary"
-                            target="_blank"
-                            href={l.localize(haku.hakulomakeLinkki)}
-                            disabled={!haku.isHakuAuki}>
-                            <Typography style={{ color: colors.white }} variant="body1">
-                              {t('toteutus.tayta-lomake')}
-                            </Typography>
-                          </Button>
-                        )}
-                        <LocalizedLink
-                          underline="none"
-                          component={RouterLink}
-                          to={`/hakukohde/${haku.hakukohdeOid}/valintaperuste/${haku.valintaperusteId}`}>
-                          <Button variant="outlined" size="large" color="primary">
-                            <Typography style={{ color: colors.green }} variant="body1">
-                              {t('toteutus.lue-valintaperusteet')}
-                            </Typography>
-                          </Button>
-                        </LocalizedLink>
-                      </ButtonGroup>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Paper>
-            </Grid>
-          ))}
+                  </Box>
+                </Paper>
+              </Grid>
+            );
+          })}
         </Grid>
       </Box>
     </Grid>
