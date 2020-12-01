@@ -36,12 +36,7 @@ const useStyles = makeStyles((theme) => ({
 const Row = ({ children }) => {
   const classes = useStyles();
   return (
-    <Grid
-      container
-      direction="row"
-      spacing={2}
-      justify="center"
-      className={classes.container}>
+    <Grid container direction="row" justify="center" className={classes.container}>
       <Grid item xs={12} sm={12} md={10}>
         {children}
       </Grid>
