@@ -25,8 +25,9 @@ const useStyles = makeStyles((theme) => ({
 
 function getTarjoajaYhteystiedot(osoitteet, tarjoajat) {
   return osoitteet.map((osoite) => {
-    let tarjoajaNimi = tarjoajat.find((tarjoaja) => tarjoaja.oid === osoite.oppilaitosOid)
-      ?.nimi;
+    const tarjoajaNimi = tarjoajat.find(
+      (tarjoaja) => tarjoaja.oid === osoite.oppilaitosOid
+    )?.nimi;
     return `${l.localize(tarjoajaNimi)} · ${osoite.yhteystiedot}`;
   });
 }
