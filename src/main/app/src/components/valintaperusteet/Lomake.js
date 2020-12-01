@@ -1,7 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
 import {
-  Grid,
   Badge,
   Button,
   Card,
@@ -20,7 +19,26 @@ import LocalizedLink from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles({
   card: {
-    padding: '15px',
+    padding: '30px',
+  },
+  table: {
+    lineHeight: '25px',
+    padding: '16px 0',
+    '& th': {
+      textAlign: 'left',
+      paddingRight: '16px',
+      verticalAlign: 'top',
+      fontWeight: 'normal',
+    },
+    '& td': {
+      fontWeight: 600,
+    },
+  },
+  cardContent: {
+    padding: 0,
+  },
+  cardActions: {
+    padding: 0,
   },
 });
 
@@ -59,19 +77,26 @@ const LomakeButton = ({ children, ...props }) => {
   );
 };
 
-const Row = ({ title, children }) => {
+const SimpleTable = (props) => {
+  const { items = [] } = props;
+  const classes = useStyles();
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={3}>
-        <Typography variant="body2" component="p">
-          {title}
-          {':'}
-        </Typography>
-      </Grid>
-      <Grid item xs={9}>
-        <Typography style={{ fontWeight: 600 }}>{children}</Typography>
-      </Grid>
-    </Grid>
+    <table className={classes.table}>
+      <tbody>
+        {items.map(
+          ({ title, value, hidden }) =>
+            !hidden && (
+              <tr key={title}>
+                <th>
+                  {title}
+                  {':'}
+                </th>
+                <td>{value}</td>
+              </tr>
+            )
+        )}
+      </tbody>
+    </table>
   );
 };
 
@@ -88,57 +113,52 @@ export const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
 
   return (
     <Card className={classes.card} elevation={2}>
-      <CardContent>
-        <Grid container direction="row" spacing={4}>
-          <Grid item>
-            <Typography variant="h4" component="h4">
-              {l.localize(hakukohde?.nimi)}
-              {isOpen && (
-                <StyledBadge
-                  badgeContent={t('valintaperuste.haku-kaynnissa')}
-                  color="secondary"
-                />
-              )}
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Row title={t('valintaperuste.haku')}>{l.localize(haku?.nimi)}</Row>
-            <Row title={t('valintaperuste.hakuaika')}>
-              {hakuaika ? formatDateRange(hakuaika[0], hakuaika[1]) : '-'}
-            </Row>
-            {Boolean(aloituspaikat) && (
-              <Row title={t('valintaperuste.opiskelupaikkoja')}>
-                {`${aloituspaikat} ${
-                  ensikertalaisille
-                    ? t('lomake.ensikertalaisille', { ensikertalaisille })
-                    : ''
-                }`}
-              </Row>
-            )}
-            <Row title={t('valintaperuste.pohjakoulutus')}>-</Row>
-          </Grid>
-        </Grid>
+      <CardContent className={classes.cardContent}>
+        <Typography variant="h4">
+          {l.localize(hakukohde?.nimi)}
+          {isOpen && (
+            <StyledBadge
+              badgeContent={t('valintaperuste.haku-kaynnissa')}
+              color="secondary"
+            />
+          )}
+        </Typography>
+        <SimpleTable
+          items={[
+            {
+              title: t('valintaperuste.haku'),
+              value: l.localize(haku?.nimi),
+            },
+            {
+              title: t('valintaperuste.hakuaika'),
+              value: hakuaika ? formatDateRange(hakuaika[0], hakuaika[1]) : '-',
+            },
+            {
+              title: t('valintaperuste.opiskelupaikkoja'),
+              value: `${aloituspaikat} ${
+                ensikertalaisille
+                  ? t('lomake.ensikertalaisille', { ensikertalaisille })
+                  : ''
+              }`,
+              hidden: !aloituspaikat,
+            },
+            {
+              title: t('valintaperuste.pohjakoulutus'),
+              value: '-',
+            },
+          ]}
+        />
       </CardContent>
-      <CardActions>
-        <Grid container direction="row" spacing={2}>
-          <Grid item>
-            <LomakeButton
-              href={l.localize(hakukohde.hakulomakeLinkki)}
-              disabled={!isOpen}>
-              {t('lomake.tayta-lomake')}
-            </LomakeButton>
-          </Grid>
-          <Grid item>
-            <LocalizedLink
-              component={RouterLink}
-              to={paluuLinkki}
-              style={{ textDecoration: 'none' }}>
-              <LomakeButton variant="outlined">
-                {t('lomake.palaa-esittelyyn')}
-              </LomakeButton>
-            </LocalizedLink>
-          </Grid>
-        </Grid>
+      <CardActions className={classes.cardActions}>
+        <LomakeButton href={l.localize(hakukohde.hakulomakeLinkki)} disabled={!isOpen}>
+          {t('lomake.tayta-lomake')}
+        </LomakeButton>
+        <LocalizedLink
+          component={RouterLink}
+          to={paluuLinkki}
+          style={{ textDecoration: 'none' }}>
+          <LomakeButton variant="outlined">{t('lomake.palaa-esittelyyn')}</LomakeButton>
+        </LocalizedLink>
       </CardActions>
     </Card>
   );
