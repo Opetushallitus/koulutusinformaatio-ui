@@ -13,7 +13,7 @@ async function fetchOsoitteet(
 ) {
   if (oppilaitosOids.length > 0) {
     const oppilaitosDatas = await Promise.all(
-      oppilaitosOids.map((oid) => getOppilaitosOsa(oid))
+      oppilaitosOids.filter(Boolean).map((oid) => getOppilaitosOsa(oid))
     );
 
     const osoitteet: OppilaitosOsoite[] = oppilaitosDatas.map((data) => {
