@@ -61,24 +61,32 @@ const KoulutusKortti = ({ koulutus }) => {
   const muiScreenSizeMinSm = useMediaQuery(MUI_BREAKPOINTS.MIN_SM);
 
   const kuvaus =
-    _.truncate(l.localize(koulutus?.kuvaus).replace(/<[^>]*>/gm, ''), { length: 255 }) ||
-    t('haku.ei_kuvausta');
-
-  const tutkintoNimikkeet = isOsaamisalaOrTutkinnonOsa()
+    _.truncate(
+      l
+        .localize(koulutus?.kuvaus)
+        .replaceAll('</li>', ',</li>')
+        .replaceAll('.,</li>', '.</li>')
+        .replace(/<[^>]*>/gm, ''),
+      { length: 255 }
+    ) || t('haku.ei_kuvausta');
+  const isOsaamisalaOrTutkinnonOsa = _.includes(
+    ['amm-osaamisala', 'amm-tutkinnon-osa'],
+    koulutus?.koulutustyyppi
+  );
+  const tutkintoNimikkeet = isOsaamisalaOrTutkinnonOsa
     ? t(`haku.${koulutus?.koulutustyyppi}`)
     : (koulutus?.tutkintonimikkeet || [])
-        .reduce((acc, nimike) => acc + l.localize(nimike) + ', ', '')
+        .map((nimike) => l.localize(nimike))
+        .join(', ')
         .replace(/,\s*$/, '') || t('haku.ei-tutkintonimiketta');
+  const colorCode =
+    educationTypeColorCode[koulutus?.koulutustyyppi] || educationTypeColorCode.muu;
 
   function getOpintojenLaajuus() {
     const tutkinnotOsat = koulutus?.tutkinnonOsat || [];
-    const opintojenLaajuusNumero = `${
+    const opintojenLaajuusNumero =
       koulutus?.opintojenLaajuusNumero ||
-      tutkinnotOsat
-        .reduce((acc, val) => [...acc, val?.opintojenLaajuusNumero], [])
-        .join(' + ') ||
-      ''
-    } `.trim();
+      tutkinnotOsat.map((k) => k?.opintojenLaajuusNumero).join(' + ');
     const opintojenLaajuusYksikko =
       l.localize(
         koulutus?.opintojenLaajuusyksikko ||
@@ -86,14 +94,6 @@ const KoulutusKortti = ({ koulutus }) => {
       ) || '';
     const opintojenLaajuus = `${opintojenLaajuusNumero} ${opintojenLaajuusYksikko}`.trim();
     return opintojenLaajuus || t('haku.ei-opintojenlaajuutta');
-  }
-
-  function getColorCode() {
-    return educationTypeColorCode[koulutus?.koulutustyyppi] || educationTypeColorCode.muu;
-  }
-
-  function isOsaamisalaOrTutkinnonOsa() {
-    return _.includes(['amm-osaamisala', 'amm-tutkinnon-osa'], koulutus?.koulutustyyppi);
   }
 
   return (
@@ -104,7 +104,7 @@ const KoulutusKortti = ({ koulutus }) => {
       <Paper
         data-cy={koulutus?.oid}
         classes={{ root: classes.paperRoot }}
-        style={{ borderTop: `5px solid ${getColorCode()}` }}>
+        style={{ borderTop: `5px solid ${colorCode}` }}>
         <Grid container alignItems="stretch" style={{ minHeight: 210 }} spacing={3}>
           <Grid
             container
@@ -157,7 +157,7 @@ const KoulutusKortti = ({ koulutus }) => {
             <Grid item container direction="row" spacing={muiScreenSizeMinSm ? 2 : 0}>
               <Grid item container md={6} sm={6} xs={12}>
                 <Grid item xs={1}>
-                  {isOsaamisalaOrTutkinnonOsa() ? (
+                  {isOsaamisalaOrTutkinnonOsa ? (
                     <ExtensionOutlined />
                   ) : (
                     <SchoolOutlined />
