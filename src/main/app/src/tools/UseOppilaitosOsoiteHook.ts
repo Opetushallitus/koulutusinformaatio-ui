@@ -25,22 +25,22 @@ async function fetchOsoitteet(oppilaitosOids: String[]) {
 
 export const useOppilaitosOsoite = (oppilaitosOids: String[]) => {
   const [osoitteet, setOsoitteet] = useState<OppilaitosOsoite[]>([]);
-  const [dataNotFetched, setDataNotFetched] = useState(true);
+  const [dataFetched, setDataFetched] = useState(false);
 
   useEffect(() => {
-    if (dataNotFetched) {
+    if (!dataFetched) {
       (async () => {
         try {
           const data = await fetchOsoitteet(oppilaitosOids);
-          setDataNotFetched(false);
+          setDataFetched(true);
           setOsoitteet(data);
         } catch (e) {
-          setDataNotFetched(false);
+          setDataFetched(true);
           console.error(e);
         }
       })();
     }
-  }, [oppilaitosOids, dataNotFetched, osoitteet]);
+  }, [oppilaitosOids, dataFetched, osoitteet]);
 
   return osoitteet;
 };
