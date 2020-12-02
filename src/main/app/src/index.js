@@ -12,7 +12,7 @@ import configure from './urls/urlUtil';
 import ScrollToTop from './ScrollToTop';
 
 import './tools/i18n';
-import LoadingCircle from './components/common/LoadingCircle';
+import { LoadingCircle } from './components/common/LoadingCircle';
 
 if ('serviceWorker' in navigator) {
   if (!window.Cypress) {

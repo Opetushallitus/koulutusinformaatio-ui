@@ -1,7 +1,7 @@
 import { getOppilaitosOsa } from '#/src/api/konfoApi';
 import { colors } from '#/src/colors';
 import { AccordionText } from '#/src/components/common/AccordionText';
-import LoadingCircle from '#/src/components/common/LoadingCircle';
+import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import Spacer from '#/src/components/common/Spacer';
 import { selectMuuHaku } from '#/src/store/reducers/toteutusSlice';
 import { Localizer as l, OsoiteParser } from '#/src/tools/Utils';

@@ -23,7 +23,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import { colors } from '../colors';
 import { observer } from 'mobx-react-lite';
 import _ from 'lodash';
-import ReactiveBorder from './ReactiveBorder';
+import { ReactiveBorder } from './ReactiveBorder';
 import koulutusPlaceholderImg from '../assets/images/Opolkuhts.png';
 import Preview from './Preview';
 

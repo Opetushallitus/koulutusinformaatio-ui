@@ -6,7 +6,7 @@ import { Localizer as l } from '../../tools/Utils';
 import { useTranslation } from 'react-i18next';
 import Murupolku from '../common/Murupolku';
 import { useParams } from 'react-router-dom';
-import LoadingCircle from '../common/LoadingCircle';
+import { LoadingCircle } from '../common/LoadingCircle';
 import superagent from 'superagent';
 import Lomake from '#/src/components/valintaperusteet/Lomake';
 import Kuvaus, { KuvausSisallysluettelo } from '#/src/components/valintaperusteet/Kuvaus';

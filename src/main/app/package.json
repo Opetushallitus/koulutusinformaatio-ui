@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "homepage": "/konfo",
   "private": true,
+  "proxy": "https://beta.hahtuvaopintopolku.fi",
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
@@ -10,7 +11,7 @@
     "cypress:run": "./node_modules/.bin/cypress run -b chrome",
     "cypress:run:headless": "npm run cypress:run -- --headless",
     "cypress:open": "./node_modules/.bin/cypress open -b chrome",
-    "test:integration": "cross-env CYPRESS_RETRIES=3 NODE_ENV=test REACT_APP_CYPRESS=true PORT=3005 ./node_modules/.bin/start-server-and-test start http://localhost:3005 cypress:run:headless",
+    "test:integration": "cross-env CYPRESS_RETRIES=3 NODE_ENV=test REACT_APP_CYPRESS=true PORT=3005 start-server-and-test start http://localhost:3005 cypress:run:headless",
     "test:ci": "cross-env CI=true npm run test && cross-env CI=true npm run test:integration",
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix"

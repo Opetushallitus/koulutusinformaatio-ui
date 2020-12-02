@@ -15,7 +15,7 @@ import { observer } from 'mobx-react';
 import Murupolku from '#/src/components/common/Murupolku';
 import SidebarValikko from '#/src/components/common/SidebarValikko';
 import LanguageTab from '#/src/components/common/LanguageTab';
-import LoadingCircle from '#/src/components/common/LoadingCircle';
+import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import { useStores } from '#/src/hooks';
 import { colors } from '#/src/colors';
 import { DRAWER_WIDTH } from '#/src/constants';
