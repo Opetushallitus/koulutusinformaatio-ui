@@ -11,7 +11,7 @@ const PopoverWithArrow = ({ anchorEl, content, id, marginTop, onClose, open }) =
       transition: 'all 0.5s',
     },
     arrowBox: {
-      minWidth: '350px',
+      minWidth: '300px',
       position: 'relative',
       padding: '25px',
       background: colors.white,

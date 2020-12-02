@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Select, { components } from 'react-select';
 import qs from 'query-string';
-import _ from 'lodash';
+import _fp from 'lodash/fp';
 import {
   Button,
   CircularProgress,
@@ -85,6 +85,8 @@ const Option = ({ data, innerProps, isFocused }) => (
   </ListItem>
 );
 
+const isChecked = (arr, value) => arr.some((o) => o.id === value.id);
+
 export const SijaintiSuodatin = ({
   expanded,
   elevation,
@@ -152,15 +154,15 @@ export const SijaintiSuodatin = ({
     dispatch(searchAll({ ...apiRequestParams, sijainti: selectedSijainnitStr }));
   };
 
-  const handleSelectedSijaintiIsMaakunta = (selected) => {
-    const wasSelected = checkedMaakunnat.some(({ id }) => id === selected.id);
+  const handleSelectedSijaintiIsMaakunta = (checked) => {
+    const wasChecked = checkedMaakunnat.some(({ id }) => id === checked.id);
 
     const maakuntaFilterObj = {
-      id: selected?.id,
-      name: selected?.name,
+      id: checked?.id,
+      name: checked?.name,
     };
-    const newValitutMaakunnat = wasSelected
-      ? checkedMaakunnat.filter(({ id }) => id !== selected.id)
+    const newValitutMaakunnat = wasChecked
+      ? checkedMaakunnat.filter(({ id }) => id !== checked.id)
       : [...checkedMaakunnat, maakuntaFilterObj];
 
     setCheckedMaakunnat(newValitutMaakunnat);
@@ -187,27 +189,19 @@ export const SijaintiSuodatin = ({
     () => [
       {
         label: t('haku.kaupungit-tai-kunnat'),
-        options: _.sortBy(
-          searchHitsSijainnit
-            .filter((hit) => !hit.isMaakunta)
-            .map((hit) => ({
-              ...hit,
-              checked: selectedSijainnit.some((selected) => selected.id === hit.id),
-            })),
-          (v) => v.label
-        ),
+        options: _fp.compose([
+          _fp.sortBy('label'),
+          _fp.map((h) => ({ ...h, checked: isChecked(selectedSijainnit, h) })),
+          _fp.filter((h) => !h.isMaakunta),
+        ])(searchHitsSijainnit),
       },
       {
         label: t('haku.maakunnat'),
-        options: _.sortBy(
-          searchHitsSijainnit
-            .filter((hit) => hit.isMaakunta)
-            .map((hit) => ({
-              ...hit,
-              checked: checkedMaakunnat.some((selected) => selected.id === hit.id),
-            })),
-          (v) => v.label
-        ),
+        options: _fp.compose([
+          _fp.sortBy('label'),
+          _fp.map((h) => ({ ...h, checked: isChecked(checkedMaakunnat, h) })),
+          _fp.filter((h) => h.isMaakunta),
+        ])(searchHitsSijainnit),
       },
     ],
     [searchHitsSijainnit, selectedSijainnit, checkedMaakunnat, t]

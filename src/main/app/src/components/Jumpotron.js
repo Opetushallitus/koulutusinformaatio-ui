@@ -1,6 +1,6 @@
 import React from 'react';
 import Hakupalkki from './haku/Hakupalkki';
-import ReactiveBorder from './ReactiveBorder';
+import { ReactiveBorder } from './ReactiveBorder';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -50,29 +50,20 @@ const useStyles = makeStyles((theme) => ({
 const Jumpotron = () => {
   const { t } = useTranslation();
   const classes = useStyles();
+
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.callToAction}>
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="center">
+        <Grid container direction="row" justify="flex-start" alignItems="center">
           <Grid item xs={12} sm={12} md={10} lg={8}>
             <ReactiveBorder>
               <Card className={classes.jumpotron}>
                 <ReactiveBorder>
                   <CardHeader
                     disableTypography={true}
-                    title={
-                      <h1 className={classes.title}>
-                        {t('jumpotron.otsikko')}
-                      </h1>
-                    }
+                    title={<h1 className={classes.title}>{t('jumpotron.otsikko')}</h1>}
                     subheader={
-                      <p className={classes.subheader}>
-                        {t('jumpotron.esittely')}
-                      </p>
+                      <p className={classes.subheader}>{t('jumpotron.esittely')}</p>
                     }
                   />
                   <CardContent className={classes.content}>
