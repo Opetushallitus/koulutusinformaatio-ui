@@ -46,6 +46,7 @@ export const configureUrls = async () => {
   if (['development', 'test'].includes(NODE_ENV)) {
     urls.addProperties(development);
   } else {
-    await urls.load('/konfo/rest/config/frontProperties', { overrides: production });
+    await urls.load('/konfo/rest/config/frontProperties');
+    urls.addOverrides(production);
   }
 };
