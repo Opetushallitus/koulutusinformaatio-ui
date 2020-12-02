@@ -88,7 +88,7 @@
         }
       },
       {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/hakukohde/1.2.246.562.20.00000000000000000191",
+        "url": "http://localhost:3005/konfo-backend/hakukohde/1.2.246.562.20.00000000000000000191",
         "method": "GET",
         "status": 200,
         "headers": {},
@@ -1867,7 +1867,7 @@
         ]
       },
       {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/valintaperuste/59df8769-114d-45ab-8db1-583a772f0adf",
+        "url": "http://localhost:3005/konfo-backend/valintaperuste/59df8769-114d-45ab-8db1-583a772f0adf",
         "method": "GET",
         "status": 200,
         "headers": {},
@@ -2113,7 +2113,7 @@
         "body": null
       },
       {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/haku/1.2.246.562.29.00000000000000000190",
+        "url": "http://localhost:3005/konfo-backend/haku/1.2.246.562.29.00000000000000000190",
         "method": "GET",
         "status": 200,
         "headers": {},
@@ -2389,7 +2389,7 @@
         }
       },
       {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/toteutus/1.2.246.562.17.00000000000000000001",
+        "url": "http://localhost:3005/konfo-backend/toteutus/1.2.246.562.17.00000000000000000001",
         "method": "GET",
         "status": 200,
         "headers": {},
@@ -2642,7 +2642,7 @@
         }
       },
       {
-        "url": "https://beta.hahtuvaopintopolku.fi/konfo-backend/koulutus/1.2.246.562.13.00000000000000000001",
+        "url": "http://localhost:3005/konfo-backend/koulutus/1.2.246.562.13.00000000000000000001",
         "method": "GET",
         "status": 200,
         "headers": {},
