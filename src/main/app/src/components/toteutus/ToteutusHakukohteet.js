@@ -64,6 +64,7 @@ const HakuCardGrid = (props) => {
               haku.jarjestyspaikka,
               osoitteet
             );
+
             return (
               <Grid
                 key={i}
@@ -94,14 +95,9 @@ const HakuCardGrid = (props) => {
                           {haku.jarjestyspaikka && (
                             <Grid item>
                               <Typography variant="body1">
-                                {l.localize(haku.jarjestyspaikka.nimi)}
-                              </Typography>
-                            </Grid>
-                          )}
-                          {!!jarjestyspaikkaYhteystiedot && (
-                            <Grid item>
-                              <Typography variant="body1">
-                                {jarjestyspaikkaYhteystiedot}
+                                {`${l.localize(
+                                  haku.jarjestyspaikka.nimi
+                                )} · ${jarjestyspaikkaYhteystiedot}`}
                               </Typography>
                             </Grid>
                           )}
