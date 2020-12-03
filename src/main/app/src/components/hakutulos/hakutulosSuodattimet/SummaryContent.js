@@ -1,14 +1,14 @@
-import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
-import { SuodatinMobileChip } from './CustomizedMuiComponents';
 import _ from 'lodash';
+import React from 'react';
+import { SuodatinMobileChip } from './CustomizedMuiComponents';
 
-export default function({
+export const SummaryContent = ({
   selectedFiltersStr,
   maxCharLengthBeforeChipWithNumber,
   filterName,
   displaySelected,
-}) {
+}) => {
   return (
     <Grid container justify="space-between" alignItems="center" wrap="nowrap">
       <Grid item>
@@ -25,4 +25,4 @@ export default function({
       )}
     </Grid>
   );
-}
+};

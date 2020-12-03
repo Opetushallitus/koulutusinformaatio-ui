@@ -356,6 +356,8 @@ export const getKoulutusalaFilterProps = createSelector(
     };
   }
 );
+
+// TODO: Some types written at SijaintiSuodatin.tsx
 export const getSijaintiFilterProps = createSelector(
   [
     getKoulutusFilters,

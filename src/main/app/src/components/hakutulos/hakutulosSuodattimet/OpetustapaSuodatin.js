@@ -18,7 +18,7 @@ import {
   SuodatinAccordionSummary,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
-import SummaryContent from './SummaryContent';
+import { SummaryContent } from './SummaryContent';
 import { Common as C, Localizer as l } from '#/src/tools/Utils';
 import { useQueryParams } from '#/src/hooks';
 

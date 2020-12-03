@@ -77,7 +77,7 @@ const hakutulosSlice = createSlice({
     setOpetustapa: (state, { payload }) => {
       state.opetustapa = payload.newCheckedOpetustavat;
     },
-    clearPaging: (state, action) => {
+    clearPaging: (state) => {
       state.koulutusPage = 1;
       state.oppilaitosPage = 1;
       state.koulutusOffset = 0;

@@ -12,8 +12,9 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '600',
   },
   paper: (props) => ({
-    borderTop: `5px solid ${educationTypeColorCode[props.tyyppi] ||
-      educationTypeColorCode.muu}`,
+    borderTop: `5px solid ${
+      educationTypeColorCode[props.tyyppi] || educationTypeColorCode.muu
+    }`,
     marginBottom: '12px',
   }),
   icon: {
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ToteutusCard = (props) => {
+export const ToteutusCard = (props) => {
   const classes = useStyles(props);
   const {
     heading,
@@ -148,5 +149,3 @@ const ToteutusCard = (props) => {
     </Paper>
   );
 };
-
-export default ToteutusCard;

@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import Spacer from '#/src/components/common/Spacer';
 import { useTranslation } from 'react-i18next';
 import { Localizer as l } from '#/src/tools/Utils';
-import ToteutusCard from '#/src/components/common/ToteutusCard';
+import { ToteutusCard } from '#/src/components/common/ToteutusCard';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles({

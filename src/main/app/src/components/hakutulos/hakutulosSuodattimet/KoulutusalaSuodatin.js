@@ -14,7 +14,7 @@ import {
   useMediaQuery,
 } from '@material-ui/core';
 import { ExpandMore, IndeterminateCheckBoxOutlined } from '@material-ui/icons';
-import SummaryContent from './SummaryContent';
+import { SummaryContent } from './SummaryContent';
 import {
   SuodatinAccordion,
   SuodatinAccordionSummary,

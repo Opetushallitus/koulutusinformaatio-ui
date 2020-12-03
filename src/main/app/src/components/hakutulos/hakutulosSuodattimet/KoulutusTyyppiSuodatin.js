@@ -23,7 +23,7 @@ import {
   SuodatinAccordionSummary,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
-import SummaryContent from './SummaryContent';
+import { SummaryContent } from './SummaryContent';
 import { Localizer as l } from '#/src/tools/Utils';
 import { FILTER_TYPES } from '#/src/constants';
 import { colors } from '#/src/colors';

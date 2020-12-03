@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import _ from 'lodash';
 import Markdown from 'markdown-to-jsx';
 import Kortti from './kortti/Kortti';
-import Uutiset from './uutinen/Uutiset';
+import { Uutiset } from './uutinen/Uutiset';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';

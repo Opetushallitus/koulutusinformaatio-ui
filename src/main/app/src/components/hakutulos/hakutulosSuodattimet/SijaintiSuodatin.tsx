@@ -22,8 +22,9 @@ import {
   setSelectedSijainti,
 } from '#/src/store/reducers/hakutulosSlice';
 import {
-  getIsLoading,
+  getAPIRequestParams,
   getSijaintiFilterProps,
+  getIsLoading,
 } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   SuodatinCheckbox,
@@ -32,10 +33,9 @@ import {
   SuodatinAccordionSummary,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
-import SummaryContent from './SummaryContent';
+import { SummaryContent } from './SummaryContent';
 import { colors } from '#/src/colors';
 import { Common as C, Localizer as l } from '#/src/tools/Utils';
-import { useQueryParams } from '#/src/hooks';
 
 const useStyles = makeStyles(() => ({
   buttonLabel: {
@@ -46,33 +46,42 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const customStyles = {
-  control: (provided, state) => ({
+type Styles = React.ComponentProps<typeof Select>['styles'];
+const customStyles: Styles = {
+  control: (provided) => ({
     ...provided,
     minHeight: '34px',
     borderRadius: '2px',
     cursor: 'text',
   }),
-  indicatorSeparator: (provided, state) => ({
+  indicatorSeparator: (provided) => ({
     ...provided,
     display: 'none',
   }),
-  indicatorContainer: (provided, state) => ({
+  indicatorsContainer: (provided) => ({
     ...provided,
     padding: '6px',
   }),
 };
 
 // Overridden react-select components
-const DropdownIndicator = (props) => (
+
+const LoadingIndicator = () => <CircularProgress size={25} color="inherit" />;
+
+type RSDropdownIndicatorProps = React.ComponentProps<typeof components.DropdownIndicator>;
+const DropdownIndicator = (props: RSDropdownIndicatorProps) => (
   <components.DropdownIndicator {...props}>
     <SearchOutlined />
   </components.DropdownIndicator>
 );
 
-const LoadingIndicator = () => <CircularProgress size={25} color="inherit" />;
-
-const Option = ({ data, innerProps, isFocused }) => (
+type RSOptionProps = React.ComponentProps<typeof components.Option>;
+type OptionProps = {
+  data?: { label: string; checked: boolean };
+  innerProps: RSOptionProps['innerProps'];
+  isFocused: boolean;
+};
+const Option = ({ data, innerProps, isFocused }: OptionProps) => (
   // innerProps contain interaction functions e.g. onClick
   <ListItem dense button {...innerProps} selected={isFocused}>
     <SuodatinCheckbox
@@ -85,14 +94,41 @@ const Option = ({ data, innerProps, isFocused }) => (
   </ListItem>
 );
 
-const isChecked = (arr, value) => arr.some((o) => o.id === value.id);
+type Translateable = { fi?: string; sv?: string; en?: string };
+type MaakuntaTuple = [string, { count: number; nimi: Translateable }];
+type Maakunta = {
+  id: string;
+  name: Translateable;
+  isMaakunta: boolean;
+  value?: string;
+  label?: string;
+};
+
+const isChecked = (arr: Maakunta[], value: Maakunta) =>
+  arr.some((o) => o.id === value.id);
+
+type SijaintiSuodatinProps = {
+  expanded?: boolean;
+  elevation?: number;
+  displaySelected?: boolean;
+  summaryHidden?: boolean;
+};
+
+type SijaintiFilterProps = {
+  firstFiveMaakunnat: MaakuntaTuple[];
+  restMaakunnat: MaakuntaTuple[];
+  selectedSijainnit: Maakunta[];
+  searchHitsSijainnit: Maakunta[];
+  checkedMaakunnat: Maakunta[];
+  selectedSijainnitStr: string;
+};
 
 export const SijaintiSuodatin = ({
   expanded,
   elevation,
   displaySelected,
   summaryHidden = false,
-}) => {
+}: SijaintiSuodatinProps) => {
   const history = useHistory();
   const { t } = useTranslation();
   const classes = useStyles();
@@ -105,16 +141,19 @@ export const SijaintiSuodatin = ({
     searchHitsSijainnit = [],
     checkedMaakunnat,
     selectedSijainnitStr = '',
-  } = sijaintiFilterProps;
-  const apiRequestParams = useQueryParams();
+  }: SijaintiFilterProps = sijaintiFilterProps as any;
+  const apiRequestParams = useSelector(getAPIRequestParams);
   const dispatch = useDispatch();
 
   const [showRest, setShowRest] = useState(false);
 
-  const handleMaakuntaToggle = (maakuntaArr) => () => {
+  console.log(firstFiveMaakunnat, restMaakunnat, selectedSijainnit);
+
+  const handleMaakuntaToggle = (maakuntaArr: MaakuntaTuple) => () => {
     const maakuntaFilterObj = {
       id: maakuntaArr[0],
       name: maakuntaArr[1]?.nimi,
+      isMaakunta: true,
     };
     const newValitutMaakunnat = [...checkedMaakunnat];
     const currentIndex = checkedMaakunnat.findIndex(
@@ -130,7 +169,7 @@ export const SijaintiSuodatin = ({
     setCheckedMaakunnat(newValitutMaakunnat);
   };
 
-  const handleSelectedSijannitToggle = (selected) => {
+  const handleSelectedSijannitToggle = (selected: Maakunta) => {
     if (selected?.isMaakunta) {
       return handleSelectedSijaintiIsMaakunta(selected);
     }
@@ -147,19 +186,20 @@ export const SijaintiSuodatin = ({
 
     dispatch(setSelectedSijainti({ newSelectedSijainnit }));
     search.sijainti = selectedSijainnitStr;
-    search.kpage = 1;
-    search.opage = 1;
+    search.kpage = '1';
+    search.opage = '1';
     history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
     dispatch(clearPaging());
     dispatch(searchAll({ ...apiRequestParams, sijainti: selectedSijainnitStr }));
   };
 
-  const handleSelectedSijaintiIsMaakunta = (checked) => {
+  const handleSelectedSijaintiIsMaakunta = (checked: Maakunta) => {
     const wasChecked = checkedMaakunnat.some(({ id }) => id === checked.id);
 
     const maakuntaFilterObj = {
       id: checked?.id,
       name: checked?.name,
+      isMaakunta: true,
     };
     const newValitutMaakunnat = wasChecked
       ? checkedMaakunnat.filter(({ id }) => id !== checked.id)
@@ -168,15 +208,15 @@ export const SijaintiSuodatin = ({
     setCheckedMaakunnat(newValitutMaakunnat);
   };
 
-  const setCheckedMaakunnat = (newCheckedOrSelectedMaakunnat) => {
+  const setCheckedMaakunnat = (newCheckedOrSelectedMaakunnat: Maakunta[]) => {
     const newCheckedOrSelectedSijainnitStr = newCheckedOrSelectedMaakunnat
       .map(({ id }) => id)
       .concat(selectedSijainnit.map(({ id }) => id))
       .join(',');
     const search = qs.parse(history.location.search);
     search.sijainti = newCheckedOrSelectedSijainnitStr;
-    search.kpage = 1;
-    search.opage = 1;
+    search.kpage = '1';
+    search.opage = '1';
     history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
     dispatch(setSijainti({ newCheckedOrSelectedMaakunnat }));
     dispatch(clearPaging());
@@ -191,16 +231,22 @@ export const SijaintiSuodatin = ({
         label: t('haku.kaupungit-tai-kunnat'),
         options: _fp.compose([
           _fp.sortBy('label'),
-          _fp.map((h) => ({ ...h, checked: isChecked(selectedSijainnit, h) })),
-          _fp.filter((h) => !h.isMaakunta),
+          _fp.map<Maakunta, Maakunta>((h) => ({
+            ...h,
+            checked: isChecked(selectedSijainnit, h),
+          })),
+          _fp.filter<Maakunta>((h) => !h.isMaakunta),
         ])(searchHitsSijainnit),
       },
       {
         label: t('haku.maakunnat'),
         options: _fp.compose([
           _fp.sortBy('label'),
-          _fp.map((h) => ({ ...h, checked: isChecked(checkedMaakunnat, h) })),
-          _fp.filter((h) => h.isMaakunta),
+          _fp.map<Maakunta, Maakunta>((h) => ({
+            ...h,
+            checked: isChecked(checkedMaakunnat, h),
+          })),
+          _fp.filter<Maakunta>((h) => h.isMaakunta),
         ])(searchHitsSijainnit),
       },
     ],
@@ -249,23 +295,22 @@ export const SijaintiSuodatin = ({
           {!summaryHidden && (
             <Grid item>
               <List style={{ width: '100%' }}>
-                {firstFiveMaakunnat.map((maakuntaArray) => {
-                  const labelId = `educationtype-outerlist-label-${maakuntaArray[0]}`;
+                {firstFiveMaakunnat.map((maakuntaTuple) => {
+                  const [id, data] = maakuntaTuple;
+                  const labelId = `educationtype-outerlist-label-${id}`;
                   return (
                     <ListItem
-                      key={maakuntaArray[0]}
-                      id={maakuntaArray[0]}
+                      key={id}
+                      id={id}
                       dense
                       button
-                      onClick={handleMaakuntaToggle(maakuntaArray)}>
+                      onClick={handleMaakuntaToggle(maakuntaTuple)}>
                       <ListItemIcon>
                         <SuodatinCheckbox
                           edge="start"
-                          checked={
-                            checkedMaakunnat.findIndex(
-                              ({ id }) => id === maakuntaArray[0]
-                            ) !== -1
-                          }
+                          checked={checkedMaakunnat.some(
+                            ({ id: checkedId }) => checkedId === id
+                          )}
                           tabIndex={-1}
                           disableRipple
                           inputProps={{ 'aria-labelledby': labelId }}
@@ -276,8 +321,8 @@ export const SijaintiSuodatin = ({
                         id={labelId}
                         primary={
                           <Grid container justify="space-between" wrap="nowrap">
-                            <Grid item>{l.localize(maakuntaArray[1])}</Grid>
-                            <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
+                            <Grid item>{l.localize(data)}</Grid>
+                            <Grid item>{`(${data?.count})`}</Grid>
                           </Grid>
                         }
                       />
@@ -285,23 +330,22 @@ export const SijaintiSuodatin = ({
                   );
                 })}
                 {showRest &&
-                  restMaakunnat.map((maakuntaArray) => {
-                    const labelId = `educationtype-outerlist-label-${maakuntaArray[0]}`;
+                  restMaakunnat.map((maakuntaTuple) => {
+                    const [id, data] = maakuntaTuple;
+                    const labelId = `educationtype-outerlist-label-${id}`;
                     return (
                       <ListItem
-                        key={maakuntaArray[0]}
-                        id={maakuntaArray[0]}
+                        key={id}
+                        id={id}
                         dense
                         button
-                        onClick={handleMaakuntaToggle(maakuntaArray)}>
+                        onClick={handleMaakuntaToggle(maakuntaTuple)}>
                         <ListItemIcon>
                           <SuodatinCheckbox
                             edge="start"
-                            checked={
-                              checkedMaakunnat.findIndex(
-                                ({ id }) => id === maakuntaArray[0]
-                              ) !== -1
-                            }
+                            checked={checkedMaakunnat.some(
+                              ({ id: checkedId }) => checkedId === id
+                            )}
                             tabIndex={-1}
                             disableRipple
                             inputProps={{ 'aria-labelledby': labelId }}
@@ -311,8 +355,8 @@ export const SijaintiSuodatin = ({
                           id={labelId}
                           primary={
                             <Grid container justify="space-between" wrap="nowrap">
-                              <Grid item>{l.localize(maakuntaArray[1])}</Grid>
-                              <Grid item>{`(${maakuntaArray[1]?.count})`}</Grid>
+                              <Grid item>{l.localize(data)}</Grid>
+                              <Grid item>{`(${data?.count})`}</Grid>
                             </Grid>
                           }
                         />
