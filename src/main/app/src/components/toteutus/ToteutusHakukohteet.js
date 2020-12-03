@@ -70,7 +70,7 @@ const HakuCardGrid = (props) => {
                 item
                 xs={12}
                 lg={6}
-                style={{ maxWidth: '624px', height: '390px' }}>
+                style={{ maxWidth: '624px', height: '100%' }}>
                 <Paper
                   style={{
                     width: '100%',
