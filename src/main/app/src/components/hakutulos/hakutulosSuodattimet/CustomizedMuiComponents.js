@@ -41,6 +41,9 @@ export const SuodatinAccordion = withStyles({
 export const SuodatinAccordionSummary = withStyles({
   root: {
     minHeight: '32px !important',
+    '@media (max-width:960px)': {
+      padding: '0 !important',
+    },
   },
   content: {
     margin: '0 !important',
@@ -49,7 +52,12 @@ export const SuodatinAccordionSummary = withStyles({
 
 export const SuodatinAccordionDetails = withStyles({
   root: {
-    padding: '0 24px 16px 24px',
+    '@media (min-width:960px)': {
+      padding: '0 24px 16px 24px',
+    },
+    '@media (max-width:960px)': {
+      padding: '0 !important',
+    },
   },
 })(AccordionDetails);
 

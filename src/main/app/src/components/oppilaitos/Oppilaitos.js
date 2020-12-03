@@ -11,7 +11,7 @@ import { getOppilaitosProps } from '#/src/store/reducers/oppilaitosSliceSelector
 import { colors } from '#/src/colors';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import Murupolku from '#/src/components/common/Murupolku';
-import LoadingCircle from '#/src/components/common/LoadingCircle';
+import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import NotFound from '#/src/NotFound';
 import OppilaitosinfoGrid from './OppilaitosinfoGrid';
 import TarjontaList from './TarjontaList';
