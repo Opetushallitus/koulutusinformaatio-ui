@@ -5,6 +5,7 @@ import TimelapseIcon from '@material-ui/icons/Timelapse';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import FlagOutlinedIcon from '@material-ui/icons/FlagOutlined';
 import HourglassEmptyOutlinedIcon from '@material-ui/icons/HourglassEmptyOutlined';
+import InfoOutlined from '@material-ui/icons/InfoOutlined';
 import EuroIcon from '@material-ui/icons/Euro';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import ScheduleIcon from '@material-ui/icons/Schedule';
@@ -13,6 +14,10 @@ import { makeStyles } from '@material-ui/styles';
 import { Localizer as l } from '#/src/tools/Utils';
 import { format } from 'date-fns';
 import { KOULUTUS_TYYPPI } from '#/src/constants';
+import getUrls from 'get-urls';
+import { nanoid } from 'nanoid';
+import { Typography, Box } from '@material-ui/core';
+import LocalizedLink from '../common/LocalizedLink';
 
 const useStyles = makeStyles((theme) => ({
   koulutusInfoGridIcon: {
@@ -38,7 +43,7 @@ const hasNimike = (tyyppi) =>
   tyyppi !== KOULUTUS_TYYPPI.AMM_TUTKINNON_OSA &&
   tyyppi !== KOULUTUS_TYYPPI.AMM_OSAAMISALA;
 
-const ToteutusInfoGrid = (props) => {
+export const ToteutusInfoGrid = (props) => {
   const classes = useStyles();
   const {
     koulutusTyyppi,
@@ -48,6 +53,7 @@ const ToteutusInfoGrid = (props) => {
     aloitus,
     suunniteltuKestoVuodet,
     suunniteltuKestoKuukaudet,
+    suunniteltuKestoKuvaus,
     opetusaika,
     opetustapa,
     maksullisuus,
@@ -64,6 +70,30 @@ const ToteutusInfoGrid = (props) => {
     suunniteltuKestoVuodet,
     suunniteltuKestoKuukaudet
   );
+  const SuunniteltuKestoKuvausWithLinks = () => {
+    const strippedFromUrlsKuvaus = l
+      .localize(suunniteltuKestoKuvaus)
+      .replace(/(?:https?|ftp):\/\/[\n\S]+/g, '')
+      .trim();
+    const linksArray = [];
+    getUrls(l.localize(suunniteltuKestoKuvaus)).forEach((link) => {
+      linksArray.push(
+        <Typography component="p" variant="body2" key={nanoid()}>
+          <LocalizedLink target="_blank" href={link}>
+            {link}
+          </LocalizedLink>
+        </Typography>
+      );
+    });
+    return (
+      <>
+        <Typography component="h5" variant="body2">
+          {strippedFromUrlsKuvaus}
+        </Typography>
+        {linksArray.length > 0 && <Box style={{ marginTop: '5px' }}>{linksArray}</Box>}
+      </>
+    );
+  };
   const aloitusString = aloitus[0]
     ? format(new Date(aloitus[1]), 'd.M.y')
     : `${l.localize(aloitus[2])} ${aloitus[3]}`;
@@ -105,6 +135,10 @@ const ToteutusInfoGrid = (props) => {
       icon: <ScheduleIcon className={classes.koulutusInfoGridIcon} />,
       title: t('koulutus.suunniteltu-kesto'),
       text: kestoString,
+      modalData: {
+        icon: <InfoOutlined />,
+        text: <SuunniteltuKestoKuvausWithLinks />,
+      },
     },
     {
       icon: <FlagOutlinedIcon className={classes.koulutusInfoGridIcon} />,
@@ -135,5 +169,3 @@ const ToteutusInfoGrid = (props) => {
 
   return <InfoGrid heading={t('koulutus.tiedot')} gridData={perustiedotData} />;
 };
-
-export default ToteutusInfoGrid;

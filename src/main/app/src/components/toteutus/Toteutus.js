@@ -3,7 +3,7 @@ import ContentWrapper from '../common/ContentWrapper';
 import { Box, Typography, makeStyles, Grid } from '@material-ui/core';
 import { HashLink } from 'react-router-hash-link';
 import { colors } from '#/src/colors';
-import ToteutusInfoGrid from './ToteutusInfoGrid';
+import { ToteutusInfoGrid } from './ToteutusInfoGrid';
 import ToteutusHakukohteet from './ToteutusHakukohteet';
 import clsx from 'clsx';
 import { useParams } from 'react-router-dom';
@@ -182,6 +182,7 @@ const Toteutus = () => {
             ]}
             suunniteltuKestoVuodet={opetus?.suunniteltuKestoVuodet}
             suunniteltuKestoKuukaudet={opetus?.suunniteltuKestoKuukaudet}
+            suunniteltuKestoKuvaus={opetus?.suunniteltuKestoKuvaus}
             opetusaika={opetus?.opetusaika}
             opetustapa={opetus?.opetustapa}
             maksullisuus={opetus?.onkoMaksullinen && opetus?.maksunMaara}
