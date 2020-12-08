@@ -173,6 +173,7 @@ const Toteutus = () => {
             koulutusTyyppi={toteutus?.metadata?.tyyppi}
             nimikkeet={toteutus?.metadata?.ammattinimikkeet}
             kielet={opetus?.opetuskieli}
+            opetuskieletKuvaus={opetus?.opetuskieletKuvaus}
             laajuus={[koulutus?.opintojenLaajuus, koulutus?.opintojenLaajuusYksikkö]}
             aloitus={[
               opetus?.koulutuksenTarkkaAlkamisaika,
@@ -184,9 +185,13 @@ const Toteutus = () => {
             suunniteltuKestoKuukaudet={opetus?.suunniteltuKestoKuukaudet}
             suunniteltuKestoKuvaus={opetus?.suunniteltuKestoKuvaus}
             opetusaika={opetus?.opetusaika}
+            opetusaikaKuvaus={opetus?.opetusaikaKuvaus}
             opetustapa={opetus?.opetustapa}
+            opetustapaKuvaus={opetus?.opetustapaKuvaus}
             maksullisuus={opetus?.onkoMaksullinen && opetus?.maksunMaara}
+            maksullisuusKuvaus={opetus?.maksullisuusKuvaus}
             apuraha={opetus?.onkoStipendia && opetus?.stipendinMaara}
+            apurahaKuvaus={opetus?.stipendinKuvaus}
           />
         </Box>
         {toteutus?.hakuAukiType && (

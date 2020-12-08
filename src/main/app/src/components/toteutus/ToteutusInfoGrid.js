@@ -14,8 +14,8 @@ import { makeStyles } from '@material-ui/styles';
 import { Localizer as l } from '#/src/tools/Utils';
 import { format } from 'date-fns';
 import { KOULUTUS_TYYPPI } from '#/src/constants';
-import getUrls from 'get-urls';
-import { nanoid } from 'nanoid';
+import urlRegexSafe from 'url-regex-safe';
+import _ from 'lodash';
 import { Typography, Box } from '@material-ui/core';
 import LocalizedLink from '../common/LocalizedLink';
 
@@ -49,15 +49,20 @@ export const ToteutusInfoGrid = (props) => {
     koulutusTyyppi,
     nimikkeet,
     kielet,
+    opetuskieletKuvaus,
     laajuus,
     aloitus,
     suunniteltuKestoVuodet,
     suunniteltuKestoKuukaudet,
     suunniteltuKestoKuvaus,
     opetusaika,
+    opetusaikaKuvaus,
     opetustapa,
+    opetustapaKuvaus,
     maksullisuus,
+    maksullisuusKuvaus,
     apuraha,
+    apurahaKuvaus,
   } = props;
   const { t } = useTranslation();
 
@@ -70,27 +75,23 @@ export const ToteutusInfoGrid = (props) => {
     suunniteltuKestoVuodet,
     suunniteltuKestoKuukaudet
   );
-  const SuunniteltuKestoKuvausWithLinks = () => {
-    const strippedFromUrlsKuvaus = l
-      .localize(suunniteltuKestoKuvaus)
-      .replace(/(?:https?|ftp):\/\/[\n\S]+/g, '')
-      .trim();
-    const linksArray = [];
-    getUrls(l.localize(suunniteltuKestoKuvaus)).forEach((link) => {
-      linksArray.push(
-        <Typography component="p" variant="body2" key={nanoid()}>
-          <LocalizedLink target="_blank" href={link}>
-            {link}
-          </LocalizedLink>
-        </Typography>
-      );
-    });
+  const KuvausWithLinks = ({ kuvausObj }) => {
+    const kuvaus = l.localize(kuvausObj);
+    const kuvausWithoutUrls = kuvaus.replaceAll(urlRegexSafe(), '').trim();
+    const linksArray = kuvaus?.match(urlRegexSafe()) || [];
+    const KuvausLinks = linksArray?.map((link) => (
+      <Typography component="p" variant="body2" key={_.uniqueId('link_')}>
+        <LocalizedLink target="_blank" href={link}>
+          {link}
+        </LocalizedLink>
+      </Typography>
+    ));
     return (
       <>
         <Typography component="h5" variant="body2">
-          {strippedFromUrlsKuvaus}
+          {kuvausWithoutUrls}
         </Typography>
-        {linksArray.length > 0 && <Box style={{ marginTop: '5px' }}>{linksArray}</Box>}
+        {linksArray?.length > 0 && <Box style={{ marginTop: '5px' }}>{KuvausLinks}</Box>}
       </>
     );
   };
@@ -125,6 +126,12 @@ export const ToteutusInfoGrid = (props) => {
       icon: <ChatBubbleOutlineIcon className={classes.koulutusInfoGridIcon} />,
       title: t('toteutus.opetuskieli'),
       text: kieliString,
+      modalData: {
+        icon: <InfoOutlined />,
+        text: !_.isEmpty(opetuskieletKuvaus) && (
+          <KuvausWithLinks kuvausObj={opetuskieletKuvaus} />
+        ),
+      },
     },
     {
       icon: <TimelapseIcon className={classes.koulutusInfoGridIcon} />,
@@ -137,7 +144,9 @@ export const ToteutusInfoGrid = (props) => {
       text: kestoString,
       modalData: {
         icon: <InfoOutlined />,
-        text: <SuunniteltuKestoKuvausWithLinks />,
+        text: !_.isEmpty(suunniteltuKestoKuvaus) && (
+          <KuvausWithLinks kuvausObj={suunniteltuKestoKuvaus} />
+        ),
       },
     },
     {
@@ -149,21 +158,43 @@ export const ToteutusInfoGrid = (props) => {
       icon: <HourglassEmptyOutlinedIcon className={classes.koulutusInfoGridIcon} />,
       title: t('toteutus.opetusaika'),
       text: opetusAikaString,
+      modalData: {
+        icon: <InfoOutlined />,
+        text: !_.isEmpty(opetusaikaKuvaus) && (
+          <KuvausWithLinks kuvausObj={opetusaikaKuvaus} />
+        ),
+      },
     },
     {
       icon: <MenuBookIcon className={classes.koulutusInfoGridIcon} />,
       title: t('toteutus.opetustapa'),
       text: opetustapaString,
+      modalData: {
+        icon: <InfoOutlined />,
+        text: !_.isEmpty(opetustapaKuvaus) && (
+          <KuvausWithLinks kuvausObj={opetustapaKuvaus} />
+        ),
+      },
     },
     {
       icon: <EuroIcon className={classes.koulutusInfoGridIcon} />,
       title: t('toteutus.maksullisuus'),
       text: maksullisuusString,
+      modalData: {
+        icon: <InfoOutlined />,
+        text: !_.isEmpty(maksullisuusKuvaus) && (
+          <KuvausWithLinks kuvausObj={maksullisuusKuvaus} />
+        ),
+      },
     },
     {
       icon: 'ApurahaIcon',
       title: t('toteutus.apuraha'),
       text: apurahaString,
+      modalData: {
+        icon: <InfoOutlined />,
+        text: !_.isEmpty(apurahaKuvaus) && <KuvausWithLinks kuvausObj={apurahaKuvaus} />,
+      },
     }
   );
 
