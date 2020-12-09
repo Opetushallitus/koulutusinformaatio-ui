@@ -26,7 +26,15 @@ const SubHeading = ({ children }) => {
   );
 };
 
-const Tilaisuus = ({ alkaa, paattyy, lisatietoja, osoite, postinumero, index }) => {
+const Tilaisuus = ({
+  alkaa,
+  paattyy,
+  lisatietoja,
+  osoite,
+  postinumero,
+  index,
+  jarjestamispaikka,
+}) => {
   const { t } = useTranslation();
   return (
     <Grid style={{ padding: '10px 20px' }} container key={`koetilaisuus-${index}`}>
@@ -45,7 +53,8 @@ const Tilaisuus = ({ alkaa, paattyy, lisatietoja, osoite, postinumero, index }) 
       {postinumero ? (
         <Grid item xs={12}>
           <Box py={1}>
-            <SubHeading>{t('valintaperuste.osoite')}</SubHeading>
+            <SubHeading>{t('valintaperuste.jarjestyspaikka')}</SubHeading>
+            <Typography variant="body1">{l.localize(jarjestamispaikka)}</Typography>
             <Typography variant="body1">
               {l.localizeOsoite(osoite, postinumero)}
             </Typography>
@@ -66,8 +75,8 @@ const Tilaisuus = ({ alkaa, paattyy, lisatietoja, osoite, postinumero, index }) 
 
 export const ValintakokeetSisallysluettelo = (valintakokeet) => (Lnk) => {
   return !_.isEmpty(valintakokeet)
-    ? valintakokeet.map(({ tyyppi: { nimi } }, index) => {
-        return Lnk(l.localize(nimi), index + 1, true);
+    ? valintakokeet.map(({ nimi }, index) => {
+        return Lnk(l.localize(nimi), index + 1, false);
       })
     : null;
 };
@@ -90,6 +99,7 @@ export const Valintakokeet = ({ valintakokeet }) => {
         return (
           <div key={`valintakoe-${index}`}>
             <Card
+              id={`${toId(l.localize(nimi))}`}
               elevation={0}
               style={{
                 backgroundColor: colors.veryLightGrey,
@@ -97,9 +107,7 @@ export const Valintakokeet = ({ valintakokeet }) => {
                 marginBottom: '20px',
               }}>
               <CardContent>
-                <Typography id={`${toId(localizedTyyppi)}-${index + 1}`} variant="body1">
-                  {localizedTyyppi}
-                </Typography>
+                <Typography variant="body1">{localizedTyyppi}</Typography>
                 <Typography className={classes.valintakoeHeader} variant="h4">
                   {l.localize(nimi)}
                 </Typography>
@@ -126,6 +134,7 @@ export const Valintakokeet = ({ valintakokeet }) => {
                     (
                       {
                         lisatietoja,
+                        jarjestamispaikka,
                         osoite: { osoite, postinumero },
                         aika: { alkaa, paattyy },
                       },
@@ -136,6 +145,7 @@ export const Valintakokeet = ({ valintakokeet }) => {
                         content: (
                           <Tilaisuus
                             osoite={osoite}
+                            jarjestamispaikka={jarjestamispaikka}
                             lisatietoja={lisatietoja}
                             postinumero={postinumero}
                             alkaa={alkaa}
