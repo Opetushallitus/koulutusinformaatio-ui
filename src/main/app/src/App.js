@@ -78,49 +78,58 @@ const KoulutusHakuBar = () => (
   </div>
 );
 
-const TranslatedRoutes = ({ match }) => {
+const TranslatedRoutes = ({ match, location }) => {
   const { i18n } = useTranslation();
   const selectedLanguage = match.params.lng;
+
   const { contentfulStore } = useStores();
   useEffect(() => {
-    if (selectedLanguage && supportedLanguages.includes(selectedLanguage)) {
+    if (supportedLanguages.includes(selectedLanguage)) {
       contentfulStore.reset(selectedLanguage);
       i18n.changeLanguage(selectedLanguage);
     }
   }, [i18n, selectedLanguage, contentfulStore]);
+
+  if (!supportedLanguages.includes(selectedLanguage)) {
+    const newLocation = {
+      ...location,
+      pathname: '/fi' + location.pathname,
+    };
+    return <Redirect to={newLocation} />;
+  }
   return supportedLanguages.includes(selectedLanguage) ? (
     <Switch>
       <Route exact path="/:lng">
         <Etusivu />
       </Route>
-      <Route path="/:lng/sisaltohaku/">
+      <Route exact path="/:lng/sisaltohaku/">
         <Sisaltohaku />
       </Route>
-      <Route path="/:lng/haku/:keyword?">
+      <Route exact path="/:lng/haku/:keyword?">
         <KoulutusHakuBar />
         <Haku />
       </Route>
-      <Route path="/:lng/koulutus/:oid">
+      <Route exact path="/:lng/koulutus/:oid">
         <KoulutusHakuBar />
         <Koulutus />
       </Route>
-      <Route path="/:lng/oppilaitos/:oid">
+      <Route exact path="/:lng/oppilaitos/:oid">
         <KoulutusHakuBar />
         <Oppilaitos />
       </Route>
-      <Route path="/:lng/oppilaitososa/:oid">
+      <Route exact path="/:lng/oppilaitososa/:oid">
         <KoulutusHakuBar />
         <Oppilaitos oppilaitosOsa />
       </Route>
-      <Route path="/:lng/toteutus/:oid">
+      <Route exact path="/:lng/toteutus/:oid">
         <KoulutusHakuBar />
         <Toteutus />
       </Route>
-      <Route path="/:lng/sivu/:id">
+      <Route exact path="/:lng/sivu/:id">
         <KoulutusHakuBar />
         <SivuRouter />
       </Route>
-      <Route path="/:lng/hakukohde/:hakukohdeOid/valintaperuste/:valintaperusteOid">
+      <Route exact path="/:lng/hakukohde/:hakukohdeOid/valintaperuste/:valintaperusteOid">
         <KoulutusHakuBar />
         <Valintaperusteet />
       </Route>
@@ -133,7 +142,6 @@ const TranslatedRoutes = ({ match }) => {
 
 const App = () => {
   const classes = useStyles();
-  const { i18n } = useTranslation();
   const contentfulStore = konfoStore.contentfulStore;
 
   const matches = useMediaQuery('(max-width: 600px)');
@@ -146,16 +154,6 @@ const App = () => {
     setMenuVisible(false);
   };
 
-  const main = (
-    <React.Fragment>
-      <Switch>
-        <Redirect exact from="/" to={`/${i18n.language}/`} />
-        <Route path="/:lng" component={TranslatedRoutes} />
-      </Switch>
-      <Palvelut />
-      <Footer />
-    </React.Fragment>
-  );
   return (
     <Provider contentfulStore={contentfulStore}>
       <MuiThemeProvider theme={theme}>
@@ -169,7 +167,9 @@ const App = () => {
               className={clsx(matches ? classes.smContent : classes.content, {
                 [matches ? classes.smContentShift : classes.contentShift]: menuVisible,
               })}>
-              {main}
+              <Route path="/:lng?" component={TranslatedRoutes} />
+              <Palvelut />
+              <Footer />
             </main>
           </div>
           <PalautePopup />
