@@ -13,8 +13,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import { Grid, withStyles } from '@material-ui/core';
-import { Localizer as l, sanitizedHTMLParser, toId } from '#/src/tools/Utils';
+import { Localizer as l, toId } from '#/src/tools/Utils';
 import { colors } from '#/src/colors';
+import { LocalizedHTML } from './LocalizedHTML';
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
@@ -36,8 +37,11 @@ const SubHeaderCell = withStyles((theme) => ({
     fontWeight: 'bold',
   },
 }))(TableCell);
+
 const Headers = ['h1', 'h2', 'h3', 'h4', 'h5'];
+
 const isHeader = (tag) => Headers.includes(tag);
+
 const tagHeaders = (node) => {
   if (isHeader(node.name)) {
     const text = node.children[0].data;
@@ -54,13 +58,9 @@ const tagHeaders = (node) => {
 };
 
 const Teksti = ({ data }) => {
-  const lang = l.getLanguage();
-  const html = data[lang] || _.first(Object.values(data));
   return (
     <Grid item xs={12} sm={12} md={12}>
-      {sanitizedHTMLParser(html, {
-        transform: tagHeaders,
-      })}
+      <LocalizedHTML data={data} transform={tagHeaders} />
     </Grid>
   );
 };
@@ -169,17 +169,11 @@ export const KuvausSisallysluettelo = (kuvaus) => (Lnk) => {
       return null;
     }
   };
-  const lang = l.getLanguage();
-  const html = kuvaus[lang] || _.first(Object.values(kuvaus));
-  return sanitizedHTMLParser(html, {
-    transform: onlyHeaders,
-  });
+  return <LocalizedHTML data={kuvaus} transform={onlyHeaders} />;
 };
 
 export const Kuvaus = ({ kuvaus, valintatavat }) => {
   const { t } = useTranslation();
-  const lang = l.getLanguage();
-  const html = kuvaus[lang] || _.first(Object.values(kuvaus));
 
   return (
     <>
@@ -190,9 +184,7 @@ export const Kuvaus = ({ kuvaus, valintatavat }) => {
               {t('valintaperuste.kuvaus')}
             </Typography>
           </Box>
-          {sanitizedHTMLParser(html, {
-            transform: tagHeaders,
-          })}
+          <LocalizedHTML data={kuvaus} transform={tagHeaders} />
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
           {valintatavat.map(Valintatapa)}

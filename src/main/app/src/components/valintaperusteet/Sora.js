@@ -1,7 +1,7 @@
 import React from 'react';
-import _ from 'lodash';
 import { Typography, Box, Grid } from '@material-ui/core';
-import { Localizer as l, sanitizedHTMLParser, toId } from '#/src/tools/Utils';
+import { Localizer as l, toId } from '#/src/tools/Utils';
+import { LocalizedHTML } from './LocalizedHTML';
 
 const Headers = ['h1', 'h2', 'h3', 'h4', 'h5'];
 const isHeader = (tag) => Headers.includes(tag);
@@ -21,9 +21,6 @@ const tagHeaders = (node) => {
 };
 
 export const Sora = ({ metadata: { kuvaus }, nimi }) => {
-  const lang = l.getLanguage();
-  const html = kuvaus[lang] || _.first(Object.values(kuvaus));
-
   return (
     <>
       <Grid container spacing={2} justify="flex-start" alignItems="flex-start">
@@ -33,9 +30,7 @@ export const Sora = ({ metadata: { kuvaus }, nimi }) => {
               {l.localize(nimi)}
             </Typography>
           </Box>
-          {sanitizedHTMLParser(html, {
-            transform: tagHeaders,
-          })}
+          <LocalizedHTML data={kuvaus} transform={tagHeaders} />
         </Grid>
       </Grid>
     </>
