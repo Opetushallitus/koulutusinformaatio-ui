@@ -2,23 +2,12 @@ import React from 'react';
 import _ from 'lodash';
 import { Box, Card, CardContent, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import {
-  formatDateString,
-  Localizer as l,
-  sanitizedHTMLParser,
-  toId,
-} from '#/src/tools/Utils';
+import { formatDateString, Localizer as l, toId } from '#/src/tools/Utils';
 import { colors } from '#/src/colors';
 import Accordion from '#/src/components/common/Accordion';
+import { LocalizedHTML } from './LocalizedHTML';
 
-const useStyles = makeStyles((theme) => ({
-  html: {
-    ...theme.typography.body1,
-    '& p': {
-      marginTop: '8px',
-      marginBottom: '20px',
-    },
-  },
+const useStyles = makeStyles(() => ({
   valintakoeHeader: {
     fontSize: '20px',
   },
@@ -27,15 +16,6 @@ const useStyles = makeStyles((theme) => ({
     color: colors.grey,
   },
 }));
-
-const LocalizedHTML = ({ data, defaultValue }) => {
-  const classes = useStyles();
-  return (
-    <div className={classes.html}>
-      {sanitizedHTMLParser(l.localize(data)) || defaultValue}
-    </div>
-  );
-};
 
 const SubHeading = ({ children }) => {
   const classes = useStyles();

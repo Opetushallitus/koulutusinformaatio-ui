@@ -19,14 +19,14 @@ import {
 } from '#/src/api/konfoApi';
 
 import { Sisallysluettelo } from './Sisallysluettelo';
-import { Lomake } from './Lomake';
+import { HakukohdeKortti } from './HakukohdeKortti';
 import { Paluu } from './Paluu';
 import { Liitteet, LiitteetSisallysluettelo } from './Liitteet';
 import { Sora } from './Sora';
 import { Valintakokeet, ValintakokeetSisallysluettelo } from './Valintakokeet';
 import { Kuvaus, KuvausSisallysluettelo } from './Kuvaus';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
     paddingLeft: '10px',
     paddingRight: '10px',
@@ -118,7 +118,11 @@ export const ValintaperustePage = () => {
               </Typography>
             </Box>
             <Box pb={2}>
-              <Lomake haku={haku} hakukohde={hakukohde} paluuLinkki={toteutusLink} />
+              <HakukohdeKortti
+                haku={haku}
+                hakukohde={hakukohde}
+                paluuLinkki={toteutusLink}
+              />
             </Box>
           </Grid>
           <Grid item xs={12} sm={12} md={3} />

@@ -64,7 +64,7 @@ const firstOnGoingDate = (dates, now) => {
   return _.find(dates, ([a, l]) => a <= now && (!l || now <= l));
 };
 
-const LomakeButton = ({ children, ...props }) => {
+const HakukohdeActionButton = ({ children, ...props }) => {
   return (
     <Button
       variant="contained"
@@ -100,7 +100,9 @@ const SimpleTable = (props) => {
   );
 };
 
-export const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
+const selectPohjakoulutusvaatimus = (hakukohde) => hakukohde?.pohjakoulutusvaatimus?.[0];
+
+export const HakukohdeKortti = ({ haku, hakukohde, paluuLinkki }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const hakuajat = parseHakuajat(haku.hakuajat);
@@ -108,6 +110,8 @@ export const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
   const hakuaika = firstOnGoingDate(hakuajat, now) || _.first(hakuajat);
   const aloituspaikat = hakukohde.aloituspaikat;
   const ensikertalaisille = hakukohde.ensikertalaisenAloituspaikat;
+
+  const pohjakoulutusvaatimus = selectPohjakoulutusvaatimus(hakukohde);
 
   const isOpen = isHakuAuki(_.concat(haku.hakuajat, hakukohde.hakuajat));
 
@@ -144,20 +148,24 @@ export const Lomake = ({ haku, hakukohde, paluuLinkki }) => {
             },
             {
               title: t('valintaperuste.pohjakoulutus'),
-              value: '-',
+              value: l.localize(pohjakoulutusvaatimus) || '-',
             },
           ]}
         />
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <LomakeButton href={l.localize(hakukohde.hakulomakeLinkki)} disabled={!isOpen}>
+        <HakukohdeActionButton
+          href={l.localize(hakukohde.hakulomakeLinkki)}
+          disabled={!isOpen}>
           {t('lomake.tayta-lomake')}
-        </LomakeButton>
+        </HakukohdeActionButton>
         <LocalizedLink
           component={RouterLink}
           to={paluuLinkki}
           style={{ textDecoration: 'none' }}>
-          <LomakeButton variant="outlined">{t('lomake.palaa-esittelyyn')}</LomakeButton>
+          <HakukohdeActionButton variant="outlined">
+            {t('lomake.palaa-esittelyyn')}
+          </HakukohdeActionButton>
         </LocalizedLink>
       </CardActions>
     </Card>
