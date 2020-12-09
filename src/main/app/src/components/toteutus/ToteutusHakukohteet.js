@@ -196,7 +196,7 @@ const HakuCardGrid = (props) => {
                           <LocalizedLink
                             underline="none"
                             component={RouterLink}
-                            to={`/hakukohde/${haku.hakukohdeOid}/valintaperuste/${haku.valintaperusteId}`}>
+                            to={`/hakukohde/${haku.hakukohdeOid}/valintaperuste`}>
                             <Button variant="outlined" size="large" color="primary">
                               <Typography style={{ color: colors.green }} variant="body1">
                                 {t('toteutus.lue-valintaperusteet')}

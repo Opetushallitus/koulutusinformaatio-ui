@@ -32,9 +32,8 @@ const useStyles = makeStyles((theme) => ({
   expanded: {},
 }));
 
-const Accordion = (props) => {
+const Accordion = ({ items, ContentWrapper = Typography }) => {
   const classes = useStyles();
-  const { items } = props;
   return (
     <div className={classes.root}>
       {items.map((item, i) => (
@@ -52,7 +51,7 @@ const Accordion = (props) => {
             <Typography className={classes.heading}>{item.title}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>{item.content}</Typography>
+            <ContentWrapper>{item.content}</ContentWrapper>
           </AccordionDetails>
         </MuiAccordion>
       ))}

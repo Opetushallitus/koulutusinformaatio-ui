@@ -11,15 +11,14 @@ import { Etusivu } from './components/Etusivu';
 import PalautePopup from './components/palaute/PalautePopup';
 import SideMenu from './components/common/SideMenu';
 import Sisaltohaku from './components/Sisaltohaku';
-import { MuiThemeProvider, makeStyles } from '@material-ui/core';
+import { MuiThemeProvider, makeStyles, useMediaQuery } from '@material-ui/core';
 import { theme } from './theme';
 import { DRAWER_WIDTH } from './constants';
 import Palvelut from './components/palvelu/Palvelut';
-import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import Haku from './components/haku/Haku';
 import Koulutus from './components/koulutus/Koulutus';
 import Oppilaitos from './components/oppilaitos/Oppilaitos';
-import Valintaperusteet from './components/valintaperusteet/Valintaperusteet';
+import { ValintaperustePage } from './components/valintaperusteet/ValintaperustePage';
 import SivuRouter from './components/sivu/SivuRouter';
 import { ReactiveBorder } from './components/ReactiveBorder';
 import Hakupalkki from './components/haku/Hakupalkki';
@@ -129,9 +128,9 @@ const TranslatedRoutes = ({ match, location }) => {
         <KoulutusHakuBar />
         <SivuRouter />
       </Route>
-      <Route exact path="/:lng/hakukohde/:hakukohdeOid/valintaperuste/:valintaperusteOid">
+      <Route exact path="/:lng/hakukohde/:hakukohdeOid/valintaperuste">
         <KoulutusHakuBar />
-        <Valintaperusteet />
+        <ValintaperustePage />
       </Route>
       <Route component={NotFound} />
     </Switch>
