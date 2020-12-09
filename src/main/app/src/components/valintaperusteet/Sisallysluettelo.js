@@ -2,7 +2,7 @@ import React from 'react';
 import { HashLink as Link } from 'react-router-hash-link';
 import { Grid, makeStyles } from '@material-ui/core';
 import { colors } from '#/src/colors';
-import { toId } from '#/src/tools/Utils';
+import { scrollIntoView, toId } from '#/src/tools/Utils';
 
 const useStyles = makeStyles({
   toc: {
@@ -45,7 +45,7 @@ const Lnk = (text, index, addIndexToAnchor) => {
       className={classes.link}
       aria-label={text}
       to={`#${anchor}${addIndexToAnchor ? '-' + index : ''}`}
-      scroll={(el) => el.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
+      scroll={(el) => scrollIntoView(el)}>
       {text}
     </Link>
   );
