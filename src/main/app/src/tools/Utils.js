@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import stripTags from 'striptags';
 import i18n from './i18n';
 import ReactHtmlParser from 'react-html-parser';
+import { TOP_BAR_HEIGHT } from '../constants';
 
 export const Common = {
   // filters 'null', 'empty string' or 'undefined', but '0' or 'false' are valid values,
@@ -165,3 +166,13 @@ export const sanitizedHTMLParser = (html, ...rest) =>
   ReactHtmlParser(sanitizeHTML(html), ...rest);
 
 export const toId = _fp.kebabCase;
+
+export const scrollIntoView = (element) => {
+  var elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+  var offsetPosition = elementPosition - TOP_BAR_HEIGHT;
+
+  window.scrollTo({
+    top: offsetPosition,
+    behavior: 'smooth',
+  });
+};
