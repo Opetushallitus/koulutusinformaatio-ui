@@ -119,6 +119,7 @@ const Toteutus = () => {
     selectHakukohteet(oid),
     shallowEqual
   );
+
   const toteutusLoading = useSelector(selectToteutusLoading);
   const [koulutusNotFetched, setKoulutusNotFetched] = useState(!koulutus);
   const koulutusLoading =
@@ -165,6 +166,7 @@ const Toteutus = () => {
   }, [toteutus, dispatch, oid, koulutus, koulutusOid, koulutusNotFetched]);
 
   const opetus = toteutus?.metadata?.opetus;
+  const hasAnyHaku = jatkuvatHaut?.length + yhteisHaut?.length + erillisHaut?.length > 0;
   const hakuUrl = useSelector(getHakuUrl);
   const { hakuParamsStr } = useSelector(getHakuParams);
 
@@ -213,26 +215,9 @@ const Toteutus = () => {
         <Box mt={4}>
           <ToteutusInfoGrid
             koulutusTyyppi={toteutus?.metadata?.tyyppi}
-            kielet={opetus?.opetuskieli}
-            opetuskieletKuvaus={opetus?.opetuskieletKuvaus}
             laajuus={[koulutus?.opintojenLaajuus, koulutus?.opintojenLaajuusYksikkö]}
-            aloitus={[
-              opetus?.koulutuksenTarkkaAlkamisaika,
-              opetus?.koulutuksenAlkamispaivamaara,
-              opetus?.koulutuksenAlkamiskausi,
-              opetus?.koulutuksenAlkamisvuosi,
-            ]}
-            suunniteltuKestoVuodet={opetus?.suunniteltuKestoVuodet}
-            suunniteltuKestoKuukaudet={opetus?.suunniteltuKestoKuukaudet}
-            suunniteltuKestoKuvaus={opetus?.suunniteltuKestoKuvaus}
-            opetusaika={opetus?.opetusaika}
-            opetusaikaKuvaus={opetus?.opetusaikaKuvaus}
-            opetustapa={opetus?.opetustapa}
-            opetustapaKuvaus={opetus?.opetustapaKuvaus}
-            maksullisuus={opetus?.onkoMaksullinen && opetus?.maksunMaara}
-            maksullisuusKuvaus={opetus?.maksullisuusKuvaus}
-            apuraha={opetus?.onkoStipendia && opetus?.stipendinMaara}
-            apurahaKuvaus={opetus?.stipendinKuvaus}
+            opetus={opetus}
+            hasHaku={hasAnyHaku}
           />
         </Box>
         {toteutus?.hakuAukiType && (
@@ -291,7 +276,7 @@ const Toteutus = () => {
             }))}
           />
         )}
-        {jatkuvatHaut?.length + yhteisHaut?.length + erillisHaut?.length > 0 && (
+        {hasAnyHaku && (
           <ToteutusHakukohteet
             jatkuvatHaut={jatkuvatHaut}
             yhteisHaut={yhteisHaut}
@@ -303,7 +288,7 @@ const Toteutus = () => {
         {opetus?.lisatiedot.length > 0 && (
           <AccordionWithTitle
             titleTranslation="koulutus.lisätietoa"
-            data={toteutus.metadata.opetus.lisatiedot.map((lisatieto) => ({
+            data={opetus.lisatiedot.map((lisatieto) => ({
               title: l.localize(lisatieto.otsikko),
               content: sanitizedHTMLParser(l.localize(lisatieto.teksti)),
             }))}
