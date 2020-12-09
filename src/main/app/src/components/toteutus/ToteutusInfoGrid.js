@@ -77,7 +77,7 @@ export const ToteutusInfoGrid = (props) => {
   );
   const KuvausWithLinks = ({ kuvausObj }) => {
     const kuvaus = l.localize(kuvausObj);
-    const kuvausWithoutUrls = kuvaus.replaceAll(urlRegexSafe(), '').trim();
+    const kuvausWithoutUrls = kuvaus?.replaceAll(urlRegexSafe(), '').trim();
     const linksArray = kuvaus?.match(urlRegexSafe()) || [];
     const KuvausLinks = linksArray?.map((link) => (
       <Typography component="p" variant="body2" key={_.uniqueId('link_')}>
@@ -91,7 +91,9 @@ export const ToteutusInfoGrid = (props) => {
         <Typography component="h5" variant="body2">
           {kuvausWithoutUrls}
         </Typography>
-        {linksArray?.length > 0 && <Box style={{ marginTop: '5px' }}>{KuvausLinks}</Box>}
+        {!_.isEmpty(KuvausLinks) > 0 && (
+          <Box style={{ marginTop: '5px' }}>{KuvausLinks}</Box>
+        )}
       </>
     );
   };
