@@ -15,14 +15,15 @@ import {
   searchAll,
   setSelectedFilters,
 } from '#/src/store/reducers/hakutulosSlice';
-import { Common as C } from '#/src/tools/Utils';
+import { Common as C, Localizer as l } from '#/src/tools/Utils';
+import { colors } from '#/src/colors';
 
 const useStyles = makeStyles((theme) => ({
   chipRoot: {
     marginBottom: 5,
     marginRight: 5,
     borderRadius: 5,
-    backgroundColor: '#F7F7F7',
+    backgroundColor: colors.veryLightGrey,
     border: 'none',
   },
   chipLabel: {
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 const SuodatinValinnat = () => {
   const history = useHistory();
   const location = useLocation();
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
   const suodatinValinnatProps = useSelector(getSuodatinValinnatProps);
@@ -83,12 +84,13 @@ const SuodatinValinnat = () => {
     return entry[1].map((item) => (
       <Chip
         size="small"
+        data-cy={`chip-${item?.id}`}
         key={`chip_${item.id}`}
         classes={{
           root: classes.chipRoot,
           label: classes.chipLabel,
         }}
-        label={item?.name?.[i18n.language]}
+        label={l.localize(item?.name) || t(`haku.${item?.id}`)}
         onDelete={handleDelete(entry[0], item)}
       />
     ));
@@ -113,7 +115,7 @@ const SuodatinValinnat = () => {
             label: classes.clearButtonLabel,
             sizeSmall: classes.clearButtonSizeSmall,
           }}
-          onClick={() => handleClearFilters()}>
+          onClick={handleClearFilters}>
           {t('haku.poista-valitut-rajaimet')}
         </Button>
       </Grid>

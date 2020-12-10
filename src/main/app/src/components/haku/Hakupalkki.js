@@ -160,16 +160,19 @@ const Hakupalkki = () => {
   } = useSelector(getHakupalkkiProps);
   const apiRequestParams = useSelector(getAPIRequestParams);
   const etusivuPath = `/${i18n.language}/`;
+  const isAtEtusivu = location.pathname === etusivuPath;
 
   const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
-    if (location.pathname === etusivuPath) {
+    if (isAtEtusivu) {
       dispatch(setKeyword({ keyword: '' }));
       dispatch(clearPaging());
-      !showHakutulosFilters && setAnchorEl(null);
+      if (!showHakutulosFilters) {
+        setAnchorEl(null);
+      }
     }
-  }, [location.pathname, dispatch, showHakutulosFilters, etusivuPath]);
+  }, [isAtEtusivu, dispatch, showHakutulosFilters]);
 
   function handleDesktopBtnClick(e) {
     dispatch(searchAll(getAPIRequestParams));
@@ -216,6 +219,7 @@ const Hakupalkki = () => {
       {t('haku.etsi')}
     </Button>
   );
+
   return (
     <ThemeProvider theme={theme}>
       <Box display="flex" flexDirection="column" alignItems="flex-end" flexGrow={1}>
@@ -229,11 +233,13 @@ const Hakupalkki = () => {
             open={!isKeywordValid}
             title={t('haku.syota-ainakin-kolme-merkkia')}>
             <InputBase
-              defaultValue={location.pathname === etusivuPath ? '' : keyword}
+              defaultValue={isAtEtusivu ? '' : keyword}
               className={classes.input}
-              onKeyPress={(event) =>
-                event.key === 'Enter' && isKeywordValid && doSearch(event)
-              }
+              onKeyPress={(event) => {
+                if (event.key === 'Enter' && isKeywordValid) {
+                  doSearch(event);
+                }
+              }}
               onChange={setSearch}
               type="search"
               placeholder={t('haku.kehoite')}
@@ -242,7 +248,7 @@ const Hakupalkki = () => {
               }}
             />
           </Tooltip>
-          {location.pathname === etusivuPath && (
+          {isAtEtusivu && (
             <Hidden smDown>
               <Box component="div" className={classes.box}>
                 <Divider orientation="vertical" />
@@ -276,7 +282,6 @@ const Hakupalkki = () => {
             </IconButton>
           </Hidden>
         </Paper>
-
         {!_.isEmpty(koulutusFilters) && (
           <>
             <Hidden mdUp>
@@ -307,23 +312,25 @@ const Hakupalkki = () => {
             </Hidden>
           </>
         )}
-        <Box
-          display="flex"
-          flexDirection="row-reverse"
-          width="100%"
-          justifyContent="space-between">
-          <LocalizedLink component={RouterLink} to={`/haku/`} className={classes.link}>
-            {t('jumpotron.naytakaikki')}
-          </LocalizedLink>
-          <Hidden mdUp>
-            <Button
-              endIcon={<FilterList />}
-              className={classes.mobileFilterButton}
-              onClick={handleMobileBtnClick}>
-              {t('haku.rajaa-tuloksia')}
-            </Button>
-          </Hidden>
-        </Box>
+        {isAtEtusivu && (
+          <Box
+            display="flex"
+            flexDirection="row-reverse"
+            width="100%"
+            justifyContent="space-between">
+            <LocalizedLink component={RouterLink} to={`/haku/`} className={classes.link}>
+              {t('jumpotron.naytakaikki')}
+            </LocalizedLink>
+            <Hidden mdUp>
+              <Button
+                endIcon={<FilterList />}
+                className={classes.mobileFilterButton}
+                onClick={handleMobileBtnClick}>
+                {t('haku.rajaa-tuloksia')}
+              </Button>
+            </Hidden>
+          </Box>
+        )}
       </Box>
     </ThemeProvider>
   );

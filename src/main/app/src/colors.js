@@ -26,6 +26,8 @@ export const colors = {
 export const educationTypeColorCode = {
   lk: '#c62828', // Brick
   amm: '#43A047', // Mid-green
+  'amm-osaamisala': '#43A047', // Mid-green
+  'amm-tutkinnon-osa': '#43A047', // Mid-green
   kk: '#9c56b8', // Amethist
   yo: '#9c56b8', // Amethist
   amk: '#9c56b8', // Amethist

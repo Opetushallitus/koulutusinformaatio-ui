@@ -3,6 +3,7 @@ import qs from 'query-string';
 import _ from 'lodash';
 import { Localizer as l } from '#/src/tools/Utils';
 import { Common as C } from '#/src/tools/Utils';
+import { FILTER_TYPES } from '#/src/constants';
 
 // State data getters
 function getKeyword(state) {
@@ -49,6 +50,9 @@ function getSijainti(state) {
 }
 function getSelectedSijainti(state) {
   return state.hakutulos.selectedSijainti;
+}
+function getOpetustapa(state) {
+  return state.hakutulos.opetustapa;
 }
 function getSelectedTab(state) {
   return state.hakutulos.selectedTab;
@@ -123,6 +127,7 @@ export const getHakutulosProps = createSelector(
     getKoulutusala,
     getSijainti,
     getSelectedSijainti,
+    getOpetustapa,
   ],
   (
     keyword,
@@ -140,7 +145,8 @@ export const getHakutulosProps = createSelector(
     koulutustyyppi,
     koulutusala,
     sijainti,
-    selectedSijainti
+    selectedSijainti,
+    opetustapa
   ) => {
     return {
       keyword,
@@ -155,7 +161,14 @@ export const getHakutulosProps = createSelector(
       pageSortArray,
       size,
       isAnyFilterSelected: _.some(
-        [opetuskieli, koulutustyyppi, koulutusala, sijainti, selectedSijainti],
+        [
+          opetuskieli,
+          koulutustyyppi,
+          koulutusala,
+          sijainti,
+          selectedSijainti,
+          opetustapa,
+        ],
         (filterArr) => _.size(filterArr) > 0
       ),
     };
@@ -183,12 +196,20 @@ export const getMobileToggleOrderByButtonMenuProps = createSelector(
   })
 );
 export const getSuodatinValinnatProps = createSelector(
-  [getOpetuskieli, getKoulutustyyppi, getKoulutusala, getSijainti, getSelectedSijainti],
-  (opetuskieli, koulutustyyppi, koulutusala, sijainti, selectedSijainti) => ({
-    opetuskieli: opetuskieli,
-    koulutustyyppi: koulutustyyppi,
-    koulutusala: koulutusala,
+  [
+    getOpetuskieli,
+    getKoulutustyyppi,
+    getKoulutusala,
+    getSijainti,
+    getSelectedSijainti,
+    getOpetustapa,
+  ],
+  (opetuskieli, koulutustyyppi, koulutusala, sijainti, selectedSijainti, opetustapa) => ({
+    opetuskieli,
+    koulutustyyppi,
+    koulutusala,
     sijainti: _.concat(sijainti, selectedSijainti),
+    opetustapa,
   })
 );
 
@@ -220,6 +241,7 @@ export const getAPIRequestParams = createSelector(
     getKoulutusala,
     getSijainti,
     getSelectedSijainti,
+    getOpetustapa,
   ],
   (
     keyword,
@@ -230,7 +252,8 @@ export const getAPIRequestParams = createSelector(
     koulutustyyppi,
     koulutusala,
     sijainti,
-    selectedSijainti
+    selectedSijainti,
+    opetustapa
   ) => {
     return {
       keyword,
@@ -242,6 +265,7 @@ export const getAPIRequestParams = createSelector(
       koulutustyyppi: getCheckedFiltersIdsStr(koulutustyyppi),
       koulutusala: getCheckedFiltersIdsStr(koulutusala),
       sijainti: getCheckedFiltersIdsStr(_.concat(selectedSijainti, sijainti)),
+      opetustapa: getCheckedFiltersIdsStr(opetustapa),
     };
   }
 );
@@ -270,10 +294,25 @@ export const getOpetuskieliFilterProps = createSelector(
         ? koulutusFilters.opetuskieli
         : oppilaitosFilters.opetuskieli;
     return {
-      sortedOpetuskielet: sortOpetusKieliFilter(opetuskieliFilter),
+      sortedOpetuskielet: sortedFilterEntries(opetuskieliFilter),
       selectedTab,
       checkedOpetuskielet,
       checkedOpetuskieletStr: getSelectedFiltersNamesStr(checkedOpetuskielet),
+    };
+  }
+);
+
+export const getOpetustapaFilterProps = createSelector(
+  [getKoulutusFilters, getOppilaitosFilters, getSelectedTab, getOpetustapa],
+  (koulutusFilters, oppilaitosFilters, selectedTab, checkedOpetustavat) => {
+    const opetustapaFilter =
+      selectedTab === 'koulutus'
+        ? koulutusFilters.opetustapa
+        : oppilaitosFilters.opetustapa;
+    return {
+      sortedOpetustavat: sortedFilterEntries(opetustapaFilter),
+      checkedOpetustavat,
+      checkedOpetustavatStr: getSelectedFiltersNamesStr(checkedOpetustavat),
     };
   }
 );
@@ -283,11 +322,16 @@ export const getKoulutustyyppiFilterProps = createSelector(
   (koulutusFilters, oppilaitosFilters, selectedTab, checkedKoulutustyypit) => {
     const koulutustyyppi =
       selectedTab === 'koulutus'
-        ? _.entries(koulutusFilters.koulutustyyppi)
-        : _.entries(oppilaitosFilters.koulutustyyppi);
+        ? _.entries(koulutusFilters?.[FILTER_TYPES.KOULUTUSTYYPPI])
+        : _.entries(oppilaitosFilters?.[FILTER_TYPES.KOULUTUSTYYPPI]);
+    const koulutustyyppiMuu =
+      selectedTab === 'koulutus'
+        ? _.entries(koulutusFilters?.[FILTER_TYPES.KOULUTUSTYYPPI_MUU])
+        : _.entries(oppilaitosFilters?.[FILTER_TYPES.KOULUTUSTYYPPI_MUU]);
     const checkedKoulutustyypitKeys = _.map(checkedKoulutustyypit, 'id');
     return {
       koulutustyyppi,
+      koulutustyyppiMuu,
       selectedTab,
       checkedKoulutustyypit,
       checkedKoulutustyypitKeys,
@@ -352,7 +396,7 @@ export const getSijaintiFilterProps = createSelector(
 );
 
 // Helpers
-function sortOpetusKieliFilter(filterObj) {
+function sortedFilterEntries(filterObj) {
   const sortedArrByCountNameDesc = _.orderBy(
     _.entries(filterObj),
     ['[1].count', `[1].nimi.[${l.getLanguage()}]`],
@@ -371,7 +415,11 @@ function getCheckedFiltersIdsStr(checkedfiltersArr) {
   return '';
 }
 function getSelectedFiltersNamesStr(filterArr) {
-  return filterArr.map((f) => _.capitalize(f?.['name']?.[l.getLanguage()])).join(', ');
+  return filterArr
+    .map((f) =>
+      _.capitalize(l.localize(f?.name) || l.getTranslationForKey(`haku.${f?.id}`))
+    )
+    .join(', ');
 }
 function sortedKoulutusalatEntries(filterObj) {
   return _.orderBy(_.entries(filterObj), `[1]nimi.[${l.getLanguage()}]`);

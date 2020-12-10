@@ -11,9 +11,9 @@ import {
   useMediaQuery,
   useTheme,
 } from '@material-ui/core';
+import { SchoolOutlined, PublicOutlined } from '@material-ui/icons';
 import _ from 'lodash';
 import { Localizer as l } from '#/src/tools/Utils';
-import { SchoolOutlined, PublicOutlined } from '@material-ui/icons';
 import oppilaitos_img from '#/src/assets/images/logo-oppilaitos.png';
 import { educationTypeColorCode } from '#/src/colors';
 import { MUI_BREAKPOINTS } from '#/src/constants';
@@ -32,12 +32,12 @@ const useStyles = makeStyles((theme) => ({
   avatarRoot: {
     borderRadius: 0,
     [theme.breakpoints.up('lg')]: {
-      width: 150,
-      height: 150,
+      width: '150px',
+      height: '150px',
     },
     [theme.breakpoints.up('sm')]: {
-      width: 125,
-      height: 125,
+      width: '125px',
+      height: '125px',
     },
     [theme.breakpoints.down('xs')]: {
       width: theme.spacing(9),
@@ -46,32 +46,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const OppilaitosKortti = ({ nimi, oppilaitos, link }) => {
+const OppilaitosKortti = ({ oppilaitos }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const theme = useTheme();
   const muiScreenSizeMinLg = useMediaQuery(MUI_BREAKPOINTS.MIN_LG);
   const screenSizeMinCustomXs = useMediaQuery(MUI_BREAKPOINTS.MIN_XS_400);
 
-  const paikkakunnatStr = oppilaitos.paikkakunnat
-    .reduce((acc, current) => {
-      return acc + current.nimi.fi + ', ';
-    }, '')
+  const paikkakunnatStr = (oppilaitos?.paikkakunnat || [])
+    .reduce((acc, paikkakunta) => acc + l.localize(paikkakunta) + ', ', '')
     .replace(/,\s*$/, '');
 
-  const kuvausStr = (kuvaus) => {
-    const kuvausStr = kuvaus && kuvaus.fi;
+  const kuvaus =
+    _.truncate(l.localize(oppilaitos?.kuvaus).replace(/<[^>]*>/gm, ''), {
+      length: 255,
+    }) || t('haku.ei_kuvausta');
 
-    if (!kuvausStr) {
-      return t('haku.ei_kuvausta');
-    }
-    const strippedHTMLKuvausStr = kuvausStr.replace(/<[^>]*>/gm, '');
-
-    if (strippedHTMLKuvausStr.length > 255) {
-      return `${strippedHTMLKuvausStr.slice(0, 250)}...`;
-    }
-    return strippedHTMLKuvausStr;
-  };
   const koulutusOhjelmatStr = () => {
     const amount = _.get(oppilaitos, 'koulutusohjelmia', 0);
     if (amount === 0) return t('haku.ei_koulutusohjelmia');
@@ -79,12 +69,17 @@ const OppilaitosKortti = ({ nimi, oppilaitos, link }) => {
     return `${amount} ${t('haku.koulutusohjelmaa')}`;
   };
 
+  const logoAltText = `${l.localize(oppilaitos)} ${t('haku.oppilaitoksen-logo')}`;
+
   return (
-    <LocalizedLink underline="none" component={RouterLink} to={link}>
+    <LocalizedLink
+      underline="none"
+      component={RouterLink}
+      to={`/oppilaitos/${oppilaitos?.oid}`}>
       <Paper
         classes={{ root: classes.paperRoot }}
         style={{ borderTop: `5px solid ${educationTypeColorCode.amm}` }}>
-        <Grid container alignItems="center" spacing={3} style={{ minHeight: 180 }}>
+        <Grid container alignItems="center" spacing={3} style={{ minHeight: '180px' }}>
           <Grid
             container
             item
@@ -104,15 +99,15 @@ const OppilaitosKortti = ({ nimi, oppilaitos, link }) => {
               alignItems="center">
               <Grid item sm={12} xs={screenSizeMinCustomXs ? 10 : 12}>
                 <Typography variant="h6" style={{ fontWeight: 'bold' }}>
-                  {l.localize(nimi)}
+                  {l.localize(oppilaitos)}
                 </Typography>
               </Grid>
               <Hidden smUp>
                 <Grid item xs>
                   <Avatar
                     classes={{ root: classes.avatarRoot }}
-                    src={oppilaitos_img}
-                    alt="oppilaitoksen logo"
+                    src={oppilaitos?.logo || oppilaitos_img}
+                    alt={logoAltText}
                   />
                 </Grid>
               </Hidden>
@@ -128,7 +123,7 @@ const OppilaitosKortti = ({ nimi, oppilaitos, link }) => {
                 wrap="nowrap"
                 justify="space-between">
                 <Grid item lg={12} md={9} sm={9} xs={12}>
-                  <Typography>{kuvausStr(oppilaitos.kuvaus)}</Typography>
+                  <Typography>{kuvaus}</Typography>
                 </Grid>
                 <Hidden lgUp xsDown>
                   <Grid
@@ -141,8 +136,8 @@ const OppilaitosKortti = ({ nimi, oppilaitos, link }) => {
                     alignContent="flex-end">
                     <Avatar
                       classes={{ root: classes.avatarRoot }}
-                      src={oppilaitos_img}
-                      alt={t('haku.oppilaitoksen-logo')}
+                      src={oppilaitos?.logo || oppilaitos_img}
+                      alt={logoAltText}
                     />
                   </Grid>
                 </Hidden>
@@ -181,8 +176,8 @@ const OppilaitosKortti = ({ nimi, oppilaitos, link }) => {
             <Grid item container lg={4} justify="center">
               <Avatar
                 classes={{ root: classes.avatarRoot }}
-                src={oppilaitos_img}
-                alt="oppilaitoksen logo"
+                src={oppilaitos?.logo || oppilaitos_img}
+                alt={logoAltText}
               />
             </Grid>
           </Hidden>

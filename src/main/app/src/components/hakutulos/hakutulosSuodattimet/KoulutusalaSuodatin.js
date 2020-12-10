@@ -176,6 +176,7 @@ const KoulutusalaSuodatin = ({
     <SuodatinAccordion
       {...(summaryHidden && { className: classes.noBoxShadow })}
       elevation={elevation}
+      data-cy="koulutusalat-filter"
       defaultExpanded={expanded}>
       {!summaryHidden && (
         <SuodatinAccordionSummary expandIcon={<ExpandMore />}>

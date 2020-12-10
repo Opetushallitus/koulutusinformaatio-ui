@@ -34,6 +34,7 @@ import MobileToggleFiltersButton from './MobileToggleFiltersButton';
 import MobileToggleOrderByButtonMenu from './MobileToggleOrderByButtonMenu';
 import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
 import MobileToggleKoulutusOppilaitos from './MobileToggleKoulutusOppilaitos';
+import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
 
 const useStyles = makeStyles((theme) => ({
   paperAnchorBottom: {
@@ -126,6 +127,8 @@ const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
         <SijaintiSuodatin expanded={false} elevation={0} displaySelected />
         <Divider className={classes.divider} />
         <KoulutusalaSuodatin expanded={false} elevation={0} displaySelected />
+        <Divider className={classes.divider} />
+        <OpetustapaSuodatin expanded={false} elevation={0} displaySelected />
         <Divider className={classes.divider} />
         {!isFrontPage && <MobileToggleOrderByButtonMenu elevation={0} />}
         {!isFrontPage && <MobileResultsPerPageExpansionMenu elevation={0} />}

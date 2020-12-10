@@ -34,6 +34,7 @@ import HakutulosResults from './HakutulosResults';
 import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
 import KoulutustyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
 import OpetuskieliSuodatin from './hakutulosSuodattimet/OpetusKieliSuodatin';
+import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
 import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
 import SuodatinValinnat from './hakutulosSuodattimet/SuodatinValinnat';
 import HakutulosToggle from './HakutulosToggle';
@@ -250,6 +251,7 @@ const Hakutulos = () => {
               <OpetuskieliSuodatin expanded elevation={2} />
               <SijaintiSuodatin expanded elevation={2} />
               <KoulutusalaSuodatin expanded elevation={2} />
+              <OpetustapaSuodatin expanded={false} elevation={2} />
             </Hidden>
           </Grid>
           <Grid item container direction="column" xs>

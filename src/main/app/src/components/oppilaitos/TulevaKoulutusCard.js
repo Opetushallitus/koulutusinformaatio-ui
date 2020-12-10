@@ -12,10 +12,12 @@ const useStyles = makeStyles({
     fontWeight: '600',
   },
   paper: (props) => ({
-    borderTop: `5px solid ${educationTypeColorCode[props.tyyppi] ||
-      educationTypeColorCode.muu}`,
+    borderTop: `5px solid ${
+      educationTypeColorCode[props.tyyppi] || educationTypeColorCode.muu
+    }`,
     width: '100%',
     height: '100%',
+    minWidth: '350px',
   }),
   icon: {
     fontSize: '1.1875rem',

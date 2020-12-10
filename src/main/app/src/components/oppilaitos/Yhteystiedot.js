@@ -77,7 +77,7 @@ const Yhteystiedot = (props) => {
             <img
               className={classes.logoImage}
               src={logo || DefaultHeroImage}
-              alt="Oppilaitoksen logo"
+              alt={t('oppilaitos.oppilaitoksen-logo')}
             />
             <Typography className={classes.text} component="div" variant="body1">
               {nimi}
@@ -97,11 +97,13 @@ const Yhteystiedot = (props) => {
             </Button>
           </Box>
         </Grid>
-        <Grid item container justify="center" lg={6} md={7} sm={8} xs={12}>
-          <Box component="div" className={classes.oskariMap}>
-            <OskariKartta osoite={osoite} postitoimipaikka={postitoimipaikka} />
-          </Box>
-        </Grid>
+        {osoite && postitoimipaikka && (
+          <Grid item container justify="center" lg={6} md={7} sm={8} xs={12}>
+            <Box component="div" className={classes.oskariMap}>
+              <OskariKartta osoite={osoite} postitoimipaikka={postitoimipaikka} />
+            </Box>
+          </Grid>
+        )}
       </Grid>
     </Box>
   );

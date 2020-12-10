@@ -4,7 +4,7 @@ describe('Tutkinnon osa KOMOTO', function () {
   autoRecord();
 
   it('Tutkinnon osa KOMOTO renders properly', function () {
-    cy.visit('/konfo/fi/toteutus/1.2.246.562.17.00000000000000000469');
+    cy.visit('/fi/toteutus/1.2.246.562.17.00000000000000000469');
 
     // Wait for everything to load
     cy.findByRole('progressbar').should('not.exist');

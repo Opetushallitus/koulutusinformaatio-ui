@@ -35,6 +35,7 @@ export const initialState = {
   opetuskieli: [],
   sijainti: [],
   selectedSijainti: [],
+  opetustapa: [],
 
   size: 20,
   selectedTab: KOULUTUS,
@@ -73,6 +74,9 @@ const hakutulosSlice = createSlice({
     setKoulutusala: (state, { payload }) => {
       state.koulutusala = payload.newCheckedKoulutusalat;
     },
+    setOpetustapa: (state, { payload }) => {
+      state.opetustapa = payload.newCheckedOpetustavat;
+    },
     clearPaging: (state, action) => {
       state.koulutusPage = 1;
       state.oppilaitosPage = 1;
@@ -94,6 +98,7 @@ const hakutulosSlice = createSlice({
       state.opetuskieli = [];
       state.sijainti = [];
       state.selectedSijainti = [];
+      state.opetustapa = [];
     },
     setSize: (state, { payload }) => {
       state.size = payload.newSize;
@@ -149,7 +154,13 @@ const hakutulosSlice = createSlice({
                 const koulutustyyppiFilters = pullUpAlakoodit(
                   koulutusData?.filters?.[key]
                 );
-                state[key] = getCheckedFilterValues(idsStr, koulutustyyppiFilters);
+                const koulutustyyppiMuuFilters = pullUpAlakoodit(
+                  koulutusData?.filters?.[`${key}-muu`]
+                );
+                state[key] = getCheckedFilterValues(
+                  idsStr,
+                  _.assign(koulutustyyppiFilters, koulutustyyppiMuuFilters)
+                );
                 break;
               case FILTER_TYPES.KOULUTUSALA:
                 const koulutusalaFilters = pullUpAlakoodit(koulutusData?.filters?.[key]);
@@ -228,6 +239,7 @@ export const {
   setKoulutusala,
   setSijainti,
   setSelectedSijainti,
+  setOpetustapa,
   clearPaging,
   clearSelectedFilters,
   setSelectedFilters,
@@ -255,6 +267,7 @@ export const searchAll = (
       'koulutustyyppi',
       'koulutusala',
       'sijainti',
+      'opetustapa',
     ]);
     const literals = _.pick(requestParams, ['size', 'order', 'sort']);
     dispatch(
@@ -335,6 +348,7 @@ export const executeSearchFromStartingPage = ({ apiRequestParams, history }) => 
       'koulutustyyppi',
       'koulutusala',
       'sijainti',
+      'opetustapa',
     ])
   ).toString();
   history.push(`/${lng}/haku/${hakutulos.keyword}?${restParams}`);
@@ -485,9 +499,23 @@ function getCheckedOnTaso02Clicked(
 }
 
 function getFilterAllValues(filterType, hakutulos) {
-  return _.isEqual(_.get(hakutulos, 'selectedTab'), KOULUTUS)
-    ? _.get(hakutulos, `koulutusFilters.${filterType}`)
-    : _.get(hakutulos, `oppilaitosFilters.${filterType}`);
+  const _tab =
+    hakutulos?.selectedTab === KOULUTUS ? 'koulutusFilters' : 'oppilaitosFilters';
+  return _.reduce(
+    hakutulos?.[_tab],
+    (acc, val, key) => {
+      if (
+        filterType === FILTER_TYPES.KOULUTUSTYYPPI &&
+        _.includes([FILTER_TYPES.KOULUTUSTYYPPI, FILTER_TYPES.KOULUTUSTYYPPI_MUU], key)
+      ) {
+        return _.isObject(val) ? { ...acc, ...val } : acc;
+      } else if (filterType === key) {
+        return { ...acc, ...val };
+      }
+      return acc;
+    },
+    {}
+  );
 }
 
 function getCheckedOnTaso01Clicked(filterAllValues, clickedFilterId, checkedValues) {

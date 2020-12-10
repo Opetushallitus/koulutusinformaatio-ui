@@ -1,12 +1,7 @@
 import { getDefaultMiddleware, configureStore } from '@reduxjs/toolkit';
-import { createLogger } from 'redux-logger';
 import reducer from './reducers';
 
-const logger = createLogger({
-  predicate: () => process.env.NODE_ENV === 'development',
-});
-
-const middleware = [...getDefaultMiddleware(), logger];
+const middleware = [...getDefaultMiddleware()];
 
 export function getKonfoStore() {
   const store = configureStore({

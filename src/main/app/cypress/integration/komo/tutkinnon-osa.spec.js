@@ -2,7 +2,7 @@ const autoRecord = require('cypress-autorecord');
 describe('Tutkinnon osa KOMO', function () {
   autoRecord();
   it('Tutkinnon osa KOMO renders properly', function () {
-    cy.visit('/konfo/fi/koulutus/1.2.246.562.13.00000000000000000622');
+    cy.visit('/fi/koulutus/1.2.246.562.13.00000000000000000622');
 
     // Wait for everything to load
     cy.findByRole('progressbar').should('not.exist');

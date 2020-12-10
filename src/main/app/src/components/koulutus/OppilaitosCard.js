@@ -5,6 +5,7 @@ import { educationTypeColorCode } from '#/src/colors';
 import OppilaitosLogo from '#/src/assets/images/Opolkuhts.png';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
 import { Link as RouterLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   paper: (props) => ({
@@ -43,6 +44,8 @@ const useStyles = makeStyles((theme) => ({
 const OppilaitosCard = (props) => {
   const classes = useStyles(props);
   const { heading, locations, image, oppilaitosOid } = props;
+  const { t } = useTranslation();
+
   return (
     <Grid item xs={12} sm={6} md={4}>
       <LocalizedLink
@@ -59,7 +62,11 @@ const OppilaitosCard = (props) => {
             direction="column"
             spacing={3}>
             <Grid item>
-              <img className={classes.img} alt="logo" src={image || OppilaitosLogo} />
+              <img
+                className={classes.img}
+                alt={t('oppilaitos.oppilaitoksen-logo')}
+                src={image || OppilaitosLogo}
+              />
             </Grid>
             <Grid item className={classes.heading}>
               {heading}

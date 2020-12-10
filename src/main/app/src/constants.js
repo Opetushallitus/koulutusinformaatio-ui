@@ -8,8 +8,10 @@ export const MUI_BREAKPOINTS = {
 export const FILTER_TYPES = {
   KOULUTUSALA: 'koulutusala',
   KOULUTUSTYYPPI: 'koulutustyyppi',
+  KOULUTUSTYYPPI_MUU: 'koulutustyyppi-muu',
   OPETUSKIELI: 'opetuskieli',
   SIJAINTI: 'sijainti',
+  OPETUSTAPA: 'opetustapa',
 };
 export const FILTER_TYPES_ARR = [
   'opetuskieli',

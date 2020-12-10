@@ -11,11 +11,13 @@ import {
   useMediaQuery,
   useTheme,
 } from '@material-ui/core';
-import { SchoolOutlined, TimelapseOutlined } from '@material-ui/icons';
+import { SchoolOutlined, TimelapseOutlined, ExtensionOutlined } from '@material-ui/icons';
+import _ from 'lodash';
 import koulutusPlaceholderImg from '#/src/assets/images/Opolkuhts.png';
 import { MUI_BREAKPOINTS } from '#/src/constants';
 import { educationTypeColorCode } from '#/src/colors';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { Localizer as l } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {
@@ -47,53 +49,62 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 0,
     [theme.breakpoints.up('sm')]: {
       objectFit: 'scale-down',
-      maxHeight: 155,
+      maxHeight: '155px',
     },
   },
 }));
 
-const KoulutusKortti = (props) => {
-  const {
-    nimi,
-    kuvaus,
-    koulutustyyppi,
-    opintojenlaajuus,
-    opintojenlaajuusyksikko,
-    teemakuva,
-    tutkintonimikkeet,
-  } = props;
-  const { t, i18n } = useTranslation();
+const KoulutusKortti = ({ koulutus }) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const classes = useStyles();
   const muiScreenSizeMinSm = useMediaQuery(MUI_BREAKPOINTS.MIN_SM);
-  const tutkintonimikkeetStr = tutkintonimikkeet
-    .reduce((acc, current) => {
-      return acc + current.nimi?.[i18n.language] + ', ';
-    }, '')
-    .replace(/,\s*$/, '');
-  const opintojenlaajuusStr = opintojenlaajuus?.nimi?.[i18n.language];
-  const opintojenlaajuusyksikkoStr = opintojenlaajuusyksikko?.nimi?.[i18n.language];
-  const kuvausStr = (kuvaus) => {
-    const kuvausStr = kuvaus && kuvaus?.[i18n.language];
 
-    if (!kuvausStr) {
-      return t('haku.ei_kuvausta');
-    }
-    const strippedHTMLKuvausStr = kuvausStr.replace(/<[^>]*>/gm, '');
-    if (strippedHTMLKuvausStr.length > 255) {
-      return `${strippedHTMLKuvausStr.slice(0, 250)}...`;
-    }
-    return strippedHTMLKuvausStr;
-  };
+  const kuvaus =
+    _.truncate(
+      l
+        .localize(koulutus?.kuvaus)
+        .replaceAll('</li>', ',</li>')
+        .replaceAll('.,</li>', '.</li>')
+        .replace(/<[^>]*>/gm, ''),
+      { length: 255 }
+    ) || t('haku.ei_kuvausta');
+  const isOsaamisalaOrTutkinnonOsa = _.includes(
+    ['amm-osaamisala', 'amm-tutkinnon-osa'],
+    koulutus?.koulutustyyppi
+  );
+  const tutkintoNimikkeet = isOsaamisalaOrTutkinnonOsa
+    ? t(`haku.${koulutus?.koulutustyyppi}`)
+    : (koulutus?.tutkintonimikkeet || [])
+        .map((nimike) => l.localize(nimike))
+        .join(', ')
+        .replace(/,\s*$/, '') || t('haku.ei-tutkintonimiketta');
+  const colorCode =
+    educationTypeColorCode[koulutus?.koulutustyyppi] || educationTypeColorCode.muu;
+
+  function getOpintojenLaajuus() {
+    const tutkinnotOsat = koulutus?.tutkinnonOsat || [];
+    const opintojenLaajuusNumero =
+      koulutus?.opintojenLaajuusNumero ||
+      tutkinnotOsat.map((k) => k?.opintojenLaajuusNumero).join(' + ');
+    const opintojenLaajuusYksikko =
+      l.localize(
+        koulutus?.opintojenLaajuusyksikko ||
+          _.find(tutkinnotOsat, 'opintojenLaajuusyksikko')?.opintojenLaajuusyksikko
+      ) || '';
+    const opintojenLaajuus = `${opintojenLaajuusNumero} ${opintojenLaajuusYksikko}`.trim();
+    return opintojenLaajuus || t('haku.ei-opintojenlaajuutta');
+  }
 
   return (
-    <LocalizedLink underline="none" component={RouterLink} to={props.link}>
+    <LocalizedLink
+      underline="none"
+      component={RouterLink}
+      to={`/koulutus/${koulutus?.oid}`}>
       <Paper
+        data-cy={koulutus?.oid}
         classes={{ root: classes.paperRoot }}
-        style={{
-          borderTop: `5px solid ${educationTypeColorCode[koulutustyyppi] ||
-            educationTypeColorCode.muu}`,
-        }}>
+        style={{ borderTop: `5px solid ${colorCode}` }}>
         <Grid container alignItems="stretch" style={{ minHeight: 210 }} spacing={3}>
           <Grid
             container
@@ -107,7 +118,7 @@ const KoulutusKortti = (props) => {
             direction="column">
             <Grid item>
               <Typography variant="h6" style={{ fontWeight: 'bold' }}>
-                {nimi?.[i18n.language]}
+                {l.localize(koulutus)}
               </Typography>
             </Grid>
             <Hidden xsDown>
@@ -120,7 +131,7 @@ const KoulutusKortti = (props) => {
                 wrap="nowrap"
                 justify="space-between">
                 <Grid item lg={12} md={8} sm={8} xs={12}>
-                  <Typography>{kuvausStr(kuvaus)}</Typography>
+                  <Typography>{kuvaus}</Typography>
                 </Grid>
                 <Hidden lgUp xsDown>
                   <Grid
@@ -133,8 +144,10 @@ const KoulutusKortti = (props) => {
                     style={{ paddingRight: 0 }}>
                     <Avatar
                       classes={{ root: classes.avatarRoot }}
-                      src={teemakuva || koulutusPlaceholderImg}
-                      alt="haku koulutukseen"
+                      src={koulutus?.teemakuva || koulutusPlaceholderImg}
+                      alt={`${l.localize(koulutus)} ${t(
+                        'koulutus.koulutuksen-teemakuva'
+                      )}`}
                     />
                   </Grid>
                 </Hidden>
@@ -144,13 +157,17 @@ const KoulutusKortti = (props) => {
             <Grid item container direction="row" spacing={muiScreenSizeMinSm ? 2 : 0}>
               <Grid item container md={6} sm={6} xs={12}>
                 <Grid item xs={1}>
-                  <SchoolOutlined />
+                  {isOsaamisalaOrTutkinnonOsa ? (
+                    <ExtensionOutlined />
+                  ) : (
+                    <SchoolOutlined />
+                  )}
                 </Grid>
                 <Grid item xs={11}>
-                  <Typography style={{ marginLeft: theme.spacing(1) }}>
-                    {tutkintonimikkeetStr
-                      ? tutkintonimikkeetStr
-                      : t('haku.ei-tutkintonimiketta')}
+                  <Typography
+                    data-cy={`tutkintonimikkeet-${koulutus?.oid}`}
+                    style={{ marginLeft: theme.spacing(1) }}>
+                    {tutkintoNimikkeet}
                   </Typography>
                 </Grid>
               </Grid>
@@ -159,10 +176,10 @@ const KoulutusKortti = (props) => {
                   <TimelapseOutlined />
                 </Grid>
                 <Grid item xs={11}>
-                  <Typography style={{ marginLeft: theme.spacing(1) }}>
-                    {opintojenlaajuusStr && opintojenlaajuusyksikkoStr
-                      ? `${opintojenlaajuusStr} ${opintojenlaajuusyksikkoStr}`
-                      : t('haku.ei-opintojenlaajuutta')}
+                  <Typography
+                    data-cy={`opintojenlaajuus-${koulutus?.oid}`}
+                    style={{ marginLeft: theme.spacing(1) }}>
+                    {getOpintojenLaajuus()}
                   </Typography>
                 </Grid>
               </Grid>
@@ -175,8 +192,8 @@ const KoulutusKortti = (props) => {
                   root: classes.avatarRoot,
                   img: classes.avatarImg,
                 }}
-                src={teemakuva || koulutusPlaceholderImg}
-                alt="haku koulutukseen"
+                src={koulutus?.teemakuva || koulutusPlaceholderImg}
+                alt={`${l.localize(koulutus)} ${t('koulutus.koulutuksen-teemakuva')}`}
               />
             </Grid>
           </Hidden>
