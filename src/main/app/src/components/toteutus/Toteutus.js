@@ -3,7 +3,7 @@ import ContentWrapper from '../common/ContentWrapper';
 import { Box, Typography, makeStyles, Grid } from '@material-ui/core';
 import { HashLink } from 'react-router-hash-link';
 import { colors } from '#/src/colors';
-import ToteutusInfoGrid from './ToteutusInfoGrid';
+import { ToteutusInfoGrid } from './ToteutusInfoGrid';
 import ToteutusHakukohteet from './ToteutusHakukohteet';
 import clsx from 'clsx';
 import { useParams } from 'react-router-dom';
@@ -173,6 +173,7 @@ const Toteutus = () => {
             koulutusTyyppi={toteutus?.metadata?.tyyppi}
             nimikkeet={toteutus?.metadata?.ammattinimikkeet}
             kielet={opetus?.opetuskieli}
+            opetuskieletKuvaus={opetus?.opetuskieletKuvaus}
             laajuus={[koulutus?.opintojenLaajuus, koulutus?.opintojenLaajuusYksikkö]}
             aloitus={[
               opetus?.koulutuksenTarkkaAlkamisaika,
@@ -182,10 +183,15 @@ const Toteutus = () => {
             ]}
             suunniteltuKestoVuodet={opetus?.suunniteltuKestoVuodet}
             suunniteltuKestoKuukaudet={opetus?.suunniteltuKestoKuukaudet}
+            suunniteltuKestoKuvaus={opetus?.suunniteltuKestoKuvaus}
             opetusaika={opetus?.opetusaika}
+            opetusaikaKuvaus={opetus?.opetusaikaKuvaus}
             opetustapa={opetus?.opetustapa}
+            opetustapaKuvaus={opetus?.opetustapaKuvaus}
             maksullisuus={opetus?.onkoMaksullinen && opetus?.maksunMaara}
+            maksullisuusKuvaus={opetus?.maksullisuusKuvaus}
             apuraha={opetus?.onkoStipendia && opetus?.stipendinMaara}
+            apurahaKuvaus={opetus?.stipendinKuvaus}
           />
         </Box>
         {toteutus?.hakuAukiType && (

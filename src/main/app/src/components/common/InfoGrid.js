@@ -1,6 +1,15 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles, Typography, Grid, Paper, Icon, Box } from '@material-ui/core';
+import {
+  makeStyles,
+  Typography,
+  Grid,
+  IconButton,
+  Paper,
+  Icon,
+  Box,
+  Tooltip,
+} from '@material-ui/core';
 import { colors } from '#/src/colors';
 import Spacer from './Spacer';
 import KoulutusAsteIcon from '#/src/assets/images/koulutusaste.svg';
@@ -43,6 +52,14 @@ const useStyles = makeStyles((theme) => ({
     width: '70%',
     paddingTop: '62px',
     paddingBottom: '62px',
+  },
+  bgColor: {
+    backgroundColor: 'white',
+    color: colors.black,
+    padding: '15px',
+  },
+  arrow: {
+    color: 'white',
   },
 }));
 
@@ -92,13 +109,31 @@ const InfoGrid = (props) => {
                 container
                 direction="column"
                 wrap="nowrap">
-                <Grid item>
-                  <Typography
-                    className={clsx(classes.title, classes.text)}
-                    variant="body1"
-                    component="h3">
-                    {e.title}
-                  </Typography>
+                <Grid item container spacing={1} wrap="nowrap" alignItems="flex-start">
+                  <Grid item>
+                    <Typography
+                      className={clsx(classes.title, classes.text)}
+                      variant="body1"
+                      noWrap
+                      component="h3">
+                      {e.title}
+                    </Typography>
+                  </Grid>
+                  {e?.modalData?.text && (
+                    <Grid item>
+                      <Tooltip
+                        classes={{ tooltip: classes.bgColor, arrow: classes.arrow }}
+                        enterTouchDelay={0}
+                        leaveTouchDelay={15000}
+                        interactive
+                        arrow
+                        title={e?.modalData?.text}>
+                        <IconButton style={{ padding: 0, minHeight: 0, minWidth: 0 }}>
+                          {e?.modalData?.icon}
+                        </IconButton>
+                      </Tooltip>
+                    </Grid>
+                  )}
                 </Grid>
                 <Grid item>
                   {e.text.split('\n').map((line, i) => (
