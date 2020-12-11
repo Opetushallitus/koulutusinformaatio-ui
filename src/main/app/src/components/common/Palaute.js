@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import superagent from 'superagent';
 import { observer } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -16,7 +15,7 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import Star from '@material-ui/icons/Star';
-import { urls } from 'oph-urls-js';
+import { sendPalaute } from '#/src/api/konfoApi';
 
 const useStyles = makeStyles((theme) => ({
   fullWidth: {
@@ -79,13 +78,7 @@ const Palaute = (props) => {
 
     const handleSubmit = (event, arvosana, palaute) => {
       event.preventDefault();
-      return superagent
-        .post(urls.url('konfo-backend.palaute'))
-        .set('Caller-Id', '1.2.246.562.10.00000000001.konfoui')
-        .send('arvosana=' + arvosana)
-        .send('palaute=' + palaute)
-        .send('path=' + window.location.pathname)
-        .catch((e) => console.log(e));
+      return sendPalaute({ arvosana, palaute });
     };
     const handleArvosanaHoverChange = (star) =>
       setState({ ...state, arvosanaHover: star });

@@ -1,16 +1,14 @@
-import { Typography, Box } from '@material-ui/core';
 import React from 'react';
-import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
-import { first } from 'lodash';
-import Grid from '@material-ui/core/Grid';
-import hyphenated from '#/src/components/valintaperusteet/hyphenated';
+import { Typography, Box, Grid } from '@material-ui/core';
+import { Localizer as l, toId } from '#/src/tools/Utils';
+import { LocalizedHTML } from './LocalizedHTML';
 
 const Headers = ['h1', 'h2', 'h3', 'h4', 'h5'];
 const isHeader = (tag) => Headers.includes(tag);
 const tagHeaders = (node) => {
   if (isHeader(node.name)) {
     const text = node.children[0].data;
-    const id = hyphenated(text);
+    const id = toId(text);
     const isH1 = 'h1' === node.name;
     return (
       <Box pb={0.33} pt={isH1 ? 0.5 : 0} key={id}>
@@ -22,26 +20,19 @@ const tagHeaders = (node) => {
   }
 };
 
-const Sora = ({ metadata: { kuvaus }, nimi }) => {
-  const lang = l.getLanguage();
-  const html = kuvaus[lang] || first(Object.values(kuvaus));
-
+export const Sora = ({ metadata: { kuvaus }, nimi }) => {
   return (
     <>
       <Grid container spacing={2} justify="flex-start" alignItems="flex-start">
         <Grid item xs={12} sm={12} md={12}>
           <Box py={2}>
-            <Typography id={hyphenated(l.localize(nimi))} variant="h2">
+            <Typography id={toId(l.localize(nimi))} variant="h2">
               {l.localize(nimi)}
             </Typography>
           </Box>
-          {sanitizedHTMLParser(html, {
-            transform: tagHeaders,
-          })}
+          <LocalizedHTML data={kuvaus} transform={tagHeaders} />
         </Grid>
       </Grid>
     </>
   );
 };
-
-export default Sora;

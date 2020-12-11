@@ -1,4 +1,4 @@
-import { isHakuAuki } from '../toteutusSlice';
+import { isHakuAuki } from './hakuaikaUtils';
 
 describe('toteutus slice', () => {
   const mockDate = new Date('2020-10-15T12:24');

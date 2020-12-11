@@ -2,17 +2,18 @@ import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import superagent from 'superagent';
 import { MuiThemeProvider } from '@material-ui/core';
-import { getKonfoStore } from './store';
-import { theme } from './theme';
-import App from './App';
 import 'typeface-open-sans';
-import configure from './urls/urlUtil';
-import ScrollToTop from './ScrollToTop';
 
-import './tools/i18n';
-import { LoadingCircle } from './components/common/LoadingCircle';
+import { getKonfoStore } from '#/src/store';
+import { theme } from '#/src/theme';
+import { configureUrls } from '#/src/urls';
+import { configureI18n } from '#/src/tools/i18n';
+import { LoadingCircle } from '#/src/components/common/LoadingCircle';
+import { postClientError } from '#/src/api/konfoApi';
+import { useQueryOnce } from '#/src/hooks';
+import ScrollToTop from '#/src/ScrollToTop';
+import App from '#/src/App';
 
 if ('serviceWorker' in navigator) {
   if (!window.Cypress) {
@@ -33,7 +34,7 @@ if ('serviceWorker' in navigator) {
 }
 
 window.onerror = (errorMsg, url, line, col, errorObj) => {
-  superagent.post('/konfo-backend/client-error').send({
+  postClientError({
     'error-message': errorMsg,
     url: url,
     line: line,
@@ -43,15 +44,27 @@ window.onerror = (errorMsg, url, line, col, errorObj) => {
   });
 };
 
-configure();
+const InitGate = ({ children }) => {
+  const { status: urlStatus } = useQueryOnce('urls', configureUrls);
+  const { status: i18nStatus } = useQueryOnce('i18n', configureI18n);
+  if ([urlStatus, i18nStatus].includes('loading')) {
+    return <LoadingCircle />;
+  } else if ([urlStatus, i18nStatus].includes('error')) {
+    return <div>Sovelluksen lataaminen epäonnistui!</div>;
+  } else {
+    return children;
+  }
+};
 
 ReactDOM.render(
   <Suspense fallback={<LoadingCircle />}>
     <Provider store={getKonfoStore()}>
       <BrowserRouter basename={'/konfo'}>
         <MuiThemeProvider theme={theme}>
-          <ScrollToTop />
-          <App />
+          <InitGate>
+            <ScrollToTop />
+            <App />
+          </InitGate>
         </MuiThemeProvider>
       </BrowserRouter>
     </Provider>
