@@ -4,13 +4,16 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles, Link } from '@material-ui/core';
 import clsx from 'clsx';
 import Grid from '@material-ui/core/Grid';
-import { colors } from '../../colors';
+import { colors } from '#/src/colors';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import { observer } from 'mobx-react-lite';
-import OpetushallitusIcon from '../../assets/images/OpetushallitusIcon.svg';
-import OPHIcon from '../../assets/images/OPH logo.png';
+import OPOLogoFooterFI from '#/src/assets/images/OpetushallitusIcon.svg';
+import OPOLogoFooterSV from '#/src/assets/images/OPO_Logo_Footer_ruotsi.svg';
+import OPOLogoFooterEN from '#/src/assets/images/OPO_Logo_Footer_englanti.svg';
+import OPHIcon from '#/src/assets/images/OPH logo.png';
 import Box from '@material-ui/core/Box';
-import { useStores } from '../../hooks';
+import { useStores } from '#/src/hooks';
+import { Localizer as l } from '#/src/tools/Utils';
 
 const useStyles = makeStyles({
   footer: {
@@ -80,6 +83,20 @@ const Footer = () => {
       },
     },
   };
+
+  const OpintopolkuFooterLogo = () => {
+    switch (l.getLanguage()) {
+      case 'fi':
+        return OPOLogoFooterFI;
+      case 'en':
+        return OPOLogoFooterEN;
+      case 'sv':
+        return OPOLogoFooterSV;
+      default:
+        return OPOLogoFooterFI;
+    }
+  };
+
   return (
     <footer>
       <div
@@ -93,7 +110,7 @@ const Footer = () => {
               <img
                 alt={t('opintopolku.brand')}
                 className={classes.ophIcon}
-                src={OpetushallitusIcon}
+                src={OpintopolkuFooterLogo()}
               />
             </div>
           </Grid>

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MenuIcon from '@material-ui/icons/Menu';
-import { colors } from '../../colors';
-import HeaderIcon from '../../assets/images/Header.svg';
+import { colors } from '#/src/colors';
+import OPOLogoFI from '#/src/assets/images/OPO_Logo_Header_suomi.svg';
+import OPOLogoSV from '#/src/assets/images/OPO_Logo_Header_ruotsi.svg';
+import OPOLogoEN from '#/src/assets/images/OPO_Logo_Header_englanti.svg';
 import { Link as RouterLink } from 'react-router-dom';
 import {
   Box,
@@ -19,6 +21,7 @@ import LocalizedLink from '#/src/components/common/LocalizedLink';
 import BetaBanner from '#/src/components/common/BetaBanner';
 import clsx from 'clsx';
 import LanguageDropDown from './LanguageDropDown';
+import { Localizer as l } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: {
@@ -67,6 +70,20 @@ const Header = (props) => {
   const classes = useStyles();
   const { toggleMenu, isOpen } = props;
   const [betaBanner, setBetaBanner] = useState(true);
+
+  const OpintopolkuHeaderLogo = () => {
+    switch (l.getLanguage()) {
+      case 'fi':
+        return OPOLogoFI;
+      case 'en':
+        return OPOLogoEN;
+      case 'sv':
+        return OPOLogoSV;
+      default:
+        return OPOLogoFI;
+    }
+  };
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -85,7 +102,7 @@ const Header = (props) => {
           </IconButton>
           <LocalizedLink component={RouterLink} to={`/`}>
             <Icon className={classes.icon}>
-              <img alt={t('opintopolku.brand')} src={HeaderIcon} />
+              <img alt={t('opintopolku.brand')} src={OpintopolkuHeaderLogo()} />
             </Icon>
           </LocalizedLink>
           <Chip
