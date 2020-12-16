@@ -35,10 +35,10 @@ import {
 import { getHakupalkkiProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { colors } from '#/src/colors';
 import { theme } from '#/src/theme';
-import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
 import HakupalkkiFilters from './HakupalkkiFilters';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
 import MobileFiltersOnTopMenu from '../hakutulos/MobileFiltersOnTopMenu';
+import { useQueryParams } from '#/src/hooks';
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -158,7 +158,7 @@ const Hakupalkki = () => {
     koulutusFilters,
     showHakutulosFilters,
   } = useSelector(getHakupalkkiProps);
-  const apiRequestParams = useSelector(getAPIRequestParams);
+  const apiRequestParams = useQueryParams();
   const etusivuPath = `/${i18n.language}/`;
   const isAtEtusivu = location.pathname === etusivuPath;
 
@@ -175,7 +175,7 @@ const Hakupalkki = () => {
   }, [isAtEtusivu, dispatch, showHakutulosFilters]);
 
   function handleDesktopBtnClick(e) {
-    dispatch(searchAll(getAPIRequestParams));
+    dispatch(searchAll(apiRequestParams));
     dispatch(toggleshowHakutulosFilters());
     window.scrollTo({
       top: 250,
@@ -185,7 +185,7 @@ const Hakupalkki = () => {
     setAnchorEl(e.currentTarget);
   }
   function handleMobileBtnClick() {
-    dispatch(searchAll(getAPIRequestParams));
+    dispatch(searchAll(apiRequestParams));
     dispatch(toggleshowHakutulosFilters());
   }
   function handleClose() {

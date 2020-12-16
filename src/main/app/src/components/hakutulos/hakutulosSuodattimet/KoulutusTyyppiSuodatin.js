@@ -15,10 +15,7 @@ import {
 } from '@material-ui/core';
 import { ExpandMore, IndeterminateCheckBoxOutlined } from '@material-ui/icons';
 import { twoLevelFilterUpdateAndSearch } from '#/src/store/reducers/hakutulosSlice';
-import {
-  getAPIRequestParams,
-  getKoulutustyyppiFilterProps,
-} from '#/src/store/reducers/hakutulosSliceSelector';
+import { getKoulutustyyppiFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   SuodatinCheckbox,
   SuodatinAccordion,
@@ -30,6 +27,7 @@ import SummaryContent from './SummaryContent';
 import { Localizer as l } from '#/src/tools/Utils';
 import { FILTER_TYPES } from '#/src/constants';
 import { colors } from '#/src/colors';
+import { useQueryParams } from '#/src/hooks';
 
 const withStyles = makeStyles(() => ({
   noBoxShadow: {
@@ -71,7 +69,7 @@ const KoulutustyyppiSuodatin = ({
     checkedKoulutustyypitStr,
     checkedKoulutustyypitKeys,
   } = useSelector(getKoulutustyyppiFilterProps);
-  const apiRequestParams = useSelector(getAPIRequestParams);
+  const apiRequestParams = useQueryParams();
 
   const [isMuuSelected, setIsMuuSelected] = useState(false);
   const koulutustyyppiOrKoulutusTyyppiMuu = isMuuSelected

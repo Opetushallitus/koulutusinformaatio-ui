@@ -6,14 +6,12 @@ import MuiFlatPagination from 'material-ui-flat-pagination';
 import { CssBaseline, makeStyles } from '@material-ui/core';
 import { ChevronLeftOutlined, ChevronRightOutlined } from '@material-ui/icons';
 
-import {
-  getHakutulosPagination,
-  getAPIRequestParams,
-} from '#/src/store/reducers/hakutulosSliceSelector';
+import { getHakutulosPagination } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   searchKoulutukset,
   searchOppilaitokset,
 } from '#/src/store/reducers/hakutulosSlice';
+import { useQueryParams } from '#/src/hooks';
 
 const useStyles = makeStyles((theme) => ({
   sizeSmall: {
@@ -42,7 +40,7 @@ const Pagination = ({ size }) => {
   const classes = useStyles();
 
   const paginationProps = useSelector(getHakutulosPagination);
-  const apiRequestParams = useSelector(getAPIRequestParams);
+  const apiRequestParams = useQueryParams();
   const dispatch = useDispatch();
 
   const [total, setTotal] = useState(0);

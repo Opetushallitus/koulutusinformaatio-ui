@@ -5,13 +5,11 @@ import { useTranslation } from 'react-i18next';
 import qs from 'query-string';
 import { Grid, Typography, ButtonGroup, Button, makeStyles } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
-import {
-  getMobileToggleOrderByButtonMenuProps,
-  getAPIRequestParams,
-} from '#/src/store/reducers/hakutulosSliceSelector';
+import { getMobileToggleOrderByButtonMenuProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { setSort, setOrder, searchAll } from '#/src/store/reducers/hakutulosSlice';
 import { colors } from '#/src/colors';
 import { Common as C } from '#/src/tools/Utils';
+import { useQueryParams } from '#/src/hooks';
 
 const useStyles = makeStyles((theme) => ({
   buttonActive: {
@@ -38,7 +36,7 @@ const MobileToggleOrderByButtonMenu = ({ elevation }) => {
   const history = useHistory();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const apiRequstParams = useSelector(getAPIRequestParams);
+  const apiRequstParams = useQueryParams();
   const mobileToggleOrderByButtonMenuProps = useSelector(
     getMobileToggleOrderByButtonMenuProps
   );
