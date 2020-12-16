@@ -1,34 +1,33 @@
-import React, { useEffect } from 'react';
-import _ from 'lodash';
-import { observer } from 'mobx-react-lite';
-import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
-import { urls } from 'oph-urls-js';
+import { Box, Link as MuiLink, makeStyles, Typography } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import { Link as MuiLink, Typography, Box, makeStyles } from '@material-ui/core';
-import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
-import HtmlTextBox from '#/src/components/common/HtmlTextBox';
+import clsx from 'clsx';
+import _ from 'lodash';
+import { urls } from 'oph-urls-js';
+import React, { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import Accordion from '#/src/components/common/Accordion';
 import ContentWrapper from '#/src/components/common/ContentWrapper';
+import HtmlTextBox from '#/src/components/common/HtmlTextBox';
+import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import Murupolku from '#/src/components/common/Murupolku';
+import Spacer from '#/src/components/common/Spacer';
+import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
+import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   fetchKoulutusWithRelatedData,
   selectKoulutus,
-  selectSuositellutKoulutukset,
   selectLoading,
+  selectSuositellutKoulutukset,
   selectTulevatJarjestajat,
 } from '#/src/store/reducers/koulutusSlice';
-import { LoadingCircle } from '#/src/components/common/LoadingCircle';
-import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
-import Spacer from '#/src/components/common/Spacer';
-import Accordion from '#/src/components/common/Accordion';
-import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
+import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
+import { useUrlParams } from '../hakutulos/UseUrlParams';
+import { KoulutusInfoGrid } from './KoulutusInfoGrid';
 import SuositusKoulutusList from './SuositusKoulutusList';
 import { ToteutusList } from './ToteutusList';
 import TulevaJarjestajaList from './TulevaJarjestajaList';
-import KoulutusInfoGrid from './KoulutusInfoGrid';
-import { useUrlParams } from '../hakutulos/UseUrlParams';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },
@@ -72,12 +71,16 @@ const findEperuste = (koulutus) => (id) =>
 const findTutkinnonOsa = (eperuste) => (id) =>
   _.first(eperuste.tutkinnonOsat.filter((t) => t.id === id));
 
-const Koulutus = () => {
+const getKuvausHtmlSection = (t) => (captionKey, localizableText) =>
+  localizableText ? '<h3>' + t(captionKey) + '</h3>' + l.localize(localizableText) : '';
+
+export const Koulutus = () => {
   const { isDraft } = useUrlParams();
   const dispatch = useDispatch();
   const classes = useStyles();
   const { oid } = useParams();
   const { t } = useTranslation();
+  const getHtmlSection = useMemo(() => getKuvausHtmlSection(t), [t]);
 
   // TODO: There is absolutely no error handling atm.
   const koulutus = useSelector(selectKoulutus(oid), shallowEqual);
@@ -96,41 +99,30 @@ const Koulutus = () => {
     }
   }, [dispatch, koulutus, oid, isDraft]);
 
-  const getKuvausHtmlSection = (captionKey, localizableText) => {
-    return localizableText
-      ? '<h3>' + t(captionKey) + '</h3>' + l.localize(localizableText)
-      : '';
-  };
-
-  const createKoulutusHtml = () => {
-    if (koulutus?.suorittaneenOsaaminen || koulutus?.tyotehtavatJoissaVoiToimia) {
-      return (
-        getKuvausHtmlSection(
+  // NOTE: This uses HtmlTextBox which needs pure html
+  const createKoulutusHtml = () =>
+    koulutus?.suorittaneenOsaaminen || koulutus?.tyotehtavatJoissaVoiToimia
+      ? getHtmlSection(
           'koulutus.suorittaneenOsaaminen',
           koulutus?.suorittaneenOsaaminen
         ) +
-        getKuvausHtmlSection(
+        getHtmlSection(
           'koulutus.tyotehtavatJoissaVoiToimia',
           koulutus?.tyotehtavatJoissaVoiToimia
         )
-      );
-    } else {
-      return l.localize(koulutus?.kuvaus);
-    }
-  };
+      : l.localize(koulutus?.kuvaus);
 
-  const createTutkinnonOsaHtml = (tutkinnonOsa) => {
-    return (
-      getKuvausHtmlSection(
+  const createTutkinnonOsa = (tutkinnonOsa) =>
+    sanitizedHTMLParser(
+      getHtmlSection(
         'koulutus.ammattitaitovaatimukset',
         tutkinnonOsa.ammattitaitovaatimukset
       ) +
-      getKuvausHtmlSection(
-        'koulutus.ammattitaidonOsoitamistavat',
-        tutkinnonOsa.ammattitaidonOsoittamistavat
-      )
+        getHtmlSection(
+          'koulutus.ammattitaidonOsoitamistavat',
+          tutkinnonOsa.ammattitaidonOsoittamistavat
+        )
     );
-  };
 
   return loading ? (
     <LoadingCircle />
@@ -207,7 +199,7 @@ const Koulutus = () => {
                 title,
                 content: (
                   <>
-                    {sanitizedHTMLParser(createTutkinnonOsaHtml(foundTutkinnonOsa))}
+                    {createTutkinnonOsa(foundTutkinnonOsa)}
                     <MuiLink
                       target="_blank"
                       rel="noopener"
@@ -243,5 +235,3 @@ const Koulutus = () => {
     </ContentWrapper>
   );
 };
-
-export default observer(Koulutus);

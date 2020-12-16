@@ -304,7 +304,7 @@ const Toteutus = () => {
             titleTranslation="koulutus.lisätietoa"
             data={toteutus.metadata.opetus.lisatiedot.map((lisatieto) => ({
               title: l.localize(lisatieto.otsikko),
-              content: l.localize(lisatieto.teksti),
+              content: sanitizedHTMLParser(l.localize(lisatieto.teksti)),
             }))}
           />
         )}

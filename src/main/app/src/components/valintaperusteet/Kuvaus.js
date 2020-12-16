@@ -25,14 +25,14 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-const HeaderCell = withStyles((theme) => ({
+const HeaderCell = withStyles(() => ({
   head: {
     backgroundColor: colors.green,
     color: colors.white,
   },
 }))(TableCell);
 
-const SubHeaderCell = withStyles((theme) => ({
+const SubHeaderCell = withStyles(() => ({
   head: {
     fontWeight: 'bold',
   },
@@ -57,17 +57,16 @@ const tagHeaders = (node) => {
   }
 };
 
-const Teksti = ({ data }) => {
-  return (
-    <Grid item xs={12} sm={12} md={12}>
-      <LocalizedHTML data={data} transform={tagHeaders} />
-    </Grid>
-  );
-};
+const Teksti = ({ data }) => (
+  <Grid item xs={12} sm={12} md={12}>
+    <LocalizedHTML data={data} transform={tagHeaders} />
+  </Grid>
+);
+
 const Taulukko = ({ data: { rows } }) => {
   const { t } = useTranslation();
 
-  const subTables = (rows || []).reduce((total, row) => {
+  const subTables = rows?.reduce((total, row) => {
     if (row.isHeader || _.isEmpty(total)) {
       total.push({ header: [], body: [] });
     }
@@ -102,7 +101,7 @@ const Taulukko = ({ data: { rows } }) => {
             size="small"
             aria-label={t('valintaperuste.taulukko')}>
             <TableHead>
-              {(spanCells || []).map((row, idx) => (
+              {spanCells?.map((row, idx) => (
                 <TableRow key={`row-${idx}`}>
                   {row.columns.map((col, idx) => (
                     <Cell key={`cell-${idx}`} align="left" colSpan={col.span}>
@@ -113,7 +112,7 @@ const Taulukko = ({ data: { rows } }) => {
               ))}
             </TableHead>
             <TableBody>
-              {(body || []).map((row, idx) => (
+              {body?.map((row, idx) => (
                 <StyledTableRow key={`row-${idx}`}>
                   {row.columns.map((col, idx) => (
                     <TableCell key={`cell-${idx}`} align="left">
@@ -149,16 +148,14 @@ const Sisalto = ({ tyyppi, ...props }, index) => {
   }
 };
 
-const Valintatapa = (props, index) => {
-  return (
-    <div key={`valintatapa-${index}`}>
-      <Box pb={1}>
-        <Typography variant="h2">{l.localize(props?.nimi)}</Typography>
-      </Box>
-      {props.sisalto.map(Sisalto)}
-    </div>
-  );
-};
+const Valintatapa = (props, index) => (
+  <div key={`valintatapa-${index}`}>
+    <Box pb={1}>
+      <Typography variant="h2">{l.localize(props?.nimi)}</Typography>
+    </Box>
+    {props.sisalto.map(Sisalto)}
+  </div>
+);
 
 export const KuvausSisallysluettelo = (kuvaus) => (Lnk) => {
   const onlyHeaders = (node) => {

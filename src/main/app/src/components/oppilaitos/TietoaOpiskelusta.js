@@ -1,13 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Typography, Container } from '@material-ui/core';
-import { Localizer as l } from '#/src/tools/Utils';
+import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
 import Spacer from '#/src/components/common/Spacer';
 import Accordion from '../common/Accordion';
 
-const TietoaOpiskelusta = (props) => {
-  const { className, heading, tietoaOpiskelusta = [] } = props;
-
+export const TietoaOpiskelusta = ({ className, heading, tietoaOpiskelusta = [] }) => {
   const { t } = useTranslation();
 
   return (
@@ -24,7 +22,7 @@ const TietoaOpiskelusta = (props) => {
           <Accordion
             items={tietoaOpiskelusta.map((lisatieto) => ({
               title: l.localize(lisatieto.otsikko),
-              content: l.localize(lisatieto.teksti),
+              content: sanitizedHTMLParser(l.localize(lisatieto.teksti)),
             }))}
           />
         </Container>
@@ -34,5 +32,3 @@ const TietoaOpiskelusta = (props) => {
     </Box>
   );
 };
-
-export default TietoaOpiskelusta;

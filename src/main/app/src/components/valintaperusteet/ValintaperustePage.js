@@ -134,7 +134,7 @@ export const ValintaperustePage = () => {
           <Grid item xs={12} sm={12} md={6}>
             <Kuvaus kuvaus={kuvaus} valintatavat={valintatavat} />
             <Valintakokeet valintakokeet={valintakokeet} />
-            {valintaperuste.sorakuvaus ? <Sora {...valintaperuste.sorakuvaus} /> : null}
+            {valintaperuste.sorakuvaus && <Sora {...valintaperuste.sorakuvaus} />}
             <Liitteet {...hakukohde} />
           </Grid>
         </Grid>

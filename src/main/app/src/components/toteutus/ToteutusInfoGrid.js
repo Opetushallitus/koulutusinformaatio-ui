@@ -14,10 +14,8 @@ import { makeStyles } from '@material-ui/styles';
 import { Localizer as l } from '#/src/tools/Utils';
 import { format } from 'date-fns';
 import { KOULUTUS_TYYPPI } from '#/src/constants';
-import urlRegexSafe from 'url-regex-safe';
 import _ from 'lodash';
-import { Typography, Box } from '@material-ui/core';
-import LocalizedLink from '../common/LocalizedLink';
+import { sanitizedHTMLParser } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({
   koulutusInfoGridIcon: {
@@ -75,28 +73,7 @@ export const ToteutusInfoGrid = (props) => {
     suunniteltuKestoVuodet,
     suunniteltuKestoKuukaudet
   );
-  const KuvausWithLinks = ({ kuvausObj }) => {
-    const kuvaus = l.localize(kuvausObj);
-    const kuvausWithoutUrls = kuvaus?.replaceAll(urlRegexSafe(), '').trim();
-    const linksArray = kuvaus?.match(urlRegexSafe()) || [];
-    const KuvausLinks = linksArray?.map((link) => (
-      <Typography component="p" variant="body2" key={_.uniqueId('link_')}>
-        <LocalizedLink target="_blank" href={link}>
-          {link}
-        </LocalizedLink>
-      </Typography>
-    ));
-    return (
-      <>
-        <Typography component="h5" variant="body2">
-          {kuvausWithoutUrls}
-        </Typography>
-        {!_.isEmpty(KuvausLinks) > 0 && (
-          <Box style={{ marginTop: '5px' }}>{KuvausLinks}</Box>
-        )}
-      </>
-    );
-  };
+
   const aloitusString = aloitus[0]
     ? format(new Date(aloitus[1]), 'd.M.y')
     : `${l.localize(aloitus[2])} ${aloitus[3]}`;
@@ -130,9 +107,9 @@ export const ToteutusInfoGrid = (props) => {
       text: kieliString,
       modalData: {
         icon: <InfoOutlined />,
-        text: !_.isEmpty(opetuskieletKuvaus) && (
-          <KuvausWithLinks kuvausObj={opetuskieletKuvaus} />
-        ),
+        text:
+          !_.isEmpty(opetuskieletKuvaus) &&
+          sanitizedHTMLParser(l.localize(opetuskieletKuvaus)),
       },
     },
     {
@@ -146,9 +123,9 @@ export const ToteutusInfoGrid = (props) => {
       text: kestoString,
       modalData: {
         icon: <InfoOutlined />,
-        text: !_.isEmpty(suunniteltuKestoKuvaus) && (
-          <KuvausWithLinks kuvausObj={suunniteltuKestoKuvaus} />
-        ),
+        text:
+          !_.isEmpty(suunniteltuKestoKuvaus) &&
+          sanitizedHTMLParser(l.localize(suunniteltuKestoKuvaus)),
       },
     },
     {
@@ -162,9 +139,9 @@ export const ToteutusInfoGrid = (props) => {
       text: opetusAikaString,
       modalData: {
         icon: <InfoOutlined />,
-        text: !_.isEmpty(opetusaikaKuvaus) && (
-          <KuvausWithLinks kuvausObj={opetusaikaKuvaus} />
-        ),
+        text:
+          !_.isEmpty(opetusaikaKuvaus) &&
+          sanitizedHTMLParser(l.localize(opetusaikaKuvaus)),
       },
     },
     {
@@ -173,9 +150,9 @@ export const ToteutusInfoGrid = (props) => {
       text: opetustapaString,
       modalData: {
         icon: <InfoOutlined />,
-        text: !_.isEmpty(opetustapaKuvaus) && (
-          <KuvausWithLinks kuvausObj={opetustapaKuvaus} />
-        ),
+        text:
+          !_.isEmpty(opetustapaKuvaus) &&
+          sanitizedHTMLParser(l.localize(opetustapaKuvaus)),
       },
     },
     {
@@ -184,9 +161,9 @@ export const ToteutusInfoGrid = (props) => {
       text: maksullisuusString,
       modalData: {
         icon: <InfoOutlined />,
-        text: !_.isEmpty(maksullisuusKuvaus) && (
-          <KuvausWithLinks kuvausObj={maksullisuusKuvaus} />
-        ),
+        text:
+          !_.isEmpty(maksullisuusKuvaus) &&
+          sanitizedHTMLParser(l.localize(maksullisuusKuvaus)),
       },
     },
     {
@@ -195,7 +172,7 @@ export const ToteutusInfoGrid = (props) => {
       text: apurahaString,
       modalData: {
         icon: <InfoOutlined />,
-        text: !_.isEmpty(apurahaKuvaus) && <KuvausWithLinks kuvausObj={apurahaKuvaus} />,
+        text: !_.isEmpty(apurahaKuvaus) && sanitizedHTMLParser(l.localize(apurahaKuvaus)),
       },
     }
   );

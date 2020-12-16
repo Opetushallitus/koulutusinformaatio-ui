@@ -16,16 +16,8 @@ describe.only('Kuvaus tooltip KOMOTO', function () {
       .within((s) => {
         cy.findByRole('button').click();
       });
-    cy.findByRole('tooltip').within((t) => {
-      cy.findByRole('heading', {
-        name: /tarkemman kuvauksen teksti ja linkki/i,
-      });
-      cy.findByRole('link', { name: 'https://oph.fi' })
-        .should('have.attr', 'href', 'https://oph.fi')
-        .should('have.attr', 'target', '_blank');
-      cy.findByRole('link', { name: 'https://beta.testiopintopolku.fi/konfo/fi/' })
-        .should('have.attr', 'href', 'https://beta.testiopintopolku.fi/konfo/fi/')
-        .should('have.attr', 'target', '_blank');
+    cy.findByRole('tooltip').within(() => {
+      cy.get('a[href*="https://oph.fi"]').should('have.attr', 'target', '_blank');
     });
   });
 });
