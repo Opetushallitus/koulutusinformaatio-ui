@@ -256,20 +256,17 @@ export const getAPIRequestParams = createSelector(
     sijainti,
     selectedSijainti,
     opetustapa
-  ) => {
-    return {
-      keyword,
-      order,
-      sort,
-      size,
-      lng: l.getLanguage(),
-      opetuskieli: getCheckedFiltersIdsStr(opetuskieli),
-      koulutustyyppi: getCheckedFiltersIdsStr(koulutustyyppi),
-      koulutusala: getCheckedFiltersIdsStr(koulutusala),
-      sijainti: getCheckedFiltersIdsStr(_.concat(selectedSijainti, sijainti)),
-      opetustapa: getCheckedFiltersIdsStr(opetustapa),
-    };
-  }
+  ) => ({
+    keyword,
+    order,
+    sort,
+    size,
+    opetuskieli: getCheckedFiltersIdsStr(opetuskieli),
+    koulutustyyppi: getCheckedFiltersIdsStr(koulutustyyppi),
+    koulutusala: getCheckedFiltersIdsStr(koulutusala),
+    sijainti: getCheckedFiltersIdsStr(_.concat(selectedSijainti, sijainti)),
+    opetustapa: getCheckedFiltersIdsStr(opetustapa),
+  })
 );
 
 export const getHakuUrl = createSelector(

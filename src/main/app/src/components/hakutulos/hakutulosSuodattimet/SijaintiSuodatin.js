@@ -22,9 +22,8 @@ import {
   setSelectedSijainti,
 } from '#/src/store/reducers/hakutulosSlice';
 import {
-  getAPIRequestParams,
-  getSijaintiFilterProps,
   getIsLoading,
+  getSijaintiFilterProps,
 } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   SuodatinCheckbox,
@@ -36,6 +35,7 @@ import {
 import SummaryContent from './SummaryContent';
 import { colors } from '#/src/colors';
 import { Common as C, Localizer as l } from '#/src/tools/Utils';
+import { useQueryParams } from '#/src/hooks';
 
 const useStyles = makeStyles(() => ({
   buttonLabel: {
@@ -106,7 +106,7 @@ export const SijaintiSuodatin = ({
     checkedMaakunnat,
     selectedSijainnitStr = '',
   } = sijaintiFilterProps;
-  const apiRequestParams = useSelector(getAPIRequestParams);
+  const apiRequestParams = useQueryParams();
   const dispatch = useDispatch();
 
   const [showRest, setShowRest] = useState(false);

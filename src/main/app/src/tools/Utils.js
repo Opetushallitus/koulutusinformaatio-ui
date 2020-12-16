@@ -17,7 +17,7 @@ export const koodiUriToPostinumero = (str = '') => {
 
 export const Localizer = {
   getLanguage() {
-    return i18n.languages && i18n.languages[0] ? i18n.language.split('-')[0] : 'fi';
+    return i18n.language;
   },
   lng(nimi, lng) {
     return nimi?.['kieli_' + lng] || nimi?.[lng] || false;

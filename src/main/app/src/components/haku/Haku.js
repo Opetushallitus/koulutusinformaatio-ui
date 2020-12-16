@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import qs from 'query-string';
 import Hakutulos from '../hakutulos/Hakutulos';
-import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
 import { searchAllOnPageReload } from '#/src/store/reducers/hakutulosSlice';
+import { useQueryParams } from '#/src/hooks';
 
 const Haku = () => {
   const history = useHistory();
   const { keyword } = useParams();
-  const apiRequestParams = useSelector(getAPIRequestParams);
+  const apiRequestParams = useQueryParams();
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -23,10 +23,7 @@ import {
   setOrder,
   setSort,
 } from '#/src/store/reducers/hakutulosSlice';
-import {
-  getAPIRequestParams,
-  getHakutulosProps,
-} from '#/src/store/reducers/hakutulosSliceSelector';
+import { getHakutulosProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { Common as C } from '#/src/tools/Utils';
 import Murupolku from '#/src/components/common/Murupolku';
 import BackendErrorMessage from './BackendErrorMessage';
@@ -41,6 +38,7 @@ import HakutulosToggle from './HakutulosToggle';
 import MobileFiltersOnTopMenu from './MobileFiltersOnTopMenu';
 import MobileToggleFiltersButton from './MobileToggleFiltersButton';
 import Pagination from './Pagination';
+import { useQueryParams } from '#/src/hooks';
 
 const useStyles = makeStyles((theme) => ({
   hakutulosSisalto: {
@@ -101,7 +99,7 @@ const Hakutulos = () => {
   const { t } = useTranslation();
 
   const hakutulosProps = useSelector(getHakutulosProps);
-  const apiRequestParams = useSelector(getAPIRequestParams);
+  const apiRequestParams = useQueryParams();
   const error = useSelector((state) => state.hakutulos.error);
   const status = useSelector((state) => state.hakutulos.status);
   const dispatch = useDispatch();

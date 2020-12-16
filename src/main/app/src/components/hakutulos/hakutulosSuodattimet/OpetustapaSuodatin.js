@@ -10,10 +10,7 @@ import {
   searchAll,
   setOpetustapa,
 } from '#/src/store/reducers/hakutulosSlice';
-import {
-  getAPIRequestParams,
-  getOpetustapaFilterProps,
-} from '#/src/store/reducers/hakutulosSliceSelector';
+import { getOpetustapaFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   SuodatinCheckbox,
   SuodatinAccordion,
@@ -23,6 +20,7 @@ import {
 } from './CustomizedMuiComponents';
 import SummaryContent from './SummaryContent';
 import { Common as C, Localizer as l } from '#/src/tools/Utils';
+import { useQueryParams } from '#/src/hooks';
 
 const withStyles = makeStyles(() => ({
   noBoxShadow: {
@@ -39,7 +37,7 @@ const OpetustapaSuodatin = ({
   const history = useHistory();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const apiRequestParams = useSelector(getAPIRequestParams);
+  const apiRequestParams = useQueryParams();
   const classes = withStyles();
   const { sortedOpetustavat, checkedOpetustavat, checkedOpetustavatStr } = useSelector(
     getOpetustapaFilterProps

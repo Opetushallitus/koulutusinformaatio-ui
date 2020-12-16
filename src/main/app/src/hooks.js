@@ -1,7 +1,10 @@
-import React, { useCallback } from 'react';
 import { MobXProviderContext } from 'mobx-react';
+import React, { useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
 
 export const useStores = () => React.useContext(MobXProviderContext);
 
@@ -34,4 +37,12 @@ export const useQueryOnce = (key, fn, props) => {
     refetchOnReconnect: false,
     retry: 1,
   });
+};
+
+export const useQueryParams = () => {
+  const apiRequestParams = useSelector(getAPIRequestParams);
+  const { i18n } = useTranslation();
+  const lng = useMemo(() => i18n.language, [i18n.language]);
+
+  return { ...apiRequestParams, lng };
 };

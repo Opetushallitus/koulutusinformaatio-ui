@@ -6,14 +6,14 @@ import _ from 'lodash';
 import qs from 'query-string';
 import { Grid, Typography } from '@material-ui/core';
 import { clearPaging, searchAll, setSize } from '#/src/store/reducers/hakutulosSlice';
-import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
 import { SuodatinMobileSlider } from './hakutulosSuodattimet/CustomizedMuiComponents';
+import { useQueryParams } from '#/src/hooks';
 
 const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
   const history = useHistory();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const apiRequestPaparms = useSelector(getAPIRequestParams);
+  const apiRequestPaparms = useQueryParams();
   const { pageSizeArray, size } = useSelector(
     (state) => ({
       pageSizeArray: state.hakutulos.pageSizeArray,
