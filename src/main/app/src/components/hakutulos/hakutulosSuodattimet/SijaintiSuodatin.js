@@ -20,10 +20,7 @@ import {
   setSijainti,
   setSelectedSijainti,
 } from '#/src/store/reducers/hakutulosSlice';
-import {
-  getAPIRequestParams,
-  getSijaintiFilterProps,
-} from '#/src/store/reducers/hakutulosSliceSelector';
+import { getSijaintiFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   SuodatinCheckbox,
   SuodatinAccordion,
@@ -34,6 +31,7 @@ import {
 import SummaryContent from './SummaryContent';
 import { colors } from '#/src/colors';
 import { Common as C, Localizer as l } from '#/src/tools/Utils';
+import { useQueryParams } from '#/src/hooks';
 
 const useStyles = makeStyles((theme) => ({
   buttonLabel: {
@@ -55,7 +53,7 @@ const SijaintiSuodatin = ({
   const { t } = useTranslation();
   const classes = useStyles();
   const sijaintiFilterProps = useSelector(getSijaintiFilterProps);
-  const apiRequestParams = useSelector(getAPIRequestParams);
+  const apiRequestParams = useQueryParams();
   const dispatch = useDispatch();
 
   const [firstFiveMaakunnat, setfirstFiveMaakunnat] = useState([]);

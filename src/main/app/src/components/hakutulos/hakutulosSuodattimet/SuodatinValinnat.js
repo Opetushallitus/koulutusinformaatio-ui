@@ -6,10 +6,7 @@ import { Button, Chip, Grid, makeStyles } from '@material-ui/core';
 import qs from 'query-string';
 import _ from 'lodash';
 import { Clear } from '@material-ui/icons';
-import {
-  getSuodatinValinnatProps,
-  getAPIRequestParams,
-} from '#/src/store/reducers/hakutulosSliceSelector';
+import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   clearSelectedFilters,
   searchAll,
@@ -17,6 +14,7 @@ import {
 } from '#/src/store/reducers/hakutulosSlice';
 import { Common as C, Localizer as l } from '#/src/tools/Utils';
 import { colors } from '#/src/colors';
+import { useQueryParams } from '#/src/hooks';
 
 const useStyles = makeStyles((theme) => ({
   chipRoot: {
@@ -48,7 +46,7 @@ const SuodatinValinnat = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const suodatinValinnatProps = useSelector(getSuodatinValinnatProps);
-  const apiRequestParams = useSelector(getAPIRequestParams);
+  const apiRequestParams = useQueryParams();
 
   const [filters, setFilters] = useState({});
 

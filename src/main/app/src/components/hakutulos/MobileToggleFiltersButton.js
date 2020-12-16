@@ -11,7 +11,7 @@ import {
   executeSearchFromStartingPage,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
-import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
+import { useQueryParams } from '#/src/hooks';
 
 const useStyles = makeStyles((theme) => ({
   buttonGroupRoot: {
@@ -39,7 +39,7 @@ const MobileToggleFiltersButton = ({ isFrontPage = false }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const suodatinValinnatProps = useSelector(getSuodatinValinnatProps);
-  const apiRequestParams = useSelector(getAPIRequestParams);
+  const apiRequestParams = useQueryParams();
   const {
     showHakutulosFilters,
     koulutusTotal,

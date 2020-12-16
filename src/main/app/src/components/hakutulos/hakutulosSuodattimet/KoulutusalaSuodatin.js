@@ -22,13 +22,11 @@ import {
   SuodatinCheckbox,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
-import {
-  getKoulutusalaFilterProps,
-  getAPIRequestParams,
-} from '#/src/store/reducers/hakutulosSliceSelector';
+import { getKoulutusalaFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { twoLevelFilterUpdateAndSearch } from '#/src/store/reducers/hakutulosSlice';
 import { MUI_BREAKPOINTS, FILTER_TYPES } from '#/src/constants';
 import { Localizer as l } from '#/src/tools/Utils';
+import { useQueryParams } from '#/src/hooks';
 
 const useStyles = makeStyles((theme) => ({
   buttonLabel: {
@@ -55,7 +53,7 @@ const KoulutusalaSuodatin = ({
     checkedKoulutusalatKeys,
     checkedKoulutusalatStr,
   } = useSelector(getKoulutusalaFilterProps);
-  const apiRequestParams = useSelector(getAPIRequestParams);
+  const apiRequestParams = useQueryParams();
   const muiScreenSizeMinMd = useMediaQuery(MUI_BREAKPOINTS.MIN_MD);
 
   const [openedKoulutusala, setOpenedKoulutusala] = useState([]);

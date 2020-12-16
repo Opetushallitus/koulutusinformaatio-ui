@@ -12,7 +12,7 @@ export const Common = {
 
 export const Localizer = {
   getLanguage() {
-    return i18n.languages && i18n.languages[0] ? i18n.language.split('-')[0] : 'fi';
+    return i18n.language;
   },
   lng(nimi, lng) {
     return nimi?.['kieli_' + lng] || nimi?.[lng] || false;
@@ -107,8 +107,8 @@ export const OsoiteParser = {
       address: coreAddress,
       addressNoNumbers: withoutHouseNumber,
     };
-  }
-}
+  },
+};
 
 export const TimeMillisParser = {
   millisToReadable(timemillis) {

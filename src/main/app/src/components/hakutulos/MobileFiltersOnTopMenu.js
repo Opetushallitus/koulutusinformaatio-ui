@@ -17,10 +17,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
-import {
-  getSuodatinValinnatProps,
-  getAPIRequestParams,
-} from '#/src/store/reducers/hakutulosSliceSelector';
+import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   toggleshowHakutulosFilters,
   clearSelectedFilters,
@@ -35,6 +32,7 @@ import MobileToggleOrderByButtonMenu from './MobileToggleOrderByButtonMenu';
 import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
 import MobileToggleKoulutusOppilaitos from './MobileToggleKoulutusOppilaitos';
 import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
+import { useQueryParams } from '#/src/hooks';
 
 const useStyles = makeStyles((theme) => ({
   paperAnchorBottom: {
@@ -69,7 +67,7 @@ const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
     (state) => state.hakutulos.showHakutulosFilters
   );
   const suodatinValinnatProps = useSelector(getSuodatinValinnatProps);
-  const apiRequestParams = useSelector(getAPIRequestParams);
+  const apiRequestParams = useQueryParams();
 
   const handleFiltersShowToggle = () => {
     dispatch(toggleshowHakutulosFilters());
