@@ -198,7 +198,6 @@ const Hakupalkki = () => {
     isPopoverOpen ? <ExpandLessOutlined /> : <ExpandMoreOutlined />;
   const id = isPopoverOpen ? 'filters-popover' : undefined;
 
-  console.log('apiRequestParams', apiRequestParams);
   const doSearch = (event) => {
     event.preventDefault();
     dispatch(executeSearchFromStartingPage({ apiRequestParams, history }));
