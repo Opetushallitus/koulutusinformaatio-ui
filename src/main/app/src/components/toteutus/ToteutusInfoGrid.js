@@ -85,13 +85,10 @@ export const ToteutusInfoGrid = (props) => {
   const perustiedotData = [];
 
   if (hasNimike(koulutusTyyppi)) {
-    const currentLanguage = l.getLanguage();
-    const nimikeString = nimikkeet
-      ? nimikkeet
-          .filter((elem) => elem.kieli === currentLanguage)
-          .map((elem) => elem.arvo)
-          .join('\n')
-      : t('koulutus.ei-tutkintonimiketta');
+    const nimikeString =
+      nimikkeet?.length > 0
+        ? nimikkeet.map((v) => l.localize(v)).join('\n')
+        : t('koulutus.ei-tutkintonimiketta');
 
     perustiedotData.push({
       icon: <SchoolOutlinedIcon className={classes.koulutusInfoGridIcon} />,
