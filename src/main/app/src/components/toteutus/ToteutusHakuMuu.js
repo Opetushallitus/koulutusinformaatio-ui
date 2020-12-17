@@ -72,12 +72,17 @@ export const ToteutusHakuMuu = ({ oid }) => {
               <Grid item container direction="row">
                 <Grid item xs md={4}>
                   <Typography noWrap variant="body1">
-                    {t('koulutus.hakuaika') + ':'}
+                    {t(
+                      muuHaku.hakuaika?.paattyy
+                        ? 'koulutus.hakuaika'
+                        : 'toteutus.haku-alkaa'
+                    ) + ':'}
                   </Typography>
                 </Grid>
                 <Grid item xs>
                   <Typography variant="body1" noWrap className={classes.valueText}>
                     {[muuHaku.hakuaika?.alkaa, muuHaku.hakuaika?.paattyy]
+                      .filter(Boolean)
                       .map((v) => format(new Date(v), 'd.M.y'))
                       .join(' - ')}
                   </Typography>
