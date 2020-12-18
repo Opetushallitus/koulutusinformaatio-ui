@@ -14,12 +14,8 @@ const useStyles = makeStyles({
   },
 });
 
-const localizeArrayToString = (toLocalizeArray) => {
-  return toLocalizeArray
-    .map((item) => l.localize(item))
-    .sort()
-    .join(', ');
-};
+const localizeArrayToString = (toLocalizeArray) =>
+  toLocalizeArray.map(l.localize).sort().join(', ');
 
 const TulevaJarjestajaList = (props) => {
   const classes = useStyles();

@@ -76,7 +76,7 @@ const KoulutusKortti = ({ koulutus }) => {
   const tutkintoNimikkeet = isOsaamisalaOrTutkinnonOsa
     ? t(`haku.${koulutus?.koulutustyyppi}`)
     : (koulutus?.tutkintonimikkeet || [])
-        .map((nimike) => l.localize(nimike))
+        .map(l.localize)
         .join(', ')
         .replace(/,\s*$/, '') || t('haku.ei-tutkintonimiketta');
   const colorCode =

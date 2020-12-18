@@ -87,7 +87,7 @@ export const ToteutusInfoGrid = (props) => {
   if (hasNimike(koulutusTyyppi)) {
     const nimikeString =
       nimikkeet?.length > 0
-        ? nimikkeet.map((v) => l.localize(v)).join('\n')
+        ? nimikkeet.map(l.localize).join('\n')
         : t('koulutus.ei-tutkintonimiketta');
 
     perustiedotData.push({

@@ -15,80 +15,51 @@ export const koodiUriToPostinumero = (str = '') => {
   return str.match(/^posti_(\d+)/)?.[1] ?? '';
 };
 
+const lng = (nimi, lng) => nimi?.['kieli_' + lng] || nimi?.[lng] || false;
+
+const translate = (nimi) => {
+  const language = Localizer.getLanguage();
+  if ('en' === language) {
+    return lng(nimi, 'en') || lng(nimi, 'fi') || lng(nimi, 'sv') || '';
+  } else if ('sv' === language) {
+    return lng(nimi, 'sv') || lng(nimi, 'fi') || lng(nimi, 'en') || '';
+  } else {
+    return lng(nimi, 'fi') || lng(nimi, 'sv') || lng(nimi, 'en') || '';
+  }
+};
+
 export const Localizer = {
-  getLanguage() {
-    return i18n.language;
-  },
-  lng(nimi, lng) {
-    return nimi?.['kieli_' + lng] || nimi?.[lng] || false;
-  },
-  translate(nimi, defaultValue = '') {
-    const lng = Localizer.getLanguage();
-    if ('en' === lng) {
-      return (
-        Localizer.lng(nimi, 'en') ||
-        Localizer.lng(nimi, 'fi') ||
-        Localizer.lng(nimi, 'sv') ||
-        defaultValue
-      );
-    } else if ('sv' === lng) {
-      return (
-        Localizer.lng(nimi, 'sv') ||
-        Localizer.lng(nimi, 'fi') ||
-        Localizer.lng(nimi, 'en') ||
-        defaultValue
-      );
-    } else {
-      return (
-        Localizer.lng(nimi, 'fi') ||
-        Localizer.lng(nimi, 'sv') ||
-        Localizer.lng(nimi, 'en') ||
-        defaultValue
-      );
-    }
-  },
-  localize(obj, defaultValue = '') {
-    if (obj) {
-      return obj.nimi
-        ? Localizer.translate(obj.nimi, defaultValue)
-        : Localizer.translate(obj, defaultValue);
-    }
-    return defaultValue;
-  },
-  localizeSortedArrayToString(arr = []) {
-    return _fp.compose(
+  getLanguage: () => i18n.language,
+
+  localize: (obj) => (obj ? translate(obj.nimi || obj) : ''),
+
+  localizeSortedArrayToString: (arr = []) =>
+    _fp.compose(
       _fp.join(', '),
       _fp.uniq,
-      _fp.map(this.localize),
-      _fp.sortBy(`nimi.${this.getLanguage()}`)
-    )(arr);
-  },
-  getTranslationForKey(key = '') {
-    return i18n.t(key);
-  },
-  localizePostitoimialueByKoodi(postinumeroKoodi) {
-    return postinumeroKoodi
-      ? `, ${koodiUriToPostinumero(postinumeroKoodi?.koodiUri)} ${Localizer.localize(
-          postinumeroKoodi?.nimi
-        )}`
-      : '';
-  },
-  localizeOsoite(katuosoite, postinumeroKoodi) {
+      _fp.map(Localizer.localize),
+      _fp.sortBy(`nimi.${Localizer.getLanguage()}`)
+    )(arr),
+
+  getTranslationForKey: (key = '') => i18n.t(key),
+
+  localizeOsoite: (katuosoite, postinumeroKoodi) => {
     if (!katuosoite || !postinumeroKoodi) {
       return '';
     }
-    return `${Localizer.localize(katuosoite)}${Localizer.localizePostitoimialueByKoodi(
-      postinumeroKoodi
-    )}`;
+    const postitoimialue = `, ${koodiUriToPostinumero(
+      postinumeroKoodi?.koodiUri
+    )} ${Localizer.localize(postinumeroKoodi?.nimi)}`;
+    return `${Localizer.localize(katuosoite)}${postitoimialue}`;
   },
 };
 
 export const OsoiteParser = {
   parseOsoiteData(osoiteData) {
-    const osoite = Localizer.localize(osoiteData.osoite, '');
+    const osoite = Localizer.localize(osoiteData.osoite);
     const postinumero = koodiUriToPostinumero(osoiteData.postinumero.koodiUri);
     const postitoimipaikka = _fp.capitalize(
-      Localizer.localize(osoiteData.postinumero.nimi, '')
+      Localizer.localize(osoiteData.postinumero.nimi)
     );
     const yhteystiedot =
       osoite && postinumero && postitoimipaikka

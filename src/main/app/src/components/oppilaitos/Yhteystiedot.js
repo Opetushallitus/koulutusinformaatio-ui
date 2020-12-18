@@ -37,10 +37,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Yhteystiedot = (props) => {
+const Yhteystiedot = ({ className, heading, logo, metadata, nimi }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { className, heading, logo, metadata, nimi } = props;
   const osoite = _.get(metadata, 'yhteystiedot.osoite.osoite.fi', '');
   const postinumero = koodiUriToPostinumero(
     _.get(metadata, 'yhteystiedot.osoite.postinumero.koodiUri', '')
@@ -55,6 +54,8 @@ const Yhteystiedot = (props) => {
     }
     return _.trim(`${osoite}, ${postinumero} ${postitoimipaikka}`, ', ');
   };
+
+  const hasHomepage = !_.isEmpty(_.get(metadata, 'yhteystiedot.wwwSivu'));
 
   return (
     <Box
@@ -85,16 +86,18 @@ const Yhteystiedot = (props) => {
             <Typography component="div" variant="body1">
               {getYhteystiedot()}
             </Typography>
-            <Button
-              className={classes.button}
-              target="_blank"
-              href={l.localize(_.get(metadata, 'yhteystiedot.wwwSivu', ''))}
-              fullWidth
-              variant="contained"
-              size="medium"
-              color="primary">
-              {t('oppilaitos.oppilaitoksen-www-sivut')}
-            </Button>
+            {hasHomepage && (
+              <Button
+                className={classes.button}
+                target="_blank"
+                href={l.localize(_.get(metadata, 'yhteystiedot.wwwSivu'))}
+                fullWidth
+                variant="contained"
+                size="medium"
+                color="primary">
+                {t('oppilaitos.oppilaitoksen-www-sivut')}
+              </Button>
+            )}
           </Box>
         </Grid>
         {osoite && postitoimipaikka && (
