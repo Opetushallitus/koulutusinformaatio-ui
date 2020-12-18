@@ -1,7 +1,8 @@
 import React from 'react';
 import { Typography, Box, Grid } from '@material-ui/core';
-import { Localizer as l, toId } from '#/src/tools/Utils';
+import { toId } from '#/src/tools/Utils';
 import { LocalizedHTML } from './LocalizedHTML';
+import { useTranslation } from 'react-i18next';
 
 const Headers = ['h1', 'h2', 'h3', 'h4', 'h5'];
 const isHeader = (tag) => Headers.includes(tag);
@@ -20,14 +21,15 @@ const tagHeaders = (node) => {
   }
 };
 
-export const Sora = ({ metadata: { kuvaus }, nimi }) => {
+export const Sora = ({ metadata: { kuvaus } }) => {
+  const { t } = useTranslation();
   return (
     <>
       <Grid container spacing={2} justify="flex-start" alignItems="flex-start">
         <Grid item xs={12} sm={12} md={12}>
           <Box py={2}>
-            <Typography id={toId(l.localize(nimi))} variant="h2">
-              {l.localize(nimi)}
+            <Typography variant="h2">
+              {t('valintaperuste.hakijan-terveydentila-ja-toimintakyky')}
             </Typography>
           </Box>
           <LocalizedHTML data={kuvaus} transform={tagHeaders} />
