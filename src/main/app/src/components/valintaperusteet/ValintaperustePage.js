@@ -13,13 +13,11 @@ import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   getKoulutus,
   getToteutus,
-  getHaku,
   getHakukohde,
   getValintaperuste,
 } from '#/src/api/konfoApi';
 
 import { Sisallysluettelo } from './Sisallysluettelo';
-import { HakukohdeKortti } from './HakukohdeKortti';
 import { Paluu } from './Paluu';
 import { Liitteet, LiitteetSisallysluettelo } from './Liitteet';
 import { Sora } from './Sora';
@@ -47,17 +45,13 @@ const Row = ({ children }) => {
 const getValintaperustePageData = async ({ hakukohdeOid }) => {
   // TODO: Backend should return most of the data using getValintaperuste()
   const hakukohde = await getHakukohde(hakukohdeOid);
-  const {
-    hakuOid,
-    toteutus: hakukohdeToteutus,
-    valintaperuste: hakukohdeValintaperuste,
-  } = hakukohde ?? {};
+  const { toteutus: hakukohdeToteutus, valintaperuste: hakukohdeValintaperuste } =
+    hakukohde ?? {};
   const valintaperuste = await getValintaperuste(hakukohdeValintaperuste?.id);
-  const haku = await getHaku(hakuOid);
   const toteutus = await getToteutus(hakukohdeToteutus?.oid);
   const koulutus = await getKoulutus(toteutus?.koulutusOid);
 
-  return { koulutus, toteutus, haku, hakukohde, valintaperuste };
+  return { koulutus, toteutus, hakukohde, valintaperuste };
 };
 
 const useValintaperustePageData = ({ hakukohdeOid }) => {
@@ -79,7 +73,7 @@ export const ValintaperustePage = () => {
   const { data = {}, isFetching, error } = useValintaperustePageData({
     hakukohdeOid,
   });
-  const { valintaperuste, koulutus, toteutus, haku, hakukohde } = data;
+  const { valintaperuste, koulutus, toteutus, hakukohde } = data;
 
   const {
     metadata: { kuvaus, valintatavat },
@@ -116,13 +110,6 @@ export const ValintaperustePage = () => {
               <Typography variant="h1" component="h1">
                 {t('lomake.valintaperusteet')}
               </Typography>
-            </Box>
-            <Box pb={2}>
-              <HakukohdeKortti
-                haku={haku}
-                hakukohde={hakukohde}
-                paluuLinkki={toteutusLink}
-              />
             </Box>
           </Grid>
           <Grid item xs={12} sm={12} md={3} />
