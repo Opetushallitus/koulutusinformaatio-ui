@@ -1,6 +1,5 @@
 import React from 'react';
 import InfoGrid from '../common/InfoGrid';
-import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
 import TimelapseIcon from '@material-ui/icons/Timelapse';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import FlagOutlinedIcon from '@material-ui/icons/FlagOutlined';
@@ -13,7 +12,6 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/styles';
 import { Localizer as l } from '#/src/tools/Utils';
 import { format } from 'date-fns';
-import { KOULUTUS_TYYPPI } from '#/src/constants';
 import _ from 'lodash';
 import { sanitizedHTMLParser } from '#/src/tools/Utils';
 
@@ -37,15 +35,10 @@ const suunniteltuKesto = (t, vuosi, kk) => {
 };
 
 const localizeMap = (v) => l.localize(v);
-const hasNimike = (tyyppi) =>
-  tyyppi !== KOULUTUS_TYYPPI.AMM_TUTKINNON_OSA &&
-  tyyppi !== KOULUTUS_TYYPPI.AMM_OSAAMISALA;
 
 export const ToteutusInfoGrid = (props) => {
   const classes = useStyles();
   const {
-    koulutusTyyppi,
-    nimikkeet,
     kielet,
     opetuskieletKuvaus,
     laajuus,
@@ -83,19 +76,6 @@ export const ToteutusInfoGrid = (props) => {
   const apurahaString = apuraha ? `${apuraha} €` : t('toteutus.ei-apurahaa');
 
   const perustiedotData = [];
-
-  if (hasNimike(koulutusTyyppi)) {
-    const nimikeString =
-      nimikkeet?.length > 0
-        ? nimikkeet.map(l.localize).join('\n')
-        : t('koulutus.ei-tutkintonimiketta');
-
-    perustiedotData.push({
-      icon: <SchoolOutlinedIcon className={classes.koulutusInfoGridIcon} />,
-      title: t('toteutus.tutkintonimikkeet'),
-      text: nimikeString,
-    });
-  }
 
   perustiedotData.push(
     {
