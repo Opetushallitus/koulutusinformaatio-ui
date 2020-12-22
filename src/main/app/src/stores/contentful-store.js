@@ -1,5 +1,5 @@
 import { observable, action, runInAction } from 'mobx';
-import superagent from 'superagent';
+import axios from 'axios';
 import { urls } from 'oph-urls-js';
 
 const initialState = {
@@ -64,7 +64,7 @@ class ContentfulStore {
   }
 
   static bodyAsArray(res) {
-    return res.body ? res.body : [];
+    return res.data ? res.data : [];
   }
 
   static reduceToKeyValue(values) {
@@ -84,10 +84,10 @@ class ContentfulStore {
   }
 
   fetchManifest() {
-    return superagent.get(urls.url('konfo-backend.content', 'manifest.json'));
+    return axios.get(urls.url('konfo-backend.content', 'manifest.json'));
   }
   fetchUrl(url) {
-    return superagent.get(url);
+    return axios.get(url);
   }
 
   createSlugsToIds(lang) {
@@ -105,7 +105,7 @@ class ContentfulStore {
     this.data.loading = true;
     return this.fetchManifest()
       .then((res) => {
-        return res.body || {};
+        return res.data || {};
       })
       .then((manifest) => {
         const contents = Object.entries(manifest).map(([k, v]) => [

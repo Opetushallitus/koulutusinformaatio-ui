@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { makeStyles, Typography, Box, Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { ExpandLessOutlined, ExpandMoreOutlined } from '@material-ui/icons';
 import PopoverWithArrow from '#/src/components/common/PopoverWithArrow';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   item: {
     padding: '10px 25px 5px 25px',
   },
@@ -21,26 +21,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Suodatin = ({ btnId, SuodatinComponent, header }) => {
+const Suodatin = ({ id: propsId, SuodatinComponent, header }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const [anchor, setAnchor] = useState(null);
+  const anchorRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const id = isOpen ? propsId : undefined;
 
-  const isOpen = Boolean(anchor);
-
-  const ExpandIcon = ({ open }) =>
-    open ? <ExpandLessOutlined /> : <ExpandMoreOutlined />;
-
-  const _btnId = isOpen ? btnId : undefined;
-
-  function handleClick(e) {
-    setAnchor(e.currentTarget);
-  }
-
-  function handleClose() {
-    setAnchor(null);
-  }
+  const ExpandIcon = () => (isOpen ? <ExpandLessOutlined /> : <ExpandMoreOutlined />);
 
   return (
     <Box className={classes.item}>
@@ -48,19 +37,20 @@ const Suodatin = ({ btnId, SuodatinComponent, header }) => {
         {header}
       </Typography>
       <Button
-        aria-describedby={_btnId}
-        endIcon={<ExpandIcon open={isOpen} />}
-        onClick={handleClick}
+        aria-describedby={id}
+        endIcon={<ExpandIcon />}
+        onClick={() => setIsOpen(true)}
+        ref={anchorRef}
         className={classes.expandButton}
         aria-label={t('haku.valitse')}>
         {t('haku.valitse')}
       </Button>
       <PopoverWithArrow
-        anchorEl={anchor}
+        anchorEl={anchorRef.current}
         content={<SuodatinComponent expanded elevation={2} summaryHidden />}
-        id={_btnId}
+        id={id}
         marginTop={7}
-        onClose={handleClose}
+        onClose={() => setIsOpen(false)}
         open={isOpen}
       />
     </Box>

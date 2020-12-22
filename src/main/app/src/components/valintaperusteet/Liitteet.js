@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import {
   Box,
   Card,
@@ -8,30 +9,14 @@ import {
   Typography,
   withStyles,
 } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
-import { groupBy, sortBy, first, uniq, isEmpty } from 'lodash';
-import { Localizer as l } from '#/src/tools/Utils';
 import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
+import { useTranslation } from 'react-i18next';
+import { formatDateString, Localizer as l, toId } from '#/src/tools/Utils';
 import { colors } from '#/src/colors';
 import Spacer from '#/src/components/common/Spacer';
-import hyphenated from '#/src/components/valintaperusteet/hyphenated';
 
-const formatHakuaika = (a, klo) => {
-  const toString = (d) =>
-    `${d.getDay()}.${d.getMonth()}.${d.getFullYear()} ${klo} ${String(
-      d.getHours()
-    ).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
-  return `${toString(a)}`;
-};
 const Osoite = ({ toimitusaika, sahkoposti, osoite, postinumero }) => {
   const { t } = useTranslation();
-  const postinumeroAsString = () => {
-    return postinumero
-      ? `, ${first(postinumero.koodiUri.replace('posti_', '').split('#'))} ${l.localize(
-          postinumero.nimi
-        )}`
-      : null;
-  };
   return (
     <>
       <Grid item xs={12}>
@@ -46,7 +31,7 @@ const Osoite = ({ toimitusaika, sahkoposti, osoite, postinumero }) => {
             <Box m={1}>
               <Typography variant="h5">{t('valintaperuste.toimituspaikka')}</Typography>
               <Typography variant="body1">
-                {`${sahkoposti} - ${l.localize(osoite)}${postinumeroAsString()}`}
+                {`${sahkoposti} - ${l.localizeOsoite(osoite, postinumero)}`}
               </Typography>
             </Box>
           </Grid>
@@ -58,9 +43,7 @@ const Osoite = ({ toimitusaika, sahkoposti, osoite, postinumero }) => {
           <Typography variant="h5">
             {t('valintaperuste.toimitettava-viimeistään')}
           </Typography>
-          <Typography variant="body1">
-            {formatHakuaika(new Date(Date.parse(toimitusaika)), t('lomake.klo'))}
-          </Typography>
+          <Typography variant="body1">{formatDateString(toimitusaika)}</Typography>
         </Box>
       </Grid>
     </>
@@ -93,28 +76,28 @@ const Liite = (liite) => {
   );
 };
 const tyypeittain = (liitteet) =>
-  sortBy(
-    Object.entries(groupBy(liitteet || [], (liite) => l.localize(liite.tyyppi.nimi))),
-    first
+  _.sortBy(
+    Object.entries(_.groupBy(liitteet || [], (liite) => l.localize(liite.tyyppi.nimi))),
+    _.first
   );
 
 export const LiitteetSisallysluettelo = (liitteet) => (Lnk) => {
   const tyyppiJaLiite = tyypeittain(liitteet);
-  return !isEmpty(tyyppiJaLiite)
+  return !_.isEmpty(tyyppiJaLiite)
     ? tyyppiJaLiite.map(([tyyppi]) => {
         return Lnk(tyyppi);
       })
     : null;
 };
 
-const Liitteet = ({ liitteet }) => {
+export const Liitteet = ({ liitteet }) => {
   const { t } = useTranslation();
   const tyyppiJaLiite = tyypeittain(liitteet);
 
-  return !isEmpty(tyyppiJaLiite) ? (
+  return !_.isEmpty(tyyppiJaLiite) ? (
     <>
       <Box py={2}>
-        <Typography id={hyphenated(t('valintaperuste.liitteet'))} variant="h2">
+        <Typography id={toId(t('valintaperuste.liitteet'))} variant="h2">
           {t('valintaperuste.liitteet')}
         </Typography>
         <Spacer />
@@ -126,12 +109,12 @@ const Liitteet = ({ liitteet }) => {
           toimitusosoite: { sahkoposti, osoite: { osoite, postinumero } = {} } = {},
         }) => ({ toimitusaika, toimitustapa, sahkoposti, osoite, postinumero });
 
-        const yhteisetOsoitteet = uniq(liitteet.map(liiteAsOsoite));
+        const yhteisetOsoitteet = _.uniq(liitteet.map(liiteAsOsoite));
         const jaettuOsoite = yhteisetOsoitteet.length === 1;
         return (
           <div key={`liitteet-${tyyppi}`}>
             <Box py={2}>
-              <Typography id={hyphenated(tyyppi)} variant="h4">
+              <Typography id={toId(tyyppi)} variant="h4">
                 {tyyppi}
               </Typography>
             </Box>
@@ -145,7 +128,7 @@ const Liitteet = ({ liitteet }) => {
                     </Grid>
                   );
                 })}
-                {jaettuOsoite ? <Osoite {...first(yhteisetOsoitteet)} /> : null}
+                {jaettuOsoite ? <Osoite {..._.first(yhteisetOsoitteet)} /> : null}
               </CardContent>
             </Card>
           </div>
@@ -154,5 +137,3 @@ const Liitteet = ({ liitteet }) => {
     </>
   ) : null;
 };
-
-export default Liitteet;

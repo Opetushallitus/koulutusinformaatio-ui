@@ -1,11 +1,18 @@
-import { HashLink as Link } from 'react-router-hash-link';
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { HashLink as Link } from 'react-router-hash-link';
+import { Grid, makeStyles } from '@material-ui/core';
 import { colors } from '#/src/colors';
-import Grid from '@material-ui/core/Grid';
-import hyphenated from '#/src/components/valintaperusteet/hyphenated';
+import { scrollIntoView, toId } from '#/src/tools/Utils';
 
 const useStyles = makeStyles({
+  toc: {
+    position: 'sticky',
+    alignSelf: 'flex-start',
+    height: 'auto',
+    top: '90px',
+    paddingTop: '30px',
+    paddingBottom: '10px',
+  },
   link: {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -31,21 +38,27 @@ const useStyles = makeStyles({
 
 const Lnk = (text, index, addIndexToAnchor) => {
   const classes = useStyles();
-  const anchor = hyphenated(text);
+  const anchor = toId(text);
   return (
     <Link
       key={`${anchor}-${index}`}
       className={classes.link}
       aria-label={text}
       to={`#${anchor}${addIndexToAnchor ? '-' + index : ''}`}
-      scroll={(el) => el.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
+      scroll={(el) => scrollIntoView(el)}>
       {text}
     </Link>
   );
 };
-const Sisallysluottelo = ({ children }) => {
+export const Sisallysluettelo = ({ children }) => {
+  const classes = useStyles();
   return (
-    <Grid container direction="row" justify="center" alignItems="center">
+    <Grid
+      container
+      direction="row"
+      justify="center"
+      alignItems="center"
+      className={classes.toc}>
       <Grid item xs={10} sm={10} md={10}>
         {children.map((l, i) => l((t, index, addIndex) => Lnk(t, index || i, addIndex)))}
       </Grid>
@@ -53,4 +66,4 @@ const Sisallysluottelo = ({ children }) => {
   );
 };
 
-export default Sisallysluottelo;
+export default Sisallysluettelo;

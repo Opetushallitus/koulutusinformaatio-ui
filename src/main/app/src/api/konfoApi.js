@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { urls } from 'oph-urls-js';
+import qs from 'query-string';
 import { Common as C, Localizer as l } from '#/src/tools/Utils';
 
 const client = axios.create({
@@ -63,6 +64,13 @@ export const getOppilaitosOsaTarjonta = ({ oid, requestParams }) => {
 
 export const getToteutus = (oid) => get(urls.url('konfo-backend.toteutus', oid));
 
+export const getHaku = (oid) => get(urls.url('konfo-backend.haku', oid));
+
+export const getHakukohde = (oid) => get(urls.url('konfo-backend.hakukohde', oid));
+
+export const getValintaperuste = (oid) =>
+  get(urls.url('konfo-backend.valintaperusteet', oid));
+
 export const searchAPI = {
   getKoulutukset(requestParams) {
     return client
@@ -79,3 +87,19 @@ export const searchAPI = {
       .then((response) => response.data);
   },
 };
+
+export const postClientError = (errorData) =>
+  client.post('/konfo-backend/client-error', errorData);
+
+export const sendPalaute = ({ arvosana, palaute }) =>
+  client({
+    method: 'post',
+    url: urls.url('konfo-backend.palaute'),
+    data: qs.stringify({
+      arvosana,
+      palaute,
+    }),
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+  });

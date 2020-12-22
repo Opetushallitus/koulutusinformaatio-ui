@@ -21,7 +21,7 @@ import {
   selectJarjestajat,
   selectTulevatJarjestajat,
 } from '#/src/store/reducers/koulutusSlice';
-import LoadingCircle from '#/src/components/common/LoadingCircle';
+import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
 import Spacer from '#/src/components/common/Spacer';
 import Accordion from '#/src/components/common/Accordion';

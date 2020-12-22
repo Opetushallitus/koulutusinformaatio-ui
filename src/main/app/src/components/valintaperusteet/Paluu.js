@@ -1,9 +1,10 @@
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowBackIos';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
+
 const useStyles = makeStyles({
   arrow: {
     display: 'inline-flex',
@@ -15,7 +16,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Paluu = ({ paluuLinkki }) => {
+export const Paluu = ({ paluuLinkki }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
@@ -31,5 +32,3 @@ const Paluu = ({ paluuLinkki }) => {
     </div>
   );
 };
-
-export default Paluu;

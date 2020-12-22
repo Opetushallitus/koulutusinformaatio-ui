@@ -3,6 +3,7 @@ import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
 
 export const useStores = () => React.useContext(MobXProviderContext);
@@ -24,6 +25,18 @@ export const useLanguageState = () => {
     [history, location, lng]
   );
   return [lng, setLanguage];
+};
+
+// Load asynchronous data once and then cache it forever
+export const useQueryOnce = (key, fn, props) => {
+  return useQuery(key, () => fn(props), {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    retry: 1,
+  });
 };
 
 export const useQueryParams = () => {
