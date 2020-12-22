@@ -25,7 +25,7 @@ import {
 } from '#/src/store/reducers/hakutulosSlice';
 import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
 import OpetusKieliSuodatin from './hakutulosSuodattimet/OpetusKieliSuodatin';
-import SijaintiSuodatin from './hakutulosSuodattimet/SijaintiSuodatin';
+import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
 import MobileResultsPerPageExpansionMenu from './MobileResultsPerPageExpansionMenu';
 import MobileToggleFiltersButton from './MobileToggleFiltersButton';
 import MobileToggleOrderByButtonMenu from './MobileToggleOrderByButtonMenu';

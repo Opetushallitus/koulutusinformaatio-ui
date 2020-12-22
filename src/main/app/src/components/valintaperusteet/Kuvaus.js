@@ -11,13 +11,11 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
-import { first, last, isEmpty } from 'lodash';
-import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core/styles';
+import _ from 'lodash';
+import { Grid, withStyles } from '@material-ui/core';
+import { Localizer as l, toId } from '#/src/tools/Utils';
 import { colors } from '#/src/colors';
-import Spacer from '#/src/components/common/Spacer';
-import hyphenated from '#/src/components/valintaperusteet/hyphenated';
+import { LocalizedHTML } from './LocalizedHTML';
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
@@ -26,23 +24,28 @@ const StyledTableRow = withStyles((theme) => ({
     },
   },
 }))(TableRow);
+
 const HeaderCell = withStyles((theme) => ({
   head: {
     backgroundColor: colors.green,
     color: colors.white,
   },
 }))(TableCell);
+
 const SubHeaderCell = withStyles((theme) => ({
   head: {
     fontWeight: 'bold',
   },
 }))(TableCell);
+
 const Headers = ['h1', 'h2', 'h3', 'h4', 'h5'];
+
 const isHeader = (tag) => Headers.includes(tag);
+
 const tagHeaders = (node) => {
   if (isHeader(node.name)) {
     const text = node.children[0].data;
-    const id = hyphenated(text);
+    const id = toId(text);
     const isH1 = 'h1' === node.name;
     return (
       <Box pt={isH1 ? 0.5 : 0} key={id}>
@@ -55,38 +58,36 @@ const tagHeaders = (node) => {
 };
 
 const Teksti = ({ data }) => {
-  const lang = l.getLanguage();
-  const html = data[lang] || first(Object.values(data));
   return (
     <Grid item xs={12} sm={12} md={12}>
-      {sanitizedHTMLParser(html, {
-        transform: tagHeaders,
-      })}
+      <LocalizedHTML data={data} transform={tagHeaders} />
     </Grid>
   );
 };
 const Taulukko = ({ data: { rows } }) => {
   const { t } = useTranslation();
+
   const subTables = (rows || []).reduce((total, row) => {
-    if (row.isHeader || isEmpty(total)) {
+    if (row.isHeader || _.isEmpty(total)) {
       total.push({ header: [], body: [] });
     }
-    const { header, body } = last(total);
+    const { header, body } = _.last(total);
     (row.isHeader ? header : body).push(row);
     return total;
   }, []);
+
   return (
     <TableContainer component={Paper}>
       {subTables.map(({ header, body }, index) => {
         const spanCells = header.map((r) => ({
           ...r,
           columns: r.columns.reduce((total, head) => {
-            if (isEmpty(total) || !isEmpty(l.localize(head?.text))) {
+            if (_.isEmpty(total) || !_.isEmpty(l.localize(head?.text))) {
               total.push({ span: 1, ...head });
             } else {
               total[total.length - 1] = {
                 span: ++total[total.length - 1].span,
-                ...last(total),
+                ..._.last(total),
               };
             }
             return total;
@@ -168,31 +169,22 @@ export const KuvausSisallysluettelo = (kuvaus) => (Lnk) => {
       return null;
     }
   };
-  const lang = l.getLanguage();
-  const html = kuvaus[lang] || first(Object.values(kuvaus));
-  return sanitizedHTMLParser(html, {
-    transform: onlyHeaders,
-  });
+  return <LocalizedHTML data={kuvaus} transform={onlyHeaders} />;
 };
 
-const Kuvaus = ({ kuvaus, valintatavat }) => {
+export const Kuvaus = ({ kuvaus, valintatavat }) => {
   const { t } = useTranslation();
-  const lang = l.getLanguage();
-  const html = kuvaus[lang] || first(Object.values(kuvaus));
 
   return (
     <>
       <Grid container spacing={2} justify="flex-start" alignItems="flex-start">
         <Grid item xs={12} sm={12} md={12}>
           <Box py={2}>
-            <Typography id={hyphenated(t('valintaperuste.kuvaus'))} variant="h1">
+            <Typography id={toId(t('valintaperuste.kuvaus'))} variant="h2">
               {t('valintaperuste.kuvaus')}
             </Typography>
-            <Spacer />
           </Box>
-          {sanitizedHTMLParser(html, {
-            transform: tagHeaders,
-          })}
+          <LocalizedHTML data={kuvaus} transform={tagHeaders} />
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
           {valintatavat.map(Valintatapa)}
@@ -201,5 +193,3 @@ const Kuvaus = ({ kuvaus, valintatavat }) => {
     </>
   );
 };
-
-export default Kuvaus;

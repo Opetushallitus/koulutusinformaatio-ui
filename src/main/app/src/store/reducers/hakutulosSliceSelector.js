@@ -6,6 +6,8 @@ import { Common as C } from '#/src/tools/Utils';
 import { FILTER_TYPES } from '#/src/constants';
 
 // State data getters
+export const getIsLoading = (state) => state.hakutulos.status === 'loading';
+
 function getKeyword(state) {
   return state.hakutulos.keyword;
 }

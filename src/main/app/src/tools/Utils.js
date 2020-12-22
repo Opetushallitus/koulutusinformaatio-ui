@@ -1,13 +1,18 @@
 import _fp from 'lodash/fp';
-import padStart from 'lodash/padStart';
+import { format } from 'date-fns';
 import stripTags from 'striptags';
 import i18n from './i18n';
 import ReactHtmlParser from 'react-html-parser';
+import { TOP_BAR_HEIGHT } from '../constants';
 
 export const Common = {
   // filters 'null', 'empty string' or 'undefined', but '0' or 'false' are valid values,
   // does not parse numbers to strings
   cleanRequestParams: _fp.pickBy(_fp.toString),
+};
+
+export const koodiUriToPostinumero = (str = '') => {
+  return str.match(/^posti_(\d+)/)?.[1] ?? '';
 };
 
 export const Localizer = {
@@ -61,26 +66,27 @@ export const Localizer = {
   getTranslationForKey(key = '') {
     return i18n.t(key);
   },
-};
-
-export const Parser = {
-  removeHtmlTags(html) {
-    if (html) {
-      const div = document.createElement('div');
-      div.innerHTML = html;
-      return div.innerText;
-    }
-    return html;
+  localizePostitoimialueByKoodi(postinumeroKoodi) {
+    return postinumeroKoodi
+      ? `, ${koodiUriToPostinumero(postinumeroKoodi?.koodiUri)} ${Localizer.localize(
+          postinumeroKoodi?.nimi
+        )}`
+      : '';
   },
-  koodiUriToPostinumero(str = '') {
-    return str.slice(0, str.indexOf('#')).replace(/[^0-9]/g, '');
+  localizeOsoite(katuosoite, postinumeroKoodi) {
+    if (!katuosoite || !postinumeroKoodi) {
+      return '';
+    }
+    return `${Localizer.localize(katuosoite)}${Localizer.localizePostitoimialueByKoodi(
+      postinumeroKoodi
+    )}`;
   },
 };
 
 export const OsoiteParser = {
   parseOsoiteData(osoiteData) {
     const osoite = Localizer.localize(osoiteData.osoite, '');
-    const postinumero = Parser.koodiUriToPostinumero(osoiteData.postinumero.koodiUri);
+    const postinumero = koodiUriToPostinumero(osoiteData.postinumero.koodiUri);
     const postitoimipaikka = _fp.capitalize(
       Localizer.localize(osoiteData.postinumero.nimi, '')
     );
@@ -110,36 +116,23 @@ export const OsoiteParser = {
   },
 };
 
-export const TimeMillisParser = {
-  millisToReadable(timemillis) {
-    if (timemillis === null) {
-      return '';
-    }
-    return new Date(timemillis).toLocaleString().replace(/\//g, '.').replace(',', ' klo');
-  },
-};
+export function formatDateString(dateString, dateFormat = 'd.M.y HH:mm') {
+  if (!dateString) {
+    return '';
+  }
 
-export const FormatDate = {
-  formatDateString(dateString, format) {
-    if (!dateString) {
-      return '';
-    }
+  const klo = i18n.t('lomake.klo');
 
-    const [date, time = ''] = dateString.split('T');
-    const [year, month, day] = date.split('-');
-    const [hour = '0', minute = '0'] = time.split(':');
+  if (klo !== '') {
+    dateFormat = "d.M.y 'klo' HH:mm";
+  }
 
-    let formattedDate = format;
+  return format(new Date(dateString), dateFormat);
+}
 
-    formattedDate = formattedDate.replace(/DD/g, padStart(day, 2, '0'));
-    formattedDate = formattedDate.replace(/MM/g, padStart(month, 2, '0'));
-    formattedDate = formattedDate.replace(/YYYY/g, year);
-    formattedDate = formattedDate.replace(/HH/g, padStart(hour, 2, '0'));
-    formattedDate = formattedDate.replace(/mm/g, padStart(minute, 2, '0'));
-
-    return formattedDate;
-  },
-};
+export function formatDateRange(start, end) {
+  return `${formatDateString(start)} \u2013 ${end ? formatDateString(end) : ''}`;
+}
 
 const ALLOWED_HTML_TAGS = [
   'b',
@@ -171,3 +164,15 @@ export const sanitizeHTML = (html) => stripTags(html, ALLOWED_HTML_TAGS);
 
 export const sanitizedHTMLParser = (html, ...rest) =>
   ReactHtmlParser(sanitizeHTML(html), ...rest);
+
+export const toId = _fp.kebabCase;
+
+export const scrollIntoView = (element) => {
+  var elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+  var offsetPosition = elementPosition - TOP_BAR_HEIGHT;
+
+  window.scrollTo({
+    top: offsetPosition,
+    behavior: 'smooth',
+  });
+};

@@ -4,6 +4,7 @@ import { theme } from '../theme';
 
 const useStyles = makeStyles((theme) => ({
   spaceOnBorders: {
+    margin: 2, // NOTE: This is a fast fix for Grid containers with negative margins inside this component
     paddingTop: 25,
     paddingBottom: 25,
     paddingLeft: 10,
@@ -25,10 +26,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ReactiveBorder = ({ children }) => (
+export const ReactiveBorder = ({ children }) => (
   <ThemeProvider theme={theme}>
     <div className={useStyles().spaceOnBorders}>{children}</div>
   </ThemeProvider>
 );
-
-export default ReactiveBorder;

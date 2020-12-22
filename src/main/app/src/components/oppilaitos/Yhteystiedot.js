@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Grid, makeStyles, Typography, Box } from '@material-ui/core';
 import OskariKartta from '#/src/components/common/OskariKartta';
 import _ from 'lodash';
-import { Parser as p, Localizer as l } from '#/src/tools/Utils';
+import { koodiUriToPostinumero, Localizer as l } from '#/src/tools/Utils';
 import DefaultHeroImage from '#/src/assets/images/herokuva_default.png';
 import { colors } from '#/src/colors';
 import Spacer from '#/src/components/common/Spacer';
@@ -42,7 +42,7 @@ const Yhteystiedot = (props) => {
   const { t } = useTranslation();
   const { className, heading, logo, metadata, nimi } = props;
   const osoite = _.get(metadata, 'yhteystiedot.osoite.osoite.fi', '');
-  const postinumero = p.koodiUriToPostinumero(
+  const postinumero = koodiUriToPostinumero(
     _.get(metadata, 'yhteystiedot.osoite.postinumero.koodiUri', '')
   );
   const postitoimipaikka = _.capitalize(

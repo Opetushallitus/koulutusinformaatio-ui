@@ -70,7 +70,6 @@ export const theme = createMuiTheme({
       fontWeight: '700',
       lineHeight: '1.75rem',
       '@media (max-width:600px)': {
-        fontSize: '1.25rem',
         lineHeight: '1.5rem',
       },
     },

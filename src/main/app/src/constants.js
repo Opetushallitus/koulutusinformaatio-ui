@@ -37,3 +37,5 @@ export const HAKULOMAKE_TYYPPI = {
   EI_SAHKOISTA: 'ei sähköistä',
   MUU: 'muu',
 };
+
+export const TOP_BAR_HEIGHT = 90;

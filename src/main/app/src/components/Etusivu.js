@@ -12,9 +12,9 @@ import Paper from '@material-ui/core/Paper';
 import { colors } from '#/src/colors';
 import Button from '@material-ui/core/Button';
 import { useTranslation } from 'react-i18next';
-import ReactiveBorder from './ReactiveBorder';
+import { ReactiveBorder } from './ReactiveBorder';
 import { useStores } from '#/src/hooks';
-import LoadingCircle from '#/src/components/common/LoadingCircle';
+import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 
 const useStyles = makeStyles({
   info: {
@@ -48,7 +48,9 @@ const useStyles = makeStyles({
   },
 });
 
-const Etusivu = observer(({ history }) => {
+const getSingle = (entry) => Object.values(entry || {})[0] || {};
+
+const EtusivuComponent = observer(({ history }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { i18n } = useTranslation();
@@ -61,8 +63,7 @@ const Etusivu = observer(({ history }) => {
   };
   const infos = Object.values(info || {});
 
-  const single = (entry) => Object.values(entry || {})[0] || {};
-  let uutislinkit = ((uutiset || {})['etusivun-uutiset'] || {}).linkit || [];
+  const uutislinkit = uutiset?.['etusivun-uutiset']?.linkit ?? [];
 
   const [showMore, setShowMore] = useState(!(uutislinkit.length > 3));
 
@@ -74,29 +75,27 @@ const Etusivu = observer(({ history }) => {
       ) : (
         <>
           <ReactiveBorder className={classes.oikopolut}>
-            <Grid container spacing={3}>
-              {infos.map((info) => {
-                return (
-                  <Grid item xs={12} key={info.id}>
-                    <Paper
-                      className={classes.info}
-                      elevation={0}
-                      onClick={() => forwardToPage(info.linkki.id)}>
-                      <span className="notification-content">
-                        <Markdown>{info.content}</Markdown>
-                      </span>
-                    </Paper>
-                  </Grid>
-                );
-              })}
+            <Grid container>
+              {infos.map((info) => (
+                <Grid item xs={12} key={info.id}>
+                  <Paper
+                    className={classes.info}
+                    elevation={0}
+                    onClick={() => forwardToPage(info.linkki.id)}>
+                    <span className="notification-content">
+                      <Markdown>{info.content}</Markdown>
+                    </span>
+                  </Paper>
+                </Grid>
+              ))}
             </Grid>
 
             <Grid container>
               <h1 className={classes.header}>{t('oikopolut')}</h1>
               <Grid container spacing={3}>
-                {(single(kortit).kortit || []).map((k) => {
-                  return <Kortti id={k.id} key={k.id} />;
-                })}
+                {getSingle(kortit).kortit?.map(({ id }) => (
+                  <Kortti id={id} key={id} />
+                ))}
               </Grid>
             </Grid>
           </ReactiveBorder>
@@ -110,7 +109,7 @@ const Etusivu = observer(({ history }) => {
               </Grid>
 
               <Grid container direction="row" justify="center" alignItems="center">
-                {showMore ? (
+                {showMore && (
                   <Button
                     className={classes.showMore}
                     variant="contained"
@@ -118,7 +117,7 @@ const Etusivu = observer(({ history }) => {
                     color="primary">
                     {t('näytä-kaikki')}
                   </Button>
-                ) : null}
+                )}
               </Grid>
             </Grid>
           </ReactiveBorder>
@@ -128,4 +127,4 @@ const Etusivu = observer(({ history }) => {
   );
 });
 
-export default withRouter(Etusivu);
+export const Etusivu = withRouter(EtusivuComponent);
