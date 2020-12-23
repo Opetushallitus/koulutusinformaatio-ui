@@ -8,10 +8,11 @@ import ToteutusHakukohteet from './ToteutusHakukohteet';
 import clsx from 'clsx';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useQuery } from 'react-query';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import Spacer from '#/src/components/common/Spacer';
 import Accordion from '#/src/components/common/Accordion';
-import { Localizer as l } from '#/src/tools/Utils';
+import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
 import HakuKaynnissaCard from '#/src/components/koulutus/HakuKaynnissaCard';
 import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
@@ -27,6 +28,7 @@ import {
   selectKoulutus,
   selectLoading as selectKoulutusLoading,
 } from '#/src/store/reducers/koulutusSlice';
+import { getToteutusOsaamisalaKuvaus } from '#/src/api/konfoApi';
 import { useTranslation } from 'react-i18next';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import Murupolku from '#/src/components/common/Murupolku';
@@ -86,6 +88,22 @@ const AccordionWithTitle = ({ titleTranslation, data }) => {
     </Box>
   );
 };
+
+const getOsaamisalatPageData = async ({ ePerusteId, requestParams }) => {
+  const osaamisalat = await getToteutusOsaamisalaKuvaus({ ePerusteId, requestParams });
+  return { osaamisalat };
+};
+
+const useOsaamisalatPageData = ({ ePerusteId, requestParams }) => {
+  return useQuery(
+    ['getOsaamisalatPageData', { ePerusteId, requestParams }],
+    (key, props) => getOsaamisalatPageData(props),
+    {
+      refetchOnWindowFocus: false,
+      enabled: !_.isNil(ePerusteId) && !_.isEmpty(requestParams),
+    }
+  );
+};
 const Toteutus = () => {
   const classes = useStyles();
   const { oid } = useParams();
@@ -112,6 +130,22 @@ const Toteutus = () => {
       .filter((asiasana) => asiasana.kieli === currentLanguage)
       .map((asiasana) => asiasana.arvo) ?? [];
 
+  const { data = [], isFetching } = useOsaamisalatPageData({
+    ePerusteId: koulutus?.ePerusteId?.toString(),
+    requestParams: {
+      'koodi-urit': toteutus?.metadata?.osaamisalat
+        ?.map((oa) => oa?.koodi?.koodiUri)
+        ?.join(','),
+    },
+  });
+
+  const osaamisalatCombined = data?.osaamisalat?.map((oa) => {
+    const toteutusOsaamisala = toteutus?.metadata?.osaamisalat?.find(
+      (toa) => toa?.koodi?.koodiUri === oa?.osaamisalakoodiUri
+    );
+    return { ...oa, extended: toteutusOsaamisala };
+  });
+
   useEffect(() => {
     if (!toteutus) {
       dispatch(fetchToteutus(oid));
@@ -126,7 +160,7 @@ const Toteutus = () => {
   const opetus = toteutus?.metadata?.opetus;
   const hakuUrl = useSelector(getHakuUrl);
 
-  return loading ? (
+  return loading || isFetching ? (
     <LoadingCircle />
   ) : (
     <ContentWrapper>
@@ -228,19 +262,27 @@ const Toteutus = () => {
             className={classes.root}
           />
         )}
-        {toteutus?.metadata?.osaamisalat && (
+        {!_.isEmpty(osaamisalatCombined) > 0 && (
           <AccordionWithTitle
             titleTranslation="koulutus.osaamisalat"
-            data={toteutus.metadata.osaamisalat.map((osaamisala) => ({
-              title: l.localize(osaamisala.koodi.nimi),
-              content: !_.isEmpty(osaamisala.linkki) && !_.isEmpty(osaamisala.otsikko) && (
-                <LocalizedLink
-                  target="_blank"
-                  rel="noopener"
-                  href={l.localize(osaamisala.linkki)}>
-                  {l.localize(osaamisala.otsikko)}
-                  <OpenInNewIcon />
-                </LocalizedLink>
+            data={osaamisalatCombined?.map((osaamisala) => ({
+              title: l.localize(osaamisala),
+              content: (
+                <>
+                  <Typography>
+                    {sanitizedHTMLParser(l.localize(osaamisala?.kuvaus))}
+                  </Typography>
+                  {!_.isEmpty(osaamisala?.extended?.linkki) &&
+                    !_.isEmpty(osaamisala?.extended?.otsikko) && (
+                      <LocalizedLink
+                        target="_blank"
+                        rel="noopener"
+                        href={l.localize(osaamisala?.extended?.linkki)}>
+                        {l.localize(osaamisala?.extended?.otsikko)}
+                        <OpenInNewIcon />
+                      </LocalizedLink>
+                    )}
+                </>
               ),
             }))}
           />
