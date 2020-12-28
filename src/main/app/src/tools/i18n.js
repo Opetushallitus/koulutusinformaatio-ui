@@ -11,6 +11,7 @@ export const configureI18n = () =>
     .use(Backend)
     .use(initReactI18next)
     .init({
+      nsSeparator: '|',
       fallbackLng: defaultLanguage,
       lng: defaultLanguage,
       supportedLngs: supportedLanguages,

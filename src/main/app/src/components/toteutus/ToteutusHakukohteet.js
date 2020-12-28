@@ -116,7 +116,7 @@ const HakuCardGrid = (props) => {
                           <Grid item xs={6}>
                             <Grid item>
                               <Typography className={classes.gridHeading} noWrap>
-                                {t('toteutus.haku-alkaa') + ':'}
+                                {t('toteutus.haku-alkaa:')}
                               </Typography>
                             </Grid>
                             <Grid item>
@@ -131,7 +131,7 @@ const HakuCardGrid = (props) => {
                             <Grid item xs={6}>
                               <Grid item>
                                 <Typography className={classes.gridHeading} noWrap>
-                                  {t('toteutus.haku-paattyy') + ':'}
+                                  {t('toteutus.haku-paattyy:')}
                                 </Typography>
                               </Grid>
                               <Grid item>
