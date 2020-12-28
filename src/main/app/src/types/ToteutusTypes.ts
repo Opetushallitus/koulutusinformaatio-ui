@@ -15,5 +15,6 @@ export type Jarjestaja = {
   oppilaitosOid: string;
   oppilaitosTila: string; // TODO: string union type, e.g. "julkaistu" | jne
   toteutusOid: string;
+  toteutusNimi: string;
   tutkintonimikkeet: TODOType;
 };
