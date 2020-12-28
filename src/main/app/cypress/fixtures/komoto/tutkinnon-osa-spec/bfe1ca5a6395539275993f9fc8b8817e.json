@@ -12618,6 +12618,90 @@
       },
       "tutkinnonOsaViitteet": [
         {
+          "id": 2569404,
+          "laajuus": 20,
+          "jarjestys": 5,
+          "_tutkinnonOsa": "2572106"
+        },
+        {
+          "id": 2532510,
+          "laajuus": 40,
+          "jarjestys": 8,
+          "_tutkinnonOsa": "2530603"
+        },
+        {
+          "id": 2532512,
+          "laajuus": 50,
+          "jarjestys": 19,
+          "_tutkinnonOsa": "2530605"
+        },
+        {
+          "id": 2532514,
+          "laajuus": 30,
+          "jarjestys": 20,
+          "_tutkinnonOsa": "2530607"
+        },
+        {
+          "id": 2449201,
+          "laajuus": 25,
+          "jarjestys": 1,
+          "_tutkinnonOsa": "2448754"
+        },
+        {
+          "id": 2569409,
+          "laajuus": 40,
+          "jarjestys": 16,
+          "_tutkinnonOsa": "2576673"
+        },
+        {
+          "id": 2569403,
+          "laajuus": 20,
+          "jarjestys": 14,
+          "_tutkinnonOsa": "2572105"
+        },
+        {
+          "id": 2569408,
+          "laajuus": 40,
+          "jarjestys": 15,
+          "_tutkinnonOsa": "2576672"
+        },
+        {
+          "id": 2538613,
+          "laajuus": 80,
+          "jarjestys": 6,
+          "_tutkinnonOsa": "2537609"
+        },
+        {
+          "id": 2540772,
+          "laajuus": 80,
+          "jarjestys": 9,
+          "_tutkinnonOsa": "2540783"
+        },
+        {
+          "id": 2578292,
+          "laajuus": 25,
+          "jarjestys": 2,
+          "_tutkinnonOsa": "2576676"
+        },
+        {
+          "id": 2578291,
+          "laajuus": 40,
+          "jarjestys": 17,
+          "_tutkinnonOsa": "2576675"
+        },
+        {
+          "id": 2536490,
+          "laajuus": 40,
+          "jarjestys": 11,
+          "_tutkinnonOsa": "2535863"
+        },
+        {
+          "id": 2569405,
+          "laajuus": 40,
+          "jarjestys": 3,
+          "_tutkinnonOsa": "2572108"
+        },
+        {
           "id": 2525018,
           "laajuus": 40,
           "jarjestys": 7,
@@ -12630,76 +12714,10 @@
           "_tutkinnonOsa": "2576671"
         },
         {
-          "id": 2540772,
-          "laajuus": 80,
-          "jarjestys": 9,
-          "_tutkinnonOsa": "2540783"
-        },
-        {
-          "id": 2569405,
-          "laajuus": 40,
-          "jarjestys": 3,
-          "_tutkinnonOsa": "2572108"
-        },
-        {
-          "id": 2532510,
-          "laajuus": 40,
-          "jarjestys": 8,
-          "_tutkinnonOsa": "2530603"
-        },
-        {
-          "id": 2569409,
-          "laajuus": 40,
-          "jarjestys": 16,
-          "_tutkinnonOsa": "2576673"
-        },
-        {
-          "id": 2536490,
-          "laajuus": 40,
-          "jarjestys": 11,
-          "_tutkinnonOsa": "2535863"
-        },
-        {
-          "id": 2532512,
-          "laajuus": 50,
-          "jarjestys": 19,
-          "_tutkinnonOsa": "2530605"
-        },
-        {
-          "id": 2569403,
-          "laajuus": 20,
-          "jarjestys": 14,
-          "_tutkinnonOsa": "2572105"
-        },
-        {
-          "id": 2449201,
-          "laajuus": 25,
-          "jarjestys": 1,
-          "_tutkinnonOsa": "2448754"
-        },
-        {
           "id": 2532517,
           "laajuus": 40,
           "jarjestys": 10,
           "_tutkinnonOsa": "2535860"
-        },
-        {
-          "id": 2538613,
-          "laajuus": 80,
-          "jarjestys": 6,
-          "_tutkinnonOsa": "2537609"
-        },
-        {
-          "id": 2578292,
-          "laajuus": 25,
-          "jarjestys": 2,
-          "_tutkinnonOsa": "2576676"
-        },
-        {
-          "id": 2532514,
-          "laajuus": 30,
-          "jarjestys": 20,
-          "_tutkinnonOsa": "2530607"
         },
         {
           "id": 2540774,
@@ -12708,34 +12726,16 @@
           "_tutkinnonOsa": "2540787"
         },
         {
-          "id": 2569408,
+          "id": 2569406,
           "laajuus": 40,
-          "jarjestys": 15,
-          "_tutkinnonOsa": "2576672"
-        },
-        {
-          "id": 2569404,
-          "laajuus": 20,
-          "jarjestys": 5,
-          "_tutkinnonOsa": "2572106"
+          "jarjestys": 4,
+          "_tutkinnonOsa": "2576670"
         },
         {
           "id": 2556770,
           "laajuus": 30,
           "jarjestys": 13,
           "_tutkinnonOsa": "2556001"
-        },
-        {
-          "id": 2578291,
-          "laajuus": 40,
-          "jarjestys": 17,
-          "_tutkinnonOsa": "2576675"
-        },
-        {
-          "id": 2569406,
-          "laajuus": 40,
-          "jarjestys": 4,
-          "_tutkinnonOsa": "2576670"
         }
       ]
     }
@@ -12840,7 +12840,7 @@
       "osaamisalaArvo": null
     }
   ],
-  "timestamp": 1606812245439,
+  "timestamp": 1607684928421,
   "tyyppi": "eperuste",
   "muokattu": 1578647112822,
   "koulutustyyppi": "koulutustyyppi_11"

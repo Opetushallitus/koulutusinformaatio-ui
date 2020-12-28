@@ -2,10 +2,13 @@
   "total": 9,
   "hits": [
     {
-      "kuvaus": {},
+      "kuvaus": {
+        "fi": "<p> Opiskelija osaa</p>\n\n<ul>\n\t<li>valmistautua palvelutilanteisiin</li>\n\t<li>myydä liikkeen edustamia tuotteita erilaisia rahoitusvaihtoehtoja tarjoten</li>\n\t<li>johtaa kauppatapahtumaa päätökseen ottaen huomioon auto- ja varaosamyyntiä koskevan lainsäädännön ja alan sopimukset</li>\n\t<li>henkilökohtaisen myyntityön ja kauppatapahtuman vaiheet</li>\n\t<li>täyttää kauppa- ja tilaussopimuksen huomioiden tiedonanto- ja virhevastuuvelvoitteen</li>\n\t<li>toimia pysyvän asiakassuhteen edellytykset huomioiden</li>\n\t<li>tarjota asiakaslähtöisiä ratkaisuja</li>\n\t<li>tehdä katelaskentaa autoliikkeen toimintaan liittyviä tunnuslukuja käyttäen</li>\n\t<li>neuvoa asiakasta ajoneuvojen tekniikkaan liittyvissä kysymyksissä</li>\n\t<li>myydä auton lisävarusteita ja korin varusteita</li>\n\t<li>arvioida vaihtoyksikön korjaustarpeen.</li>\n</ul>",
+        "sv": "<p>Den studerande kan</p>\n\n<ul>\n\t<li>förbereda sig för en betjäningssituation</li>\n\t<li>sälja produkter som affären representerar och erbjuda olika slags finansieringsalternativ</li>\n\t<li>slutföra affären och beakta den lagstiftning och de allmänna avtal som gäller för bil- och reservdelshandeln</li>\n\t<li>personligt försäljningsarbete och faserna i en affärstransaktion</li>\n\t<li>fylla i ett köpe- och beställningsavtal och beakta upplysningsplikten och skyldigheten att ansvara för fel</li>\n\t<li>agera så att förutsättningarna för en bestående kundrelation beaktas</li>\n\t<li>erbjuda kundcentrerade lösningar</li>\n\t<li>göra en lönsamhetsberäkning genom att använda nyckeltal som hänför sig till bilaffärens verksamhet</li>\n\t<li>ge kunden råd i frågor gällande fordonens teknik</li>\n\t<li>sälja tilläggsutrustning till bilen och karossutrustning</li>\n\t<li>bedöma behovet av reparation av den bytesbil som kommer in.</li>\n</ul>"
+      },
       "teemakuva": null,
       "opintojenLaajuusyksikko": null,
-      "_score": 4.291231,
+      "_score": 4.5817814,
       "opintojenLaajuusNumero": null,
       "opintojenLaajuus": null,
       "tutkinnonOsat": [
@@ -65,7 +68,7 @@
           "en": "ECVET competence points"
         }
       },
-      "_score": 3.3888583,
+      "_score": 2.9830568,
       "opintojenLaajuusNumero": 180,
       "opintojenLaajuus": {
         "koodiUri": "opintojenlaajuus_180",
@@ -140,65 +143,6 @@
       "koulutustyyppi": "amm"
     },
     {
-      "kuvaus": {},
-      "teemakuva": null,
-      "opintojenLaajuusyksikko": {
-        "koodiUri": "opintojenlaajuusyksikko_6",
-        "nimi": {
-          "sv": "kompetenspoäng",
-          "fi": "osaamispistettä",
-          "en": "ECVET competence points"
-        }
-      },
-      "_score": 3.279132,
-      "opintojenLaajuusNumero": 180,
-      "opintojenLaajuus": {
-        "koodiUri": "opintojenlaajuus_180",
-        "nimi": {
-          "fi": "180",
-          "sv": "180",
-          "en": "180"
-        }
-      },
-      "nimi": {
-        "fi": "Sähkö- ja automaatioalan perustutkinto",
-        "sv": "Grundexamen inom el- och automationsbranschen"
-      },
-      "oid": "1.2.246.562.13.00000000000000000471",
-      "kielivalinta": [
-        "fi",
-        "sv"
-      ],
-      "koulutus": {
-        "koodiUri": "koulutus_351407#12",
-        "nimi": {
-          "fi": "Sähkö- ja automaatioalan perustutkinto",
-          "sv": "Grundexamen inom el- och automationsbranschen",
-          "en": "Vocational qualification in Electrical Engineering and Automation Technology"
-        }
-      },
-      "tutkintonimikkeet": [
-        {
-          "koodiUri": "tutkintonimikkeet_10015",
-          "nimi": {
-            "fi": "Automaatioasentaja",
-            "sv": "Automationsmontör",
-            "en": "Automation Assembler"
-          }
-        },
-        {
-          "koodiUri": "tutkintonimikkeet_10111",
-          "nimi": {
-            "sv": "Elmontör",
-            "fi": "Sähköasentaja",
-            "en": "Electrician"
-          }
-        }
-      ],
-      "eperuste": null,
-      "koulutustyyppi": "amm"
-    },
-    {
       "kuvaus": {
         "fi": "<p>Logistiikka-ala käsittää tässä autokuljetuksen ja varastoinnin sekä lentoaseman logistisia palveluja. Kuljetusalan ammattilainen kuljettaa ihmisiä, tavaroita ja ajoneuvoja paikasta toiseen tehokkaasti ja turvallisesti ja palvelee asiakkaita mahdollisimman hyvin. Varastoalalla toimivat käsittelevät ja siirtävät erilaisia tavaroita varastoihin ja sieltä edelleen kuluttajille. Lentoasemapalveluiden toiminnoissa huolletaan lentoasemalla olevia rakennuksia sekä lentokenttää ja käsitellään rahtia. Ala on kansainvälinen ja edellyttää ammattilaiselta laaja-alaista osaamista sekä kykyä kehittyä. Lisäksi alalla toimivalta edellytetään erilaisten autojen, työkoneiden ja laitteiden käsittelykykyä, tietoteknisiä taitoja sekä kielitaitoa.</p>",
         "sv": "<p>Logistikbranschen innefattar här biltransporter och lagring samt logistiska tjänster på flygplatser. Den sakkunnige inom transportbranschen transporterar människor och gods och kör fordon från en plats till en annan på ett effektivt och säkert sätt och betjänar kunderna så bra som möjligt. De som arbetar inom lagerbranschen hanterar och flyttar olika slags varor till lager och därifrån vidare till konsumenterna. De som arbetar i funktioner vid flygfältsservice underhåller byggnader på flygfältet samt flygplatsen och hanterar frakt. Det är en internationell bransch och den förutsätter att sakkunniga har ett brett kunnande och förmåga att utvecklas. Dessutom förutsätts det att de som arbetar inom branschen har förmåga att hantera olika slags bilar, arbetsmaskiner och anordningar, att de har informationstekniska färdigheter samt språkkunskaper.</p>",
@@ -213,7 +157,7 @@
           "en": "ECVET competence points"
         }
       },
-      "_score": 3.1794586,
+      "_score": 2.857589,
       "opintojenLaajuusNumero": 180,
       "opintojenLaajuus": {
         "koodiUri": "opintojenlaajuus_180",
@@ -286,10 +230,69 @@
       "koulutustyyppi": "amm"
     },
     {
-      "kuvaus": {},
+      "kuvaus": null,
+      "teemakuva": null,
+      "opintojenLaajuusyksikko": {
+        "koodiUri": "opintojenlaajuusyksikko_6",
+        "nimi": {
+          "sv": "kompetenspoäng",
+          "fi": "osaamispistettä",
+          "en": "ECVET competence points"
+        }
+      },
+      "_score": 2.8276217,
+      "opintojenLaajuusNumero": 180,
+      "opintojenLaajuus": {
+        "koodiUri": "opintojenlaajuus_180",
+        "nimi": {
+          "fi": "180",
+          "sv": "180",
+          "en": "180"
+        }
+      },
+      "nimi": {
+        "fi": "Sähkö- ja automaatioalan perustutkinto",
+        "sv": "Grundexamen inom el- och automationsbranschen"
+      },
+      "oid": "1.2.246.562.13.00000000000000000471",
+      "kielivalinta": [
+        "fi",
+        "sv"
+      ],
+      "koulutus": {
+        "koodiUri": "koulutus_351407#12",
+        "nimi": {
+          "fi": "Sähkö- ja automaatioalan perustutkinto",
+          "sv": "Grundexamen inom el- och automationsbranschen",
+          "en": "Vocational qualification in Electrical Engineering and Automation Technology"
+        }
+      },
+      "tutkintonimikkeet": [
+        {
+          "koodiUri": "tutkintonimikkeet_10015",
+          "nimi": {
+            "fi": "Automaatioasentaja",
+            "sv": "Automationsmontör",
+            "en": "Automation Assembler"
+          }
+        },
+        {
+          "koodiUri": "tutkintonimikkeet_10111",
+          "nimi": {
+            "sv": "Elmontör",
+            "fi": "Sähköasentaja",
+            "en": "Electrician"
+          }
+        }
+      ],
+      "eperuste": null,
+      "koulutustyyppi": "amm"
+    },
+    {
+      "kuvaus": null,
       "teemakuva": "https://konfo-files.hahtuvaopintopolku.fi/koulutus-teemakuva/1.2.246.562.13.00000000000000000189/eeeffe72-85d6-4d42-a1e9-d9005c4d99a3.png",
       "opintojenLaajuusyksikko": null,
-      "_score": 2.384823,
+      "_score": 2.056452,
       "opintojenLaajuusNumero": null,
       "opintojenLaajuus": null,
       "nimi": {
@@ -312,10 +315,10 @@
       "koulutustyyppi": "amm"
     },
     {
-      "kuvaus": {},
+      "kuvaus": null,
       "teemakuva": null,
       "opintojenLaajuusyksikko": null,
-      "_score": 2.3025851,
+      "_score": 2.0088239,
       "opintojenLaajuusNumero": null,
       "opintojenLaajuus": null,
       "nimi": {
@@ -338,12 +341,24 @@
       "koulutustyyppi": "amm"
     },
     {
-      "kuvaus": {},
+      "kuvaus": {
+        "fi": "asdfsad"
+      },
       "teemakuva": null,
-      "opintojenLaajuusyksikko": null,
-      "_score": 2.3025851,
-      "opintojenLaajuusNumero": null,
-      "opintojenLaajuus": null,
+      "opintojenLaajuusyksikko": {
+        "koodiUri": "opintojenlaajuus_100#1",
+        "nimi": {
+          "fi": "100"
+        }
+      },
+      "_score": 2.0088239,
+      "opintojenLaajuusNumero": "100",
+      "opintojenLaajuus": {
+        "koodiUri": "opintojenlaajuus_100#1",
+        "nimi": {
+          "fi": "100"
+        }
+      },
       "nimi": {
         "fi": "Autoalan perustutkinto"
       },
@@ -378,7 +393,7 @@
           "en": "ECVET competence points"
         }
       },
-      "_score": 2.3025851,
+      "_score": 2.0088239,
       "opintojenLaajuusNumero": 180,
       "opintojenLaajuus": {
         "koodiUri": "opintojenlaajuus_180",
@@ -453,10 +468,10 @@
       "koulutustyyppi": "amm"
     },
     {
-      "kuvaus": {},
+      "kuvaus": null,
       "teemakuva": null,
       "opintojenLaajuusyksikko": null,
-      "_score": 1.8787708,
+      "_score": 1.6885753,
       "opintojenLaajuusNumero": null,
       "opintojenLaajuus": null,
       "nimi": {
@@ -489,14 +504,14 @@
           "sv": "finska",
           "fi": "suomi"
         },
-        "count": 4
+        "count": 5
       },
       "oppilaitoksenopetuskieli_5": {
         "nimi": {
           "sv": "samiska",
           "fi": "saame"
         },
-        "count": 0
+        "count": 1
       },
       "oppilaitoksenopetuskieli_2": {
         "nimi": {
@@ -565,7 +580,7 @@
           "fi": "Pohjois-Savo",
           "sv": "Norra Savolax"
         },
-        "count": 2
+        "count": 3
       },
       "maakunta_05": {
         "nimi": {
@@ -684,7 +699,7 @@
           "sv": "Päijänne-Tavastland",
           "fi": "Päijät-Häme"
         },
-        "count": 2
+        "count": 3
       },
       "maakunta_18": {
         "nimi": {
@@ -820,7 +835,7 @@
           "sv": "Idensalmi",
           "fi": "Iisalmi"
         },
-        "count": 2
+        "count": 3
       },
       "kunta_530": {
         "nimi": {
@@ -2880,7 +2895,7 @@
           "fi": "Asikkala",
           "sv": "Asikkala"
         },
-        "count": 0
+        "count": 1
       },
       "kunta_039": {
         "nimi": {
@@ -5538,7 +5553,7 @@
           "sv": "Närundervisning",
           "en": "Contact teaching"
         },
-        "count": 4
+        "count": 2
       },
       "opetuspaikkakk_5": {
         "nimi": {
@@ -5550,7 +5565,7 @@
         "nimi": {
           "fi": "Monimuoto"
         },
-        "count": 1
+        "count": 0
       },
       "opetuspaikkakk_3": {
         "nimi": {
