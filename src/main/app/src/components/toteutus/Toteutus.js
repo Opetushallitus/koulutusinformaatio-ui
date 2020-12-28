@@ -124,13 +124,12 @@ const Toteutus = () => {
   const koulutusLoading =
     useSelector(selectKoulutusLoading) || (!koulutus && koulutusNotFetched);
 
-  const loading = koulutusLoading || toteutusLoading;
   const asiasanat =
     toteutus?.metadata?.asiasanat
       .filter((asiasana) => asiasana.kieli === currentLanguage)
       .map((asiasana) => asiasana.arvo) ?? [];
 
-  const { data = [], isFetching } = useOsaamisalatPageData({
+  const { data: osaamisalaData = [], isFetching } = useOsaamisalatPageData({
     ePerusteId: koulutus?.ePerusteId?.toString(),
     requestParams: {
       'koodi-urit': toteutus?.metadata?.osaamisalat
@@ -139,12 +138,14 @@ const Toteutus = () => {
     },
   });
 
-  const osaamisalatCombined = data?.osaamisalat?.map((oa) => {
+  const osaamisalatCombined = osaamisalaData?.osaamisalat?.map((oa) => {
     const toteutusOsaamisala = toteutus?.metadata?.osaamisalat?.find(
       (toa) => toa?.koodi?.koodiUri === oa?.osaamisalakoodiUri
     );
     return { ...oa, extended: toteutusOsaamisala };
   });
+
+  const loading = koulutusLoading || toteutusLoading || isFetching;
 
   useEffect(() => {
     if (!toteutus) {
@@ -160,7 +161,7 @@ const Toteutus = () => {
   const opetus = toteutus?.metadata?.opetus;
   const hakuUrl = useSelector(getHakuUrl);
 
-  return loading || isFetching ? (
+  return loading ? (
     <LoadingCircle />
   ) : (
     <ContentWrapper>
@@ -262,7 +263,7 @@ const Toteutus = () => {
             className={classes.root}
           />
         )}
-        {!_.isEmpty(osaamisalatCombined) > 0 && (
+        {!_.isEmpty(osaamisalatCombined) && (
           <AccordionWithTitle
             titleTranslation="koulutus.osaamisalat"
             data={osaamisalatCombined?.map((osaamisala) => ({
