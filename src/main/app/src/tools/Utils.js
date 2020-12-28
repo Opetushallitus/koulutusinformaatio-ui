@@ -130,9 +130,10 @@ export function formatDateString(dateString, dateFormat = 'd.M.y HH:mm') {
   return format(new Date(dateString), dateFormat);
 }
 
-export function formatDateRange(start, end) {
-  return `${formatDateString(start)} \u2013 ${end ? formatDateString(end) : ''}`;
-}
+export const formatDateRange = (start, end, dateFormat) =>
+  `${formatDateString(start, dateFormat)} \u2013 ${
+    end ? formatDateString(end, dateFormat) : ''
+  }`;
 
 const ALLOWED_HTML_TAGS = [
   'b',
