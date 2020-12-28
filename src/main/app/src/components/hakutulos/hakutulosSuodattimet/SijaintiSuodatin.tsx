@@ -1,9 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import Select, { components } from 'react-select';
-import qs from 'query-string';
 import _fp from 'lodash/fp';
 import {
   Button,
@@ -35,7 +33,10 @@ import {
 } from './CustomizedMuiComponents';
 import { SummaryContent } from './SummaryContent';
 import { colors } from '#/src/colors';
-import { Common as C, Localizer as l } from '#/src/tools/Utils';
+import { Localizer as l } from '#/src/tools/Utils';
+import { ElasticTuple, SuodatinProps } from './SuodatinTypes';
+import { Translateable } from '#/src/types/common';
+import { useUrlParams } from '../UseUrlParams';
 
 const useStyles = makeStyles(() => ({
   buttonLabel: {
@@ -94,8 +95,6 @@ const Option = ({ data, innerProps, isFocused }: OptionProps) => (
   </ListItem>
 );
 
-type Translateable = { fi?: string; sv?: string; en?: string };
-type MaakuntaTuple = [string, { count: number; nimi: Translateable }];
 type Maakunta = {
   id: string;
   name: Translateable;
@@ -107,16 +106,9 @@ type Maakunta = {
 const isChecked = (arr: Maakunta[], value: Maakunta) =>
   arr.some((o) => o.id === value.id);
 
-type SijaintiSuodatinProps = {
-  expanded?: boolean;
-  elevation?: number;
-  displaySelected?: boolean;
-  summaryHidden?: boolean;
-};
-
 type SijaintiFilterProps = {
-  firstFiveMaakunnat: MaakuntaTuple[];
-  restMaakunnat: MaakuntaTuple[];
+  firstFiveMaakunnat: ElasticTuple[];
+  restMaakunnat: ElasticTuple[];
   selectedSijainnit: Maakunta[];
   searchHitsSijainnit: Maakunta[];
   checkedMaakunnat: Maakunta[];
@@ -128,8 +120,8 @@ export const SijaintiSuodatin = ({
   elevation,
   displaySelected,
   summaryHidden = false,
-}: SijaintiSuodatinProps) => {
-  const history = useHistory();
+}: SuodatinProps) => {
+  const { updateUrlSearchParams } = useUrlParams();
   const { t } = useTranslation();
   const classes = useStyles();
   const loading = useSelector(getIsLoading);
@@ -147,9 +139,7 @@ export const SijaintiSuodatin = ({
 
   const [showRest, setShowRest] = useState(false);
 
-  console.log(firstFiveMaakunnat, restMaakunnat, selectedSijainnit);
-
-  const handleMaakuntaToggle = (maakuntaArr: MaakuntaTuple) => () => {
+  const handleMaakuntaToggle = (maakuntaArr: ElasticTuple) => () => {
     const maakuntaFilterObj = {
       id: maakuntaArr[0],
       name: maakuntaArr[1]?.nimi,
@@ -182,13 +172,9 @@ export const SijaintiSuodatin = ({
       .map(({ id }) => id)
       .concat(checkedMaakunnat.map(({ id }) => id))
       .join(',');
-    const search = qs.parse(history.location.search);
 
     dispatch(setSelectedSijainti({ newSelectedSijainnit }));
-    search.sijainti = selectedSijainnitStr;
-    search.kpage = '1';
-    search.opage = '1';
-    history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
+    updateUrlSearchParams({ sijainti: selectedSijainnitStr });
     dispatch(clearPaging());
     dispatch(searchAll({ ...apiRequestParams, sijainti: selectedSijainnitStr }));
   };
@@ -213,11 +199,7 @@ export const SijaintiSuodatin = ({
       .map(({ id }) => id)
       .concat(selectedSijainnit.map(({ id }) => id))
       .join(',');
-    const search = qs.parse(history.location.search);
-    search.sijainti = newCheckedOrSelectedSijainnitStr;
-    search.kpage = '1';
-    search.opage = '1';
-    history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
+    updateUrlSearchParams({ sijainti: newCheckedOrSelectedSijainnitStr });
     dispatch(setSijainti({ newCheckedOrSelectedMaakunnat }));
     dispatch(clearPaging());
     dispatch(
@@ -253,6 +235,7 @@ export const SijaintiSuodatin = ({
     [searchHitsSijainnit, selectedSijainnit, checkedMaakunnat, t]
   );
 
+  // TODO: Use Filter.tsx if possible
   return (
     <SuodatinAccordion
       {...(summaryHidden && { className: classes.noBoxShadow })}

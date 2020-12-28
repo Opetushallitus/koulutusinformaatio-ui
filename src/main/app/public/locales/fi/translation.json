@@ -279,6 +279,7 @@
     "katso-jarjestavat": "Katso koulutusta järjestävät oppilaitokset.",
     "nayta-oppilaitokset": "Näytä oppilaitokset",
     "ei-toteutuksia": "Tätä koulutusta ei ole tarjolla tällä hetkellä missään oppilaitoksessa.",
+    "ei-rajaimia-vastaavia-toteutuksia": "Rajaimia vastaavia toteutuksia ei ole tarjolla tällä hetkellä missään oppilaitoksessa.",
     "ei-tutkintonimiketta": "Ei tutkintonimikettä",
     "ei-laajuutta": "Ei opintojenlaajuutta",
     "kesto-vuosi": "{{count}} vuosi",

@@ -1,8 +1,6 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import qs from 'query-string';
 import _ from 'lodash';
 import {
   AppBar,
@@ -24,7 +22,7 @@ import {
   searchAll,
 } from '#/src/store/reducers/hakutulosSlice';
 import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
-import OpetusKieliSuodatin from './hakutulosSuodattimet/OpetusKieliSuodatin';
+import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
 import MobileResultsPerPageExpansionMenu from './MobileResultsPerPageExpansionMenu';
 import MobileToggleFiltersButton from './MobileToggleFiltersButton';
@@ -33,8 +31,9 @@ import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
 import MobileToggleKoulutusOppilaitos from './MobileToggleKoulutusOppilaitos';
 import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
 import { useQueryParams } from '#/src/hooks';
+import { useUrlParams } from './UseUrlParams';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   paperAnchorBottom: {
     height: '100%',
   },
@@ -59,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
-  const history = useHistory();
+  const { omitUrlSearchParams } = useUrlParams();
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -74,10 +73,7 @@ const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
   };
 
   const handleClearFilters = () => {
-    const search = qs.parse(history.location.search);
-    history.replace({
-      search: qs.stringify(_.omit(search, _.keys(suodatinValinnatProps))),
-    });
+    omitUrlSearchParams(suodatinValinnatProps);
     dispatch(clearSelectedFilters());
     dispatch(searchAll(_.omit(apiRequestParams, _.keys(suodatinValinnatProps))));
   };
@@ -120,7 +116,7 @@ const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
         {isFrontPage && <Divider className={classes.divider} />}
         <KoulutusTyyppiSuodatin expanded={false} elevation={0} displaySelected />
         <Divider className={classes.divider} />
-        <OpetusKieliSuodatin expanded={false} elevation={0} displaySelected />
+        <OpetuskieliSuodatin expanded={false} elevation={0} displaySelected />
         <Divider className={classes.divider} />
         <SijaintiSuodatin expanded={false} elevation={0} displaySelected />
         <Divider className={classes.divider} />

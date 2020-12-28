@@ -8,7 +8,7 @@ import {
   ListItemText,
   Slider,
 } from '@material-ui/core';
-import { colors } from '../../../colors';
+import { colors } from '#/src/colors';
 
 export const SuodatinCheckbox = withStyles({
   root: {
@@ -32,7 +32,7 @@ export const SuodatinAccordion = withStyles({
     },
   },
   expanded: {
-    '@media (max-width:960px)': {
+    '@media (max-width:959px)': {
       margin: '0 !important',
     },
   },
@@ -41,7 +41,7 @@ export const SuodatinAccordion = withStyles({
 export const SuodatinAccordionSummary = withStyles({
   root: {
     minHeight: '32px !important',
-    '@media (max-width:960px)': {
+    '@media (max-width:959px)': {
       padding: '0 !important',
     },
   },
@@ -55,7 +55,7 @@ export const SuodatinAccordionDetails = withStyles({
     '@media (min-width:960px)': {
       padding: '0 24px 16px 24px',
     },
-    '@media (max-width:960px)': {
+    '@media (max-width:959px)': {
       padding: '0 !important',
     },
   },

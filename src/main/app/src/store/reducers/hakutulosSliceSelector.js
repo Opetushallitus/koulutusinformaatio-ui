@@ -269,18 +269,26 @@ export const getAPIRequestParams = createSelector(
   })
 );
 
-export const getHakuUrl = createSelector(
+export const getHakuParams = createSelector(
   [getAPIRequestParams, getSelectedTab, getKoulutusPage, getOppilaitosPage],
   (apiRequestParams, selectedTab, koulutusPage, oppilaitosPage) => {
-    const { keyword } = apiRequestParams;
     const hakuParams = {
       ...C.cleanRequestParams(_.omit(apiRequestParams, 'keyword')),
       kpage: koulutusPage,
       opage: oppilaitosPage,
       selectedTab,
     };
+    const hakuParamsStr = qs.stringify(hakuParams, { arrayFormat: 'comma' });
+    return { hakuParams, hakuParamsStr };
+  }
+);
+
+export const getHakuUrl = createSelector(
+  [getAPIRequestParams, getHakuParams],
+  (apiRequestParams, { hakuParamsStr }) => {
+    const { keyword } = apiRequestParams;
     const urlStart = _.size(keyword) > 2 ? `/haku/${keyword}?` : `/haku?`;
-    const url = urlStart + qs.stringify(hakuParams, { arrayFormat: 'comma' });
+    const url = urlStart + hakuParamsStr;
     return { url };
   }
 );

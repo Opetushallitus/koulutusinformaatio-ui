@@ -1,17 +1,15 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import qs from 'query-string';
 import { Grid, Typography, ButtonGroup, Button, makeStyles } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { getMobileToggleOrderByButtonMenuProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { setSort, setOrder, searchAll } from '#/src/store/reducers/hakutulosSlice';
 import { colors } from '#/src/colors';
-import { Common as C } from '#/src/tools/Utils';
 import { useQueryParams } from '#/src/hooks';
+import { useUrlParams } from './UseUrlParams';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   buttonActive: {
     backgroundColor: colors.green,
     color: colors.white,
@@ -33,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MobileToggleOrderByButtonMenu = ({ elevation }) => {
   const classes = useStyles();
-  const history = useHistory();
+  const { updateUrlSearchParams } = useUrlParams();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const apiRequstParams = useQueryParams();
@@ -48,10 +46,7 @@ const MobileToggleOrderByButtonMenu = ({ elevation }) => {
   } = mobileToggleOrderByButtonMenuProps;
 
   const updateSortAndOrder = (newSort, newOrder) => {
-    const search = qs.parse(history.location.search);
-    search.sort = newSort;
-    search.order = newOrder;
-    history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
+    updateUrlSearchParams({ sort: newSort, order: newOrder }, false);
     dispatch(setSort({ newSort }));
     dispatch(setOrder({ newOrder }));
     dispatch(searchAll({ ...apiRequstParams, order: newOrder, sort: newSort }));

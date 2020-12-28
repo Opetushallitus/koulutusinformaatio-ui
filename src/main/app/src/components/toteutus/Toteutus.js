@@ -1,41 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import ContentWrapper from '../common/ContentWrapper';
-import { Box, Typography, makeStyles, Grid } from '@material-ui/core';
-import { HashLink } from 'react-router-hash-link';
-import { colors } from '#/src/colors';
-import { ToteutusInfoGrid } from './ToteutusInfoGrid';
-import ToteutusHakukohteet from './ToteutusHakukohteet';
-import clsx from 'clsx';
-import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { useQuery } from 'react-query';
-import { LoadingCircle } from '#/src/components/common/LoadingCircle';
-import Spacer from '#/src/components/common/Spacer';
-import Accordion from '#/src/components/common/Accordion';
-import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
-import HakuKaynnissaCard from '#/src/components/koulutus/HakuKaynnissaCard';
-import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
+import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import clsx from 'clsx';
 import _ from 'lodash';
-import {
-  fetchToteutus,
-  selectLoading as selectToteutusLoading,
-  selectToteutus,
-  selectHakukohteet,
-} from '#/src/store/reducers/toteutusSlice';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useQuery } from 'react-query';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
+import { getToteutusOsaamisalaKuvaus } from '#/src/api/konfoApi';
+import { colors } from '#/src/colors';
+import Accordion from '#/src/components/common/Accordion';
+import HtmlTextBox from '#/src/components/common/HtmlTextBox';
+import { LoadingCircle } from '#/src/components/common/LoadingCircle';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
+import Murupolku from '#/src/components/common/Murupolku';
+import Spacer from '#/src/components/common/Spacer';
+import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
+import HakuKaynnissaCard from '#/src/components/koulutus/HakuKaynnissaCard';
+import { getHakuParams, getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   fetchKoulutusWithRelatedData,
   selectKoulutus,
   selectLoading as selectKoulutusLoading,
 } from '#/src/store/reducers/koulutusSlice';
-import { getToteutusOsaamisalaKuvaus } from '#/src/api/konfoApi';
-import { useTranslation } from 'react-i18next';
-import HtmlTextBox from '#/src/components/common/HtmlTextBox';
-import Murupolku from '#/src/components/common/Murupolku';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
-import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
-import { ToteutusHakuMuu } from './ToteutusHakuMuu';
+import {
+  fetchToteutus,
+  selectHakukohteet,
+  selectLoading as selectToteutusLoading,
+  selectToteutus,
+} from '#/src/store/reducers/toteutusSlice';
+import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
+import ContentWrapper from '../common/ContentWrapper';
 import { ToteutusHakuEiSahkoista } from './ToteutusHakuEiSahkoista';
+import ToteutusHakukohteet from './ToteutusHakukohteet';
+import { ToteutusHakuMuu } from './ToteutusHakuMuu';
+import { ToteutusInfoGrid } from './ToteutusInfoGrid';
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -160,6 +160,7 @@ const Toteutus = () => {
 
   const opetus = toteutus?.metadata?.opetus;
   const hakuUrl = useSelector(getHakuUrl);
+  const { hakuParamsStr } = useSelector(getHakuParams);
 
   return loading ? (
     <LoadingCircle />
@@ -176,7 +177,7 @@ const Toteutus = () => {
               { name: t('haku.otsikko'), link: hakuUrl.url },
               {
                 name: l.localize(koulutus?.tutkintoNimi),
-                link: `/koulutus/${toteutus?.koulutusOid}`,
+                link: `/koulutus/${toteutus?.koulutusOid}?${hakuParamsStr}`,
               },
               { name: l.localize(toteutus?.nimi) },
             ]}

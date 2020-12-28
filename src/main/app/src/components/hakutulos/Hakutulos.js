@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import qs from 'query-string';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import {
   Box,
   Grid,
@@ -24,21 +22,21 @@ import {
   setSort,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getHakutulosProps } from '#/src/store/reducers/hakutulosSliceSelector';
-import { Common as C } from '#/src/tools/Utils';
 import Murupolku from '#/src/components/common/Murupolku';
 import BackendErrorMessage from './BackendErrorMessage';
-import HakutulosResults from './HakutulosResults';
+import { HakutulosResults } from './HakutulosResults';
 import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
 import KoulutustyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
-import OpetuskieliSuodatin from './hakutulosSuodattimet/OpetusKieliSuodatin';
+import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
-import SuodatinValinnat from './hakutulosSuodattimet/SuodatinValinnat';
+import { SuodatinValinnat } from './hakutulosSuodattimet/SuodatinValinnat';
 import HakutulosToggle from './HakutulosToggle';
 import MobileFiltersOnTopMenu from './MobileFiltersOnTopMenu';
 import MobileToggleFiltersButton from './MobileToggleFiltersButton';
 import Pagination from './Pagination';
 import { useQueryParams } from '#/src/hooks';
+import { useUrlParams } from './UseUrlParams';
 
 const useStyles = makeStyles((theme) => ({
   hakutulosSisalto: {
@@ -92,8 +90,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Hakutulos = () => {
-  const history = useHistory();
+export const Hakutulos = () => {
+  const { updateUrlSearchParams } = useUrlParams();
   const classes = useStyles();
   const theme = useTheme();
   const { t } = useTranslation();
@@ -112,28 +110,21 @@ const Hakutulos = () => {
   }, [hakutulosProps.size]);
 
   const handlePageSortChange = (e) => {
-    const search = qs.parse(history.location.search);
     const newPageSort = e.target.value;
     const newOrder = newPageSort === 'name_asc' ? 'asc' : 'desc';
     const newSort = newPageSort === 'score_desc' ? 'score' : 'name';
 
     setPageSort(newPageSort);
-    search.sort = newSort;
-    search.order = newOrder;
-    history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
+    updateUrlSearchParams({ sort: newSort, order: newOrder }, false);
     dispatch(setSort({ newSort }));
     dispatch(setOrder({ newOrder }));
     dispatch(searchAll({ ...apiRequestParams, order: newOrder, sort: newSort }));
   };
   const handlePageSizeChange = (e) => {
-    const search = qs.parse(history.location.search);
     const newSize = e.target.value;
 
     setPageSize(newSize);
-    search.size = newSize;
-    search.kpage = 1;
-    search.opage = 1;
-    history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
+    updateUrlSearchParams({ size: newSize });
     dispatch(clearPaging());
     dispatch(setSize({ newSize }));
     dispatch(searchAll({ ...apiRequestParams, size: newSize }));
@@ -270,5 +261,3 @@ const Hakutulos = () => {
     </Grid>
   );
 };
-
-export default Hakutulos;

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
@@ -27,6 +26,7 @@ import { twoLevelFilterUpdateAndSearch } from '#/src/store/reducers/hakutulosSli
 import { MUI_BREAKPOINTS, FILTER_TYPES } from '#/src/constants';
 import { Localizer as l } from '#/src/tools/Utils';
 import { useQueryParams } from '#/src/hooks';
+import { useUrlParams } from '../UseUrlParams';
 
 const useStyles = makeStyles((theme) => ({
   buttonLabel: {
@@ -43,7 +43,7 @@ const KoulutusalaSuodatin = ({
   displaySelected,
   summaryHidden = false,
 }) => {
-  const history = useHistory();
+  const { updateUrlSearchParams } = useUrlParams();
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -78,7 +78,7 @@ const KoulutusalaSuodatin = ({
         apiRequestParams,
         clickedFilterId,
         parentFilterId,
-        history,
+        updateUrlSearchParams,
       })
     );
   };
@@ -170,6 +170,7 @@ const KoulutusalaSuodatin = ({
     </List>
   );
 
+  // TODO: Use Filter.tsx if possible
   return (
     <SuodatinAccordion
       {...(summaryHidden && { className: classes.noBoxShadow })}

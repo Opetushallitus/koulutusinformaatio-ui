@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
@@ -28,6 +27,7 @@ import { Localizer as l } from '#/src/tools/Utils';
 import { FILTER_TYPES } from '#/src/constants';
 import { colors } from '#/src/colors';
 import { useQueryParams } from '#/src/hooks';
+import { useUrlParams } from '../UseUrlParams';
 
 const withStyles = makeStyles(() => ({
   noBoxShadow: {
@@ -58,7 +58,7 @@ const KoulutustyyppiSuodatin = ({
   summaryHidden = false,
 }) => {
   const classes = withStyles();
-  const history = useHistory();
+  const { updateUrlSearchParams } = useUrlParams();
   const { t } = useTranslation();
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -82,7 +82,7 @@ const KoulutustyyppiSuodatin = ({
         apiRequestParams,
         clickedFilterId,
         parentFilterId,
-        history,
+        updateUrlSearchParams,
       })
     );
   };
@@ -102,6 +102,7 @@ const KoulutustyyppiSuodatin = ({
     return l.localize(alakoodiValue) || t(`haku.${alakoodiKey}`);
   }
 
+  // TODO: Use Filter.tsx if possible
   return (
     <SuodatinAccordion
       {...(summaryHidden && { className: classes.noBoxShadow })}

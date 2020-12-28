@@ -1,14 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedTab } from '#/src/store/reducers/hakutulosSlice';
-import { useHistory } from 'react-router-dom';
 import { Tabs, Tab, makeStyles, useMediaQuery } from '@material-ui/core';
 import { SchoolOutlined, HomeWorkOutlined } from '@material-ui/icons';
-import qs from 'query-string';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { MUI_BREAKPOINTS } from '../../constants';
 import { getHakutulosToggleProps } from '#/src/store/reducers/hakutulosSliceSelector';
+import { useUrlParams } from './UseUrlParams';
 
 const useStyles = makeStyles((theme) => ({
   tabIconMargin: {
@@ -39,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const HakutulosToggle = () => {
-  const history = useHistory();
+  const { updateUrlSearchParams } = useUrlParams();
+
   const { t } = useTranslation();
   const { selectedTab, koulutusTotal, oppilaitosTotal } = useSelector(
     getHakutulosToggleProps
@@ -49,9 +49,7 @@ const HakutulosToggle = () => {
   const muiScreenSizeMinMd = useMediaQuery(MUI_BREAKPOINTS.MIN_MD);
 
   const handleSelectedTab = (e, newSelectedTab) => {
-    const search = qs.parse(history.location.search);
-    search.tab = newSelectedTab;
-    history.replace({ search: qs.stringify(search) });
+    updateUrlSearchParams({ tab: newSelectedTab });
     dispatch(setSelectedTab({ newSelectedTab }));
   };
 

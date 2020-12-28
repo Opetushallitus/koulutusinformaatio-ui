@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { searchAPI } from '#/src/api/konfoApi';
-import qs from 'query-string';
 import _ from 'lodash';
 import { Localizer as l, Common as C } from '#/src/tools/Utils';
 import { FILTER_TYPES, FILTER_TYPES_ARR } from '#/src/constants';
@@ -92,7 +91,7 @@ const hakutulosSlice = createSlice({
         state[filterType] = state[filterType].filter(({ id }) => id !== itemId);
       }
     },
-    clearSelectedFilters: (state, action) => {
+    clearSelectedFilters: (state) => {
       state.koulutustyyppi = [];
       state.koulutusala = [];
       state.opetuskieli = [];
@@ -361,7 +360,7 @@ export const twoLevelFilterUpdateAndSearch = ({
   apiRequestParams,
   clickedFilterId,
   parentFilterId,
-  history,
+  updateUrlSearchParams,
 }) => (dispatch, getState) => {
   const { hakutulos } = getState();
   let filterCheckedValues = _.clone(_.get(hakutulos, filterType));
@@ -400,8 +399,6 @@ export const twoLevelFilterUpdateAndSearch = ({
   }
 
   filterCheckedValues = _.sortBy(_.uniqBy(filterCheckedValues, 'id'), 'id');
-
-  const search = qs.parse(history.location.search);
   const filterURLParamsStr = _.join(_.map(filterCheckedValues, 'id'), ',');
 
   switch (filterType) {
@@ -414,10 +411,8 @@ export const twoLevelFilterUpdateAndSearch = ({
     default:
       break;
   }
-  search[filterType] = filterURLParamsStr;
-  search.kpage = 1;
-  search.opage = 1;
-  history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
+
+  updateUrlSearchParams({ [filterType]: filterURLParamsStr });
   dispatch(clearPaging());
   dispatch(searchAll({ ...apiRequestParams, [filterType]: filterURLParamsStr }));
 };

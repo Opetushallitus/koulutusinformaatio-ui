@@ -6,20 +6,26 @@ import _ from 'lodash';
 import KoulutusKortti from './hakutulosKortit/KoulutusKortti';
 import OppilaitosKortti from './hakutulosKortit/OppilaitosKortti';
 
-const HakutulosResults = ({ selectedTab, koulutusHits, oppilaitosHits, keyword }) => {
+export const HakutulosResults = ({
+  selectedTab,
+  koulutusHits,
+  oppilaitosHits,
+  keyword,
+}) => {
   const theme = useTheme();
   const { t } = useTranslation();
 
   if (selectedTab === 'koulutus' && _.size(koulutusHits) > 0) {
-    return koulutusHits.map((koulutus) => {
-      return <KoulutusKortti key={koulutus.oid} koulutus={koulutus} />;
-    });
+    return koulutusHits.map((koulutus) => (
+      <KoulutusKortti key={koulutus.oid} koulutus={koulutus} />
+    ));
   }
   if (selectedTab === 'oppilaitos' && _.size(oppilaitosHits) > 0) {
-    return oppilaitosHits.map((oppilaitos) => {
-      return <OppilaitosKortti key={oppilaitos.oid} oppilaitos={oppilaitos} />;
-    });
+    return oppilaitosHits.map((oppilaitos) => (
+      <OppilaitosKortti key={oppilaitos.oid} oppilaitos={oppilaitos} />
+    ));
   }
+
   return (
     <Grid
       container
@@ -41,5 +47,3 @@ const HakutulosResults = ({ selectedTab, koulutusHits, oppilaitosHits, keyword }
     </Grid>
   );
 };
-
-export default HakutulosResults;

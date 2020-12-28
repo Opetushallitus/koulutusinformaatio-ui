@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import _ from 'lodash';
 import { observer } from 'mobx-react-lite';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
-import qs from 'query-string';
 import { urls } from 'oph-urls-js';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { Link as MuiLink, Typography, Box, makeStyles } from '@material-ui/core';
@@ -18,7 +17,6 @@ import {
   selectKoulutus,
   selectSuositellutKoulutukset,
   selectLoading,
-  selectJarjestajat,
   selectTulevatJarjestajat,
 } from '#/src/store/reducers/koulutusSlice';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
@@ -27,9 +25,10 @@ import Spacer from '#/src/components/common/Spacer';
 import Accordion from '#/src/components/common/Accordion';
 import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import SuositusKoulutusList from './SuositusKoulutusList';
-import ToteutusList from './ToteutusList';
+import { ToteutusList } from './ToteutusList';
 import TulevaJarjestajaList from './TulevaJarjestajaList';
 import KoulutusInfoGrid from './KoulutusInfoGrid';
+import { useUrlParams } from '../hakutulos/UseUrlParams';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },
@@ -57,7 +56,12 @@ const AccordionWithTitle = ({ titleTranslation, data }) => {
       alignItems="center">
       <Typography variant="h2">{t(titleTranslation)}</Typography>
       <Spacer />
-      <Accordion items={data} />
+      <Accordion
+        items={data}
+        ContentWrapper={({ children }) => (
+          <Typography component="div">{children}</Typography>
+        )}
+      />
     </Box>
   );
 };
@@ -68,9 +72,8 @@ const findEperuste = (koulutus) => (id) =>
 const findTutkinnonOsa = (eperuste) => (id) =>
   _.first(eperuste.tutkinnonOsat.filter((t) => t.id === id));
 
-const Koulutus = (props) => {
-  const history = useHistory();
-  const { draft } = qs.parse(history.location.search);
+const Koulutus = () => {
+  const { isDraft } = useUrlParams();
   const dispatch = useDispatch();
   const classes = useStyles();
   const { oid } = useParams();
@@ -82,7 +85,6 @@ const Koulutus = (props) => {
     (state) => selectSuositellutKoulutukset(state),
     shallowEqual
   );
-  const toteutukset = useSelector(selectJarjestajat(oid));
   const tulevatJarjestajat = useSelector((state) => selectTulevatJarjestajat(state, oid));
   const loading = useSelector((state) => selectLoading(state));
 
@@ -90,9 +92,9 @@ const Koulutus = (props) => {
 
   useEffect(() => {
     if (!koulutus) {
-      dispatch(fetchKoulutusWithRelatedData(oid, draft));
+      dispatch(fetchKoulutusWithRelatedData(oid, isDraft));
     }
-  }, [dispatch, koulutus, oid, draft]);
+  }, [dispatch, koulutus, oid, isDraft]);
 
   const getKuvausHtmlSection = (captionKey, localizableText) => {
     return localizableText
@@ -201,6 +203,8 @@ const Koulutus = (props) => {
               ].join(' ');
               const foundTutkinnonOsa = findTutkinnonOsa(eperuste)(tutkinnonosaId);
 
+              console.log('foundTutkinnonOsa', foundTutkinnonOsa);
+
               return {
                 title,
                 content: (
@@ -225,7 +229,7 @@ const Koulutus = (props) => {
           />
         ) : null}
         <Box width="95%" id="tarjonta">
-          <ToteutusList toteutukset={toteutukset} />
+          <ToteutusList oid={oid} />
         </Box>
         {suositellutKoulutukset?.total > 0 && (
           <Box id="suositukset">

@@ -1,16 +1,15 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
-import qs from 'query-string';
 import { Grid, Typography } from '@material-ui/core';
 import { clearPaging, searchAll, setSize } from '#/src/store/reducers/hakutulosSlice';
 import { SuodatinMobileSlider } from './hakutulosSuodattimet/CustomizedMuiComponents';
 import { useQueryParams } from '#/src/hooks';
+import { useUrlParams } from './UseUrlParams';
 
 const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
-  const history = useHistory();
+  const { updateUrlSearchParams } = useUrlParams();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const apiRequestPaparms = useQueryParams();
@@ -29,12 +28,7 @@ const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
   const valueText = (value) => value;
 
   const handleSliderValueChange = (e, newSize) => {
-    const search = qs.parse(history.location.search);
-
-    search.pagesize = newSize;
-    search.kpage = 1;
-    search.opage = 1;
-    history.replace({ search: qs.stringify(search) });
+    updateUrlSearchParams({ pagesize: newSize });
     dispatch(clearPaging());
     dispatch(setSize({ newSize }));
     dispatch(searchAll({ ...apiRequestPaparms, size: newSize }));
