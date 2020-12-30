@@ -10,7 +10,7 @@ type Props = {
   sortedValues: FilterType[];
 };
 
-export const OpetuskieliSuodatin = (props: Props) => {
+export const OpetustapaSuodatin = (props: Props) => {
   const { t } = useTranslation();
   const { handleFilterChange, initialValues = [], sortedValues = [] } = props;
 
@@ -26,14 +26,14 @@ export const OpetuskieliSuodatin = (props: Props) => {
         : [...checkedValues, value];
 
       setCheckedValues(newCheckedValues);
-      handleFilterChange({ opetuskieli: newCheckedValues });
+      handleFilterChange({ opetustapa: newCheckedValues });
     },
     [checkedValues, handleFilterChange]
   );
 
   return (
     <Filter
-      name={t('haku.opetuskieli')}
+      name={t('haku.opetustapa')}
       sortedFilterValues={sortedValues}
       handleCheck={handleCheck}
       checkedStr={checkedStr}

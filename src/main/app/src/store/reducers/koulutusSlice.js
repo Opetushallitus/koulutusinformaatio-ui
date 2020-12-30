@@ -253,8 +253,17 @@ export const selectLoading = (state) =>
 export const selectTulevatJarjestajat = (state, oid) =>
   state.koulutus.tulevatJarjestajat[oid]?.hits;
 
-export const selectJarjestajat = (state) => ({
-  jarjestajat: state.koulutus.jarjestajat,
-  loading: state.koulutus.jarjestajatStatus === LOADING_STATUS,
-  sortedFilters: state.koulutus.jarjestajatFilters,
-});
+export const selectJarjestajat = (state) => {
+  // This modifies { filter: { id: { data } } } to { filter: [{id, data}]} for more simple usage
+  const sortedFilters = _.mapValues(state.koulutus.jarjestajatFilters || {}, (o) =>
+    Object.entries(o || {})
+      .map(([id, values]) => ({ id, ...values }))
+      .filter((v) => v.count > 0)
+  );
+
+  return {
+    jarjestajat: state.koulutus.jarjestajat,
+    loading: state.koulutus.jarjestajatStatus === LOADING_STATUS,
+    sortedFilters,
+  };
+};

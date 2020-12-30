@@ -203,8 +203,6 @@ const Koulutus = () => {
               ].join(' ');
               const foundTutkinnonOsa = findTutkinnonOsa(eperuste)(tutkinnonosaId);
 
-              console.log('foundTutkinnonOsa', foundTutkinnonOsa);
-
               return {
                 title,
                 content: (

@@ -18,7 +18,7 @@ export const SummaryContent = ({
   displaySelected,
 }: Props) => (
   <Grid container justify="space-between" alignItems="center" wrap="nowrap">
-    <Grid item>
+    <Grid item style={{ paddingRight: '8px' }}>
       <Typography variant="subtitle1">{filterName}</Typography>
     </Grid>
     {displaySelected && (

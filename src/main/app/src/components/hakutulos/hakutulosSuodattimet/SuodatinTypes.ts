@@ -7,15 +7,22 @@ export type SuodatinProps = {
   summaryHidden?: boolean;
 };
 
+// TODO: Refactor this tuple as filtertype in state
 export type ElasticTuple = [string, { count: number; nimi: Translateable }];
 
-export type CheckedFilter = {
+export type FilterType = {
   id: string;
-  name: Translateable;
+  nimi: Translateable;
+  count: number;
 };
 
 export type OpetuskieliFilterProps = {
-  checkedOpetuskielet: CheckedFilter[];
+  checkedOpetuskielet: FilterType[];
   checkedOpetuskieletStr: string;
   sortedOpetuskielet: ElasticTuple[];
+};
+
+export type SijaintiFilterProps = {
+  checkedMaakunnat: FilterType[];
+  selectedSijainnit: FilterType[];
 };

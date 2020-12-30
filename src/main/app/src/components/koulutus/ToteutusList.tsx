@@ -1,4 +1,4 @@
-import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Container, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,8 +16,10 @@ import { Localizer as l } from '#/src/tools/Utils';
 import { Translateable } from '#/src/types/common';
 import { Jarjestaja } from '#/src/types/ToteutusTypes';
 import { OpetuskieliSuodatin } from './toteutusSuodattimet/OpetusKieliSuodatin';
+import { SijaintiSuodatin } from './toteutusSuodattimet/SijaintiSuodatin';
+import { OpetustapaSuodatin } from './toteutusSuodattimet/OpetustapaSuodatin';
 import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
-import { CheckedFilter } from '../hakutulos/hakutulosSuodattimet/SuodatinTypes';
+import { FilterType } from '../hakutulos/hakutulosSuodattimet/SuodatinTypes';
 
 const useStyles = makeStyles({
   container: {
@@ -33,7 +35,7 @@ const useStyles = makeStyles({
     marginBottom: '16px',
   },
   filter: {
-    minWidth: '300px',
+    minWidth: '250px',
   },
 });
 
@@ -50,7 +52,7 @@ type Props = {
 type JarjestajaData = {
   jarjestajat: Jarjestaja[];
   loading: boolean;
-  sortedFilters: any;
+  sortedFilters: Record<string, FilterType[]>;
 };
 
 const getQueryStr = (values: Array<{ id: string }>) =>
@@ -61,19 +63,20 @@ export const ToteutusList = ({ oid }: Props) => {
   const { jarjestajat, loading, sortedFilters }: JarjestajaData = useSelector(
     selectJarjestajat
   );
+
   const valinnatFromHaku = useSelector(getSuodatinValinnatProps);
-  const initialValues: Record<string, CheckedFilter[]> = useMemo(
+  const initialValues: Record<string, FilterType[]> = useMemo(
     () =>
-      _fp.pick([
-        'opetuskieli',
-        // TODO: Uncomment these when proper filter components are implemented
-        // 'koulutustyyppi',
-        // 'koulutusala',
-        // 'sijainti',
-        // 'opetustapa',
-      ])(valinnatFromHaku) as any,
+      _fp.pipe(
+        _fp.pick(['opetuskieli', 'sijainti', 'opetustapa']),
+        // TODO: Refactor name to nimi in state
+        _fp.mapValues((arr: any[]) =>
+          arr.map(({ name, ...rest }) => ({ nimi: name, ...rest }))
+        )
+      )(valinnatFromHaku) as any,
     [valinnatFromHaku]
   );
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -91,7 +94,7 @@ export const ToteutusList = ({ oid }: Props) => {
     [dispatch, oid, chosenFilters]
   );
 
-  // NOTE: Initial fetch with params from Haku
+  // Initial fetch with params from Haku
   useEffect(() => {
     const queryStrings = _fp.mapValues(getQueryStr, initialValues);
     dispatch(fetchKoulutusJarjestajat(oid, queryStrings));
@@ -106,19 +109,37 @@ export const ToteutusList = ({ oid }: Props) => {
     <Container maxWidth="lg" className={classes.container}>
       <Typography variant="h2">{t('koulutus.tarjonta')}</Typography>
       <Spacer />
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        spacing={2}
-        className={classes.filtersContainer}>
-        <Grid item className={classes.filter}>
-          <OpetuskieliSuodatin
-            handleFilterChange={handleFilterChange}
-            sortedValues={sortedFilters.opetuskieli}
-          />
+      <Hidden smDown>
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          spacing={2}
+          className={classes.filtersContainer}>
+          <Grid item className={classes.filter}>
+            <OpetuskieliSuodatin
+              handleFilterChange={handleFilterChange}
+              initialValues={initialValues.opetuskieli}
+              sortedValues={sortedFilters.opetuskieli}
+            />
+          </Grid>
+          <Grid item className={classes.filter}>
+            <SijaintiSuodatin
+              handleFilterChange={handleFilterChange}
+              initialSijainnit={initialValues.sijainti}
+              sortedMaakunnat={sortedFilters.maakunta}
+              sortedKunnat={sortedFilters.kunta}
+            />
+          </Grid>
+          <Grid item className={classes.filter}>
+            <OpetustapaSuodatin
+              handleFilterChange={handleFilterChange}
+              initialValues={initialValues.opetustapa}
+              sortedValues={sortedFilters.opetustapa}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+      </Hidden>
       {loading ? (
         <LoadingCircle />
       ) : jarjestajat?.length > 0 ? (

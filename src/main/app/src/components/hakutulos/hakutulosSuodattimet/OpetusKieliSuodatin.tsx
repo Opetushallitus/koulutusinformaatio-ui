@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   clearPaging,
@@ -10,10 +10,12 @@ import {
   getOpetuskieliFilterProps,
 } from '#/src/store/reducers/hakutulosSliceSelector';
 import { Filter } from './Filter';
-import { ElasticTuple, OpetuskieliFilterProps, SuodatinProps } from './SuodatinTypes';
+import { FilterType, OpetuskieliFilterProps, SuodatinProps } from './SuodatinTypes';
 import { useUrlParams } from '../UseUrlParams';
+import { useTranslation } from 'react-i18next';
 
 export const OpetuskieliSuodatin = (filterProps: SuodatinProps) => {
+  const { t } = useTranslation();
   const { updateUrlSearchParams } = useUrlParams();
   const dispatch = useDispatch();
   const opetuskieliFilterProps = useSelector(getOpetuskieliFilterProps);
@@ -24,15 +26,15 @@ export const OpetuskieliSuodatin = (filterProps: SuodatinProps) => {
   }: OpetuskieliFilterProps = opetuskieliFilterProps as any;
   const apiRequestParams = useSelector(getAPIRequestParams);
 
-  const handleCheck = (opetuskieliObj: ElasticTuple) => () => {
+  const handleCheck = (opetuskieliObj: FilterType) => {
     const checkedOpetuskieliObj = {
-      id: opetuskieliObj[0],
-      name: opetuskieliObj[1]?.nimi,
+      id: opetuskieliObj.id,
+      name: opetuskieliObj.nimi,
     };
     const currentIndex = checkedOpetuskielet.findIndex(
       ({ id }) => id === checkedOpetuskieliObj.id
     );
-    const newCheckedOpetuskielet = [...checkedOpetuskielet];
+    const newCheckedOpetuskielet: any = [...checkedOpetuskielet];
 
     if (currentIndex === -1) {
       newCheckedOpetuskielet.push(checkedOpetuskieliObj);
@@ -40,7 +42,7 @@ export const OpetuskieliSuodatin = (filterProps: SuodatinProps) => {
       newCheckedOpetuskielet.splice(currentIndex, 1);
     }
     const newCheckedOpetusKieletStr = newCheckedOpetuskielet
-      .map(({ id }) => id)
+      .map(({ id }: any) => id)
       .join(',');
 
     dispatch(setOpetuskieli({ newCheckedOpetuskielet }));
@@ -49,10 +51,16 @@ export const OpetuskieliSuodatin = (filterProps: SuodatinProps) => {
     dispatch(searchAll({ ...apiRequestParams, opetuskieli: newCheckedOpetusKieletStr }));
   };
 
+  const sortedValues = useMemo(
+    () => sortedOpetuskielet.map(([id, values]) => ({ id, ...values })),
+    [sortedOpetuskielet]
+  );
+
   return (
     <Filter
       {...filterProps}
-      sortedFilterValues={sortedOpetuskielet}
+      name={t('haku.opetuskieli')}
+      sortedFilterValues={sortedValues}
       handleCheck={handleCheck}
       checkedStr={checkedOpetuskieletStr}
       checkedValues={checkedOpetuskielet}

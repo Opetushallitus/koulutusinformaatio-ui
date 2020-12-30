@@ -15,7 +15,6 @@ import { Localizer as l } from '#/src/tools/Utils';
 import { colors } from '#/src/colors';
 import { useQueryParams } from '#/src/hooks';
 import { useUrlParams } from '../UseUrlParams';
-import { CheckedFilter } from './SuodatinTypes';
 
 const useStyles = makeStyles(() => ({
   chipRoot: {
@@ -40,8 +39,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+// TODO: This is NOT same type as new refactored filters, name !== nimi
+type FilterType = {
+  id: string;
+  name: any;
+};
+
 type ChosenFiltersProps = {
-  filters: Record<string, CheckedFilter[]>;
+  filters: Record<string, FilterType[]>;
   getHandleDelete: (filterType: string, itemId: string) => VoidFunction;
   handleClearFilters: VoidFunction;
 };
@@ -54,7 +59,7 @@ const ChipList = ({
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const displayChips = ([filterType, items]: [string, CheckedFilter[]]) =>
+  const displayChips = ([filterType, items]: [string, FilterType[]]) =>
     items.map(({ id, name }) => (
       <Chip
         size="small"
@@ -103,7 +108,7 @@ export const SuodatinValinnat = () => {
   const suodatinValinnatProps = useSelector(getSuodatinValinnatProps);
   const apiRequestParams = useQueryParams();
 
-  const [filters, setFilters] = useState<Record<string, CheckedFilter[]>>({});
+  const [filters, setFilters] = useState<Record<string, FilterType[]>>({});
 
   useEffect(() => {
     setFilters(suodatinValinnatProps);
