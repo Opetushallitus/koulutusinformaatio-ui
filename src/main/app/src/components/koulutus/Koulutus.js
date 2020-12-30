@@ -135,7 +135,7 @@ const Koulutus = (props) => {
     );
   };
 
-  const koulutusAlat = koulutus?.koulutusAla?.map((ala) => l.localize(ala))?.join(', ');
+  const koulutusAlat = koulutus?.koulutusAla?.map((ala) => l.localize(ala))?.join(' + ');
 
   return loading ? (
     <LoadingCircle />
