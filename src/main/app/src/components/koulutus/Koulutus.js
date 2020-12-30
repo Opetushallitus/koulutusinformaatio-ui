@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
   alatText: {
     ...theme.typography.body1,
     fontSize: '1.25rem',
-    maxWidth: '80%',
     margin: 'auto',
     textAlign: 'center',
   },
