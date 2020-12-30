@@ -195,10 +195,11 @@ const Koulutus = (props) => {
                 opintojenLaajuusNumero,
                 opintojenLaajuusyksikko,
                 tutkinnonOsat: nimi,
+                koulutus: koulutusNimi,
               } = tutkinnonOsa;
               const eperuste = findEperuste(koulutus)(ePerusteId);
               const title = [
-                `${l.localize(nimi)},`,
+                `${l.localize(nimi || koulutusNimi)}`,
                 l.localize(opintojenLaajuus) || opintojenLaajuusNumero,
                 l.localize(opintojenLaajuusyksikko),
               ].join(' ');
