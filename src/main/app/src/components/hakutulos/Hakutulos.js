@@ -32,8 +32,7 @@ import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
 import { SuodatinValinnat } from './hakutulosSuodattimet/SuodatinValinnat';
 import HakutulosToggle from './HakutulosToggle';
-import MobileFiltersOnTopMenu from './MobileFiltersOnTopMenu';
-import MobileToggleFiltersButton from './MobileToggleFiltersButton';
+import { MobileFiltersOnTopMenu } from './MobileFiltersOnTopMenu';
 import Pagination from './Pagination';
 import { useQueryParams } from '#/src/hooks';
 import { useUrlParams } from './UseUrlParams';
@@ -234,7 +233,6 @@ export const Hakutulos = () => {
             <Hidden mdUp>
               <MobileFiltersOnTopMenu />
             </Hidden>
-            <MobileToggleFiltersButton />
             <Hidden smDown>
               <KoulutustyyppiSuodatin expanded elevation={2} />
               <OpetuskieliSuodatin expanded elevation={2} />

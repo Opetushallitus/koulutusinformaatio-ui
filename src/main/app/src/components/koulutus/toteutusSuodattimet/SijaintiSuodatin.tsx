@@ -1,26 +1,33 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Filter } from '#/src/components/hakutulos/hakutulosSuodattimet/Filter';
-import { FilterType } from '#/src/components/hakutulos/hakutulosSuodattimet/SuodatinTypes';
+import {
+  FilterType,
+  SuodatinProps,
+} from '#/src/components/hakutulos/hakutulosSuodattimet/SuodatinTypes';
 import { getOptionsForSelect, getShownStr } from './utils';
 
 type Props = {
   handleFilterChange: (newFilters: object) => void;
-  initialSijainnit: FilterType[];
+  initialValues: FilterType[];
   sortedMaakunnat: FilterType[];
   sortedKunnat: FilterType[];
-};
+} & SuodatinProps;
 
 export const SijaintiSuodatin = (props: Props) => {
   const { t } = useTranslation();
   const {
     handleFilterChange,
-    initialSijainnit = [],
+    initialValues = [],
     sortedMaakunnat = [],
     sortedKunnat = [],
+    ...rest
   } = props;
 
-  const [checkedValues, setCheckedValues] = useState(initialSijainnit);
+  const [checkedValues, setCheckedValues] = useState(initialValues);
+  useEffect(() => {
+    setCheckedValues(initialValues);
+  }, [initialValues]);
 
   const checkedStr = useMemo(() => getShownStr(checkedValues), [checkedValues]);
 
@@ -61,6 +68,7 @@ export const SijaintiSuodatin = (props: Props) => {
       checkedStr={checkedStr}
       checkedValues={checkedValues}
       displaySelected
+      {...rest}
     />
   );
 };

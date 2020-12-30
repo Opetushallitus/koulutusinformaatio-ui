@@ -20,6 +20,7 @@ import { SijaintiSuodatin } from './toteutusSuodattimet/SijaintiSuodatin';
 import { OpetustapaSuodatin } from './toteutusSuodattimet/OpetustapaSuodatin';
 import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { FilterType } from '../hakutulos/hakutulosSuodattimet/SuodatinTypes';
+import { MobileFiltersOnTopMenu } from './toteutusSuodattimet/MobileFiltersOnTopMenu';
 
 const useStyles = makeStyles({
   container: {
@@ -84,6 +85,11 @@ export const ToteutusList = ({ oid }: Props) => {
     isMaksullinen ? `${maksuAmount} €` : t('toteutus.maksuton');
 
   const [chosenFilters, setChosenFilters] = useState(initialValues);
+  const chosenFilterCount = useMemo(
+    () => _fp.sum(Object.values(chosenFilters).map((v) => v.length)),
+    [chosenFilters]
+  );
+
   const handleFilterChange = useCallback(
     (newChosenFilters: object) => {
       const usedFilters = { ...chosenFilters, ...newChosenFilters };
@@ -93,6 +99,13 @@ export const ToteutusList = ({ oid }: Props) => {
     },
     [dispatch, oid, chosenFilters]
   );
+
+  const handleFiltersClear = useCallback(() => {
+    const usedFilters = _fp.mapValues((_) => [], chosenFilters);
+    setChosenFilters(usedFilters);
+    const queryStrings = _fp.mapValues(getQueryStr, usedFilters);
+    dispatch(fetchKoulutusJarjestajat(oid, queryStrings));
+  }, [dispatch, oid, chosenFilters]);
 
   // Initial fetch with params from Haku
   useEffect(() => {
@@ -126,7 +139,7 @@ export const ToteutusList = ({ oid }: Props) => {
           <Grid item className={classes.filter}>
             <SijaintiSuodatin
               handleFilterChange={handleFilterChange}
-              initialSijainnit={initialValues.sijainti}
+              initialValues={initialValues.sijainti}
               sortedMaakunnat={sortedFilters.maakunta}
               sortedKunnat={sortedFilters.kunta}
             />
@@ -139,6 +152,16 @@ export const ToteutusList = ({ oid }: Props) => {
             />
           </Grid>
         </Grid>
+      </Hidden>
+      <Hidden mdUp>
+        <MobileFiltersOnTopMenu
+          chosenFilters={chosenFilters}
+          sortedValues={sortedFilters}
+          hitCount={jarjestajat?.length}
+          chosenFilterCount={chosenFilterCount}
+          handleFilterChange={handleFilterChange}
+          clearChosenFilters={handleFiltersClear}
+        />
       </Hidden>
       {loading ? (
         <LoadingCircle />

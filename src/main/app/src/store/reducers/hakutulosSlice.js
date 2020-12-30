@@ -108,9 +108,6 @@ const hakutulosSlice = createSlice({
     setSort: (state, { payload }) => {
       state.sort = payload.newSort;
     },
-    toggleshowHakutulosFilters: (state, action) => {
-      state.showHakutulosFilters = !state.showHakutulosFilters;
-    },
     searchAPICallStart(state) {
       if (state.status === IDLE_STATUS) {
         state.status = LOADING_STATUS;
@@ -244,7 +241,6 @@ export const {
   setSelectedFilters,
   setOrder,
   setSort,
-  toggleshowHakutulosFilters,
   setSize,
   searchAllSuccess,
   searchKoulutuksetSuccess,

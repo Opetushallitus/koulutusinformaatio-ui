@@ -29,7 +29,6 @@ import {
   setKeyword,
   clearPaging,
   setKeywordEditMode,
-  toggleshowHakutulosFilters,
   executeSearchFromStartingPage,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getHakupalkkiProps } from '#/src/store/reducers/hakutulosSliceSelector';
@@ -37,7 +36,7 @@ import { colors } from '#/src/colors';
 import { theme } from '#/src/theme';
 import HakupalkkiFilters from './HakupalkkiFilters';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
-import MobileFiltersOnTopMenu from '../hakutulos/MobileFiltersOnTopMenu';
+import { MobileFiltersOnTopMenu } from '../hakutulos/MobileFiltersOnTopMenu';
 import { useQueryParams } from '#/src/hooks';
 
 const useStyles = makeStyles((theme) => ({
@@ -176,7 +175,6 @@ const Hakupalkki = () => {
 
   function handleDesktopBtnClick(e) {
     dispatch(searchAll(apiRequestParams));
-    dispatch(toggleshowHakutulosFilters());
     window.scrollTo({
       top: 250,
       left: 0,
@@ -186,11 +184,9 @@ const Hakupalkki = () => {
   }
   function handleMobileBtnClick() {
     dispatch(searchAll(apiRequestParams));
-    dispatch(toggleshowHakutulosFilters());
   }
   function handleClose() {
     setAnchorEl(null);
-    dispatch(toggleshowHakutulosFilters());
   }
 
   const isPopoverOpen = Boolean(anchorEl);
