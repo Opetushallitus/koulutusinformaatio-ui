@@ -42,7 +42,6 @@ export const initialState = {
   sort: 'score',
   pageSizeArray: [5, 10, 20, 30, 50],
   pageSortArray: ['score_desc', 'name_asc', 'name_desc'],
-  showHakutulosFilters: false,
 };
 
 const hakutulosSlice = createSlice({

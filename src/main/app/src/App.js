@@ -21,7 +21,7 @@ import Oppilaitos from './components/oppilaitos/Oppilaitos';
 import { ValintaperustePage } from './components/valintaperusteet/ValintaperustePage';
 import SivuRouter from './components/sivu/SivuRouter';
 import { ReactiveBorder } from './components/ReactiveBorder';
-import Hakupalkki from './components/haku/Hakupalkki';
+import { Hakupalkki } from './components/haku/Hakupalkki';
 import Toteutus from './components/toteutus/Toteutus';
 import { useTranslation } from 'react-i18next';
 import { supportedLanguages } from '#/src/tools/i18n';

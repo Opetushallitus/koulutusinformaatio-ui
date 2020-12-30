@@ -60,6 +60,7 @@ export const MobileFiltersOnTopMenu = ({
     <>
       {!showFilters && (
         <MobileToggleFiltersButton
+          type="KOMO"
           chosenFilterCount={chosenFilterCount}
           showFilters={showFilters}
           handleFiltersShowToggle={toggleShowFilters}
@@ -125,7 +126,7 @@ export const MobileFiltersOnTopMenu = ({
           <Divider className={classes.divider} />
         </Container>
         <MobileToggleFiltersButton
-          fixedPosition
+          type="fixed"
           chosenFilterCount={chosenFilterCount}
           hitCount={hitCount}
           showFilters={showFilters}

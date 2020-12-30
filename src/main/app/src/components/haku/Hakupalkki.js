@@ -20,7 +20,6 @@ import {
   SearchOutlined,
   ExpandMoreOutlined,
   ExpandLessOutlined,
-  FilterList,
 } from '@material-ui/icons';
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
@@ -144,19 +143,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Hakupalkki = () => {
+export const Hakupalkki = () => {
   const history = useHistory();
   const location = useLocation();
   const { t, i18n } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const {
-    keyword,
-    keywordEditMode,
-    isKeywordValid,
-    koulutusFilters,
-    showHakutulosFilters,
-  } = useSelector(getHakupalkkiProps);
+  const { keyword, keywordEditMode, isKeywordValid, koulutusFilters } = useSelector(
+    getHakupalkkiProps
+  );
   const apiRequestParams = useQueryParams();
   const etusivuPath = `/${i18n.language}/`;
   const isAtEtusivu = location.pathname === etusivuPath;
@@ -167,11 +162,8 @@ const Hakupalkki = () => {
     if (isAtEtusivu) {
       dispatch(setKeyword({ keyword: '' }));
       dispatch(clearPaging());
-      if (!showHakutulosFilters) {
-        setAnchorEl(null);
-      }
     }
-  }, [isAtEtusivu, dispatch, showHakutulosFilters]);
+  }, [isAtEtusivu, dispatch]);
 
   function handleDesktopBtnClick(e) {
     dispatch(searchAll(apiRequestParams));
@@ -182,9 +174,7 @@ const Hakupalkki = () => {
     });
     setAnchorEl(e.currentTarget);
   }
-  function handleMobileBtnClick() {
-    dispatch(searchAll(apiRequestParams));
-  }
+
   function handleClose() {
     setAnchorEl(null);
   }
@@ -280,9 +270,6 @@ const Hakupalkki = () => {
         </Paper>
         {!_.isEmpty(koulutusFilters) && (
           <>
-            <Hidden mdUp>
-              <MobileFiltersOnTopMenu isFrontPage />
-            </Hidden>
             <Hidden smDown>
               <Popover
                 classes={{ paper: classes.popoverPaper, root: classes.popoverRoot }}
@@ -318,12 +305,7 @@ const Hakupalkki = () => {
               {t('jumpotron.naytakaikki')}
             </LocalizedLink>
             <Hidden mdUp>
-              <Button
-                endIcon={<FilterList />}
-                className={classes.mobileFilterButton}
-                onClick={handleMobileBtnClick}>
-                {t('haku.rajaa-tuloksia')}
-              </Button>
+              <MobileFiltersOnTopMenu isFrontPage />
             </Hidden>
           </Box>
         )}
@@ -331,5 +313,3 @@ const Hakupalkki = () => {
     </ThemeProvider>
   );
 };
-
-export default Hakupalkki;

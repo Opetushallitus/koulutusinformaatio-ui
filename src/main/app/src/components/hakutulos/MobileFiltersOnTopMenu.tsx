@@ -104,12 +104,12 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
 
   return (
     <>
-      {!isFrontPage && !showFilters && (
+      {!showFilters && (
         <MobileToggleFiltersButton
-          fixedPosition
+          type={isFrontPage ? 'frontpage' : 'fixed'}
           chosenFilterCount={chosenFilterCount}
           showFilters={showFilters}
-          handleFiltersShowToggle={handleFiltersShowToggle}
+          handleFiltersShowToggle={toggleShowFilters}
         />
       )}
       <SwipeableDrawer
@@ -161,7 +161,7 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
           {!isFrontPage && <MobileResultsPerPageExpansionMenu elevation={0} />}
         </Container>
         <MobileToggleFiltersButton
-          fixedPosition
+          type="fixed"
           hitCount={count}
           showFilters={showFilters}
           handleFiltersShowToggle={handleFiltersShowToggle}
