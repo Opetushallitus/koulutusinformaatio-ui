@@ -16,7 +16,7 @@ import { theme } from './theme';
 import { DRAWER_WIDTH } from './constants';
 import Palvelut from './components/palvelu/Palvelut';
 import { Haku } from './components/haku/Haku';
-import Koulutus from './components/koulutus/Koulutus';
+import { Koulutus } from './components/koulutus/Koulutus';
 import Oppilaitos from './components/oppilaitos/Oppilaitos';
 import { ValintaperustePage } from './components/valintaperusteet/ValintaperustePage';
 import SivuRouter from './components/sivu/SivuRouter';

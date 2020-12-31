@@ -136,6 +136,7 @@ export const formatDateRange = (start, end, dateFormat) =>
   }`;
 
 const ALLOWED_HTML_TAGS = [
+  'a',
   'b',
   'blockquote',
   'br',
