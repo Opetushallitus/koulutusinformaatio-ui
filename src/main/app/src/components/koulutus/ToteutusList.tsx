@@ -42,7 +42,7 @@ const useStyles = makeStyles({
 
 const localizeArrayToString = (toLocalizeArray: Array<{ nimi: Translateable }>) =>
   toLocalizeArray
-    ?.map((item) => l.localize(item.nimi))
+    ?.map((item) => l.localize(item))
     .sort()
     .join(', ');
 
