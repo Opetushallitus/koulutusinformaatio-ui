@@ -138,11 +138,15 @@ const Toteutus = () => {
     },
   });
 
-  const osaamisalatCombined = osaamisalaData?.osaamisalat?.map((oa) => {
-    const toteutusOsaamisala = toteutus?.metadata?.osaamisalat?.find(
-      (toa) => toa?.koodi?.koodiUri === oa?.osaamisalakoodiUri
-    );
-    return { ...oa, extended: toteutusOsaamisala };
+  const osaamisalatCombined = toteutus?.metadata?.osaamisalat?.map((toa) => {
+    const extendedData =
+      osaamisalaData?.osaamisalat?.find(
+        (koa) => toa?.koodi?.koodiUri === koa?.osaamisalakoodiUri
+      ) || {};
+    const kuvaus = !_.isEmpty(extendedData?.kuvaus)
+      ? l.localize(extendedData?.kuvaus)
+      : t('toteutus.osaamisalalle-ei-loytynyt-kuvausta');
+    return { ...toa, extendedData, kuvaus };
   });
 
   const loading = koulutusLoading || toteutusLoading || isFetching;
@@ -268,22 +272,19 @@ const Toteutus = () => {
           <AccordionWithTitle
             titleTranslation="koulutus.osaamisalat"
             data={osaamisalatCombined?.map((osaamisala) => ({
-              title: l.localize(osaamisala),
+              title: l.localize(osaamisala?.koodi),
               content: (
                 <>
-                  <Typography>
-                    {sanitizedHTMLParser(l.localize(osaamisala?.kuvaus))}
-                  </Typography>
-                  {!_.isEmpty(osaamisala?.extended?.linkki) &&
-                    !_.isEmpty(osaamisala?.extended?.otsikko) && (
-                      <LocalizedLink
-                        target="_blank"
-                        rel="noopener"
-                        href={l.localize(osaamisala?.extended?.linkki)}>
-                        {l.localize(osaamisala?.extended?.otsikko)}
-                        <OpenInNewIcon />
-                      </LocalizedLink>
-                    )}
+                  <Typography>{sanitizedHTMLParser(osaamisala?.kuvaus)}</Typography>
+                  {!_.isEmpty(osaamisala?.linkki) && !_.isEmpty(osaamisala?.otsikko) && (
+                    <LocalizedLink
+                      target="_blank"
+                      rel="noopener"
+                      href={l.localize(osaamisala?.linkki)}>
+                      {l.localize(osaamisala?.otsikko)}
+                      <OpenInNewIcon />
+                    </LocalizedLink>
+                  )}
                 </>
               ),
             }))}

@@ -17,4 +17,13 @@ describe('Osaamisalan description KOMOTO', function () {
       'Valinnainen tutkinnon osa Eläinalan yritystoiminta valmistaa häntä toimimaan alan yrittäjänä.'
     );
   });
+  it('KOMOTO: on empty or missing osaamisala description fallback text should be displayed', function () {
+    cy.visit('/fi/toteutus/1.2.246.562.17.00000000000000000466');
+
+    // Wait for everything to load
+    cy.findByRole('progressbar').should('not.exist');
+    cy.get('h2').contains('Osaamisalat');
+    cy.findByRole('button', { name: /kuljetuspalvelujen osaamisala/i }).click();
+    cy.get('p').contains('Osaamisalalle ei löytynyt kuvausta.');
+  });
 });
