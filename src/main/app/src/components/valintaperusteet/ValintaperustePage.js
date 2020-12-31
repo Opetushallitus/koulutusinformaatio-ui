@@ -121,7 +121,7 @@ export const ValintaperustePage = () => {
                 ValintakokeetSisallysluettelo(valintakokeet),
                 (ll) =>
                   valintaperuste.sorakuvaus
-                    ? ll(l.localize(valintaperuste.sorakuvaus.nimi))
+                    ? ll(t('valintaperuste.hakijan-terveydentila-ja-toimintakyky'))
                     : null,
                 (l) =>
                   !_.isEmpty(hakukohde?.liitteet)

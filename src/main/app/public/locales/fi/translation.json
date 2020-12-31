@@ -36,7 +36,8 @@
     "haku": "Haku",
     "hakuaika": "Hakuaika",
     "opiskelupaikkoja": "Opiskelupaikkoja",
-    "pohjakoulutus": "Pohjakoulutus"
+    "pohjakoulutus": "Pohjakoulutus",
+    "hakijan-terveydentila-ja-toimintakyky": "Hakijan terveydentila ja toimintakyky"
   },
   "palvelut": {
     "otsikko-muut-palvelut": "Muut palvelut",
@@ -325,7 +326,6 @@
     "oppisopimuskoulutus": "Oppisopimuskoulutus",
     "kaksoistutkinto": "Kaksoistutkinto",
     "valintaperusteet-ammatilliseen": "Valintaperusteet ammatilliseen",
-    "hakijan-terveyden-tila": "Hakijan terveyden tila",
     "ammattikorkeakoulu": "Ammattikorkeakoulu",
     "ammattikorkeakouluopintojen-rakenne": "Ammattikorkeakouluopintojen rakenne",
     "mitä-amkssa-voi-opiskella": "Mitä AMK:ssa voi opiskella",
