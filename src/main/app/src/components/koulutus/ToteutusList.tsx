@@ -180,8 +180,8 @@ export const ToteutusList = ({ oid }: Props) => {
                 component={RouterLink}
                 to={`/toteutus/${toteutus.toteutusOid}`}>
                 <ToteutusCard
-                  heading={l.localize(toteutus.nimi)}
-                  ammattinimikkeet={localizeArrayToString(toteutus.tutkintonimikkeet)}
+                  organizer={l.localize(toteutus)}
+                  heading={l.localize(toteutus.toteutusNimi)}
                   description={l.localize(toteutus.kuvaus)}
                   locations={localizeArrayToString(toteutus.kunnat)}
                   opetustapa={localizeArrayToString(toteutus.opetusajat)}

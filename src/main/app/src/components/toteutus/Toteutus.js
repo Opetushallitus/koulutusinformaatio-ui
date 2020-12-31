@@ -155,7 +155,7 @@ const Toteutus = () => {
     if (!toteutus) {
       dispatch(fetchToteutus(oid));
     }
-    // TODO: Get rid of koulutus call here when opintolaajuus comes from toteutus -backend
+    // TODO: Get rid of koulutus call here when opintolaajuus AND tutkintonimikkeet comes from toteutus -backend
     if (!koulutus && koulutusOid && koulutusNotFetched) {
       dispatch(fetchKoulutusWithRelatedData(toteutus.koulutusOid));
       setKoulutusNotFetched(false);
@@ -211,7 +211,6 @@ const Toteutus = () => {
         <Box mt={4}>
           <ToteutusInfoGrid
             koulutusTyyppi={toteutus?.metadata?.tyyppi}
-            nimikkeet={toteutus?.metadata?.ammattinimikkeet}
             kielet={opetus?.opetuskieli}
             opetuskieletKuvaus={opetus?.opetuskieletKuvaus}
             laajuus={[koulutus?.opintojenLaajuus, koulutus?.opintojenLaajuusYksikkö]}
