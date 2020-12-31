@@ -120,8 +120,8 @@ export const MobileFiltersOnTopMenu = ({
             handleFilterChange={handleFilterChange}
             expanded={false}
             elevation={0}
-            initialValues={chosenFilters.opetuskieli}
-            sortedValues={sortedValues.opetuskieli}
+            initialValues={chosenFilters.opetustapa}
+            sortedValues={sortedValues.opetustapa}
           />
           <Divider className={classes.divider} />
         </Container>
