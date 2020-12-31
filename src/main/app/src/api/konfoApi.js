@@ -7,60 +7,48 @@ const client = axios.create({
   headers: { 'Caller-Id': '1.2.246.562.10.00000000001.konfoui' },
 });
 
-const get = async (url) => {
-  const response = await client.get(url);
+const get = async (url, config = {}) => {
+  const response = await client.get(url, config);
   return response.data;
 };
 
+// TODO: Why is this ' + oid' and not '(..., oid)' ? needs fixing to urls
 export const getKoulutus = (oid, draft) =>
-  get(urls.url('konfo-backend.koulutus') + oid + (draft ? '?draft=true' : ''));
+  get(urls.url('konfo-backend.koulutus') + oid, draft ? { params: { draft: true } } : {});
 
+// TODO: Why is this ' + oid' and not '(..., oid)' ? needs fixing to urls
 export const getKoulutusKuvaus = (uri) =>
   get(urls.url('konfo-backend.koulutus.kuvaus') + uri);
 
 export const getEperusteKuvaus = (uri) =>
   get(urls.url('konfo-backend.eperuste.kuvaus', uri));
 
-export const getKoulutusJarjestajat = (oid, tuleva) =>
-  get(
-    urls.url('konfo-backend.koulutus.jarjestajat', oid) + (tuleva ? '?tuleva=true' : '')
-  );
+export const getKoulutusJarjestajat = (oid, requestParams) =>
+  get(urls.url('konfo-backend.koulutus.jarjestajat', oid), {
+    params: C.cleanRequestParams({
+      ...requestParams,
+    }),
+  });
 
-export const getSuositellutKoulutukset = (requestParams) => {
-  return client
-    .get(urls.url('konfo-backend.suosittelu'), {
-      params: C.cleanRequestParams(requestParams),
-    })
-    .then((response) => response.data);
-};
+export const getSuositellutKoulutukset = (requestParams) =>
+  get(urls.url('konfo-backend.suosittelu'), {
+    params: C.cleanRequestParams(requestParams),
+  });
 
-export const getOppilaitos = (oid) => {
-  return client
-    .get(urls.url('konfo-backend.oppilaitos', oid))
-    .then((response) => response.data);
-};
+export const getOppilaitos = (oid) => get(urls.url('konfo-backend.oppilaitos', oid));
 
-export const getOppilaitosOsa = (oid) => {
-  return client
-    .get(urls.url('konfo-backend.oppilaitosOsa', oid))
-    .then((response) => response.data);
-};
+export const getOppilaitosOsa = (oid) =>
+  get(urls.url('konfo-backend.oppilaitosOsa', oid));
 
-export const getOppilaitosTarjonta = ({ oid, requestParams }) => {
-  return client
-    .get(urls.url('konfo-backend.oppilaitos.tarjonta', oid), {
-      params: C.cleanRequestParams(requestParams),
-    })
-    .then((response) => response.data);
-};
+export const getOppilaitosTarjonta = ({ oid, requestParams }) =>
+  get(urls.url('konfo-backend.oppilaitos.tarjonta', oid), {
+    params: C.cleanRequestParams(requestParams),
+  });
 
-export const getOppilaitosOsaTarjonta = ({ oid, requestParams }) => {
-  return client
-    .get(urls.url('konfo-backend.oppilaitosOsa.tarjonta', oid), {
-      params: C.cleanRequestParams(requestParams),
-    })
-    .then((response) => response.data);
-};
+export const getOppilaitosOsaTarjonta = ({ oid, requestParams }) =>
+  get(urls.url('konfo-backend.oppilaitosOsa.tarjonta', oid), {
+    params: C.cleanRequestParams(requestParams),
+  });
 
 export const getToteutus = (oid) => get(urls.url('konfo-backend.toteutus', oid));
 
@@ -81,18 +69,14 @@ export const getValintaperuste = (oid) =>
 
 export const searchAPI = {
   getKoulutukset(requestParams) {
-    return client
-      .get(urls.url('konfo-backend.search.koulutukset'), {
-        params: { lng: l.getLanguage(), ...C.cleanRequestParams(requestParams) },
-      })
-      .then((response) => response.data);
+    return get(urls.url('konfo-backend.search.koulutukset'), {
+      params: { lng: l.getLanguage(), ...C.cleanRequestParams(requestParams) },
+    });
   },
   getOppilaitokset(requestParams) {
-    return client
-      .get(urls.url('konfo-backend.search.oppilaitokset'), {
-        params: { lng: l.getLanguage(), ...C.cleanRequestParams(requestParams) },
-      })
-      .then((response) => response.data);
+    return get(urls.url('konfo-backend.search.oppilaitokset'), {
+      params: { lng: l.getLanguage(), ...C.cleanRequestParams(requestParams) },
+    });
   },
 };
 

@@ -17,7 +17,8 @@ export const initialState = {
   jarjestajatStatus: IDLE_STATUS,
   suositellutKoulutuksetStatus: IDLE_STATUS,
   koulutukset: {},
-  jarjestajat: {},
+  jarjestajat: [],
+  jarjestajatFilters: {},
   tulevatJarjestajat: {},
   suositellutKoulutukset: {},
   koulutusError: null,
@@ -44,6 +45,11 @@ const koulutusSlice = createSlice({
         state.jarjestajatStatus = LOADING_STATUS;
       }
     },
+    fetchTulevatJarjestajatStart(state) {
+      if (state.tulevatJarjestajatStatus === IDLE_STATUS) {
+        state.tulevatJarjestajatStatus = LOADING_STATUS;
+      }
+    },
     fetchKoulutusSuccess(state, { payload }) {
       if (state.koulutusStatus === LOADING_STATUS) {
         const { koulutus, oid } = payload;
@@ -61,18 +67,31 @@ const koulutusSlice = createSlice({
     },
     fetchJarjestajatSuccess(state, { payload }) {
       if (state.jarjestajatStatus === LOADING_STATUS) {
-        const { jarjestajat, tulevatJarjestajat, oid } = payload;
-        state.jarjestajat[oid] = jarjestajat;
-        state.tulevatJarjestajat[oid] = tulevatJarjestajat;
+        const { jarjestajatData } = payload;
+        state.jarjestajat = jarjestajatData.hits;
+        state.jarjestajatFilters = jarjestajatData.filters;
         state.error = null;
         state.jarjestajatStatus = IDLE_STATUS;
       }
     },
-
     fetchJarjestajatError(state, action) {
       if (state.jarjestajatStatus === LOADING_STATUS) {
         state.jarjestajatError = action.payload;
         state.jarjestajatStatus = IDLE_STATUS;
+      }
+    },
+    fetchTulevatJarjestajatSuccess(state, { payload }) {
+      if (state.tulevatJarjestajatStatus === LOADING_STATUS) {
+        const { tulevatJarjestajat, oid } = payload;
+        state.tulevatJarjestajat[oid] = tulevatJarjestajat;
+        state.error = null;
+        state.tulevatJarjestajatStatus = IDLE_STATUS;
+      }
+    },
+    fetchTulevatJarjestajatError(state, action) {
+      if (state.tulevatJarjestajatStatus === LOADING_STATUS) {
+        state.tulevatJarjestajatError = action.payload;
+        state.tulevatJarjestajatStatus = IDLE_STATUS;
       }
     },
     fetchKoulutusError(state, action) {
@@ -94,12 +113,15 @@ export const {
   fetchKoulutusStart,
   fetchSuositellutKoulutuksetStart,
   fetchJarjestajatStart,
+  fetchTulevatJarjestajatStart,
   fetchKoulutusSuccess,
   fetchSuositellutKoulutuksetSuccess,
   fetchJarjestajatSuccess,
+  fetchTulevatJarjestajatSuccess,
   fetchKoulutusError,
   fetchSuositellutKoulutuksetError,
   fetchJarjestajatError,
+  fetchTulevatJarjestajatError,
 } = koulutusSlice.actions;
 export default koulutusSlice.reducer;
 
@@ -157,20 +179,32 @@ export const fetchSuositellutKoulutukset = (oid) => async (dispatch) => {
   } catch (error) {}
 };
 
-export const fetchKoulutusJarjestajat = (oid) => async (dispatch) => {
+export const fetchKoulutusJarjestajat = (oid, requestParams) => async (dispatch) => {
   try {
     dispatch(fetchJarjestajatStart());
-    const jarjestajatData = await getKoulutusJarjestajat(oid);
-    const tulevatJarjestajat = await getKoulutusJarjestajat(oid, true);
+
+    // TODO: This does not use paging but backend presumes so? Does this only show first 20 toteutukses?
+    const jarjestajatData = await getKoulutusJarjestajat(oid, requestParams);
+    dispatch(fetchJarjestajatSuccess({ jarjestajatData }));
+  } catch (err) {
+    dispatch(fetchJarjestajatError(err.toString()));
+  }
+};
+
+export const fetchTulevatJarjestajat = (oid) => async (dispatch) => {
+  try {
+    dispatch(fetchTulevatJarjestajatStart());
+
+    // TODO: This does not use paging but backend presumes so? Does this only show first 20 toteutukses?
+    const tulevatJarjestajat = await getKoulutusJarjestajat(oid, { tuleva: true });
     dispatch(
-      fetchJarjestajatSuccess({
+      fetchTulevatJarjestajatSuccess({
         oid,
-        jarjestajat: jarjestajatData,
         tulevatJarjestajat,
       })
     );
   } catch (err) {
-    dispatch(fetchJarjestajatError(err.toString()));
+    dispatch(fetchTulevatJarjestajatError(err.toString()));
   }
 };
 
@@ -179,7 +213,7 @@ export const fetchKoulutusWithRelatedData = (oid, draft) => {
     Promise.all([
       dispatch(fetchKoulutus(oid, draft)),
       dispatch(fetchSuositellutKoulutukset(oid)),
-      dispatch(fetchKoulutusJarjestajat(oid)),
+      dispatch(fetchTulevatJarjestajat(oid)),
     ]);
   };
 };
@@ -214,10 +248,22 @@ export const selectSuositellutKoulutukset = (state) =>
 
 export const selectLoading = (state) =>
   state.koulutus.koulutusStatus === LOADING_STATUS ||
-  state.koulutus.jarjestajatStatus === LOADING_STATUS;
-
-export const selectJarjestajat = (oid) => (state) =>
-  state.koulutus.jarjestajat[oid]?.hits;
+  state.koulutus.tulevatJarjestajatStatus === LOADING_STATUS;
 
 export const selectTulevatJarjestajat = (state, oid) =>
   state.koulutus.tulevatJarjestajat[oid]?.hits;
+
+export const selectJarjestajat = (state) => {
+  // This modifies { filter: { id: { data } } } to { filter: [{id, data}]} for more simple usage
+  const sortedFilters = _.mapValues(state.koulutus.jarjestajatFilters || {}, (o) =>
+    Object.entries(o || {})
+      .map(([id, values]) => ({ id, ...values }))
+      .filter((v) => v.count > 0)
+  );
+
+  return {
+    jarjestajat: state.koulutus.jarjestajat,
+    loading: state.koulutus.jarjestajatStatus === LOADING_STATUS,
+    sortedFilters,
+  };
+};

@@ -1,8 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
-import qs from 'query-string';
+import { useUrlParams } from '../hakutulos/UseUrlParams';
 
 const useStyles = makeStyles({
   draft: {
@@ -22,12 +21,9 @@ const useStyles = makeStyles({
   },
 });
 
-const Draft = () => {
+export const Draft = () => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const history = useHistory();
-  const { draft } = qs.parse(history.location.search);
-  return draft ? <div className={classes.draft}>{t('Esikatselu')}</div> : null;
+  const { isDraft } = useUrlParams();
+  return isDraft ? <div className={classes.draft}>{t('Esikatselu')}</div> : null;
 };
-
-export default Draft;

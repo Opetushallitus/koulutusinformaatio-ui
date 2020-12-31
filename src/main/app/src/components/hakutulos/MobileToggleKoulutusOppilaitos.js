@@ -1,8 +1,6 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import qs from 'query-string';
 import { ButtonGroup, Button, makeStyles, Typography } from '@material-ui/core';
 import { getHakutulosToggleProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { setSelectedTab } from '#/src/store/reducers/hakutulosSlice';
@@ -13,6 +11,7 @@ import {
   SuodatinAccordionSummary,
 } from './hakutulosSuodattimet/CustomizedMuiComponents';
 import { ExpandMore } from '@material-ui/icons';
+import { useUrlParams } from './UseUrlParams';
 
 const useStyles = makeStyles((theme) => ({
   buttonActive: {
@@ -36,16 +35,14 @@ const useStyles = makeStyles((theme) => ({
 
 const MobileToggleKoulutusOppilaitos = () => {
   const classes = useStyles();
-  const history = useHistory();
+  const { updateUrlSearchParams } = useUrlParams();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { selectedTab } = useSelector(getHakutulosToggleProps);
 
   function updateSelectedTab(e) {
     const newSelectedTab = e.currentTarget.dataset.tab;
-    const search = qs.parse(history.location.search);
-    search.tab = newSelectedTab;
-    history.replace({ search: qs.stringify(search) });
+    updateUrlSearchParams({ tab: newSelectedTab });
     dispatch(setSelectedTab({ newSelectedTab }));
   }
 

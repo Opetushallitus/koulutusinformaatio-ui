@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   },
 });
 
-const LinkOrYoutube = ({ children, className, href, ...props }) => {
+export const LinkOrYoutube = ({ children, className, href, ...props }) => {
   const url = parse(href, true);
   const classes = useStyles();
   if (className === 'embedly-card') {
@@ -37,8 +37,9 @@ const LinkOrYoutube = ({ children, className, href, ...props }) => {
             title={props.url}
             width="560"
             height="315"
-            src={`https://www.youtube.com/embed${(url.query.v && '/' + url.query.v) ||
-              url.pathname}`}
+            src={`https://www.youtube.com/embed${
+              (url.query.v && '/' + url.query.v) || url.pathname
+            }`}
             frameBorder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen={true}
@@ -55,5 +56,3 @@ const LinkOrYoutube = ({ children, className, href, ...props }) => {
     );
   }
 };
-
-export default LinkOrYoutube;

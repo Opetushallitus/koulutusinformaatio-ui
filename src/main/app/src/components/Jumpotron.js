@@ -1,5 +1,5 @@
 import React from 'react';
-import Hakupalkki from './haku/Hakupalkki';
+import { Hakupalkki } from './haku/Hakupalkki';
 import { ReactiveBorder } from './ReactiveBorder';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';

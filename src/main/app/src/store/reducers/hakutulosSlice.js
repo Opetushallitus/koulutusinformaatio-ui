@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { searchAPI } from '#/src/api/konfoApi';
-import qs from 'query-string';
 import _ from 'lodash';
 import { Localizer as l, Common as C } from '#/src/tools/Utils';
 import { FILTER_TYPES, FILTER_TYPES_ARR } from '#/src/constants';
@@ -43,7 +42,6 @@ export const initialState = {
   sort: 'score',
   pageSizeArray: [5, 10, 20, 30, 50],
   pageSortArray: ['score_desc', 'name_asc', 'name_desc'],
-  showHakutulosFilters: false,
 };
 
 const hakutulosSlice = createSlice({
@@ -77,7 +75,7 @@ const hakutulosSlice = createSlice({
     setOpetustapa: (state, { payload }) => {
       state.opetustapa = payload.newCheckedOpetustavat;
     },
-    clearPaging: (state, action) => {
+    clearPaging: (state) => {
       state.koulutusPage = 1;
       state.oppilaitosPage = 1;
       state.koulutusOffset = 0;
@@ -92,7 +90,7 @@ const hakutulosSlice = createSlice({
         state[filterType] = state[filterType].filter(({ id }) => id !== itemId);
       }
     },
-    clearSelectedFilters: (state, action) => {
+    clearSelectedFilters: (state) => {
       state.koulutustyyppi = [];
       state.koulutusala = [];
       state.opetuskieli = [];
@@ -108,9 +106,6 @@ const hakutulosSlice = createSlice({
     },
     setSort: (state, { payload }) => {
       state.sort = payload.newSort;
-    },
-    toggleshowHakutulosFilters: (state, action) => {
-      state.showHakutulosFilters = !state.showHakutulosFilters;
     },
     searchAPICallStart(state) {
       if (state.status === IDLE_STATUS) {
@@ -245,7 +240,6 @@ export const {
   setSelectedFilters,
   setOrder,
   setSort,
-  toggleshowHakutulosFilters,
   setSize,
   searchAllSuccess,
   searchKoulutuksetSuccess,
@@ -361,7 +355,7 @@ export const twoLevelFilterUpdateAndSearch = ({
   apiRequestParams,
   clickedFilterId,
   parentFilterId,
-  history,
+  updateUrlSearchParams,
 }) => (dispatch, getState) => {
   const { hakutulos } = getState();
   let filterCheckedValues = _.clone(_.get(hakutulos, filterType));
@@ -400,8 +394,6 @@ export const twoLevelFilterUpdateAndSearch = ({
   }
 
   filterCheckedValues = _.sortBy(_.uniqBy(filterCheckedValues, 'id'), 'id');
-
-  const search = qs.parse(history.location.search);
   const filterURLParamsStr = _.join(_.map(filterCheckedValues, 'id'), ',');
 
   switch (filterType) {
@@ -414,10 +406,8 @@ export const twoLevelFilterUpdateAndSearch = ({
     default:
       break;
   }
-  search[filterType] = filterURLParamsStr;
-  search.kpage = 1;
-  search.opage = 1;
-  history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
+
+  updateUrlSearchParams({ [filterType]: filterURLParamsStr });
   dispatch(clearPaging());
   dispatch(searchAll({ ...apiRequestParams, [filterType]: filterURLParamsStr }));
 };
