@@ -8,7 +8,6 @@ describe('Valintaperuste page', function () {
 
     // Wait for everything to load
     cy.findByRole('progressbar').should('not.exist');
-    cy.findByRole('heading', { level: 4, name: /Liiketoiminnan perustutkinto/ });
     cy.findByRole('heading', { level: 4, name: /kielikoe/ });
     cy.findByRole('heading', { level: 4, name: /Annikan pääsykoe/ });
     cy.findByRole('heading', { level: 4, name: /lisäpiste urheilijalle/ });
