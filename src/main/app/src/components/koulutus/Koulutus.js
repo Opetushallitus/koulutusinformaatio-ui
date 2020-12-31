@@ -36,6 +36,11 @@ const useStyles = makeStyles((theme) => ({
   alatText: {
     ...theme.typography.body1,
     fontSize: '1.25rem',
+    margin: 'auto',
+    textAlign: 'center',
+  },
+  tutkintoHeader: {
+    textAlign: 'center',
   },
   accordion: {
     width: '50%',
@@ -132,6 +137,8 @@ const Koulutus = () => {
     );
   };
 
+  const koulutusAlat = koulutus?.koulutusAla?.map((ala) => l.localize(ala))?.join(' + ');
+
   return loading ? (
     <LoadingCircle />
   ) : (
@@ -146,18 +153,14 @@ const Koulutus = () => {
           />
         </Box>
         <Box mt={4}>
-          {koulutus?.koulutusAla?.map((ala) => (
-            <Typography
-              key={ala.koodiUri}
-              className={classes.alatText}
-              variant="h3"
-              component="h1">
-              {l.localize(ala)}
+          {koulutusAlat && (
+            <Typography className={classes.alatText} variant="h3" component="h1">
+              {koulutusAlat}
             </Typography>
-          ))}
+          )}
         </Box>
         <Box mt={1}>
-          <Typography variant="h1" component="h1">
+          <Typography className={classes.tutkintoHeader} variant="h1" component="h1">
             {l.localize(koulutus?.tutkintoNimi)}
           </Typography>
         </Box>
