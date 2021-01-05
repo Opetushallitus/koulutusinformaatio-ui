@@ -1,7 +1,7 @@
+import { makeStyles } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowBackIos';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
 
@@ -16,7 +16,11 @@ const useStyles = makeStyles({
   },
 });
 
-export const Paluu = ({ paluuLinkki }) => {
+type Props = {
+  paluuLinkki: string;
+};
+
+export const Paluu = ({ paluuLinkki }: Props) => {
   const classes = useStyles();
   const { t } = useTranslation();
   return (

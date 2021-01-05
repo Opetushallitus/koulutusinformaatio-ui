@@ -1,12 +1,12 @@
+import { Box, Grid, Typography } from '@material-ui/core';
 import React from 'react';
-import { Typography, Box, Grid } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import { toId } from '#/src/tools/Utils';
 import { LocalizedHTML } from './LocalizedHTML';
-import { useTranslation } from 'react-i18next';
 
 const Headers = ['h1', 'h2', 'h3', 'h4', 'h5'];
-const isHeader = (tag) => Headers.includes(tag);
-const tagHeaders = (node) => {
+const isHeader = (tag: string) => Headers.includes(tag);
+const tagHeaders = (node: any) => {
   if (isHeader(node.name)) {
     const text = node.children[0].data;
     const id = toId(text);
@@ -21,7 +21,9 @@ const tagHeaders = (node) => {
   }
 };
 
-export const Sora = ({ metadata: { kuvaus } }) => {
+type Props = { metadata: { kuvaus: object } };
+
+export const Sora = ({ metadata: { kuvaus } }: Props) => {
   const { t } = useTranslation();
   return (
     <>

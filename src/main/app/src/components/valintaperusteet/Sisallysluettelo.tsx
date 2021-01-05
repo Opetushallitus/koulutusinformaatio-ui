@@ -36,21 +36,27 @@ const useStyles = makeStyles({
   },
 });
 
-const Lnk = (text, index, addIndexToAnchor) => {
+const Lnk = (text: string, index: number, addIndexToAnchor: boolean) => {
   const classes = useStyles();
   const anchor = toId(text);
+
   return (
     <Link
       key={`${anchor}-${index}`}
       className={classes.link}
       aria-label={text}
       to={`#${anchor}${addIndexToAnchor ? '-' + index : ''}`}
-      scroll={(el) => scrollIntoView(el)}>
+      scroll={(el: HTMLElement) => scrollIntoView(el)}>
       {text}
     </Link>
   );
 };
-export const Sisallysluettelo = ({ children }) => {
+
+type Props = {
+  children: any[];
+};
+
+export const Sisallysluettelo = ({ children }: Props) => {
   const classes = useStyles();
   return (
     <Grid
@@ -59,11 +65,11 @@ export const Sisallysluettelo = ({ children }) => {
       justify="center"
       alignItems="center"
       className={classes.toc}>
-      <Grid item xs={10} sm={10} md={10}>
-        {children.map((l, i) => l((t, index, addIndex) => Lnk(t, index || i, addIndex)))}
+      <Grid item xs={10}>
+        {children.map((l, i) =>
+          l((t: string, index: number, addIndex: boolean) => Lnk(t, index || i, addIndex))
+        )}
       </Grid>
     </Grid>
   );
 };
-
-export default Sisallysluettelo;

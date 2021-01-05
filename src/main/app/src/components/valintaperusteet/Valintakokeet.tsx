@@ -1,10 +1,11 @@
-import React from 'react';
-import _ from 'lodash';
 import { Box, Card, CardContent, Grid, makeStyles, Typography } from '@material-ui/core';
+import _ from 'lodash';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatDateString, Localizer as l, toId } from '#/src/tools/Utils';
 import { colors } from '#/src/colors';
 import Accordion from '#/src/components/common/Accordion';
+import { formatDateString, Localizer as l, toId } from '#/src/tools/Utils';
+import { Koodi, Translateable } from '#/src/types/common';
 import { LocalizedHTML } from './LocalizedHTML';
 
 const useStyles = makeStyles(() => ({
@@ -17,13 +18,23 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const SubHeading = ({ children }) => {
+const SubHeading: React.FC = ({ children }) => {
   const classes = useStyles();
   return (
     <Typography variant="h5" className={classes.valintakoeSubHeader}>
       {children}
     </Typography>
   );
+};
+
+type TilaisuusProps = {
+  alkaa: string;
+  paattyy: string;
+  lisatietoja: Translateable;
+  osoite: Translateable;
+  postinumero: Koodi;
+  index: number;
+  jarjestamispaikka: Translateable;
 };
 
 const Tilaisuus = ({
@@ -34,7 +45,7 @@ const Tilaisuus = ({
   postinumero,
   index,
   jarjestamispaikka,
-}) => {
+}: TilaisuusProps) => {
   const { t } = useTranslation();
   return (
     <Grid style={{ padding: '10px 20px' }} container key={`koetilaisuus-${index}`}>
@@ -65,7 +76,7 @@ const Tilaisuus = ({
         <Grid item xs={12}>
           <Box py={1}>
             <SubHeading>{t('valintaperuste.lisatietoja')}</SubHeading>
-            <LocalizedHTML data={lisatietoja} defaultValue="-" />
+            <LocalizedHTML data={lisatietoja!} defaultValue="-" />
           </Box>
         </Grid>
       )}
@@ -73,15 +84,30 @@ const Tilaisuus = ({
   );
 };
 
-export const ValintakokeetSisallysluettelo = (valintakokeet) => (Lnk) => {
-  return !_.isEmpty(valintakokeet)
-    ? valintakokeet.map(({ nimi }, index) => {
-        return Lnk(l.localize(nimi), index + 1, false);
-      })
+export const ValintakokeetSisallysluettelo = (valintakokeet: any[]) => (Lnk: any) =>
+  !_.isEmpty(valintakokeet)
+    ? valintakokeet.map(({ nimi }, index) => Lnk(l.localize(nimi), index + 1, false))
     : null;
+
+type Props = {
+  valintakokeet: Array<{
+    nimi: string;
+    tyyppi: Koodi;
+    tilaisuudet: Array<{
+      lisatietoja: Translateable;
+      jarjestamispaikka: Translateable;
+      osoite: { osoite: Translateable; postinumero: Koodi };
+      aika: { alkaa: string; paattyy: string };
+    }>;
+    metadata: {
+      ohjeetErityisjarjestelyihin: Translateable;
+      ohjeetEnnakkovalmistautumiseen: Translateable;
+      tietoja: Translateable;
+    };
+  }>;
 };
 
-export const Valintakokeet = ({ valintakokeet }) => {
+export const Valintakokeet = ({ valintakokeet }: Props) => {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
@@ -111,13 +137,13 @@ export const Valintakokeet = ({ valintakokeet }) => {
                 <Typography className={classes.valintakoeHeader} variant="h4">
                   {l.localize(nimi)}
                 </Typography>
-                <LocalizedHTML data={tietoja} />
+                {!_.isEmpty(tietoja) && <LocalizedHTML data={tietoja!} />}
                 {!_.isEmpty(ohjeetEnnakkovalmistautumiseen) && (
                   <>
                     <SubHeading>
                       {t('valintaperuste.valmistautumisohjeet-hakijalle')}
                     </SubHeading>
-                    <LocalizedHTML data={ohjeetEnnakkovalmistautumiseen} />
+                    <LocalizedHTML data={ohjeetEnnakkovalmistautumiseen!} />
                   </>
                 )}
                 {!_.isEmpty(ohjeetErityisjarjestelyihin) && (
@@ -125,11 +151,11 @@ export const Valintakokeet = ({ valintakokeet }) => {
                     <SubHeading>
                       {t('valintaperuste.ohjeet-erityisjarjestelyihin')}
                     </SubHeading>
-                    <LocalizedHTML data={ohjeetErityisjarjestelyihin} />
+                    <LocalizedHTML data={ohjeetErityisjarjestelyihin!} />
                   </>
                 )}
                 <Accordion
-                  ContentWrapper="div"
+                  ContentWrapper={'div' as any}
                   items={tilaisuudet.map(
                     (
                       {
