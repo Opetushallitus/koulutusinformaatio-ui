@@ -67,7 +67,7 @@ const Teksti = ({ data }: any) => (
 );
 
 const Taulukko = ({
-  data: { rows = [] as Array<{ isHeader: boolean; columns: any[] }> },
+  data: { rows = [] as Array<{ isHeader: boolean; columns: Array<any> }> },
 }) => {
   const { t } = useTranslation();
   const [headerRow, ...restRows] = rows;
@@ -122,7 +122,7 @@ const Sisalto = ({ tyyppi, ...props }: any, index: number) => {
   }
 };
 
-export const ValintatavatSisallysluettelo = (valintatavat: any[]) => (Lnk: any) =>
+export const ValintatavatSisallysluettelo = (valintatavat: Array<any>) => (Lnk: any) =>
   !_fp.isEmpty(valintatavat)
     ? valintatavat.map(({ nimi }, index) => Lnk(l.localize(nimi), index + 1, false))
     : null;

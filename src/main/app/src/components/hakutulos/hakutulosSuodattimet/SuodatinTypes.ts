@@ -17,12 +17,12 @@ export type FilterType = {
 };
 
 export type OpetuskieliFilterProps = {
-  checkedOpetuskielet: FilterType[];
+  checkedOpetuskielet: Array<FilterType>;
   checkedOpetuskieletStr: string;
-  sortedOpetuskielet: ElasticTuple[];
+  sortedOpetuskielet: Array<ElasticTuple>;
 };
 
 export type SijaintiFilterProps = {
-  checkedMaakunnat: FilterType[];
-  selectedSijainnit: FilterType[];
+  checkedMaakunnat: Array<FilterType>;
+  selectedSijainnit: Array<FilterType>;
 };

@@ -51,9 +51,9 @@ type Props = {
 };
 
 type JarjestajaData = {
-  jarjestajat: Jarjestaja[];
+  jarjestajat: Array<Jarjestaja>;
   loading: boolean;
-  sortedFilters: Record<string, FilterType[]>;
+  sortedFilters: Record<string, Array<FilterType>>;
 };
 
 const getQueryStr = (values: Array<{ id: string }>) =>
@@ -66,12 +66,12 @@ export const ToteutusList = ({ oid }: Props) => {
   );
 
   const valinnatFromHaku = useSelector(getSuodatinValinnatProps);
-  const initialValues: Record<string, FilterType[]> = useMemo(
+  const initialValues: Record<string, Array<FilterType>> = useMemo(
     () =>
       _fp.pipe(
         _fp.pick(['opetuskieli', 'sijainti', 'opetustapa']),
         // TODO: Refactor name to nimi in state
-        _fp.mapValues((arr: any[]) =>
+        _fp.mapValues((arr: Array<any>) =>
           arr.map(({ name, ...rest }) => ({ nimi: name, ...rest }))
         )
       )(valinnatFromHaku) as any,

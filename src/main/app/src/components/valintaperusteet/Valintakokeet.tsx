@@ -84,7 +84,7 @@ const Tilaisuus = ({
   );
 };
 
-export const ValintakokeetSisallysluettelo = (valintakokeet: any[]) => (Lnk: any) =>
+export const ValintakokeetSisallysluettelo = (valintakokeet: Array<any>) => (Lnk: any) =>
   !_.isEmpty(valintakokeet)
     ? valintakokeet.map(({ nimi }, index) => Lnk(l.localize(nimi), index + 1, false))
     : null;

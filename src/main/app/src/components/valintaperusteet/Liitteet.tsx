@@ -93,19 +93,19 @@ const LiiteComponent = ({ nimi, kuvaus }: Liite) => (
   </>
 );
 
-const tyypeittain = (liitteet: Liite[]) =>
+const tyypeittain = (liitteet: Array<Liite>) =>
   _.sortBy(
     Object.entries(_.groupBy(liitteet || [], (liite) => l.localize(liite.tyyppi.nimi))),
     _.first
   );
 
-export const LiitteetSisallysluettelo = (liitteet: Liite[]) => (Lnk: any) => {
+export const LiitteetSisallysluettelo = (liitteet: Array<Liite>) => (Lnk: any) => {
   const tyyppiJaLiite = tyypeittain(liitteet);
   return tyyppiJaLiite.map(([tyyppi]) => Lnk(tyyppi));
 };
 
 type Props = {
-  liitteet: Liite[];
+  liitteet: Array<Liite>;
 };
 
 const liiteAsOsoite = ({

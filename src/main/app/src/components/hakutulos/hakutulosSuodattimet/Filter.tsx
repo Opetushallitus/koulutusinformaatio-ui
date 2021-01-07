@@ -81,7 +81,7 @@ type Props = {
   elevation?: number;
   displaySelected?: boolean;
   summaryHidden?: boolean;
-  sortedFilterValues: FilterType[];
+  sortedFilterValues: Array<FilterType>;
   handleCheck: (value: FilterType) => void;
   checkedStr?: string;
   checkedValues: Array<{ id: string }>;

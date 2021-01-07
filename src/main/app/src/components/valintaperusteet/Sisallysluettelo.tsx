@@ -53,7 +53,7 @@ const Lnk = (text: string, index: number, addIndexToAnchor: boolean) => {
 };
 
 type Props = {
-  children: any[];
+  children: Array<any>;
 };
 
 export const Sisallysluettelo = ({ children }: Props) => {
