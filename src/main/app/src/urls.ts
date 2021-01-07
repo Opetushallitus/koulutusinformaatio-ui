@@ -24,14 +24,10 @@ const production = {
   'konfo-backend.haku': '/konfo-backend/haku/$1',
   'konfo-backend.koulutus.kuvaus': '/konfo-backend/kuvaus/',
   'konfo-backend.eperuste.kuvaus': '/konfo-backend/eperuste/$1',
-  'kartta.base-url': 'https://hkp.maanmittauslaitos.fi',
-  'kartta.publish-url':
-    'https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0',
 };
 
 const development = {
   ...production,
-  'konfo-backend.old-oppija': '/',
   'konfo-backend.content': 'https://konfo-content.untuvaopintopolku.fi/$1',
   'konfo-backend.suosittelu': 'https://beta.testiopintopolku.fi/konfo-backend/suosittelu',
   'konfo-backend.kuvaus.osaamisalat':
