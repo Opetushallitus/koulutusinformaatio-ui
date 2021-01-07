@@ -139,8 +139,8 @@ export const Filter = ({
                   ...theme,
                   colors: {
                     ...theme.colors,
-                    primary25: colors.greyMuiListOnHover,
-                    primary: colors.green,
+                    primary25: colors.darkGrey,
+                    primary: colors.brandGreen,
                   },
                 })}
               />

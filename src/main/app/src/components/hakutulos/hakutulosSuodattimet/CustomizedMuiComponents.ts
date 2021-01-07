@@ -64,7 +64,7 @@ export const SuodatinAccordionDetails = withStyles({
 export const SuodatinListItemText = withStyles({
   primary: {
     fontSize: 14,
-    color: colors.grey,
+    color: colors.darkGrey,
   },
 })(ListItemText);
 
@@ -72,7 +72,7 @@ export const SuodatinMobileChip = withStyles({
   root: {
     borderRadius: 2,
     color: colors.white,
-    backgroundColor: colors.green,
+    backgroundColor: colors.brandGreen,
     height: 28,
     fontSize: '0.9rem',
     cursor: 'pointer',
@@ -84,7 +84,7 @@ export const SuodatinMobileChip = withStyles({
 
 export const SuodatinMobileSlider = withStyles({
   markLabelActive: {
-    color: colors.green,
+    color: colors.brandGreen,
     fontWeight: 700,
   },
 })(Slider);

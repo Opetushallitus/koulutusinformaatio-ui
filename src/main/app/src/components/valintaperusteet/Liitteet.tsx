@@ -71,7 +71,7 @@ const OsoiteComponent = ({
 
 const FileIcon = withStyles(() => ({
   root: {
-    color: colors.green,
+    color: colors.brandGreen,
   },
 }))(InsertDriveFileOutlinedIcon);
 

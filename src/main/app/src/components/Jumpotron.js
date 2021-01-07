@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
   },
   jumpotron: {
-    backgroundColor: colors.green,
+    backgroundColor: colors.brandGreen,
     marginTop: '85px',
   },
   title: {

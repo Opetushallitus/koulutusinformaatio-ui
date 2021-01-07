@@ -28,7 +28,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 const HeaderCell = withStyles(() => ({
   head: {
-    backgroundColor: colors.green,
+    backgroundColor: colors.brandGreen,
     color: colors.white,
     fontWeight: 'bold',
   },

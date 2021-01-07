@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
   },
   valintakoeSubHeader: {
     fontWeight: 700,
-    color: colors.grey,
+    color: colors.darkGrey,
   },
 }));
 
@@ -128,7 +128,7 @@ export const Valintakokeet = ({ valintakokeet }: Props) => {
               id={`${toId(l.localize(nimi))}`}
               elevation={0}
               style={{
-                backgroundColor: colors.veryLightGrey,
+                backgroundColor: colors.lightGrey,
                 padding: '15px',
                 marginBottom: '20px',
               }}>

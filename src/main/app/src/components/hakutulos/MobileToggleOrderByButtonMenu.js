@@ -11,18 +11,18 @@ import { useUrlParams } from './UseUrlParams';
 
 const useStyles = makeStyles(() => ({
   buttonActive: {
-    backgroundColor: colors.green,
+    backgroundColor: colors.brandGreen,
     color: colors.white,
     fontSize: 14,
     fontWeight: 600,
     whiteSpace: 'nowrap',
     '&:hover': {
-      backgroundColor: colors.green,
+      backgroundColor: colors.brandGreen,
     },
   },
   buttonInactive: {
     backgroundColor: colors.white,
-    color: colors.green,
+    color: colors.brandGreen,
     fontSize: 14,
     fontWeight: 600,
     whiteSpace: 'nowrap',

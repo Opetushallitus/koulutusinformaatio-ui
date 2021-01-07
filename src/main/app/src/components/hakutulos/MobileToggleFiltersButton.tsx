@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
     border: 0,
   },
   buttonLabel: {
-    color: colors.green,
+    color: colors.brandGreen,
     fontSize: 16,
     fontWeight: 600,
     whiteSpace: 'nowrap',
@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
     bottom: 30,
     left: '50%',
     transform: 'translateX(-50%)',
-    backgroundColor: colors.green,
+    backgroundColor: colors.brandGreen,
   },
   fixedButtonLabel: {
     color: colors.white,

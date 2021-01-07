@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { makeStyles, Typography, Paper, Box } from '@material-ui/core';
-import { colors } from '../../colors';
+import { educationTypeColorCode } from '../../colors';
 import Spacer from './Spacer';
 import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     width: '80%',
-    backgroundColor: colors.limeGreenBackground,
+    backgroundColor: educationTypeColorCode.ammatillinenGreenBg, // TODO: Not sure if color should come from current koulutus theme
     [theme.breakpoints.down('sm')]: {
       width: '95%',
     },

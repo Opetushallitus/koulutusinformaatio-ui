@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: { marginTop: '100px' },
   textWithBackgroundBox: {
-    backgroundColor: colors.beigeGreen,
+    backgroundColor: colors.lightGreen2,
     height: '24px',
   },
   textWithBackgroundText: {

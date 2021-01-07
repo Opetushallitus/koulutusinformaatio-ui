@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
     marginBottom: 5,
     marginRight: 5,
     borderRadius: 5,
-    backgroundColor: colors.veryLightGrey,
+    backgroundColor: colors.lightGrey,
     border: 'none',
   },
   chipLabel: {

@@ -46,7 +46,7 @@ const useStyles = makeStyles({
     background: colors.red,
   },
   polku: {
-    background: colors.green,
+    background: colors.brandGreen,
   },
 });
 

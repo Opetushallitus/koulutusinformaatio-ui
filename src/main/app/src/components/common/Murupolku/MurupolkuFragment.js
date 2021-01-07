@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     ...(link
       ? {
           cursor: 'pointer',
-          color: colors.green,
+          color: colors.brandGreen,
         }
       : {}),
     ...(isLast && !isHome
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '24px',
     minWidth: 0,
     '&:hover, &:active': {
-      borderColor: colors.green,
+      borderColor: colors.brandGreen,
     },
   },
 }));
