@@ -117,6 +117,12 @@
       "prettier"
     ],
     "rules": {
+      "@typescript-eslint/array-type": [
+        "warn",
+        {
+          "default": "array-simple"
+        }
+      ],
       "prettier/prettier": [
         "warn",
         {
