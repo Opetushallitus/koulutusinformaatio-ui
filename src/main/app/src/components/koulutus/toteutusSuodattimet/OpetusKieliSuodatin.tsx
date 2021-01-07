@@ -9,8 +9,8 @@ import { getShownStr } from './utils';
 
 type Props = {
   handleFilterChange: (newFilters: object) => void;
-  initialValues: FilterType[];
-  sortedValues: FilterType[];
+  initialValues: Array<FilterType>;
+  sortedValues: Array<FilterType>;
 } & SuodatinProps;
 
 export const OpetuskieliSuodatin = (props: Props) => {

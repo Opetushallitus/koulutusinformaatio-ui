@@ -10,7 +10,7 @@ import {
   Box,
   Tooltip,
 } from '@material-ui/core';
-import { colors } from '#/src/colors';
+import { colors, educationTypeColorCode } from '#/src/colors';
 import Spacer from './Spacer';
 import KoulutusAsteIcon from '#/src/assets/images/koulutusaste.svg';
 import KoulutusTyypitIcon from '#/src/assets/images/koulutustyyppi.svg';
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-evenly',
     width: '80%',
-    backgroundColor: colors.limeGreenBackground,
+    backgroundColor: educationTypeColorCode.ammatillinenGreenBg, // TODO: Not sure if this should come from koulutus type theme
     [theme.breakpoints.down('sm')]: {
       width: '95%',
     },

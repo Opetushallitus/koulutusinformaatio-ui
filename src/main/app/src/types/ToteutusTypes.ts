@@ -5,13 +5,13 @@ type KoulutusTyyppi = ValueOf<typeof KOULUTUS_TYYPPI>;
 
 export type Jarjestaja = {
   koulutustyyppi: KoulutusTyyppi;
-  kunnat: Koodi[];
+  kunnat: Array<Koodi>;
   kuva: string;
   kuvaus: Translateable;
   maksunMaara: TODOType;
   nimi: Translateable;
   onkoMaksullinen: boolean;
-  opetusajat: Koodi[];
+  opetusajat: Array<Koodi>;
   oppilaitosOid: string;
   oppilaitosTila: string; // TODO: string union type, e.g. "julkaistu" | jne
   toteutusOid: string;

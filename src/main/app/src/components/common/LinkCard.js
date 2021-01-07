@@ -16,14 +16,14 @@ const useStyles = makeStyles({
   paper: {
     height: '110px',
     borderLeft: '4px solid',
-    borderLeftColor: colors.green,
+    borderLeftColor: colors.brandGreen,
     minWidth: '426px',
     cursor: 'pointer',
   },
   icon: {
     height: '60px',
     width: '60px',
-    backgroundColor: colors.green,
+    backgroundColor: colors.brandGreen,
     borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',

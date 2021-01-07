@@ -39,15 +39,15 @@ const withStyles = makeStyles(() => ({
     whiteSpace: 'nowrap',
   },
   buttonActive: {
-    backgroundColor: colors.green,
+    backgroundColor: colors.brandGreen,
     color: colors.white,
     '&:hover': {
-      backgroundColor: colors.green,
+      backgroundColor: colors.brandGreen,
     },
   },
   buttonInactive: {
     backgroundColor: colors.white,
-    color: colors.green,
+    color: colors.brandGreen,
   },
 }));
 

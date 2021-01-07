@@ -5,7 +5,7 @@ import React from 'react';
 const useStyles = makeStyles({
   iconBackground: ({ color }) => ({
     borderRadius: '50%',
-    backgroundColor: color ?? colors.green,
+    backgroundColor: color ?? colors.brandGreen,
     padding: '12.5px 15px', // TODO: forced square ratio would be nice but prolly very hard to implement
   }),
 });

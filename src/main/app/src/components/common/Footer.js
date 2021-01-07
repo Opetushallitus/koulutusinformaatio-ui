@@ -37,7 +37,7 @@ const useStyles = makeStyles({
     border: 'none',
     borderTopWidth: '1px',
     borderTopStyle: 'solid',
-    borderTopColor: colors.lightAlphaGrey,
+    borderTopColor: colors.lightGrey,
     textAlign: 'center',
   },
   ophIcon: {

@@ -7,7 +7,7 @@ const useStyles = makeStyles({
     height: '4px',
     width: '30px',
     borderRadius: '2px',
-    backgroundColor: props.color ? props.color : colors.green,
+    backgroundColor: props.color ? props.color : colors.brandGreen,
     margin: '20px',
   }),
 });

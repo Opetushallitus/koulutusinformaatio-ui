@@ -8,7 +8,7 @@ import { sanitizedHTMLParser } from '#/src/tools/Utils';
 const useStyles = makeStyles(() => ({
   heading: {
     fontWeight: 700,
-    color: colors.green,
+    color: colors.brandGreen,
     cursor: 'pointer',
   },
   icon: {

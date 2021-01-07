@@ -1,28 +1,26 @@
+import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
+import _fp from 'lodash/fp';
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import _ from 'lodash';
-import { makeStyles, Grid, Box, Typography } from '@material-ui/core';
-import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
-
-import { Localizer as l } from '#/src/tools/Utils';
-import Murupolku from '#/src/components/common/Murupolku';
-import { LoadingCircle } from '#/src/components/common/LoadingCircle';
-import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import {
+  getHakukohde,
   getKoulutus,
   getToteutus,
-  getHakukohde,
   getValintaperuste,
 } from '#/src/api/konfoApi';
-
-import { Sisallysluettelo } from './Sisallysluettelo';
-import { Paluu } from './Paluu';
+import { LoadingCircle } from '#/src/components/common/LoadingCircle';
+import Murupolku from '#/src/components/common/Murupolku';
+import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
+import { Localizer as l } from '#/src/tools/Utils';
+import { Kuvaus, KuvausSisallysluettelo, ValintatavatSisallysluettelo } from './Kuvaus';
 import { Liitteet, LiitteetSisallysluettelo } from './Liitteet';
+import { Paluu } from './Paluu';
+import { Sisallysluettelo } from './Sisallysluettelo';
 import { Sora } from './Sora';
 import { Valintakokeet, ValintakokeetSisallysluettelo } from './Valintakokeet';
-import { Kuvaus, KuvausSisallysluettelo } from './Kuvaus';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -31,7 +29,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Row = ({ children }) => {
+const Row: React.FC = ({ children }) => {
   const classes = useStyles();
   return (
     <Grid container direction="row" justify="center" className={classes.container}>
@@ -42,7 +40,17 @@ const Row = ({ children }) => {
   );
 };
 
-const getValintaperustePageData = async ({ hakukohdeOid }) => {
+type PageDataProps = {
+  hakukohdeOid: string;
+};
+type PageData = {
+  valintaperuste: any;
+  koulutus: any;
+  toteutus: any;
+  hakukohde: any;
+};
+
+const getValintaperustePageData = async ({ hakukohdeOid }: PageDataProps) => {
   // TODO: Backend should return most of the data using getValintaperuste()
   const hakukohde = await getHakukohde(hakukohdeOid);
   const { toteutus: hakukohdeToteutus, valintaperuste: hakukohdeValintaperuste } =
@@ -54,10 +62,10 @@ const getValintaperustePageData = async ({ hakukohdeOid }) => {
   return { koulutus, toteutus, hakukohde, valintaperuste };
 };
 
-const useValintaperustePageData = ({ hakukohdeOid }) => {
-  return useQuery(
+const useValintaperustePageData = ({ hakukohdeOid }: PageDataProps) => {
+  return useQuery<PageData>(
     ['getValintaperustePageData', { hakukohdeOid }],
-    (key, props) => getValintaperustePageData(props),
+    (_, props: PageDataProps) => getValintaperustePageData(props),
     {
       refetchOnWindowFocus: false,
     }
@@ -66,11 +74,11 @@ const useValintaperustePageData = ({ hakukohdeOid }) => {
 
 export const ValintaperustePage = () => {
   const classes = useStyles();
-  const { hakukohdeOid } = useParams();
+  const { hakukohdeOid } = useParams<PageDataProps>();
   const { t } = useTranslation();
   const hakuUrl = useSelector(getHakuUrl);
 
-  const { data = {}, isFetching, error } = useValintaperustePageData({
+  const { data = {} as PageData, isFetching, error } = useValintaperustePageData({
     hakukohdeOid,
   });
   const { valintaperuste, koulutus, toteutus, hakukohde } = data;
@@ -80,7 +88,8 @@ export const ValintaperustePage = () => {
   } = valintaperuste || { metadata: { kuvaus: {}, valintatavat: [] } };
   const toteutusLink = toteutus && `/toteutus/${toteutus.oid}`;
 
-  const valintakokeet = _.concat(hakukohde?.valintakokeet, valintaperuste?.valintakokeet);
+  const valintakokeet =
+    _fp.concat(hakukohde?.valintakokeet, valintaperuste?.valintakokeet) || [];
 
   return isFetching ? (
     <LoadingCircle />
@@ -103,8 +112,8 @@ export const ValintaperustePage = () => {
           spacing={0}
           justify="flex-start"
           className={classes.container}>
-          <Grid item xs={12} sm={12} md={3} />
-          <Grid item xs={12} sm={12} md={6}>
+          <Grid item xs={12} md={3} />
+          <Grid item xs={12} md={6}>
             <Paluu paluuLinkki={toteutusLink} />
             <Box pb={2}>
               <Typography variant="h1" component="h1">
@@ -112,30 +121,31 @@ export const ValintaperustePage = () => {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={12} md={3} />
-          <Grid item xs={12} sm={12} md={3}>
+          <Grid item xs={12} md={3} />
+          <Grid item xs={12} md={3}>
             <Sisallysluettelo>
               {[
-                (l) => l(t('valintaperuste.kuvaus')),
+                (l: any) => l(t('valintaperuste.kuvaus')),
                 KuvausSisallysluettelo(kuvaus),
+                ValintatavatSisallysluettelo(valintatavat),
                 ValintakokeetSisallysluettelo(valintakokeet),
-                (ll) =>
+                (ll: any) =>
                   valintaperuste.sorakuvaus
                     ? ll(t('valintaperuste.hakijan-terveydentila-ja-toimintakyky'))
                     : null,
-                (l) =>
-                  !_.isEmpty(hakukohde?.liitteet)
+                (l: any) =>
+                  !_fp.isEmpty(hakukohde?.liitteet)
                     ? l(t('valintaperuste.liitteet'))
                     : null,
                 LiitteetSisallysluettelo(hakukohde?.liitteet),
               ]}
             </Sisallysluettelo>
           </Grid>
-          <Grid item xs={12} sm={12} md={6}>
+          <Grid item xs={12} md={6}>
             <Kuvaus kuvaus={kuvaus} valintatavat={valintatavat} />
-            <Valintakokeet valintakokeet={valintakokeet} />
+            {valintakokeet.length > 0 && <Valintakokeet valintakokeet={valintakokeet} />}
             {valintaperuste.sorakuvaus && <Sora {...valintaperuste.sorakuvaus} />}
-            <Liitteet {...hakukohde} />
+            <Liitteet liitteet={hakukohde?.liitteet} />
           </Grid>
         </Grid>
       </>

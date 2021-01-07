@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1.1875rem',
   },
   organizerText: {
-    color: colors.grey,
+    color: colors.darkGrey,
     fontWeight: 600,
   },
   description: {

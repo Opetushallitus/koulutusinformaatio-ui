@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
   },
   beta: {
-    color: colors.green,
+    color: colors.brandGreen,
     borderRadius: 2,
     marginLeft: 20,
     padding: '0px 5px',

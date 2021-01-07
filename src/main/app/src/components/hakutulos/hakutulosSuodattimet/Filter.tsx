@@ -81,7 +81,7 @@ type Props = {
   elevation?: number;
   displaySelected?: boolean;
   summaryHidden?: boolean;
-  sortedFilterValues: FilterType[];
+  sortedFilterValues: Array<FilterType>;
   handleCheck: (value: FilterType) => void;
   checkedStr?: string;
   checkedValues: Array<{ id: string }>;
@@ -139,8 +139,8 @@ export const Filter = ({
                   ...theme,
                   colors: {
                     ...theme.colors,
-                    primary25: colors.greyMuiListOnHover,
-                    primary: colors.green,
+                    primary25: colors.darkGrey,
+                    primary: colors.brandGreen,
                   },
                 })}
               />

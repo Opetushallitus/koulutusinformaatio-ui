@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     flex: '1',
     position: 'relative',
     background: colors.white,
-    color: colors.grey,
+    color: colors.darkGrey,
     border: '1px solid #e0e1dd',
     marginBottom: '8px',
   },

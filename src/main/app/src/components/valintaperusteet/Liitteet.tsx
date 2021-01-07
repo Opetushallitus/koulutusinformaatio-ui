@@ -19,8 +19,22 @@ import {
   sanitizedHTMLParser,
   toId,
 } from '#/src/tools/Utils';
+import { Koodi, Translateable } from '#/src/types/common';
+import { Liite } from '#/src/types/valintaperuste-types';
 
-const Osoite = ({ toimitusaika, sahkoposti, osoite, postinumero }) => {
+type OsoiteProps = {
+  toimitusaika: string;
+  sahkoposti: string;
+  osoite: Translateable;
+  postinumero?: Koodi;
+};
+
+const OsoiteComponent = ({
+  toimitusaika,
+  sahkoposti,
+  osoite,
+  postinumero,
+}: OsoiteProps) => {
   const { t } = useTranslation();
   return (
     <>
@@ -55,13 +69,13 @@ const Osoite = ({ toimitusaika, sahkoposti, osoite, postinumero }) => {
   );
 };
 
-const FileIcon = withStyles((theme) => ({
+const FileIcon = withStyles(() => ({
   root: {
-    color: colors.green,
+    color: colors.brandGreen,
   },
 }))(InsertDriveFileOutlinedIcon);
 
-const Liite = ({ nimi, kuvaus }) => (
+const LiiteComponent = ({ nimi, kuvaus }: Liite) => (
   <>
     <Grid item xs={2}>
       <Grid container alignItems="flex-start" justify="flex-end" direction="row">
@@ -79,62 +93,66 @@ const Liite = ({ nimi, kuvaus }) => (
   </>
 );
 
-const tyypeittain = (liitteet) =>
+const tyypeittain = (liitteet: Array<Liite>) =>
   _.sortBy(
     Object.entries(_.groupBy(liitteet || [], (liite) => l.localize(liite.tyyppi.nimi))),
     _.first
   );
 
-export const LiitteetSisallysluettelo = (liitteet) => (Lnk) => {
+export const LiitteetSisallysluettelo = (liitteet: Array<Liite>) => (Lnk: any) => {
   const tyyppiJaLiite = tyypeittain(liitteet);
-  return tyyppiJaLiite?.map(([tyyppi]) => Lnk(tyyppi));
+  return tyyppiJaLiite.map(([tyyppi]) => Lnk(tyyppi));
 };
 
-export const Liitteet = ({ liitteet }) => {
+type Props = {
+  liitteet: Array<Liite>;
+};
+
+const liiteAsOsoite = ({
+  toimitusaika,
+  toimitustapa,
+  toimitusosoite: { sahkoposti, osoite: { osoite, postinumero } = {} as any } = {} as any,
+}: Liite) => ({ toimitusaika, toimitustapa, sahkoposti, osoite, postinumero });
+
+export const Liitteet = ({ liitteet }: Props) => {
   const { t } = useTranslation();
   const tyyppiJaLiite = tyypeittain(liitteet);
 
   return (
-    !_.isEmpty(tyyppiJaLiite) && (
-      <>
+    <>
+      {tyyppiJaLiite.length > 0 && (
         <Box py={2}>
           <Typography id={toId(t('valintaperuste.liitteet'))} variant="h2">
             {t('valintaperuste.liitteet')}
           </Typography>
           <Spacer />
         </Box>
-        {tyyppiJaLiite.map(([tyyppi, liitteet]) => {
-          const liiteAsOsoite = ({
-            toimitusaika,
-            toimitustapa,
-            toimitusosoite: { sahkoposti, osoite: { osoite, postinumero } = {} } = {},
-          }) => ({ toimitusaika, toimitustapa, sahkoposti, osoite, postinumero });
+      )}
+      {tyyppiJaLiite.map(([tyyppi, liitteet]) => {
+        const yhteisetOsoitteet = _.uniq(liitteet.map(liiteAsOsoite));
+        const jaettuOsoite = yhteisetOsoitteet.length === 1;
 
-          const yhteisetOsoitteet = _.uniq(liitteet.map(liiteAsOsoite));
-          const jaettuOsoite = yhteisetOsoitteet.length === 1;
-
-          return (
-            <div key={`liitteet-${tyyppi}`}>
-              <Box py={2}>
-                <Typography id={toId(tyyppi)} variant="h4">
-                  {tyyppi}
-                </Typography>
-              </Box>
-              <Card elevation={2}>
-                <CardContent>
-                  {liitteet.map((liite, index) => (
-                    <Grid container key={`liite-${index}`}>
-                      <Liite {...liite} />
-                      {!jaettuOsoite && <Osoite {...liiteAsOsoite(liite)} />}
-                    </Grid>
-                  ))}
-                  {jaettuOsoite && <Osoite {..._.first(yhteisetOsoitteet)} />}
-                </CardContent>
-              </Card>
-            </div>
-          );
-        })}
-      </>
-    )
+        return (
+          <div key={`liitteet-${tyyppi}`}>
+            <Box py={2}>
+              <Typography id={toId(tyyppi)} variant="h4">
+                {tyyppi}
+              </Typography>
+            </Box>
+            <Card elevation={2}>
+              <CardContent>
+                {liitteet.map((liite, index) => (
+                  <Grid container key={`liite-${index}`}>
+                    <LiiteComponent {...liite} />
+                    {!jaettuOsoite && <OsoiteComponent {...liiteAsOsoite(liite)} />}
+                  </Grid>
+                ))}
+                {jaettuOsoite && <OsoiteComponent {..._.first(yhteisetOsoitteet)!} />}
+              </CardContent>
+            </Card>
+          </div>
+        );
+      })}
+    </>
   );
 };

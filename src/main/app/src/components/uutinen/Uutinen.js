@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     cursor: 'pointer',
     fontSize: '19px',
     lineHeight: '26px',
-    color: colors.green,
+    color: colors.brandGreen,
     height: '100%',
   },
   content: {
@@ -29,13 +29,13 @@ const useStyles = makeStyles({
   },
   kategoria: {
     textTransform: 'uppercase',
-    color: colors.grey,
+    color: colors.darkGrey,
     fontSize: '14px',
     lineHeight: '19px',
     fontWeight: 'light',
   },
   pvm: {
-    color: colors.grey,
+    color: colors.darkGrey,
     fontSize: '14px',
     lineHeight: '19px',
     textAlign: 'end',

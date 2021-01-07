@@ -7,7 +7,7 @@ export interface OppilaitosOsoite {
   yhteystiedot: string;
 }
 
-async function fetchOsoitteet(oppilaitosOids: String[]) {
+async function fetchOsoitteet(oppilaitosOids: Array<string>) {
   const oppilaitosDatas = await Promise.all(
     oppilaitosOids.filter(Boolean).map((oid) => getOppilaitosOsa(oid))
   );
@@ -23,8 +23,8 @@ async function fetchOsoitteet(oppilaitosOids: String[]) {
   });
 }
 
-export const useOppilaitosOsoite = (oppilaitosOids: String[]) => {
-  const [osoitteet, setOsoitteet] = useState<OppilaitosOsoite[]>([]);
+export const useOppilaitosOsoite = (oppilaitosOids: Array<string>) => {
+  const [osoitteet, setOsoitteet] = useState<Array<OppilaitosOsoite>>([]);
   const [dataFetched, setDataFetched] = useState(false);
 
   useEffect(() => {

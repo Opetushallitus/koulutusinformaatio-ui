@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 0,
     marginLeft: theme.spacing(3),
     flex: 1,
-    color: colors.grey,
+    color: colors.darkGrey,
     fontFamily: 'Open Sans',
     fontSize: '16px',
     fontWeight: '600',

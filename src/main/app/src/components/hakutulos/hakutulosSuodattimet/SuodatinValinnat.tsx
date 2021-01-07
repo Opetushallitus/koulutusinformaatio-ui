@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
     marginBottom: 5,
     marginRight: 5,
     borderRadius: 5,
-    backgroundColor: colors.veryLightGrey,
+    backgroundColor: colors.lightGrey,
     border: 'none',
   },
   chipLabel: {
@@ -46,7 +46,7 @@ type FilterType = {
 };
 
 type ChosenFiltersProps = {
-  filters: Record<string, FilterType[]>;
+  filters: Record<string, Array<FilterType>>;
   getHandleDelete: (filterType: string, itemId: string) => VoidFunction;
   handleClearFilters: VoidFunction;
 };
@@ -59,7 +59,7 @@ const ChipList = ({
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const displayChips = ([filterType, items]: [string, FilterType[]]) =>
+  const displayChips = ([filterType, items]: [string, Array<FilterType>]) =>
     items.map(({ id, name }) => (
       <Chip
         size="small"
@@ -108,7 +108,7 @@ export const SuodatinValinnat = () => {
   const suodatinValinnatProps = useSelector(getSuodatinValinnatProps);
   const apiRequestParams = useQueryParams();
 
-  const [filters, setFilters] = useState<Record<string, FilterType[]>>({});
+  const [filters, setFilters] = useState<Record<string, Array<FilterType>>>({});
 
   useEffect(() => {
     setFilters(suodatinValinnatProps);

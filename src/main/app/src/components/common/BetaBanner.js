@@ -78,7 +78,7 @@ const BetaBanner = (props) => {
       alignItems="center"
       justifyContent="center"
       className={classes.banner}
-      bgcolor={colors.betaBannerGreen}>
+      bgcolor={colors.darkGreen}>
       <Box flexGrow={1} className={classes.bannerText}>
         <Title />
       </Box>

@@ -9,9 +9,9 @@ import { getOptionsForSelect, getShownStr } from './utils';
 
 type Props = {
   handleFilterChange: (newFilters: object) => void;
-  initialValues: FilterType[];
-  sortedMaakunnat: FilterType[];
-  sortedKunnat: FilterType[];
+  initialValues: Array<FilterType>;
+  sortedMaakunnat: Array<FilterType>;
+  sortedKunnat: Array<FilterType>;
 } & SuodatinProps;
 
 export const SijaintiSuodatin = (props: Props) => {

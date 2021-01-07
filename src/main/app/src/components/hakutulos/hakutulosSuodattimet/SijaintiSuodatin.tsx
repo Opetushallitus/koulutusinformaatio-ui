@@ -103,15 +103,15 @@ type Maakunta = {
   label?: string;
 };
 
-const isChecked = (arr: Maakunta[], value: Maakunta) =>
+const isChecked = (arr: Array<Maakunta>, value: Maakunta) =>
   arr.some((o) => o.id === value.id);
 
 type SijaintiFilterProps = {
-  firstFiveMaakunnat: ElasticTuple[];
-  restMaakunnat: ElasticTuple[];
-  selectedSijainnit: Maakunta[];
-  searchHitsSijainnit: Maakunta[];
-  checkedMaakunnat: Maakunta[];
+  firstFiveMaakunnat: Array<ElasticTuple>;
+  restMaakunnat: Array<ElasticTuple>;
+  selectedSijainnit: Array<Maakunta>;
+  searchHitsSijainnit: Array<Maakunta>;
+  checkedMaakunnat: Array<Maakunta>;
   selectedSijainnitStr: string;
 };
 
@@ -194,7 +194,7 @@ export const SijaintiSuodatin = ({
     setCheckedMaakunnat(newValitutMaakunnat);
   };
 
-  const setCheckedMaakunnat = (newCheckedOrSelectedMaakunnat: Maakunta[]) => {
+  const setCheckedMaakunnat = (newCheckedOrSelectedMaakunnat: Array<Maakunta>) => {
     const newCheckedOrSelectedSijainnitStr = newCheckedOrSelectedMaakunnat
       .map(({ id }) => id)
       .concat(selectedSijainnit.map(({ id }) => id))
@@ -269,8 +269,8 @@ export const SijaintiSuodatin = ({
                 ...theme,
                 colors: {
                   ...theme.colors,
-                  primary25: colors.greyMuiListOnHover,
-                  primary: colors.green,
+                  primary25: colors.darkGrey,
+                  primary: colors.brandGreen,
                 },
               })}
             />
