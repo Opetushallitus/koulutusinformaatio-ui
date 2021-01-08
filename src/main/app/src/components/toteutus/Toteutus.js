@@ -124,10 +124,12 @@ const Toteutus = () => {
   const koulutusLoading =
     useSelector(selectKoulutusLoading) || (!koulutus && koulutusNotFetched);
 
-  const asiasanat =
-    toteutus?.metadata?.asiasanat
-      .filter((asiasana) => asiasana.kieli === currentLanguage)
-      .map((asiasana) => asiasana.arvo) ?? [];
+  // NOTE: These ammattinimikkeet should be the freely written virkailija asiasana-ammattinimikkeet,
+  // not the formal tutkintonimikkeet
+  const asiasanat = (toteutus?.metadata?.ammattinimikkeet || [])
+    .concat(toteutus?.metadata?.asiasanat || [])
+    .filter((asiasana) => asiasana.kieli === currentLanguage)
+    .map((asiasana) => asiasana.arvo);
 
   const { data: osaamisalaData = [], isFetching } = useOsaamisalatPageData({
     ePerusteId: koulutus?.ePerusteId?.toString(),
