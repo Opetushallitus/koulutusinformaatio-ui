@@ -37,10 +37,46 @@
     <meta name="msapplication-TileColor" content="#378703" />
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
     <meta name="theme-color" content="#378703" />
+    <script>
+      var siteDomain = document.domain;
+
+      // NOTE: Do not run any analytics on local dev / cypress runs
+      if (siteDomain !== 'localhost') {
+        var matomoSiteId;
+        switch (siteDomain) {
+          case 'beta.opintopolku.fi':
+            matomoSiteId = 27;
+            break;
+          case 'beta.testiopintopolku.fi':
+            matomoSiteId = 28;
+            break;
+          default:
+            matomoSiteId = 2; // Kehitys
+        }
+        var _paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['trackPageView']);
+        _paq.push(['setDocumentTitle', document.domain + '/' + document.title]);
+        _paq.push(['enableLinkTracking']);
+        (function () {
+          var u = '//analytiikka.opintopolku.fi/matomo/';
+          _paq.push(['setTrackerUrl', u + 'matomo.php']);
+          _paq.push(['setSiteId', matomoSiteId]);
+          var d = document,
+            g = d.createElement('script'),
+            s = d.getElementsByTagName('script')[0];
+          g.type = 'text/javascript';
+          g.async = true;
+          g.defer = true;
+          g.src = u + 'matomo.js';
+          s.parentNode.insertBefore(g, s);
+        })();
+      }
+    </script>
     <title>Opintopolku</title>
   </head>
   <body>
-    <noscript> You need to enable JavaScript to run this app. </noscript>
+    <noscript> You need to enable JavaScript to run this app.</noscript>
     <div id="wrapper"></div>
   </body>
 </html>
