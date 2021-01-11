@@ -1,35 +1,33 @@
-import React, { useEffect } from 'react';
-import _ from 'lodash';
-import { observer } from 'mobx-react-lite';
-import { useParams, useHistory } from 'react-router-dom';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
-import qs from 'query-string';
-import { urls } from 'oph-urls-js';
+import { Box, Link as MuiLink, makeStyles, Typography } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import { Link as MuiLink, Typography, Box, makeStyles } from '@material-ui/core';
-import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
-import HtmlTextBox from '#/src/components/common/HtmlTextBox';
+import clsx from 'clsx';
+import _ from 'lodash';
+import { urls } from 'oph-urls-js';
+import React, { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import Accordion from '#/src/components/common/Accordion';
 import ContentWrapper from '#/src/components/common/ContentWrapper';
+import HtmlTextBox from '#/src/components/common/HtmlTextBox';
+import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import Murupolku from '#/src/components/common/Murupolku';
+import Spacer from '#/src/components/common/Spacer';
+import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
+import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   fetchKoulutusWithRelatedData,
   selectKoulutus,
-  selectSuositellutKoulutukset,
   selectLoading,
-  selectJarjestajat,
+  selectSuositellutKoulutukset,
   selectTulevatJarjestajat,
 } from '#/src/store/reducers/koulutusSlice';
-import { LoadingCircle } from '#/src/components/common/LoadingCircle';
-import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
-import Spacer from '#/src/components/common/Spacer';
-import Accordion from '#/src/components/common/Accordion';
-import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
+import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
+import { useUrlParams } from '../hakutulos/UseUrlParams';
+import { KoulutusInfoGrid } from './KoulutusInfoGrid';
 import SuositusKoulutusList from './SuositusKoulutusList';
-import ToteutusList from './ToteutusList';
+import { ToteutusList } from './ToteutusList';
 import TulevaJarjestajaList from './TulevaJarjestajaList';
-import KoulutusInfoGrid from './KoulutusInfoGrid';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },
@@ -37,6 +35,11 @@ const useStyles = makeStyles((theme) => ({
   alatText: {
     ...theme.typography.body1,
     fontSize: '1.25rem',
+    margin: 'auto',
+    textAlign: 'center',
+  },
+  tutkintoHeader: {
+    textAlign: 'center',
   },
   accordion: {
     width: '50%',
@@ -57,7 +60,12 @@ const AccordionWithTitle = ({ titleTranslation, data }) => {
       alignItems="center">
       <Typography variant="h2">{t(titleTranslation)}</Typography>
       <Spacer />
-      <Accordion items={data} />
+      <Accordion
+        items={data}
+        ContentWrapper={({ children }) => (
+          <Typography component="div">{children}</Typography>
+        )}
+      />
     </Box>
   );
 };
@@ -68,13 +76,16 @@ const findEperuste = (koulutus) => (id) =>
 const findTutkinnonOsa = (eperuste) => (id) =>
   _.first(eperuste.tutkinnonOsat.filter((t) => t.id === id));
 
-const Koulutus = (props) => {
-  const history = useHistory();
-  const { draft } = qs.parse(history.location.search);
+const getKuvausHtmlSection = (t) => (captionKey, localizableText) =>
+  localizableText ? '<h3>' + t(captionKey) + '</h3>' + l.localize(localizableText) : '';
+
+export const Koulutus = () => {
+  const { isDraft } = useUrlParams();
   const dispatch = useDispatch();
   const classes = useStyles();
   const { oid } = useParams();
   const { t } = useTranslation();
+  const getHtmlSection = useMemo(() => getKuvausHtmlSection(t), [t]);
 
   // TODO: There is absolutely no error handling atm.
   const koulutus = useSelector(selectKoulutus(oid), shallowEqual);
@@ -82,7 +93,6 @@ const Koulutus = (props) => {
     (state) => selectSuositellutKoulutukset(state),
     shallowEqual
   );
-  const toteutukset = useSelector(selectJarjestajat(oid));
   const tulevatJarjestajat = useSelector((state) => selectTulevatJarjestajat(state, oid));
   const loading = useSelector((state) => selectLoading(state));
 
@@ -90,45 +100,36 @@ const Koulutus = (props) => {
 
   useEffect(() => {
     if (!koulutus) {
-      dispatch(fetchKoulutusWithRelatedData(oid, draft));
+      dispatch(fetchKoulutusWithRelatedData(oid, isDraft));
     }
-  }, [dispatch, koulutus, oid, draft]);
+  }, [dispatch, koulutus, oid, isDraft]);
 
-  const getKuvausHtmlSection = (captionKey, localizableText) => {
-    return localizableText
-      ? '<h3>' + t(captionKey) + '</h3>' + l.localize(localizableText)
-      : '';
-  };
-
-  const createKoulutusHtml = () => {
-    if (koulutus?.suorittaneenOsaaminen || koulutus?.tyotehtavatJoissaVoiToimia) {
-      return (
-        getKuvausHtmlSection(
+  // NOTE: This uses HtmlTextBox which needs pure html
+  const createKoulutusHtml = () =>
+    koulutus?.suorittaneenOsaaminen || koulutus?.tyotehtavatJoissaVoiToimia
+      ? getHtmlSection(
           'koulutus.suorittaneenOsaaminen',
           koulutus?.suorittaneenOsaaminen
         ) +
-        getKuvausHtmlSection(
+        getHtmlSection(
           'koulutus.tyotehtavatJoissaVoiToimia',
           koulutus?.tyotehtavatJoissaVoiToimia
         )
-      );
-    } else {
-      return l.localize(koulutus?.kuvaus);
-    }
-  };
+      : l.localize(koulutus?.kuvaus);
 
-  const createTutkinnonOsaHtml = (tutkinnonOsa) => {
-    return (
-      getKuvausHtmlSection(
+  const createTutkinnonOsa = (tutkinnonOsa) =>
+    sanitizedHTMLParser(
+      getHtmlSection(
         'koulutus.ammattitaitovaatimukset',
         tutkinnonOsa.ammattitaitovaatimukset
       ) +
-      getKuvausHtmlSection(
-        'koulutus.ammattitaidonOsoitamistavat',
-        tutkinnonOsa.ammattitaidonOsoittamistavat
-      )
+        getHtmlSection(
+          'koulutus.ammattitaidonOsoitamistavat',
+          tutkinnonOsa.ammattitaidonOsoittamistavat
+        )
     );
-  };
+
+  const koulutusAlat = koulutus?.koulutusAla?.map((ala) => l.localize(ala))?.join(' + ');
 
   return loading ? (
     <LoadingCircle />
@@ -144,18 +145,14 @@ const Koulutus = (props) => {
           />
         </Box>
         <Box mt={4}>
-          {koulutus?.koulutusAla?.map((ala) => (
-            <Typography
-              key={ala.koodiUri}
-              className={classes.alatText}
-              variant="h3"
-              component="h1">
-              {l.localize(ala)}
+          {koulutusAlat && (
+            <Typography className={classes.alatText} variant="h3" component="h1">
+              {koulutusAlat}
             </Typography>
-          ))}
+          )}
         </Box>
         <Box mt={1}>
-          <Typography variant="h1" component="h1">
+          <Typography className={classes.tutkintoHeader} variant="h1" component="h1">
             {l.localize(koulutus?.tutkintoNimi)}
           </Typography>
         </Box>
@@ -205,7 +202,7 @@ const Koulutus = (props) => {
                 title,
                 content: (
                   <>
-                    {sanitizedHTMLParser(createTutkinnonOsaHtml(foundTutkinnonOsa))}
+                    {createTutkinnonOsa(foundTutkinnonOsa)}
                     <MuiLink
                       target="_blank"
                       rel="noopener"
@@ -225,7 +222,7 @@ const Koulutus = (props) => {
           />
         ) : null}
         <Box width="95%" id="tarjonta">
-          <ToteutusList toteutukset={toteutukset} />
+          <ToteutusList oid={oid} />
         </Box>
         {suositellutKoulutukset?.total > 0 && (
           <Box id="suositukset">
@@ -241,5 +238,3 @@ const Koulutus = (props) => {
     </ContentWrapper>
   );
 };
-
-export default observer(Koulutus);

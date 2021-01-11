@@ -94,12 +94,11 @@ describe('thunks', () => {
     const expectedActions = [
       fetchJarjestajatStart(),
       fetchJarjestajatSuccess({
-        oid: koulutusOid,
-        jarjestajat: jarjestajatData,
+        jarjestajatData,
       }),
     ];
 
     expect(store.getActions()).toEqual(expectedActions);
-    expect(api.getKoulutusJarjestajat).toBeCalledTimes(2);
+    expect(api.getKoulutusJarjestajat).toBeCalledTimes(1);
   });
 });

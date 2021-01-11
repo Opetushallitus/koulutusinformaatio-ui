@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     right: '0%',
     top: '65%',
     transform: 'translate(0, -50%)',
-    background: colors.green,
+    background: colors.brandGreen,
     padding: '14px',
   },
   icon: {

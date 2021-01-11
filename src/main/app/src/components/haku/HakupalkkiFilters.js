@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Divider, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import KoulutusalaSuodatin from '#/src/components/hakutulos/hakutulosSuodattimet/KoulutusalaSuodatin';
-import OpetuskieliSuodatin from '#/src/components/hakutulos/hakutulosSuodattimet/OpetusKieliSuodatin';
+import { OpetuskieliSuodatin } from '#/src/components/hakutulos/hakutulosSuodattimet/OpetusKieliSuodatin';
 import { SijaintiSuodatin } from '#/src/components/hakutulos/hakutulosSuodattimet/SijaintiSuodatin';
 import KoulutustyyppiSuodatin from '#/src/components/hakutulos/hakutulosSuodattimet/KoulutusTyyppiSuodatin';
 import Suodatin from '#/src/components/haku/Suodatin';

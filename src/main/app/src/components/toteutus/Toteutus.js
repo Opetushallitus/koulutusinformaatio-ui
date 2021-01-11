@@ -1,39 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import ContentWrapper from '../common/ContentWrapper';
-import { Box, Typography, makeStyles, Grid } from '@material-ui/core';
-import { HashLink } from 'react-router-hash-link';
-import { colors } from '#/src/colors';
-import { ToteutusInfoGrid } from './ToteutusInfoGrid';
-import ToteutusHakukohteet from './ToteutusHakukohteet';
-import clsx from 'clsx';
-import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { LoadingCircle } from '#/src/components/common/LoadingCircle';
-import Spacer from '#/src/components/common/Spacer';
-import Accordion from '#/src/components/common/Accordion';
-import { Localizer as l } from '#/src/tools/Utils';
-import HakuKaynnissaCard from '#/src/components/koulutus/HakuKaynnissaCard';
-import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
+import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import clsx from 'clsx';
 import _ from 'lodash';
-import {
-  fetchToteutus,
-  selectLoading as selectToteutusLoading,
-  selectToteutus,
-  selectHakukohteet,
-} from '#/src/store/reducers/toteutusSlice';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useQuery } from 'react-query';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
+import { getToteutusOsaamisalaKuvaus } from '#/src/api/konfoApi';
+import { colors } from '#/src/colors';
+import Accordion from '#/src/components/common/Accordion';
+import HtmlTextBox from '#/src/components/common/HtmlTextBox';
+import { LoadingCircle } from '#/src/components/common/LoadingCircle';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
+import Murupolku from '#/src/components/common/Murupolku';
+import Spacer from '#/src/components/common/Spacer';
+import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
+import HakuKaynnissaCard from '#/src/components/koulutus/HakuKaynnissaCard';
+import { getHakuParams, getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   fetchKoulutusWithRelatedData,
   selectKoulutus,
   selectLoading as selectKoulutusLoading,
 } from '#/src/store/reducers/koulutusSlice';
-import { useTranslation } from 'react-i18next';
-import HtmlTextBox from '#/src/components/common/HtmlTextBox';
-import Murupolku from '#/src/components/common/Murupolku';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
-import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
-import { ToteutusHakuMuu } from './ToteutusHakuMuu';
+import {
+  fetchToteutus,
+  selectHakukohteet,
+  selectLoading as selectToteutusLoading,
+  selectToteutus,
+} from '#/src/store/reducers/toteutusSlice';
+import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
+import ContentWrapper from '../common/ContentWrapper';
 import { ToteutusHakuEiSahkoista } from './ToteutusHakuEiSahkoista';
+import ToteutusHakukohteet from './ToteutusHakukohteet';
+import { ToteutusHakuMuu } from './ToteutusHakuMuu';
+import { ToteutusInfoGrid } from './ToteutusInfoGrid';
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -44,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: { marginTop: '100px' },
   textWithBackgroundBox: {
-    backgroundColor: colors.beigeGreen,
+    backgroundColor: colors.lightGreen2,
     height: '24px',
   },
   textWithBackgroundText: {
@@ -86,6 +88,22 @@ const AccordionWithTitle = ({ titleTranslation, data }) => {
     </Box>
   );
 };
+
+const getOsaamisalatPageData = async ({ ePerusteId, requestParams }) => {
+  const osaamisalat = await getToteutusOsaamisalaKuvaus({ ePerusteId, requestParams });
+  return { osaamisalat };
+};
+
+const useOsaamisalatPageData = ({ ePerusteId, requestParams }) => {
+  return useQuery(
+    ['getOsaamisalatPageData', { ePerusteId, requestParams }],
+    (key, props) => getOsaamisalatPageData(props),
+    {
+      refetchOnWindowFocus: false,
+      enabled: !_.isNil(ePerusteId) && !_.isEmpty(requestParams),
+    }
+  );
+};
 const Toteutus = () => {
   const classes = useStyles();
   const { oid } = useParams();
@@ -106,17 +124,40 @@ const Toteutus = () => {
   const koulutusLoading =
     useSelector(selectKoulutusLoading) || (!koulutus && koulutusNotFetched);
 
-  const loading = koulutusLoading || toteutusLoading;
-  const asiasanat =
-    toteutus?.metadata?.asiasanat
-      .filter((asiasana) => asiasana.kieli === currentLanguage)
-      .map((asiasana) => asiasana.arvo) ?? [];
+  // NOTE: These ammattinimikkeet should be the freely written virkailija asiasana-ammattinimikkeet,
+  // not the formal tutkintonimikkeet
+  const asiasanat = (toteutus?.metadata?.ammattinimikkeet || [])
+    .concat(toteutus?.metadata?.asiasanat || [])
+    .filter((asiasana) => asiasana.kieli === currentLanguage)
+    .map((asiasana) => asiasana.arvo);
+
+  const { data: osaamisalaData = [], isFetching } = useOsaamisalatPageData({
+    ePerusteId: koulutus?.ePerusteId?.toString(),
+    requestParams: {
+      'koodi-urit': toteutus?.metadata?.osaamisalat
+        ?.map((oa) => oa?.koodi?.koodiUri)
+        ?.join(','),
+    },
+  });
+
+  const osaamisalatCombined = toteutus?.metadata?.osaamisalat?.map((toa) => {
+    const extendedData =
+      osaamisalaData?.osaamisalat?.find(
+        (koa) => toa?.koodi?.koodiUri === koa?.osaamisalakoodiUri
+      ) || {};
+    const kuvaus = !_.isEmpty(extendedData?.kuvaus)
+      ? l.localize(extendedData?.kuvaus)
+      : t('toteutus.osaamisalalle-ei-loytynyt-kuvausta');
+    return { ...toa, extendedData, kuvaus };
+  });
+
+  const loading = koulutusLoading || toteutusLoading || isFetching;
 
   useEffect(() => {
     if (!toteutus) {
       dispatch(fetchToteutus(oid));
     }
-    // TODO: Get rid of koulutus call here when opintolaajuus comes from toteutus -backend
+    // TODO: Get rid of koulutus call here when opintolaajuus AND tutkintonimikkeet comes from toteutus -backend
     if (!koulutus && koulutusOid && koulutusNotFetched) {
       dispatch(fetchKoulutusWithRelatedData(toteutus.koulutusOid));
       setKoulutusNotFetched(false);
@@ -125,6 +166,7 @@ const Toteutus = () => {
 
   const opetus = toteutus?.metadata?.opetus;
   const hakuUrl = useSelector(getHakuUrl);
+  const { hakuParamsStr } = useSelector(getHakuParams);
 
   return loading ? (
     <LoadingCircle />
@@ -141,7 +183,7 @@ const Toteutus = () => {
               { name: t('haku.otsikko'), link: hakuUrl.url },
               {
                 name: l.localize(koulutus?.tutkintoNimi),
-                link: `/koulutus/${toteutus?.koulutusOid}`,
+                link: `/koulutus/${toteutus?.koulutusOid}?${hakuParamsStr}`,
               },
               { name: l.localize(toteutus?.nimi) },
             ]}
@@ -171,7 +213,6 @@ const Toteutus = () => {
         <Box mt={4}>
           <ToteutusInfoGrid
             koulutusTyyppi={toteutus?.metadata?.tyyppi}
-            nimikkeet={toteutus?.metadata?.ammattinimikkeet}
             kielet={opetus?.opetuskieli}
             opetuskieletKuvaus={opetus?.opetuskieletKuvaus}
             laajuus={[koulutus?.opintojenLaajuus, koulutus?.opintojenLaajuusYksikkö]}
@@ -228,19 +269,24 @@ const Toteutus = () => {
             className={classes.root}
           />
         )}
-        {toteutus?.metadata?.osaamisalat && (
+        {!_.isEmpty(osaamisalatCombined) && (
           <AccordionWithTitle
             titleTranslation="koulutus.osaamisalat"
-            data={toteutus.metadata.osaamisalat.map((osaamisala) => ({
-              title: l.localize(osaamisala.koodi.nimi),
-              content: !_.isEmpty(osaamisala.linkki) && !_.isEmpty(osaamisala.otsikko) && (
-                <LocalizedLink
-                  target="_blank"
-                  rel="noopener"
-                  href={l.localize(osaamisala.linkki)}>
-                  {l.localize(osaamisala.otsikko)}
-                  <OpenInNewIcon />
-                </LocalizedLink>
+            data={osaamisalatCombined?.map((osaamisala) => ({
+              title: l.localize(osaamisala?.koodi),
+              content: (
+                <>
+                  <Typography>{sanitizedHTMLParser(osaamisala?.kuvaus)}</Typography>
+                  {!_.isEmpty(osaamisala?.linkki) && !_.isEmpty(osaamisala?.otsikko) && (
+                    <LocalizedLink
+                      target="_blank"
+                      rel="noopener"
+                      href={l.localize(osaamisala?.linkki)}>
+                      {l.localize(osaamisala?.otsikko)}
+                      <OpenInNewIcon />
+                    </LocalizedLink>
+                  )}
+                </>
               ),
             }))}
           />
@@ -259,7 +305,7 @@ const Toteutus = () => {
             titleTranslation="koulutus.lisätietoa"
             data={toteutus.metadata.opetus.lisatiedot.map((lisatieto) => ({
               title: l.localize(lisatieto.otsikko),
-              content: l.localize(lisatieto.teksti),
+              content: sanitizedHTMLParser(l.localize(lisatieto.teksti)),
             }))}
           />
         )}

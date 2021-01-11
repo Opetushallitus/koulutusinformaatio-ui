@@ -14,11 +14,7 @@ const InfoCardGrid = (props) => {
   const classes = useStyles();
 
   return (
-    <Grid
-      className={classes.grid}
-      container
-      direction="column"
-      alignItems="center">
+    <Grid className={classes.grid} container direction="column" alignItems="center">
       <Grid item>
         <Typography variant="h2">{title}</Typography>
       </Grid>

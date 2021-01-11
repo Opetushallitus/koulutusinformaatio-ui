@@ -14,6 +14,7 @@ const production = {
   'konfo-backend.valintaperusteet': '/konfo-backend/valintaperuste/$1',
   'konfo-backend.oppilaitos': '/konfo-backend/oppilaitos/$1',
   'konfo-backend.oppilaitosOsa': '/konfo-backend/oppilaitoksen-osa/$1',
+  'konfo-backend.kuvaus.osaamisalat': '/konfo-backend/kuvaus/$1/osaamisalat',
   'konfo-backend.palaute': '/konfo-backend/palaute',
   'konfo-backend.koulutus.jarjestajat': '/konfo-backend/search/koulutus/$1/jarjestajat',
   'konfo-backend.oppilaitos.tarjonta': '/konfo-backend/search/oppilaitos/$1/tarjonta',
@@ -23,16 +24,14 @@ const production = {
   'konfo-backend.haku': '/konfo-backend/haku/$1',
   'konfo-backend.koulutus.kuvaus': '/konfo-backend/kuvaus/',
   'konfo-backend.eperuste.kuvaus': '/konfo-backend/eperuste/$1',
-  'kartta.base-url': 'https://hkp.maanmittauslaitos.fi',
-  'kartta.publish-url':
-    'https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0',
 };
 
 const development = {
   ...production,
-  'konfo-backend.old-oppija': '/',
   'konfo-backend.content': 'https://konfo-content.untuvaopintopolku.fi/$1',
   'konfo-backend.suosittelu': 'https://beta.testiopintopolku.fi/konfo-backend/suosittelu',
+  'konfo-backend.kuvaus.osaamisalat':
+    'https://beta.hahtuvaopintopolku.fi/konfo-backend/kuvaus/$1/osaamisalat',
   'eperusteet-service.eperuste.kuvaus':
     'https://eperusteet.hahtuvaopintopolku.fi/#/$1/esitys/$2/reformi/tutkinnonosat/$3',
   'kartta.base-url': 'https://hkp.maanmittauslaitos.fi',

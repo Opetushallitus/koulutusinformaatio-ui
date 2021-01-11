@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import Spacer from '#/src/components/common/Spacer';
-import ToteutusCard from '#/src/components/common/ToteutusCard';
+import { ToteutusCard } from '#/src/components/common/ToteutusCard';
 import TarjontaPagination from './TarjontaPagination';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
 

@@ -3,10 +3,9 @@ import { AccordionText } from '#/src/components/common/AccordionText';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import Spacer from '#/src/components/common/Spacer';
 import { selectMuuHaku } from '#/src/store/reducers/toteutusSlice';
-import { Localizer as l } from '#/src/tools/Utils';
+import { formatDateRange, formatDateString, Localizer as l } from '#/src/tools/Utils';
 import { Box, Button, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import PublicIcon from '@material-ui/icons/Public';
-import { format } from 'date-fns';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useSelector } from 'react-redux';
@@ -72,14 +71,21 @@ export const ToteutusHakuMuu = ({ oid }) => {
               <Grid item container direction="row">
                 <Grid item xs md={4}>
                   <Typography noWrap variant="body1">
-                    {t('koulutus.hakuaika') + ':'}
+                    {t(
+                      muuHaku.hakuaika?.paattyy
+                        ? 'koulutus.hakuaika:'
+                        : 'toteutus.haku-alkaa:'
+                    )}
                   </Typography>
                 </Grid>
                 <Grid item xs>
-                  <Typography variant="body1" noWrap className={classes.valueText}>
-                    {[muuHaku.hakuaika?.alkaa, muuHaku.hakuaika?.paattyy]
-                      .map((v) => format(new Date(v), 'd.M.y'))
-                      .join(' - ')}
+                  <Typography variant="body1" className={classes.valueText}>
+                    {muuHaku.hakuaika?.paattyy
+                      ? formatDateRange(
+                          muuHaku.hakuaika?.alkaa,
+                          muuHaku.hakuaika?.paattyy
+                        )
+                      : formatDateString(muuHaku.hakuaika?.alkaa)}
                   </Typography>
                 </Grid>
               </Grid>
@@ -87,7 +93,7 @@ export const ToteutusHakuMuu = ({ oid }) => {
                 <Grid item container direction="row">
                   <Grid item xs md={4}>
                     <Typography noWrap variant="body1">
-                      {t('toteutus.opiskelupaikkoja') + ':'}
+                      {t('toteutus.opiskelupaikkoja:')}
                     </Typography>
                   </Grid>
                   <Grid item xs>

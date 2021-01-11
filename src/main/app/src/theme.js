@@ -7,14 +7,14 @@ import { colors } from './colors';
 export const theme = createMuiTheme({
   palette: {
     primary: {
-      main: colors.green,
+      main: colors.brandGreen,
     },
     secondary: {
-      main: colors.green,
+      main: colors.brandGreen,
     },
     text: {
-      primary: colors.textBlack,
-      secondary: colors.textBlack,
+      primary: colors.darkGrey,
+      secondary: colors.darkGrey,
     },
   },
   typography: {
@@ -82,7 +82,7 @@ export const theme = createMuiTheme({
       fontSize: '1rem',
       fontWeight: 400,
       lineHeight: '1.6875rem',
-      color: colors.grey,
+      color: colors.darkGrey,
       '@media (max-width:600px)': {
         lineHeight: '1.6875rem',
       },

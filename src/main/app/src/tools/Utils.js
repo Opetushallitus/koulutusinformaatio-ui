@@ -15,80 +15,51 @@ export const koodiUriToPostinumero = (str = '') => {
   return str.match(/^posti_(\d+)/)?.[1] ?? '';
 };
 
+const lng = (nimi, lng) => nimi?.['kieli_' + lng] || nimi?.[lng] || false;
+
+const translate = (nimi) => {
+  const language = Localizer.getLanguage();
+  if ('en' === language) {
+    return lng(nimi, 'en') || lng(nimi, 'fi') || lng(nimi, 'sv') || '';
+  } else if ('sv' === language) {
+    return lng(nimi, 'sv') || lng(nimi, 'fi') || lng(nimi, 'en') || '';
+  } else {
+    return lng(nimi, 'fi') || lng(nimi, 'sv') || lng(nimi, 'en') || '';
+  }
+};
+
 export const Localizer = {
-  getLanguage() {
-    return i18n.language;
-  },
-  lng(nimi, lng) {
-    return nimi?.['kieli_' + lng] || nimi?.[lng] || false;
-  },
-  translate(nimi, defaultValue = '') {
-    const lng = Localizer.getLanguage();
-    if ('en' === lng) {
-      return (
-        Localizer.lng(nimi, 'en') ||
-        Localizer.lng(nimi, 'fi') ||
-        Localizer.lng(nimi, 'sv') ||
-        defaultValue
-      );
-    } else if ('sv' === lng) {
-      return (
-        Localizer.lng(nimi, 'sv') ||
-        Localizer.lng(nimi, 'fi') ||
-        Localizer.lng(nimi, 'en') ||
-        defaultValue
-      );
-    } else {
-      return (
-        Localizer.lng(nimi, 'fi') ||
-        Localizer.lng(nimi, 'sv') ||
-        Localizer.lng(nimi, 'en') ||
-        defaultValue
-      );
-    }
-  },
-  localize(obj, defaultValue = '') {
-    if (obj) {
-      return obj.nimi
-        ? Localizer.translate(obj.nimi, defaultValue)
-        : Localizer.translate(obj, defaultValue);
-    }
-    return defaultValue;
-  },
-  localizeSortedArrayToString(arr = []) {
-    return _fp.compose(
+  getLanguage: () => i18n.language,
+
+  localize: (obj) => (obj ? translate(obj.nimi || obj) : ''),
+
+  localizeSortedArrayToString: (arr = []) =>
+    _fp.compose(
       _fp.join(', '),
       _fp.uniq,
-      _fp.map(this.localize),
-      _fp.sortBy(`nimi.${this.getLanguage()}`)
-    )(arr);
-  },
-  getTranslationForKey(key = '') {
-    return i18n.t(key);
-  },
-  localizePostitoimialueByKoodi(postinumeroKoodi) {
-    return postinumeroKoodi
-      ? `, ${koodiUriToPostinumero(postinumeroKoodi?.koodiUri)} ${Localizer.localize(
-          postinumeroKoodi?.nimi
-        )}`
-      : '';
-  },
-  localizeOsoite(katuosoite, postinumeroKoodi) {
+      _fp.map(Localizer.localize),
+      _fp.sortBy(`nimi.${Localizer.getLanguage()}`)
+    )(arr),
+
+  getTranslationForKey: (key = '') => i18n.t(key),
+
+  localizeOsoite: (katuosoite, postinumeroKoodi) => {
     if (!katuosoite || !postinumeroKoodi) {
       return '';
     }
-    return `${Localizer.localize(katuosoite)}${Localizer.localizePostitoimialueByKoodi(
-      postinumeroKoodi
-    )}`;
+    const postitoimialue = `, ${koodiUriToPostinumero(
+      postinumeroKoodi?.koodiUri
+    )} ${Localizer.localize(postinumeroKoodi?.nimi)}`;
+    return `${Localizer.localize(katuosoite)}${postitoimialue}`;
   },
 };
 
 export const OsoiteParser = {
   parseOsoiteData(osoiteData) {
-    const osoite = Localizer.localize(osoiteData.osoite, '');
+    const osoite = Localizer.localize(osoiteData.osoite);
     const postinumero = koodiUriToPostinumero(osoiteData.postinumero.koodiUri);
     const postitoimipaikka = _fp.capitalize(
-      Localizer.localize(osoiteData.postinumero.nimi, '')
+      Localizer.localize(osoiteData.postinumero.nimi)
     );
     const yhteystiedot =
       osoite && postinumero && postitoimipaikka
@@ -97,21 +68,28 @@ export const OsoiteParser = {
 
     return { osoite, postinumero, postitoimipaikka, yhteystiedot };
   },
-  getCoreAddress(postitoimipaikka = '', osoite = '') {
-    //Merkkejä ja välilyönnillä siitä erotettu numero, esim: Ratapiha 3, Hubert Hepolaisen Katu 888.
-    //Mahdollinen jatke leikataan pois.
-    const regexp = '^.+? \\d+';
-    const fullAddress = [postitoimipaikka, osoite].join(' ');
-    const withoutNumber = fullAddress.split(' ').filter(isNaN).join(' ');
-    const withoutHouseNumber = [withoutNumber];
-    withoutHouseNumber.input = withoutNumber;
-    const coreAddress = fullAddress.match(regexp);
-    if (coreAddress === null) {
-      console.warn('Warning: returning null for core address, input: ' + fullAddress);
+
+  getSearchAddress(postitoimipaikka = '', osoite = '') {
+    // 'PL 123, osoite 123' <- we need to remove any PL (postilokero) parts for map searches
+    const usedOsoite = osoite
+      .split(',')
+      .filter((s) => !s.includes('PL'))
+      .map((s) => s.trim())
+      .join(', ');
+    const fullAddress = [postitoimipaikka, usedOsoite].filter(Boolean).join(' ');
+    const withoutNumbers = fullAddress.split(' ').filter(isNaN).join(' ');
+
+    // This cuts the string after any words + single number e.g. 'Paikkakunta Osoite 123 this is cut'
+    // TODO: Is this really necessary
+    const regexp = /^.+? \d+/;
+    const coreAddress = fullAddress.match(regexp)?.[0];
+
+    if (!coreAddress) {
+      consoleWarning('Warning: returning null for core address, input: ' + fullAddress);
     }
     return {
-      address: coreAddress,
-      addressNoNumbers: withoutHouseNumber,
+      address: coreAddress || postitoimipaikka,
+      addressNoNumbers: withoutNumbers, // NOTE: This is used when given street number is not found in Oskari map
     };
   },
 };
@@ -130,11 +108,13 @@ export function formatDateString(dateString, dateFormat = 'd.M.y HH:mm') {
   return format(new Date(dateString), dateFormat);
 }
 
-export function formatDateRange(start, end) {
-  return `${formatDateString(start)} \u2013 ${end ? formatDateString(end) : ''}`;
-}
+export const formatDateRange = (start, end, dateFormat) =>
+  `${formatDateString(start, dateFormat)} \u2013 ${
+    end ? formatDateString(end, dateFormat) : ''
+  }`;
 
 const ALLOWED_HTML_TAGS = [
+  'a',
   'b',
   'blockquote',
   'br',
@@ -175,4 +155,12 @@ export const scrollIntoView = (element) => {
     top: offsetPosition,
     behavior: 'smooth',
   });
+};
+
+const { NODE_ENV } = process.env || {};
+
+export const consoleWarning = (...props) => {
+  if (NODE_ENV !== 'test') {
+    console.warn(...props);
+  }
 };

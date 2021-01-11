@@ -1,8 +1,6 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import qs from 'query-string';
 import { Grid, List, ListItem, ListItemIcon, makeStyles } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import {
@@ -18,9 +16,10 @@ import {
   SuodatinAccordionSummary,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
-import SummaryContent from './SummaryContent';
-import { Common as C, Localizer as l } from '#/src/tools/Utils';
+import { SummaryContent } from './SummaryContent';
 import { useQueryParams } from '#/src/hooks';
+import { Localizer as l } from '#/src/tools/Utils';
+import { useUrlParams } from '../UseUrlParams';
 
 const withStyles = makeStyles(() => ({
   noBoxShadow: {
@@ -34,7 +33,7 @@ const OpetustapaSuodatin = ({
   displaySelected,
   summaryHidden = false,
 }) => {
-  const history = useHistory();
+  const { updateUrlSearchParams } = useUrlParams();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const apiRequestParams = useQueryParams();
@@ -62,14 +61,12 @@ const OpetustapaSuodatin = ({
 
     dispatch(setOpetustapa({ newCheckedOpetustavat }));
 
-    const search = qs.parse(history.location.search);
-    search.opetustapa = newCheckedOpetustavatStr;
-    search.kpage = 1;
-    search.opage = 1;
-    history.replace({ search: qs.stringify(C.cleanRequestParams(search)) });
+    updateUrlSearchParams({ opetustapa: newCheckedOpetustavatStr });
     dispatch(clearPaging());
     dispatch(searchAll({ ...apiRequestParams, opetustapa: newCheckedOpetustavatStr }));
   };
+
+  // TODO: Use Filter.tsx if possible
   return (
     <SuodatinAccordion
       {...(summaryHidden && { className: classes.noBoxShadow })}

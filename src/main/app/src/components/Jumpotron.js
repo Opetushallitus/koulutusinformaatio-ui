@@ -1,5 +1,5 @@
 import React from 'react';
-import Hakupalkki from './haku/Hakupalkki';
+import { Hakupalkki } from './haku/Hakupalkki';
 import { ReactiveBorder } from './ReactiveBorder';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
   },
   jumpotron: {
-    backgroundColor: colors.green,
+    backgroundColor: colors.brandGreen,
     marginTop: '85px',
   },
   title: {

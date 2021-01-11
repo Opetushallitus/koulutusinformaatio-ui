@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import _ from 'lodash';
 import Markdown from 'markdown-to-jsx';
 import Kortti from './kortti/Kortti';
-import Uutiset from './uutinen/Uutiset';
+import { Uutiset } from './uutinen/Uutiset';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
@@ -18,7 +18,7 @@ import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 
 const useStyles = makeStyles({
   info: {
-    backgroundColor: colors.veryLightGreyBackground,
+    backgroundColor: colors.greyBg,
     borderRadius: 2,
     padding: '25px 20px',
     cursor: 'pointer',
@@ -34,7 +34,7 @@ const useStyles = makeStyles({
     paddingBottom: '100px',
   },
   uutiset: {
-    backgroundColor: colors.lightGreyBackground,
+    backgroundColor: colors.greyBg,
     paddingBottom: '100px',
   },
   palvelut: {

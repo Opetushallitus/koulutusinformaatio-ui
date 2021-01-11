@@ -1,23 +1,25 @@
-import React from 'react';
-import { Grid, Typography, Paper, makeStyles, Hidden } from '@material-ui/core';
-import PublicIcon from '@material-ui/icons/Public';
-import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
+import { Grid, Hidden, makeStyles, Paper, Typography } from '@material-ui/core';
 import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
-import { educationTypeColorCode } from '#/src/colors';
-import OppilaitosLogo from '#/src/assets/images/Opolkuhts.png';
+import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
+import PublicIcon from '@material-ui/icons/Public';
+import React from 'react';
 import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
+import OppilaitosLogo from '#/src/assets/images/Opolkuhts.png';
+import { colors, educationTypeColorCode } from '#/src/colors';
 
 const useStyles = makeStyles((theme) => ({
-  nimikkeet: {
-    fontWeight: '600',
-  },
   paper: (props) => ({
-    borderTop: `5px solid ${educationTypeColorCode[props.tyyppi] ||
-      educationTypeColorCode.muu}`,
+    borderTop: `5px solid ${
+      educationTypeColorCode[props.tyyppi] || educationTypeColorCode.muu
+    }`,
     marginBottom: '12px',
   }),
   icon: {
     fontSize: '1.1875rem',
+  },
+  organizerText: {
+    color: colors.darkGrey,
+    fontWeight: 600,
   },
   description: {
     margin: '10px 0',
@@ -42,17 +44,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ToteutusCard = (props) => {
+export const ToteutusCard = (props) => {
   const classes = useStyles(props);
-  const {
-    heading,
-    ammattinimikkeet,
-    description,
-    locations,
-    opetustapa,
-    price,
-    image,
-  } = props;
+  const { organizer, heading, description, locations, opetustapa, price, image } = props;
+
   const ToteutusImage = () => (
     <img className={classes.img} alt={heading} src={image || OppilaitosLogo} />
   );
@@ -73,14 +68,16 @@ const ToteutusCard = (props) => {
             </Grid>
           </Hidden>
           <Grid item>
+            <Typography
+              className={classes.organizerText}
+              variant="body1"
+              gutterBottom
+              component="div">
+              {organizer}
+            </Typography>
             <Typography variant="h4" gutterBottom>
               {heading}
             </Typography>
-            {ammattinimikkeet ? (
-              <Typography className={classes.nimikkeet} variant="body1" gutterBottom>
-                {ammattinimikkeet}
-              </Typography>
-            ) : null}
             <Hidden smDown>
               <Typography className={classes.description} variant="body1" component="div">
                 <HTMLEllipsis unsafeHTML={description} maxLine={2} />
@@ -148,5 +145,3 @@ const ToteutusCard = (props) => {
     </Paper>
   );
 };
-
-export default ToteutusCard;

@@ -41,10 +41,8 @@ const OskariKartta = ({ osoite, postitoimipaikka }) => {
         channel.postRequest('MapModulePlugin.AddMarkerRequest', [requestData, MARKER_ID]);
       } else {
         if (!noHouseNumberSearchDone) {
-          channel.postRequest(
-            'SearchRequest',
-            op.getCoreAddress(postitoimipaikka, osoite).addressNoNumbers
-          );
+          const { addressNoNumbers } = op.getSearchAddress(postitoimipaikka, osoite);
+          channel.postRequest('SearchRequest', [addressNoNumbers]);
           noHouseNumberSearchDone = true;
         }
       }
@@ -71,9 +69,9 @@ const OskariKartta = ({ osoite, postitoimipaikka }) => {
         }
       }
 
-      const data = op.getCoreAddress(postitoimipaikka, osoite).address;
       if (channel) {
-        channel.postRequest('SearchRequest', data);
+        const { address } = op.getSearchAddress(postitoimipaikka, osoite);
+        channel.postRequest('SearchRequest', [address]);
       } else {
         console.error(
           'Odottamaton virhe. Karttapalvelun channel puuttuu',

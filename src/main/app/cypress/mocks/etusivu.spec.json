@@ -1,6 +1,6 @@
 {
   "Should have cards with working links": {
-    "timestamp": 1606735942975,
+    "timestamp": 1609164852909,
     "routes": [
       {
         "url": "https://konfo-content.untuvaopintopolku.fi/manifest.json",
@@ -30,8 +30,8 @@
             "sv": "1580997016376/sv/info.json"
           },
           "asset": {
-            "fi": "1596805168746/fi/asset.json",
-            "sv": "1596805168746/sv/asset.json"
+            "fi": "1608554454634/fi/asset.json",
+            "sv": "1608554454634/sv/asset.json"
           },
           "footer": {
             "fi": "1581944186840/fi/footer.json",
@@ -88,53 +88,12 @@
         }
       },
       {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/sivuKooste.json",
+        "url": "https://konfo-content.untuvaopintopolku.fi/1580997016376/fi/esittely.json",
         "method": "GET",
         "status": 200,
         "headers": {},
         "body": null,
-        "response": [
-          {
-            "id": "75LUvZLRmvRvLli4oCYBTi",
-            "name": "Ammatillinen koulutus",
-            "type": "sivuKooste",
-            "created": "2020-01-03T08:51:14.682Z",
-            "updated": "2020-02-17T13:01:48.179Z",
-            "slug": "ammatillinen-koulutus-2",
-            "modules": [
-              {
-                "id": "6086RR5LUS2CdrV0C1mx2e",
-                "name": "Ammatillinen koulutus",
-                "type": "infoGrid"
-              },
-              {
-                "id": "5G7gPGrKkbQckP5J99cmK9",
-                "name": "Ammatillinen koulutus -tekstiosio",
-                "type": "content"
-              },
-              {
-                "id": "xjDtd0K2Xko0KkdeEQCKY",
-                "name": "Koulutusalat",
-                "type": "puu"
-              },
-              {
-                "id": "22HSZQEGDrtv3rLi8dHlq5",
-                "name": "Tutustu ammatilliseen koulutukseen",
-                "type": "uutiset"
-              },
-              {
-                "id": "7yu9JnePt1cK5tEYl8JT7T",
-                "name": "Polkuja ammatilliseen koulutukseen",
-                "type": "uutiset"
-              },
-              {
-                "id": "4ZE2PCUvbuWkxe5JnwQYXd",
-                "name": "Muut ammatilliset koulutukset",
-                "type": "uutiset"
-              }
-            ]
-          }
-        ]
+        "response": []
       },
       {
         "url": "https://konfo-content.untuvaopintopolku.fi/1594889859462/fi/kortti.json",
@@ -235,15 +194,26 @@
         ]
       },
       {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1580997016376/fi/info.json",
+        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/footer.json",
         "method": "GET",
         "status": 200,
         "headers": {},
         "body": null,
-        "response": []
+        "response": [
+          {
+            "id": "6CuSL4nupT3xGqasfSC045",
+            "name": "Footer",
+            "type": "footer",
+            "created": "2020-01-03T08:51:31.641Z",
+            "updated": "2020-02-17T13:02:17.630Z",
+            "contentCenter": "\n[Tietoturvaselosteet](https://opintopolku.fi/wp/tietosuojaseloste/ \"siirry tietosuojaselosteisiin\")",
+            "lopputekstit": "Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja koulutuksistaan Opintopolku.fi-palvelussa. Tietojen oikeellisuuden voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.",
+            "content": "Opintopolku sisältää tietoa tutkinnoista, ammateista sekä opiskelusta eri oppilaitoksissa. Sen kautta voi sekä löytää koulutusvaihtoehtoja että hakea niihin."
+          }
+        ]
       },
       {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1596805168746/fi/asset.json",
+        "url": "https://konfo-content.untuvaopintopolku.fi/1608554454634/fi/asset.json",
         "method": "GET",
         "status": 200,
         "headers": {},
@@ -652,33 +622,6 @@
         ]
       },
       {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/footer.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": [
-          {
-            "id": "6CuSL4nupT3xGqasfSC045",
-            "name": "Footer",
-            "type": "footer",
-            "created": "2020-01-03T08:51:31.641Z",
-            "updated": "2020-02-17T13:02:17.630Z",
-            "contentCenter": "\n[Tietoturvaselosteet](https://opintopolku.fi/wp/tietosuojaseloste/ \"siirry tietosuojaselosteisiin\")",
-            "lopputekstit": "Koulutuksen järjestäjät ja korkeakoulut ylläpitävät tietoja koulutuksistaan Opintopolku.fi-palvelussa. Tietojen oikeellisuuden voit tarkistaa kyseisestä oppilaitoksesta tai korkeakoulusta.",
-            "content": "Opintopolku sisältää tietoa tutkinnoista, ammateista sekä opiskelusta eri oppilaitoksissa. Sen kautta voi sekä löytää koulutusvaihtoehtoja että hakea niihin."
-          }
-        ]
-      },
-      {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1580997016376/fi/esittely.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": []
-      },
-      {
         "url": "https://konfo-content.untuvaopintopolku.fi/1596545044574/fi/valikko.json",
         "method": "GET",
         "status": 200,
@@ -1033,6 +976,125 @@
         ]
       },
       {
+        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/puu.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": [
+          {
+            "id": "xjDtd0K2Xko0KkdeEQCKY",
+            "name": "Koulutusalat",
+            "type": "puu",
+            "created": "2020-01-03T08:51:15.112Z",
+            "updated": "2020-02-17T13:01:48.717Z",
+            "left": [
+              {
+                "id": "16X0EWOCJmt9Ldstq7sxA2",
+                "name": "Humanistiset ja taidealat",
+                "type": "lehti"
+              },
+              {
+                "id": "2PUAYZ0kIOEXi8G4zaiWRx",
+                "name": "Kasvatusalat",
+                "type": "lehti"
+              },
+              {
+                "id": "nYvb8EzCl3AJNwyVHwoft",
+                "name": "Kauppa ja halliinto",
+                "type": "lehti"
+              },
+              {
+                "id": "7dlGV8p0qvapI0G1LHaM6h",
+                "name": "Luonnontieteet",
+                "type": "lehti"
+              },
+              {
+                "id": "7oXTjne24qgok8MENryy3u",
+                "name": "Yhteiskunnalliset alat",
+                "type": "lehti"
+              }
+            ],
+            "right": [
+              {
+                "id": "mMs2Egm5ZYOyOOvpGGW8Z",
+                "name": "Tietojenkäsittely ja tietoliikenne (ICT)",
+                "type": "lehti"
+              },
+              {
+                "id": "7arc9OK0qjy7GYr02YEsCg",
+                "name": "Tekniikat alat",
+                "type": "lehti"
+              },
+              {
+                "id": "3MrA3M1939k9n9aENzlAvH",
+                "name": "Maa- ja metsätalous",
+                "type": "lehti"
+              },
+              {
+                "id": "7TzWVIagUNqpRDHizk4Az",
+                "name": "Terveys- ja hyvinvointialat",
+                "type": "lehti"
+              },
+              {
+                "id": "0wVS1WSJfsdF8NPG9J8Cc",
+                "name": "Palvelualat",
+                "type": "lehti"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/sivuKooste.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": [
+          {
+            "id": "75LUvZLRmvRvLli4oCYBTi",
+            "name": "Ammatillinen koulutus",
+            "type": "sivuKooste",
+            "created": "2020-01-03T08:51:14.682Z",
+            "updated": "2020-02-17T13:01:48.179Z",
+            "slug": "ammatillinen-koulutus-2",
+            "modules": [
+              {
+                "id": "6086RR5LUS2CdrV0C1mx2e",
+                "name": "Ammatillinen koulutus",
+                "type": "infoGrid"
+              },
+              {
+                "id": "5G7gPGrKkbQckP5J99cmK9",
+                "name": "Ammatillinen koulutus -tekstiosio",
+                "type": "content"
+              },
+              {
+                "id": "xjDtd0K2Xko0KkdeEQCKY",
+                "name": "Koulutusalat",
+                "type": "puu"
+              },
+              {
+                "id": "22HSZQEGDrtv3rLi8dHlq5",
+                "name": "Tutustu ammatilliseen koulutukseen",
+                "type": "uutiset"
+              },
+              {
+                "id": "7yu9JnePt1cK5tEYl8JT7T",
+                "name": "Polkuja ammatilliseen koulutukseen",
+                "type": "uutiset"
+              },
+              {
+                "id": "4ZE2PCUvbuWkxe5JnwQYXd",
+                "name": "Muut ammatilliset koulutukset",
+                "type": "uutiset"
+              }
+            ]
+          }
+        ]
+      },
+      {
         "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/uutinen.json",
         "method": "GET",
         "status": 200,
@@ -1121,6 +1183,14 @@
         ]
       },
       {
+        "url": "https://konfo-content.untuvaopintopolku.fi/1580997016376/fi/info.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": []
+      },
+      {
         "url": "https://konfo-content.untuvaopintopolku.fi/1587477941420/fi/valikot.json",
         "method": "GET",
         "status": 200,
@@ -1153,76 +1223,6 @@
                 "id": "5F8QSVVmN4VUJadHS7xGRJ",
                 "name": "Ohjeet ja tuki",
                 "type": "valikko"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/puu.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": [
-          {
-            "id": "xjDtd0K2Xko0KkdeEQCKY",
-            "name": "Koulutusalat",
-            "type": "puu",
-            "created": "2020-01-03T08:51:15.112Z",
-            "updated": "2020-02-17T13:01:48.717Z",
-            "left": [
-              {
-                "id": "16X0EWOCJmt9Ldstq7sxA2",
-                "name": "Humanistiset ja taidealat",
-                "type": "lehti"
-              },
-              {
-                "id": "2PUAYZ0kIOEXi8G4zaiWRx",
-                "name": "Kasvatusalat",
-                "type": "lehti"
-              },
-              {
-                "id": "nYvb8EzCl3AJNwyVHwoft",
-                "name": "Kauppa ja halliinto",
-                "type": "lehti"
-              },
-              {
-                "id": "7dlGV8p0qvapI0G1LHaM6h",
-                "name": "Luonnontieteet",
-                "type": "lehti"
-              },
-              {
-                "id": "7oXTjne24qgok8MENryy3u",
-                "name": "Yhteiskunnalliset alat",
-                "type": "lehti"
-              }
-            ],
-            "right": [
-              {
-                "id": "mMs2Egm5ZYOyOOvpGGW8Z",
-                "name": "Tietojenkäsittely ja tietoliikenne (ICT)",
-                "type": "lehti"
-              },
-              {
-                "id": "7arc9OK0qjy7GYr02YEsCg",
-                "name": "Tekniikat alat",
-                "type": "lehti"
-              },
-              {
-                "id": "3MrA3M1939k9n9aENzlAvH",
-                "name": "Maa- ja metsätalous",
-                "type": "lehti"
-              },
-              {
-                "id": "7TzWVIagUNqpRDHizk4Az",
-                "name": "Terveys- ja hyvinvointialat",
-                "type": "lehti"
-              },
-              {
-                "id": "0wVS1WSJfsdF8NPG9J8Cc",
-                "name": "Palvelualat",
-                "type": "lehti"
               }
             ]
           }
@@ -1461,6 +1461,84 @@
         ]
       },
       {
+        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/palvelut.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": [
+          {
+            "id": "33sOZUdzfJ79NkoV39qB1Y",
+            "name": "Palvelut",
+            "type": "palvelut",
+            "created": "2020-01-03T08:51:32.516Z",
+            "updated": "2020-02-17T13:02:18.184Z",
+            "linkit": [
+              {
+                "id": "3ogdy5DQZGcBhuAJDHK0wY",
+                "name": "eHOKS",
+                "type": "palvelu"
+              },
+              {
+                "id": "5utPy4Rqb9ca5jhVtw67Ob",
+                "name": "ePerusteet",
+                "type": "palvelu"
+              },
+              {
+                "id": "4gy1IvD9tNJWmowFzpqHSE",
+                "name": "Europassi",
+                "type": "palvelu"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186497/fi/ohjeetJaTuki.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": [
+          {
+            "id": "aXr4hmMFRFT90k028T3n5",
+            "name": "Ohjeet ja tuki",
+            "type": "ohjeetJaTuki",
+            "created": "2020-01-03T08:51:13.688Z",
+            "updated": "2020-02-17T13:01:45.882Z",
+            "linkit": [
+              {
+                "id": "3L6ZIIaEdLfIYsS6fni6GQ",
+                "name": "Neuvonta ja ohjaus",
+                "type": "palvelu"
+              },
+              {
+                "id": "1iGCaePEDip1LulX0Sp5kb",
+                "name": "Kysytyimmät kysymykset",
+                "type": "palvelu"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/infoGrid.json",
+        "method": "GET",
+        "status": 200,
+        "headers": {},
+        "body": null,
+        "response": [
+          {
+            "id": "6086RR5LUS2CdrV0C1mx2e",
+            "name": "Ammatillinen koulutus",
+            "type": "infoGrid",
+            "created": "2020-01-03T08:51:23.672Z",
+            "updated": "2020-02-17T13:02:08.978Z",
+            "data": "[{\"icon\":\"KoulutusAsteIcon\",\"text\":\"Toinen aste\",\"title\":\"Koulutusaste:\"},{\"icon\":\"KoulutusTyypitIcon\",\"text\":\"Ammatilliset tutkinnot Täydennyskoulutukset Valmentava koulutus Avoimet opinnot\",\"title\":\"Koulutustyypit:\"},{\"icon\":\"TutkintoNimikeIcon\",\"text\":\"Perustutkinto Ammattitutkinto Erikoistammattitutkinto\",\"title\":\"Tutkintotasot:\"},{\"icon\":\"SuunniteltuKestoIcon\",\"text\":\"1-3 vuotta\",\"title\":\"Suunniteltu kesto:\"},{\"icon\":\"KoulutuksenLaajuusIcon\",\"text\":\"150-180 osaamispistettä / tutkintotaso\",\"title\":\"Tutkintojen laajuus:\"},{\"icon\":\"TutkintoonHakeminenIcon\",\"text\":\"Yhteishaku Jatkuva haku\",\"title\":\"Tutkintoon hakeminen:\"}]"
+          }
+        ]
+      },
+      {
         "url": "https://konfo-content.untuvaopintopolku.fi/1587550657704/fi/palvelu.json",
         "method": "GET",
         "status": 200,
@@ -1580,85 +1658,7 @@
         ]
       },
       {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/infoGrid.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": [
-          {
-            "id": "6086RR5LUS2CdrV0C1mx2e",
-            "name": "Ammatillinen koulutus",
-            "type": "infoGrid",
-            "created": "2020-01-03T08:51:23.672Z",
-            "updated": "2020-02-17T13:02:08.978Z",
-            "data": "[{\"icon\":\"KoulutusAsteIcon\",\"text\":\"Toinen aste\",\"title\":\"Koulutusaste:\"},{\"icon\":\"KoulutusTyypitIcon\",\"text\":\"Ammatilliset tutkinnot Täydennyskoulutukset Valmentava koulutus Avoimet opinnot\",\"title\":\"Koulutustyypit:\"},{\"icon\":\"TutkintoNimikeIcon\",\"text\":\"Perustutkinto Ammattitutkinto Erikoistammattitutkinto\",\"title\":\"Tutkintotasot:\"},{\"icon\":\"SuunniteltuKestoIcon\",\"text\":\"1-3 vuotta\",\"title\":\"Suunniteltu kesto:\"},{\"icon\":\"KoulutuksenLaajuusIcon\",\"text\":\"150-180 osaamispistettä / tutkintotaso\",\"title\":\"Tutkintojen laajuus:\"},{\"icon\":\"TutkintoonHakeminenIcon\",\"text\":\"Yhteishaku Jatkuva haku\",\"title\":\"Tutkintoon hakeminen:\"}]"
-          }
-        ]
-      },
-      {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186497/fi/ohjeetJaTuki.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": [
-          {
-            "id": "aXr4hmMFRFT90k028T3n5",
-            "name": "Ohjeet ja tuki",
-            "type": "ohjeetJaTuki",
-            "created": "2020-01-03T08:51:13.688Z",
-            "updated": "2020-02-17T13:01:45.882Z",
-            "linkit": [
-              {
-                "id": "3L6ZIIaEdLfIYsS6fni6GQ",
-                "name": "Neuvonta ja ohjaus",
-                "type": "palvelu"
-              },
-              {
-                "id": "1iGCaePEDip1LulX0Sp5kb",
-                "name": "Kysytyimmät kysymykset",
-                "type": "palvelu"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "url": "https://konfo-content.untuvaopintopolku.fi/1581944186840/fi/palvelut.json",
-        "method": "GET",
-        "status": 200,
-        "headers": {},
-        "body": null,
-        "response": [
-          {
-            "id": "33sOZUdzfJ79NkoV39qB1Y",
-            "name": "Palvelut",
-            "type": "palvelut",
-            "created": "2020-01-03T08:51:32.516Z",
-            "updated": "2020-02-17T13:02:18.184Z",
-            "linkit": [
-              {
-                "id": "3ogdy5DQZGcBhuAJDHK0wY",
-                "name": "eHOKS",
-                "type": "palvelu"
-              },
-              {
-                "id": "5utPy4Rqb9ca5jhVtw67Ob",
-                "name": "ePerusteet",
-                "type": "palvelu"
-              },
-              {
-                "id": "4gy1IvD9tNJWmowFzpqHSE",
-                "name": "Europassi",
-                "type": "palvelu"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "fixtureId": "11ed605c1e1bde8a8b5719f88586ff1e",
+        "fixtureId": "fd7c7194870cee5314d40ba8d11b0fe5",
         "url": "https://konfo-content.untuvaopintopolku.fi/1596792142276/fi/sivu.json",
         "method": "GET",
         "status": 200,

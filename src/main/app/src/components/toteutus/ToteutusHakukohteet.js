@@ -116,7 +116,7 @@ const HakuCardGrid = (props) => {
                           <Grid item xs={6}>
                             <Grid item>
                               <Typography className={classes.gridHeading} noWrap>
-                                {t('toteutus.haku-alkaa') + ':'}
+                                {t('toteutus.haku-alkaa:')}
                               </Typography>
                             </Grid>
                             <Grid item>
@@ -131,7 +131,7 @@ const HakuCardGrid = (props) => {
                             <Grid item xs={6}>
                               <Grid item>
                                 <Typography className={classes.gridHeading} noWrap>
-                                  {t('toteutus.haku-paattyy') + ':'}
+                                  {t('toteutus.haku-paattyy:')}
                                 </Typography>
                               </Grid>
                               <Grid item>
@@ -198,7 +198,9 @@ const HakuCardGrid = (props) => {
                             component={RouterLink}
                             to={`/hakukohde/${haku.hakukohdeOid}/valintaperuste`}>
                             <Button variant="outlined" size="large" color="primary">
-                              <Typography style={{ color: colors.green }} variant="body1">
+                              <Typography
+                                style={{ color: colors.brandGreen }}
+                                variant="body1">
                                 {t('toteutus.lue-valintaperusteet')}
                               </Typography>
                             </Button>

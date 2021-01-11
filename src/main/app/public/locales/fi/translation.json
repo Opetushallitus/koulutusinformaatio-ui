@@ -36,7 +36,8 @@
     "haku": "Haku",
     "hakuaika": "Hakuaika",
     "opiskelupaikkoja": "Opiskelupaikkoja",
-    "pohjakoulutus": "Pohjakoulutus"
+    "pohjakoulutus": "Pohjakoulutus",
+    "hakijan-terveydentila-ja-toimintakyky": "Hakijan terveydentila ja toimintakyky"
   },
   "palvelut": {
     "otsikko-muut-palvelut": "Muut palvelut",
@@ -249,7 +250,7 @@
     "tuntematon": "Tuntematon koulutus",
     "ei-nimeä": "Koulutus (ei nimeä)",
     "tuntematon-nimi": "(Tuntematon nimi)",
-    "hakuaika": "Hakuaika",
+    "hakuaika:": "Hakuaika:",
     "tiedot": "Koulutuksen perustiedot",
     "hae-koulutukseen": "Hae koulutukseen",
     "eperuste-linkki": "Lue lisää ePerusteet palvelussa",
@@ -279,6 +280,7 @@
     "katso-jarjestavat": "Katso koulutusta järjestävät oppilaitokset.",
     "nayta-oppilaitokset": "Näytä oppilaitokset",
     "ei-toteutuksia": "Tätä koulutusta ei ole tarjolla tällä hetkellä missään oppilaitoksessa.",
+    "ei-rajaimia-vastaavia-toteutuksia": "Rajaimia vastaavia toteutuksia ei ole tarjolla tällä hetkellä missään oppilaitoksessa.",
     "ei-tutkintonimiketta": "Ei tutkintonimikettä",
     "ei-laajuutta": "Ei opintojenlaajuutta",
     "kesto-vuosi": "{{count}} vuosi",
@@ -325,7 +327,6 @@
     "oppisopimuskoulutus": "Oppisopimuskoulutus",
     "kaksoistutkinto": "Kaksoistutkinto",
     "valintaperusteet-ammatilliseen": "Valintaperusteet ammatilliseen",
-    "hakijan-terveyden-tila": "Hakijan terveyden tila",
     "ammattikorkeakoulu": "Ammattikorkeakoulu",
     "ammattikorkeakouluopintojen-rakenne": "Ammattikorkeakouluopintojen rakenne",
     "mitä-amkssa-voi-opiskella": "Mitä AMK:ssa voi opiskella",
@@ -425,9 +426,9 @@
     "erillishaku": "Erillishaku",
     "ei-maksua": "Ei maksua",
     "ei-apurahaa": "Ei apurahaa",
-    "haku-alkaa": "Haku alkaa",
-    "haku-paattyy": "Haku päättyy",
-    "opiskelupaikkoja": "Opiskelupaikkoja",
+    "haku-alkaa:": "Haku alkaa:",
+    "haku-paattyy:": "Haku päättyy:",
+    "opiskelupaikkoja:": "Opiskelupaikkoja:",
     "tayta-lomake": "Täytä hakulomake",
     "lue-valintaperusteet": "Lue valintaperusteet",
     "yhteyshenkilot": "Koulutuksen yhteyshenkilot",
@@ -436,6 +437,7 @@
     "lisatietoa-ilmoittautumisesta": "Lisätietoa ilmoittautumisesta",
     "lisatietoa-valintaperusteista": "Lisätietoa valintaperusteista",
     "hakijan-terveydentila-ja-toimintakyky": "Hakijan terveydentila ja toimintakyky",
-    "ei-sahkoista-hakua": "Ei sähköistä hakua"
+    "ei-sahkoista-hakua": "Ei sähköistä hakua",
+    "osaamisalalle-ei-loytynyt-kuvausta": "Osaamisalalle ei löytynyt kuvausta."
   }
 }

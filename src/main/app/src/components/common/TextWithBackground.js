@@ -5,7 +5,7 @@ import { colors } from '#/src/colors';
 
 const useStyles = makeStyles({
   textWithBackgroundBox: {
-    backgroundColor: colors.beigeGreen,
+    backgroundColor: colors.lightGreen2,
     height: '24px',
   },
   textWithBackgroundText: {

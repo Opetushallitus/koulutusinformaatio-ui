@@ -39,8 +39,9 @@ const useStyles = makeStyles({
     justifyContent: 'space-between',
     height: '100%',
     maxWidth: 400,
-    borderBottom: `5px solid ${educationTypeColorCode[props.tyyppi] ||
-      educationTypeColorCode.muu}`,
+    borderBottom: `5px solid ${
+      educationTypeColorCode[props.tyyppi] || educationTypeColorCode.muu
+    }`,
   }),
 });
 

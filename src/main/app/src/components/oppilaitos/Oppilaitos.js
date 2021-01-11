@@ -15,7 +15,7 @@ import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import NotFound from '#/src/NotFound';
 import OppilaitosinfoGrid from './OppilaitosinfoGrid';
 import TarjontaList from './TarjontaList';
-import TietoaOpiskelusta from './TietoaOpiskelusta';
+import { TietoaOpiskelusta } from './TietoaOpiskelusta';
 import Yhteystiedot from './Yhteystiedot';
 import TulevaTarjontaList from './TulevaTarjontaList';
 import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';

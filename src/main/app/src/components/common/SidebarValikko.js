@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     borderTopStyle: 'solid',
     borderWidth: '1px',
     borderColor: colors.lightGrey,
-    color: colors.grey,
+    color: colors.darkGrey,
     '&:last-child': {
       borderBottomStyle: 'solid',
       marginBottom: '40px',
@@ -32,14 +32,14 @@ const useStyles = makeStyles({
   otsikko: {
     paddingTop: '0',
     paddingBottom: '0',
-    color: colors.green,
+    color: colors.brandGreen,
   },
   parentOtsikko: {
     paddingTop: '0',
     paddingBottom: '0',
   },
   parentOtsikkoIconBase: {
-    backgroundColor: colors.green,
+    backgroundColor: colors.brandGreen,
     padding: '13px',
     marginRight: '10px',
   },
@@ -49,7 +49,7 @@ const useStyles = makeStyles({
   otsikkoText: {
     textTransform: 'uppercase',
     fontSize: '12px',
-    color: colors.green,
+    color: colors.brandGreen,
   },
   valintaText: {
     marginTop: '9px',
@@ -62,7 +62,7 @@ const useStyles = makeStyles({
     padding: '12px',
   },
   valintaIcon: {
-    color: colors.green,
+    color: colors.brandGreen,
   },
 });
 
