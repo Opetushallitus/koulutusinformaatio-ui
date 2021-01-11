@@ -68,21 +68,28 @@ export const OsoiteParser = {
 
     return { osoite, postinumero, postitoimipaikka, yhteystiedot };
   },
-  getCoreAddress(postitoimipaikka = '', osoite = '') {
-    //Merkkejä ja välilyönnillä siitä erotettu numero, esim: Ratapiha 3, Hubert Hepolaisen Katu 888.
-    //Mahdollinen jatke leikataan pois.
-    const regexp = '^.+? \\d+';
-    const fullAddress = [postitoimipaikka, osoite].join(' ');
-    const withoutNumber = fullAddress.split(' ').filter(isNaN).join(' ');
-    const withoutHouseNumber = [withoutNumber];
-    withoutHouseNumber.input = withoutNumber;
-    const coreAddress = fullAddress.match(regexp);
-    if (coreAddress === null) {
-      console.warn('Warning: returning null for core address, input: ' + fullAddress);
+
+  getSearchAddress(postitoimipaikka = '', osoite = '') {
+    // 'PL 123, osoite 123' <- we need to remove any PL (postilokero) parts for map searches
+    const usedOsoite = osoite
+      .split(',')
+      .filter((s) => !s.includes('PL'))
+      .map((s) => s.trim())
+      .join(', ');
+    const fullAddress = [postitoimipaikka, usedOsoite].filter(Boolean).join(' ');
+    const withoutNumbers = fullAddress.split(' ').filter(isNaN).join(' ');
+
+    // This cuts the string after any words + single number e.g. 'Paikkakunta Osoite 123 this is cut'
+    // TODO: Is this really necessary
+    const regexp = /^.+? \d+/;
+    const coreAddress = fullAddress.match(regexp)?.[0];
+
+    if (!coreAddress) {
+      consoleWarning('Warning: returning null for core address, input: ' + fullAddress);
     }
     return {
-      address: coreAddress,
-      addressNoNumbers: withoutHouseNumber,
+      address: coreAddress || postitoimipaikka,
+      addressNoNumbers: withoutNumbers, // NOTE: This is used when given street number is not found in Oskari map
     };
   },
 };
@@ -148,4 +155,12 @@ export const scrollIntoView = (element) => {
     top: offsetPosition,
     behavior: 'smooth',
   });
+};
+
+const { NODE_ENV } = process.env || {};
+
+export const consoleWarning = (...props) => {
+  if (NODE_ENV !== 'test') {
+    console.warn(...props);
+  }
 };
