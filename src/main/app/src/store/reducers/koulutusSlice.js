@@ -15,6 +15,7 @@ const LOADING_STATUS = 'loading';
 export const initialState = {
   koulutusStatus: IDLE_STATUS,
   jarjestajatStatus: IDLE_STATUS,
+  tulevatJarjestajatStatus: IDLE_STATUS,
   suositellutKoulutuksetStatus: IDLE_STATUS,
   koulutukset: {},
   jarjestajat: [],
