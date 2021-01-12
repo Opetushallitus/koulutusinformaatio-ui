@@ -27,7 +27,7 @@ import { useUrlParams } from '../hakutulos/UseUrlParams';
 import { KoulutusInfoGrid } from './KoulutusInfoGrid';
 import SuositusKoulutusList from './SuositusKoulutusList';
 import { ToteutusList } from './ToteutusList';
-import TulevaJarjestajaList from './TulevaJarjestajaList';
+import { TulevaJarjestajaList } from './TulevaJarjestajaList';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },

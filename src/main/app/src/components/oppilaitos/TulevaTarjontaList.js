@@ -1,8 +1,10 @@
-import React from 'react';
-import { Typography, Grid, Container, makeStyles } from '@material-ui/core';
 import Spacer from '#/src/components/common/Spacer';
-import { useTranslation } from 'react-i18next';
+import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import _ from 'lodash';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 import TulevaKoulutusCard from './TulevaKoulutusCard';
 import TulevaTarjontaPagination from './TulevaTarjontaPagination';
 
@@ -15,7 +17,7 @@ const useStyles = makeStyles({
   },
 });
 
-const TulevaTarjontaList = ({ tulevaTarjonta, oid, isOppilaitosOsa }) => {
+export const TulevaTarjontaList = ({ tulevaTarjonta, oid, isOppilaitosOsa }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -24,21 +26,21 @@ const TulevaTarjontaList = ({ tulevaTarjonta, oid, isOppilaitosOsa }) => {
       <Typography variant="h2">{t('oppilaitos.tulevat-koulutukset')}</Typography>
       <Spacer />
       {tulevaTarjonta?.hitsSize > 0 ? (
-        <Grid
-          container
-          direction="row"
-          alignContent="stretch"
-          alignItems="stretch"
-          spacing={1}>
+        <Grid container direction="row" justify="center" alignItems="stretch" spacing={1}>
           {_.map(_.get(tulevaTarjonta, 'localizedTulevaTarjonta'), (kts, i) => (
             <Grid item key={i} xs={12} md={4}>
-              <TulevaKoulutusCard
-                koulutusName={kts?.koulutusName}
-                tutkintonimikkeet={kts?.tutkintonimikkeet}
-                koulutustyypit={kts?.koulutustyypit}
-                opintojenlaajuus={kts?.opintojenlaajuus}
-                tyyppi={kts?.tyyppi}
-              />
+              <LocalizedLink
+                underline="none"
+                component={RouterLink}
+                to={`/koulutus/${kts?.koulutusOid}`}>
+                <TulevaKoulutusCard
+                  koulutusName={kts?.koulutusName}
+                  tutkintonimikkeet={kts?.tutkintonimikkeet}
+                  koulutustyypit={kts?.koulutustyypit}
+                  opintojenlaajuus={kts?.opintojenlaajuus}
+                  tyyppi={kts?.tyyppi}
+                />
+              </LocalizedLink>
             </Grid>
           ))}
         </Grid>
@@ -55,5 +57,3 @@ const TulevaTarjontaList = ({ tulevaTarjonta, oid, isOppilaitosOsa }) => {
     </Container>
   );
 };
-
-export default TulevaTarjontaList;

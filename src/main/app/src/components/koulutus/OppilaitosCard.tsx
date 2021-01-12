@@ -1,17 +1,23 @@
-import React from 'react';
-import { Grid, Typography, Paper, makeStyles } from '@material-ui/core';
+import { Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import PublicIcon from '@material-ui/icons/Public';
-import { educationTypeColorCode } from '#/src/colors';
-import OppilaitosLogo from '#/src/assets/images/Opolkuhts.png';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
-import { Link as RouterLink } from 'react-router-dom';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
+import OppilaitosLogo from '#/src/assets/images/Opolkuhts.png';
+import { educationTypeColorCode } from '#/src/colors';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
 
-const useStyles = makeStyles((theme) => ({
-  paper: (props) => ({
+type StylesProps = Pick<Props, 'tyyppi'>;
+
+const useStyles = makeStyles(() => ({
+  content: {
+    width: 'unset',
+    margin: '12px',
+  },
+  paper: ({ tyyppi }: StylesProps) => ({
     borderTop: `5px solid
-      ${educationTypeColorCode[props.tyyppi] || educationTypeColorCode.muu}`,
-    maxWidth: '400px',
+      ${educationTypeColorCode[tyyppi] || educationTypeColorCode.muu}`,
+    maxWidth: '620px',
   }),
   icon: {
     fontSize: '1.1875rem',
@@ -20,30 +26,32 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
-  grid: {
-    padding: '40px',
-    [theme.breakpoints.down('sm')]: { padding: '8px' },
-    margin: '0',
-  },
   img: {
-    width: 'auto',
+    width: '100%',
     height: '130px',
-    float: 'right',
-    [theme.breakpoints.down('sm')]: {
-      width: '80px',
-      float: 'left',
-      marginBottom: '8px',
-    },
+    objectFit: 'contain',
   },
   heading: {
-    textAlign: 'center',
-    fontWeight: '600',
+    fontWeight: 600,
   },
 }));
 
-const OppilaitosCard = (props) => {
-  const classes = useStyles(props);
-  const { heading, locations, image, oppilaitosOid } = props;
+type Props = {
+  heading: string;
+  locations: string;
+  image: string;
+  oppilaitosOid: string;
+  tyyppi: keyof typeof educationTypeColorCode;
+};
+
+export const OppilaitosCard = ({
+  heading,
+  locations,
+  image,
+  oppilaitosOid,
+  tyyppi,
+}: Props) => {
+  const classes = useStyles({ tyyppi });
   const { t } = useTranslation();
 
   return (
@@ -54,13 +62,12 @@ const OppilaitosCard = (props) => {
         to={`/oppilaitos/${oppilaitosOid}`}>
         <Paper className={classes.paper}>
           <Grid
-            className={classes.grid}
             container
             justify="center"
             alignItems="center"
-            wrap="nowrap"
             direction="column"
-            spacing={3}>
+            spacing={3}
+            className={classes.content}>
             <Grid item>
               <img
                 className={classes.img}
@@ -71,7 +78,13 @@ const OppilaitosCard = (props) => {
             <Grid item className={classes.heading}>
               {heading}
             </Grid>
-            <Grid container direction="row" spacing={1} justify="center" wrap="nowrap">
+            <Grid
+              item
+              container
+              direction="row"
+              spacing={1}
+              justify="center"
+              wrap="nowrap">
               <Grid item className={classes.iconContainer}>
                 <PublicIcon className={classes.icon} />
               </Grid>
@@ -87,5 +100,3 @@ const OppilaitosCard = (props) => {
     </Grid>
   );
 };
-
-export default OppilaitosCard;

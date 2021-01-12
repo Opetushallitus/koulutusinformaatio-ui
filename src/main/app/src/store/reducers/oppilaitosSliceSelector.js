@@ -43,43 +43,44 @@ function getOppilaitosError(state) {
   return state.oppilaitos.oppilaitosError;
 }
 
-//Selectors
-const getTarjontaProps = createSelector([getTarjonta], (_tarjonta) => {
-  const hits = _.get(_tarjonta, 'hits', []);
-  const total = _.get(_tarjonta, 'total');
+// Selectors
+const getTarjontaProps = createSelector([getTarjonta], (tarjonta) => {
+  const hits = tarjonta.hits ?? [];
+  const total = tarjonta.total;
   const hasHits = _.size(hits) > 0;
-  const localizedTarjonta = _.map(hits, (t) => ({
-    toteutusName: l.localize(_.get(t, 'nimi')),
-    description: l.localize(_.get(t, 'kuvaus')),
-    locations: l.localizeSortedArrayToString(_.get(t, 'kunnat')),
-    opetustapa: l.localizeSortedArrayToString(_.get(t, 'opetusajat')),
-    price: getLocallizedmaksullisuus(
-      _.get(t, 'onkoMaksullinen'),
-      _.get(t, 'maksunMaara')
-    ),
-    tyyppi: _.get(t, 'koulutustyyppi'),
-    kuva: _.get(t, 'kuva'),
-    toteutusOid: _.get(t, 'toteutusOid'),
+  const localizedTarjonta = hits.map((t) => ({
+    toteutusName: l.localize(t.nimi),
+    description: l.localize(t.kuvaus),
+    locations: l.localizeSortedArrayToString(t.kunnat),
+    opetustapa: l.localizeSortedArrayToString(t.opetusajat),
+    price: getLocalizedmaksullisuus(t.onkoMaksullinen, t.maksunMaara),
+    tyyppi: t.koulutustyyppi,
+    kuva: t.kuva,
+    toteutusOid: t.toteutusOid,
   }));
+
   return {
     localizedTarjonta,
     total,
     hasHits,
   };
 });
+
 const getTulevaTarjontaProps = createSelector([getTulevaTarjonta], (tulevaTarjonta) => {
   const hits = _.get(tulevaTarjonta, 'hits', []);
   const total = _.get(tulevaTarjonta, 'total');
   const hitsSize = _.size(hits);
   const localizedTulevaTarjonta = _.map(hits, (k) => ({
-    koulutusName: l.localize(_.get(k, 'nimi')),
-    tutkintonimikkeet: l.localizeSortedArrayToString(_.get(k, 'tutkintonimikkeet')),
-    koulutustyypit: l.localizeSortedArrayToString(_.get(k, 'koulutustyypit')),
-    opintojenlaajuus: `${l.localize(_.get(k, 'opintojenLaajuus'))} ${l.localize(
-      _.get(k, 'opintojenLaajuusyksikko')
+    koulutusOid: k.koulutusOid,
+    koulutusName: l.localize(k.nimi),
+    tutkintonimikkeet: l.localizeSortedArrayToString(k.tutkintonimikkeet),
+    koulutustyypit: l.localizeSortedArrayToString(k.koulutustyypit),
+    opintojenlaajuus: `${l.localize(k.opintojenLaajuus)} ${l.localize(
+      k.opintojenLaajuusyksikko
     )}`,
-    tyyppi: _.get(k, 'koulutustyyppi'),
+    tyyppi: k.koulutustyyppi,
   }));
+
   return {
     localizedTulevaTarjonta,
     total,
@@ -144,10 +145,8 @@ export const getTulevaTarjontaPaginationProps = createSelector(
 );
 
 // Helpers
-function getLocallizedmaksullisuus(isMaksullinen, maksuAmount) {
-  return isMaksullinen ? `${maksuAmount} €` : l.getTranslationForKey('toteutus.maksuton');
-}
+const getLocalizedmaksullisuus = (isMaksullinen, maksuAmount) =>
+  isMaksullinen ? `${maksuAmount} €` : l.getTranslationForKey('toteutus.maksuton');
 
-function removeOppilaitosName(osaName, oppilaitosName) {
-  return osaName.replace(`${oppilaitosName}, `, '');
-}
+const removeOppilaitosName = (osaName, oppilaitosName) =>
+  osaName.replace(`${oppilaitosName}, `, '');

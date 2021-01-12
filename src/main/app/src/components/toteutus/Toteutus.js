@@ -17,7 +17,6 @@ import LocalizedLink from '#/src/components/common/LocalizedLink';
 import Murupolku from '#/src/components/common/Murupolku';
 import Spacer from '#/src/components/common/Spacer';
 import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
-import HakuKaynnissaCard from '#/src/components/koulutus/HakuKaynnissaCard';
 import { getHakuParams, getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   fetchKoulutusWithRelatedData,
@@ -32,6 +31,7 @@ import {
 } from '#/src/store/reducers/toteutusSlice';
 import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
 import ContentWrapper from '../common/ContentWrapper';
+import { HakuKaynnissaCard } from './HakuKaynnissaCard';
 import { ToteutusHakuEiSahkoista } from './ToteutusHakuEiSahkoista';
 import ToteutusHakukohteet from './ToteutusHakukohteet';
 import { ToteutusHakuMuu } from './ToteutusHakuMuu';

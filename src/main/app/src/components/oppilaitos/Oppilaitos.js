@@ -17,7 +17,7 @@ import OppilaitosinfoGrid from './OppilaitosinfoGrid';
 import TarjontaList from './TarjontaList';
 import { TietoaOpiskelusta } from './TietoaOpiskelusta';
 import Yhteystiedot from './Yhteystiedot';
-import TulevaTarjontaList from './TulevaTarjontaList';
+import { TulevaTarjontaList } from './TulevaTarjontaList';
 import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
 import OppilaitosOsaList from './OppilaitosOsaList';
 

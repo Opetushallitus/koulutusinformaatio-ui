@@ -6,6 +6,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { KOULUTUS_TYYPPI } from '#/src/constants';
 import { Localizer as l } from '#/src/tools/Utils';
+import { Translateable } from '#/src/types/common';
 import InfoGrid from '../common/InfoGrid';
 
 const useStyles = makeStyles((theme) => ({
@@ -14,14 +15,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const hasNimike = (tyyppi) =>
+const hasNimike = (tyyppi: string) =>
   tyyppi !== KOULUTUS_TYYPPI.AMM_TUTKINNON_OSA &&
   tyyppi !== KOULUTUS_TYYPPI.AMM_OSAAMISALA;
 
-export const KoulutusInfoGrid = (props) => {
+type Props = {
+  nimikkeet: Array<Translateable>;
+  koulutustyyppi: string;
+  laajuus: Array<Translateable | undefined>;
+};
+
+export const KoulutusInfoGrid = (props: Props) => {
   const classes = useStyles();
-  const { nimikkeet, koulutustyyppi, laajuus } = props;
   const { t } = useTranslation();
+  const { nimikkeet, koulutustyyppi, laajuus } = props;
 
   const perustiedotData = [];
   if (hasNimike(koulutustyyppi)) {

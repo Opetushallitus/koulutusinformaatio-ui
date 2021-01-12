@@ -49,7 +49,7 @@ type Props = {
 
 export const MobileToggleFiltersButton = ({
   type,
-  hitCount,
+  hitCount = 0,
   chosenFilterCount,
   showFilters,
   handleFiltersShowToggle,
