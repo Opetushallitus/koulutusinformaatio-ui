@@ -7,13 +7,15 @@ import {
 } from '@material-ui/icons/';
 import { educationTypeColorCode } from '#/src/colors';
 
+type StylesProps = Pick<Props, 'tyyppi'>;
+
 const useStyles = makeStyles({
   nimikkeet: {
-    fontWeight: '600',
+    fontWeight: 600,
   },
-  paper: (props) => ({
+  paper: ({ tyyppi }: StylesProps) => ({
     borderTop: `5px solid ${
-      educationTypeColorCode[props.tyyppi] || educationTypeColorCode.muu
+      educationTypeColorCode[tyyppi] || educationTypeColorCode.muu
     }`,
     width: '100%',
     height: '100%',
@@ -31,9 +33,22 @@ const useStyles = makeStyles({
   },
 });
 
-const TulevaKoulutusCard = (props) => {
-  const classes = useStyles(props);
-  const { koulutusName, tutkintonimikkeet, koulutustyypit, opintojenlaajuus } = props;
+type Props = {
+  koulutusName: string;
+  tutkintonimikkeet: string;
+  koulutustyypit: string;
+  opintojenlaajuus: string;
+  tyyppi: keyof typeof educationTypeColorCode;
+};
+
+export const TulevaKoulutusCard = ({
+  koulutusName,
+  tutkintonimikkeet,
+  koulutustyypit,
+  opintojenlaajuus,
+  tyyppi,
+}: Props) => {
+  const classes = useStyles({ tyyppi });
 
   return (
     <Paper className={classes.paper}>
@@ -86,5 +101,3 @@ const TulevaKoulutusCard = (props) => {
     </Paper>
   );
 };
-
-export default TulevaKoulutusCard;

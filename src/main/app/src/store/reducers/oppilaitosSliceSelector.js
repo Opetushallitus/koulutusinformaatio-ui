@@ -67,10 +67,9 @@ const getTarjontaProps = createSelector([getTarjonta], (tarjonta) => {
 });
 
 const getTulevaTarjontaProps = createSelector([getTulevaTarjonta], (tulevaTarjonta) => {
-  const hits = _.get(tulevaTarjonta, 'hits', []);
-  const total = _.get(tulevaTarjonta, 'total');
-  const hitsSize = _.size(hits);
-  const localizedTulevaTarjonta = _.map(hits, (k) => ({
+  const hits = tulevaTarjonta?.hits ?? [];
+  const total = tulevaTarjonta?.total ?? 0;
+  const localizedTulevaTarjonta = hits.map((k) => ({
     koulutusOid: k.koulutusOid,
     koulutusName: l.localize(k.nimi),
     tutkintonimikkeet: l.localizeSortedArrayToString(k.tutkintonimikkeet),
@@ -81,11 +80,7 @@ const getTulevaTarjontaProps = createSelector([getTulevaTarjonta], (tulevaTarjon
     tyyppi: k.koulutustyyppi,
   }));
 
-  return {
-    localizedTulevaTarjonta,
-    total,
-    hitsSize,
-  };
+  return { values: localizedTulevaTarjonta, total };
 });
 
 export const getApiRequestParams = createSelector(
