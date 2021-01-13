@@ -1,14 +1,15 @@
-import React from 'react';
-import InfoGrid from '#/src/components/common/InfoGrid';
-import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
+import { makeStyles } from '@material-ui/core';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import HomeWorkOutlinedIcon from '@material-ui/icons/HomeWorkOutlined';
-import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
-import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
-import { Localizer as l } from '#/src/tools/Utils';
+import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined';
+import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
 import _fp from 'lodash/fp';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { InfoGrid } from '#/src/components/common/InfoGrid';
+import { Localizer as l } from '#/src/tools/Utils';
+import { Koodi } from '#/src/types/common';
 
 const useStyles = makeStyles((theme) => ({
   koulutusInfoGridIcon: {
@@ -16,22 +17,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const OppilaitosinfoGrid = (props) => {
+type Props = {
+  className?: string;
+  opiskelijoita: number;
+  kotipaikat: Array<Koodi>;
+  opetuskieli: Array<Koodi>;
+  koulutusohjelmia: number;
+  toimipisteita: number;
+};
+
+export const OppilaitosinfoGrid = ({
+  className,
+  opiskelijoita,
+  kotipaikat,
+  opetuskieli,
+  koulutusohjelmia,
+  toimipisteita,
+}: Props) => {
   const classes = useStyles();
-  const {
-    opiskelijoita,
-    kotipaikat,
-    opetuskieli,
-    koulutusohjelmia,
-    toimipisteita,
-  } = props;
   const { t } = useTranslation();
+
   const paikkakunnat = l.localizeSortedArrayToString(kotipaikat);
   const opetuskielet = _fp.compose(
     _fp.join(', '),
     _fp.map(_fp.capitalize),
     _fp.map(`nimi.${l.getLanguage()}`)
   )(opetuskieli);
+
   const perustiedotData = [
     {
       icon: <PublicOutlinedIcon className={classes.koulutusInfoGridIcon} />,
@@ -59,13 +71,12 @@ const OppilaitosinfoGrid = (props) => {
       text: _fp.toString(koulutusohjelmia),
     },
   ];
+
   return (
     <InfoGrid
       heading={t('oppilaitos.perustiedot')}
       gridData={perustiedotData}
-      {...props}
+      className={className}
     />
   );
 };
-
-export default OppilaitosinfoGrid;

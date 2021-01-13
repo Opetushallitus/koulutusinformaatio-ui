@@ -33,7 +33,7 @@ import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
 import ContentWrapper from '../common/ContentWrapper';
 import { HakuKaynnissaCard } from './HakuKaynnissaCard';
 import { ToteutusHakuEiSahkoista } from './ToteutusHakuEiSahkoista';
-import ToteutusHakukohteet from './ToteutusHakukohteet';
+import { ToteutusHakukohteet } from './ToteutusHakukohteet';
 import { ToteutusHakuMuu } from './ToteutusHakuMuu';
 import { ToteutusInfoGrid } from './ToteutusInfoGrid';
 

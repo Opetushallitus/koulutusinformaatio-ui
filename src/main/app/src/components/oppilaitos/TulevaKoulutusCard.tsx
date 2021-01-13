@@ -66,36 +66,42 @@ export const TulevaKoulutusCard = ({
           </Typography>
         </Grid>
         <Grid item container direction="column" spacing={2}>
-          <Grid item>
-            <Grid container wrap="nowrap" spacing={1} alignItems="center">
-              <Grid item className={classes.iconContainer}>
-                <SchoolOutlined />
-              </Grid>
-              <Grid item>
-                <Typography variant="body1">{tutkintonimikkeet}</Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Grid container wrap="nowrap" spacing={1} alignItems="center">
-              <Grid item className={classes.iconContainer}>
-                <ExtensionOutlined />
-              </Grid>
-              <Grid item>
-                <Typography variant="body1">{koulutustyypit}</Typography>
+          {tutkintonimikkeet && (
+            <Grid item>
+              <Grid container wrap="nowrap" spacing={1} alignItems="center">
+                <Grid item className={classes.iconContainer}>
+                  <SchoolOutlined />
+                </Grid>
+                <Grid item>
+                  <Typography variant="body1">{tutkintonimikkeet}</Typography>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item>
-            <Grid container wrap="nowrap" spacing={1} alignItems="center">
-              <Grid item className={classes.iconContainer}>
-                <TimelapseOutlined />
-              </Grid>
-              <Grid item>
-                <Typography variant="body1">{opintojenlaajuus}</Typography>
+          )}
+          {koulutustyypit && (
+            <Grid item>
+              <Grid container wrap="nowrap" spacing={1} alignItems="center">
+                <Grid item className={classes.iconContainer}>
+                  <ExtensionOutlined />
+                </Grid>
+                <Grid item>
+                  <Typography variant="body1">{koulutustyypit}</Typography>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
+          )}
+          {opintojenlaajuus && (
+            <Grid item>
+              <Grid container wrap="nowrap" spacing={1} alignItems="center">
+                <Grid item className={classes.iconContainer}>
+                  <TimelapseOutlined />
+                </Grid>
+                <Grid item>
+                  <Typography variant="body1">{opintojenlaajuus}</Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+          )}
         </Grid>
       </Grid>
     </Paper>

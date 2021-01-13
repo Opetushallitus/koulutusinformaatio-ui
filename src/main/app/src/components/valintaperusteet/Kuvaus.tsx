@@ -16,7 +16,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { colors } from '#/src/colors';
 import { Localizer as l, toId } from '#/src/tools/Utils';
-import { LocalizedHTML } from './LocalizedHTML';
+import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 
 const StyledTableRow = withStyles((theme) => ({
   root: {

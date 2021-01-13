@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { KOULUTUS_TYYPPI } from '#/src/constants';
 import { Localizer as l } from '#/src/tools/Utils';
 import { Translateable } from '#/src/types/common';
-import InfoGrid from '../common/InfoGrid';
+import { InfoGrid } from '../common/InfoGrid';
 
 const useStyles = makeStyles((theme) => ({
   koulutusInfoGridIcon: {
@@ -23,12 +23,17 @@ type Props = {
   nimikkeet: Array<Translateable>;
   koulutustyyppi: string;
   laajuus: Array<Translateable | undefined>;
+  className?: string;
 };
 
-export const KoulutusInfoGrid = (props: Props) => {
+export const KoulutusInfoGrid = ({
+  className,
+  nimikkeet,
+  koulutustyyppi,
+  laajuus,
+}: Props) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { nimikkeet, koulutustyyppi, laajuus } = props;
 
   const perustiedotData = [];
   if (hasNimike(koulutustyyppi)) {
@@ -61,6 +66,10 @@ export const KoulutusInfoGrid = (props: Props) => {
   });
 
   return (
-    <InfoGrid heading={t('koulutus.tiedot')} gridData={perustiedotData} {...props} />
+    <InfoGrid
+      heading={t('koulutus.tiedot')}
+      gridData={perustiedotData}
+      className={className}
+    />
   );
 };

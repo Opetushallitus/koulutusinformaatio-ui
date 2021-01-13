@@ -1,27 +1,19 @@
-import React from 'react';
+import { Box, Grid, Icon, makeStyles, Paper, Typography } from '@material-ui/core';
 import clsx from 'clsx';
-import {
-  makeStyles,
-  Typography,
-  Grid,
-  IconButton,
-  Paper,
-  Icon,
-  Box,
-  Tooltip,
-} from '@material-ui/core';
-import { colors, educationTypeColorCode } from '#/src/colors';
-import Spacer from './Spacer';
+import React from 'react';
+import ApurahaIcon from '#/src/assets/images/Apuraha.svg';
+import KoulutuksenLaajuusIcon from '#/src/assets/images/koulutuksen_laajuus.svg';
 import KoulutusAsteIcon from '#/src/assets/images/koulutusaste.svg';
 import KoulutusTyypitIcon from '#/src/assets/images/koulutustyyppi.svg';
-import TutkintoNimikeIcon from '#/src/assets/images/tutkintonimike.svg';
-import SuunniteltuKestoIcon from '#/src/assets/images/suunniteltu_kesto.svg';
-import KoulutuksenLaajuusIcon from '#/src/assets/images/koulutuksen_laajuus.svg';
-import TutkintoonHakeminenIcon from '#/src/assets/images/tutkintoon_hakeminen.svg';
 import OpetusKasvatusPsykologiaIcon from '#/src/assets/images/opetus_kasvatus_psykologia.svg';
-import ApurahaIcon from '#/src/assets/images/Apuraha.svg';
+import SuunniteltuKestoIcon from '#/src/assets/images/suunniteltu_kesto.svg';
+import TutkintoNimikeIcon from '#/src/assets/images/tutkintonimike.svg';
+import TutkintoonHakeminenIcon from '#/src/assets/images/tutkintoon_hakeminen.svg';
+import { colors, educationTypeColorCode } from '#/src/colors';
+import { LabelTooltip } from '#/src/components/common/LabelTooltip';
+import Spacer from './Spacer';
 
-const iconLookupTable = {
+const iconLookupTable: Record<string, string> = {
   KoulutusAsteIcon: KoulutusAsteIcon,
   KoulutusTyypitIcon: KoulutusTyypitIcon,
   TutkintoNimikeIcon: TutkintoNimikeIcon,
@@ -53,17 +45,21 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: '62px',
     paddingBottom: '62px',
   },
-  bgColor: {
-    backgroundColor: 'white',
-    color: colors.black,
-    padding: '15px',
-  },
-  arrow: {
-    color: 'white',
-  },
 }));
 
-const InfoGrid = (props) => {
+type Props = {
+  heading: string;
+  gridData: Array<{
+    id?: string;
+    icon: string | JSX.Element;
+    title: string;
+    modalText?: string;
+    text: string;
+  }>;
+  className?: string;
+};
+
+export const InfoGrid = (props: Props) => {
   const { heading, gridData, className } = props;
   const classes = useStyles();
 
@@ -119,19 +115,9 @@ const InfoGrid = (props) => {
                       {e.title}
                     </Typography>
                   </Grid>
-                  {e?.modalData?.text && (
+                  {e?.modalText && (
                     <Grid item>
-                      <Tooltip
-                        classes={{ tooltip: classes.bgColor, arrow: classes.arrow }}
-                        enterTouchDelay={0}
-                        leaveTouchDelay={15000}
-                        interactive
-                        arrow
-                        title={e?.modalData?.text}>
-                        <IconButton style={{ padding: 0, minHeight: 0, minWidth: 0 }}>
-                          {e?.modalData?.icon}
-                        </IconButton>
-                      </Tooltip>
+                      <LabelTooltip title={e?.modalText} />
                     </Grid>
                   )}
                 </Grid>
@@ -154,5 +140,3 @@ const InfoGrid = (props) => {
     </Box>
   );
 };
-
-export default InfoGrid;

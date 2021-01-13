@@ -6,7 +6,7 @@ import { colors } from '#/src/colors';
 import Accordion from '#/src/components/common/Accordion';
 import { formatDateString, Localizer as l, toId } from '#/src/tools/Utils';
 import { Koodi, Translateable } from '#/src/types/common';
-import { LocalizedHTML } from './LocalizedHTML';
+import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 
 const useStyles = makeStyles(() => ({
   valintakoeHeader: {

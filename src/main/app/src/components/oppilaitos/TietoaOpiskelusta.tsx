@@ -1,11 +1,25 @@
+import { Box, Container, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Typography, Container } from '@material-ui/core';
-import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
 import Spacer from '#/src/components/common/Spacer';
+import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
+import { Translateable } from '#/src/types/common';
 import Accordion from '../common/Accordion';
 
-export const TietoaOpiskelusta = ({ className, heading, tietoaOpiskelusta = [] }) => {
+type Props = {
+  className: string;
+  heading: string;
+  tietoaOpiskelusta: Array<{
+    otsikko: Translateable;
+    teksti: Translateable;
+  }>;
+};
+
+export const TietoaOpiskelusta = ({
+  className,
+  heading,
+  tietoaOpiskelusta = [],
+}: Props) => {
   const { t } = useTranslation();
 
   return (
