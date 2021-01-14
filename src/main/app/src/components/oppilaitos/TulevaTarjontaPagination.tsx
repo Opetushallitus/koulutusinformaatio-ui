@@ -42,7 +42,7 @@ export const TulevaTarjontaPagination = ({ total, oid, isOppilaitosOsa }: Props)
   const dispatch = useDispatch();
 
   const handleClick = useCallback(
-    (_, offset, page) => {
+    (ignored, offset, page) => {
       dispatch(
         fetchTulevaTarjontaData({
           oid,

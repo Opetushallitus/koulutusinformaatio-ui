@@ -132,16 +132,15 @@ export const ValintatavatSisallysluettelo = (valintatavat: Array<Valintatapa>) =
 ) =>
   !_fp.isEmpty(valintatavat)
     ? valintatavat.map(({ nimi, sisalto }, index) =>
-        _fp.flatten(
-          // Link to title and links to sisalto subtitles given in HTML-string
-          [Lnk(l.localize(nimi), index + 1, false)].concat(
-            sisalto.map((s) =>
-              s.tyyppi === 'teksti'
-                ? KuvausSisallysluettelo(s.data, toId(l.localize(nimi) + index))(Lnk)
-                : null
-            )
-          )
-        )
+        // Link to title and links to sisalto subtitles given in HTML-string
+        [
+          Lnk(l.localize(nimi), index + 1, false),
+          ...sisalto.map((s) =>
+            s.tyyppi === 'teksti'
+              ? KuvausSisallysluettelo(s.data, toId(l.localize(nimi) + index))(Lnk)
+              : null
+          ),
+        ]
       )
     : null;
 
