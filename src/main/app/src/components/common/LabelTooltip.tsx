@@ -29,7 +29,7 @@ export const LabelTooltip = ({ title }: Props) => {
 
   const [open, setOpen] = useState(false);
   const handleClick = () => {
-    setOpen(!open);
+    setOpen(isOpen => !isOpen);
   };
   const handleClose = () => {
     setOpen(false);
