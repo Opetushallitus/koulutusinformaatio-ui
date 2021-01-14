@@ -1,8 +1,8 @@
-const autoRecord = require('cypress-autorecord');
 describe('Sivut', () => {
-  autoRecord();
-  it('Language change should be reflected in URL and page content', function () {
+  it('Language change should be reflected in URL and page content', () => {
     cy.visit('/fi/sivu/paikan-vastaanotto-ja-ilmoittautuminen-korkeakouluun');
+    cy.findAllByRole('progressbar').should('not.exist');
+
     cy.findByRole('heading', {
       name: /paikan vastaanotto ja ilmoittautuminen korkeakouluun/i,
     });
@@ -18,6 +18,9 @@ describe('Sivut', () => {
     );
 
     cy.go('back');
+
+    cy.findAllByRole('progressbar').should('not.exist');
+
     cy.url().should(
       'include',
       '/fi/sivu/paikan-vastaanotto-ja-ilmoittautuminen-korkeakouluun'
@@ -29,6 +32,8 @@ describe('Sivut', () => {
     cy.viewport('samsung-s10');
     cy.findByRole('button', { name: /open drawer/i }).click();
     cy.findByRole('tab', { name: /på svenska/i }).click({ force: true });
+
+    cy.findAllByRole('progressbar').should('not.exist');
 
     cy.url().should(
       'include',

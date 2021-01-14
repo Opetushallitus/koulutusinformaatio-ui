@@ -1,10 +1,12 @@
-const autoRecord = require('cypress-autorecord');
-const { assertBreadcrumb } = require('../utils');
+import { playMockFile } from 'kto-ui-common/cypress/mockUtils';
+import { assertBreadcrumb } from '../utils';
 
-describe('Murupolku', function () {
-  autoRecord();
+describe('Murupolku', () => {
+  beforeEach(() => {
+    playMockFile('murupolku.mocks.json');
+  });
 
-  it('Should show correct breadcrumb for a contentful page', function () {
+  it('Should show correct breadcrumb for a contentful page', () => {
     const url = '/fi/sivu/paikan-vastaanotto-ja-ilmoittautuminen-korkeakouluun';
     cy.visit(url);
 
@@ -16,7 +18,7 @@ describe('Murupolku', function () {
     });
   });
 
-  it('Should show correct breadcrumb for koulutus', function () {
+  it('Should show correct breadcrumb for koulutus', () => {
     const url = '/fi/koulutus/1.2.246.562.13.00000000000000000570';
     cy.visit(url);
 
@@ -28,7 +30,7 @@ describe('Murupolku', function () {
     });
   });
 
-  it('Should show correct breadcrumb for toteutus', function () {
+  it('Should show correct breadcrumb for toteutus', () => {
     const url = '/fi/toteutus/1.2.246.562.17.00000000000000000404';
     cy.visit(url);
 
@@ -40,7 +42,7 @@ describe('Murupolku', function () {
     });
   });
 
-  it('Should show correct breadcrumb for oppilaitos', function () {
+  it('Should show correct breadcrumb for oppilaitos', () => {
     const url = '/fi/oppilaitos/1.2.246.562.10.56753942459';
     cy.visit(url);
 
@@ -52,7 +54,7 @@ describe('Murupolku', function () {
     });
   });
 
-  it('Should show correct breadcrumb for oppilaitoksen osa', function () {
+  it('Should show correct breadcrumb for oppilaitoksen osa', () => {
     const url = '/fi/oppilaitososa/1.2.246.562.10.61042218794';
     cy.visit(url);
 
@@ -64,7 +66,7 @@ describe('Murupolku', function () {
     });
   });
 
-  it('Should show correct breadcrumb for valintaperuste', function () {
+  it('Should show correct breadcrumb for valintaperuste', () => {
     const url = '/fi/hakukohde/1.2.246.562.20.00000000000000000429/valintaperuste';
     cy.visit(url);
 

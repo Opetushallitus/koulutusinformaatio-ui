@@ -1,9 +1,11 @@
-const autoRecord = require('cypress-autorecord');
+import { playMockFile } from 'kto-ui-common/cypress/mockUtils';
 
-describe.only('Kuvaus tooltip KOMOTO', function () {
-  autoRecord();
+describe('Kuvaus tooltip KOMOTO', () => {
+  beforeEach(() => {
+    playMockFile('komoto-kuvaus-tooltip.mocks.json');
+  });
 
-  it('Suunniteltu kesto kuvaus KOMOTO renders properly', function () {
+  it('Suunniteltu kesto kuvaus KOMOTO renders properly', () => {
     cy.visit('/fi/toteutus/1.2.246.562.17.00000000000000000420');
 
     // Wait for everything to load

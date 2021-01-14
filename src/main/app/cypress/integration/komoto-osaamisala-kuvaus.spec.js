@@ -1,9 +1,11 @@
-const autoRecord = require('cypress-autorecord');
+import { playMockFile } from 'kto-ui-common/cypress/mockUtils';
 
-describe('Osaamisalan description KOMOTO', function () {
-  autoRecord();
-
-  it('KOMOTO includes osaamisala description', function () {
+describe('Osaamisalan description KOMOTO', () => {
+  beforeEach(() => {
+    playMockFile('komoto-osaamisala-kuvaus.mocks.json');
+  });
+  // TODO: This test fails with current data from hahtuva. See https://beta.hahtuvaopintopolku.fi/konfo-backend/search/oppilaitoksen-osa/1.2.246.562.10.76662434703/tarjonta
+  it('KOMOTO includes osaamisala description', () => {
     cy.visit('/fi/toteutus/1.2.246.562.17.00000000000000000437');
 
     // Wait for everything to load
@@ -17,7 +19,7 @@ describe('Osaamisalan description KOMOTO', function () {
       'Valinnainen tutkinnon osa Eläinalan yritystoiminta valmistaa häntä toimimaan alan yrittäjänä.'
     );
   });
-  it('KOMOTO: on empty or missing osaamisala description fallback text should be displayed', function () {
+  it('KOMOTO: on empty or missing osaamisala description fallback text should be displayed', () => {
     cy.visit('/fi/toteutus/1.2.246.562.17.00000000000000000466');
 
     // Wait for everything to load
