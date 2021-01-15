@@ -3,7 +3,7 @@ import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { colors } from '#/src/colors';
-import Accordion from '#/src/components/common/Accordion';
+import { Accordion } from '#/src/components/common/Accordion';
 import { formatDateString, Localizer as l, toId } from '#/src/tools/Utils';
 import { Koodi, Translateable } from '#/src/types/common';
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
@@ -128,7 +128,7 @@ export const Valintakokeet = ({ valintakokeet }: Props) => {
               id={`${toId(l.localize(nimi))}`}
               elevation={0}
               style={{
-                backgroundColor: colors.lightGrey,
+                backgroundColor: colors.grey,
                 padding: '15px',
                 marginBottom: '20px',
               }}>
@@ -155,6 +155,7 @@ export const Valintakokeet = ({ valintakokeet }: Props) => {
                   </>
                 )}
                 <Accordion
+                  noColors
                   ContentWrapper={'div' as any}
                   items={tilaisuudet.map(
                     (

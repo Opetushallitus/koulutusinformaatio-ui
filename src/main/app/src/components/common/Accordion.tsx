@@ -7,6 +7,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { colors } from '#/src/colors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,28 +24,40 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.body1,
     fontWeight: 600,
   },
-  test: {
+  // NOTE: For some reason '&$expanded' as a key did not work when returning values from function hence the two separate styles
+  greenSummaryRoot: {
     '&$expanded': {
-      backgroundColor: '#F4FFF4',
-      borderTop: '5px solid #378703',
+      borderBottom: `1px solid ${colors.grey}`,
+      backgroundColor: colors.lightGreen2,
+      borderTop: `5px solid ${colors.brandGreen}`,
+    },
+  },
+  whiteSummaryRoot: {
+    '&$expanded': {
+      borderBottom: `1px solid ${colors.grey}`,
     },
   },
   expanded: {},
 }));
 
-const Accordion = ({ items, ContentWrapper = Typography }) => {
-  const classes = useStyles();
+type Props = {
+  items: Array<{ title: string; content: any }>;
+  ContentWrapper?: React.FC;
+  noColors?: boolean;
+};
+
+export const Accordion = ({ items, noColors, ContentWrapper = Typography }: Props) => {
+  const classes = useStyles({ noColors });
   return (
     <div className={classes.root}>
       {items.map((item, i) => (
         <MuiAccordion className={classes.panel} elevation={0} key={i}>
           <AccordionSummary
             classes={{
-              root: classes.test,
+              root: noColors ? classes.whiteSummaryRoot : classes.greenSummaryRoot,
               expanded: classes.expanded,
             }}
             className={classes.summary}
-            elevation={0}
             expandIcon={<ExpandMoreIcon />}
             aria-controls={`panel${i}a-content`}
             id={`panel${i}a-header`}>
@@ -58,5 +71,3 @@ const Accordion = ({ items, ContentWrapper = Typography }) => {
     </div>
   );
 };
-
-export default Accordion;

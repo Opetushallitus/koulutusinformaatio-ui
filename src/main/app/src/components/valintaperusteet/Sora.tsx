@@ -30,7 +30,7 @@ export const Sora = ({ metadata: { kuvaus } }: Props) => {
       <Grid container spacing={2} justify="flex-start" alignItems="flex-start">
         <Grid item xs={12} sm={12} md={12}>
           <Box py={2}>
-            <Typography variant="h2">
+            <Typography variant="h2" id="hakijan-terveydentila-ja-toimintakyky">
               {t('valintaperuste.hakijan-terveydentila-ja-toimintakyky')}
             </Typography>
           </Box>

@@ -18,7 +18,7 @@ import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 
 const useStyles = makeStyles({
   info: {
-    backgroundColor: colors.greyBg,
+    backgroundColor: colors.grey,
     borderRadius: 2,
     padding: '25px 20px',
     cursor: 'pointer',
@@ -34,7 +34,7 @@ const useStyles = makeStyles({
     paddingBottom: '100px',
   },
   uutiset: {
-    backgroundColor: colors.greyBg,
+    backgroundColor: colors.grey,
     paddingBottom: '100px',
   },
   palvelut: {

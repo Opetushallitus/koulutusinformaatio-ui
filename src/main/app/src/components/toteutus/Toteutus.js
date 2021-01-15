@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { getToteutusOsaamisalaKuvaus } from '#/src/api/konfoApi';
 import { colors } from '#/src/colors';
-import Accordion from '#/src/components/common/Accordion';
+import { Accordion } from '#/src/components/common/Accordion';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import LocalizedLink from '#/src/components/common/LocalizedLink';
