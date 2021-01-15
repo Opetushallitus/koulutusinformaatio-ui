@@ -1,0 +1,5 @@
+---
+exclude_paths:
+  - '**/cypress/fixtures/**'
+  - '**/cypress/mocks/**'
+  - '**/tsconfig*.json'
