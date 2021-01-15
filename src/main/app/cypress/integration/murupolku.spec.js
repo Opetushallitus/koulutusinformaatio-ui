@@ -54,6 +54,8 @@ describe('Murupolku', () => {
     });
   });
 
+  // TODO: This fails with current data from hahtuva. Update mocks after fix is done.
+  // See https://beta.hahtuvaopintopolku.fi/konfo-backend/search/oppilaitoksen-osa/1.2.246.562.10.76662434703/tarjonta
   it('Should show correct breadcrumb for oppilaitoksen osa', () => {
     const url = '/fi/oppilaitososa/1.2.246.562.10.61042218794';
     cy.visit(url);

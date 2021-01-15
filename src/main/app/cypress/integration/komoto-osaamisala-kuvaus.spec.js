@@ -4,7 +4,6 @@ describe('Osaamisalan description KOMOTO', () => {
   beforeEach(() => {
     playMockFile('komoto-osaamisala-kuvaus.mocks.json');
   });
-  // TODO: This test fails with current data from hahtuva. See https://beta.hahtuvaopintopolku.fi/konfo-backend/search/oppilaitoksen-osa/1.2.246.562.10.76662434703/tarjonta
   it('KOMOTO includes osaamisala description', () => {
     cy.visit('/fi/toteutus/1.2.246.562.17.00000000000000000437');
 
