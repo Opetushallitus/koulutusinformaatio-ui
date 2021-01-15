@@ -1,9 +1,11 @@
-const autoRecord = require('cypress-autorecord');
+import { playMockFile } from 'kto-ui-common/cypress/mockUtils';
 
-describe('Valintaperuste page', function () {
-  autoRecord();
+describe('Valintaperuste page', () => {
+  beforeEach(() => {
+    playMockFile('valintaperuste.mocks.json');
+  });
 
-  it('Valintaperuste-page renders properly', function () {
+  it('Valintaperuste-page renders properly', () => {
     cy.visit('/fi/hakukohde/1.2.246.562.20.00000000000000000191/valintaperuste');
 
     // Wait for everything to load

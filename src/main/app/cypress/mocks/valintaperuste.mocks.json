@@ -1,0 +1,1099 @@
+[
+  {
+    "method": "GET",
+    "url": "http://localhost:3005/konfo-backend/hakukohde/1.2.246.562.20.00000000000000000191",
+    "response": {
+      "body": {
+        "kaytetaanHaunAikataulua": true,
+        "tila": "julkaistu",
+        "hakulomakeKuvaus": {},
+        "pohjakoulutusvaatimusTarkenne": {},
+        "kaytetaanHaunHakulomaketta": true,
+        "aloituspaikat": 10,
+        "toteutus": {
+          "oid": "1.2.246.562.17.00000000000000000001",
+          "organisaatio": {
+            "paikkakunta": {
+              "koodiUri": "kunta_109",
+              "nimi": {
+                "fi": "Hämeenlinna",
+                "sv": "Tavastehus"
+              }
+            },
+            "nimi": {
+              "fi": "Koulutuskuntayhtymä Tavastia"
+            },
+            "oid": "1.2.246.562.10.83097956748"
+          },
+          "nimi": {
+            "fi": "Liiketoiminnan perustutkinto"
+          },
+          "tila": "julkaistu",
+          "tarjoajat": [
+            {
+              "paikkakunta": {
+                "koodiUri": "kunta_109",
+                "nimi": {
+                  "fi": "Hämeenlinna",
+                  "sv": "Tavastehus"
+                }
+              },
+              "nimi": {
+                "fi": "Ammattiopisto Tavastia, Hämeenlinna",
+                "en": "Tavastia Vocational College"
+              },
+              "oid": "1.2.246.562.10.90573717916"
+            },
+            {
+              "paikkakunta": {
+                "koodiUri": "kunta_109",
+                "nimi": {
+                  "fi": "Hämeenlinna",
+                  "sv": "Tavastehus"
+                }
+              },
+              "nimi": {
+                "fi": "Ammattiopisto Tavastia",
+                "sv": "Ammattiopisto Tavastia",
+                "en": "Ammattiopisto Tavastia"
+              },
+              "oid": "1.2.246.562.10.93016938081"
+            }
+          ],
+          "muokkaaja": {
+            "oid": "1.2.246.562.24.46610968871",
+            "nimi": "Annika Grönholm"
+          },
+          "modified": "2020-11-24T14:16",
+          "organisaatiot": [
+            "1.2.246.562.10.83097956748",
+            "1.2.246.562.10.90573717916",
+            "1.2.246.562.10.93016938081"
+          ]
+        },
+        "kaytetaanHaunAlkamiskautta": true,
+        "pohjakoulutusvaatimus": [
+          {
+            "koodiUri": "pohjakoulutusvaatimustoinenaste_xx#1",
+            "nimi": {
+              "fi": "Ei pohjakoulutusvaatimusta"
+            }
+          }
+        ],
+        "hakulomakeLinkki": {
+          "fi": "https://testiopintopolku.fi/hakemus/haku/1.2.246.562.29.00000000000000000190?lang=fi",
+          "sv": "https://testiopintopolku.fi/hakemus/haku/1.2.246.562.29.00000000000000000190?lang=sv",
+          "en": "https://testiopintopolku.fi/hakemus/haku/1.2.246.562.29.00000000000000000190?lang=en"
+        },
+        "valintaperuste": {
+          "tila": "julkaistu",
+          "modified": "2020-11-11T11:26",
+          "hakutapa": {
+            "koodiUri": "hakutapa_03#1",
+            "nimi": {
+              "fi": "Jatkuva haku",
+              "sv": "Fortgående ansökan"
+            }
+          },
+          "nimi": {
+            "fi": "Tavastia valintaperuste Annika testi"
+          },
+          "muokkaaja": {
+            "oid": "1.2.246.562.24.46610968871",
+            "nimi": "Annika Grönholm"
+          },
+          "id": "59df8769-114d-45ab-8db1-583a772f0adf",
+          "kohdejoukko": {
+            "koodiUri": "haunkohdejoukko_23#1",
+            "nimi": {
+              "fi": "Ammatillinen koulutus"
+            }
+          },
+          "kielivalinta": [
+            "fi"
+          ],
+          "julkinen": false,
+          "organisaatio": {
+            "paikkakunta": {
+              "koodiUri": "kunta_109",
+              "nimi": {
+                "fi": "Hämeenlinna",
+                "sv": "Tavastehus"
+              }
+            },
+            "nimi": {
+              "fi": "Koulutuskuntayhtymä Tavastia"
+            },
+            "oid": "1.2.246.562.10.83097956748"
+          },
+          "valintakokeet": [
+            {
+              "id": "2a14bd89-2c55-465e-8f63-241c3e0d57ed",
+              "tyyppi": {
+                "koodiUri": "valintakokeentyyppi_7#1",
+                "nimi": {
+                  "fi": "Kielikoe"
+                }
+              },
+              "nimi": {
+                "fi": "kielikoe"
+              },
+              "metadata": {
+                "tietoja": {
+                  "fi": "<p>jos sinulla ei ole todistusta kielitaidosta niin mene kokeeseen</p>"
+                },
+                "liittyyEnnakkovalmistautumista": true,
+                "ohjeetEnnakkovalmistautumiseen": {
+                  "fi": "<p>mene ajoissa ja ota kynä mukaan</p>"
+                },
+                "ohjeetErityisjarjestelyihin": {}
+              },
+              "tilaisuudet": []
+            },
+            {
+              "id": "b177f8ff-1cc1-41c1-bc95-a1a202d93a3c",
+              "tyyppi": {
+                "koodiUri": "valintakokeentyyppi_1#1",
+                "nimi": {
+                  "fi": "Pääsy- ja soveltuvuuskoe",
+                  "sv": "Inträdes- eller lämplighetsprov"
+                }
+              },
+              "nimi": {
+                "fi": "Annikan pääsykoe"
+              },
+              "metadata": {
+                "tietoja": {
+                  "fi": "<p>kokeessa on kirjallinen osio sekä haastattelu</p>"
+                },
+                "liittyyEnnakkovalmistautumista": true,
+                "ohjeetEnnakkovalmistautumiseen": {
+                  "fi": "<p>lue kirja ja ota laskin mukaan. Laskimen tekniset ohjeet ovat</p>"
+                },
+                "erityisjarjestelytMahdollisia": true,
+                "ohjeetErityisjarjestelyihin": {
+                  "fi": "<p>voit hakea koeajan pidennystä erityisestä syystä</p>"
+                }
+              },
+              "tilaisuudet": [
+                {
+                  "osoite": {
+                    "osoite": {
+                      "fi": "opintopolkutie 12"
+                    },
+                    "postinumero": {
+                      "koodiUri": "posti_00100#2",
+                      "nimi": {
+                        "sv": "HELSINGFORS",
+                        "fi": "HELSINKI"
+                      }
+                    }
+                  },
+                  "aika": {
+                    "alkaa": "2020-12-16T09:00",
+                    "paattyy": "2020-12-16T12:00"
+                  },
+                  "jarjestamispaikka": {
+                    "fi": "Oppimisentalo"
+                  },
+                  "lisatietoja": {
+                    "fi": "salijako sukunimen aakkosten mukaan"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "d37a1409-d1ce-400a-8a12-478aea5cdc5a",
+              "tyyppi": {
+                "koodiUri": "valintakokeentyyppi_5#1",
+                "nimi": {
+                  "sv": "Tilläggspoäng",
+                  "fi": "Lisäpiste"
+                }
+              },
+              "nimi": {
+                "fi": "lisäpiste urheilijalle"
+              },
+              "metadata": {
+                "tietoja": {
+                  "fi": "<p>jos olet urheilija toimita todistus lisäpisteestä</p>"
+                },
+                "ohjeetEnnakkovalmistautumiseen": {},
+                "ohjeetErityisjarjestelyihin": {}
+              },
+              "tilaisuudet": []
+            }
+          ],
+          "koulutustyyppi": "amm"
+        },
+        "modified": "2020-11-07T12:35",
+        "toteutusOid": "1.2.246.562.17.00000000000000000001",
+        "muuPohjakoulutusvaatimus": {},
+        "jarjestyspaikka": {
+          "paikkakunta": {
+            "koodiUri": "kunta_109",
+            "nimi": {
+              "fi": "Hämeenlinna",
+              "sv": "Tavastehus"
+            }
+          },
+          "nimi": {
+            "fi": "Ammattiopisto Tavastia, Hämeenlinna",
+            "en": "Tavastia Vocational College"
+          },
+          "oid": "1.2.246.562.10.90573717916"
+        },
+        "toinenAsteOnkoKaksoistutkinto": false,
+        "nimi": {
+          "fi": "Liiketoiminnan perustutkinto"
+        },
+        "muokkaaja": {
+          "oid": "1.2.246.562.24.46610968871",
+          "nimi": "Annika Grönholm"
+        },
+        "oid": "1.2.246.562.20.00000000000000000191",
+        "liitteetOnkoSamaToimitusaika": false,
+        "hakuajat": [],
+        "hakuOid": "1.2.246.562.29.00000000000000000190",
+        "liitteetOnkoSamaToimitusosoite": false,
+        "liitteet": [],
+        "yhdenPaikanSaanto": {
+          "voimassa": false,
+          "syy": "Ei korkeakoulutus koulutusta"
+        },
+        "kielivalinta": [
+          "fi"
+        ],
+        "timestamp": 1606310766633,
+        "organisaatio": {
+          "paikkakunta": {
+            "koodiUri": "kunta_109",
+            "nimi": {
+              "fi": "Hämeenlinna",
+              "sv": "Tavastehus"
+            }
+          },
+          "nimi": {
+            "fi": "Koulutuskuntayhtymä Tavastia"
+          },
+          "oid": "1.2.246.562.10.83097956748"
+        },
+        "metadata": {
+          "valintakokeidenYleiskuvaus": {}
+        },
+        "valintakokeet": []
+      }
+    }
+  },
+  {
+    "url": "http://localhost:3005/konfo-backend/valintaperuste/59df8769-114d-45ab-8db1-583a772f0adf",
+    "method": "GET",
+    "response": {
+      "body": {
+        "tila": "julkaistu",
+        "modified": "2020-11-11T11:26",
+        "hakutapa": {
+          "koodiUri": "hakutapa_03#1",
+          "nimi": {
+            "fi": "Jatkuva haku",
+            "sv": "Fortgående ansökan"
+          }
+        },
+        "nimi": {
+          "fi": "Tavastia valintaperuste Annika testi"
+        },
+        "muokkaaja": {
+          "oid": "1.2.246.562.24.46610968871",
+          "nimi": "Annika Grönholm"
+        },
+        "id": "59df8769-114d-45ab-8db1-583a772f0adf",
+        "kohdejoukko": {
+          "koodiUri": "haunkohdejoukko_23#1",
+          "nimi": {
+            "fi": "Ammatillinen koulutus"
+          }
+        },
+        "kielivalinta": [
+          "fi"
+        ],
+        "timestamp": 1606310769931,
+        "julkinen": false,
+        "organisaatio": {
+          "paikkakunta": {
+            "koodiUri": "kunta_109",
+            "nimi": {
+              "fi": "Hämeenlinna",
+              "sv": "Tavastehus"
+            }
+          },
+          "nimi": {
+            "fi": "Koulutuskuntayhtymä Tavastia"
+          },
+          "oid": "1.2.246.562.10.83097956748"
+        },
+        "metadata": {
+          "tyyppi": "amm",
+          "valintatavat": [],
+          "kielitaitovaatimukset": [],
+          "kuvaus": {
+            "fi": "<p>Tavastian jatkuvassa haussa <strong>Valintakriteerit</strong> ovat seuraavat. Jatkuvassa haussa hakijat pisteytetään hakemuksen tai hakemuksen ja haastattelun/valintakokeen perusteella.</p><ul><li>hakukelpoisuus</li><li>koulutustarve (aiemmin suoritetut tutkinnot)</li><li>motivaatio</li><li>tutkintokohtainen tutkinnon suorittamisen edellytysten selvitys</li><li>lisäpisteet Valma-koulutuksen suorittamisesta</li></ul>"
+          },
+          "valintakokeidenYleiskuvaus": {
+            "fi": "<p>Tässä koulutuksessa osallistutaan kokeeseen josta tulee kutsu spostilla</p>"
+          }
+        },
+        "valintakokeet": [
+          {
+            "id": "2a14bd89-2c55-465e-8f63-241c3e0d57ed",
+            "tyyppi": {
+              "koodiUri": "valintakokeentyyppi_7#1",
+              "nimi": {
+                "fi": "Kielikoe"
+              }
+            },
+            "nimi": {
+              "fi": "kielikoe"
+            },
+            "metadata": {
+              "tietoja": {
+                "fi": "<p>jos sinulla ei ole todistusta kielitaidosta niin mene kokeeseen</p>"
+              },
+              "liittyyEnnakkovalmistautumista": true,
+              "ohjeetEnnakkovalmistautumiseen": {
+                "fi": "<p>mene ajoissa ja ota kynä mukaan</p>"
+              },
+              "ohjeetErityisjarjestelyihin": {}
+            },
+            "tilaisuudet": []
+          },
+          {
+            "id": "b177f8ff-1cc1-41c1-bc95-a1a202d93a3c",
+            "tyyppi": {
+              "koodiUri": "valintakokeentyyppi_1#1",
+              "nimi": {
+                "fi": "Pääsy- ja soveltuvuuskoe",
+                "sv": "Inträdes- eller lämplighetsprov"
+              }
+            },
+            "nimi": {
+              "fi": "Annikan pääsykoe"
+            },
+            "metadata": {
+              "tietoja": {
+                "fi": "<p>kokeessa on kirjallinen osio sekä haastattelu</p>"
+              },
+              "liittyyEnnakkovalmistautumista": true,
+              "ohjeetEnnakkovalmistautumiseen": {
+                "fi": "<p>lue kirja ja ota laskin mukaan. Laskimen tekniset ohjeet ovat</p>"
+              },
+              "erityisjarjestelytMahdollisia": true,
+              "ohjeetErityisjarjestelyihin": {
+                "fi": "<p>voit hakea koeajan pidennystä erityisestä syystä</p>"
+              }
+            },
+            "tilaisuudet": [
+              {
+                "osoite": {
+                  "osoite": {
+                    "fi": "opintopolkutie 12"
+                  },
+                  "postinumero": {
+                    "koodiUri": "posti_00100#2",
+                    "nimi": {
+                      "sv": "HELSINGFORS",
+                      "fi": "HELSINKI"
+                    }
+                  }
+                },
+                "aika": {
+                  "alkaa": "2020-12-16T09:00",
+                  "paattyy": "2020-12-16T12:00"
+                },
+                "jarjestamispaikka": {
+                  "fi": "Oppimisentalo"
+                },
+                "lisatietoja": {
+                  "fi": "salijako sukunimen aakkosten mukaan"
+                }
+              }
+            ]
+          },
+          {
+            "id": "d37a1409-d1ce-400a-8a12-478aea5cdc5a",
+            "tyyppi": {
+              "koodiUri": "valintakokeentyyppi_5#1",
+              "nimi": {
+                "sv": "Tilläggspoäng",
+                "fi": "Lisäpiste"
+              }
+            },
+            "nimi": {
+              "fi": "lisäpiste urheilijalle"
+            },
+            "metadata": {
+              "tietoja": {
+                "fi": "<p>jos olet urheilija toimita todistus lisäpisteestä</p>"
+              },
+              "ohjeetEnnakkovalmistautumiseen": {},
+              "ohjeetErityisjarjestelyihin": {}
+            },
+            "tilaisuudet": []
+          }
+        ],
+        "koulutustyyppi": "amm"
+      }
+    }
+  },
+  {
+    "url": "http://localhost:3005/konfo-backend/toteutus/1.2.246.562.17.00000000000000000001",
+    "method": "GET",
+    "response": {
+      "body": {
+        "tila": "julkaistu",
+        "teemakuva": "https://konfo-files.testiopintopolku.fi/toteutus-teemakuva/1.2.246.562.17.00000000000000000001/d319ba86-3f28-4645-916a-04c634f4380d.jpg",
+        "tarjoajat": [
+          {
+            "paikkakunta": {
+              "koodiUri": "kunta_109",
+              "nimi": {
+                "fi": "Hämeenlinna",
+                "sv": "Tavastehus"
+              }
+            },
+            "nimi": {
+              "fi": "Ammattiopisto Tavastia, Hämeenlinna",
+              "en": "Tavastia Vocational College"
+            },
+            "oid": "1.2.246.562.10.90573717916"
+          },
+          {
+            "paikkakunta": {
+              "koodiUri": "kunta_109",
+              "nimi": {
+                "fi": "Hämeenlinna",
+                "sv": "Tavastehus"
+              }
+            },
+            "nimi": {
+              "fi": "Ammattiopisto Tavastia",
+              "sv": "Ammattiopisto Tavastia",
+              "en": "Ammattiopisto Tavastia"
+            },
+            "oid": "1.2.246.562.10.93016938081"
+          }
+        ],
+        "modified": "2020-11-24T14:16",
+        "koulutusOid": "1.2.246.562.13.00000000000000000001",
+        "nimi": {
+          "fi": "Liiketoiminnan perustutkinto"
+        },
+        "muokkaaja": {
+          "oid": "1.2.246.562.24.46610968871",
+          "nimi": "Annika Grönholm"
+        },
+        "oid": "1.2.246.562.17.00000000000000000001",
+        "kielivalinta": [
+          "fi"
+        ],
+        "timestamp": 1606310755525,
+        "organisaatiot": [
+          "1.2.246.562.10.83097956748",
+          "1.2.246.562.10.90573717916",
+          "1.2.246.562.10.93016938081"
+        ],
+        "organisaatio": {
+          "paikkakunta": {
+            "koodiUri": "kunta_109",
+            "nimi": {
+              "fi": "Hämeenlinna",
+              "sv": "Tavastehus"
+            }
+          },
+          "nimi": {
+            "fi": "Koulutuskuntayhtymä Tavastia"
+          },
+          "oid": "1.2.246.562.10.83097956748"
+        },
+        "metadata": {
+          "tyyppi": "amm",
+          "kuvaus": {
+            "fi": "<p>Tutkinnon suorittajalla on asiakaslähtöistä liiketoimintaosaamista, viestintä- ja vuorovaikutusosaamista, kielitaitoa sekä talouden hallinnan osaamista. Hän toimii erilaisissa digitaalisissa ympäristöissä ja verkostoituu ammatillisesti. Hänellä on perusvalmiudet yrittäjyyteen ja valmiudet kehittyä lähiesimiestehtäviin. Tutkinnon suorittaneella on valmiudet uusien tuotteiden ja palveluiden sekä asiakaskokemuksen kehittämiseen. Opiskelija voi valintojensa pohjalta hankkia osaamista esimerkiksi seuraavilta alueilta:</p>"
+          },
+          "osaamisalat": [],
+          "opetus": {
+            "maksullisuusKuvaus": {},
+            "suunniteltuKestoKuvaus": {},
+            "koulutuksenAlkamiskausi": {
+              "koodiUri": "kausi_s#1",
+              "nimi": {
+                "sv": "Höst",
+                "en": "Autumn",
+                "fi": "Syksy"
+              }
+            },
+            "suunniteltuKestoVuodet": 3,
+            "onkoStipendia": false,
+            "koulutuksenAlkamisvuosi": 2021,
+            "lisatiedot": [
+              {
+                "otsikko": {
+                  "koodiUri": "koulutuksenlisatiedot_02#1",
+                  "nimi": {
+                    "fi": "Jatko-opintomahdollisuudet",
+                    "sv": "Möjlighet till fortsatta studier"
+                  }
+                },
+                "teksti": {
+                  "fi": "Ammatillisista perustutkinnoista sekä ammatti- ja erikoisammattitutkinnoista saa yleisen jatko-opintokelpoisuuden ammattikorkeakouluihin ja yliopistoihin. Luonteva jatko-opintoväylä esim. ammatillisen perustutkinnon suorittaneilla on liiketalouden alan ammattikorkeakoulututkinto, tradenomi. Yliopistossa voi suorittaa esimerkiksi kauppatieteen tai taloustieteen kandidaatin tai maisterin tutkinnon. Ammatillisen opettajan pedagogiset opinnot antavat jatkokoulutusmahdollisuuden ammatillisen opettajan työtehtäviin."
+                }
+              }
+            ],
+            "suunniteltuKestoKuukaudet": 0,
+            "opetustapaKuvaus": {
+              "fi": "Ohjattu opetus"
+            },
+            "opetuskieletKuvaus": {},
+            "stipendinKuvaus": {},
+            "opetustapa": [
+              {
+                "koodiUri": "opetuspaikkakk_1#1",
+                "nimi": {
+                  "fi": "Lähiopetus",
+                  "sv": "Närundervisning",
+                  "en": "Contact teaching"
+                }
+              }
+            ],
+            "onkoMaksullinen": false,
+            "opetusaikaKuvaus": {},
+            "opetuskieli": [
+              {
+                "koodiUri": "oppilaitoksenopetuskieli_1#1",
+                "nimi": {
+                  "sv": "finska",
+                  "fi": "suomi"
+                }
+              }
+            ],
+            "opetusaika": [
+              {
+                "koodiUri": "opetusaikakk_1#1",
+                "nimi": {
+                  "sv": "Dagundervisning",
+                  "en": "Day time teaching",
+                  "fi": "Päiväopetus"
+                }
+              }
+            ]
+          },
+          "asiasanat": [
+            {
+              "kieli": "fi",
+              "arvo": "asiakaspalvelu ja myynti"
+            },
+            {
+              "kieli": "fi",
+              "arvo": "markkinointiviestintä"
+            },
+            {
+              "kieli": "fi",
+              "arvo": "palvelumuotoilu"
+            },
+            {
+              "kieli": "fi",
+              "arvo": "talous"
+            },
+            {
+              "kieli": "fi",
+              "arvo": "kirjasto- ja tietopalvelu"
+            }
+          ],
+          "ammattinimikkeet": [
+            {
+              "kieli": "fi",
+              "arvo": "merkonomi"
+            }
+          ],
+          "yhteyshenkilot": [
+            {
+              "nimi": {
+                "fi": "Mika Heinonen"
+              },
+              "titteli": {
+                "fi": "opinto-ohjaaja"
+              },
+              "sahkoposti": {
+                "fi": "mika.heinonen(at)kktavastia.fi"
+              },
+              "puhelinnumero": {
+                "fi": "050 4400 484"
+              },
+              "wwwSivu": {}
+            }
+          ]
+        },
+        "hakutiedot": [
+          {
+            "hakuOid": "1.2.246.562.29.00000000000000000190",
+            "nimi": {
+              "fi": "Testhaku tavastia ag"
+            },
+            "hakutapa": {
+              "koodiUri": "hakutapa_03#1",
+              "nimi": {
+                "fi": "Jatkuva haku",
+                "sv": "Fortgående ansökan"
+              }
+            },
+            "hakukohteet": [
+              {
+                "hakulomakeKuvaus": {},
+                "pohjakoulutusvaatimusTarkenne": {},
+                "aloituspaikat": 10,
+                "hakulomaketyyppi": "ataru",
+                "pohjakoulutusvaatimus": [
+                  {
+                    "koodiUri": "pohjakoulutusvaatimustoinenaste_xx#1",
+                    "nimi": {
+                      "fi": "Ei pohjakoulutusvaatimusta"
+                    }
+                  }
+                ],
+                "hakulomakeLinkki": {
+                  "fi": "https://testiopintopolku.fi/hakemus/haku/1.2.246.562.29.00000000000000000190?lang=fi",
+                  "sv": "https://testiopintopolku.fi/hakemus/haku/1.2.246.562.29.00000000000000000190?lang=sv",
+                  "en": "https://testiopintopolku.fi/hakemus/haku/1.2.246.562.29.00000000000000000190?lang=en"
+                },
+                "hakulomakeAtaruId": "93006924-eec1-4652-8414-3cdb8c29dfff",
+                "jarjestyspaikka": {
+                  "paikkakunta": {
+                    "koodiUri": "kunta_109",
+                    "nimi": {
+                      "fi": "Hämeenlinna",
+                      "sv": "Tavastehus"
+                    }
+                  },
+                  "nimi": {
+                    "fi": "Ammattiopisto Tavastia, Hämeenlinna",
+                    "en": "Tavastia Vocational College"
+                  },
+                  "oid": "1.2.246.562.10.90573717916"
+                },
+                "nimi": {
+                  "fi": "Liiketoiminnan perustutkinto"
+                },
+                "hakuajat": [
+                  {
+                    "alkaa": "2020-11-06T00:00"
+                  }
+                ],
+                "hakukohdeOid": "1.2.246.562.20.00000000000000000191",
+                "valintaperusteId": "59df8769-114d-45ab-8db1-583a772f0adf"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "url": "http://localhost:3005/konfo-backend/koulutus/1.2.246.562.13.00000000000000000001",
+    "method": "GET",
+    "response": {
+      "body": {
+        "tila": "julkaistu",
+        "johtaaTutkintoon": true,
+        "teemakuva": "https://konfo-files.testiopintopolku.fi/koulutus-teemakuva/1.2.246.562.13.00000000000000000001/5048a9a2-88b7-46b7-9702-a5e47255031f.jpg",
+        "tarjoajat": [
+          {
+            "paikkakunta": {
+              "koodiUri": "kunta_710",
+              "nimi": {
+                "sv": "Raseborg",
+                "fi": "Raasepori"
+              }
+            },
+            "nimi": {
+              "fi": "Axxell",
+              "sv": "Axxell",
+              "en": "Axxell"
+            },
+            "oid": "1.2.246.562.10.51053050251"
+          },
+          {
+            "paikkakunta": {
+              "koodiUri": "kunta_398",
+              "nimi": {
+                "sv": "Lahtis",
+                "fi": "Lahti"
+              }
+            },
+            "nimi": {
+              "fi": "Koulutuskeskus Salpaus -kuntayhtymä"
+            },
+            "oid": "1.2.246.562.10.594252633210"
+          },
+          {
+            "paikkakunta": {
+              "koodiUri": "kunta_398",
+              "nimi": {
+                "sv": "Lahtis",
+                "fi": "Lahti"
+              }
+            },
+            "nimi": {
+              "fi": "Koulutuskeskus Salpaus",
+              "sv": "Koulutuskeskus Salpaus",
+              "en": "Koulutuskeskus Salpaus"
+            },
+            "oid": "1.2.246.562.10.81934895871"
+          },
+          {
+            "paikkakunta": {
+              "koodiUri": "kunta_684",
+              "nimi": {
+                "sv": "Raumo",
+                "fi": "Rauma"
+              }
+            },
+            "nimi": {
+              "fi": "Länsirannikon Koulutus Oy"
+            },
+            "oid": "1.2.246.562.10.82246911869"
+          },
+          {
+            "paikkakunta": {
+              "koodiUri": "kunta_109",
+              "nimi": {
+                "fi": "Hämeenlinna",
+                "sv": "Tavastehus"
+              }
+            },
+            "nimi": {
+              "fi": "Ammattiopisto Tavastia",
+              "sv": "Ammattiopisto Tavastia",
+              "en": "Ammattiopisto Tavastia"
+            },
+            "oid": "1.2.246.562.10.93016938081"
+          },
+          {
+            "paikkakunta": {
+              "koodiUri": "kunta_684",
+              "nimi": {
+                "sv": "Raumo",
+                "fi": "Rauma"
+              }
+            },
+            "nimi": {
+              "fi": "WinNova",
+              "sv": "WinNova",
+              "en": "WinNova"
+            },
+            "oid": "1.2.246.562.10.93135224694"
+          }
+        ],
+        "toteutukset": [
+          {
+            "oid": "1.2.246.562.17.00000000000000000129",
+            "organisaatio": {
+              "paikkakunta": {
+                "koodiUri": "kunta_710",
+                "nimi": {
+                  "sv": "Raseborg",
+                  "fi": "Raasepori"
+                }
+              },
+              "nimi": {
+                "sv": "Axxell Utbildning Ab"
+              },
+              "oid": "1.2.246.562.10.20423940541"
+            },
+            "nimi": {
+              "sv": "Grundexamen i affärsverksamhet"
+            },
+            "tila": "julkaistu",
+            "tarjoajat": [
+              {
+                "paikkakunta": {
+                  "koodiUri": "kunta_710",
+                  "nimi": {
+                    "sv": "Raseborg",
+                    "fi": "Raasepori"
+                  }
+                },
+                "nimi": {
+                  "fi": "Axxell, Ratakatu 75, Karjaa",
+                  "sv": "Axxell, Bangatan 75, Karis"
+                },
+                "oid": "1.2.246.562.10.70610169099"
+              }
+            ],
+            "muokkaaja": {
+              "oid": "1.2.246.562.24.46610968871",
+              "nimi": "Annika Grönholm"
+            },
+            "modified": "2020-11-09T11:38",
+            "organisaatiot": [
+              "1.2.246.562.10.20423940541",
+              "1.2.246.562.10.70610169099"
+            ]
+          },
+          {
+            "oid": "1.2.246.562.17.00000000000000000124",
+            "organisaatio": {
+              "paikkakunta": {
+                "koodiUri": "kunta_684",
+                "nimi": {
+                  "sv": "Raumo",
+                  "fi": "Rauma"
+                }
+              },
+              "nimi": {
+                "fi": "Länsirannikon Koulutus Oy"
+              },
+              "oid": "1.2.246.562.10.82246911869"
+            },
+            "nimi": {
+              "fi": "Liiketoiminnan perustutkinto"
+            },
+            "tila": "julkaistu",
+            "tarjoajat": [
+              {
+                "paikkakunta": {
+                  "koodiUri": "kunta_609",
+                  "nimi": {
+                    "sv": "Björneborg",
+                    "fi": "Pori"
+                  }
+                },
+                "nimi": {
+                  "fi": "WinNova, Pori"
+                },
+                "oid": "1.2.246.562.10.49344459547"
+              }
+            ],
+            "muokkaaja": {
+              "oid": "1.2.246.562.24.46610968871",
+              "nimi": "Annika Grönholm"
+            },
+            "modified": "2020-11-07T12:22",
+            "organisaatiot": [
+              "1.2.246.562.10.82246911869",
+              "1.2.246.562.10.49344459547"
+            ]
+          },
+          {
+            "oid": "1.2.246.562.17.00000000000000000001",
+            "organisaatio": {
+              "paikkakunta": {
+                "koodiUri": "kunta_109",
+                "nimi": {
+                  "fi": "Hämeenlinna",
+                  "sv": "Tavastehus"
+                }
+              },
+              "nimi": {
+                "fi": "Koulutuskuntayhtymä Tavastia"
+              },
+              "oid": "1.2.246.562.10.83097956748"
+            },
+            "nimi": {
+              "fi": "Liiketoiminnan perustutkinto"
+            },
+            "tila": "julkaistu",
+            "tarjoajat": [
+              {
+                "paikkakunta": {
+                  "koodiUri": "kunta_109",
+                  "nimi": {
+                    "fi": "Hämeenlinna",
+                    "sv": "Tavastehus"
+                  }
+                },
+                "nimi": {
+                  "fi": "Ammattiopisto Tavastia, Hämeenlinna",
+                  "en": "Tavastia Vocational College"
+                },
+                "oid": "1.2.246.562.10.90573717916"
+              },
+              {
+                "paikkakunta": {
+                  "koodiUri": "kunta_109",
+                  "nimi": {
+                    "fi": "Hämeenlinna",
+                    "sv": "Tavastehus"
+                  }
+                },
+                "nimi": {
+                  "fi": "Ammattiopisto Tavastia",
+                  "sv": "Ammattiopisto Tavastia",
+                  "en": "Ammattiopisto Tavastia"
+                },
+                "oid": "1.2.246.562.10.93016938081"
+              }
+            ],
+            "muokkaaja": {
+              "oid": "1.2.246.562.24.46610968871",
+              "nimi": "Annika Grönholm"
+            },
+            "modified": "2020-11-24T14:16",
+            "organisaatiot": [
+              "1.2.246.562.10.83097956748",
+              "1.2.246.562.10.90573717916",
+              "1.2.246.562.10.93016938081"
+            ]
+          },
+          {
+            "oid": "1.2.246.562.17.00000000000000000007",
+            "organisaatio": {
+              "paikkakunta": {
+                "koodiUri": "kunta_398",
+                "nimi": {
+                  "sv": "Lahtis",
+                  "fi": "Lahti"
+                }
+              },
+              "nimi": {
+                "fi": "Koulutuskeskus Salpaus -kuntayhtymä"
+              },
+              "oid": "1.2.246.562.10.594252633210"
+            },
+            "nimi": {
+              "fi": "Liiketoiminnan perustutkinto"
+            },
+            "tila": "julkaistu",
+            "tarjoajat": [
+              {
+                "paikkakunta": {
+                  "koodiUri": "kunta_398",
+                  "nimi": {
+                    "sv": "Lahtis",
+                    "fi": "Lahti"
+                  }
+                },
+                "nimi": {
+                  "fi": "Koulutuskeskus Salpaus, Lahti, Svinhufvudinkatu"
+                },
+                "oid": "1.2.246.562.10.60871080721"
+              },
+              {
+                "paikkakunta": {
+                  "koodiUri": "kunta_111",
+                  "nimi": {
+                    "sv": "Heinola",
+                    "fi": "Heinola"
+                  }
+                },
+                "nimi": {
+                  "fi": "Koulutuskeskus Salpaus, Heinola"
+                },
+                "oid": "1.2.246.562.10.94620157316"
+              }
+            ],
+            "muokkaaja": {
+              "oid": "1.2.246.562.24.76761043071",
+              "nimi": "Annika Gholm"
+            },
+            "modified": "2020-05-08T13:13",
+            "organisaatiot": [
+              "1.2.246.562.10.594252633210",
+              "1.2.246.562.10.60871080721",
+              "1.2.246.562.10.94620157316"
+            ]
+          }
+        ],
+        "esikatselu": true,
+        "modified": "2020-11-09T11:38",
+        "ePerusteId": 3855077,
+        "nimi": {
+          "en": "Vocational qualification in Business",
+          "fi": "Liiketoiminnan perustutkinto",
+          "sv": "Grundexamen i affärsverksamhet"
+        },
+        "muokkaaja": {
+          "oid": "1.2.246.562.24.46610968871",
+          "nimi": "Annika Grönholm"
+        },
+        "oid": "1.2.246.562.13.00000000000000000001",
+        "kielivalinta": [
+          "fi",
+          "sv",
+          "en"
+        ],
+        "koulutus": {
+          "koodiUri": "koulutus_331101#12",
+          "nimi": {
+            "en": "Vocational qualification in Business",
+            "fi": "Liiketoiminnan perustutkinto",
+            "sv": "Grundexamen i affärsverksamhet"
+          }
+        },
+        "timestamp": 1606310529194,
+        "julkinen": true,
+        "organisaatiot": [
+          "1.2.246.562.10.00000000001",
+          "1.2.246.562.10.51053050251",
+          "1.2.246.562.10.594252633210",
+          "1.2.246.562.10.81934895871",
+          "1.2.246.562.10.82246911869",
+          "1.2.246.562.10.93016938081",
+          "1.2.246.562.10.93135224694"
+        ],
+        "organisaatio": {
+          "paikkakunta": {
+            "koodiUri": null,
+            "nimi": {}
+          },
+          "nimi": {
+            "fi": "Opetushallitus",
+            "sv": "Utbildningsstyrelsen",
+            "en": "Finnish National Agency for Education"
+          },
+          "oid": "1.2.246.562.10.00000000001"
+        },
+        "metadata": {
+          "tyyppi": "amm",
+          "kuvaus": {},
+          "lisatiedot": [],
+          "tutkintonimike": [
+            {
+              "koodiUri": "tutkintonimikkeet_10059",
+              "nimi": {
+                "sv": "Merkonom",
+                "fi": "Merkonomi",
+                "en": "Vocational Qualification in Business and Administration"
+              }
+            }
+          ],
+          "opintojenLaajuus": {
+            "nimi": {
+              "en": "180",
+              "fi": "180",
+              "sv": "180"
+            },
+            "koodiUri": "opintojenlaajuus_180"
+          },
+          "opintojenLaajuusyksikko": {
+            "koodiUri": "opintojenlaajuusyksikko_6",
+            "nimi": {
+              "sv": "kompetenspoäng",
+              "fi": "osaamispistettä",
+              "en": "ECVET competence points"
+            }
+          },
+          "koulutusala": [
+            {
+              "koodiUri": "kansallinenkoulutusluokitus2016koulutusalataso1_04",
+              "nimi": {
+                "en": "Business, administration and law",
+                "sv": "Handel, administration och juridik",
+                "fi": "Kauppa, hallinto ja oikeustieteet"
+              }
+            }
+          ]
+        },
+        "koulutustyyppi": "amm"
+      }
+    }
+  }
+]
