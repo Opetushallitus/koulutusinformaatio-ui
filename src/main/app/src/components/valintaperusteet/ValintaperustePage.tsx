@@ -84,7 +84,7 @@ export const ValintaperustePage = () => {
   const { valintaperuste, koulutus, toteutus, hakukohde } = data;
 
   const {
-    metadata: { kuvaus, valintatavat },
+    metadata: { kuvaus, sisalto, valintatavat },
   } = valintaperuste || { metadata: { kuvaus: {}, valintatavat: [] } };
   const toteutusLink = toteutus && `/toteutus/${toteutus.oid}`;
 
@@ -123,10 +123,19 @@ export const ValintaperustePage = () => {
           </Grid>
           <Grid item xs={12} md={3} />
           <Grid item xs={12} md={3}>
+            {/* TODO: Refactor Sisallysluettelo, this is really complex to read */}
+            {/* e.g. just give a precalculated bunch of ids to the component */}
             <Sisallysluettelo>
               {[
                 (l: any) => l(t('valintaperuste.kuvaus')),
-                KuvausSisallysluettelo(kuvaus),
+                // Links to any kuvaus or sisalto subtitles given in HTML-string
+                KuvausSisallysluettelo(kuvaus, 'kuvaus-sisallysluettelo'),
+                ...(sisalto?.length > 0
+                  ? sisalto.map((s: any, i: number) =>
+                      KuvausSisallysluettelo(s.data, `sisalto-${i}`)
+                    )
+                  : []),
+
                 ValintatavatSisallysluettelo(valintatavat),
                 ValintakokeetSisallysluettelo(valintakokeet),
                 (ll: any) =>
@@ -142,7 +151,7 @@ export const ValintaperustePage = () => {
             </Sisallysluettelo>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Kuvaus kuvaus={kuvaus} valintatavat={valintatavat} />
+            <Kuvaus kuvaus={kuvaus} sisalto={sisalto} valintatavat={valintatavat} />
             {valintakokeet.length > 0 && <Valintakokeet valintakokeet={valintakokeet} />}
             {valintaperuste.sorakuvaus && <Sora {...valintaperuste.sorakuvaus} />}
             <Liitteet liitteet={hakukohde?.liitteet} />

@@ -15,8 +15,15 @@ import _fp from 'lodash/fp';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { colors } from '#/src/colors';
+import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 import { Localizer as l, toId } from '#/src/tools/Utils';
-import { LocalizedHTML } from './LocalizedHTML';
+import {
+  Sisalto,
+  SisaltoTaulukko,
+  SisaltoTeksti,
+  Valintatapa,
+} from './ValintaperusteTypes';
+import { Translateable } from '#/src/types/common';
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
@@ -60,15 +67,13 @@ const tagHeaders = (node: any) => {
   }
 };
 
-const Teksti = ({ data }: any) => (
+const Teksti = ({ data }: SisaltoTeksti) => (
   <Grid item xs={12}>
     <LocalizedHTML data={data} transform={tagHeaders} />
   </Grid>
 );
 
-const Taulukko = ({
-  data: { rows = [] as Array<{ isHeader: boolean; columns: Array<any> }> },
-}) => {
+const Taulukko = ({ data: { rows } }: SisaltoTaulukko) => {
   const { t } = useTranslation();
   const [headerRow, ...restRows] = rows;
 
@@ -78,7 +83,7 @@ const Taulukko = ({
         <TableHead>
           <StyledTableRow>
             {headerRow?.columns.map((col, index) => (
-              <HeaderCell key={`cell-${index}`} align="left" colSpan={col.span}>
+              <HeaderCell key={`cell-${index}`} align="left">
                 {l.localize(col?.text)}
               </HeaderCell>
             ))}
@@ -103,7 +108,7 @@ const Taulukko = ({
   );
 };
 
-const Sisalto = ({ tyyppi, ...props }: any, index: number) => {
+const SisaltoComponent = ({ tyyppi, ...props }: Sisalto[0], index: number) => {
   const addKey = (element: any) => (
     <Box pb={2} key={`sisalto-${index}`}>
       {element}
@@ -112,34 +117,48 @@ const Sisalto = ({ tyyppi, ...props }: any, index: number) => {
 
   switch (tyyppi) {
     case 'teksti':
-      return addKey(Teksti(props));
+      return addKey(Teksti(props as SisaltoTeksti));
 
     case 'taulukko':
-      return addKey(Taulukko(props));
+      return addKey(Taulukko(props as SisaltoTaulukko));
 
     default:
       return null;
   }
 };
 
-export const ValintatavatSisallysluettelo = (valintatavat: Array<any>) => (Lnk: any) =>
+export const ValintatavatSisallysluettelo = (valintatavat: Array<Valintatapa>) => (
+  Lnk: any
+) =>
   !_fp.isEmpty(valintatavat)
-    ? valintatavat.map(({ nimi }, index) => Lnk(l.localize(nimi), index + 1, false))
+    ? valintatavat.map(({ nimi, sisalto }, index) =>
+        // Link to title and links to sisalto subtitles given in HTML-string
+        [
+          Lnk(l.localize(nimi), index + 1, false),
+          ...sisalto.map((s) =>
+            s.tyyppi === 'teksti'
+              ? KuvausSisallysluettelo(s.data, toId(l.localize(nimi) + index))(Lnk)
+              : null
+          ),
+        ]
+      )
     : null;
 
-const Valintatapa = (props: any, index: number) => (
+const ValintatapaComponent = ({ nimi, sisalto }: Valintatapa, index: number) => (
   <div key={`valintatapa-${index}`}>
     <Box pb={1}>
-      <Typography variant="h2" id={`${toId(l.localize(props?.nimi))}`}>
-        {l.localize(props?.nimi)}
+      <Typography variant="h2" id={`${toId(l.localize(nimi))}`}>
+        {l.localize(nimi)}
       </Typography>
     </Box>
-    {props.sisalto.map(Sisalto)}
+    {sisalto.map(SisaltoComponent)}
   </div>
 );
 
-// NOTE: This parses given kuvaus and returns a list of links to headers found in it
-export const KuvausSisallysluettelo = (kuvaus: any) => (Lnk: any) => {
+// NOTE: This parses any given kuvaus and returns a list of links to headers found in it
+export const KuvausSisallysluettelo = (kuvaus: Translateable, key: string) => (
+  Lnk: any
+) => {
   const onlyHeaders = (node: any) => {
     if (isHeader(node.name)) {
       const text = node.children[0].data;
@@ -151,16 +170,17 @@ export const KuvausSisallysluettelo = (kuvaus: any) => (Lnk: any) => {
 
   return _fp.isEmpty(kuvaus) ? null : (
     // NOTE: Dunno why this needs a separate key
-    <LocalizedHTML
-      noWrapper
-      key="kuvaus-sisallysluettelo"
-      data={kuvaus}
-      transform={onlyHeaders}
-    />
+    <LocalizedHTML noWrapper key={key} data={kuvaus} transform={onlyHeaders} />
   );
 };
 
-export const Kuvaus = ({ kuvaus, valintatavat }: any) => {
+type Props = {
+  kuvaus: Translateable;
+  sisalto: Sisalto;
+  valintatavat: Array<Valintatapa>;
+};
+
+export const Kuvaus = ({ kuvaus, sisalto = [], valintatavat }: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -174,9 +194,14 @@ export const Kuvaus = ({ kuvaus, valintatavat }: any) => {
             <LocalizedHTML data={kuvaus} transform={tagHeaders} />
           </Grid>
         )}
+        {sisalto?.length > 0 && (
+          <Grid item xs={12}>
+            {sisalto.map(SisaltoComponent)}
+          </Grid>
+        )}
         {valintatavat?.length > 0 && (
           <Grid item xs={12}>
-            {valintatavat.map(Valintatapa)}
+            {valintatavat.map(ValintatapaComponent)}
           </Grid>
         )}
       </Grid>

@@ -13,11 +13,11 @@ import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import Murupolku from '#/src/components/common/Murupolku';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import NotFound from '#/src/NotFound';
-import OppilaitosinfoGrid from './OppilaitosinfoGrid';
+import { OppilaitosinfoGrid } from './OppilaitosinfoGrid';
 import TarjontaList from './TarjontaList';
 import { TietoaOpiskelusta } from './TietoaOpiskelusta';
-import Yhteystiedot from './Yhteystiedot';
-import TulevaTarjontaList from './TulevaTarjontaList';
+import { Yhteystiedot } from './Yhteystiedot';
+import { TulevaTarjontaList } from './TulevaTarjontaList';
 import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
 import OppilaitosOsaList from './OppilaitosOsaList';
 
@@ -141,7 +141,7 @@ const Oppilaitos = (props) => {
             className={classes.root}
             heading={t('oppilaitos.yhteystiedot')}
             logo={oppilaitos?.oppilaitos?.logo}
-            metadata={oppilaitos?.oppilaitos?.metadata}
+            yhteystiedot={oppilaitos?.oppilaitos?.metadata?.yhteystiedot}
             nimi={l.localize(oppilaitos)}
           />
         </Box>

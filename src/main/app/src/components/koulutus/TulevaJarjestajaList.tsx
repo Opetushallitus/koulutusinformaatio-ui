@@ -1,9 +1,11 @@
+import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
-import { Typography, Grid, Container, makeStyles } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import Spacer from '#/src/components/common/Spacer';
 import { Localizer as l } from '#/src/tools/Utils';
-import OppilaitosCard from './OppilaitosCard';
-import { useTranslation } from 'react-i18next';
+import { Koodi } from '#/src/types/common';
+import { Jarjestaja } from '#/src/types/ToteutusTypes';
+import { OppilaitosCard } from './OppilaitosCard';
 
 const useStyles = makeStyles({
   container: {
@@ -14,12 +16,15 @@ const useStyles = makeStyles({
   },
 });
 
-const localizeArrayToString = (toLocalizeArray) =>
+const localizeArrayToString = (toLocalizeArray: Array<Koodi>) =>
   toLocalizeArray.map(l.localize).sort().join(', ');
 
-const TulevaJarjestajaList = (props) => {
+type Props = {
+  jarjestajat: Array<Jarjestaja>;
+};
+
+export const TulevaJarjestajaList = ({ jarjestajat }: Props) => {
   const classes = useStyles();
-  const { jarjestajat } = props;
   const { t } = useTranslation();
 
   return (
@@ -28,10 +33,10 @@ const TulevaJarjestajaList = (props) => {
         {t('koulutus.muut-koulutusta-jarjestavat-oppilaitokset')}
       </Typography>
       <Spacer />
-      <Grid container direction="row" justify="center" spacing={1}>
-        {jarjestajat.map((jarjestaja, i) => (
+      <Grid container direction="row" justify="center" spacing={2}>
+        {jarjestajat.map((jarjestaja) => (
           <OppilaitosCard
-            key={i}
+            key={jarjestaja.oppilaitosOid}
             heading={l.localize(jarjestaja.nimi)}
             locations={localizeArrayToString(jarjestaja.kunnat)}
             tyyppi={jarjestaja.koulutustyyppi}
@@ -43,5 +48,3 @@ const TulevaJarjestajaList = (props) => {
     </Container>
   );
 };
-
-export default TulevaJarjestajaList;

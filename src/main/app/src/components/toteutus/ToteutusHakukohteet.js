@@ -1,17 +1,27 @@
-import React from 'react';
-import { Box, Typography, Grid, Paper, Button, makeStyles } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Grid,
+  makeStyles,
+  Paper,
+  Typography,
+} from '@material-ui/core';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
-import Spacer from '#/src/components/common/Spacer';
 import { format } from 'date-fns';
-import { Localizer as l } from '#/src/tools/Utils';
+import _ from 'lodash';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { colors } from '#/src/colors';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
 import { Link as RouterLink } from 'react-router-dom';
+import { colors } from '#/src/colors';
+import { LabelTooltip } from '#/src/components/common/LabelTooltip';
+import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
+import LocalizedLink from '#/src/components/common/LocalizedLink';
+import Spacer from '#/src/components/common/Spacer';
 import { HAKULOMAKE_TYYPPI } from '#/src/constants';
 import { useOppilaitosOsoite } from '#/src/tools/UseOppilaitosOsoiteHook';
+import { Localizer as l } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({
   gridHeading: {
@@ -146,10 +156,29 @@ const HakuCardGrid = (props) => {
                             </Grid>
                           )}
                           <Grid item xs={6}>
-                            <Grid item>
-                              <Typography className={classes.gridHeading} noWrap>
-                                {t('koulutus.pohjakoulutus') + ':'}
-                              </Typography>
+                            <Grid
+                              item
+                              container
+                              spacing={1}
+                              wrap="nowrap"
+                              alignItems="flex-start">
+                              <Grid item>
+                                <Typography className={classes.gridHeading} noWrap>
+                                  {t('koulutus.pohjakoulutus') + ':'}
+                                </Typography>
+                              </Grid>
+                              {!_.isEmpty(haku.pohjakoulutusvaatimusTarkenne) && (
+                                <Grid item>
+                                  <LabelTooltip
+                                    title={
+                                      <LocalizedHTML
+                                        noMargin
+                                        data={haku.pohjakoulutusvaatimusTarkenne}
+                                      />
+                                    }
+                                  />
+                                </Grid>
+                              )}
                             </Grid>
                             <Grid item>
                               <Typography variant="body1" noWrap>
@@ -219,7 +248,7 @@ const HakuCardGrid = (props) => {
   );
 };
 
-const ToteutusHakukohteet = (props) => {
+export const ToteutusHakukohteet = (props) => {
   const { t } = useTranslation();
   const { jatkuvatHaut, erillisHaut, yhteisHaut } = props;
   return (
@@ -258,5 +287,3 @@ const ToteutusHakukohteet = (props) => {
     </Box>
   );
 };
-
-export default ToteutusHakukohteet;

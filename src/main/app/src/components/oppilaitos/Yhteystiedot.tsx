@@ -1,12 +1,13 @@
+import { Box, Button, Grid, makeStyles, Typography } from '@material-ui/core';
+import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Grid, makeStyles, Typography, Box } from '@material-ui/core';
-import OskariKartta from '#/src/components/common/OskariKartta';
-import _ from 'lodash';
-import { koodiUriToPostinumero, Localizer as l } from '#/src/tools/Utils';
 import DefaultHeroImage from '#/src/assets/images/herokuva_default.png';
 import { colors } from '#/src/colors';
+import OskariKartta from '#/src/components/common/OskariKartta';
 import Spacer from '#/src/components/common/Spacer';
+import { koodiUriToPostinumero, Localizer as l } from '#/src/tools/Utils';
+import { Yhteystiedot as YhteystiedotType } from '#/src/types/common';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -37,25 +38,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Yhteystiedot = ({ className, heading, logo, metadata, nimi }) => {
+type Props = {
+  className: string;
+  heading: string;
+  logo: string;
+  yhteystiedot: YhteystiedotType;
+  nimi: string;
+};
+
+export const Yhteystiedot = ({ className, heading, logo, yhteystiedot, nimi }: Props) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const osoite = _.get(metadata, 'yhteystiedot.osoite.osoite.fi', '');
-  const postinumero = koodiUriToPostinumero(
-    _.get(metadata, 'yhteystiedot.osoite.postinumero.koodiUri', '')
-  );
-  const postitoimipaikka = _.capitalize(
-    _.get(metadata, 'yhteystiedot.osoite.postinumero.nimi.fi', '')
-  );
 
-  const getYhteystiedot = () => {
-    if (!osoite && !postinumero && !postitoimipaikka) {
-      return t('oppilaitos.ei-yhteystietoja');
-    }
-    return _.trim(`${osoite}, ${postinumero} ${postitoimipaikka}`, ', ');
-  };
+  const osoite = l.localize(yhteystiedot?.osoite?.osoite);
+  const postinumero = koodiUriToPostinumero(yhteystiedot?.osoite?.postinumero?.koodiUri);
+  const postitoimipaikka = _.capitalize(l.localize(yhteystiedot?.osoite?.postinumero));
 
-  const hasHomepage = !_.isEmpty(_.get(metadata, 'yhteystiedot.wwwSivu'));
+  const shownYhteystiedot =
+    !osoite && !postinumero && !postitoimipaikka
+      ? t('oppilaitos.ei-yhteystietoja')
+      : _.trim(`${osoite}, ${postinumero} ${postitoimipaikka}`, ', ');
+
+  const homePage = yhteystiedot?.wwwSivu;
 
   return (
     <Box
@@ -84,13 +88,13 @@ const Yhteystiedot = ({ className, heading, logo, metadata, nimi }) => {
               {nimi}
             </Typography>
             <Typography component="div" variant="body1">
-              {getYhteystiedot()}
+              {shownYhteystiedot}
             </Typography>
-            {hasHomepage && (
+            {homePage && (
               <Button
                 className={classes.button}
                 target="_blank"
-                href={l.localize(_.get(metadata, 'yhteystiedot.wwwSivu'))}
+                href={l.localize(homePage)}
                 fullWidth
                 variant="contained"
                 size="medium"
@@ -111,5 +115,3 @@ const Yhteystiedot = ({ className, heading, logo, metadata, nimi }) => {
     </Box>
   );
 };
-
-export default Yhteystiedot;

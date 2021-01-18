@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import { observer } from 'mobx-react-lite';
-import InfoGrid from '../common/InfoGrid';
+import { InfoGrid } from '../common/InfoGrid';
 import { Typography, Grid } from '@material-ui/core';
 import { useStores } from '../../hooks';
 import InfoCardGrid from '../common/InfoCardGrid';

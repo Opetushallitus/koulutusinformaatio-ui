@@ -2,7 +2,7 @@ import { Box, Grid, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { toId } from '#/src/tools/Utils';
-import { LocalizedHTML } from './LocalizedHTML';
+import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 
 const Headers = ['h1', 'h2', 'h3', 'h4', 'h5'];
 const isHeader = (tag: string) => Headers.includes(tag);
@@ -30,7 +30,7 @@ export const Sora = ({ metadata: { kuvaus } }: Props) => {
       <Grid container spacing={2} justify="flex-start" alignItems="flex-start">
         <Grid item xs={12} sm={12} md={12}>
           <Box py={2}>
-            <Typography variant="h2">
+            <Typography variant="h2" id="hakijan-terveydentila-ja-toimintakyky">
               {t('valintaperuste.hakijan-terveydentila-ja-toimintakyky')}
             </Typography>
           </Box>

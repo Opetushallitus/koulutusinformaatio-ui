@@ -7,7 +7,7 @@ import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import Accordion from '#/src/components/common/Accordion';
+import { Accordion } from '#/src/components/common/Accordion';
 import ContentWrapper from '#/src/components/common/ContentWrapper';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
@@ -27,7 +27,7 @@ import { useUrlParams } from '../hakutulos/UseUrlParams';
 import { KoulutusInfoGrid } from './KoulutusInfoGrid';
 import SuositusKoulutusList from './SuositusKoulutusList';
 import { ToteutusList } from './ToteutusList';
-import TulevaJarjestajaList from './TulevaJarjestajaList';
+import { TulevaJarjestajaList } from './TulevaJarjestajaList';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },

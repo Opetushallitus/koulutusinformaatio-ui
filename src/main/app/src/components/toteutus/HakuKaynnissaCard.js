@@ -15,9 +15,10 @@ const useStyles = makeStyles({
   buttonText: { color: '#FFFFFF' },
 });
 
-const HakuKaynnissaCard = (props) => {
+export const HakuKaynnissaCard = (props) => {
   const classes = useStyles();
   const { title, text, link, buttonText } = props;
+
   return (
     <Card className={classes.card} elevation={2}>
       <CardContent className={classes.gridWrapper}>
@@ -44,5 +45,3 @@ const HakuKaynnissaCard = (props) => {
     </Card>
   );
 };
-
-export default HakuKaynnissaCard;

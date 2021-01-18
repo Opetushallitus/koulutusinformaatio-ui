@@ -1,19 +1,18 @@
-import React from 'react';
-import InfoGrid from '../common/InfoGrid';
-import TimelapseIcon from '@material-ui/icons/Timelapse';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import EuroIcon from '@material-ui/icons/Euro';
 import FlagOutlinedIcon from '@material-ui/icons/FlagOutlined';
 import HourglassEmptyOutlinedIcon from '@material-ui/icons/HourglassEmptyOutlined';
-import InfoOutlined from '@material-ui/icons/InfoOutlined';
-import EuroIcon from '@material-ui/icons/Euro';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import ScheduleIcon from '@material-ui/icons/Schedule';
-import { useTranslation } from 'react-i18next';
+import TimelapseIcon from '@material-ui/icons/Timelapse';
 import { makeStyles } from '@material-ui/styles';
-import { Localizer as l } from '#/src/tools/Utils';
 import { format } from 'date-fns';
 import _ from 'lodash';
-import { sanitizedHTMLParser } from '#/src/tools/Utils';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
+import { Localizer as l } from '#/src/tools/Utils';
+import { InfoGrid } from '../common/InfoGrid';
 
 const useStyles = makeStyles((theme) => ({
   koulutusInfoGridIcon: {
@@ -82,12 +81,9 @@ export const ToteutusInfoGrid = (props) => {
       icon: <ChatBubbleOutlineIcon className={classes.koulutusInfoGridIcon} />,
       title: t('toteutus.opetuskieli'),
       text: kieliString,
-      modalData: {
-        icon: <InfoOutlined />,
-        text:
-          !_.isEmpty(opetuskieletKuvaus) &&
-          sanitizedHTMLParser(l.localize(opetuskieletKuvaus)),
-      },
+      modalText: !_.isEmpty(opetuskieletKuvaus) && (
+        <LocalizedHTML data={opetuskieletKuvaus} noMargin />
+      ),
     },
     {
       icon: <TimelapseIcon className={classes.koulutusInfoGridIcon} />,
@@ -98,12 +94,9 @@ export const ToteutusInfoGrid = (props) => {
       icon: <ScheduleIcon className={classes.koulutusInfoGridIcon} />,
       title: t('koulutus.suunniteltu-kesto'),
       text: kestoString,
-      modalData: {
-        icon: <InfoOutlined />,
-        text:
-          !_.isEmpty(suunniteltuKestoKuvaus) &&
-          sanitizedHTMLParser(l.localize(suunniteltuKestoKuvaus)),
-      },
+      modalText: !_.isEmpty(suunniteltuKestoKuvaus) && (
+        <LocalizedHTML data={suunniteltuKestoKuvaus} noMargin />
+      ),
     },
     {
       icon: <FlagOutlinedIcon className={classes.koulutusInfoGridIcon} />,
@@ -114,43 +107,33 @@ export const ToteutusInfoGrid = (props) => {
       icon: <HourglassEmptyOutlinedIcon className={classes.koulutusInfoGridIcon} />,
       title: t('toteutus.opetusaika'),
       text: opetusAikaString,
-      modalData: {
-        icon: <InfoOutlined />,
-        text:
-          !_.isEmpty(opetusaikaKuvaus) &&
-          sanitizedHTMLParser(l.localize(opetusaikaKuvaus)),
-      },
+      modalText: !_.isEmpty(opetusaikaKuvaus) && (
+        <LocalizedHTML data={opetusaikaKuvaus} noMargin />
+      ),
     },
     {
       icon: <MenuBookIcon className={classes.koulutusInfoGridIcon} />,
       title: t('toteutus.opetustapa'),
       text: opetustapaString,
-      modalData: {
-        icon: <InfoOutlined />,
-        text:
-          !_.isEmpty(opetustapaKuvaus) &&
-          sanitizedHTMLParser(l.localize(opetustapaKuvaus)),
-      },
+      modalText: !_.isEmpty(opetustapaKuvaus) && (
+        <LocalizedHTML data={opetustapaKuvaus} noMargin />
+      ),
     },
     {
       icon: <EuroIcon className={classes.koulutusInfoGridIcon} />,
       title: t('toteutus.maksullisuus'),
       text: maksullisuusString,
-      modalData: {
-        icon: <InfoOutlined />,
-        text:
-          !_.isEmpty(maksullisuusKuvaus) &&
-          sanitizedHTMLParser(l.localize(maksullisuusKuvaus)),
-      },
+      modalText: !_.isEmpty(maksullisuusKuvaus) && (
+        <LocalizedHTML data={maksullisuusKuvaus} noMargin />
+      ),
     },
     {
       icon: 'ApurahaIcon',
       title: t('toteutus.apuraha'),
       text: apurahaString,
-      modalData: {
-        icon: <InfoOutlined />,
-        text: !_.isEmpty(apurahaKuvaus) && sanitizedHTMLParser(l.localize(apurahaKuvaus)),
-      },
+      modalText: !_.isEmpty(apurahaKuvaus) && (
+        <LocalizedHTML data={apurahaKuvaus} noMargin />
+      ),
     }
   );
 
