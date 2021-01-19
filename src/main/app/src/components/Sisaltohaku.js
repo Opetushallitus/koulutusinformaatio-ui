@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import { withRouter } from 'react-router-dom';
 import Murupolku from './common/Murupolku';
 import parse from 'url-parse';

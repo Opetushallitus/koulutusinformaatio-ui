@@ -20,7 +20,7 @@ import {
   toId,
 } from '#/src/tools/Utils';
 import { Koodi, Translateable } from '#/src/types/common';
-import { Liite } from '#/src/types/valintaperuste-types';
+import { Liite } from '#/src/types/ValintaperusteTypes';
 
 type OsoiteProps = {
   toimitusaika: string;

@@ -17,7 +17,7 @@ import {
   Toolbar,
   Hidden,
 } from '@material-ui/core';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import BetaBanner from '#/src/components/common/BetaBanner';
 import clsx from 'clsx';
 import LanguageDropDown from './LanguageDropDown';

@@ -17,7 +17,7 @@ import { Localizer as l } from '#/src/tools/Utils';
 import oppilaitos_img from '#/src/assets/images/logo-oppilaitos.png';
 import { educationTypeColorCode } from '#/src/colors';
 import { MUI_BREAKPOINTS } from '#/src/constants';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {

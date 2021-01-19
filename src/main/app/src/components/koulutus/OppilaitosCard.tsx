@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import OppilaitosLogo from '#/src/assets/images/Opolkuhts.png';
 import { educationTypeColorCode } from '#/src/colors';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 
 type StylesProps = Pick<Props, 'tyyppi'>;
 

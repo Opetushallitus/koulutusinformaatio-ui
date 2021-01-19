@@ -84,12 +84,16 @@ export const ValintaperustePage = () => {
   const { valintaperuste, koulutus, toteutus, hakukohde } = data;
 
   const {
-    metadata: { kuvaus, sisalto, valintatavat },
+    metadata: { kuvaus, sisalto, valintakokeidenYleiskuvaus, valintatavat },
   } = valintaperuste || { metadata: { kuvaus: {}, valintatavat: [] } };
   const toteutusLink = toteutus && `/toteutus/${toteutus.oid}`;
 
   const valintakokeet =
     _fp.concat(hakukohde?.valintakokeet, valintaperuste?.valintakokeet) || [];
+  const yleiskuvaukset = [
+    hakukohde?.metadata?.valintakokeidenYleiskuvaus,
+    valintakokeidenYleiskuvaus,
+  ].filter(Boolean);
 
   return isFetching ? (
     <LoadingCircle />
@@ -152,7 +156,12 @@ export const ValintaperustePage = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <Kuvaus kuvaus={kuvaus} sisalto={sisalto} valintatavat={valintatavat} />
-            {valintakokeet.length > 0 && <Valintakokeet valintakokeet={valintakokeet} />}
+            {valintakokeet.length > 0 && (
+              <Valintakokeet
+                yleiskuvaukset={yleiskuvaukset}
+                valintakokeet={valintakokeet}
+              />
+            )}
             {valintaperuste.sorakuvaus && <Sora {...valintaperuste.sorakuvaus} />}
             <Liitteet liitteet={hakukohde?.liitteet} />
           </Grid>

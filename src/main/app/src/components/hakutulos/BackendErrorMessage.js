@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Avatar, Button, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import { ErrorOutline } from '@material-ui/icons';
 import { colors } from '../../colors';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles((theme) => ({
   gridOuterContainerRoot: {
