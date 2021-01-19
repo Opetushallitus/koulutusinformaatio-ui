@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   },
 });
 
-const NotFound = () => {
+export const NotFound = () => {
   const { t } = useTranslation();
   const classes = useStyles();
   return (
@@ -61,5 +61,3 @@ const NotFound = () => {
     </div>
   );
 };
-
-export default NotFound;

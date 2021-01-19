@@ -159,9 +159,10 @@ const ValintatapaComponent = ({ nimi, sisalto }: Valintatapa, index: number) => 
 );
 
 // NOTE: This parses any given kuvaus and returns a list of links to headers found in it
-export const KuvausSisallysluettelo = (kuvaus: Translateable, key: string) => (
-  Lnk: any
-) => {
+export const KuvausSisallysluettelo = (
+  kuvaus: { nimi: Translateable } | Translateable,
+  key: string
+) => (Lnk: any) => {
   const onlyHeaders = (node: any) => {
     if (isHeader(node.name) && node.children[0]?.data) {
       const text = node.children[0].data;

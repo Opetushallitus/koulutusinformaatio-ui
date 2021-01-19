@@ -1,26 +1,28 @@
-import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Box, Divider, Grid, makeStyles, Typography } from '@material-ui/core';
 import _fp from 'lodash/fp';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import {
-  getHakukohde,
-  getKoulutus,
-  getToteutus,
-  getValintaperuste,
-} from '#/src/api/konfoApi';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import Murupolku from '#/src/components/common/Murupolku';
+import { NotFound } from '#/src/NotFound';
 import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import { Localizer as l } from '#/src/tools/Utils';
+import { Translateable } from '#/src/types/common';
+import {
+  PageData,
+  PreviewPageData,
+  useValintaperustePageData,
+  useValintaperustePreviewPageData,
+} from './hooks';
 import { Kuvaus, KuvausSisallysluettelo, ValintatavatSisallysluettelo } from './Kuvaus';
 import { Liitteet, LiitteetSisallysluettelo } from './Liitteet';
 import { Paluu } from './Paluu';
 import { Sisallysluettelo } from './Sisallysluettelo';
 import { Sora } from './Sora';
 import { Valintakokeet, ValintakokeetSisallysluettelo } from './Valintakokeet';
+import { Sisalto } from './ValintaperusteTypes';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -40,41 +42,124 @@ const Row: React.FC = ({ children }) => {
   );
 };
 
-type PageDataProps = {
-  hakukohdeOid: string;
-};
-type PageData = {
+type ContentProps = {
+  hakukohde?: any;
+  kuvaus: Translateable;
+  sisalto: Sisalto;
+  valintakokeet: any;
   valintaperuste: any;
-  koulutus: any;
-  toteutus: any;
-  hakukohde: any;
+  valintatavat: any;
+  yleiskuvaukset: any;
 };
 
-const getValintaperustePageData = async ({ hakukohdeOid }: PageDataProps) => {
-  // TODO: Backend should return most of the data using getValintaperuste()
-  const hakukohde = await getHakukohde(hakukohdeOid);
-  const { toteutus: hakukohdeToteutus, valintaperuste: hakukohdeValintaperuste } =
-    hakukohde ?? {};
-  const valintaperuste = await getValintaperuste(hakukohdeValintaperuste?.id);
-  const toteutus = await getToteutus(hakukohdeToteutus?.oid);
-  const koulutus = await getKoulutus(toteutus?.koulutusOid);
+const ValintaperusteContent = ({
+  hakukohde,
+  kuvaus,
+  sisalto,
+  valintakokeet,
+  valintaperuste,
+  valintatavat,
+  yleiskuvaukset,
+}: ContentProps) => {
+  const { t } = useTranslation();
 
-  return { koulutus, toteutus, hakukohde, valintaperuste };
+  return (
+    <>
+      <Grid item xs={12} md={3}>
+        {/* TODO: Refactor Sisallysluettelo, this is really complex to read */}
+        {/* e.g. just give a precalculated bunch of ids to the component */}
+        <Sisallysluettelo>
+          {[
+            (l: any) => l(t('valintaperuste.kuvaus')),
+            // Links to any kuvaus or sisalto subtitles given in HTML-string
+            KuvausSisallysluettelo(kuvaus, 'kuvaus-sisallysluettelo'),
+            ...(sisalto?.length > 0
+              ? sisalto.map((s, i) => KuvausSisallysluettelo(s.data, `sisalto-${i}`))
+              : []),
+
+            ValintatavatSisallysluettelo(valintatavat),
+            ValintakokeetSisallysluettelo(valintakokeet),
+            (l: any) =>
+              valintaperuste.sorakuvaus
+                ? l(t('valintaperuste.hakijan-terveydentila-ja-toimintakyky'))
+                : null,
+            (l: any) =>
+              !_fp.isEmpty(hakukohde?.liitteet) ? l(t('valintaperuste.liitteet')) : null,
+            LiitteetSisallysluettelo(hakukohde?.liitteet),
+          ]}
+        </Sisallysluettelo>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <Kuvaus kuvaus={kuvaus} sisalto={sisalto} valintatavat={valintatavat} />
+        {valintakokeet.length > 0 && (
+          <Valintakokeet yleiskuvaukset={yleiskuvaukset} valintakokeet={valintakokeet} />
+        )}
+        {valintaperuste.sorakuvaus && <Sora {...valintaperuste.sorakuvaus} />}
+        <Liitteet liitteet={hakukohde?.liitteet} />
+      </Grid>
+    </>
+  );
 };
 
-const useValintaperustePageData = ({ hakukohdeOid }: PageDataProps) => {
-  return useQuery<PageData>(
-    ['getValintaperustePageData', { hakukohdeOid }],
-    (_, props: PageDataProps) => getValintaperustePageData(props),
-    {
-      refetchOnWindowFocus: false,
-    }
+export const ValintaperustePreviewPage = () => {
+  const classes = useStyles();
+  const { valintaperusteId } = useParams<{ valintaperusteId: string }>();
+  const { t } = useTranslation();
+
+  const {
+    data = {} as PreviewPageData,
+    isFetching,
+    error,
+  } = useValintaperustePreviewPageData({
+    valintaperusteId,
+  });
+  const { valintaperuste } = data;
+
+  const {
+    metadata: { kuvaus, sisalto, valintakokeidenYleiskuvaus, valintatavat },
+    valintakokeet,
+  } = valintaperuste || { metadata: { kuvaus: {}, valintatavat: [] } };
+
+  return isFetching ? (
+    <LoadingCircle />
+  ) : !error ? (
+    <Grid
+      container
+      direction="row"
+      spacing={0}
+      justify="flex-start"
+      className={classes.container}>
+      <Grid item xs={12} md={3} />
+      <Grid item xs={12} md={6}>
+        <Box pb={2}>
+          <Typography variant="h1" component="h1">
+            {t('lomake.valintaperusteet')}
+          </Typography>
+        </Box>
+        <Box pb={2}>
+          <Divider />
+        </Box>
+      </Grid>
+      <Grid item xs={12} md={3} />
+      <ValintaperusteContent
+        {...{
+          kuvaus,
+          sisalto,
+          valintakokeet,
+          valintaperuste,
+          valintatavat,
+          yleiskuvaukset: [valintakokeidenYleiskuvaus],
+        }}
+      />
+    </Grid>
+  ) : (
+    <NotFound />
   );
 };
 
 export const ValintaperustePage = () => {
   const classes = useStyles();
-  const { hakukohdeOid } = useParams<PageDataProps>();
+  const { hakukohdeOid } = useParams<{ hakukohdeOid: string }>();
   const { t } = useTranslation();
   const hakuUrl = useSelector(getHakuUrl);
 
@@ -97,76 +182,51 @@ export const ValintaperustePage = () => {
 
   return isFetching ? (
     <LoadingCircle />
-  ) : (
-    !error && (
-      <>
-        <Row>
-          <Murupolku
-            path={[
-              { name: t('haku.otsikko'), link: hakuUrl.url },
-              { name: l.localize(koulutus?.nimi), link: `/koulutus/${koulutus?.oid}` },
-              { name: l.localize(toteutus?.nimi), link: toteutusLink },
-              { name: l.localize(valintaperuste?.nimi) },
-            ]}
-          />
-        </Row>
-        <Grid
-          container
-          direction="row"
-          spacing={0}
-          justify="flex-start"
-          className={classes.container}>
-          <Grid item xs={12} md={3} />
-          <Grid item xs={12} md={6}>
-            <Paluu paluuLinkki={toteutusLink} />
-            <Box pb={2}>
-              <Typography variant="h1" component="h1">
-                {t('lomake.valintaperusteet')}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={3} />
-          <Grid item xs={12} md={3}>
-            {/* TODO: Refactor Sisallysluettelo, this is really complex to read */}
-            {/* e.g. just give a precalculated bunch of ids to the component */}
-            <Sisallysluettelo>
-              {[
-                (l: any) => l(t('valintaperuste.kuvaus')),
-                // Links to any kuvaus or sisalto subtitles given in HTML-string
-                KuvausSisallysluettelo(kuvaus, 'kuvaus-sisallysluettelo'),
-                ...(sisalto?.length > 0
-                  ? sisalto.map((s: any, i: number) =>
-                      KuvausSisallysluettelo(s.data, `sisalto-${i}`)
-                    )
-                  : []),
-
-                ValintatavatSisallysluettelo(valintatavat),
-                ValintakokeetSisallysluettelo(valintakokeet),
-                (ll: any) =>
-                  valintaperuste.sorakuvaus
-                    ? ll(t('valintaperuste.hakijan-terveydentila-ja-toimintakyky'))
-                    : null,
-                (l: any) =>
-                  !_fp.isEmpty(hakukohde?.liitteet)
-                    ? l(t('valintaperuste.liitteet'))
-                    : null,
-                LiitteetSisallysluettelo(hakukohde?.liitteet),
-              ]}
-            </Sisallysluettelo>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Kuvaus kuvaus={kuvaus} sisalto={sisalto} valintatavat={valintatavat} />
-            {valintakokeet.length > 0 && (
-              <Valintakokeet
-                yleiskuvaukset={yleiskuvaukset}
-                valintakokeet={valintakokeet}
-              />
-            )}
-            {valintaperuste.sorakuvaus && <Sora {...valintaperuste.sorakuvaus} />}
-            <Liitteet liitteet={hakukohde?.liitteet} />
-          </Grid>
+  ) : !error ? (
+    <>
+      <Row>
+        <Murupolku
+          path={[
+            { name: t('haku.otsikko'), link: hakuUrl.url },
+            { name: l.localize(koulutus?.nimi), link: `/koulutus/${koulutus?.oid}` },
+            { name: l.localize(toteutus?.nimi), link: toteutusLink },
+            { name: l.localize(valintaperuste?.nimi) },
+          ]}
+        />
+      </Row>
+      <Grid
+        container
+        direction="row"
+        spacing={0}
+        justify="flex-start"
+        className={classes.container}>
+        <Grid item xs={12} md={3} />
+        <Grid item xs={12} md={6}>
+          <Paluu paluuLinkki={toteutusLink} />
+          <Box pb={2}>
+            <Typography variant="h1" component="h1">
+              {t('lomake.valintaperusteet')}
+            </Typography>
+          </Box>
+          <Box pb={2}>
+            <Divider />
+          </Box>
         </Grid>
-      </>
-    )
+        <Grid item xs={12} md={3} />
+        <ValintaperusteContent
+          {...{
+            hakukohde,
+            kuvaus,
+            sisalto,
+            valintakokeet,
+            valintaperuste,
+            valintatavat,
+            yleiskuvaukset,
+          }}
+        />
+      </Grid>
+    </>
+  ) : (
+    <NotFound />
   );
 };
