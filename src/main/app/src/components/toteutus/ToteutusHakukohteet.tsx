@@ -121,7 +121,6 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                               )}`}
                             </Typography>
                           </Grid>
-                          {/* )} */}
                         </Grid>
                       </Grid>
                       <Grid item>

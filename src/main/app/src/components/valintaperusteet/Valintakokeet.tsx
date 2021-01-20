@@ -104,10 +104,19 @@ type Props = {
       vahimmaispisteet?: number;
     };
   }>;
-  yleiskuvaukset: Array<Translateable>;
+  yleiskuvaukset: {
+    valintaperuste: Translateable;
+    hakukohde: Translateable;
+  };
 };
 
-export const Valintakokeet = ({ yleiskuvaukset = [], valintakokeet = [] }: Props) => {
+export const Valintakokeet = ({
+  yleiskuvaukset: {
+    valintaperuste: valintaperusteYk,
+    hakukohde: hakukohdeYk,
+  } = {} as Props['yleiskuvaukset'],
+  valintakokeet = [],
+}: Props) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -116,9 +125,22 @@ export const Valintakokeet = ({ yleiskuvaukset = [], valintakokeet = [] }: Props
       <Box py={1}>
         <Typography variant="h2">{t('valintaperuste.valintakokeet')}</Typography>
       </Box>
-      {yleiskuvaukset.map((v, i) => (
-        <LocalizedHTML key={`yleiskuvaus-${i}`} data={v} />
-      ))}
+      {valintaperusteYk && (
+        <Box py={1}>
+          <Typography variant="h3">
+            {t('valintaperuste.valintakokeet-yleiskuvaus-valintaperuste')}
+          </Typography>
+          <LocalizedHTML data={valintaperusteYk} />
+        </Box>
+      )}
+      {hakukohdeYk && (
+        <Box py={1}>
+          <Typography variant="h3">
+            {t('valintaperuste.valintakokeet-yleiskuvaus-hakukohde')}
+          </Typography>
+          <LocalizedHTML data={hakukohdeYk} />
+        </Box>
+      )}
       {valintakokeet.map(({ nimi, tyyppi, tilaisuudet, metadata = {} }, index) => {
         const localizedTyyppi = l.localize(tyyppi?.nimi);
         const {

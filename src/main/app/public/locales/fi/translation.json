@@ -38,7 +38,9 @@
     "opiskelupaikkoja": "Opiskelupaikkoja",
     "pohjakoulutus": "Pohjakoulutus",
     "hakijan-terveydentila-ja-toimintakyky": "Hakijan terveydentila ja toimintakyky",
-    "alin-hyvaksytty-pistemaara": "Alin hyväksytty pistemäärä"
+    "alin-hyvaksytty-pistemaara": "Alin hyväksytty pistemäärä",
+    "valintakokeet-yleiskuvaus-valintaperuste": "Valintakokeiden yleiskuvaus valintaperusteista",
+    "valintakokeet-yleiskuvaus-hakukohde": "Valintakokeiden yleiskuvaus hakukohteelta"
   },
   "palvelut": {
     "otsikko-muut-palvelut": "Muut palvelut",

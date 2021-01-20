@@ -119,6 +119,9 @@ export const ValintaperustePreviewPage = () => {
     metadata: { kuvaus, sisalto, valintakokeidenYleiskuvaus, valintatavat },
     valintakokeet,
   } = valintaperuste || { metadata: { kuvaus: {}, valintatavat: [] } };
+  const yleiskuvaukset = {
+    valintaperuste: valintakokeidenYleiskuvaus,
+  };
 
   return isFetching ? (
     <LoadingCircle />
@@ -148,7 +151,7 @@ export const ValintaperustePreviewPage = () => {
           valintakokeet,
           valintaperuste,
           valintatavat,
-          yleiskuvaukset: [valintakokeidenYleiskuvaus],
+          yleiskuvaukset,
         }}
       />
     </Grid>
@@ -173,12 +176,13 @@ export const ValintaperustePage = () => {
   } = valintaperuste || { metadata: { kuvaus: {}, valintatavat: [] } };
   const toteutusLink = toteutus && `/toteutus/${toteutus.oid}`;
 
+  // TODO: when kouta-ui is refactored to use inheritance modify this to not use valintaperuste valintakokeet here
   const valintakokeet =
     _fp.concat(hakukohde?.valintakokeet, valintaperuste?.valintakokeet) || [];
-  const yleiskuvaukset = [
-    hakukohde?.metadata?.valintakokeidenYleiskuvaus,
-    valintakokeidenYleiskuvaus,
-  ].filter(Boolean);
+  const yleiskuvaukset = {
+    hakukohde: hakukohde?.metadata?.valintakokeidenYleiskuvaus,
+    valintaperuste: valintakokeidenYleiskuvaus,
+  };
 
   return isFetching ? (
     <LoadingCircle />

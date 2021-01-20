@@ -30,6 +30,7 @@ import {
   selectToteutus,
 } from '#/src/store/reducers/toteutusSlice';
 import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
+import { useUrlParams } from '#/src/components/hakutulos/UseUrlParams';
 import ContentWrapper from '../common/ContentWrapper';
 import { HakuKaynnissaCard } from './HakuKaynnissaCard';
 import { ToteutusHakuEiSahkoista } from './ToteutusHakuEiSahkoista';
@@ -115,6 +116,7 @@ const Toteutus = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const currentLanguage = l.getLanguage();
+  const { isDraft } = useUrlParams();
 
   // TODO: There is absolutely no error handling atm.
   const toteutus = useSelector(selectToteutus(oid), shallowEqual);
@@ -161,14 +163,14 @@ const Toteutus = () => {
 
   useEffect(() => {
     if (!toteutus) {
-      dispatch(fetchToteutus(oid));
+      dispatch(fetchToteutus(oid, isDraft));
     }
     // TODO: Get rid of koulutus call here when opintolaajuus AND tutkintonimikkeet comes from toteutus -backend
     if (!koulutus && koulutusOid && koulutusNotFetched) {
-      dispatch(fetchKoulutusWithRelatedData(toteutus.koulutusOid));
+      dispatch(fetchKoulutusWithRelatedData(toteutus.koulutusOid, isDraft));
       setKoulutusNotFetched(false);
     }
-  }, [toteutus, dispatch, oid, koulutus, koulutusOid, koulutusNotFetched]);
+  }, [isDraft, toteutus, dispatch, oid, koulutus, koulutusOid, koulutusNotFetched]);
 
   const opetus = toteutus?.metadata?.opetus;
   const hasAnyHaku = jatkuvatHaut?.length + yhteisHaut?.length + erillisHaut?.length > 0;

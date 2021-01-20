@@ -5,6 +5,7 @@ import {
   getValintaperuste,
 } from '#/src/api/konfoApi';
 import { useQuery } from 'react-query';
+import { useUrlParams } from '#/src/components/hakutulos/UseUrlParams';
 
 type PageDataProps = {
   hakukohdeOid: string;
@@ -22,21 +23,25 @@ export type PageData = {
 // * toteutus is fetched only for koulutusOid, other data already returns on getHakukohde
 // * koulutus is fetched only for koulutus nimi
 // Refactor this to only use getHakukohde when all data is available from the call
-const getValintaperustePageData = async ({ hakukohdeOid }: PageDataProps) => {
-  const hakukohde = await getHakukohde(hakukohdeOid);
+const getValintaperustePageData = async (
+  { hakukohdeOid }: PageDataProps,
+  isDraft: boolean
+) => {
+  const hakukohde = await getHakukohde(hakukohdeOid, isDraft);
   const { toteutus: hakukohdeToteutus, valintaperuste: hakukohdeValintaperuste } =
     hakukohde ?? {};
-  const valintaperuste = await getValintaperuste(hakukohdeValintaperuste?.id);
-  const toteutus = await getToteutus(hakukohdeToteutus?.oid);
-  const koulutus = await getKoulutus(toteutus?.koulutusOid);
+  const valintaperuste = await getValintaperuste(hakukohdeValintaperuste?.id, isDraft);
+  const toteutus = await getToteutus(hakukohdeToteutus?.oid, isDraft);
+  const koulutus = await getKoulutus(toteutus?.koulutusOid, isDraft);
 
   return { koulutus, toteutus, hakukohde, valintaperuste };
 };
 
 export const useValintaperustePageData = ({ hakukohdeOid }: PageDataProps) => {
+  const { isDraft } = useUrlParams();
   return useQuery<PageData>(
     ['getValintaperustePageData', { hakukohdeOid }],
-    (_, props: PageDataProps) => getValintaperustePageData(props),
+    (_, props: PageDataProps) => getValintaperustePageData(props, isDraft),
     {
       refetchOnWindowFocus: false,
     }
@@ -51,10 +56,11 @@ export type PreviewPageData = {
   valintaperuste: any;
 };
 
-const getValintaperustePreviewPageData = async ({
-  valintaperusteId,
-}: PreviewPageDataProps) => {
-  const valintaperuste = await getValintaperuste(valintaperusteId);
+const getValintaperustePreviewPageData = async (
+  { valintaperusteId }: PreviewPageDataProps,
+  isDraft: boolean
+) => {
+  const valintaperuste = await getValintaperuste(valintaperusteId, isDraft);
 
   return { valintaperuste };
 };
@@ -62,9 +68,10 @@ const getValintaperustePreviewPageData = async ({
 export const useValintaperustePreviewPageData = ({
   valintaperusteId,
 }: PreviewPageDataProps) => {
+  const { isDraft } = useUrlParams();
   return useQuery<PreviewPageData>(
     ['getValintaperustePreviewPageData', { valintaperusteId }],
-    (_, props: PreviewPageDataProps) => getValintaperustePreviewPageData(props),
+    (_, props: PreviewPageDataProps) => getValintaperustePreviewPageData(props, isDraft),
     {
       refetchOnWindowFocus: false,
     }
