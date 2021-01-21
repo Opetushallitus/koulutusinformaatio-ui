@@ -11,7 +11,7 @@ import AutorenewIcon from '@material-ui/icons/Autorenew';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import { format } from 'date-fns';
 import _ from 'lodash';
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { colors } from '#/src/colors';
@@ -42,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const getJarjestyspaikkaYhteystiedot = (jarjestyspaikka, osoitteet) =>
+  osoitteet.find((osoite) => osoite.oppilaitosOid === jarjestyspaikka.oid)?.yhteystiedot;
+
 const HakuCardGrid = (props) => {
   const classes = useStyles();
   const { type, haut, icon } = props;
@@ -51,13 +54,6 @@ const HakuCardGrid = (props) => {
     haut,
   ]);
   const osoitteet = useOppilaitosOsoite(oppilaitosOids);
-
-  const getJarjestyspaikkaYhteystiedot = useCallback(
-    (jarjestyspaikka) =>
-      osoitteet.find((osoite) => osoite.oppilaitosOid === jarjestyspaikka.oid)
-        ?.yhteystiedot,
-    [osoitteet]
-  );
 
   return (
     <Grid item>
@@ -75,10 +71,6 @@ const HakuCardGrid = (props) => {
           justify="center"
           alignItems="center">
           {haut.map((haku) => {
-            const jarjestyspaikkaYhteystiedot = getJarjestyspaikkaYhteystiedot(
-              haku.jarjestyspaikka || {},
-              osoitteet
-            );
             const someHakuaikaPaattyy = haku.hakuajat?.some(
               (hakuaika) => hakuaika.paattyy
             );
@@ -119,7 +111,10 @@ const HakuCardGrid = (props) => {
                               <Typography variant="body1">
                                 {`${l.localize(
                                   haku.jarjestyspaikka.nimi
-                                )} · ${jarjestyspaikkaYhteystiedot}`}
+                                )} · ${getJarjestyspaikkaYhteystiedot(
+                                  haku.jarjestyspaikka,
+                                  osoitteet
+                                )}`}
                               </Typography>
                             </Grid>
                           )}
@@ -228,18 +223,20 @@ const HakuCardGrid = (props) => {
                               </Typography>
                             </Button>
                           )}
-                          <LocalizedLink
-                            underline="none"
-                            component={RouterLink}
-                            to={`/hakukohde/${haku.hakukohdeOid}/valintaperuste`}>
-                            <Button variant="outlined" size="large" color="primary">
-                              <Typography
-                                style={{ color: colors.brandGreen }}
-                                variant="body1">
-                                {t('toteutus.lue-valintaperusteet')}
-                              </Typography>
-                            </Button>
-                          </LocalizedLink>
+                          {haku.valintaperusteId && (
+                            <LocalizedLink
+                              underline="none"
+                              component={RouterLink}
+                              to={`/hakukohde/${haku.hakukohdeOid}/valintaperuste`}>
+                              <Button variant="outlined" size="large" color="primary">
+                                <Typography
+                                  style={{ color: colors.brandGreen }}
+                                  variant="body1">
+                                  {t('toteutus.lue-valintaperusteet')}
+                                </Typography>
+                              </Button>
+                            </LocalizedLink>
+                          )}
                         </ButtonGroup>
                       </Grid>
                     </Grid>
