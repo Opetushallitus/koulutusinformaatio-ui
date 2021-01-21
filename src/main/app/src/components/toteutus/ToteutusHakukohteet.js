@@ -71,7 +71,7 @@ const HakuCardGrid = (props) => {
           justify="center"
           alignItems="center">
           {haut.map((haku) => {
-            const someHakuaikaPaattyy = haku.hakuajat?.some(
+            const anyHakuaikaPaattyy = haku.hakuajat?.some(
               (hakuaika) => hakuaika.paattyy
             );
             const { alkaaText, alkaaModalText, paattyyText } = formatAloitus(
@@ -132,13 +132,13 @@ const HakuCardGrid = (props) => {
                         <Grid container direction="row" spacing={3}>
                           {[
                             {
-                              size: someHakuaikaPaattyy ? 6 : 12,
+                              size: anyHakuaikaPaattyy ? 6 : 12,
                               heading: t('toteutus.haku-alkaa:'),
                               content: haku.hakuajat.map((hakuaika) =>
                                 format(new Date(hakuaika.alkaa), 'd.M.y H:mm')
                               ),
                             },
-                            someHakuaikaPaattyy && {
+                            anyHakuaikaPaattyy && {
                               size: 6,
                               heading: t('toteutus.haku-paattyy:'),
                               content: haku.hakuajat.map((hakuaika) =>
