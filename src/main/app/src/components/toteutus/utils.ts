@@ -1,4 +1,5 @@
 import { Localizer as l } from '#/src/tools/Utils';
+import { Koodi, Translateable } from '#/src/types/common';
 import { format } from 'date-fns';
 import { TFunction } from 'i18next';
 
@@ -8,6 +9,15 @@ enum Alkamiskausityyppi {
   HENKILOKOHTAINEN_SUUNNITELMA = 'henkilokohtainen suunnitelma',
 }
 
+type Props = {
+  alkamiskausityyppi?: Alkamiskausityyppi;
+  henkilokohtaisenSuunnitelmanLisatiedot: Translateable;
+  koulutuksenAlkamiskausi: Koodi;
+  koulutuksenAlkamisvuosi: string;
+  koulutuksenAlkamispaivamaara: string;
+  koulutuksenPaattymispaivamaara: string;
+};
+
 export const formatAloitus = (
   {
     alkamiskausityyppi,
@@ -16,7 +26,7 @@ export const formatAloitus = (
     koulutuksenAlkamisvuosi,
     koulutuksenAlkamispaivamaara,
     koulutuksenPaattymispaivamaara,
-  }: any = {},
+  }: Props = {} as Props,
   t: TFunction
 ) => {
   switch (alkamiskausityyppi) {
