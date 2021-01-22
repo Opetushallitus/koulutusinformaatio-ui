@@ -84,7 +84,12 @@ const AccordionWithTitle = ({ titleTranslation, data }) => {
       alignItems="center">
       <Typography variant="h2">{t(titleTranslation)}</Typography>
       <Spacer />
-      <Accordion items={data} />
+      <Accordion
+        items={data}
+        ContentWrapper={({ children }) => (
+          <Typography component="div">{children}</Typography>
+        )}
+      />
     </Box>
   );
 };
@@ -148,7 +153,7 @@ const Toteutus = () => {
       ) || {};
     const kuvaus = !_.isEmpty(extendedData?.kuvaus)
       ? l.localize(extendedData?.kuvaus)
-      : t('toteutus.osaamisalalle-ei-loytynyt-kuvausta');
+      : `<p>${t('toteutus.osaamisalalle-ei-loytynyt-kuvausta')}</p>`;
     return { ...toa, extendedData, kuvaus };
   });
 
@@ -261,14 +266,14 @@ const Toteutus = () => {
               title: l.localize(osaamisala?.koodi),
               content: (
                 <>
-                  <Typography>{sanitizedHTMLParser(osaamisala?.kuvaus)}</Typography>
+                  {sanitizedHTMLParser(osaamisala?.kuvaus)}
                   {!_.isEmpty(osaamisala?.linkki) && !_.isEmpty(osaamisala?.otsikko) && (
                     <LocalizedLink
                       target="_blank"
                       rel="noopener"
                       href={l.localize(osaamisala?.linkki)}>
                       {l.localize(osaamisala?.otsikko)}
-                      <OpenInNewIcon />
+                      <OpenInNewIcon fontSize="small" />
                     </LocalizedLink>
                   )}
                 </>

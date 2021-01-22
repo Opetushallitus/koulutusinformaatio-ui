@@ -38,7 +38,9 @@ export const formatAloitus = (
     case Alkamiskausityyppi.TARKKA_ALKAMISAJANKOHTA:
       return {
         alkaaText: format(new Date(koulutuksenAlkamispaivamaara), 'd.M.y'),
-        paattyyText: format(new Date(koulutuksenPaattymispaivamaara), 'd.M.y'),
+        paattyyText: koulutuksenPaattymispaivamaara
+          ? format(new Date(koulutuksenPaattymispaivamaara), 'd.M.y')
+          : null,
       };
     case Alkamiskausityyppi.ALKAMISKAUSI_JA_VUOSI:
       return {

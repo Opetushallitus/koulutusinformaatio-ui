@@ -141,22 +141,23 @@ const HakuCardGrid = (props) => {
                             anyHakuaikaPaattyy && {
                               size: 6,
                               heading: t('toteutus.haku-paattyy:'),
-                              content: haku.hakuajat.map((hakuaika) =>
-                                hakuaika.paattyy
-                                  ? format(new Date(hakuaika.paattyy), 'd.M.y H:mm')
-                                  : null
+                              content: haku.hakuajat.map(
+                                (hakuaika) =>
+                                  hakuaika.paattyy
+                                    ? format(new Date(hakuaika.paattyy), 'd.M.y H:mm')
+                                    : '-' // This is needed for the alkuu & paattyy to be rendered on the same row
                               ),
                             },
                             alkaaText && {
                               size: paattyyText ? 6 : 12,
                               heading: t('toteutus.koulutus-alkaa:'),
-                              content: alkaaText,
+                              content: [alkaaText],
                               modalText: alkaaModalText,
                             },
                             paattyyText && {
                               size: 6,
                               heading: t('toteutus.koulutus-paattyy:'),
-                              content: paattyyText,
+                              content: [paattyyText],
                             },
                             {
                               size: 6,
@@ -169,7 +170,7 @@ const HakuCardGrid = (props) => {
                             haku.aloituspaikat && {
                               size: 6,
                               heading: t('toteutus.opiskelupaikkoja:'),
-                              content: haku.aloituspaikat,
+                              content: [haku.aloituspaikat],
                             },
                           ]
                             .filter(Boolean)
@@ -197,9 +198,13 @@ const HakuCardGrid = (props) => {
                                   )}
                                 </Grid>
                                 <Grid item>
-                                  <Typography variant="body1" noWrap>
-                                    {content}
-                                  </Typography>
+                                  {content.map((v, i) => (
+                                    <Typography
+                                      key={`${heading}-text-${i}`}
+                                      variant="body1">
+                                      {v}
+                                    </Typography>
+                                  ))}
                                 </Grid>
                               </Grid>
                             ))}

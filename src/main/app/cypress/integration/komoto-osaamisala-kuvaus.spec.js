@@ -18,6 +18,7 @@ describe('Osaamisalan description KOMOTO', () => {
       'Valinnainen tutkinnon osa Eläinalan yritystoiminta valmistaa häntä toimimaan alan yrittäjänä.'
     );
   });
+
   it('KOMOTO: on empty or missing osaamisala description fallback text should be displayed', () => {
     cy.visit('/fi/toteutus/1.2.246.562.17.00000000000000000466');
 
