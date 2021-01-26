@@ -41,9 +41,10 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
   },
   grid: {
-    width: '70%',
-    paddingTop: '62px',
-    paddingBottom: '62px',
+    padding: theme.spacing(8),
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(2),
+    },
   },
 }));
 
@@ -73,12 +74,7 @@ export const InfoGrid = (props: Props) => {
       <Typography variant="h2">{heading}</Typography>
       <Spacer />
       <Paper className={classes.paper}>
-        <Grid
-          className={classes.grid}
-          container
-          alignItems="flex-start"
-          justify="space-evenly"
-          spacing={5}>
+        <Grid className={classes.grid} container justify="space-evenly" spacing={5}>
           {gridData.map((e, index) => (
             <Grid
               item

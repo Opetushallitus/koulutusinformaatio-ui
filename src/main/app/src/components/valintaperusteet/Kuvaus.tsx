@@ -53,7 +53,7 @@ const isHeader = (tag: string) => Headers.includes(tag);
 
 // TODO: What is node here?
 const tagHeaders = (node: any) => {
-  if (isHeader(node.name)) {
+  if (isHeader(node.name) && node.children[0]?.data) {
     const text = node.children[0].data;
     const id = toId(text);
     const isH1 = 'h1' === node.name;
@@ -135,9 +135,12 @@ export const ValintatavatSisallysluettelo = (valintatavat: Array<Valintatapa>) =
         // Link to title and links to sisalto subtitles given in HTML-string
         [
           Lnk(l.localize(nimi), index + 1, false),
-          ...sisalto.map((s) =>
+          ...sisalto.map((s, i) =>
             s.tyyppi === 'teksti'
-              ? KuvausSisallysluettelo(s.data, toId(l.localize(nimi) + index))(Lnk)
+              ? KuvausSisallysluettelo(
+                  s.data,
+                  `${toId(l.localize(nimi))}-teksti-${i}`
+                )(Lnk)
               : null
           ),
         ]
@@ -160,7 +163,7 @@ export const KuvausSisallysluettelo = (kuvaus: Translateable, key: string) => (
   Lnk: any
 ) => {
   const onlyHeaders = (node: any) => {
-    if (isHeader(node.name)) {
+    if (isHeader(node.name) && node.children[0]?.data) {
       const text = node.children[0].data;
       return Lnk(text);
     } else {

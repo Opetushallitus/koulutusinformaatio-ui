@@ -11,7 +11,7 @@ import AutorenewIcon from '@material-ui/icons/Autorenew';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import { format } from 'date-fns';
 import _ from 'lodash';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { colors } from '#/src/colors';
@@ -22,6 +22,7 @@ import Spacer from '#/src/components/common/Spacer';
 import { HAKULOMAKE_TYYPPI } from '#/src/constants';
 import { useOppilaitosOsoite } from '#/src/tools/UseOppilaitosOsoiteHook';
 import { Localizer as l } from '#/src/tools/Utils';
+import { formatAloitus } from './utils';
 
 const useStyles = makeStyles((theme) => ({
   gridHeading: {
@@ -41,18 +42,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const getJarjestyspaikkaYhteystiedot = (jarjestyspaikka, osoitteet) =>
+  osoitteet.find((osoite) => osoite.oppilaitosOid === jarjestyspaikka.oid)?.yhteystiedot;
+
 const HakuCardGrid = (props) => {
   const classes = useStyles();
   const { type, haut, icon } = props;
   const { t } = useTranslation();
 
-  const oppilaitosOids = haut.map((haku) => haku.jarjestyspaikka?.oid);
+  const oppilaitosOids = useMemo(() => haut.map((haku) => haku.jarjestyspaikka?.oid), [
+    haut,
+  ]);
   const osoitteet = useOppilaitosOsoite(oppilaitosOids);
-
-  function getJarjestyspaikkaYhteystiedot(jarjestyspaikka, osoitteet) {
-    return osoitteet.find((osoite) => osoite.oppilaitosOid === jarjestyspaikka.oid)
-      ?.yhteystiedot;
-  }
 
   return (
     <Grid item>
@@ -69,15 +70,18 @@ const HakuCardGrid = (props) => {
           alignContent="center"
           justify="center"
           alignItems="center">
-          {haut.map((haku, i) => {
-            const jarjestyspaikkaYhteystiedot = getJarjestyspaikkaYhteystiedot(
-              haku.jarjestyspaikka,
-              osoitteet
+          {haut.map((haku) => {
+            const anyHakuaikaPaattyy = haku.hakuajat?.some(
+              (hakuaika) => hakuaika.paattyy
+            );
+            const { alkaaText, alkaaModalText, paattyyText } = formatAloitus(
+              haku.koulutuksenAlkamiskausi,
+              t
             );
 
             return (
               <Grid
-                key={i}
+                key={haku.hakukohdeOid}
                 item
                 xs={12}
                 lg={6}
@@ -107,7 +111,10 @@ const HakuCardGrid = (props) => {
                               <Typography variant="body1">
                                 {`${l.localize(
                                   haku.jarjestyspaikka.nimi
-                                )} · ${jarjestyspaikkaYhteystiedot}`}
+                                )} · ${getJarjestyspaikkaYhteystiedot(
+                                  haku.jarjestyspaikka,
+                                  osoitteet
+                                )}`}
                               </Typography>
                             </Grid>
                           )}
@@ -123,85 +130,84 @@ const HakuCardGrid = (props) => {
                       </Grid>
                       <Grid item>
                         <Grid container direction="row" spacing={3}>
-                          <Grid item xs={6}>
-                            <Grid item>
-                              <Typography className={classes.gridHeading} noWrap>
-                                {t('toteutus.haku-alkaa:')}
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              {haku.hakuajat.map((hakuaika, i) => (
-                                <Typography key={i} variant="body1" noWrap>
-                                  {format(new Date(hakuaika.alkaa), 'd.M.y H:mm')}
-                                </Typography>
-                              ))}
-                            </Grid>
-                          </Grid>
-                          {haku.hakuajat?.some((hakuaika) => hakuaika.paattyy) && (
-                            <Grid item xs={6}>
-                              <Grid item>
-                                <Typography className={classes.gridHeading} noWrap>
-                                  {t('toteutus.haku-paattyy:')}
-                                </Typography>
-                              </Grid>
-                              <Grid item>
-                                {haku.hakuajat.map((hakuaika, i) =>
-                                  hakuaika.paattyy ? (
-                                    <Typography key={i} variant="body1" noWrap>
-                                      {format(new Date(hakuaika.paattyy), 'd.M.y H:mm')}
+                          {[
+                            {
+                              size: anyHakuaikaPaattyy ? 6 : 12,
+                              heading: t('toteutus.haku-alkaa:'),
+                              content: haku.hakuajat.map((hakuaika) =>
+                                format(new Date(hakuaika.alkaa), 'd.M.y H:mm')
+                              ),
+                            },
+                            anyHakuaikaPaattyy && {
+                              size: 6,
+                              heading: t('toteutus.haku-paattyy:'),
+                              content: haku.hakuajat.map(
+                                (hakuaika) =>
+                                  hakuaika.paattyy
+                                    ? format(new Date(hakuaika.paattyy), 'd.M.y H:mm')
+                                    : '-' // This is needed for the alkuu & paattyy to be rendered on the same row
+                              ),
+                            },
+                            alkaaText && {
+                              size: paattyyText ? 6 : 12,
+                              heading: t('toteutus.koulutus-alkaa:'),
+                              content: [alkaaText],
+                              modalText: alkaaModalText,
+                            },
+                            paattyyText && {
+                              size: 6,
+                              heading: t('toteutus.koulutus-paattyy:'),
+                              content: [paattyyText],
+                            },
+                            {
+                              size: 6,
+                              heading: t('toteutus.pohjakoulutus:'),
+                              content: haku.pohjakoulutusvaatimus.map((vaatimus) =>
+                                l.localize(vaatimus)
+                              ),
+                              modalText: haku.pohjakoulutusvaatimusTarkenne,
+                            },
+                            haku.aloituspaikat && {
+                              size: 6,
+                              heading: t('toteutus.opiskelupaikkoja:'),
+                              content: [haku.aloituspaikat],
+                            },
+                          ]
+                            .filter(Boolean)
+                            .map(({ size, heading, content, modalText }) => (
+                              <Grid key={heading} item xs={size}>
+                                <Grid
+                                  item
+                                  container
+                                  spacing={1}
+                                  wrap="nowrap"
+                                  alignItems="flex-start">
+                                  <Grid item>
+                                    <Typography className={classes.gridHeading} noWrap>
+                                      {heading}
                                     </Typography>
-                                  ) : null
-                                )}
-                              </Grid>
-                            </Grid>
-                          )}
-                          <Grid item xs={6}>
-                            <Grid
-                              item
-                              container
-                              spacing={1}
-                              wrap="nowrap"
-                              alignItems="flex-start">
-                              <Grid item>
-                                <Typography className={classes.gridHeading} noWrap>
-                                  {t('koulutus.pohjakoulutus') + ':'}
-                                </Typography>
-                              </Grid>
-                              {!_.isEmpty(haku.pohjakoulutusvaatimusTarkenne) && (
-                                <Grid item>
-                                  <LabelTooltip
-                                    title={
-                                      <LocalizedHTML
-                                        noMargin
-                                        data={haku.pohjakoulutusvaatimusTarkenne}
+                                  </Grid>
+                                  {!_.isEmpty(modalText) && (
+                                    <Grid item>
+                                      <LabelTooltip
+                                        title={
+                                          <LocalizedHTML noMargin data={modalText} />
+                                        }
                                       />
-                                    }
-                                  />
+                                    </Grid>
+                                  )}
                                 </Grid>
-                              )}
-                            </Grid>
-                            <Grid item>
-                              <Typography variant="body1" noWrap>
-                                {haku.pohjakoulutusvaatimus.map((vaatimus) =>
-                                  l.localize(vaatimus)
-                                )}
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                          {haku.aloituspaikat && (
-                            <Grid item xs={6}>
-                              <Grid item>
-                                <Typography className={classes.gridHeading} noWrap>
-                                  {t('toteutus.opiskelupaikkoja') + ':'}
-                                </Typography>
+                                <Grid item>
+                                  {content.map((v, i) => (
+                                    <Typography
+                                      key={`${heading}-text-${i}`}
+                                      variant="body1">
+                                      {v}
+                                    </Typography>
+                                  ))}
+                                </Grid>
                               </Grid>
-                              <Grid item>
-                                <Typography variant="body1" noWrap>
-                                  {haku.aloituspaikat}
-                                </Typography>
-                              </Grid>
-                            </Grid>
-                          )}
+                            ))}
                         </Grid>
                       </Grid>
                       <Grid item>
@@ -222,18 +228,20 @@ const HakuCardGrid = (props) => {
                               </Typography>
                             </Button>
                           )}
-                          <LocalizedLink
-                            underline="none"
-                            component={RouterLink}
-                            to={`/hakukohde/${haku.hakukohdeOid}/valintaperuste`}>
-                            <Button variant="outlined" size="large" color="primary">
-                              <Typography
-                                style={{ color: colors.brandGreen }}
-                                variant="body1">
-                                {t('toteutus.lue-valintaperusteet')}
-                              </Typography>
-                            </Button>
-                          </LocalizedLink>
+                          {haku.valintaperusteId && (
+                            <LocalizedLink
+                              underline="none"
+                              component={RouterLink}
+                              to={`/hakukohde/${haku.hakukohdeOid}/valintaperuste`}>
+                              <Button variant="outlined" size="large" color="primary">
+                                <Typography
+                                  style={{ color: colors.brandGreen }}
+                                  variant="body1">
+                                  {t('toteutus.lue-valintaperusteet')}
+                                </Typography>
+                              </Button>
+                            </LocalizedLink>
+                          )}
                         </ButtonGroup>
                       </Grid>
                     </Grid>
