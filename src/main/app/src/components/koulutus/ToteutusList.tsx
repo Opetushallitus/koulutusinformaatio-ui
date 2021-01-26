@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import _fp from 'lodash/fp';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Spacer from '#/src/components/common/Spacer';
 import { ToteutusCard } from '#/src/components/common/ToteutusCard';
 import {

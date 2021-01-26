@@ -50,10 +50,10 @@ export const {
 
 export default toteutusSlice.reducer;
 
-export const fetchToteutus = (oid) => async (dispatch) => {
+export const fetchToteutus = (oid, isDraft) => async (dispatch) => {
   try {
     dispatch(fetchToteutusStart());
-    const data = await getToteutus(oid);
+    const data = await getToteutus(oid, isDraft);
     dispatch(fetchToteutusSuccess(data));
   } catch (err) {
     dispatch(fetchToteutusFail(err.toString()));

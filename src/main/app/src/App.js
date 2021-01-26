@@ -6,7 +6,6 @@ import { Provider } from 'mobx-react';
 import { Draft } from './components/common/Draft';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
-import NotFound from './NotFound';
 import { Etusivu } from './components/Etusivu';
 import PalautePopup from './components/palaute/PalautePopup';
 import SideMenu from './components/common/SideMenu';
@@ -18,13 +17,17 @@ import Palvelut from './components/palvelu/Palvelut';
 import { Haku } from './components/haku/Haku';
 import { Koulutus } from './components/koulutus/Koulutus';
 import Oppilaitos from './components/oppilaitos/Oppilaitos';
-import { ValintaperustePage } from './components/valintaperusteet/ValintaperustePage';
+import {
+  ValintaperustePage,
+  ValintaperustePreviewPage,
+} from './components/valintaperusteet/ValintaperustePage';
 import SivuRouter from './components/sivu/SivuRouter';
 import { ReactiveBorder } from './components/ReactiveBorder';
 import { Hakupalkki } from './components/haku/Hakupalkki';
 import Toteutus from './components/toteutus/Toteutus';
 import { useTranslation } from 'react-i18next';
 import { supportedLanguages } from '#/src/tools/i18n';
+import { NotFound } from '#/src/NotFound';
 import { useStores } from './hooks';
 
 const konfoStore = new KonfoStore();
@@ -131,6 +134,10 @@ const TranslatedRoutes = ({ match, location }) => {
       <Route exact path="/:lng/hakukohde/:hakukohdeOid/valintaperuste">
         <KoulutusHakuBar />
         <ValintaperustePage />
+      </Route>
+      <Route exact path="/:lng/valintaperuste/:valintaperusteId">
+        <KoulutusHakuBar />
+        <ValintaperustePreviewPage />
       </Route>
       <Route component={NotFound} />
     </Switch>

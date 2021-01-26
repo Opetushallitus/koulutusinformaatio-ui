@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Divider,
   Grid,
   makeStyles,
   Paper,
@@ -17,21 +18,22 @@ import { Link as RouterLink } from 'react-router-dom';
 import { colors } from '#/src/colors';
 import { LabelTooltip } from '#/src/components/common/LabelTooltip';
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Spacer from '#/src/components/common/Spacer';
 import { HAKULOMAKE_TYYPPI } from '#/src/constants';
 import { useOppilaitosOsoite } from '#/src/tools/UseOppilaitosOsoiteHook';
 import { Localizer as l } from '#/src/tools/Utils';
 import { formatAloitus } from './utils';
+import { Hakukohde } from '#/src/types/ToteutusTypes';
 
 const useStyles = makeStyles((theme) => ({
   gridHeading: {
     ...theme.typography.body1,
-    fontWeight: '700',
+    fontWeight: 700,
   },
   hakuName: {
     ...theme.typography.h5,
-    fontWeight: '700',
+    fontWeight: 700,
     color: colors.black,
   },
   lomakeButtonGroup: {
@@ -40,14 +42,27 @@ const useStyles = makeStyles((theme) => ({
       marginRight: theme.spacing(1),
     },
   },
+  paper: {
+    width: '100%',
+    height: '100%',
+    borderTop: `5px solid ${colors.brandGreen}`,
+  },
 }));
 
-const getJarjestyspaikkaYhteystiedot = (jarjestyspaikka, osoitteet) =>
+const getJarjestyspaikkaYhteystiedot = (
+  jarjestyspaikka: Hakukohde['jarjestyspaikka'],
+  osoitteet: Array<{ oppilaitosOid: string; yhteystiedot: string }>
+) =>
   osoitteet.find((osoite) => osoite.oppilaitosOid === jarjestyspaikka.oid)?.yhteystiedot;
 
-const HakuCardGrid = (props) => {
+type GridProps = {
+  tyyppiOtsikko: string;
+  haut: Array<Hakukohde>;
+  icon: JSX.Element;
+};
+
+const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
   const classes = useStyles();
-  const { type, haut, icon } = props;
   const { t } = useTranslation();
 
   const oppilaitosOids = useMemo(() => haut.map((haku) => haku.jarjestyspaikka?.oid), [
@@ -57,25 +72,20 @@ const HakuCardGrid = (props) => {
 
   return (
     <Grid item>
-      <Box display="flex" alignItems="center">
+      <Box ml={2} display="flex" justifyContent="center">
         {icon}
         <Box ml={2}>
-          <Typography variant="h4">{`${type} ( ${haut.length} )`}</Typography>
+          <Typography variant="h4">{`${tyyppiOtsikko} ( ${haut.length} )`}</Typography>
         </Box>
       </Box>
       <Box mt={4}>
-        <Grid
-          container
-          spacing={2}
-          alignContent="center"
-          justify="center"
-          alignItems="center">
+        <Grid container spacing={2} justify="center">
           {haut.map((haku) => {
             const anyHakuaikaPaattyy = haku.hakuajat?.some(
               (hakuaika) => hakuaika.paattyy
             );
             const { alkaaText, alkaaModalText, paattyyText } = formatAloitus(
-              haku.koulutuksenAlkamiskausi,
+              haku.koulutuksenAlkamiskausi || {},
               t
             );
 
@@ -86,12 +96,7 @@ const HakuCardGrid = (props) => {
                 xs={12}
                 lg={6}
                 style={{ maxWidth: '624px', height: '100%' }}>
-                <Paper
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    borderTop: `5px solid #43A047`,
-                  }}>
+                <Paper className={classes.paper}>
                   <Box m={4}>
                     <Grid container direction="column" spacing={3}>
                       <Grid item>
@@ -121,12 +126,7 @@ const HakuCardGrid = (props) => {
                         </Grid>
                       </Grid>
                       <Grid item>
-                        <div
-                          style={{
-                            height: '0px',
-                            borderTop: '1px solid #B2B2B2',
-                          }}
-                        />
+                        <Divider />
                       </Grid>
                       <Grid item>
                         <Grid container direction="row" spacing={3}>
@@ -174,7 +174,8 @@ const HakuCardGrid = (props) => {
                             },
                           ]
                             .filter(Boolean)
-                            .map(({ size, heading, content, modalText }) => (
+                            // TODO: filter(Boolean) does not clean the types here :(
+                            .map(({ size, heading, content, modalText }: any) => (
                               <Grid key={heading} item xs={size}>
                                 <Grid
                                   item
@@ -198,7 +199,7 @@ const HakuCardGrid = (props) => {
                                   )}
                                 </Grid>
                                 <Grid item>
-                                  {content.map((v, i) => (
+                                  {content.map((v: string, i: number) => (
                                     <Typography
                                       key={`${heading}-text-${i}`}
                                       variant="body1">
@@ -256,9 +257,15 @@ const HakuCardGrid = (props) => {
   );
 };
 
-export const ToteutusHakukohteet = (props) => {
+type Props = {
+  jatkuvatHaut: Array<Hakukohde>;
+  erillisHaut: Array<Hakukohde>;
+  yhteisHaut: Array<Hakukohde>;
+};
+
+export const ToteutusHakukohteet = ({ jatkuvatHaut, erillisHaut, yhteisHaut }: Props) => {
   const { t } = useTranslation();
-  const { jatkuvatHaut, erillisHaut, yhteisHaut } = props;
+
   return (
     <Box
       pt={12}
@@ -270,27 +277,27 @@ export const ToteutusHakukohteet = (props) => {
       <Typography variant="h2">{t('toteutus.koulutuksen-hakukohteet')}</Typography>
       <Spacer />
       <Grid container direction="column" spacing={6}>
-        {jatkuvatHaut?.length > 0 ? (
+        {jatkuvatHaut?.length > 0 && (
           <HakuCardGrid
-            type={t('toteutus.jatkuvahaku')}
+            tyyppiOtsikko={t('toteutus.jatkuvahaku')}
             haut={jatkuvatHaut}
             icon={<AutorenewIcon />}
           />
-        ) : null}
-        {yhteisHaut?.length > 0 ? (
+        )}
+        {yhteisHaut?.length > 0 && (
           <HakuCardGrid
-            type={t('toteutus.yhteishaku')}
+            tyyppiOtsikko={t('toteutus.yhteishaku')}
             haut={yhteisHaut}
             icon={<CalendarTodayOutlinedIcon />}
           />
-        ) : null}
-        {erillisHaut?.length > 0 ? (
+        )}
+        {erillisHaut?.length > 0 && (
           <HakuCardGrid
-            type={t('toteutus.erillishaku')}
+            tyyppiOtsikko={t('toteutus.erillishaku')}
             haut={erillisHaut}
             icon={<CalendarTodayOutlinedIcon />}
           />
-        ) : null}
+        )}
       </Grid>
     </Box>
   );

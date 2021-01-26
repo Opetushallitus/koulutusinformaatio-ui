@@ -50,7 +50,8 @@ export const getOppilaitosOsaTarjonta = ({ oid, requestParams }) =>
     params: C.cleanRequestParams(requestParams),
   });
 
-export const getToteutus = (oid) => get(urls.url('konfo-backend.toteutus', oid));
+export const getToteutus = (oid, draft) =>
+  get(urls.url('konfo-backend.toteutus', oid), draft ? { params: { draft: true } } : {});
 
 export const getToteutusOsaamisalaKuvaus = ({ ePerusteId, requestParams }) => {
   return client
@@ -60,12 +61,14 @@ export const getToteutusOsaamisalaKuvaus = ({ ePerusteId, requestParams }) => {
     .then((response) => response.data);
 };
 
-export const getHaku = (oid) => get(urls.url('konfo-backend.haku', oid));
+export const getHakukohde = (oid, draft) =>
+  get(urls.url('konfo-backend.hakukohde', oid), draft ? { params: { draft: true } } : {});
 
-export const getHakukohde = (oid) => get(urls.url('konfo-backend.hakukohde', oid));
-
-export const getValintaperuste = (oid) =>
-  get(urls.url('konfo-backend.valintaperusteet', oid));
+export const getValintaperuste = (oid, draft) =>
+  get(
+    urls.url('konfo-backend.valintaperusteet', oid),
+    draft ? { params: { draft: true } } : {}
+  );
 
 export const searchAPI = {
   getKoulutukset(requestParams) {

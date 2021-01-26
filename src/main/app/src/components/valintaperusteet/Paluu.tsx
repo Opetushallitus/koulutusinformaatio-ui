@@ -1,9 +1,9 @@
 import { makeStyles } from '@material-ui/core';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles({
   arrow: {
@@ -30,7 +30,7 @@ export const Paluu = ({ paluuLinkki }: Props) => {
         color="secondary"
         aria-label={t('lomake.palaa-esittelyyn')}
         to={paluuLinkki}>
-        <ArrowForwardIosIcon className={classes.arrow} />
+        <ArrowBackIos className={classes.arrow} />
         {t('lomake.palaa-esittelyyn')}
       </LocalizedLink>
     </div>

@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-type Props = { title: string };
+type Props = { title: JSX.Element | string };
 
 export const LabelTooltip = ({ title }: Props) => {
   const classes = useStyles();

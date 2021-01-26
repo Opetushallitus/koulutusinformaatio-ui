@@ -2,7 +2,7 @@ import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Spacer from '#/src/components/common/Spacer';
 import { TulevaKoulutusCard } from './TulevaKoulutusCard';
 import { TulevaTarjontaPagination } from './TulevaTarjontaPagination';

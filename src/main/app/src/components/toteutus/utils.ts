@@ -1,22 +1,7 @@
-import { Localizer as l } from '#/src/tools/Utils';
-import { Koodi, Translateable } from '#/src/types/common';
 import { format } from 'date-fns';
 import { TFunction } from 'i18next';
-
-enum Alkamiskausityyppi {
-  TARKKA_ALKAMISAJANKOHTA = 'tarkka alkamisajankohta',
-  ALKAMISKAUSI_JA_VUOSI = 'alkamiskausi ja -vuosi',
-  HENKILOKOHTAINEN_SUUNNITELMA = 'henkilokohtainen suunnitelma',
-}
-
-type Props = {
-  alkamiskausityyppi?: Alkamiskausityyppi;
-  henkilokohtaisenSuunnitelmanLisatiedot: Translateable;
-  koulutuksenAlkamiskausi: Koodi;
-  koulutuksenAlkamisvuosi: string;
-  koulutuksenAlkamispaivamaara: string;
-  koulutuksenPaattymispaivamaara: string;
-};
+import { Localizer as l } from '#/src/tools/Utils';
+import { Alkamiskausi, Alkamiskausityyppi } from '#/src/types/ToteutusTypes';
 
 export const formatAloitus = (
   {
@@ -26,7 +11,7 @@ export const formatAloitus = (
     koulutuksenAlkamisvuosi,
     koulutuksenAlkamispaivamaara,
     koulutuksenPaattymispaivamaara,
-  }: Props = {} as Props,
+  }: Alkamiskausi = {} as Alkamiskausi,
   t: TFunction
 ) => {
   switch (alkamiskausityyppi) {
