@@ -35,10 +35,19 @@ export const getSuositellutKoulutukset = (requestParams) =>
     params: C.cleanRequestParams(requestParams),
   });
 
-export const getOppilaitos = (oid) => get(urls.url('konfo-backend.oppilaitos', oid));
+// TODO: hooks to calling code to give draft parameter
+export const getOppilaitos = (oid, draft) =>
+  get(
+    urls.url('konfo-backend.oppilaitos', oid),
+    draft ? { params: { draft: true } } : {}
+  );
 
-export const getOppilaitosOsa = (oid) =>
-  get(urls.url('konfo-backend.oppilaitosOsa', oid));
+// TODO: hooks to calling code to give draft parameter
+export const getOppilaitosOsa = (oid, draft) =>
+  get(
+    urls.url('konfo-backend.oppilaitosOsa', oid),
+    draft ? { params: { draft: true } } : {}
+  );
 
 export const getOppilaitosTarjonta = ({ oid, requestParams }) =>
   get(urls.url('konfo-backend.oppilaitos.tarjonta', oid), {
