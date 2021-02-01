@@ -12,16 +12,19 @@ const get = async (url, config = {}) => {
   return response.data;
 };
 
-// TODO: Why is this ' + oid' and not '(..., oid)' ? needs fixing to urls
-export const getKoulutus = (oid, draft) =>
-  get(urls.url('konfo-backend.koulutus') + oid, draft ? { params: { draft: true } } : {});
+const createEntityGetter = (entityName) => (oid, draft) =>
+  get(
+    urls.url(`konfo-backend.${entityName}`, oid),
+    draft ? { params: { draft: true } } : {}
+  );
 
-// TODO: Why is this ' + oid' and not '(..., oid)' ? needs fixing to urls
-export const getKoulutusKuvaus = (uri) =>
-  get(urls.url('konfo-backend.koulutus.kuvaus') + uri);
+export const getKoulutus = createEntityGetter('koulutus');
 
-export const getEperusteKuvaus = (uri) =>
-  get(urls.url('konfo-backend.eperuste.kuvaus', uri));
+export const getKoulutusKuvaus = (ePerusteId) =>
+  get(urls.url('konfo-backend.koulutus.kuvaus', ePerusteId));
+
+export const getEperusteKuvaus = (ePerusteId) =>
+  get(urls.url('konfo-backend.eperuste.kuvaus', ePerusteId));
 
 export const getKoulutusJarjestajat = (oid, requestParams) =>
   get(urls.url('konfo-backend.koulutus.jarjestajat', oid), {
@@ -36,18 +39,10 @@ export const getSuositellutKoulutukset = (requestParams) =>
   });
 
 // TODO: hooks to calling code to give draft parameter
-export const getOppilaitos = (oid, draft) =>
-  get(
-    urls.url('konfo-backend.oppilaitos', oid),
-    draft ? { params: { draft: true } } : {}
-  );
+export const getOppilaitos = createEntityGetter('oppilaitos');
 
 // TODO: hooks to calling code to give draft parameter
-export const getOppilaitosOsa = (oid, draft) =>
-  get(
-    urls.url('konfo-backend.oppilaitosOsa', oid),
-    draft ? { params: { draft: true } } : {}
-  );
+export const getOppilaitosOsa = createEntityGetter('oppilaitosOsa');
 
 export const getOppilaitosTarjonta = ({ oid, requestParams }) =>
   get(urls.url('konfo-backend.oppilaitos.tarjonta', oid), {
@@ -59,8 +54,7 @@ export const getOppilaitosOsaTarjonta = ({ oid, requestParams }) =>
     params: C.cleanRequestParams(requestParams),
   });
 
-export const getToteutus = (oid, draft) =>
-  get(urls.url('konfo-backend.toteutus', oid), draft ? { params: { draft: true } } : {});
+export const getToteutus = createEntityGetter('toteutus');
 
 export const getToteutusOsaamisalaKuvaus = ({ ePerusteId, requestParams }) => {
   return client
@@ -70,14 +64,9 @@ export const getToteutusOsaamisalaKuvaus = ({ ePerusteId, requestParams }) => {
     .then((response) => response.data);
 };
 
-export const getHakukohde = (oid, draft) =>
-  get(urls.url('konfo-backend.hakukohde', oid), draft ? { params: { draft: true } } : {});
+export const getHakukohde = createEntityGetter('hakukohde');
 
-export const getValintaperuste = (oid, draft) =>
-  get(
-    urls.url('konfo-backend.valintaperusteet', oid),
-    draft ? { params: { draft: true } } : {}
-  );
+export const getValintaperuste = createEntityGetter('valintaperusteet');
 
 export const searchAPI = {
   getKoulutukset(requestParams) {
