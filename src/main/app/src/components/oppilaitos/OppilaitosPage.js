@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Oppilaitos = (props) => {
+export const OppilaitosPage = (props) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { oid } = useParams();
@@ -155,5 +155,3 @@ const Oppilaitos = (props) => {
 
   return status === 'loading' ? <LoadingCircle /> : <OppilaitosData />;
 };
-
-export default Oppilaitos;
