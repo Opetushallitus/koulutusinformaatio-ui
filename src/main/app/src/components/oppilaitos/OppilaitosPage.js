@@ -19,6 +19,7 @@ import { TulevaTarjontaList } from './TulevaTarjontaList';
 import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
 import OppilaitosOsaList from './OppilaitosOsaList';
 import { useOppilaitos } from './hooks';
+import { useUrlParams } from '../hakutulos/UseUrlParams';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },
@@ -39,10 +40,12 @@ export const OppilaitosPage = (props) => {
   const { oid } = useParams();
   const { t } = useTranslation();
   const isOppilaitosOsa = props.oppilaitosOsa;
+  const { isDraft } = useUrlParams();
 
   const { data = {}, status } = useOppilaitos({
     oid,
     isOppilaitosOsa,
+    isDraft,
   });
 
   const { esittelyHtml, oppilaitos, oppilaitosOsat, tietoaOpiskelusta } = data;

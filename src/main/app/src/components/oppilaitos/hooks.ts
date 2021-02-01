@@ -30,12 +30,14 @@ const ACTIVE = 'AKTIIVINEN';
 type UseOppilaitosProps = {
   oid: string;
   isOppilaitosOsa: boolean;
+  isDraft?: boolean;
 };
 
-export const useOppilaitos = ({ oid, isOppilaitosOsa }: UseOppilaitosProps) => {
+export const useOppilaitos = ({ oid, isOppilaitosOsa, isDraft }: UseOppilaitosProps) => {
   const { data: oppilaitos = {}, ...rest } = useQuery(
-    ['getOppilaitos', { oid, isOppilaitosOsa }],
-    () => (isOppilaitosOsa ? getOppilaitosOsa(oid) : getOppilaitos(oid)),
+    ['getOppilaitos', { oid, isOppilaitosOsa, isDraft }],
+    () =>
+      isOppilaitosOsa ? getOppilaitosOsa(oid, isDraft) : getOppilaitos(oid, isDraft),
     { refetchOnWindowFocus: false, refetchOnReconnect: false, staleTime: 5000 }
   );
 
