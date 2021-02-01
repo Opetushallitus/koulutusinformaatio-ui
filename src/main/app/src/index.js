@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { MuiThemeProvider } from '@material-ui/core';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import 'typeface-open-sans';
 
 import { getKonfoStore } from '#/src/store';
@@ -62,6 +63,7 @@ const InitGate = ({ children }) => {
 ReactDOM.render(
   <Suspense fallback={<LoadingCircle />}>
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
       <Provider store={getKonfoStore()}>
         <BrowserRouter basename={'/konfo'}>
           <MuiThemeProvider theme={theme}>
