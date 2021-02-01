@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import _ from 'lodash';
 import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Typography, Box, Container, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Localizer as l } from '#/src/tools/Utils';
-import { fetchOppilaitosTarjontaData } from '#/src/store/reducers/oppilaitosSlice';
 import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
-import { getOppilaitosProps } from '#/src/store/reducers/oppilaitosSliceSelector';
 import { colors } from '#/src/colors';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import Murupolku from '#/src/components/common/Murupolku';
@@ -37,119 +35,100 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const OppilaitosPage = (props) => {
-  const dispatch = useDispatch();
   const classes = useStyles();
   const { oid } = useParams();
   const { t } = useTranslation();
   const isOppilaitosOsa = props.oppilaitosOsa;
-  const { tarjonta, tulevaTarjonta, status, oppilaitosError } = useSelector(
-    getOppilaitosProps
-  );
 
-  const { data = {}, isLoading } = useOppilaitos({ oid, isOppilaitosOsa });
+  const { data = {}, status } = useOppilaitos({
+    oid,
+    isOppilaitosOsa,
+  });
 
   const { esittelyHtml, oppilaitos, oppilaitosOsat, tietoaOpiskelusta } = data;
   const hakuUrl = useSelector(getHakuUrl);
 
-  const OppilaitosData = () => {
-    if (oppilaitosError) {
+  switch (status) {
+    case 'loading':
+      return <LoadingCircle />;
+    case 'error':
       return <NotFound />;
-    }
-    return (
-      <Container className={classes.container}>
-        <Box display="flex" flexDirection="column" alignItems="center">
-          <Box width="100%" alignSelf="start">
-            <Murupolku
-              path={[
-                { name: t('haku.otsikko'), link: hakuUrl.url },
-                ...(isOppilaitosOsa
-                  ? [
-                      {
-                        name: l.localize(oppilaitos?.oppilaitos),
-                        link: `/oppilaitos/${oppilaitos?.oppilaitos?.oid}`,
-                      },
-                    ]
-                  : []),
-                {
-                  name: l.localize(oppilaitos),
-                },
-              ]}
-            />
-          </Box>
-          <Box className={classes.title}>
-            <Typography variant="h1" component="h2">
-              {l.localize(oppilaitos)}
-            </Typography>
-          </Box>
-          <Box className={classes.imageContainer} mt={7.5}>
-            <TeemakuvaImage
-              imgUrl={oppilaitos?.oppilaitos?.teemakuva}
-              altText={t('oppilaitos.oppilaitoksen-teemakuva')}
-            />
-          </Box>
-          <OppilaitosinfoGrid
-            className={classes.root}
-            opiskelijoita={oppilaitos?.oppilaitos?.metadata?.opiskelijoita ?? ''}
-            toimipisteita={oppilaitos?.oppilaitos?.metadata?.toimipisteita ?? ''}
-            kotipaikat={_.map(oppilaitos?.osat, 'kotipaikka')}
-            opetuskieli={oppilaitos?.opetuskieli ?? []}
-            koulutusohjelmia={oppilaitos?.koulutusohjelmia ?? ''}
-          />
-          {esittelyHtml && (
-            <HtmlTextBox
-              heading={t('oppilaitos.esittely')}
-              html={esittelyHtml}
-              className={classes.root}
-            />
-          )}
-
-          {tarjonta?.total > 0 && (
-            <Box id="tarjonta">
-              <TarjontaList
-                tarjonta={tarjonta}
-                oid={oid}
-                isOppilaitosOsa={isOppilaitosOsa}
+    case 'success':
+      return (
+        <Container className={classes.container}>
+          <Box display="flex" flexDirection="column" alignItems="center">
+            <Box width="100%" alignSelf="start">
+              <Murupolku
+                path={[
+                  { name: t('haku.otsikko'), link: hakuUrl.url },
+                  ...(isOppilaitosOsa
+                    ? [
+                        {
+                          name: l.localize(oppilaitos?.oppilaitos),
+                          link: `/oppilaitos/${oppilaitos?.oppilaitos?.oid}`,
+                        },
+                      ]
+                    : []),
+                  {
+                    name: l.localize(oppilaitos),
+                  },
+                ]}
               />
             </Box>
-          )}
-          {tulevaTarjonta?.total > 0 && (
-            <Box id="tulevaTarjonta">
-              <TulevaTarjontaList
-                tulevaTarjonta={tulevaTarjonta}
-                oid={oid}
-                isOppilaitosOsa={isOppilaitosOsa}
+            <Box className={classes.title}>
+              <Typography variant="h1" component="h2">
+                {l.localize(oppilaitos)}
+              </Typography>
+            </Box>
+            <Box className={classes.imageContainer} mt={7.5}>
+              <TeemakuvaImage
+                imgUrl={oppilaitos?.oppilaitos?.teemakuva}
+                altText={t('oppilaitos.oppilaitoksen-teemakuva')}
               />
             </Box>
-          )}
-
-          {_.size(tietoaOpiskelusta) > 0 && (
-            <TietoaOpiskelusta
+            <OppilaitosinfoGrid
               className={classes.root}
-              heading={t('oppilaitos.tietoa-opiskelusta')}
-              tietoaOpiskelusta={tietoaOpiskelusta}
+              opiskelijoita={oppilaitos?.oppilaitos?.metadata?.opiskelijoita ?? ''}
+              toimipisteita={oppilaitos?.oppilaitos?.metadata?.toimipisteita ?? ''}
+              kotipaikat={_.map(oppilaitos?.osat, 'kotipaikka')}
+              opetuskieli={oppilaitos?.opetuskieli ?? []}
+              koulutusohjelmia={oppilaitos?.koulutusohjelmia ?? ''}
             />
-          )}
-          {isOppilaitosOsa ? null : (
-            <OppilaitosOsaList
-              oppilaitosOsat={oppilaitosOsat}
-              title={t('oppilaitos.tutustu-toimipisteisiin')}
+            {esittelyHtml && (
+              <HtmlTextBox
+                heading={t('oppilaitos.esittely')}
+                html={esittelyHtml}
+                className={classes.root}
+              />
+            )}
+
+            <TarjontaList oid={oid} isOppilaitosOsa={isOppilaitosOsa} />
+            <TulevaTarjontaList oid={oid} isOppilaitosOsa={isOppilaitosOsa} />
+
+            {_.size(tietoaOpiskelusta) > 0 && (
+              <TietoaOpiskelusta
+                className={classes.root}
+                heading={t('oppilaitos.tietoa-opiskelusta')}
+                tietoaOpiskelusta={tietoaOpiskelusta}
+              />
+            )}
+            {isOppilaitosOsa ? null : (
+              <OppilaitosOsaList
+                oppilaitosOsat={oppilaitosOsat}
+                title={t('oppilaitos.tutustu-toimipisteisiin')}
+              />
+            )}
+            <Yhteystiedot
+              className={classes.root}
+              heading={t('oppilaitos.yhteystiedot')}
+              logo={oppilaitos?.oppilaitos?.logo}
+              yhteystiedot={oppilaitos?.oppilaitos?.metadata?.yhteystiedot}
+              nimi={l.localize(oppilaitos)}
             />
-          )}
-          <Yhteystiedot
-            className={classes.root}
-            heading={t('oppilaitos.yhteystiedot')}
-            logo={oppilaitos?.oppilaitos?.logo}
-            yhteystiedot={oppilaitos?.oppilaitos?.metadata?.yhteystiedot}
-            nimi={l.localize(oppilaitos)}
-          />
-        </Box>
-      </Container>
-    );
-  };
-
-  useEffect(() => {
-    dispatch(fetchOppilaitosTarjontaData({ oid, isOppilaitosOsa }));
-  }, [oid, dispatch, isOppilaitosOsa]);
-
-  return status === 'loading' || isLoading ? <LoadingCircle /> : <OppilaitosData />;
+          </Box>
+        </Container>
+      );
+    default:
+      return null;
+  }
 };

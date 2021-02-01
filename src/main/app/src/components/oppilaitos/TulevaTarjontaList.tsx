@@ -7,6 +7,7 @@ import Spacer from '#/src/components/common/Spacer';
 import { TulevaKoulutusCard } from './TulevaKoulutusCard';
 import { TulevaTarjontaPagination } from './TulevaTarjontaPagination';
 import { educationTypeColorCode } from '#/src/colors';
+import { usePaginatedTarjonta } from './hooks';
 
 const useStyles = makeStyles({
   container: {
@@ -27,23 +28,27 @@ type Tarjonta = {
 };
 
 type Props = {
-  tulevaTarjonta: {
-    values: Array<Tarjonta>;
-    total: number;
-  };
   oid: string;
   isOppilaitosOsa: boolean;
 };
 
-export const TulevaTarjontaList = ({
-  tulevaTarjonta: { values, total },
-  oid,
-  isOppilaitosOsa,
-}: Props) => {
+export const TulevaTarjontaList = ({ oid, isOppilaitosOsa }: Props) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  return (
+  const { queryResult } = usePaginatedTarjonta({
+    oid,
+    isOppilaitosOsa,
+    isTuleva: true,
+  });
+
+  const { data: tulevaTarjonta = {} } = queryResult;
+  const { values, total } = tulevaTarjonta as {
+    values: Array<Tarjonta>;
+    total: number;
+  };
+
+  return values ? (
     <Container maxWidth="lg" className={classes.container}>
       <Typography variant="h2">{t('oppilaitos.tulevat-koulutukset')}</Typography>
       <Spacer />
@@ -71,5 +76,5 @@ export const TulevaTarjontaList = ({
         isOppilaitosOsa={isOppilaitosOsa}
       />
     </Container>
-  );
+  ) : null;
 };
