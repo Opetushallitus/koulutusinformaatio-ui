@@ -37,11 +37,11 @@ const getValintaperustePageData = async (
   return { koulutus, toteutus, hakukohde, valintaperuste };
 };
 
-export const useValintaperustePageData = ({ hakukohdeOid }: PageDataProps) => {
+export const useValintaperustePageData = (props: PageDataProps) => {
   const { isDraft } = useUrlParams();
   return useQuery<PageData>(
-    ['getValintaperustePageData', { hakukohdeOid }],
-    (_, props: PageDataProps) => getValintaperustePageData(props, isDraft),
+    ['getValintaperustePageData', props],
+    () => getValintaperustePageData(props, isDraft),
     {
       refetchOnWindowFocus: false,
     }
@@ -65,13 +65,11 @@ const getValintaperustePreviewPageData = async (
   return { valintaperuste };
 };
 
-export const useValintaperustePreviewPageData = ({
-  valintaperusteId,
-}: PreviewPageDataProps) => {
+export const useValintaperustePreviewPageData = (props: PreviewPageDataProps) => {
   const { isDraft } = useUrlParams();
   return useQuery<PreviewPageData>(
-    ['getValintaperustePreviewPageData', { valintaperusteId }],
-    (_, props: PreviewPageDataProps) => getValintaperustePreviewPageData(props, isDraft),
+    ['getValintaperustePreviewPageData', props],
+    () => getValintaperustePreviewPageData(props, isDraft),
     {
       refetchOnWindowFocus: false,
     }

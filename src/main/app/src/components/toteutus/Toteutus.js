@@ -107,7 +107,7 @@ const getOsaamisalatPageData = async ({ ePerusteId, requestParams }) => {
 const useOsaamisalatPageData = ({ ePerusteId, requestParams }) => {
   return useQuery(
     ['getOsaamisalatPageData', { ePerusteId, requestParams }],
-    (key, props) => getOsaamisalatPageData(props),
+    () => getOsaamisalatPageData({ ePerusteId, requestParams }),
     {
       refetchOnWindowFocus: false,
       enabled: !_.isNil(ePerusteId) && !_.isEmpty(requestParams),
