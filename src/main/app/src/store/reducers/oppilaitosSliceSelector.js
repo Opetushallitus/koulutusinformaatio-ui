@@ -1,14 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
 import _ from 'lodash';
-import { map, flow, filter, get } from 'lodash/fp';
 import { Localizer as l } from '#/src/tools/Utils';
 
-const ACTIVE = 'AKTIIVINEN';
-
 // State data getters
-function getOppilaitokset(state) {
-  return state.oppilaitos.oppilaitos;
-}
 function getTarjonta(state) {
   return state.oppilaitos.tarjonta;
 }
@@ -94,25 +88,8 @@ export const getApiRequestParams = createSelector(
 );
 
 export const getOppilaitosProps = createSelector(
-  [
-    getOppilaitokset,
-    getTarjontaProps,
-    getTulevaTarjontaProps,
-    getStatus,
-    getOppilaitosError,
-  ],
-  (oppilaitos, tarjonta, tulevaTarjonta, status, oppilaitosError) => ({
-    oppilaitos,
-    oppilaitosOsat: flow(
-      get('osat'),
-      filter({ status: ACTIVE }),
-      map((osa) => ({
-        ...osa,
-        nimi: removeOppilaitosName(l.localize(osa.nimi), l.localize(oppilaitos.nimi)),
-      }))
-    )(oppilaitos),
-    esittelyHtml: l.localize(_.get(oppilaitos, 'oppilaitos.metadata.esittely', '')),
-    tietoaOpiskelusta: _.get(oppilaitos, 'oppilaitos.metadata.tietoaOpiskelusta', []),
+  [getTarjontaProps, getTulevaTarjontaProps, getStatus, getOppilaitosError],
+  (tarjonta, tulevaTarjonta, status, oppilaitosError) => ({
     tarjonta,
     tulevaTarjonta,
     status,
@@ -142,6 +119,3 @@ export const getTulevaTarjontaPaginationProps = createSelector(
 // Helpers
 const getLocalizedmaksullisuus = (isMaksullinen, maksuAmount) =>
   isMaksullinen ? `${maksuAmount} €` : l.getTranslationForKey('toteutus.maksuton');
-
-const removeOppilaitosName = (osaName, oppilaitosName) =>
-  osaName.replace(`${oppilaitosName}, `, '');

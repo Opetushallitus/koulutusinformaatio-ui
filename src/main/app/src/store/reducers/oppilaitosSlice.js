@@ -1,10 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
-  getOppilaitos,
-  getOppilaitosTarjonta,
-  getOppilaitosOsa,
-  getOppilaitosOsaTarjonta,
-} from '#/src/api/konfoApi';
+import { getOppilaitosTarjonta, getOppilaitosOsaTarjonta } from '#/src/api/konfoApi';
 import { Localizer as l } from '#/src/tools/Utils';
 
 const IDLE_STATUS = 'idle';
@@ -12,7 +7,6 @@ const LOADING_STATUS = 'loading';
 
 export const initialState = {
   status: IDLE_STATUS,
-  oppilaitos: {},
   tarjonta: {},
   tulevaTarjonta: {},
   page: 1,
@@ -34,11 +28,8 @@ const oppilaitosSlice = createSlice({
         state.status = LOADING_STATUS;
       }
     },
-    fetchOppilaitosSuccess(state, { payload }) {
+    fetchOppilaitosSuccess(state) {
       if (state.status === LOADING_STATUS) {
-        state.oppilaitos = payload.oppilaitosData;
-        state.tarjonta = payload.tarjonta;
-        state.tulevaTarjonta = payload.tulevaTarjonta;
         state.tulevaPage = 1;
         state.tulevaOffset = 0;
         state.page = 1;
@@ -84,9 +75,6 @@ export const fetchOppilaitosTarjontaData = ({ oid, isOppilaitosOsa }) => async (
 ) => {
   try {
     dispatch(fetchOppilaitosStart());
-    const oppilaitosData = await (isOppilaitosOsa
-      ? getOppilaitosOsa(oid)
-      : getOppilaitos(oid));
     const tarjontaOpts = {
       oid,
       requestParams: {
@@ -112,7 +100,7 @@ export const fetchOppilaitosTarjontaData = ({ oid, isOppilaitosOsa }) => async (
     const tulevaTarjonta = await (isOppilaitosOsa
       ? getOppilaitosOsaTarjonta(tulevaTarjontaOpts)
       : getOppilaitosTarjonta(tulevaTarjontaOpts));
-    dispatch(fetchOppilaitosSuccess({ oid, oppilaitosData, tarjonta, tulevaTarjonta }));
+    dispatch(fetchOppilaitosSuccess({ oid, tarjonta, tulevaTarjonta }));
   } catch (err) {
     dispatch(fetchOppilaitosError(err.toString()));
   }

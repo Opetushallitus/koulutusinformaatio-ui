@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
+import _ from 'lodash';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Box, Container, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Localizer as l } from '#/src/tools/Utils';
-import _ from 'lodash';
 import { fetchOppilaitosTarjontaData } from '#/src/store/reducers/oppilaitosSlice';
 import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import { getOppilaitosProps } from '#/src/store/reducers/oppilaitosSliceSelector';
@@ -20,6 +20,7 @@ import { Yhteystiedot } from './Yhteystiedot';
 import { TulevaTarjontaList } from './TulevaTarjontaList';
 import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
 import OppilaitosOsaList from './OppilaitosOsaList';
+import { useOppilaitos } from './hooks';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },
@@ -41,16 +42,13 @@ export const OppilaitosPage = (props) => {
   const { oid } = useParams();
   const { t } = useTranslation();
   const isOppilaitosOsa = props.oppilaitosOsa;
-  const {
-    esittelyHtml,
-    oppilaitos,
-    oppilaitosOsat,
-    tarjonta,
-    tietoaOpiskelusta,
-    tulevaTarjonta,
-    status,
-    oppilaitosError,
-  } = useSelector(getOppilaitosProps);
+  const { tarjonta, tulevaTarjonta, status, oppilaitosError } = useSelector(
+    getOppilaitosProps
+  );
+
+  const { data = {}, isLoading } = useOppilaitos({ oid, isOppilaitosOsa });
+
+  const { esittelyHtml, oppilaitos, oppilaitosOsat, tietoaOpiskelusta } = data;
   const hakuUrl = useSelector(getHakuUrl);
 
   const OppilaitosData = () => {
@@ -153,5 +151,5 @@ export const OppilaitosPage = (props) => {
     dispatch(fetchOppilaitosTarjontaData({ oid, isOppilaitosOsa }));
   }, [oid, dispatch, isOppilaitosOsa]);
 
-  return status === 'loading' ? <LoadingCircle /> : <OppilaitosData />;
+  return status === 'loading' || isLoading ? <LoadingCircle /> : <OppilaitosData />;
 };
