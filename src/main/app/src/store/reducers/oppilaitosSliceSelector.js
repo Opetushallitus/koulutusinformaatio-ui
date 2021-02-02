@@ -24,31 +24,23 @@ function getTulevaOffset(state) {
   return state.oppilaitos.tulevaOffset;
 }
 
-export const getApiRequestParams = createSelector(
-  [getPage, getSize, getOrder],
-  (page, size, order) => ({
+export const getTarjontaPaginationProps = createSelector(
+  [getPage, getSize, getOrder, getOffset],
+  (page, size, order, offset) => ({
     page,
     size,
-    lng: l.getLanguage(),
     order,
-  })
-);
-
-export const getTarjontaPaginationProps = createSelector(
-  [getApiRequestParams, getOffset],
-  (apiRequestParams, offset) => ({
-    ...apiRequestParams,
     offset,
   })
 );
 
 export const getTulevaTarjontaPaginationProps = createSelector(
-  [getOrder, getTulevaPage, getTulevaSize, getTulevaOffset],
-  (order, page, size, offset) => ({
+  [getTulevaPage, getTulevaSize, getOrder, getTulevaOffset],
+  (page, size, order, offset) => ({
     page,
     size,
-    offset,
     order,
+    offset,
     lng: l.getLanguage(),
   })
 );

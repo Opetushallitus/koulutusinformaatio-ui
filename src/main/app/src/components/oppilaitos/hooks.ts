@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import _fp from 'lodash/fp';
 import { useQuery } from 'react-query';
@@ -16,6 +16,7 @@ import {
 import {
   setTarjontaPagination,
   setTulevaTarjontaPagination,
+  resetPagination,
 } from '#/src/store/reducers/oppilaitosSlice';
 
 // Helpers
@@ -108,6 +109,13 @@ export const usePaginatedTarjonta = ({
   isOppilaitosOsa,
   isTuleva,
 }: UsePaginatedTarjontaProps) => {
+  const dispatch = useDispatch();
+
+  // Reset pagination when oid changes (which means that another oppilaitos-page was opened)
+  useEffect(() => {
+    dispatch(resetPagination());
+  }, [dispatch, oid]);
+
   const paginationProps = useSelector((state) =>
     isTuleva ? getTulevaTarjontaPaginationProps(state) : getTarjontaPaginationProps(state)
   );
@@ -130,13 +138,11 @@ export const usePaginatedTarjonta = ({
       enabled: Boolean(oid),
       refetchOnWindowFocus: false,
       keepPreviousData: true,
-      staleTime: 30 * 60 * 1000,
+      staleTime: 60 * 1000,
       select: (tarjontaData) =>
         isTuleva ? selectTulevaTarjonta(tarjontaData) : selectTarjonta(tarjontaData),
     }
   );
-
-  const dispatch = useDispatch();
 
   return useMemo(
     () => ({

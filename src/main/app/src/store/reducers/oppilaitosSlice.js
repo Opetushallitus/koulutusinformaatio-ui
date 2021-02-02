@@ -28,11 +28,16 @@ const oppilaitosSlice = createSlice({
       state.tulevaOffset = offset;
       state.order = order;
     },
+    resetPagination(state) {
+      Object.assign(state, initialState);
+    },
   },
 });
 
 export const {
   setTarjontaPagination,
   setTulevaTarjontaPagination,
+  resetPagination,
 } = oppilaitosSlice.actions;
+
 export default oppilaitosSlice.reducer;
