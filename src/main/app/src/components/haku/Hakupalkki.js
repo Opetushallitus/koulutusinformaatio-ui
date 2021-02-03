@@ -34,7 +34,7 @@ import { getHakupalkkiProps } from '#/src/store/reducers/hakutulosSliceSelector'
 import { colors } from '#/src/colors';
 import { theme } from '#/src/theme';
 import HakupalkkiFilters from './HakupalkkiFilters';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import { MobileFiltersOnTopMenu } from '../hakutulos/MobileFiltersOnTopMenu';
 import { useQueryParams } from '#/src/hooks';
 

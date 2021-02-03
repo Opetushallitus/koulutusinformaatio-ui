@@ -16,7 +16,7 @@ import _ from 'lodash';
 import koulutusPlaceholderImg from '#/src/assets/images/Opolkuhts.png';
 import { MUI_BREAKPOINTS } from '#/src/constants';
 import { educationTypeColorCode } from '#/src/colors';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import { Localizer as l } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({

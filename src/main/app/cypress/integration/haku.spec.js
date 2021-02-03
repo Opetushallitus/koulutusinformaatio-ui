@@ -1,7 +1,11 @@
-const autoRecord = require('cypress-autorecord');
+import { playMockFile } from 'kto-ui-common/cypress/mockUtils';
+
 describe('Haku', () => {
-  autoRecord();
-  it('Koulutustyyppi checkboxes should work hierarchically', function () {
+  beforeEach(() => {
+    playMockFile('haku.mocks.json');
+  });
+
+  it('Koulutustyyppi checkboxes should work hierarchically', () => {
     cy.visit('/fi/haku/auto');
 
     cy.findByRole('checkbox', { name: /Ammatillinen koulutus/ }).as(
@@ -33,8 +37,10 @@ describe('Haku', () => {
 
     cy.get('@AmmatillinenKoulutus').should('be.checked');
   });
-  it("Koulutustyyppi switching between 'Tutkintoon johtavat' and 'Muut'", function () {
+  it("Koulutustyyppi switching between 'Tutkintoon johtavat' and 'Muut'", () => {
     cy.visit('/fi/haku/auto');
+
+    cy.findAllByRole('progressbar').should('not.exist');
     const tutkintoonJohtavatBtn = () =>
       cy.findByRole('button', { name: /Tutkintoon johtavat/i });
     const muutBtn = () => cy.findByRole('button', { name: /Muut/i });
@@ -47,9 +53,9 @@ describe('Haku', () => {
     const tutkinnonOsaChk = () => cy.findByRole('checkbox', { name: /Tutkinnon osa /i });
     const osaamisalaChk = () => cy.findByRole('checkbox', { name: /Osaamisala /i });
 
-    ammatillinenKoulutusChk().should('be.visible');
-    ammatillinenPerustutkintoChk().should('be.visible');
-    erikoisammattitutkintoChk().should('be.visible');
+    ammatillinenKoulutusChk().should('exist');
+    ammatillinenPerustutkintoChk().should('exist');
+    erikoisammattitutkintoChk().should('exist');
 
     cy.get('[data-cy=koulutustyyppi-filter]').within((koulutustyyppppi) => {
       tutkintoonJohtavatBtn().should('have.attr', 'aria-selected', 'true');
@@ -57,10 +63,10 @@ describe('Haku', () => {
 
       muutBtn().click().should('have.attr', 'aria-selected', 'true');
       tutkintoonJohtavatBtn().should('have.attr', 'aria-selected', 'false');
-      tutkinnonOsaChk().should('be.visible');
-      osaamisalaChk().should('be.visible');
-      ammatillinenPerustutkintoChk().should('not.be.visible');
-      erikoisammattitutkintoChk().should('not.be.visible');
+      tutkinnonOsaChk().should('exist');
+      osaamisalaChk().should('exist');
+      ammatillinenPerustutkintoChk().should('not.exist');
+      erikoisammattitutkintoChk().should('not.exist');
 
       tutkinnonOsaChk().check().should('be.checked');
       ammatillinenKoulutusChk().should('have.attr', 'data-indeterminate', 'true');
@@ -73,8 +79,9 @@ describe('Haku', () => {
         .should('have.attr', 'data-indeterminate', 'false');
     });
   });
-  it('Koulutusala checkboxes should work hierarchically', function () {
+  it('Koulutusala checkboxes should work hierarchically', () => {
     cy.visit('/fi/haku/auto');
+    cy.findAllByRole('progressbar').should('not.exist');
     cy.findByText('Koulutusalat').should('exist');
     cy.findByText('Tekniikan alat').click().should('not.be.visible');
 
@@ -118,7 +125,7 @@ describe('Haku', () => {
         koneProsessiEnergiaSahkoTekniikka().should('be.checked');
       });
   });
-  it('Opetustapa filter checkboxes and mobile summary view', function () {
+  it('Opetustapa filter checkboxes and mobile summary view', () => {
     cy.visit('/fi/haku/auto');
     const etaopetusChk = () => cy.findByRole('checkbox', { name: /Etäopetus \(\d*\)/i });
     const verkkoOpiskeluChk = () =>
@@ -142,7 +149,7 @@ describe('Haku', () => {
         verkkoOpiskeluChk().should('exist').should('not.be.checked');
       });
   });
-  it("Koulutuskortti data should be presented correctly for 'Tutkinnon osa'", function () {
+  it("Koulutuskortti data should be presented correctly for 'Tutkinnon osa'", () => {
     cy.visit('/fi/haku/auto');
 
     const searchBox = () =>
@@ -160,7 +167,7 @@ describe('Haku', () => {
       );
     });
   });
-  it("Koulutuskortti data should be presented correctly for 'Osaamisala'", function () {
+  it("Koulutuskortti data should be presented correctly for 'Osaamisala'", () => {
     cy.visit('/fi/haku/auto');
 
     const searchBox = () =>

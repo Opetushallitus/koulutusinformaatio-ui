@@ -1,7 +1,10 @@
-const autoRecord = require('cypress-autorecord');
-describe('Tutkinnon osa KOMO', function () {
-  autoRecord();
-  it('Tutkinnon osa KOMO renders properly', function () {
+import { playMockFile } from 'kto-ui-common/cypress/mockUtils';
+
+describe('Tutkinnon osa KOMO', () => {
+  beforeEach(() => {
+    playMockFile('komo-tutkinnon-osa.mocks.json');
+  });
+  it('Tutkinnon osa KOMO renders properly', () => {
     cy.visit('/fi/koulutus/1.2.246.562.13.00000000000000000622');
 
     // Wait for everything to load
@@ -12,7 +15,7 @@ describe('Tutkinnon osa KOMO', function () {
     cy.get('[aria-expanded=false]').contains('Hevosten hyvinvoinnista');
   });
 
-  it('Tutkinnon osa KOMO kuvaus accordions work', function () {
+  it('Tutkinnon osa KOMO kuvaus accordions work', () => {
     cy.get('a[href*="tutkinnonosat/2449201"]').should('not.be.visible');
     cy.get('[aria-expanded=false]').contains('Hevosten hyvinvoinnista').click();
 

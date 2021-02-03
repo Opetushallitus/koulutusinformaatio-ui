@@ -10,14 +10,13 @@ import { useParams } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { getToteutusOsaamisalaKuvaus } from '#/src/api/konfoApi';
 import { colors } from '#/src/colors';
-import Accordion from '#/src/components/common/Accordion';
+import { Accordion } from '#/src/components/common/Accordion';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Murupolku from '#/src/components/common/Murupolku';
 import Spacer from '#/src/components/common/Spacer';
 import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
-import HakuKaynnissaCard from '#/src/components/koulutus/HakuKaynnissaCard';
 import { getHakuParams, getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   fetchKoulutusWithRelatedData,
@@ -31,9 +30,11 @@ import {
   selectToteutus,
 } from '#/src/store/reducers/toteutusSlice';
 import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
+import { useUrlParams } from '#/src/components/hakutulos/UseUrlParams';
 import ContentWrapper from '../common/ContentWrapper';
+import { HakuKaynnissaCard } from './HakuKaynnissaCard';
 import { ToteutusHakuEiSahkoista } from './ToteutusHakuEiSahkoista';
-import ToteutusHakukohteet from './ToteutusHakukohteet';
+import { ToteutusHakukohteet } from './ToteutusHakukohteet';
 import { ToteutusHakuMuu } from './ToteutusHakuMuu';
 import { ToteutusInfoGrid } from './ToteutusInfoGrid';
 
@@ -84,7 +85,12 @@ const AccordionWithTitle = ({ titleTranslation, data }) => {
       alignItems="center">
       <Typography variant="h2">{t(titleTranslation)}</Typography>
       <Spacer />
-      <Accordion items={data} />
+      <Accordion
+        items={data}
+        ContentWrapper={({ children }) => (
+          <Typography component="div">{children}</Typography>
+        )}
+      />
     </Box>
   );
 };
@@ -110,6 +116,7 @@ const Toteutus = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const currentLanguage = l.getLanguage();
+  const { isDraft } = useUrlParams();
 
   // TODO: There is absolutely no error handling atm.
   const toteutus = useSelector(selectToteutus(oid), shallowEqual);
@@ -119,6 +126,7 @@ const Toteutus = () => {
     selectHakukohteet(oid),
     shallowEqual
   );
+
   const toteutusLoading = useSelector(selectToteutusLoading);
   const [koulutusNotFetched, setKoulutusNotFetched] = useState(!koulutus);
   const koulutusLoading =
@@ -147,7 +155,7 @@ const Toteutus = () => {
       ) || {};
     const kuvaus = !_.isEmpty(extendedData?.kuvaus)
       ? l.localize(extendedData?.kuvaus)
-      : t('toteutus.osaamisalalle-ei-loytynyt-kuvausta');
+      : `<p>${t('toteutus.osaamisalalle-ei-loytynyt-kuvausta')}</p>`;
     return { ...toa, extendedData, kuvaus };
   });
 
@@ -155,16 +163,17 @@ const Toteutus = () => {
 
   useEffect(() => {
     if (!toteutus) {
-      dispatch(fetchToteutus(oid));
+      dispatch(fetchToteutus(oid, isDraft));
     }
     // TODO: Get rid of koulutus call here when opintolaajuus AND tutkintonimikkeet comes from toteutus -backend
     if (!koulutus && koulutusOid && koulutusNotFetched) {
-      dispatch(fetchKoulutusWithRelatedData(toteutus.koulutusOid));
+      dispatch(fetchKoulutusWithRelatedData(toteutus.koulutusOid, isDraft));
       setKoulutusNotFetched(false);
     }
-  }, [toteutus, dispatch, oid, koulutus, koulutusOid, koulutusNotFetched]);
+  }, [isDraft, toteutus, dispatch, oid, koulutus, koulutusOid, koulutusNotFetched]);
 
   const opetus = toteutus?.metadata?.opetus;
+  const hasAnyHaku = jatkuvatHaut?.length + yhteisHaut?.length + erillisHaut?.length > 0;
   const hakuUrl = useSelector(getHakuUrl);
   const { hakuParamsStr } = useSelector(getHakuParams);
 
@@ -213,26 +222,9 @@ const Toteutus = () => {
         <Box mt={4}>
           <ToteutusInfoGrid
             koulutusTyyppi={toteutus?.metadata?.tyyppi}
-            kielet={opetus?.opetuskieli}
-            opetuskieletKuvaus={opetus?.opetuskieletKuvaus}
             laajuus={[koulutus?.opintojenLaajuus, koulutus?.opintojenLaajuusYksikkö]}
-            aloitus={[
-              opetus?.koulutuksenTarkkaAlkamisaika,
-              opetus?.koulutuksenAlkamispaivamaara,
-              opetus?.koulutuksenAlkamiskausi,
-              opetus?.koulutuksenAlkamisvuosi,
-            ]}
-            suunniteltuKestoVuodet={opetus?.suunniteltuKestoVuodet}
-            suunniteltuKestoKuukaudet={opetus?.suunniteltuKestoKuukaudet}
-            suunniteltuKestoKuvaus={opetus?.suunniteltuKestoKuvaus}
-            opetusaika={opetus?.opetusaika}
-            opetusaikaKuvaus={opetus?.opetusaikaKuvaus}
-            opetustapa={opetus?.opetustapa}
-            opetustapaKuvaus={opetus?.opetustapaKuvaus}
-            maksullisuus={opetus?.onkoMaksullinen && opetus?.maksunMaara}
-            maksullisuusKuvaus={opetus?.maksullisuusKuvaus}
-            apuraha={opetus?.onkoStipendia && opetus?.stipendinMaara}
-            apurahaKuvaus={opetus?.stipendinKuvaus}
+            opetus={opetus}
+            hasHaku={hasAnyHaku}
           />
         </Box>
         {toteutus?.hakuAukiType && (
@@ -276,14 +268,14 @@ const Toteutus = () => {
               title: l.localize(osaamisala?.koodi),
               content: (
                 <>
-                  <Typography>{sanitizedHTMLParser(osaamisala?.kuvaus)}</Typography>
+                  {sanitizedHTMLParser(osaamisala?.kuvaus)}
                   {!_.isEmpty(osaamisala?.linkki) && !_.isEmpty(osaamisala?.otsikko) && (
                     <LocalizedLink
                       target="_blank"
                       rel="noopener"
                       href={l.localize(osaamisala?.linkki)}>
                       {l.localize(osaamisala?.otsikko)}
-                      <OpenInNewIcon />
+                      <OpenInNewIcon fontSize="small" />
                     </LocalizedLink>
                   )}
                 </>
@@ -291,7 +283,7 @@ const Toteutus = () => {
             }))}
           />
         )}
-        {jatkuvatHaut?.length + yhteisHaut?.length + erillisHaut?.length > 0 && (
+        {hasAnyHaku && (
           <ToteutusHakukohteet
             jatkuvatHaut={jatkuvatHaut}
             yhteisHaut={yhteisHaut}
@@ -303,7 +295,7 @@ const Toteutus = () => {
         {opetus?.lisatiedot.length > 0 && (
           <AccordionWithTitle
             titleTranslation="koulutus.lisätietoa"
-            data={toteutus.metadata.opetus.lisatiedot.map((lisatieto) => ({
+            data={opetus.lisatiedot.map((lisatieto) => ({
               title: l.localize(lisatieto.otsikko),
               content: sanitizedHTMLParser(l.localize(lisatieto.teksti)),
             }))}

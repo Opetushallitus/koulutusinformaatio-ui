@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import { Localizer as l } from '#/src/tools/Utils';
 import SuositusKoulutusCard from './SuositusKoulutusCard';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles({
   container: {

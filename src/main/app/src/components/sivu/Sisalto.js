@@ -7,7 +7,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { useStores } from '../../hooks';
 import { LinkOrYoutube } from './LinkOrYoutube';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles({
   notFound: {

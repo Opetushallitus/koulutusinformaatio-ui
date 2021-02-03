@@ -1,9 +1,11 @@
-const autoRecord = require('cypress-autorecord');
+import { playMockFile } from 'kto-ui-common/cypress/mockUtils';
 
-describe('Tutkinnon osa KOMOTO', function () {
-  autoRecord();
+describe('Tutkinnon osa KOMOTO', () => {
+  beforeEach(() => {
+    playMockFile('komoto-tutkinnon-osa.mocks.json');
+  });
 
-  it('Tutkinnon osa KOMOTO renders properly', function () {
+  it('Tutkinnon osa KOMOTO renders properly', () => {
     cy.visit('/fi/toteutus/1.2.246.562.17.00000000000000000469');
 
     // Wait for everything to load
@@ -18,8 +20,8 @@ describe('Tutkinnon osa KOMOTO', function () {
     );
   });
 
-  it('Tutkinnon osa KOMO kuvaus accordions work', function () {
-    cy.get('a[href*="tutkinnonosat/2449201"]').should('not.be.visible');
+  it('Tutkinnon osa KOMO kuvaus accordions work', () => {
+    cy.get('a[href*="tutkinnonosat/2449201"]').should('not.exist');
     cy.get('[aria-expanded=false]').contains('Lisätietoa ilmoittautumisesta').click();
     cy.get('[aria-expanded=true]').contains('Lisätietoa ilmoittautumisesta');
   });

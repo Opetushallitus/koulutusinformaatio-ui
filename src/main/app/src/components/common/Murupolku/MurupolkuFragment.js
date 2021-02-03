@@ -4,7 +4,7 @@ import { Button, makeStyles } from '@material-ui/core';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
-import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import { colors } from '#/src/colors';
 
 const BREADCRUMB_ICON_SPACING = '14px';

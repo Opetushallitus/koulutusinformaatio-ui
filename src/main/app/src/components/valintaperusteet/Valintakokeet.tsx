@@ -3,14 +3,15 @@ import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { colors } from '#/src/colors';
-import Accordion from '#/src/components/common/Accordion';
+import { Accordion } from '#/src/components/common/Accordion';
 import { formatDateString, Localizer as l, toId } from '#/src/tools/Utils';
 import { Koodi, Translateable } from '#/src/types/common';
-import { LocalizedHTML } from './LocalizedHTML';
+import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 
 const useStyles = makeStyles(() => ({
   valintakoeHeader: {
     fontSize: '20px',
+    color: colors.darkGrey,
   },
   valintakoeSubHeader: {
     fontWeight: 700,
@@ -28,23 +29,18 @@ const SubHeading: React.FC = ({ children }) => {
 };
 
 type TilaisuusProps = {
-  alkaa: string;
-  paattyy: string;
-  lisatietoja: Translateable;
-  osoite: Translateable;
-  postinumero: Koodi;
   index: number;
-  jarjestamispaikka: Translateable;
+  tilaisuus: Tilaisuus;
 };
 
-const Tilaisuus = ({
-  alkaa,
-  paattyy,
-  lisatietoja,
-  osoite,
-  postinumero,
+const TilaisuusComponent = ({
   index,
-  jarjestamispaikka,
+  tilaisuus: {
+    lisatietoja,
+    jarjestamispaikka,
+    osoite: { osoite, postinumero },
+    aika: { alkaa, paattyy },
+  },
 }: TilaisuusProps) => {
   const { t } = useTranslation();
   return (
@@ -89,46 +85,78 @@ export const ValintakokeetSisallysluettelo = (valintakokeet: Array<any>) => (Lnk
     ? valintakokeet.map(({ nimi }, index) => Lnk(l.localize(nimi), index + 1, false))
     : null;
 
+type Tilaisuus = {
+  lisatietoja: Translateable;
+  jarjestamispaikka: Translateable;
+  osoite: { osoite: Translateable; postinumero: Koodi };
+  aika: { alkaa: string; paattyy: string };
+};
+
 type Props = {
   valintakokeet: Array<{
     nimi: string;
     tyyppi: Koodi;
-    tilaisuudet: Array<{
-      lisatietoja: Translateable;
-      jarjestamispaikka: Translateable;
-      osoite: { osoite: Translateable; postinumero: Koodi };
-      aika: { alkaa: string; paattyy: string };
-    }>;
+    tilaisuudet: Array<Tilaisuus>;
     metadata: {
       ohjeetErityisjarjestelyihin: Translateable;
       ohjeetEnnakkovalmistautumiseen: Translateable;
       tietoja: Translateable;
+      vahimmaispisteet?: number;
     };
   }>;
+  yleiskuvaukset: {
+    valintaperuste: Translateable;
+    hakukohde: Translateable;
+  };
 };
 
-export const Valintakokeet = ({ valintakokeet }: Props) => {
+export const Valintakokeet = ({
+  yleiskuvaukset: {
+    valintaperuste: valintaperusteYk,
+    hakukohde: hakukohdeYk,
+  } = {} as Props['yleiskuvaukset'],
+  valintakokeet = [],
+}: Props) => {
   const classes = useStyles();
   const { t } = useTranslation();
+
   return (
     <>
       <Box py={1}>
         <Typography variant="h2">{t('valintaperuste.valintakokeet')}</Typography>
       </Box>
+      {valintaperusteYk && (
+        <Box py={1}>
+          <Typography variant="h3">
+            {t('valintaperuste.valintakokeet-yleiskuvaus-valintaperuste')}
+          </Typography>
+          <LocalizedHTML data={valintaperusteYk} />
+        </Box>
+      )}
+      {hakukohdeYk && (
+        <Box py={1}>
+          <Typography variant="h3">
+            {t('valintaperuste.valintakokeet-yleiskuvaus-hakukohde')}
+          </Typography>
+          <LocalizedHTML data={hakukohdeYk} />
+        </Box>
+      )}
       {valintakokeet.map(({ nimi, tyyppi, tilaisuudet, metadata = {} }, index) => {
         const localizedTyyppi = l.localize(tyyppi?.nimi);
         const {
           ohjeetErityisjarjestelyihin,
           ohjeetEnnakkovalmistautumiseen,
           tietoja,
+          vahimmaispisteet,
         } = metadata;
+
         return (
           <div key={`valintakoe-${index}`}>
             <Card
               id={`${toId(l.localize(nimi))}`}
               elevation={0}
               style={{
-                backgroundColor: colors.lightGrey,
+                backgroundColor: colors.grey,
                 padding: '15px',
                 marginBottom: '20px',
               }}>
@@ -138,6 +166,14 @@ export const Valintakokeet = ({ valintakokeet }: Props) => {
                   {l.localize(nimi)}
                 </Typography>
                 {!_.isEmpty(tietoja) && <LocalizedHTML data={tietoja!} />}
+                {vahimmaispisteet && (
+                  <>
+                    <SubHeading>
+                      {t('valintaperuste.alin-hyvaksytty-pistemaara')}
+                    </SubHeading>
+                    <Typography variant="body1">{vahimmaispisteet}</Typography>
+                  </>
+                )}
                 {!_.isEmpty(ohjeetEnnakkovalmistautumiseen) && (
                   <>
                     <SubHeading>
@@ -154,35 +190,20 @@ export const Valintakokeet = ({ valintakokeet }: Props) => {
                     <LocalizedHTML data={ohjeetErityisjarjestelyihin!} />
                   </>
                 )}
-                <Accordion
-                  ContentWrapper={'div' as any}
-                  items={tilaisuudet.map(
-                    (
-                      {
-                        lisatietoja,
-                        jarjestamispaikka,
-                        osoite: { osoite, postinumero },
-                        aika: { alkaa, paattyy },
-                      },
-                      index
-                    ) => {
-                      return {
+                {tilaisuudet.length > 0 && (
+                  <Box mt={2}>
+                    <Accordion
+                      noColors
+                      ContentWrapper={'div' as any}
+                      items={tilaisuudet.map((tilaisuus, index) => ({
                         title: `${t('valintaperuste.tilaisuus')} ${index + 1}`,
                         content: (
-                          <Tilaisuus
-                            osoite={osoite}
-                            jarjestamispaikka={jarjestamispaikka}
-                            lisatietoja={lisatietoja}
-                            postinumero={postinumero}
-                            alkaa={alkaa}
-                            paattyy={paattyy}
-                            index={index}
-                          />
+                          <TilaisuusComponent index={index} tilaisuus={tilaisuus} />
                         ),
-                      };
-                    }
-                  )}
-                />
+                      }))}
+                    />
+                  </Box>
+                )}
               </CardContent>
             </Card>
           </div>

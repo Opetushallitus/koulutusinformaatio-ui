@@ -1,20 +1,12 @@
-// ***********************************************************
-// This example support/index.js is processed and
-// loaded automatically before your test files.
-//
-// This is a great place to put global configuration and
-// behavior that modifies Cypress.
-//
-// You can change the location of this file or turn off
-// automatically serving support files with the
-// 'supportFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/configuration
-// ***********************************************************
+import { playMockFile } from 'kto-ui-common/cypress/mockUtils';
+import './commands';
 
-// Import commands.js using ES2015 syntax:
-import './commands'
-
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+beforeEach(() => {
+  playMockFile('common.mocks.json');
+  cy.intercept('**/faq.e49945eb.svg', { fixture: 'faq.e49945eb.svg' });
+  cy.intercept('**/ehoks.fdeaa517.svg', { fixture: 'ehoks.fdeaa517.svg' });
+  cy.intercept('**/sv/translation.json', {});
+  cy.intercept('https://fonts.googleapis.com/icon?family=Material+Icons', {
+    fixture: 'material-icons.css',
+  });
+});

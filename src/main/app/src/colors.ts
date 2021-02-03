@@ -13,6 +13,7 @@ export const colors = {
 
   // TODO: Should be from specs?
   blue: '#0033CC',
+  grey: '#EEEEEE',
 };
 
 export const educationTypeColorCode = {

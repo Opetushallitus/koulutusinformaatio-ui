@@ -8,7 +8,10 @@ export type Osoite = {
 
 export type Yhteystiedot = {
   osoite: Osoite;
+  // TODO: Not sure if sahkoposti and puhelinnumero should be Translateable, but it comes as string with Liitteet? And as Translateable from oppilaitos
   sahkoposti: string;
+  puhelinnumero: string;
+  wwwSivu: Translateable;
 };
 
 // Utils

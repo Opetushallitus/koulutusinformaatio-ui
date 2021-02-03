@@ -6,7 +6,7 @@ import _ from 'lodash';
 import Spacer from '#/src/components/common/Spacer';
 import { ToteutusCard } from '#/src/components/common/ToteutusCard';
 import TarjontaPagination from './TarjontaPagination';
-import LocalizedLink from '#/src/components/common/LocalizedLink';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles({
   container: {
