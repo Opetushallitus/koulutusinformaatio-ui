@@ -38,10 +38,8 @@ export const getSuositellutKoulutukset = (requestParams) =>
     params: C.cleanRequestParams(requestParams),
   });
 
-// TODO: hooks to calling code to give draft parameter
 export const getOppilaitos = createEntityGetter('oppilaitos');
 
-// TODO: hooks to calling code to give draft parameter
 export const getOppilaitosOsa = createEntityGetter('oppilaitosOsa');
 
 export const getOppilaitosTarjonta = ({ oid, requestParams }) =>
