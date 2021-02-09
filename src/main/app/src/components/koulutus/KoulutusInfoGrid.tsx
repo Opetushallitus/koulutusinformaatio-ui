@@ -47,9 +47,6 @@ export const KoulutusInfoGrid = ({
     });
   }
 
-  const laajuusString = !laajuus.includes(undefined)
-    ? laajuus.map((elem) => l.localize(elem)).join(' ')
-    : t('koulutus.ei-laajuutta');
   const koulutusTyyppiString = koulutustyyppi
     ? t(`koulutus.tyyppi-${koulutustyyppi}`)
     : '';
@@ -62,7 +59,7 @@ export const KoulutusInfoGrid = ({
   perustiedotData.push({
     icon: <TimelapseIcon className={classes.koulutusInfoGridIcon} />,
     title: t('koulutus.koulutuksen-laajuus'),
-    text: laajuusString,
+    text: l.localizeLaajuus(laajuus),
   });
 
   return (

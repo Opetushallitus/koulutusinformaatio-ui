@@ -40,9 +40,6 @@ export const ToteutusInfoGrid = ({ koulutusTyyppi, laajuus, opetus = {}, hasHaku
   const { t } = useTranslation();
 
   const kieliString = opetus.opetuskieli?.map(localizeMap).join('\n') ?? '';
-  const laajuusString = !laajuus.includes(undefined)
-    ? laajuus.map(localizeMap).join(' ')
-    : t('koulutus.ei-laajuutta');
   const kestoString = suunniteltuKesto(
     t,
     opetus.suunniteltuKestoVuodet,
@@ -72,7 +69,7 @@ export const ToteutusInfoGrid = ({ koulutusTyyppi, laajuus, opetus = {}, hasHaku
     {
       icon: <TimelapseIcon className={classes.koulutusInfoGridIcon} />,
       title: t('koulutus.koulutuksen-laajuus'),
-      text: laajuusString,
+      text: l.localizeLaajuus(laajuus),
     },
     {
       icon: <ScheduleIcon className={classes.koulutusInfoGridIcon} />,
