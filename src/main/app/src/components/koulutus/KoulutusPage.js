@@ -79,7 +79,7 @@ const findTutkinnonOsa = (eperuste) => (id) =>
 const getKuvausHtmlSection = (t) => (captionKey, localizableText) =>
   localizableText ? '<h3>' + t(captionKey) + '</h3>' + l.localize(localizableText) : '';
 
-export const Koulutus = () => {
+export const KoulutusPage = () => {
   const { isDraft } = useUrlParams();
   const dispatch = useDispatch();
   const classes = useStyles();

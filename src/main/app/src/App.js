@@ -15,7 +15,7 @@ import { theme } from './theme';
 import { DRAWER_WIDTH } from './constants';
 import Palvelut from './components/palvelu/Palvelut';
 import { Haku } from './components/haku/Haku';
-import { Koulutus } from './components/koulutus/Koulutus';
+import { KoulutusPage } from './components/koulutus/KoulutusPage';
 import Oppilaitos from './components/oppilaitos/Oppilaitos';
 import {
   ValintaperustePage,
@@ -113,7 +113,7 @@ const TranslatedRoutes = ({ match, location }) => {
       </Route>
       <Route exact path="/:lng/koulutus/:oid">
         <KoulutusHakuBar />
-        <Koulutus />
+        <KoulutusPage />
       </Route>
       <Route exact path="/:lng/oppilaitos/:oid">
         <KoulutusHakuBar />
