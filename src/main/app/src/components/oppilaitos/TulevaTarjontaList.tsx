@@ -1,14 +1,18 @@
-import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
+import _ from 'lodash';
+import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
+import { educationTypeColorCode } from '#/src/colors';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
+import {
+  LoadingCircle,
+  OverlayLoadingCircle,
+} from '#/src/components/common/LoadingCircle';
 import Spacer from '#/src/components/common/Spacer';
 import { TulevaKoulutusCard } from './TulevaKoulutusCard';
 import { TulevaTarjontaPagination } from './TulevaTarjontaPagination';
-import { educationTypeColorCode } from '#/src/colors';
 import { usePaginatedTarjonta } from './hooks';
-import { LoadingCircle, OverlayLoadingCircle } from '../common/LoadingCircle';
 
 const useStyles = makeStyles({
   container: {
@@ -53,7 +57,7 @@ export const TulevaTarjontaList = ({ oid, isOppilaitosOsa }: Props) => {
     case 'loading':
       return <LoadingCircle />;
     case 'success':
-      return values ? (
+      return _.isEmpty(values) ? null : (
         <Container maxWidth="lg" className={classes.container}>
           <Typography variant="h2">{t('oppilaitos.tulevat-koulutukset')}</Typography>
           <Spacer />
@@ -89,7 +93,7 @@ export const TulevaTarjontaList = ({ oid, isOppilaitosOsa }: Props) => {
             isOppilaitosOsa={isOppilaitosOsa}
           />
         </Container>
-      ) : null;
+      );
     default:
       return null;
   }
