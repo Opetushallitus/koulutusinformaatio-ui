@@ -29,7 +29,11 @@ import {
   selectLoading as selectToteutusLoading,
   selectToteutus,
 } from '#/src/store/reducers/toteutusSlice';
-import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
+import {
+  getLocalizedOpintojenLaajuus,
+  Localizer as l,
+  sanitizedHTMLParser,
+} from '#/src/tools/Utils';
 import { useUrlParams } from '#/src/components/hakutulos/UseUrlParams';
 import ContentWrapper from '../common/ContentWrapper';
 import { HakuKaynnissaCard } from './HakuKaynnissaCard';
@@ -222,7 +226,7 @@ const Toteutus = () => {
         <Box mt={4}>
           <ToteutusInfoGrid
             koulutusTyyppi={toteutus?.metadata?.tyyppi}
-            laajuus={[koulutus?.opintojenLaajuus, koulutus?.opintojenLaajuusYksikkö]}
+            laajuus={getLocalizedOpintojenLaajuus(koulutus)}
             opetus={opetus}
             hasHaku={hasAnyHaku}
           />

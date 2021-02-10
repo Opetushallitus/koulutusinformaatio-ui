@@ -169,3 +169,30 @@ export const consoleWarning = (...props) => {
     console.warn(...props);
   }
 };
+
+export function getLocalizedOpintojenLaajuus(koulutus) {
+  const tutkinnonOsat = koulutus?.tutkinnonOsat || [];
+  if (!koulutus?.opintojenLaajuus) {
+    console.log(koulutus?.opintojenLaajuusNumero, koulutus?.opintojenLaajuus);
+  }
+  let opintojenLaajuusNumero =
+    (koulutus?.opintojenLaajuus && Localizer.localize(koulutus?.opintojenLaajuus)) ||
+    koulutus?.opintojenLaajuusNumero ||
+    (tutkinnonOsat && tutkinnonOsat.map((k) => k?.opintojenLaajuusNumero).join(' + '));
+
+  if (_fp.isString(opintojenLaajuusNumero)) {
+    opintojenLaajuusNumero = opintojenLaajuusNumero.split('+').map(_fp.trim).join(' + ');
+  }
+
+  const opintojenLaajuusYksikko =
+    Localizer.localize(
+      koulutus?.opintojenLaajuusyksikko ||
+        _fp.find('opintojenLaajuusyksikko', tutkinnonOsat)?.opintojenLaajuusyksikko
+    ) || '';
+
+  const opintojenLaajuus =
+    opintojenLaajuusNumero &&
+    opintojenLaajuusYksikko &&
+    `${opintojenLaajuusNumero} ${opintojenLaajuusYksikko}`.trim();
+  return opintojenLaajuus || Localizer.getTranslationForKey('koulutus.ei-laajuutta');
+}

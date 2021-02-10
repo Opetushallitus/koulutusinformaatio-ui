@@ -69,7 +69,7 @@ export const ToteutusInfoGrid = ({ koulutusTyyppi, laajuus, opetus = {}, hasHaku
     {
       icon: <TimelapseIcon className={classes.koulutusInfoGridIcon} />,
       title: t('koulutus.koulutuksen-laajuus'),
-      text: l.localizeLaajuus(laajuus),
+      text: laajuus,
     },
     {
       icon: <ScheduleIcon className={classes.koulutusInfoGridIcon} />,

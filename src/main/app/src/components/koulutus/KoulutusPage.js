@@ -22,7 +22,11 @@ import {
   selectSuositellutKoulutukset,
   selectTulevatJarjestajat,
 } from '#/src/store/reducers/koulutusSlice';
-import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
+import {
+  getLocalizedOpintojenLaajuus,
+  Localizer as l,
+  sanitizedHTMLParser,
+} from '#/src/tools/Utils';
 import { useUrlParams } from '../hakutulos/UseUrlParams';
 import { KoulutusInfoGrid } from './KoulutusInfoGrid';
 import SuositusKoulutusList from './SuositusKoulutusList';
@@ -166,7 +170,7 @@ export const KoulutusPage = () => {
           className={classes.root}
           nimikkeet={koulutus?.tutkintoNimikkeet}
           koulutustyyppi={koulutus?.koulutusTyyppi}
-          laajuus={[koulutus?.opintojenLaajuus, koulutus?.opintojenLaajuusYksikkö]}
+          laajuus={getLocalizedOpintojenLaajuus(koulutus)}
         />
         {(!_.isEmpty(koulutus?.kuvaus) ||
           koulutus?.suorittaneenOsaaminen ||

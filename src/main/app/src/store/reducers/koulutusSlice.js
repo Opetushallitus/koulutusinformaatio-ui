@@ -234,7 +234,7 @@ export const selectKoulutus = (oid) => (state) => {
       tutkintoNimi: koulutusData?.nimi,
       tutkintoNimikkeet: koulutusData.metadata?.tutkintonimike,
       opintojenLaajuus: koulutusData.metadata?.opintojenLaajuus,
-      opintojenLaajuusYksikkö: koulutusData.metadata?.opintojenLaajuusyksikko,
+      opintojenLaajuusyksikko: koulutusData.metadata?.opintojenLaajuusyksikko,
       koulutusTyyppi: koulutusData.metadata?.tyyppi,
       lisatiedot: koulutusData.metadata?.lisatiedot,
       teemakuva: koulutusData?.teemakuva,
