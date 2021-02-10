@@ -89,6 +89,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const getPageSortTranslationKey = (sort) => {
+  switch (sort) {
+    case 'score_desc':
+      return 'haku.jarjesta_osuvin';
+    case 'name_desc':
+      return 'haku.jarjesta_aakkoset_o_a';
+    case 'name_asc':
+      return 'haku.jarjesta_aakkoset_a_o';
+    default:
+      return '';
+  }
+};
+
 export const Hakutulos = () => {
   const { updateUrlSearchParams } = useUrlParams();
   const classes = useStyles();
@@ -127,19 +140,6 @@ export const Hakutulos = () => {
     dispatch(clearPaging());
     dispatch(setSize({ newSize }));
     dispatch(searchAll({ ...apiRequestParams, size: newSize }));
-  };
-
-  const getPageSortTranslationKey = (sort) => {
-    switch (sort) {
-      case 'score_desc':
-        return 'haku.jarjesta_osuvin';
-      case 'name_desc':
-        return 'haku.jarjesta_aakkoset_o_a';
-      case 'name_asc':
-        return 'haku.jarjesta_aakkoset_a_o';
-      default:
-        return '';
-    }
   };
 
   return (
