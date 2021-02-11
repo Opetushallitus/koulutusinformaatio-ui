@@ -52,11 +52,6 @@ export const Localizer = {
     )} ${Localizer.localize(postinumeroKoodi?.nimi)}`;
     return `${Localizer.localize(katuosoite)}${postitoimialue}`;
   },
-  localizeLaajuus: (laajuus) => {
-    return !laajuus.includes(undefined)
-      ? laajuus.map((elem) => Localizer.localize(elem)).join(' ')
-      : Localizer.getTranslationForKey('koulutus.ei-laajuutta');
-  },
 };
 
 export const OsoiteParser = {
