@@ -55,7 +55,7 @@ const Murupolku = ({ path }) => {
       <ol className={classes.breadcrumb}>
         {collapsingPath.map(({ name, link, isCollapsedPart, isHome }, index) => {
           return (
-            <li key={`breadcrumb-item-${index}`} className={classes.item}>
+            <li key={`${name} ${index}`} className={classes.item}>
               <MurupolkuFragment
                 name={name}
                 link={link}
