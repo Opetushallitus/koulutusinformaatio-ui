@@ -22,7 +22,11 @@ import {
   selectSuositellutKoulutukset,
   selectTulevatJarjestajat,
 } from '#/src/store/reducers/koulutusSlice';
-import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
+import {
+  getLocalizedOpintojenLaajuus,
+  Localizer as l,
+  sanitizedHTMLParser,
+} from '#/src/tools/Utils';
 import { useUrlParams } from '../hakutulos/UseUrlParams';
 import { KoulutusInfoGrid } from './KoulutusInfoGrid';
 import SuositusKoulutusList from './SuositusKoulutusList';
@@ -79,7 +83,7 @@ const findTutkinnonOsa = (eperuste) => (id) =>
 const getKuvausHtmlSection = (t) => (captionKey, localizableText) =>
   localizableText ? '<h3>' + t(captionKey) + '</h3>' + l.localize(localizableText) : '';
 
-export const Koulutus = () => {
+export const KoulutusPage = () => {
   const { isDraft } = useUrlParams();
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -166,7 +170,7 @@ export const Koulutus = () => {
           className={classes.root}
           nimikkeet={koulutus?.tutkintoNimikkeet}
           koulutustyyppi={koulutus?.koulutusTyyppi}
-          laajuus={[koulutus?.opintojenLaajuus, koulutus?.opintojenLaajuusYksikkö]}
+          laajuus={getLocalizedOpintojenLaajuus(koulutus)}
         />
         {(!_.isEmpty(koulutus?.kuvaus) ||
           koulutus?.suorittaneenOsaaminen ||

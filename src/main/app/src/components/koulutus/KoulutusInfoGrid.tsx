@@ -15,14 +15,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const hasNimike = (tyyppi: string) =>
+const hasNimike = (tyyppi?: string) =>
   tyyppi !== KOULUTUS_TYYPPI.AMM_TUTKINNON_OSA &&
   tyyppi !== KOULUTUS_TYYPPI.AMM_OSAAMISALA;
 
 type Props = {
   nimikkeet: Array<Translateable>;
-  koulutustyyppi: string;
-  laajuus: Array<Translateable | undefined>;
+  koulutustyyppi?: string;
+  laajuus: string;
   className?: string;
 };
 
@@ -47,9 +47,6 @@ export const KoulutusInfoGrid = ({
     });
   }
 
-  const laajuusString = !laajuus.includes(undefined)
-    ? laajuus.map((elem) => l.localize(elem)).join(' ')
-    : t('koulutus.ei-laajuutta');
   const koulutusTyyppiString = koulutustyyppi
     ? t(`koulutus.tyyppi-${koulutustyyppi}`)
     : '';
@@ -62,7 +59,7 @@ export const KoulutusInfoGrid = ({
   perustiedotData.push({
     icon: <TimelapseIcon className={classes.koulutusInfoGridIcon} />,
     title: t('koulutus.koulutuksen-laajuus'),
-    text: laajuusString,
+    text: laajuus,
   });
 
   return (

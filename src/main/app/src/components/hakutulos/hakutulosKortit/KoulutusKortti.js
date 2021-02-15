@@ -17,7 +17,7 @@ import koulutusPlaceholderImg from '#/src/assets/images/Opolkuhts.png';
 import { MUI_BREAKPOINTS } from '#/src/constants';
 import { educationTypeColorCode } from '#/src/colors';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
-import { Localizer as l } from '#/src/tools/Utils';
+import { getLocalizedOpintojenLaajuus, Localizer as l } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {
@@ -81,20 +81,6 @@ const KoulutusKortti = ({ koulutus }) => {
         .replace(/,\s*$/, '') || t('haku.ei-tutkintonimiketta');
   const colorCode =
     educationTypeColorCode[koulutus?.koulutustyyppi] || educationTypeColorCode.muu;
-
-  function getOpintojenLaajuus() {
-    const tutkinnotOsat = koulutus?.tutkinnonOsat || [];
-    const opintojenLaajuusNumero =
-      koulutus?.opintojenLaajuusNumero ||
-      tutkinnotOsat.map((k) => k?.opintojenLaajuusNumero).join(' + ');
-    const opintojenLaajuusYksikko =
-      l.localize(
-        koulutus?.opintojenLaajuusyksikko ||
-          _.find(tutkinnotOsat, 'opintojenLaajuusyksikko')?.opintojenLaajuusyksikko
-      ) || '';
-    const opintojenLaajuus = `${opintojenLaajuusNumero} ${opintojenLaajuusYksikko}`.trim();
-    return opintojenLaajuus || t('haku.ei-opintojenlaajuutta');
-  }
 
   return (
     <LocalizedLink
@@ -179,7 +165,7 @@ const KoulutusKortti = ({ koulutus }) => {
                   <Typography
                     data-cy={`opintojenlaajuus-${koulutus?.oid}`}
                     style={{ marginLeft: theme.spacing(1) }}>
-                    {getOpintojenLaajuus()}
+                    {getLocalizedOpintojenLaajuus(koulutus)}
                   </Typography>
                 </Grid>
               </Grid>
