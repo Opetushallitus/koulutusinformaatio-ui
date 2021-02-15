@@ -53,9 +53,8 @@ export const useOppilaitos = ({ oid, isOppilaitosOsa, isDraft }: UseOppilaitosPr
           nimi: removeOppilaitosName(l.localize(osa.nimi), l.localize(oppilaitos.nimi)),
         }))
       )(oppilaitos),
-      esittelyHtml: l.localize(_fp.get(oppilaitos, 'oppilaitos.metadata.esittely') ?? ''),
-      tietoaOpiskelusta:
-        _fp.get(oppilaitos, 'oppilaitos.metadata.tietoaOpiskelusta') ?? [],
+      esittelyHtml: l.localize(oppilaitos?.oppilaitos?.metadata?.esittely) ?? '',
+      tietoaOpiskelusta: oppilaitos?.oppilaitos?.metadata?.tietoaOpiskelusta ?? [],
     },
     ...rest,
   };
@@ -139,7 +138,7 @@ export const usePaginatedTarjonta = ({
       refetchOnWindowFocus: false,
       keepPreviousData: true,
       staleTime: 60 * 1000,
-      select: (tarjontaData) =>
+      select: (tarjontaData: any) =>
         isTuleva ? selectTulevaTarjonta(tarjontaData) : selectTarjonta(tarjontaData),
     }
   );
