@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Typography, Box, Container, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { Localizer as l } from '#/src/tools/Utils';
+import { condArray, Localizer as l } from '#/src/tools/Utils';
 import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import { colors } from '#/src/colors';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
@@ -42,13 +42,14 @@ export const OppilaitosPage = (props) => {
   const isOppilaitosOsa = props.oppilaitosOsa;
   const { isDraft } = useUrlParams();
 
-  const { data = {}, status } = useOppilaitos({
+  const { data: entity = {}, status } = useOppilaitos({
     oid,
     isOppilaitosOsa,
     isDraft,
   });
 
-  const { esittelyHtml, oppilaitos, oppilaitosOsat, tietoaOpiskelusta } = data;
+  const { esittelyHtml, oppilaitosOsat, tietoaOpiskelusta } = entity;
+
   const hakuUrl = useSelector(getHakuUrl);
 
   switch (status) {
@@ -64,38 +65,36 @@ export const OppilaitosPage = (props) => {
               <Murupolku
                 path={[
                   { name: t('haku.otsikko'), link: hakuUrl.url },
-                  ...(isOppilaitosOsa
-                    ? [
-                        {
-                          name: l.localize(oppilaitos?.oppilaitos),
-                          link: `/oppilaitos/${oppilaitos?.oppilaitos?.oid}`,
-                        },
-                      ]
-                    : []),
+                  ...condArray(isOppilaitosOsa, {
+                    name: l.localize(entity?.oppilaitos),
+                    link: `/oppilaitos/${entity?.oppilaitos?.oid}`,
+                  }),
                   {
-                    name: l.localize(oppilaitos),
+                    name: l.localize(entity),
                   },
                 ]}
               />
             </Box>
             <Box className={classes.title}>
               <Typography variant="h1" component="h2">
-                {l.localize(oppilaitos)}
+                {l.localize(entity)}
               </Typography>
             </Box>
             <Box className={classes.imageContainer} mt={7.5}>
               <TeemakuvaImage
-                imgUrl={oppilaitos?.oppilaitos?.teemakuva}
+                imgUrl={entity?.teemakuva}
                 altText={t('oppilaitos.oppilaitoksen-teemakuva')}
               />
             </Box>
             <OppilaitosinfoGrid
               className={classes.root}
-              opiskelijoita={oppilaitos?.oppilaitos?.metadata?.opiskelijoita ?? ''}
-              toimipisteita={oppilaitos?.oppilaitos?.metadata?.toimipisteita ?? ''}
-              kotipaikat={_.map(oppilaitos?.osat, 'kotipaikka')}
-              opetuskieli={oppilaitos?.opetuskieli ?? []}
-              koulutusohjelmia={oppilaitos?.koulutusohjelmia ?? ''}
+              opiskelijoita={entity?.metadata?.opiskelijoita ?? ''}
+              toimipisteita={
+                isOppilaitosOsa ? undefined : entity?.metadata?.toimipisteita
+              }
+              kotipaikat={entity?.kotipaikat}
+              opetuskieli={entity?.opetuskieli ?? []}
+              koulutusohjelmia={entity?.koulutusohjelmia ?? ''}
             />
             {esittelyHtml && (
               <HtmlTextBox
@@ -124,9 +123,9 @@ export const OppilaitosPage = (props) => {
             <Yhteystiedot
               className={classes.root}
               heading={t('oppilaitos.yhteystiedot')}
-              logo={oppilaitos?.oppilaitos?.logo}
-              yhteystiedot={oppilaitos?.oppilaitos?.metadata?.yhteystiedot}
-              nimi={l.localize(oppilaitos)}
+              logo={entity?.logo}
+              yhteystiedot={entity?.metadata?.yhteystiedot}
+              nimi={l.localize(entity)}
             />
           </Box>
         </Container>

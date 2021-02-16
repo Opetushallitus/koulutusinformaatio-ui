@@ -191,3 +191,5 @@ export function getLocalizedOpintojenLaajuus(koulutus) {
     `${opintojenLaajuusNumero} ${opintojenLaajuusYksikko}`.trim();
   return opintojenLaajuus || Localizer.getTranslationForKey('koulutus.ei-laajuutta');
 }
+
+export const condArray = (cond, item) => (cond ? [item] : []);

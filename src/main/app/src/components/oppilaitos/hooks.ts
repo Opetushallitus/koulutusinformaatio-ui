@@ -35,26 +35,32 @@ type UseOppilaitosProps = {
 };
 
 export const useOppilaitos = ({ oid, isOppilaitosOsa, isDraft }: UseOppilaitosProps) => {
-  const { data: oppilaitos = {}, ...rest } = useQuery(
+  const { data = {}, ...rest } = useQuery(
     ['getOppilaitos', { oid, isOppilaitosOsa, isDraft }],
     () =>
       isOppilaitosOsa ? getOppilaitosOsa(oid, isDraft) : getOppilaitos(oid, isDraft),
     { refetchOnWindowFocus: false, refetchOnReconnect: false, staleTime: 5000 }
   );
 
+  const entity = isOppilaitosOsa ? data.oppilaitoksenOsa : data.oppilaitos ?? {};
+
   return {
     data: {
-      oppilaitos,
-      oppilaitosOsat: _fp.flow(
-        _fp.prop('osat'),
-        _fp.filter({ status: ACTIVE }),
-        _fp.map((osa: any) => ({
-          ...osa,
-          nimi: removeOppilaitosName(l.localize(osa.nimi), l.localize(oppilaitos.nimi)),
-        }))
-      )(oppilaitos),
-      esittelyHtml: l.localize(oppilaitos?.oppilaitos?.metadata?.esittely) ?? '',
-      tietoaOpiskelusta: oppilaitos?.oppilaitos?.metadata?.tietoaOpiskelusta ?? [],
+      ...data,
+      ...entity,
+      oppilaitosOsat: !isOppilaitosOsa
+        ? _fp.flow(
+            _fp.prop('osat'),
+            _fp.filter({ status: ACTIVE }),
+            _fp.map((osa: any) => ({
+              ...osa,
+              nimi: removeOppilaitosName(l.localize(osa.nimi), l.localize(data.nimi)),
+            }))
+          )(data)
+        : undefined,
+      esittelyHtml: l.localize(entity?.metadata?.esittely) ?? '',
+      tietoaOpiskelusta: entity?.metadata?.tietoaOpiskelusta ?? [],
+      kotipaikat: data?.osat?.map(_fp.prop('kotipaikka')) ?? [data?.kotipaikka],
     },
     ...rest,
   };
