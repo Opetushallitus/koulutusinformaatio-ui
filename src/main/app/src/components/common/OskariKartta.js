@@ -79,6 +79,10 @@ const OskariKartta = ({ osoite, postitoimipaikka }) => {
         );
       }
     });
+
+    return () => {
+      channel?.destroy();
+    };
   }, [postitoimipaikka, osoite]);
 
   return (
