@@ -1,8 +1,9 @@
-import { playMockFile } from 'kto-ui-common/cypress/mockUtils';
+import { playMocks } from 'kto-ui-common/cypress/mockUtils';
+import komoOsaamisalaMocks from '#/cypress/mocks/komo-osaamisala.mocks.json';
 
 describe('Osaamisala KOMO', () => {
   beforeEach(() => {
-    playMockFile('komo-osaamisala.mocks.json');
+    playMocks(komoOsaamisalaMocks);
   });
   it('Osaamisala KOMO renders properly', () => {
     cy.visit('/fi/koulutus/1.2.246.562.13.00000000000000000623');
