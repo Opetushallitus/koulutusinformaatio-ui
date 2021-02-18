@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { makeStyles } from '@material-ui/core';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import HomeWorkOutlinedIcon from '@material-ui/icons/HomeWorkOutlined';
@@ -5,8 +7,8 @@ import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined';
 import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
 import _fp from 'lodash/fp';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { InfoGrid } from '#/src/components/common/InfoGrid';
 import { Localizer as l, condArray } from '#/src/tools/Utils';
 import { Koodi } from '#/src/types/common';

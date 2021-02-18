@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+
 import {
   makeStyles,
   Drawer,
@@ -12,13 +11,16 @@ import {
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { observer } from 'mobx-react';
-import Murupolku from '#/src/components/common/Murupolku';
-import SidebarValikko from '#/src/components/common/SidebarValikko';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+
+import { colors } from '#/src/colors';
 import LanguageTab from '#/src/components/common/LanguageTab';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
-import { useStores } from '#/src/hooks';
-import { colors } from '#/src/colors';
+import Murupolku from '#/src/components/common/Murupolku';
+import SidebarValikko from '#/src/components/common/SidebarValikko';
 import { DRAWER_WIDTH } from '#/src/constants';
+import { useStores } from '#/src/hooks';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {

@@ -1,6 +1,9 @@
+import React from 'react';
+
 import { Box, Grid, Icon, makeStyles, Paper, Typography } from '@material-ui/core';
 import clsx from 'clsx';
-import React from 'react';
+import _ from 'lodash';
+
 import ApurahaIcon from '#/src/assets/images/Apuraha.svg';
 import KoulutuksenLaajuusIcon from '#/src/assets/images/koulutuksen_laajuus.svg';
 import KoulutusAsteIcon from '#/src/assets/images/koulutusaste.svg';
@@ -11,6 +14,7 @@ import TutkintoNimikeIcon from '#/src/assets/images/tutkintonimike.svg';
 import TutkintoonHakeminenIcon from '#/src/assets/images/tutkintoon_hakeminen.svg';
 import { colors, educationTypeColorCode } from '#/src/colors';
 import { LabelTooltip } from '#/src/components/common/LabelTooltip';
+
 import Spacer from './Spacer';
 
 const iconLookupTable: Record<string, string> = {
@@ -85,7 +89,7 @@ export const InfoGrid = (props: Props) => {
               lg={4}
               key={`info-grid-${e.id}-${index}`}>
               <Grid item>
-                {typeof e.icon === 'string' ? (
+                {_.isString(e.icon) ? (
                   <Icon>
                     <img src={iconLookupTable[e.icon]} alt="" />
                   </Icon>

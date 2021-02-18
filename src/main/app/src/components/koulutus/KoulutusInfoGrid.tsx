@@ -1,12 +1,15 @@
+import React from 'react';
+
 import { makeStyles } from '@material-ui/core';
 import ExtensionOutlinedIcon from '@material-ui/icons/ExtensionOutlined';
 import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
 import TimelapseIcon from '@material-ui/icons/Timelapse';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { KOULUTUS_TYYPPI } from '#/src/constants';
 import { Localizer as l } from '#/src/tools/Utils';
 import { Translateable } from '#/src/types/common';
+
 import { InfoGrid } from '../common/InfoGrid';
 
 const useStyles = makeStyles((theme) => ({

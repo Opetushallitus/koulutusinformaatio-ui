@@ -1,11 +1,12 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { Button, makeStyles } from '@material-ui/core';
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
-import { LocalizedLink } from '#/src/components/common/LocalizedLink';
+import { Button, makeStyles } from '@material-ui/core';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
+import { Link as RouterLink } from 'react-router-dom';
+
 import { colors } from '#/src/colors';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 
 const BREADCRUMB_ICON_SPACING = '14px';
 

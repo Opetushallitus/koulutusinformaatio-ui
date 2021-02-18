@@ -1,7 +1,9 @@
+import React from 'react';
+
 import { Grid, Typography } from '@material-ui/core';
 import { TFunction } from 'i18next';
 import _ from 'lodash';
-import React from 'react';
+
 import { SuodatinMobileChip } from './CustomizedMuiComponents';
 
 type Props = {

@@ -1,15 +1,17 @@
+import React from 'react';
+
+import { Box, Button, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
+import PublicIcon from '@material-ui/icons/Public';
+import { useTranslation } from 'react-i18next';
+import { shallowEqual, useSelector } from 'react-redux';
+
 import { colors } from '#/src/colors';
 import { AccordionText } from '#/src/components/common/AccordionText';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import Spacer from '#/src/components/common/Spacer';
 import { selectMuuHaku } from '#/src/store/reducers/toteutusSlice';
-import { formatDateRange, formatDateString, Localizer as l } from '#/src/tools/Utils';
-import { Box, Button, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
-import PublicIcon from '@material-ui/icons/Public';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { shallowEqual, useSelector } from 'react-redux';
 import { useOppilaitosOsoite } from '#/src/tools/UseOppilaitosOsoiteHook';
+import { formatDateRange, formatDateString, Localizer as l } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({
   hakuName: {

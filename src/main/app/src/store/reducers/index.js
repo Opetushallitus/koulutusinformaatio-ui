@@ -1,6 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import koulutusSlice from './koulutusSlice';
+
 import hakutulosSlice from './hakutulosSlice';
+import koulutusSlice from './koulutusSlice';
 import oppilaitosSlice from './oppilaitosSlice';
 import toteutusSlice from './toteutusSlice';
 

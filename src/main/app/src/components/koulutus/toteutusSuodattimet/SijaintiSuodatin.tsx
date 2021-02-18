@@ -1,10 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+
 import { useTranslation } from 'react-i18next';
+
 import { Filter } from '#/src/components/hakutulos/hakutulosSuodattimet/Filter';
 import {
   FilterType,
   SuodatinProps,
 } from '#/src/components/hakutulos/hakutulosSuodattimet/SuodatinTypes';
+
 import { getOptionsForSelect, getShownStr } from './utils';
 
 type Props = {

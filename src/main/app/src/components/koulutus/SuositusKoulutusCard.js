@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+
 import {
   Grid,
   Typography,
@@ -16,10 +16,11 @@ import {
   FavoriteOutlined,
   FavoriteBorderOutlined,
 } from '@material-ui/icons/';
+import { useTranslation } from 'react-i18next';
 
+import defaultTeemakuva from '#/src/assets/images/o-EDUCATION-facebook.jpg';
 import { educationTypeColorCode } from '#/src/colors';
 import TextWithBackground from '#/src/components/common/TextWithBackground';
-import defaultTeemakuva from '#/src/assets/images/o-EDUCATION-facebook.jpg';
 
 const useStyles = makeStyles({
   cardActions: {

@@ -1,12 +1,14 @@
+import React, { useEffect, useMemo } from 'react';
+
 import { Box, Link as MuiLink, makeStyles, Typography } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import clsx from 'clsx';
 import _ from 'lodash';
 import { urls } from 'oph-urls-js';
-import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+
 import { Accordion } from '#/src/components/common/Accordion';
 import ContentWrapper from '#/src/components/common/ContentWrapper';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
@@ -27,6 +29,7 @@ import {
   Localizer as l,
   sanitizedHTMLParser,
 } from '#/src/tools/Utils';
+
 import { useUrlParams } from '../hakutulos/UseUrlParams';
 import { KoulutusInfoGrid } from './KoulutusInfoGrid';
 import SuositusKoulutusList from './SuositusKoulutusList';
@@ -75,10 +78,10 @@ const AccordionWithTitle = ({ titleTranslation, data }) => {
 };
 
 const findEperuste = (koulutus) => (id) =>
-  _.first(koulutus.eperusteet.filter((e) => e.id === id));
+  _.head(koulutus.eperusteet.filter((e) => e.id === id));
 
 const findTutkinnonOsa = (eperuste) => (id) =>
-  _.first(eperuste.tutkinnonOsat.filter((t) => t.id === id));
+  _.head(eperuste.tutkinnonOsat.filter((t) => t.id === id));
 
 const getKuvausHtmlSection = (t) => (captionKey, localizableText) =>
   localizableText ? '<h3>' + t(captionKey) + '</h3>' + l.localize(localizableText) : '';

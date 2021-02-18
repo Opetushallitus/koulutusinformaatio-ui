@@ -1,6 +1,8 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+
 import * as api from '#/src/api/konfoApi';
+
 import reducer, {
   initialState,
   fetchKoulutusStart,
@@ -11,8 +13,8 @@ import reducer, {
   fetchKoulutus,
 } from '../koulutusSlice';
 import { koulutusData, jarjestajatData } from './koulutusSliceTestData';
-import tutkinnonOsaKoulutusData from './tutkinnon-osa-koulutus-data.json';
 import tutkinnonOsaEperusteData from './tutkinnon-osa-eperuste-data.json';
+import tutkinnonOsaKoulutusData from './tutkinnon-osa-koulutus-data.json';
 
 const mockStore = configureMockStore([thunk]);
 

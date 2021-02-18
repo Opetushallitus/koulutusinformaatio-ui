@@ -1,3 +1,5 @@
+import React from 'react';
+
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import EuroIcon from '@material-ui/icons/Euro';
 import FlagOutlinedIcon from '@material-ui/icons/FlagOutlined';
@@ -7,10 +9,11 @@ import ScheduleIcon from '@material-ui/icons/Schedule';
 import TimelapseIcon from '@material-ui/icons/Timelapse';
 import { makeStyles } from '@material-ui/styles';
 import _ from 'lodash';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 import { Localizer as l } from '#/src/tools/Utils';
+
 import { InfoGrid } from '../common/InfoGrid';
 import { formatAloitus } from './utils';
 

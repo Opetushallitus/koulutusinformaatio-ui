@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { makeStyles, Typography, Box } from '@material-ui/core';
-import { colors } from '#/src/colors';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+
+import { colors } from '#/src/colors';
 
 const useStyles = makeStyles((theme) => ({
   root: {

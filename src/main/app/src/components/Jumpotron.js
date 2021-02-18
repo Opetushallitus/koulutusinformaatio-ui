@@ -1,8 +1,5 @@
 import React from 'react';
-import { Hakupalkki } from './haku/Hakupalkki';
-import { ReactiveBorder } from './ReactiveBorder';
-import { withRouter } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+
 import {
   Grid,
   Card,
@@ -11,9 +8,14 @@ import {
   makeStyles,
   ThemeProvider,
 } from '@material-ui/core';
-import { colors } from '../colors';
+import { useTranslation } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
+
 import Image from '../assets/images/o-EDUCATION-facebook.jpg';
+import { colors } from '../colors';
 import { theme } from '../theme';
+import { Hakupalkki } from './haku/Hakupalkki';
+import { ReactiveBorder } from './ReactiveBorder';
 
 const useStyles = makeStyles((theme) => ({
   callToAction: {

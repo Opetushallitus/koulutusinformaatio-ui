@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import _ from 'lodash';
+
 import {
   getKoulutus,
   getKoulutusKuvaus,
@@ -6,7 +8,6 @@ import {
   getSuositellutKoulutukset,
   getEperusteKuvaus,
 } from '#/src/api/konfoApi';
-import _ from 'lodash';
 import { KOULUTUS_TYYPPI } from '#/src/constants';
 
 const IDLE_STATUS = 'idle';

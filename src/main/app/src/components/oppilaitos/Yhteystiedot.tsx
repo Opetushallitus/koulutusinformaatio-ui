@@ -1,7 +1,9 @@
+import React from 'react';
+
 import { Box, Button, Grid, makeStyles, Typography } from '@material-ui/core';
 import _ from 'lodash';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
+
 import DefaultHeroImage from '#/src/assets/images/herokuva_default.png';
 import { colors } from '#/src/colors';
 import OskariKartta from '#/src/components/common/OskariKartta';

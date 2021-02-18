@@ -1,6 +1,8 @@
 import React from 'react';
-import InfoCard from './InfoCard';
+
 import { Grid, Typography, makeStyles } from '@material-ui/core';
+
+import InfoCard from './InfoCard';
 import Spacer from './Spacer';
 
 const useStyles = makeStyles({

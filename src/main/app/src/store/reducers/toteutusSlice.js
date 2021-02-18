@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { HAKULOMAKE_TYYPPI } from '#/src/constants';
+import _ from 'lodash';
+
 import { getToteutus } from '#/src/api/konfoApi';
+import { HAKULOMAKE_TYYPPI } from '#/src/constants';
 import { isHakuAuki, isHakuEndInFuture } from '#/src/tools/hakuaikaUtils';
-import pick from 'lodash/pick';
 
 const IDLE_STATUS = 'idle';
 const LOADING_STATUS = 'loading';
@@ -88,7 +89,7 @@ export const selectMuuHaku = (oid) => (state) => {
 
   // TODO: SORA-kuvaus - atm. we only get an Id from the API but we cannot do anything with it
   return {
-    ...pick(toteutus.metadata, [
+    ..._.pick(toteutus.metadata, [
       'aloituspaikat',
       'hakuaika',
       'hakulomakeLinkki',
@@ -107,7 +108,7 @@ export const selectMuuHaku = (oid) => (state) => {
 export const selectEiSahkoistaHaku = (oid) => (state) => {
   const toteutus = selectToteutus(oid)(state);
   return {
-    ...pick(toteutus.metadata, ['lisatietoaHakeutumisesta']),
+    ..._.pick(toteutus.metadata, ['lisatietoaHakeutumisesta']),
   };
 };
 

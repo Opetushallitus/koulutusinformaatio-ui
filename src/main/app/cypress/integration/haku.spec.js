@@ -1,4 +1,5 @@
 import { playMocks } from 'kto-ui-common/cypress/mockUtils';
+
 import hakuMocks from '#/cypress/mocks/haku.mocks.json';
 
 describe('Haku', () => {

@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
+
 import { makeStyles, Typography, Box, Button } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
 import { ExpandLessOutlined, ExpandMoreOutlined } from '@material-ui/icons';
+import { useTranslation } from 'react-i18next';
+
 import PopoverWithArrow from '#/src/components/common/PopoverWithArrow';
 
 const useStyles = makeStyles(() => ({

@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
-import OskariRPC from 'oskari-rpc';
+
 import { urls } from 'oph-urls-js';
+import OskariRPC from 'oskari-rpc';
+
 import { OsoiteParser as op, Localizer as l } from '#/src/tools/Utils';
 
 const MARKER_ID = 'OPPILAITOS';

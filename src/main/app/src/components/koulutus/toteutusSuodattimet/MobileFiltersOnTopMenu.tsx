@@ -1,4 +1,5 @@
-import { MobileToggleFiltersButton } from '#/src/components/hakutulos/MobileToggleFiltersButton';
+import React, { useCallback, useState } from 'react';
+
 import {
   AppBar,
   Button,
@@ -12,11 +13,13 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
-import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { MobileToggleFiltersButton } from '#/src/components/hakutulos/MobileToggleFiltersButton';
+
 import { OpetuskieliSuodatin } from './OpetusKieliSuodatin';
-import { SijaintiSuodatin } from './SijaintiSuodatin';
 import { OpetustapaSuodatin } from './OpetustapaSuodatin';
+import { SijaintiSuodatin } from './SijaintiSuodatin';
 
 const useStyles = makeStyles(() => ({
   paperAnchorBottom: {

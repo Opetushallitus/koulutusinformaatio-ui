@@ -1,8 +1,9 @@
 import { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+
 import _fp from 'lodash/fp';
 import { useQuery } from 'react-query';
-import { Localizer as l } from '#/src/tools/Utils';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   getOppilaitos,
   getOppilaitosOsa,
@@ -10,14 +11,15 @@ import {
   getOppilaitosTarjonta,
 } from '#/src/api/konfoApi';
 import {
-  getTarjontaPaginationProps,
-  getTulevaTarjontaPaginationProps,
-} from '#/src/store/reducers/oppilaitosSliceSelector';
-import {
   setTarjontaPagination,
   setTulevaTarjontaPagination,
   resetPagination,
 } from '#/src/store/reducers/oppilaitosSlice';
+import {
+  getTarjontaPaginationProps,
+  getTulevaTarjontaPaginationProps,
+} from '#/src/store/reducers/oppilaitosSliceSelector';
+import { Localizer as l } from '#/src/tools/Utils';
 
 // Helpers
 const getLocalizedmaksullisuus = (isMaksullinen: boolean, maksuAmount: number) =>

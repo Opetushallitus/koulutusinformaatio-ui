@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { makeStyles, Card, CardMedia } from '@material-ui/core';
+
 import DefaultHeroImage from '#/src/assets/images/herokuva_default.png';
 
 const useStyles = makeStyles((theme) => ({

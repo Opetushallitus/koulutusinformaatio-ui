@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+
 import { useSelector, useDispatch } from 'react-redux';
-import { Hakutulos } from '../hakutulos/Hakutulos';
-import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
+import { useParams } from 'react-router-dom';
+
 import { searchAllOnPageReload } from '#/src/store/reducers/hakutulosSlice';
+import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
+
+import { Hakutulos } from '../hakutulos/Hakutulos';
 import { useUrlParams } from '../hakutulos/UseUrlParams';
 
 export const Haku = () => {

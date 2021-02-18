@@ -1,14 +1,20 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+
 import { Grid, List, ListItem, ListItemIcon, makeStyles } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { useQueryParams } from '#/src/hooks';
 import {
   clearPaging,
   searchAll,
   setOpetustapa,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getOpetustapaFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
+import { Localizer as l } from '#/src/tools/Utils';
+
+import { useUrlParams } from '../UseUrlParams';
 import {
   SuodatinCheckbox,
   SuodatinAccordion,
@@ -17,9 +23,6 @@ import {
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 import { SummaryContent } from './SummaryContent';
-import { useQueryParams } from '#/src/hooks';
-import { Localizer as l } from '#/src/tools/Utils';
-import { useUrlParams } from '../UseUrlParams';
 
 const withStyles = makeStyles(() => ({
   noBoxShadow: {

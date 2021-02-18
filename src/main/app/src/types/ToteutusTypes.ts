@@ -1,5 +1,6 @@
-import { Koodi, Translateable, TODOType, ValueOf } from './common';
 import { KOULUTUS_TYYPPI } from '#/src/constants';
+
+import { Koodi, Translateable, TODOType, ValueOf } from './common';
 
 type KoulutusTyyppi = ValueOf<typeof KOULUTUS_TYYPPI>;
 

@@ -1,9 +1,10 @@
-import _fp from 'lodash/fp';
 import { format } from 'date-fns';
-import stripTags from 'striptags';
-import i18n from './i18n';
+import _fp from 'lodash/fp';
 import ReactHtmlParser from 'react-html-parser';
+import stripTags from 'striptags';
+
 import { TOP_BAR_HEIGHT } from '../constants';
+import i18n from './i18n';
 
 export const Common = {
   // filters 'null', 'empty string' or 'undefined', but '0' or 'false' are valid values,

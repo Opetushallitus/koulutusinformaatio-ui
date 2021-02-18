@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { makeStyles, ThemeProvider } from '@material-ui/core';
+
 import { theme } from '../theme';
 
 const useStyles = makeStyles((theme) => ({

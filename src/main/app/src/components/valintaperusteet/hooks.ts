@@ -1,10 +1,11 @@
+import { useQuery } from 'react-query';
+
 import {
   getHakukohde,
   getKoulutus,
   getToteutus,
   getValintaperuste,
 } from '#/src/api/konfoApi';
-import { useQuery } from 'react-query';
 import { useUrlParams } from '#/src/components/hakutulos/UseUrlParams';
 
 type PageDataProps = {

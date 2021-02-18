@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   Box,
   Card,
@@ -9,8 +11,8 @@ import {
 } from '@material-ui/core';
 import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
 import _ from 'lodash';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { colors } from '#/src/colors';
 import Spacer from '#/src/components/common/Spacer';
 import {
@@ -147,7 +149,7 @@ export const Liitteet = ({ liitteet }: Props) => {
                     {!jaettuOsoite && <OsoiteComponent {...liiteAsOsoite(liite)} />}
                   </Grid>
                 ))}
-                {jaettuOsoite && <OsoiteComponent {..._.first(yhteisetOsoitteet)!} />}
+                {jaettuOsoite && <OsoiteComponent {..._.head(yhteisetOsoitteet)!} />}
               </CardContent>
             </Card>
           </div>

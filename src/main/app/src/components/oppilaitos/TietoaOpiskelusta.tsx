@@ -1,9 +1,12 @@
-import { Box, Container, Typography } from '@material-ui/core';
 import React from 'react';
+
+import { Box, Container, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+
 import Spacer from '#/src/components/common/Spacer';
 import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
 import { Translateable } from '#/src/types/common';
+
 import { Accordion } from '../common/Accordion';
 
 type Props = {

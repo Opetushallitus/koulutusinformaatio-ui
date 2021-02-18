@@ -1,16 +1,18 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { colors } from '../../colors';
+
+import { makeStyles } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { observer } from 'mobx-react';
-import { useStores } from '../../hooks';
-import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+
+import { colors } from '../../colors';
+import { useStores } from '../../hooks';
 
 const useStyles = makeStyles({
   root: {

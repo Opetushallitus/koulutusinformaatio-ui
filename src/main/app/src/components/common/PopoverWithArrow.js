@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Box, makeStyles, Popover } from '@material-ui/core';
+
 import { colors } from '#/src/colors';
 
 const PopoverWithArrow = ({ anchorEl, content, id, marginTop, onClose, open }) => {

@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import _ from 'lodash';
+
 import {
   Button,
   ButtonGroup,
@@ -13,8 +11,18 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { ExpandMore, IndeterminateCheckBoxOutlined } from '@material-ui/icons';
+import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { colors } from '#/src/colors';
+import { FILTER_TYPES } from '#/src/constants';
+import { useQueryParams } from '#/src/hooks';
 import { twoLevelFilterUpdateAndSearch } from '#/src/store/reducers/hakutulosSlice';
 import { getKoulutustyyppiFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
+import { Localizer as l } from '#/src/tools/Utils';
+
+import { useUrlParams } from '../UseUrlParams';
 import {
   SuodatinCheckbox,
   SuodatinAccordion,
@@ -23,11 +31,6 @@ import {
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 import { SummaryContent } from './SummaryContent';
-import { Localizer as l } from '#/src/tools/Utils';
-import { FILTER_TYPES } from '#/src/constants';
-import { colors } from '#/src/colors';
-import { useQueryParams } from '#/src/hooks';
-import { useUrlParams } from '../UseUrlParams';
 
 const withStyles = makeStyles(() => ({
   noBoxShadow: {
@@ -179,7 +182,7 @@ const KoulutustyyppiSuodatin = ({
                           }
                         />
                       </ListItem>
-                      {_.entries(_.get(koulutustyyppiValue, 'alakoodit')).map(
+                      {_.toPairs(_.get(koulutustyyppiValue, 'alakoodit')).map(
                         ([alakoodiKey, alakoodiValue]) => {
                           const labelId = `${koulutustyyppiKey}_${alakoodiKey}_label`;
                           return (
@@ -196,11 +199,10 @@ const KoulutustyyppiSuodatin = ({
                               <ListItemIcon>
                                 <SuodatinCheckbox
                                   edge="start"
-                                  checked={
-                                    checkedKoulutustyypit.findIndex(
-                                      ({ id }) => id === alakoodiKey
-                                    ) !== -1
-                                  }
+                                  checked={_.some(
+                                    checkedKoulutustyypit,
+                                    ({ id }) => id === alakoodiKey
+                                  )}
                                   tabIndex={-1}
                                   disableRipple
                                   inputProps={{ 'aria-labelledby': labelId }}

@@ -1,12 +1,15 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+
 import { Grid, Typography, ButtonGroup, Button, makeStyles } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
-import { getMobileToggleOrderByButtonMenuProps } from '#/src/store/reducers/hakutulosSliceSelector';
-import { setSort, setOrder, searchAll } from '#/src/store/reducers/hakutulosSlice';
+import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { colors } from '#/src/colors';
 import { useQueryParams } from '#/src/hooks';
+import { setSort, setOrder, searchAll } from '#/src/store/reducers/hakutulosSlice';
+import { getMobileToggleOrderByButtonMenuProps } from '#/src/store/reducers/hakutulosSliceSelector';
+
 import { useUrlParams } from './UseUrlParams';
 
 const useStyles = makeStyles(() => ({

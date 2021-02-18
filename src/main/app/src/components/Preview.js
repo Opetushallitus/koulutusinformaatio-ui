@@ -1,6 +1,7 @@
 import React from 'react';
-import removeMd from 'remove-markdown';
+
 import { observer } from 'mobx-react-lite';
+import removeMd from 'remove-markdown';
 
 const Preview = observer(({ markdown }) => {
   const textAsSentences = removeMd(markdown).match(/[^.!?]+[.!?]+/g);

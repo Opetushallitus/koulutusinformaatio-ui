@@ -1,10 +1,13 @@
 import React from 'react';
-import { withRouter, Link as RouterLink } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+
 import { Avatar, Button, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import { ErrorOutline } from '@material-ui/icons';
-import { colors } from '../../colors';
+import { useTranslation } from 'react-i18next';
+import { withRouter, Link as RouterLink } from 'react-router-dom';
+
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
+
+import { colors } from '../../colors';
 
 const useStyles = makeStyles((theme) => ({
   gridOuterContainerRoot: {

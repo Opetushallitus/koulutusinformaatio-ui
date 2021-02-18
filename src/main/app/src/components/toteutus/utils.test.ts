@@ -1,4 +1,5 @@
 import { Alkamiskausityyppi } from '#/src/types/ToteutusTypes';
+
 import { formatAloitus } from './utils';
 
 describe('Utils/Localizer', () => {
