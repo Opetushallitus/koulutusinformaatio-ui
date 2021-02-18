@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+
 import { Button, Chip, Grid, makeStyles } from '@material-ui/core';
-import _ from 'lodash';
 import { Clear } from '@material-ui/icons';
-import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
+import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+
+import { colors } from '#/src/colors';
+import { useQueryParams } from '#/src/hooks';
 import {
   clearSelectedFilters,
   searchAll,
   setSelectedFilters,
 } from '#/src/store/reducers/hakutulosSlice';
+import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { Localizer as l } from '#/src/tools/Utils';
-import { colors } from '#/src/colors';
-import { useQueryParams } from '#/src/hooks';
+
 import { useUrlParams } from '../UseUrlParams';
 
 const useStyles = makeStyles(() => ({

@@ -1,34 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import clsx from 'clsx';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import KonfoStore from './stores/konfo-store';
-import { Provider } from 'mobx-react';
-import { Draft } from './components/common/Draft';
-import Header from './components/common/Header';
-import Footer from './components/common/Footer';
-import { Etusivu } from './components/Etusivu';
-import PalautePopup from './components/palaute/PalautePopup';
-import SideMenu from './components/common/SideMenu';
-import Sisaltohaku from './components/Sisaltohaku';
+
 import { MuiThemeProvider, makeStyles, useMediaQuery } from '@material-ui/core';
-import { theme } from './theme';
-import { DRAWER_WIDTH } from './constants';
-import Palvelut from './components/palvelu/Palvelut';
+import clsx from 'clsx';
+import { Provider } from 'mobx-react';
+import { useTranslation } from 'react-i18next';
+import { Switch, Route, Redirect } from 'react-router-dom';
+
+import { NotFound } from '#/src/NotFound';
+import { supportedLanguages } from '#/src/tools/i18n';
+
+import { Draft } from './components/common/Draft';
+import Footer from './components/common/Footer';
+import Header from './components/common/Header';
+import SideMenu from './components/common/SideMenu';
+import { Etusivu } from './components/Etusivu';
 import { Haku } from './components/haku/Haku';
+import { Hakupalkki } from './components/haku/Hakupalkki';
 import { KoulutusPage } from './components/koulutus/KoulutusPage';
 import { OppilaitosPage } from './components/oppilaitos/OppilaitosPage';
+import PalautePopup from './components/palaute/PalautePopup';
+import Palvelut from './components/palvelu/Palvelut';
+import { ReactiveBorder } from './components/ReactiveBorder';
+import Sisaltohaku from './components/Sisaltohaku';
+import SivuRouter from './components/sivu/SivuRouter';
+import Toteutus from './components/toteutus/Toteutus';
 import {
   ValintaperustePage,
   ValintaperustePreviewPage,
 } from './components/valintaperusteet/ValintaperustePage';
-import SivuRouter from './components/sivu/SivuRouter';
-import { ReactiveBorder } from './components/ReactiveBorder';
-import { Hakupalkki } from './components/haku/Hakupalkki';
-import Toteutus from './components/toteutus/Toteutus';
-import { useTranslation } from 'react-i18next';
-import { supportedLanguages } from '#/src/tools/i18n';
-import { NotFound } from '#/src/NotFound';
+import { DRAWER_WIDTH } from './constants';
 import { useStores } from './hooks';
+import KonfoStore from './stores/konfo-store';
+import { theme } from './theme';
 
 const konfoStore = new KonfoStore();
 

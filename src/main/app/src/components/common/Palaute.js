@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { observer } from 'mobx-react';
-import { useTranslation } from 'react-i18next';
+
 import {
   Box,
   Typography,
@@ -15,6 +14,9 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import Star from '@material-ui/icons/Star';
+import { observer } from 'mobx-react';
+import { useTranslation } from 'react-i18next';
+
 import { sendPalaute } from '#/src/api/konfoApi';
 
 const useStyles = makeStyles((theme) => ({

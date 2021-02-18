@@ -1,4 +1,5 @@
 import { Localizer as l } from '#/src/tools/Utils';
+
 import { FilterType } from '../../hakutulos/hakutulosSuodattimet/SuodatinTypes';
 
 export const getShownStr = (values: Array<any>) =>

@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { makeStyles } from '@material-ui/core';
+
 import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
 
 type StylesProps = Pick<Props, 'noMargin'>;

@@ -1,8 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import _ from 'lodash';
+
 import {
   AppBar,
   Button,
@@ -16,22 +13,28 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
-import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
+import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+
+import { useQueryParams } from '#/src/hooks';
 import {
   executeSearchFromStartingPage,
   clearSelectedFilters,
   searchAll,
 } from '#/src/store/reducers/hakutulosSlice';
+import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
+
+import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
 import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
 import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin';
+import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
 import MobileResultsPerPageExpansionMenu from './MobileResultsPerPageExpansionMenu';
 import { MobileToggleFiltersButton } from './MobileToggleFiltersButton';
-import MobileToggleOrderByButtonMenu from './MobileToggleOrderByButtonMenu';
-import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
 import MobileToggleKoulutusOppilaitos from './MobileToggleKoulutusOppilaitos';
-import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
-import { useQueryParams } from '#/src/hooks';
+import MobileToggleOrderByButtonMenu from './MobileToggleOrderByButtonMenu';
 import { useUrlParams } from './UseUrlParams';
 
 const useStyles = makeStyles(() => ({

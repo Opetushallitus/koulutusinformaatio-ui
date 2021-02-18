@@ -1,9 +1,11 @@
+import React from 'react';
+
 import { Grid, Hidden, makeStyles, Paper, Typography } from '@material-ui/core';
 import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import PublicIcon from '@material-ui/icons/Public';
-import React from 'react';
 import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
+
 import OppilaitosLogo from '#/src/assets/images/Opolkuhts.png';
 import { colors, educationTypeColorCode } from '#/src/colors';
 

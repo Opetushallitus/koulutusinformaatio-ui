@@ -1,13 +1,14 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { IconButton, makeStyles, Typography } from '@material-ui/core';
-import { colors } from '../../colors';
-import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
 
-import CloseIcon from '@material-ui/icons/Close';
+import { IconButton, makeStyles, Typography } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import CloseIcon from '@material-ui/icons/Close';
 import { urls } from 'oph-urls-js';
+import { useTranslation } from 'react-i18next';
+
+import { colors } from '../../colors';
 
 const useStyles = makeStyles({
   banner: {

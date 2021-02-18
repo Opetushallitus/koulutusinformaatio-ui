@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import MenuIcon from '@material-ui/icons/Menu';
-import { colors } from '#/src/colors';
-import OPOLogoFI from '#/src/assets/images/OPO_Logo_Header_suomi.svg';
-import OPOLogoSV from '#/src/assets/images/OPO_Logo_Header_ruotsi.svg';
-import OPOLogoEN from '#/src/assets/images/OPO_Logo_Header_englanti.svg';
-import { Link as RouterLink } from 'react-router-dom';
+
 import {
   Box,
   Chip,
@@ -17,11 +11,20 @@ import {
   Toolbar,
   Hidden,
 } from '@material-ui/core';
-import { LocalizedLink } from '#/src/components/common/LocalizedLink';
-import BetaBanner from '#/src/components/common/BetaBanner';
+import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
-import LanguageDropDown from './LanguageDropDown';
+import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
+
+import OPOLogoEN from '#/src/assets/images/OPO_Logo_Header_englanti.svg';
+import OPOLogoSV from '#/src/assets/images/OPO_Logo_Header_ruotsi.svg';
+import OPOLogoFI from '#/src/assets/images/OPO_Logo_Header_suomi.svg';
+import { colors } from '#/src/colors';
+import BetaBanner from '#/src/components/common/BetaBanner';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import { Localizer as l } from '#/src/tools/Utils';
+
+import LanguageDropDown from './LanguageDropDown';
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: {

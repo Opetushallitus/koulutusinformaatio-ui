@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
-import Jumpotron from './Jumpotron';
-import { withRouter } from 'react-router-dom';
-import { observer } from 'mobx-react';
+
+import { makeStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import _ from 'lodash';
 import Markdown from 'markdown-to-jsx';
-import Kortti from './kortti/Kortti';
-import { Uutiset } from './uutinen/Uutiset';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
-import { colors } from '#/src/colors';
-import Button from '@material-ui/core/Button';
+import { observer } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
-import { ReactiveBorder } from './ReactiveBorder';
-import { useStores } from '#/src/hooks';
+import { withRouter } from 'react-router-dom';
+
+import { colors } from '#/src/colors';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
+import { useStores } from '#/src/hooks';
+
+import Jumpotron from './Jumpotron';
+import Kortti from './kortti/Kortti';
+import { ReactiveBorder } from './ReactiveBorder';
+import { Uutiset } from './uutinen/Uutiset';
 
 const useStyles = makeStyles({
   info: {

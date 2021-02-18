@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+
 import {
   Box,
   Drawer,
@@ -10,7 +10,10 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
+import { useTranslation } from 'react-i18next';
+
 import { colors } from '#/src/colors';
+
 import { MurupolkuFragment } from './MurupolkuFragment';
 
 const FRAGMENT_INDENT_STEP = 10;

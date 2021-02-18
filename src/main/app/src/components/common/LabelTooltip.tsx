@@ -1,9 +1,11 @@
-import { Backdrop, IconButton, makeStyles, Tooltip } from '@material-ui/core';
-import InfoOutlined from '@material-ui/icons/InfoOutlined';
 import React, { useState } from 'react';
-import { colors } from '#/src/colors';
+
+import { Backdrop, IconButton, makeStyles, Tooltip } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import InfoOutlined from '@material-ui/icons/InfoOutlined';
 import { useTranslation } from 'react-i18next';
+
+import { colors } from '#/src/colors';
 
 const useStyles = makeStyles(() => ({
   backDrop: {

@@ -1,13 +1,15 @@
+import React, { useEffect, useState } from 'react';
+
 import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import clsx from 'clsx';
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
+
 import { getToteutusOsaamisalaKuvaus } from '#/src/api/konfoApi';
 import { colors } from '#/src/colors';
 import { Accordion } from '#/src/components/common/Accordion';
@@ -17,6 +19,7 @@ import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Murupolku from '#/src/components/common/Murupolku';
 import Spacer from '#/src/components/common/Spacer';
 import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
+import { useUrlParams } from '#/src/components/hakutulos/UseUrlParams';
 import { getHakuParams, getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   fetchKoulutusWithRelatedData,
@@ -34,7 +37,7 @@ import {
   Localizer as l,
   sanitizedHTMLParser,
 } from '#/src/tools/Utils';
-import { useUrlParams } from '#/src/components/hakutulos/UseUrlParams';
+
 import ContentWrapper from '../common/ContentWrapper';
 import { HakuKaynnissaCard } from './HakuKaynnissaCard';
 import { ToteutusHakuEiSahkoista } from './ToteutusHakuEiSahkoista';

@@ -1,16 +1,19 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+
 import { ButtonGroup, Button, makeStyles, Typography } from '@material-ui/core';
-import { getHakutulosToggleProps } from '#/src/store/reducers/hakutulosSliceSelector';
-import { setSelectedTab } from '#/src/store/reducers/hakutulosSlice';
+import { ExpandMore } from '@material-ui/icons';
+import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { colors } from '#/src/colors';
+import { setSelectedTab } from '#/src/store/reducers/hakutulosSlice';
+import { getHakutulosToggleProps } from '#/src/store/reducers/hakutulosSliceSelector';
+
 import {
   SuodatinAccordion,
   SuodatinAccordionDetails,
   SuodatinAccordionSummary,
 } from './hakutulosSuodattimet/CustomizedMuiComponents';
-import { ExpandMore } from '@material-ui/icons';
 import { useUrlParams } from './UseUrlParams';
 
 const useStyles = makeStyles((theme) => ({

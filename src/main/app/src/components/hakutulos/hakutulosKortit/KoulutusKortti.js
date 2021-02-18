@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+
 import {
   Avatar,
   Hidden,
@@ -13,10 +12,13 @@ import {
 } from '@material-ui/core';
 import { SchoolOutlined, TimelapseOutlined, ExtensionOutlined } from '@material-ui/icons';
 import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
+
 import koulutusPlaceholderImg from '#/src/assets/images/Opolkuhts.png';
-import { MUI_BREAKPOINTS } from '#/src/constants';
 import { educationTypeColorCode } from '#/src/colors';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
+import { MUI_BREAKPOINTS } from '#/src/constants';
 import { getLocalizedOpintojenLaajuus, Localizer as l } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({

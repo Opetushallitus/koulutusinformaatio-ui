@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
-import MuiFlatPagination from 'material-ui-flat-pagination';
+
 import { CssBaseline, makeStyles } from '@material-ui/core';
 import { ChevronLeftOutlined, ChevronRightOutlined } from '@material-ui/icons';
+import MuiFlatPagination from 'material-ui-flat-pagination';
+
 import { usePaginatedTarjonta } from './hooks';
 
 const useStyles = makeStyles((theme) => ({

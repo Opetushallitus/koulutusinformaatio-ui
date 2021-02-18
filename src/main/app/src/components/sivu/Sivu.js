@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
-import Murupolku from '../common/Murupolku';
-import TableOfContents from './TableOfContents';
-import Sisalto from './Sisalto';
-import Grid from '@material-ui/core/Grid';
-import { colors } from '../../colors';
+
 import { makeStyles } from '@material-ui/core';
-import { useStores } from '../../hooks';
+import Grid from '@material-ui/core/Grid';
 import { observer } from 'mobx-react-lite';
+import { withRouter } from 'react-router-dom';
+
+import { colors } from '../../colors';
+import { useStores } from '../../hooks';
+import Murupolku from '../common/Murupolku';
+import Sisalto from './Sisalto';
+import TableOfContents from './TableOfContents';
 
 const useStyles = makeStyles({
   notFound: {

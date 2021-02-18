@@ -1,9 +1,11 @@
 import React from 'react';
+
 import { Tabs, Tab } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+
+import { LANG_NAME_BY_CODE } from '#/src/constants';
 import { useLanguageState } from '#/src/hooks';
 import { supportedLanguages } from '#/src/tools/i18n';
-import { LANG_NAME_BY_CODE } from '#/src/constants';
 
 const LanguageTab = () => {
   const { t } = useTranslation();

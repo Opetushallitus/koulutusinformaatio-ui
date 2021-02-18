@@ -1,18 +1,21 @@
 import React from 'react';
-import _ from 'lodash';
+
 import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
+import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
+
 import { educationTypeColorCode } from '#/src/colors';
-import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import {
   LoadingCircle,
   OverlayLoadingCircle,
 } from '#/src/components/common/LoadingCircle';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Spacer from '#/src/components/common/Spacer';
+
+import { usePaginatedTarjonta } from './hooks';
 import { TulevaKoulutusCard } from './TulevaKoulutusCard';
 import { TulevaTarjontaPagination } from './TulevaTarjontaPagination';
-import { usePaginatedTarjonta } from './hooks';
 
 const useStyles = makeStyles({
   container: {

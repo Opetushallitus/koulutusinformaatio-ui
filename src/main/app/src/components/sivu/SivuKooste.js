@@ -1,13 +1,15 @@
 import React from 'react';
+
+import { Typography, Grid } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import { observer } from 'mobx-react-lite';
-import { InfoGrid } from '../common/InfoGrid';
-import { Typography, Grid } from '@material-ui/core';
+import { withRouter } from 'react-router-dom';
+
 import { useStores } from '../../hooks';
 import InfoCardGrid from '../common/InfoCardGrid';
+import { InfoGrid } from '../common/InfoGrid';
 import Tree from '../common/Tree';
 import Sisalto from './Sisalto';
-import { withRouter } from 'react-router-dom';
 
 const uutisHelper = (data, noPics, greenTitle) => {
   const testiTeksti = `Ammatillisia tutkintoja ovat ammatilliset perustutkinnot, ammattitutkinnot ja erikoisammattitutkinnot.  Tässä osiossa kerrotaan yleisesti opinnoista ja tutkinnon suorittamisesta.`;

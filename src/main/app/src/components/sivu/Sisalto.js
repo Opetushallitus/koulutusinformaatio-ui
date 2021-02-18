@@ -1,13 +1,16 @@
 import React from 'react';
-import { Accordion, Summary } from './Accordion';
-import Markdown from 'markdown-to-jsx';
-import { colors } from '../../colors';
+
 import { makeStyles, Typography, Grid, Card, CardMedia } from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom';
+import Markdown from 'markdown-to-jsx';
 import { observer } from 'mobx-react';
-import { useStores } from '../../hooks';
-import { LinkOrYoutube } from './LinkOrYoutube';
+import { Link as RouterLink } from 'react-router-dom';
+
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
+
+import { colors } from '../../colors';
+import { useStores } from '../../hooks';
+import { Accordion, Summary } from './Accordion';
+import { LinkOrYoutube } from './LinkOrYoutube';
 
 const useStyles = makeStyles({
   notFound: {

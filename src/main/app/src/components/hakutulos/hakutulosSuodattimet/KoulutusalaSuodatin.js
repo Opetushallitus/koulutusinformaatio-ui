@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import _ from 'lodash';
+
 import {
   Button,
   Divider,
@@ -13,7 +11,17 @@ import {
   useMediaQuery,
 } from '@material-ui/core';
 import { ExpandMore, IndeterminateCheckBoxOutlined } from '@material-ui/icons';
-import { SummaryContent } from './SummaryContent';
+import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { MUI_BREAKPOINTS, FILTER_TYPES } from '#/src/constants';
+import { useQueryParams } from '#/src/hooks';
+import { twoLevelFilterUpdateAndSearch } from '#/src/store/reducers/hakutulosSlice';
+import { getKoulutusalaFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
+import { Localizer as l } from '#/src/tools/Utils';
+
+import { useUrlParams } from '../UseUrlParams';
 import {
   SuodatinAccordion,
   SuodatinAccordionSummary,
@@ -21,12 +29,7 @@ import {
   SuodatinCheckbox,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
-import { getKoulutusalaFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
-import { twoLevelFilterUpdateAndSearch } from '#/src/store/reducers/hakutulosSlice';
-import { MUI_BREAKPOINTS, FILTER_TYPES } from '#/src/constants';
-import { Localizer as l } from '#/src/tools/Utils';
-import { useQueryParams } from '#/src/hooks';
-import { useUrlParams } from '../UseUrlParams';
+import { SummaryContent } from './SummaryContent';
 
 const useStyles = makeStyles((theme) => ({
   buttonLabel: {
@@ -114,10 +117,7 @@ const KoulutusalaSuodatin = ({
             indeterminateIcon={<IndeterminateCheckBoxOutlined />}
             indeterminate={isIndeterminate(openedKoulutusala)}
             edge="start"
-            checked={
-              checkedKoulutusalat.findIndex(({ id }) => id === openedKoulutusala[0]) !==
-              -1
-            }
+            checked={checkedKoulutusalat.some(({ id }) => id === openedKoulutusala[0])}
             tabIndex={-1}
             disableRipple
             inputProps={{ 'aria-labelledby': `koulutusala_${openedKoulutusala[0]}` }}
@@ -146,7 +146,7 @@ const KoulutusalaSuodatin = ({
           <ListItemIcon>
             <SuodatinCheckbox
               edge="start"
-              checked={checkedKoulutusalat.findIndex(({ id }) => id === kaTaso2Id) !== -1}
+              checked={checkedKoulutusalat.some(({ id }) => id === kaTaso2Id)}
               tabIndex={-1}
               disableRipple
               inputProps={{ 'aria-labelledby': `${openedKoulutusala[0]}_${kaTaso2Id}` }}

@@ -11,8 +11,8 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
-const fs = require('fs');
 const wp = require('@cypress/webpack-preprocessor');
+
 const alias = require('../../webpack-alias');
 
 module.exports = (on, config) => {

@@ -1,15 +1,17 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import clsx from 'clsx';
-import { colors } from '../../colors';
+
 import Grid from '@material-ui/core/Grid';
-import { observer } from 'mobx-react-lite';
-import Palvelu from './Palvelu';
-import _ from 'lodash';
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
+import clsx from 'clsx';
+import _ from 'lodash';
+import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
+
+import { colors } from '../../colors';
 import { useStores } from '../../hooks';
+import Palvelu from './Palvelu';
 
 const useStyles = makeStyles({
   header: {

@@ -1,11 +1,14 @@
 import React from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import _ from 'lodash';
+
 import { Grid, Typography } from '@material-ui/core';
-import { clearPaging, searchAll, setSize } from '#/src/store/reducers/hakutulosSlice';
-import { SuodatinMobileSlider } from './hakutulosSuodattimet/CustomizedMuiComponents';
+import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+
 import { useQueryParams } from '#/src/hooks';
+import { clearPaging, searchAll, setSize } from '#/src/store/reducers/hakutulosSlice';
+
+import { SuodatinMobileSlider } from './hakutulosSuodattimet/CustomizedMuiComponents';
 import { useUrlParams } from './UseUrlParams';
 
 const MobileResultsPerPageExpansionMenu = ({ elevation }) => {

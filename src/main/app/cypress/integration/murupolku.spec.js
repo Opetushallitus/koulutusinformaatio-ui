@@ -1,6 +1,7 @@
 import { playMocks } from 'kto-ui-common/cypress/mockUtils';
-import { assertBreadcrumb } from '#/cypress/utils';
+
 import murupolkuMocks from '#/cypress/mocks/murupolku.mocks.json';
+import { assertBreadcrumb } from '#/cypress/utils';
 
 describe('Murupolku', () => {
   beforeEach(() => {

@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react';
+
 import { getOppilaitosOsa } from '#/src/api/konfoApi';
 import { OsoiteParser } from '#/src/tools/Utils';
-import { useEffect, useState } from 'react';
 
 export interface OppilaitosOsoite {
   oppilaitosOid: string;

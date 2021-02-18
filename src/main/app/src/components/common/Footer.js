@@ -1,17 +1,19 @@
 import React from 'react';
-import Markdown from 'markdown-to-jsx';
-import { useTranslation } from 'react-i18next';
+
 import { makeStyles, Link } from '@material-ui/core';
-import clsx from 'clsx';
-import Grid from '@material-ui/core/Grid';
-import { colors } from '#/src/colors';
-import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
-import { observer } from 'mobx-react-lite';
-import OPOLogoFooterFI from '#/src/assets/images/OpetushallitusIcon.svg';
-import OPOLogoFooterSV from '#/src/assets/images/OPO_Logo_Footer_ruotsi.svg';
-import OPOLogoFooterEN from '#/src/assets/images/OPO_Logo_Footer_englanti.svg';
-import OPHIcon from '#/src/assets/images/OPH logo.png';
 import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
+import clsx from 'clsx';
+import Markdown from 'markdown-to-jsx';
+import { observer } from 'mobx-react-lite';
+import { useTranslation } from 'react-i18next';
+
+import OPOLogoFooterFI from '#/src/assets/images/OpetushallitusIcon.svg';
+import OPHIcon from '#/src/assets/images/OPH logo.png';
+import OPOLogoFooterEN from '#/src/assets/images/OPO_Logo_Footer_englanti.svg';
+import OPOLogoFooterSV from '#/src/assets/images/OPO_Logo_Footer_ruotsi.svg';
+import { colors } from '#/src/colors';
 import { useStores } from '#/src/hooks';
 import { Localizer as l } from '#/src/tools/Utils';
 

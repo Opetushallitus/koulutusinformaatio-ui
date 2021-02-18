@@ -1,8 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import Select, { components } from 'react-select';
-import _fp from 'lodash/fp';
+
 import {
   Button,
   CircularProgress,
@@ -13,6 +10,12 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore, SearchOutlined } from '@material-ui/icons';
+import _fp from 'lodash/fp';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import Select, { components } from 'react-select';
+
+import { colors } from '#/src/colors';
 import {
   clearPaging,
   searchAll,
@@ -24,6 +27,10 @@ import {
   getSijaintiFilterProps,
   getIsLoading,
 } from '#/src/store/reducers/hakutulosSliceSelector';
+import { Localizer as l } from '#/src/tools/Utils';
+import { Translateable } from '#/src/types/common';
+
+import { useUrlParams } from '../UseUrlParams';
 import {
   SuodatinCheckbox,
   SuodatinAccordion,
@@ -32,11 +39,7 @@ import {
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 import { SummaryContent } from './SummaryContent';
-import { colors } from '#/src/colors';
-import { Localizer as l } from '#/src/tools/Utils';
 import { ElasticTuple, SuodatinProps } from './SuodatinTypes';
-import { Translateable } from '#/src/types/common';
-import { useUrlParams } from '../UseUrlParams';
 
 const useStyles = makeStyles(() => ({
   buttonLabel: {

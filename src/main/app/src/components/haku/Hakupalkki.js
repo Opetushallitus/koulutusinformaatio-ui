@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import _ from 'lodash';
+
 import {
   Box,
   CircularProgress,
@@ -16,13 +12,22 @@ import {
   Tooltip,
   IconButton,
 } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import InputBase from '@material-ui/core/InputBase';
 import {
   SearchOutlined,
   ExpandMoreOutlined,
   ExpandLessOutlined,
 } from '@material-ui/icons';
-import InputBase from '@material-ui/core/InputBase';
-import Button from '@material-ui/core/Button';
+import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+
+import { colors } from '#/src/colors';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
+import { useQueryParams } from '#/src/hooks';
 import {
   searchAll,
   setKeyword,
@@ -31,12 +36,10 @@ import {
   executeSearchFromStartingPage,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getHakupalkkiProps } from '#/src/store/reducers/hakutulosSliceSelector';
-import { colors } from '#/src/colors';
 import { theme } from '#/src/theme';
-import HakupalkkiFilters from './HakupalkkiFilters';
-import { LocalizedLink } from '#/src/components/common/LocalizedLink';
+
 import { MobileFiltersOnTopMenu } from '../hakutulos/MobileFiltersOnTopMenu';
-import { useQueryParams } from '#/src/hooks';
+import HakupalkkiFilters from './HakupalkkiFilters';
 
 const useStyles = makeStyles((theme) => ({
   box: {

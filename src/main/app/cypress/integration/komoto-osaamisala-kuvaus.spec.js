@@ -1,4 +1,5 @@
 import { playMocks } from 'kto-ui-common/cypress/mockUtils';
+
 import komotoOsaamisalaKuvausMocks from '#/cypress/mocks/komoto-osaamisala-kuvaus.mocks.json';
 
 describe('Osaamisalan description KOMOTO', () => {

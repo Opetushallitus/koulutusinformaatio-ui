@@ -1,8 +1,11 @@
 import React from 'react';
-import ImageCardGrid from '#/src/components/common/ImageCardGrid';
+
 import { Box, Typography, useTheme, useMediaQuery } from '@material-ui/core';
-import Spacer from '../common/Spacer';
+
 import DefaultHeroImage from '#/src/assets/images/herokuva_default.png';
+import ImageCardGrid from '#/src/components/common/ImageCardGrid';
+
+import Spacer from '../common/Spacer';
 
 const OppilaitosOsaList = (props) => {
   const { oppilaitosOsat, title } = props;

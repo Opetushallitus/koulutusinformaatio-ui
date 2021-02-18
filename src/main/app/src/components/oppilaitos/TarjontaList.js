@@ -1,13 +1,19 @@
 import React from 'react';
+
 import { Typography, Grid, Container, makeStyles } from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
+
+import {
+  LoadingCircle,
+  OverlayLoadingCircle,
+} from '#/src/components/common/LoadingCircle';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Spacer from '#/src/components/common/Spacer';
 import { ToteutusCard } from '#/src/components/common/ToteutusCard';
-import TarjontaPagination from './TarjontaPagination';
-import { LocalizedLink } from '#/src/components/common/LocalizedLink';
+
 import { usePaginatedTarjonta } from './hooks';
-import { LoadingCircle, OverlayLoadingCircle } from '../common/LoadingCircle';
+import TarjontaPagination from './TarjontaPagination';
 
 const useStyles = makeStyles({
   container: {

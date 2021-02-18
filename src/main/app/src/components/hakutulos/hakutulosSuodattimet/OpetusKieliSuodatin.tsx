@@ -1,5 +1,8 @@
 import React, { useMemo } from 'react';
+
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+
 import {
   clearPaging,
   searchAll,
@@ -9,10 +12,10 @@ import {
   getAPIRequestParams,
   getOpetuskieliFilterProps,
 } from '#/src/store/reducers/hakutulosSliceSelector';
+
+import { useUrlParams } from '../UseUrlParams';
 import { Filter } from './Filter';
 import { FilterType, OpetuskieliFilterProps, SuodatinProps } from './SuodatinTypes';
-import { useUrlParams } from '../UseUrlParams';
-import { useTranslation } from 'react-i18next';
 
 export const OpetuskieliSuodatin = (filterProps: SuodatinProps) => {
   const { t } = useTranslation();

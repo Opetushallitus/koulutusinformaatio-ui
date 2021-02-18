@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   Accordion as MuiAccordion,
   AccordionSummary,
@@ -7,6 +8,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 import { colors } from '#/src/colors';
 
 const useStyles = makeStyles((theme) => ({

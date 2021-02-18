@@ -1,25 +1,28 @@
 import React from 'react';
-import _ from 'lodash';
-import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+
 import { Typography, Box, Container, makeStyles } from '@material-ui/core';
+import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { condArray, Localizer as l } from '#/src/tools/Utils';
-import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+
 import { colors } from '#/src/colors';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
-import Murupolku from '#/src/components/common/Murupolku';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
+import Murupolku from '#/src/components/common/Murupolku';
+import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
 import { NotFound } from '#/src/NotFound';
+import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
+import { condArray, Localizer as l } from '#/src/tools/Utils';
+
+import { useUrlParams } from '../hakutulos/UseUrlParams';
+import { useOppilaitos } from './hooks';
 import { OppilaitosinfoGrid } from './OppilaitosinfoGrid';
+import OppilaitosOsaList from './OppilaitosOsaList';
 import TarjontaList from './TarjontaList';
 import { TietoaOpiskelusta } from './TietoaOpiskelusta';
-import { Yhteystiedot } from './Yhteystiedot';
 import { TulevaTarjontaList } from './TulevaTarjontaList';
-import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
-import OppilaitosOsaList from './OppilaitosOsaList';
-import { useOppilaitos } from './hooks';
-import { useUrlParams } from '../hakutulos/UseUrlParams';
+import { Yhteystiedot } from './Yhteystiedot';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },

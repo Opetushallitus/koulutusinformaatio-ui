@@ -1,4 +1,5 @@
 import { playMocks } from 'kto-ui-common/cypress/mockUtils';
+
 import commonMocks from '#/cypress/mocks/common.mocks.json';
 import './commands';
 

@@ -1,4 +1,5 @@
 import { playMocks } from 'kto-ui-common/cypress/mockUtils';
+
 import komotoKuvausTooltipMocks from '#/cypress/mocks/komoto-kuvaus-tooltip.mocks.json';
 
 describe('Kuvaus tooltip KOMOTO', () => {

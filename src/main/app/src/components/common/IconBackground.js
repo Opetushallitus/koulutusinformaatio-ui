@@ -1,6 +1,8 @@
-import { colors } from '#/src/colors';
-import { makeStyles } from '@material-ui/core';
 import React from 'react';
+
+import { makeStyles } from '@material-ui/core';
+
+import { colors } from '#/src/colors';
 
 const useStyles = makeStyles({
   iconBackground: ({ color }) => ({

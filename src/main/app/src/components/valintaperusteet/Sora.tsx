@@ -1,8 +1,10 @@
-import { Box, Grid, Typography } from '@material-ui/core';
 import React from 'react';
+
+import { Box, Grid, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { toId } from '#/src/tools/Utils';
+
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
+import { toId } from '#/src/tools/Utils';
 
 const Headers = ['h1', 'h2', 'h3', 'h4', 'h5'];
 const isHeader = (tag: string) => Headers.includes(tag);
