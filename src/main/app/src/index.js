@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { MuiThemeProvider } from '@material-ui/core';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import 'typeface-open-sans';
 
 import { getKonfoStore } from '#/src/store';
@@ -14,6 +16,8 @@ import { postClientError } from '#/src/api/konfoApi';
 import { useQueryOnce } from '#/src/hooks';
 import ScrollToTop from '#/src/ScrollToTop';
 import App from '#/src/App';
+
+const queryClient = new QueryClient();
 
 if ('serviceWorker' in navigator) {
   if (!window.Cypress) {
@@ -58,16 +62,19 @@ const InitGate = ({ children }) => {
 
 ReactDOM.render(
   <Suspense fallback={<LoadingCircle />}>
-    <Provider store={getKonfoStore()}>
-      <BrowserRouter basename={'/konfo'}>
-        <MuiThemeProvider theme={theme}>
-          <InitGate>
-            <ScrollToTop />
-            <App />
-          </InitGate>
-        </MuiThemeProvider>
-      </BrowserRouter>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <Provider store={getKonfoStore()}>
+        <BrowserRouter basename={'/konfo'}>
+          <MuiThemeProvider theme={theme}>
+            <InitGate>
+              <ScrollToTop />
+              <App />
+            </InitGate>
+          </MuiThemeProvider>
+        </BrowserRouter>
+      </Provider>
+    </QueryClientProvider>
   </Suspense>,
   document.getElementById('wrapper')
 );

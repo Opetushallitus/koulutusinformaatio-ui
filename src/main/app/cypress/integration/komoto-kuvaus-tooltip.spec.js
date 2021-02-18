@@ -1,8 +1,9 @@
-import { playMockFile } from 'kto-ui-common/cypress/mockUtils';
+import { playMocks } from 'kto-ui-common/cypress/mockUtils';
+import komotoKuvausTooltipMocks from '#/cypress/mocks/komoto-kuvaus-tooltip.mocks.json';
 
 describe('Kuvaus tooltip KOMOTO', () => {
   beforeEach(() => {
-    playMockFile('komoto-kuvaus-tooltip.mocks.json');
+    playMocks(komotoKuvausTooltipMocks);
   });
 
   it('Suunniteltu kesto kuvaus KOMOTO renders properly', () => {
