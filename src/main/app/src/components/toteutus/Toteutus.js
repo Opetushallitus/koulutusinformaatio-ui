@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
@@ -184,6 +184,11 @@ const Toteutus = () => {
   const hakuUrl = useSelector(getHakuUrl);
   const { hakuParamsStr } = useSelector(getHakuParams);
 
+  const combinedLisatiedot = useMemo(
+    () => [...(koulutus?.lisatiedot || []), ...(opetus?.lisatiedot || [])],
+    [koulutus?.lisatiedot, opetus?.lisatiedot]
+  );
+
   return loading ? (
     <LoadingCircle />
   ) : (
@@ -299,10 +304,10 @@ const Toteutus = () => {
         )}
         {toteutus?.hasMuuHaku && <ToteutusHakuMuu oid={toteutus?.oid} />}
         {toteutus?.hasEiSahkoistaHaku && <ToteutusHakuEiSahkoista oid={toteutus?.oid} />}
-        {opetus?.lisatiedot.length > 0 && (
+        {combinedLisatiedot.length > 0 && (
           <AccordionWithTitle
             titleTranslation="koulutus.lisätietoa"
-            data={opetus.lisatiedot.map((lisatieto) => ({
+            data={combinedLisatiedot.map((lisatieto) => ({
               title: l.localize(lisatieto.otsikko),
               content: sanitizedHTMLParser(l.localize(lisatieto.teksti)),
             }))}
