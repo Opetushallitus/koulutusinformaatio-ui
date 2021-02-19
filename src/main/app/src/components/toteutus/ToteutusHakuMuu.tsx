@@ -12,6 +12,7 @@ import Spacer from '#/src/components/common/Spacer';
 import { selectMuuHaku } from '#/src/store/reducers/toteutusSlice';
 import { useOppilaitosOsoite } from '#/src/tools/UseOppilaitosOsoiteHook';
 import { formatDateRange, formatDateString, Localizer as l } from '#/src/tools/Utils';
+import { Translateable } from '#/src/types/common';
 
 const useStyles = makeStyles((theme) => ({
   hakuName: {
@@ -24,21 +25,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function getTarjoajaYhteystiedot(osoitteet, tarjoajat) {
-  return osoitteet.map((osoite) => {
+const getTarjoajaYhteystiedot = (
+  osoitteet: Array<{ oppilaitosOid: string; yhteystiedot: string }>,
+  tarjoajat: Array<{ oid: string; nimi: Translateable }>
+) =>
+  osoitteet.map((osoite) => {
     const tarjoajaNimi = tarjoajat.find(
       (tarjoaja) => tarjoaja.oid === osoite.oppilaitosOid
     )?.nimi;
     return `${l.localize(tarjoajaNimi)} · ${osoite.yhteystiedot}`;
   });
-}
 
-export const ToteutusHakuMuu = ({ oid }) => {
+type Props = { oid: string };
+
+export const ToteutusHakuMuu = ({ oid }: Props) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const muuHaku = useSelector(selectMuuHaku(oid), shallowEqual);
 
-  const oppilaitosOids = muuHaku.tarjoajat.map((tarjoaja) => tarjoaja.oid);
+  const oppilaitosOids = muuHaku.tarjoajat.map(
+    (tarjoaja: { oid: string }) => tarjoaja.oid
+  );
   const osoitteet = useOppilaitosOsoite(oppilaitosOids);
   const yhteystiedot = getTarjoajaYhteystiedot(osoitteet, muuHaku.tarjoajat);
 

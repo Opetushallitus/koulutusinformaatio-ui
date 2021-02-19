@@ -23,7 +23,7 @@ import Palvelut from './components/palvelu/Palvelut';
 import { ReactiveBorder } from './components/ReactiveBorder';
 import Sisaltohaku from './components/Sisaltohaku';
 import SivuRouter from './components/sivu/SivuRouter';
-import Toteutus from './components/toteutus/Toteutus';
+import { ToteutusPage } from './components/toteutus/Toteutus';
 import {
   ValintaperustePage,
   ValintaperustePreviewPage,
@@ -128,7 +128,7 @@ const TranslatedRoutes = ({ match, location }) => {
       </Route>
       <Route exact path="/:lng/toteutus/:oid">
         <KoulutusHakuBar />
-        <Toteutus />
+        <ToteutusPage />
       </Route>
       <Route exact path="/:lng/sivu/:id">
         <KoulutusHakuBar />

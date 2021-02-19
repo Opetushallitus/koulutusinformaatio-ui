@@ -19,7 +19,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ToteutusHakuEiSahkoista = ({ oid }) => {
+type Props = {
+  oid: string;
+};
+
+export const ToteutusHakuEiSahkoista = ({ oid }: Props) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const eiSahkoistaData = useSelector(selectEiSahkoistaHaku(oid), shallowEqual);

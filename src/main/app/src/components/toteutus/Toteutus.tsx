@@ -37,6 +37,7 @@ import {
   Localizer as l,
   sanitizedHTMLParser,
 } from '#/src/tools/Utils';
+import { Toteutus } from '#/src/types/ToteutusTypes';
 
 import ContentWrapper from '../common/ContentWrapper';
 import { HakuKaynnissaCard } from './HakuKaynnissaCard';
@@ -68,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TextWithBackground = (props) => {
+const TextWithBackground = (props: React.PropsWithChildren<object>) => {
   const classes = useStyles();
   return (
     <Box
@@ -81,7 +82,12 @@ const TextWithBackground = (props) => {
   );
 };
 
-const AccordionWithTitle = ({ titleTranslation, data }) => {
+type AccordionProps = {
+  titleTranslationKey: string;
+  data: React.ComponentProps<typeof Accordion>['items'];
+};
+
+const AccordionWithTitle = ({ titleTranslationKey, data }: AccordionProps) => {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
@@ -90,7 +96,7 @@ const AccordionWithTitle = ({ titleTranslation, data }) => {
       display="flex"
       flexDirection="column"
       alignItems="center">
-      <Typography variant="h2">{t(titleTranslation)}</Typography>
+      <Typography variant="h2">{t(titleTranslationKey)}</Typography>
       <Spacer />
       <Accordion
         items={data}
@@ -102,12 +108,23 @@ const AccordionWithTitle = ({ titleTranslation, data }) => {
   );
 };
 
-const getOsaamisalatPageData = async ({ ePerusteId, requestParams }) => {
-  const osaamisalat = await getToteutusOsaamisalaKuvaus({ ePerusteId, requestParams });
+type OsaamisalatProps = {
+  ePerusteId: string;
+  requestParams: { 'koodi-urit': string };
+};
+
+const getOsaamisalatPageData = async ({
+  ePerusteId,
+  requestParams,
+}: OsaamisalatProps) => {
+  const osaamisalat: Array<any> = await getToteutusOsaamisalaKuvaus({
+    ePerusteId,
+    requestParams,
+  });
   return { osaamisalat };
 };
 
-const useOsaamisalatPageData = ({ ePerusteId, requestParams }) => {
+const useOsaamisalatPageData = ({ ePerusteId, requestParams }: OsaamisalatProps) => {
   return useQuery(
     ['getOsaamisalatPageData', { ePerusteId, requestParams }],
     () => getOsaamisalatPageData({ ePerusteId, requestParams }),
@@ -117,16 +134,17 @@ const useOsaamisalatPageData = ({ ePerusteId, requestParams }) => {
     }
   );
 };
-const Toteutus = () => {
+
+export const ToteutusPage = () => {
   const classes = useStyles();
-  const { oid } = useParams();
+  const { oid } = useParams<{ oid: string }>();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const currentLanguage = l.getLanguage();
   const { isDraft } = useUrlParams();
 
   // TODO: There is absolutely no error handling atm.
-  const toteutus = useSelector(selectToteutus(oid), shallowEqual);
+  const toteutus: Toteutus = useSelector(selectToteutus(oid), shallowEqual);
   const koulutusOid = toteutus?.koulutusOid;
   const koulutus = useSelector(selectKoulutus(koulutusOid), shallowEqual);
   const { jatkuvatHaut, yhteisHaut, erillisHaut } = useSelector(
@@ -141,24 +159,25 @@ const Toteutus = () => {
 
   // NOTE: These ammattinimikkeet should be the freely written virkailija asiasana-ammattinimikkeet,
   // not the formal tutkintonimikkeet
-  const asiasanat = (toteutus?.metadata?.ammattinimikkeet || [])
+  const asiasanat: Array<string> = (toteutus?.metadata?.ammattinimikkeet || [])
     .concat(toteutus?.metadata?.asiasanat || [])
-    .filter((asiasana) => asiasana.kieli === currentLanguage)
-    .map((asiasana) => asiasana.arvo);
+    .filter((asiasana: any) => asiasana.kieli === currentLanguage)
+    .map((asiasana: any) => asiasana.arvo);
 
-  const { data: osaamisalaData = [], isFetching } = useOsaamisalatPageData({
+  const { data: osaamisalaData = {} as any, isFetching } = useOsaamisalatPageData({
     ePerusteId: koulutus?.ePerusteId?.toString(),
     requestParams: {
       'koodi-urit': toteutus?.metadata?.osaamisalat
-        ?.map((oa) => oa?.koodi?.koodiUri)
+        ?.map((oa: any) => oa?.koodi?.koodiUri)
         ?.join(','),
     },
   });
 
-  const osaamisalatCombined = toteutus?.metadata?.osaamisalat?.map((toa) => {
+  // NOTE: This must *not* handle alemmanKorkeakoulututkinnonOsaamisalat or ylemmanKorkeakoulututkinnonOsaamisalat
+  const osaamisalatCombined = toteutus?.metadata?.osaamisalat?.map((toa: any) => {
     const extendedData =
       osaamisalaData?.osaamisalat?.find(
-        (koa) => toa?.koodi?.koodiUri === koa?.osaamisalakoodiUri
+        (koa: any) => toa?.koodi?.koodiUri === koa?.osaamisalakoodiUri
       ) || {};
     const kuvaus = !_.isEmpty(extendedData?.kuvaus)
       ? l.localize(extendedData?.kuvaus)
@@ -233,7 +252,6 @@ const Toteutus = () => {
         </Box>
         <Box mt={4}>
           <ToteutusInfoGrid
-            koulutusTyyppi={toteutus?.metadata?.tyyppi}
             laajuus={getLocalizedOpintojenLaajuus(koulutus)}
             opetus={opetus}
             hasHaku={hasAnyHaku}
@@ -275,8 +293,8 @@ const Toteutus = () => {
         )}
         {!_.isEmpty(osaamisalatCombined) && (
           <AccordionWithTitle
-            titleTranslation="koulutus.osaamisalat"
-            data={osaamisalatCombined?.map((osaamisala) => ({
+            titleTranslationKey="koulutus.osaamisalat"
+            data={osaamisalatCombined?.map((osaamisala: any) => ({
               title: l.localize(osaamisala?.koodi),
               content: (
                 <>
@@ -285,7 +303,7 @@ const Toteutus = () => {
                     <LocalizedLink
                       target="_blank"
                       rel="noopener"
-                      href={l.localize(osaamisala?.linkki)}>
+                      to={l.localize(osaamisala?.linkki)}>
                       {l.localize(osaamisala?.otsikko)}
                       <OpenInNewIcon fontSize="small" />
                     </LocalizedLink>
@@ -306,7 +324,7 @@ const Toteutus = () => {
         {toteutus?.hasEiSahkoistaHaku && <ToteutusHakuEiSahkoista oid={toteutus?.oid} />}
         {combinedLisatiedot.length > 0 && (
           <AccordionWithTitle
-            titleTranslation="koulutus.lisätietoa"
+            titleTranslationKey="koulutus.lisätietoa"
             data={combinedLisatiedot.map((lisatieto) => ({
               title: l.localize(lisatieto.otsikko),
               content: sanitizedHTMLParser(l.localize(lisatieto.teksti)),
@@ -319,43 +337,45 @@ const Toteutus = () => {
             <Spacer />
             <Box mt={5}>
               <Grid container alignItems="center">
-                {toteutus.metadata.yhteyshenkilot.map((yhteyshenkilo, i, a) => (
-                  <React.Fragment key={i}>
-                    <Grid item>
-                      <Grid container direction="column">
-                        <Grid item>
-                          <Typography variant="h4">
-                            {l.localize(yhteyshenkilo.nimi)}
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Typography variant="body1">
-                            {l.localize(yhteyshenkilo.titteli)}
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Typography variant="body1">
-                            {l.localize(yhteyshenkilo.sahkoposti)}
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Typography variant="body1">
-                            {l.localize(yhteyshenkilo.puhelinnumero)}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                    {i + 1 !== a.length && (
+                {toteutus.metadata.yhteyshenkilot.map(
+                  (yhteyshenkilo: any, i: number, a: any) => (
+                    <React.Fragment key={i}>
                       <Grid item>
-                        <Box
-                          mx={9}
-                          style={{ height: '104px' }}
-                          borderRight={`1px solid ${colors.lightGrey}`}
-                        />
+                        <Grid container direction="column">
+                          <Grid item>
+                            <Typography variant="h4">
+                              {l.localize(yhteyshenkilo.nimi)}
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Typography variant="body1">
+                              {l.localize(yhteyshenkilo.titteli)}
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Typography variant="body1">
+                              {l.localize(yhteyshenkilo.sahkoposti)}
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Typography variant="body1">
+                              {l.localize(yhteyshenkilo.puhelinnumero)}
+                            </Typography>
+                          </Grid>
+                        </Grid>
                       </Grid>
-                    )}
-                  </React.Fragment>
-                ))}
+                      {i + 1 !== a.length && (
+                        <Grid item>
+                          <Box
+                            mx={9}
+                            style={{ height: '104px' }}
+                            borderRight={`1px solid ${colors.lightGrey}`}
+                          />
+                        </Grid>
+                      )}
+                    </React.Fragment>
+                  )
+                )}
               </Grid>
             </Box>
           </Box>
@@ -364,5 +384,3 @@ const Toteutus = () => {
     </ContentWrapper>
   );
 };
-
-export default Toteutus;
