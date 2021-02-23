@@ -58,7 +58,7 @@ type Props = {
     id?: string;
     icon: string | JSX.Element;
     title: string;
-    modalText?: string;
+    modalText?: JSX.Element | false;
     text: string;
   }>;
   className?: string;

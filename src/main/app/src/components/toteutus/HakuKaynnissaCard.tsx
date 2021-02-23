@@ -16,9 +16,15 @@ const useStyles = makeStyles({
   buttonText: { color: '#FFFFFF' },
 });
 
-export const HakuKaynnissaCard = (props) => {
+type Props = {
+  title: string;
+  text: string;
+  link: React.ReactElement;
+  buttonText: string;
+};
+
+export const HakuKaynnissaCard = ({ title, text, link, buttonText }: Props) => {
   const classes = useStyles();
-  const { title, text, link, buttonText } = props;
 
   return (
     <Card className={classes.card} elevation={2}>

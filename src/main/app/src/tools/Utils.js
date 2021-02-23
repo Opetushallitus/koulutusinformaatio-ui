@@ -168,9 +168,7 @@ export const consoleWarning = (...props) => {
 
 export function getLocalizedOpintojenLaajuus(koulutus) {
   const tutkinnonOsat = koulutus?.tutkinnonOsat || [];
-  if (!koulutus?.opintojenLaajuus) {
-    console.log(koulutus?.opintojenLaajuusNumero, koulutus?.opintojenLaajuus);
-  }
+
   let opintojenLaajuusNumero =
     (koulutus?.opintojenLaajuus && Localizer.localize(koulutus?.opintojenLaajuus)) ||
     koulutus?.opintojenLaajuusNumero ||
