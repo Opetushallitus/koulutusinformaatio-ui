@@ -102,7 +102,9 @@ export const ToteutusInfoGrid = ({ laajuus, opetus = {}, hasHaku }: Props) => {
       icon: <FlagOutlinedIcon className={classes.koulutusInfoGridIcon} />,
       title: t('toteutus.koulutus-alkaa'),
       text: alkaaText,
-      modalText: alkaaModalText && <LocalizedHTML data={alkaaModalText} noMargin />,
+      modalText: !_.isEmpty(alkaaModalText) && (
+        <LocalizedHTML data={alkaaModalText} noMargin />
+      ),
     });
   }
 

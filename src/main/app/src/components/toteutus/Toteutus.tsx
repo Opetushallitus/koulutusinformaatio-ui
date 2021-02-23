@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Box, Grid, Link, makeStyles, Typography } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import clsx from 'clsx';
 import _ from 'lodash';
@@ -343,7 +343,7 @@ export const ToteutusPage = () => {
                       <Grid item>
                         <Grid container direction="column">
                           <Grid item>
-                            <Typography variant="h4">
+                            <Typography variant="h5">
                               {l.localize(yhteyshenkilo.nimi)}
                             </Typography>
                           </Grid>
@@ -362,6 +362,23 @@ export const ToteutusPage = () => {
                               {l.localize(yhteyshenkilo.puhelinnumero)}
                             </Typography>
                           </Grid>
+                          {yhteyshenkilo.wwwSivu && (
+                            <Grid item>
+                              <Link
+                                target="_blank"
+                                rel="noopener"
+                                href={l.localize(yhteyshenkilo.wwwSivu)}
+                                variant="body1">
+                                <Grid container direction="row" alignItems="center">
+                                  {l.localize(yhteyshenkilo.wwwSivu)}
+                                  <OpenInNewIcon
+                                    fontSize="small"
+                                    style={{ marginLeft: '5px' }}
+                                  />
+                                </Grid>
+                              </Link>
+                            </Grid>
+                          )}
                         </Grid>
                       </Grid>
                       {i + 1 !== a.length && (
