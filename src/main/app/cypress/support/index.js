@@ -14,4 +14,5 @@ beforeEach(() => {
   cy.intercept('https://fonts.googleapis.com/icon?family=Material+Icons', {
     fixture: 'material-icons.css',
   });
+  cy.setCookie('oph-konfo-mandatory-cookies-accepted', 'true'); //Hide cookie modal
 });

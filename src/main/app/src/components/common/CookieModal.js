@@ -147,7 +147,7 @@ const CookieModal = (props) => {
     expandLinkText: contentfulTexts['expandLinkText'] || '',
     settingsButtonText: contentfulTexts['settingsButtonText'] || '',
     settingsButtonCloseText: contentfulTexts['settingsButtonCloseText'] || '',
-    acceptButtonText: contentfulTexts['acceptButtonText'] || '',
+    acceptButtonText: contentfulTexts['acceptButtonText'] || 'Hyväksy',
     settingsHeaderText: contentfulTexts['settingsHeaderText'] || '',
     settingsAcceptMandatoryText: contentfulTexts['settingsAcceptMandatoryText'] || '',
     settingsAcceptStatisticText: contentfulTexts['settingsAcceptStatisticText'] || '',
