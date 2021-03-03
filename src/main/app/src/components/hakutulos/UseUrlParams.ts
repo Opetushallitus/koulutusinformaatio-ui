@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from 'react';
 
-import _ from 'lodash';
 import qs from 'query-string';
 import { useHistory } from 'react-router-dom';
 
@@ -29,30 +28,12 @@ export const useUrlParams = () => {
     [history, search]
   );
 
-  const omitUrlSearchParams = useCallback(
-    (filters: Record<string, object>) => {
-      history.replace({
-        search: qs.stringify(_.omit(search, _.keys(filters))),
-      });
-    },
-    [history, search]
-  );
-
-  const overrideUrlSearchParams = useCallback(
-    (newSearch: string) => {
-      history.replace({ search: newSearch });
-    },
-    [history]
-  );
-
   const isDraft = useMemo(() => !!search?.draft, [search]);
 
   return {
     isDraft,
     search,
     getAsString,
-    omitUrlSearchParams,
-    overrideUrlSearchParams,
     updateUrlSearchParams,
   };
 };

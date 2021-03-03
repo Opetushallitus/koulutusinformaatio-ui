@@ -12,8 +12,6 @@ import {
 } from '#/src/store/reducers/hakutulosSlice';
 import { getHakutulosPagination } from '#/src/store/reducers/hakutulosSliceSelector';
 
-import { useUrlParams } from './UseUrlParams';
-
 const useStyles = makeStyles((theme) => ({
   sizeSmall: {
     padding: '1px 6px',
@@ -37,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Pagination = ({ size }) => {
-  const { updateUrlSearchParams } = useUrlParams();
   const classes = useStyles();
 
   const paginationProps = useSelector(getHakutulosPagination);
@@ -63,7 +60,6 @@ const Pagination = ({ size }) => {
   const handleClick = (e, offset, page) => {
     setOffset(offset);
     if (paginationProps.selectedTab === 'koulutus') {
-      updateUrlSearchParams({ kpage: page }, false);
       dispatch(
         searchKoulutukset({
           requestParams: { ...apiRequestParams, page, size },
@@ -72,7 +68,6 @@ const Pagination = ({ size }) => {
         })
       );
     } else {
-      updateUrlSearchParams({ opage: page }, false);
       dispatch(
         searchOppilaitokset({
           requestParams: { ...apiRequestParams, page, size },

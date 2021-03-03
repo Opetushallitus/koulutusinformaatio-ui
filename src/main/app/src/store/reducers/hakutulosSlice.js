@@ -5,13 +5,16 @@ import { searchAPI } from '#/src/api/konfoApi';
 import { FILTER_TYPES, FILTER_TYPES_ARR } from '#/src/constants';
 import { Localizer as l, Common as C } from '#/src/tools/Utils';
 
+import { getAPIRequestParams } from './hakutulosSliceSelector';
+
+const INITIAL = 'initial';
 const IDLE_STATUS = 'idle';
 const LOADING_STATUS = 'loading';
 const KOULUTUS = 'koulutus';
 const OPPILAITOS = 'oppilaitos';
 
 export const initialState = {
-  status: IDLE_STATUS,
+  status: INITIAL,
   error: null,
   keyword: '',
   keywordEditMode: false,
@@ -33,6 +36,7 @@ export const initialState = {
   koulutustyyppi: [],
   koulutusala: [],
   opetuskieli: [],
+  valintatapa: [],
   sijainti: [],
   selectedSijainti: [],
   opetustapa: [],
@@ -57,6 +61,16 @@ const hakutulosSlice = createSlice({
     },
     setSelectedTab: (state, { payload }) => {
       state.selectedTab = payload.newSelectedTab;
+    },
+    handleFilterToggle: (state, { payload }) => {
+      const {
+        filter,
+        item: { id, nimi },
+      } = payload;
+      const exists = state[filter].some(({ id: itemId }) => id === itemId);
+      state[filter] = exists
+        ? state[filter].filter(({ id: itemId }) => id !== itemId)
+        : state[filter].concat({ id, nimi, name: nimi }); // TODO: Remove name from here when it is refactored away
     },
     setOpetuskieli: (state, { payload }) => {
       state.opetuskieli = payload.newCheckedOpetuskielet;
@@ -95,6 +109,7 @@ const hakutulosSlice = createSlice({
       state.koulutustyyppi = [];
       state.koulutusala = [];
       state.opetuskieli = [];
+      state.valintatapa = [];
       state.sijainti = [];
       state.selectedSijainti = [];
       state.opetustapa = [];
@@ -109,7 +124,7 @@ const hakutulosSlice = createSlice({
       state.sort = payload.newSort;
     },
     searchAPICallStart(state) {
-      if (state.status === IDLE_STATUS) {
+      if (state.status === INITIAL || state.status === IDLE_STATUS) {
         state.status = LOADING_STATUS;
       }
     },
@@ -141,6 +156,7 @@ const hakutulosSlice = createSlice({
           state.selectedTab = KOULUTUS;
         }
         if (isReload) {
+          console.log('filters', filters);
           _.forEach(literals, (val, key) => {
             state[key] = val;
           });
@@ -231,6 +247,7 @@ export const {
   searchAPICallStart,
   searchAPICallError,
   setOpetuskieli,
+  handleFilterToggle,
   setKoulutustyyppi,
   setKoulutusala,
   setSijainti,
@@ -246,7 +263,34 @@ export const {
   searchKoulutuksetSuccess,
   searchOppilaitoksetSuccess,
 } = hakutulosSlice.actions;
+
 export default hakutulosSlice.reducer;
+
+// TODO: Remove Searchall when all filters use this
+export const newSearchAll = () => async (dispatch, getState) => {
+  const state = getState();
+  const requestParams = getAPIRequestParams(state);
+  dispatch(clearPaging());
+
+  try {
+    dispatch(searchAPICallStart());
+    const koulutusData = await searchAPI.getKoulutukset(requestParams);
+    const oppilaitosData = await searchAPI.getOppilaitokset(requestParams);
+
+    const filters = _.pick(requestParams, FILTER_TYPES_ARR);
+    const literals = _.pick(requestParams, ['size', 'order', 'sort']);
+    dispatch(
+      searchAllSuccess({
+        koulutusData,
+        oppilaitosData,
+        filters,
+        literals,
+      })
+    );
+  } catch (err) {
+    dispatch(searchAPICallError(err.toString()));
+  }
+};
 
 export const searchAll = (
   requestParams,
@@ -259,6 +303,7 @@ export const searchAll = (
     const oppilaitosData = await searchAPI.getOppilaitokset(requestParams);
     const filters = _.pick(requestParams, [
       'opetuskieli',
+      'valintatapa',
       'koulutustyyppi',
       'koulutusala',
       'sijainti',
@@ -279,6 +324,7 @@ export const searchAll = (
     dispatch(searchAPICallError(err.toString()));
   }
 };
+
 export const searchKoulutukset = ({
   requestParams,
   koulutusOffset,
@@ -308,12 +354,11 @@ export const searchOppilaitokset = ({
   }
 };
 
-export const searchAllOnPageReload = ({ apiRequestParams, search, keyword }) => (
-  dispatch,
-  getState
-) => {
+export const searchAllOnPageReload = ({ search, keyword }) => (dispatch, getState) => {
+  const state = getState();
+  const apiRequestParams = getAPIRequestParams(state);
   const cleanedUrlSearch = getCleanUrlSearch(search, apiRequestParams);
-  const { hakutulos } = getState();
+  const { hakutulos } = state;
   if (
     !_.isMatch(apiRequestParams, { ...cleanedUrlSearch, keyword }) &&
     !hakutulos.keywordEditMode
@@ -340,6 +385,7 @@ export const executeSearchFromStartingPage = ({ apiRequestParams, history }) => 
       'order',
       'size',
       'opetuskieli',
+      'valintatapa',
       'koulutustyyppi',
       'koulutusala',
       'sijainti',
@@ -356,7 +402,6 @@ export const twoLevelFilterUpdateAndSearch = ({
   apiRequestParams,
   clickedFilterId,
   parentFilterId,
-  updateUrlSearchParams,
 }) => (dispatch, getState) => {
   const { hakutulos } = getState();
   let filterCheckedValues = _.clone(_.get(hakutulos, filterType));
@@ -408,7 +453,6 @@ export const twoLevelFilterUpdateAndSearch = ({
       break;
   }
 
-  updateUrlSearchParams({ [filterType]: filterURLParamsStr });
   dispatch(clearPaging());
   dispatch(searchAll({ ...apiRequestParams, [filterType]: filterURLParamsStr }));
 };

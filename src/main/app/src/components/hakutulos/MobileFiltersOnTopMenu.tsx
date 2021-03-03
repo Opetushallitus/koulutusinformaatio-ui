@@ -31,11 +31,11 @@ import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodati
 import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
+import { ValintatapaSuodatin } from './hakutulosSuodattimet/ValintatapaSuodatin';
 import MobileResultsPerPageExpansionMenu from './MobileResultsPerPageExpansionMenu';
 import { MobileToggleFiltersButton } from './MobileToggleFiltersButton';
 import MobileToggleKoulutusOppilaitos from './MobileToggleKoulutusOppilaitos';
 import MobileToggleOrderByButtonMenu from './MobileToggleOrderByButtonMenu';
-import { useUrlParams } from './UseUrlParams';
 
 const useStyles = makeStyles(() => ({
   paperAnchorBottom: {
@@ -62,7 +62,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
-  const { omitUrlSearchParams } = useUrlParams();
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -100,7 +99,6 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
   };
 
   const handleClearFilters = () => {
-    omitUrlSearchParams(suodatinValinnatProps);
     dispatch(clearSelectedFilters());
     dispatch(searchAll(_.omit(apiRequestParams, _.keys(suodatinValinnatProps))));
   };
@@ -159,6 +157,8 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
           <KoulutusalaSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
           <OpetustapaSuodatin expanded={false} elevation={0} displaySelected />
+          <Divider className={classes.divider} />
+          <ValintatapaSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
           {!isFrontPage && <MobileToggleOrderByButtonMenu elevation={0} />}
           {!isFrontPage && <MobileResultsPerPageExpansionMenu elevation={0} />}

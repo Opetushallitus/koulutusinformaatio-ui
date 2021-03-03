@@ -9,10 +9,8 @@ import { useQueryParams } from '#/src/hooks';
 import { clearPaging, searchAll, setSize } from '#/src/store/reducers/hakutulosSlice';
 
 import { SuodatinMobileSlider } from './hakutulosSuodattimet/CustomizedMuiComponents';
-import { useUrlParams } from './UseUrlParams';
 
 const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
-  const { updateUrlSearchParams } = useUrlParams();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const apiRequestPaparms = useQueryParams();
@@ -31,7 +29,6 @@ const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
   const valueText = (value) => value;
 
   const handleSliderValueChange = (e, newSize) => {
-    updateUrlSearchParams({ pagesize: newSize });
     dispatch(clearPaging());
     dispatch(setSize({ newSize }));
     dispatch(searchAll({ ...apiRequestPaparms, size: newSize }));

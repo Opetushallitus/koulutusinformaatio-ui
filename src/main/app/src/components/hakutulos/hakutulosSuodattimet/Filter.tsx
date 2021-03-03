@@ -92,6 +92,7 @@ type Props = {
   selectPlaceholder?: string;
 };
 
+// NOTE: Do *not* put redux code here, this component is used both with and without
 export const Filter = ({
   name,
   expanded,

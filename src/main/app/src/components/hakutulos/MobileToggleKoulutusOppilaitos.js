@@ -14,7 +14,6 @@ import {
   SuodatinAccordionDetails,
   SuodatinAccordionSummary,
 } from './hakutulosSuodattimet/CustomizedMuiComponents';
-import { useUrlParams } from './UseUrlParams';
 
 const useStyles = makeStyles((theme) => ({
   buttonActive: {
@@ -38,14 +37,12 @@ const useStyles = makeStyles((theme) => ({
 
 const MobileToggleKoulutusOppilaitos = () => {
   const classes = useStyles();
-  const { updateUrlSearchParams } = useUrlParams();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { selectedTab } = useSelector(getHakutulosToggleProps);
 
   function updateSelectedTab(e) {
     const newSelectedTab = e.currentTarget.dataset.tab;
-    updateUrlSearchParams({ tab: newSelectedTab });
     dispatch(setSelectedTab({ newSelectedTab }));
   }
 

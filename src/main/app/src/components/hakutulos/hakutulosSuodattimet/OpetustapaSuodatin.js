@@ -14,7 +14,6 @@ import {
 import { getOpetustapaFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { Localizer as l } from '#/src/tools/Utils';
 
-import { useUrlParams } from '../UseUrlParams';
 import {
   SuodatinCheckbox,
   SuodatinAccordion,
@@ -36,7 +35,6 @@ const OpetustapaSuodatin = ({
   displaySelected,
   summaryHidden = false,
 }) => {
-  const { updateUrlSearchParams } = useUrlParams();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const apiRequestParams = useQueryParams();
@@ -63,8 +61,6 @@ const OpetustapaSuodatin = ({
     const newCheckedOpetustavatStr = newCheckedOpetustavat.map(({ id }) => id).join(',');
 
     dispatch(setOpetustapa({ newCheckedOpetustavat }));
-
-    updateUrlSearchParams({ opetustapa: newCheckedOpetustavatStr });
     dispatch(clearPaging());
     dispatch(searchAll({ ...apiRequestParams, opetustapa: newCheckedOpetustavatStr }));
   };

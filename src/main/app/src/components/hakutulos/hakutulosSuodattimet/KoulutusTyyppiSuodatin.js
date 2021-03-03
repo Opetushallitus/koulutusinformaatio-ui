@@ -22,7 +22,6 @@ import { twoLevelFilterUpdateAndSearch } from '#/src/store/reducers/hakutulosSli
 import { getKoulutustyyppiFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { Localizer as l } from '#/src/tools/Utils';
 
-import { useUrlParams } from '../UseUrlParams';
 import {
   SuodatinCheckbox,
   SuodatinAccordion,
@@ -61,7 +60,6 @@ const KoulutustyyppiSuodatin = ({
   summaryHidden = false,
 }) => {
   const classes = withStyles();
-  const { updateUrlSearchParams } = useUrlParams();
   const { t } = useTranslation();
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -85,7 +83,6 @@ const KoulutustyyppiSuodatin = ({
         apiRequestParams,
         clickedFilterId,
         parentFilterId,
-        updateUrlSearchParams,
       })
     );
   };

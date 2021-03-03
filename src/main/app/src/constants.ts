@@ -13,6 +13,7 @@ export const FILTER_TYPES = {
   OPETUSKIELI: 'opetuskieli',
   SIJAINTI: 'sijainti',
   OPETUSTAPA: 'opetustapa',
+  VALINTATAPA: 'valintatapa',
 } as const;
 
 export const FILTER_TYPES_ARR = [
@@ -20,6 +21,8 @@ export const FILTER_TYPES_ARR = [
   'koulutusala',
   'koulutustyyppi',
   'sijainti',
+  'opetustapa',
+  'valintatapa',
 ] as const;
 
 export const DRAWER_WIDTH = 330;

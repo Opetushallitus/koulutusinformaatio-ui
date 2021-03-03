@@ -1,6 +1,6 @@
 import { Translateable } from '#/src/types/common';
 
-export type SuodatinProps = {
+export type SuodatinComponentProps = {
   expanded?: boolean;
   elevation?: number;
   displaySelected?: boolean;
@@ -14,6 +14,19 @@ export type FilterType = {
   id: string;
   nimi: Translateable;
   count: number;
+};
+
+// General type for all filters // TODO: Make every filter use this
+export type FilterProps = {
+  checkedValues: Array<FilterType>;
+  sortedValues: Array<FilterType>;
+  localizedCheckedValues: string;
+};
+
+export type ValintatapaFilterProps = {
+  checkedValintatavat: Array<FilterType>;
+  checkedValintatavatStr: string;
+  sortedValintatavat: Array<ElasticTuple>;
 };
 
 export type OpetuskieliFilterProps = {

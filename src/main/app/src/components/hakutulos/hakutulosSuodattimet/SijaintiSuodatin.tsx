@@ -30,7 +30,6 @@ import {
 import { Localizer as l } from '#/src/tools/Utils';
 import { Translateable } from '#/src/types/common';
 
-import { useUrlParams } from '../UseUrlParams';
 import {
   SuodatinCheckbox,
   SuodatinAccordion,
@@ -39,7 +38,7 @@ import {
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 import { SummaryContent } from './SummaryContent';
-import { ElasticTuple, SuodatinProps } from './SuodatinTypes';
+import { ElasticTuple, SuodatinComponentProps } from './SuodatinTypes';
 
 const useStyles = makeStyles(() => ({
   buttonLabel: {
@@ -123,8 +122,7 @@ export const SijaintiSuodatin = ({
   elevation,
   displaySelected,
   summaryHidden = false,
-}: SuodatinProps) => {
-  const { updateUrlSearchParams } = useUrlParams();
+}: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const loading = useSelector(getIsLoading);
@@ -177,7 +175,6 @@ export const SijaintiSuodatin = ({
       .join(',');
 
     dispatch(setSelectedSijainti({ newSelectedSijainnit }));
-    updateUrlSearchParams({ sijainti: selectedSijainnitStr });
     dispatch(clearPaging());
     dispatch(searchAll({ ...apiRequestParams, sijainti: selectedSijainnitStr }));
   };
@@ -202,7 +199,6 @@ export const SijaintiSuodatin = ({
       .map(({ id }) => id)
       .concat(selectedSijainnit.map(({ id }) => id))
       .join(',');
-    updateUrlSearchParams({ sijainti: newCheckedOrSelectedSijainnitStr });
     dispatch(setSijainti({ newCheckedOrSelectedMaakunnat }));
     dispatch(clearPaging());
     dispatch(

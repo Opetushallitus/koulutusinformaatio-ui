@@ -1,26 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { searchAllOnPageReload } from '#/src/store/reducers/hakutulosSlice';
-import { getAPIRequestParams } from '#/src/store/reducers/hakutulosSliceSelector';
+import {
+  getAPIRequestParams,
+  getIsInitialized,
+} from '#/src/store/reducers/hakutulosSliceSelector';
 
 import { Hakutulos } from '../hakutulos/Hakutulos';
 import { useUrlParams } from '../hakutulos/UseUrlParams';
 
 export const Haku = () => {
-  const { search } = useUrlParams();
+  const { search, updateUrlSearchParams } = useUrlParams();
 
   // TODO: keyword should probably be refactored into url params since hakupalkki is found in other pages too
-  // Or into sessiontstorage?
   const { keyword } = useParams<{ keyword: string }>();
-  const apiRequestParams = useSelector(getAPIRequestParams);
+  const queryParams = useSelector(getAPIRequestParams, shallowEqual);
+  const initialized = useSelector(getIsInitialized);
   const dispatch = useDispatch();
 
+  const isFirstRun = useRef(true);
   useEffect(() => {
-    dispatch(searchAllOnPageReload({ apiRequestParams, search, keyword }));
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      dispatch(searchAllOnPageReload({ search, keyword }));
+    }
   });
+
+  // Update queryparameters when any apirequest related parameters change
+  useEffect(() => {
+    if (initialized) {
+      updateUrlSearchParams(queryParams);
+    }
+  }, [initialized, queryParams, updateUrlSearchParams]);
 
   return <Hakutulos />;
 };

@@ -35,10 +35,10 @@ import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin'
 import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
 import { SuodatinValinnat } from './hakutulosSuodattimet/SuodatinValinnat';
+import { ValintatapaSuodatin } from './hakutulosSuodattimet/ValintatapaSuodatin';
 import HakutulosToggle from './HakutulosToggle';
 import { MobileFiltersOnTopMenu } from './MobileFiltersOnTopMenu';
 import Pagination from './Pagination';
-import { useUrlParams } from './UseUrlParams';
 
 const useStyles = makeStyles((theme) => ({
   hakutulosSisalto: {
@@ -106,7 +106,6 @@ const getPageSortTranslationKey = (sort) => {
 };
 
 export const Hakutulos = () => {
-  const { updateUrlSearchParams } = useUrlParams();
   const classes = useStyles();
   const theme = useTheme();
   const { t } = useTranslation();
@@ -130,7 +129,6 @@ export const Hakutulos = () => {
     const newSort = newPageSort === 'score_desc' ? 'score' : 'name';
 
     setPageSort(newPageSort);
-    updateUrlSearchParams({ sort: newSort, order: newOrder }, false);
     dispatch(setSort({ newSort }));
     dispatch(setOrder({ newOrder }));
     dispatch(searchAll({ ...apiRequestParams, order: newOrder, sort: newSort }));
@@ -139,7 +137,6 @@ export const Hakutulos = () => {
     const newSize = e.target.value;
 
     setPageSize(newSize);
-    updateUrlSearchParams({ size: newSize });
     dispatch(clearPaging());
     dispatch(setSize({ newSize }));
     dispatch(searchAll({ ...apiRequestParams, size: newSize }));
@@ -242,6 +239,7 @@ export const Hakutulos = () => {
               <SijaintiSuodatin expanded elevation={2} />
               <KoulutusalaSuodatin expanded elevation={2} />
               <OpetustapaSuodatin expanded={false} elevation={2} />
+              <ValintatapaSuodatin expanded={false} elevation={2} />
             </Hidden>
           </Grid>
           <Grid item container direction="column" xs>
