@@ -363,12 +363,10 @@ export const searchAllOnPageReload = ({ search, keyword }) => (dispatch, getStat
   }
 };
 
-export const searchAndMoveToHaku = ({ apiRequestParams, history }) => (
-  dispatch,
-  getState
-) => {
+export const searchAndMoveToHaku = ({ history }) => (dispatch, getState) => {
   const { hakutulos } = getState();
-  const lng = apiRequestParams.lng || 'fi';
+  const apiRequestParams = getAPIRequestParams({ hakutulos });
+  const lng = l.getLanguage();
   const restParams = new URLSearchParams(
     _.pick(C.cleanRequestParams(apiRequestParams), [
       'order',

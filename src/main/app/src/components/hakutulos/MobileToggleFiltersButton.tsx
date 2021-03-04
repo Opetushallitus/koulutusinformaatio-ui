@@ -63,6 +63,7 @@ export const MobileToggleFiltersButton = ({
     hitCount,
   ]);
 
+  // TODO: Spinner when loading would be nice
   return (
     <ButtonGroup classes={{ root: type === 'fixed' ? classes.fixed : classes.button }}>
       {showFilters ? (

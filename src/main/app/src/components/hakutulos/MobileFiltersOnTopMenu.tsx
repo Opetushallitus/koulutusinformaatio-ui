@@ -93,7 +93,7 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
 
   const handleFiltersShowToggle = () => {
     if (isFrontPage) {
-      dispatch(searchAndMoveToHaku({ apiRequestParams, history }));
+      dispatch(searchAndMoveToHaku({ history }));
     }
     toggleShowFilters();
   };

@@ -82,13 +82,9 @@ function getSort(state) {
 
 //Selectors
 export const getHakupalkkiProps = createSelector(
-  [getKeyword, getKoulutusFilters, getOppilaitosFilters, getSelectedTab],
-  (keyword, koulutusFilters, oppilaitosFilters, selectedTab) => ({
-    keyword,
-    isKeywordValid: !_.inRange(_.size(keyword), 1, 3),
+  [getKoulutusFilters],
+  (koulutusFilters) => ({
     koulutusFilters,
-    oppilaitosFilters,
-    selectedTab,
   })
 );
 
@@ -97,11 +93,7 @@ export const getHakutulosProps = createSelector(
     getKeyword,
     getKoulutusHits,
     getOppilaitosHits,
-    getOrder,
-    getSort,
     getSelectedTab,
-    getKoulutusTotal,
-    getOppilaitosTotal,
     getSize,
     getOpetuskieli,
     getKoulutustyyppi,
@@ -115,11 +107,7 @@ export const getHakutulosProps = createSelector(
     keyword,
     koulutusHits,
     oppilaitosHits,
-    order,
-    sort,
     selectedTab,
-    koulutusTotal,
-    oppilaitosTotal,
     size,
     opetuskieli,
     koulutustyyppi,
@@ -133,11 +121,7 @@ export const getHakutulosProps = createSelector(
       keyword,
       koulutusHits,
       oppilaitosHits,
-      order,
-      sort,
       selectedTab,
-      koulutusTotal,
-      oppilaitosTotal,
       size,
       isAnyFilterSelected: _.some(
         [

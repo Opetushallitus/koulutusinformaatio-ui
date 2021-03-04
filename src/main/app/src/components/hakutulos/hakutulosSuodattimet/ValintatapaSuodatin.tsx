@@ -28,6 +28,7 @@ export const ValintatapaSuodatin = (props: SuodatinComponentProps) => {
   return (
     <Filter
       {...props}
+      testId="valintatapa-filter"
       name={t('haku.valintatapa')}
       sortedFilterValues={sortedValues}
       handleCheck={handleCheck}
