@@ -45,3 +45,7 @@ export const HAKULOMAKE_TYYPPI = {
 } as const;
 
 export const TOP_BAR_HEIGHT = 90;
+
+// Search related
+export const pageSizeArray = [5, 10, 20, 30, 50];
+export const pageSortArray = ['score_desc', 'name_asc', 'name_desc'];

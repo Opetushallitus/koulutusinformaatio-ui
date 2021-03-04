@@ -17,22 +17,20 @@ export const initialState = {
   status: INITIAL,
   error: null,
   keyword: '',
-  keywordEditMode: false,
   // Koulutukset
   koulutusHits: [],
   koulutusFilters: {},
-  koulutusCount: null,
   koulutusTotal: null,
   koulutusOffset: 0,
   koulutusPage: 1,
   // Oppilaitokset
   oppilaitosHits: [],
   oppilaitosFilters: {},
-  oppilaitosCount: null,
   oppilaitosTotal: null,
   oppilaitosOffset: 0,
   oppilaitosPage: 1,
-  // Suodattimet
+  // Selected filter values
+  // TODO: Refactor this to contain *only* ids, now it contains also names which are only used at SuodatinValinnat
   koulutustyyppi: [],
   koulutusala: [],
   opetuskieli: [],
@@ -45,8 +43,6 @@ export const initialState = {
   selectedTab: KOULUTUS,
   order: 'desc',
   sort: 'score',
-  pageSizeArray: [5, 10, 20, 30, 50],
-  pageSortArray: ['score_desc', 'name_asc', 'name_desc'],
 };
 
 const hakutulosSlice = createSlice({
@@ -55,9 +51,6 @@ const hakutulosSlice = createSlice({
   reducers: {
     setKeyword: (state, { payload }) => {
       state.keyword = payload.keyword;
-    },
-    setKeywordEditMode: (state, { payload }) => {
-      state.keywordEditMode = payload.newKeywordEditMode;
     },
     setSelectedTab: (state, { payload }) => {
       state.selectedTab = payload.newSelectedTab;
@@ -139,11 +132,9 @@ const hakutulosSlice = createSlice({
           literals,
         } = payload;
         state.koulutusHits = koulutusData.hits;
-        state.koulutusCount = _.size(koulutusData.hits);
         state.koulutusFilters = koulutusData.filters;
         state.koulutusTotal = koulutusData.total;
         state.oppilaitosHits = oppilaitosData.hits;
-        state.oppilaitosCount = _.size(oppilaitosData.hits);
         state.oppilaitosFilters = oppilaitosData.filters;
         state.oppilaitosTotal = oppilaitosData.total;
         if (
@@ -155,8 +146,10 @@ const hakutulosSlice = createSlice({
         } else if (_.size(koulutusData.hits) > 0 && isNewKeyword) {
           state.selectedTab = KOULUTUS;
         }
+
+        // NOTE: This sets and translates initial checked filter values
+        // TODO: Really complex, refactor this
         if (isReload) {
-          console.log('filters', filters);
           _.forEach(literals, (val, key) => {
             state[key] = val;
           });
@@ -213,7 +206,6 @@ const hakutulosSlice = createSlice({
       if (state.status === LOADING_STATUS) {
         const { koulutusData, koulutusOffset, koulutusPage } = payload;
         state.koulutusHits = koulutusData.hits;
-        state.koulutusCount = _.size(koulutusData.hits);
         state.koulutusOffset = koulutusOffset;
         state.koulutusPage = koulutusPage;
         state.error = null;
@@ -224,7 +216,6 @@ const hakutulosSlice = createSlice({
       if (state.status === LOADING_STATUS) {
         const { oppilaitosData, oppilaitosOffset, oppilaitosPage } = payload;
         state.oppilaitosHits = oppilaitosData.hits;
-        state.oppilaitosCount = _.size(oppilaitosData.hits);
         state.oppilaitosOffset = oppilaitosOffset;
         state.oppilaitosPage = oppilaitosPage;
         state.error = null;
@@ -242,7 +233,6 @@ const hakutulosSlice = createSlice({
 
 export const {
   setKeyword,
-  setKeywordEditMode,
   setSelectedTab,
   searchAPICallStart,
   searchAPICallError,
@@ -338,6 +328,7 @@ export const searchKoulutukset = ({
     dispatch(searchAPICallError(err.toString()));
   }
 };
+
 export const searchOppilaitokset = ({
   requestParams,
   oppilaitosOffset,
@@ -359,10 +350,8 @@ export const searchAllOnPageReload = ({ search, keyword }) => (dispatch, getStat
   const apiRequestParams = getAPIRequestParams(state);
   const cleanedUrlSearch = getCleanUrlSearch(search, apiRequestParams);
   const { hakutulos } = state;
-  if (
-    !_.isMatch(apiRequestParams, { ...cleanedUrlSearch, keyword }) &&
-    !hakutulos.keywordEditMode
-  ) {
+
+  if (!_.isMatch(apiRequestParams, { ...cleanedUrlSearch, keyword })) {
     dispatch(setKeyword({ keyword }));
     dispatch(
       searchAll(
@@ -374,7 +363,7 @@ export const searchAllOnPageReload = ({ search, keyword }) => (dispatch, getStat
   }
 };
 
-export const executeSearchFromStartingPage = ({ apiRequestParams, history }) => (
+export const searchAndMoveToHaku = ({ apiRequestParams, history }) => (
   dispatch,
   getState
 ) => {
@@ -393,7 +382,6 @@ export const executeSearchFromStartingPage = ({ apiRequestParams, history }) => 
     ])
   ).toString();
   history.push(`/${lng}/haku/${hakutulos.keyword}?${restParams}`);
-  dispatch(setKeywordEditMode({ newKeywordEditMode: false }));
   dispatch(searchAll(apiRequestParams, true));
 };
 

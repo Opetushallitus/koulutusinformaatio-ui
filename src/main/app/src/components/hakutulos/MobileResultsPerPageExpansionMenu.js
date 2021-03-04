@@ -5,18 +5,18 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
+import { pageSizeArray } from '#/src/constants';
 import { useQueryParams } from '#/src/hooks';
 import { clearPaging, searchAll, setSize } from '#/src/store/reducers/hakutulosSlice';
 
 import { SuodatinMobileSlider } from './hakutulosSuodattimet/CustomizedMuiComponents';
 
-const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
+export const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const apiRequestPaparms = useQueryParams();
-  const { pageSizeArray, size } = useSelector(
+  const { size } = useSelector(
     (state) => ({
-      pageSizeArray: state.hakutulos.pageSizeArray,
       size: state.hakutulos.size,
     }),
     shallowEqual
@@ -62,5 +62,3 @@ const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
     </Grid>
   );
 };
-
-export default MobileResultsPerPageExpansionMenu;

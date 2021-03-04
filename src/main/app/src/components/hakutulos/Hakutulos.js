@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import Murupolku from '#/src/components/common/Murupolku';
+import { pageSizeArray, pageSortArray } from '#/src/constants';
 import { useQueryParams } from '#/src/hooks';
 import {
   clearPaging,
@@ -193,7 +194,7 @@ export const Hakutulos = () => {
                   }}
                   value={pageSize}
                   onChange={handlePageSizeChange}>
-                  {hakutulosProps.pageSizeArray.map((size) => (
+                  {pageSizeArray.map((size) => (
                     <MenuItem
                       key={size}
                       classes={{ root: classes.menuItemRoot }}
@@ -215,7 +216,7 @@ export const Hakutulos = () => {
                   }}
                   value={pageSort}
                   onChange={handlePageSortChange}>
-                  {hakutulosProps.pageSortArray.map((sort) => (
+                  {pageSortArray.map((sort) => (
                     <MenuItem
                       key={sort}
                       classes={{ root: classes.menuItemRoot }}

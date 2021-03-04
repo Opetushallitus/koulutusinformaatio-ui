@@ -20,13 +20,7 @@ export type FilterType = {
 export type FilterProps = {
   checkedValues: Array<FilterType>;
   sortedValues: Array<FilterType>;
-  localizedCheckedValues: string;
-};
-
-export type ValintatapaFilterProps = {
-  checkedValintatavat: Array<FilterType>;
-  checkedValintatavatStr: string;
-  sortedValintatavat: Array<ElasticTuple>;
+  localizedCheckedValues: string; // Concatenated for mobile
 };
 
 export type OpetuskieliFilterProps = {

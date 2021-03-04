@@ -20,7 +20,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useQueryParams } from '#/src/hooks';
 import {
-  executeSearchFromStartingPage,
+  searchAndMoveToHaku,
   clearSelectedFilters,
   searchAll,
 } from '#/src/store/reducers/hakutulosSlice';
@@ -32,7 +32,7 @@ import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin'
 import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
 import { ValintatapaSuodatin } from './hakutulosSuodattimet/ValintatapaSuodatin';
-import MobileResultsPerPageExpansionMenu from './MobileResultsPerPageExpansionMenu';
+import { MobileResultsPerPageExpansionMenu } from './MobileResultsPerPageExpansionMenu';
 import { MobileToggleFiltersButton } from './MobileToggleFiltersButton';
 import MobileToggleKoulutusOppilaitos from './MobileToggleKoulutusOppilaitos';
 import MobileToggleOrderByButtonMenu from './MobileToggleOrderByButtonMenu';
@@ -93,7 +93,7 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
 
   const handleFiltersShowToggle = () => {
     if (isFrontPage) {
-      dispatch(executeSearchFromStartingPage({ apiRequestParams, history }));
+      dispatch(searchAndMoveToHaku({ apiRequestParams, history }));
     }
     toggleShowFilters();
   };

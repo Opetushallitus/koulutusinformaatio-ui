@@ -32,8 +32,7 @@ import {
   searchAll,
   setKeyword,
   clearPaging,
-  setKeywordEditMode,
-  executeSearchFromStartingPage,
+  searchAndMoveToHaku,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getHakupalkkiProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { theme } from '#/src/theme';
@@ -152,9 +151,7 @@ export const Hakupalkki = () => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { keyword, keywordEditMode, isKeywordValid, koulutusFilters } = useSelector(
-    getHakupalkkiProps
-  );
+  const { keyword, isKeywordValid, koulutusFilters } = useSelector(getHakupalkkiProps);
   const apiRequestParams = useQueryParams();
   const etusivuPath = `/${i18n.language}/`;
   const isAtEtusivu = location.pathname === etusivuPath;
@@ -189,10 +186,10 @@ export const Hakupalkki = () => {
 
   const doSearch = (event) => {
     event.preventDefault();
-    dispatch(executeSearchFromStartingPage({ apiRequestParams, history }));
+    dispatch(setKeyword({ keyword: event.target.value || '' }));
+    dispatch(searchAndMoveToHaku({ apiRequestParams, history }));
   };
   const setSearch = (event) => {
-    !keywordEditMode && dispatch(setKeywordEditMode({ newKeywordEditMode: true }));
     dispatch(setKeyword({ keyword: event.target.value || '' }));
   };
 
@@ -229,7 +226,7 @@ export const Hakupalkki = () => {
                   doSearch(event);
                 }
               }}
-              onChange={setSearch}
+              onBlur={setSearch}
               type="search"
               placeholder={t('haku.kehoite')}
               inputProps={{

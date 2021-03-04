@@ -13,9 +13,6 @@ export const getIsInitialized = (state) => state.hakutulos.status !== 'initial';
 function getKeyword(state) {
   return state.hakutulos.keyword;
 }
-function getKeywordEditMode(state) {
-  return state.hakutulos.keywordEditMode;
-}
 function getKoulutusHits(state) {
   return state.hakutulos.koulutusHits;
 }
@@ -82,25 +79,12 @@ function getOrder(state) {
 function getSort(state) {
   return state.hakutulos.sort;
 }
-function getPageSizeArray(state) {
-  return state.hakutulos.pageSizeArray;
-}
-function getPageSortArray(state) {
-  return state.hakutulos.pageSortArray;
-}
 
 //Selectors
 export const getHakupalkkiProps = createSelector(
-  [
-    getKeyword,
-    getKeywordEditMode,
-    getKoulutusFilters,
-    getOppilaitosFilters,
-    getSelectedTab,
-  ],
-  (keyword, keywordEditMode, koulutusFilters, oppilaitosFilters, selectedTab) => ({
+  [getKeyword, getKoulutusFilters, getOppilaitosFilters, getSelectedTab],
+  (keyword, koulutusFilters, oppilaitosFilters, selectedTab) => ({
     keyword,
-    keywordEditMode,
     isKeywordValid: !_.inRange(_.size(keyword), 1, 3),
     koulutusFilters,
     oppilaitosFilters,
@@ -118,8 +102,6 @@ export const getHakutulosProps = createSelector(
     getSelectedTab,
     getKoulutusTotal,
     getOppilaitosTotal,
-    getPageSizeArray,
-    getPageSortArray,
     getSize,
     getOpetuskieli,
     getKoulutustyyppi,
@@ -138,8 +120,6 @@ export const getHakutulosProps = createSelector(
     selectedTab,
     koulutusTotal,
     oppilaitosTotal,
-    pageSizeArray,
-    pageSortArray,
     size,
     opetuskieli,
     koulutustyyppi,
@@ -158,8 +138,6 @@ export const getHakutulosProps = createSelector(
       selectedTab,
       koulutusTotal,
       oppilaitosTotal,
-      pageSizeArray,
-      pageSortArray,
       size,
       isAnyFilterSelected: _.some(
         [

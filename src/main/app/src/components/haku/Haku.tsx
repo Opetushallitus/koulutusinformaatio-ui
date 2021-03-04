@@ -29,7 +29,7 @@ export const Haku = () => {
     }
   });
 
-  // Update queryparameters when any apirequest related parameters change
+  // Update queryparameters when any haku api -request related parameters change
   useEffect(() => {
     if (initialized) {
       updateUrlSearchParams(queryParams);
