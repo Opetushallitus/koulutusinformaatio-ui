@@ -58,6 +58,7 @@ function getOpetustapa(state) {
 function getValintatapa(state) {
   return state.hakutulos.valintatapa;
 }
+const getHakutapa = (state) => state.hakutulos.hakutapa;
 
 const getFilter = (id) => (state) => state.hakutulos[id];
 
@@ -102,6 +103,7 @@ export const getHakutulosProps = createSelector(
     getSelectedSijainti,
     getOpetustapa,
     getValintatapa,
+    getHakutapa,
   ],
   (
     keyword,
@@ -115,7 +117,8 @@ export const getHakutulosProps = createSelector(
     sijainti,
     selectedSijainti,
     opetustapa,
-    valintatapa
+    valintatapa,
+    hakutapa
   ) => {
     return {
       keyword,
@@ -132,6 +135,7 @@ export const getHakutulosProps = createSelector(
           selectedSijainti,
           opetustapa,
           valintatapa,
+          hakutapa,
         ],
         (filterArr) => _.size(filterArr) > 0
       ),
@@ -168,6 +172,7 @@ export const getSuodatinValinnatProps = createSelector(
     getSelectedSijainti,
     getOpetustapa,
     getValintatapa,
+    getHakutapa,
   ],
   (
     opetuskieli,
@@ -176,7 +181,8 @@ export const getSuodatinValinnatProps = createSelector(
     sijainti,
     selectedSijainti,
     opetustapa,
-    valintatapa
+    valintatapa,
+    hakutapa
   ) => ({
     opetuskieli,
     koulutustyyppi,
@@ -184,6 +190,7 @@ export const getSuodatinValinnatProps = createSelector(
     sijainti: _.concat(sijainti, selectedSijainti),
     opetustapa,
     valintatapa,
+    hakutapa,
   })
 );
 
@@ -217,6 +224,7 @@ export const getAPIRequestParams = createSelector(
     getSelectedSijainti,
     getOpetustapa,
     getValintatapa,
+    getHakutapa,
   ],
   (
     keyword,
@@ -229,7 +237,8 @@ export const getAPIRequestParams = createSelector(
     sijainti,
     selectedSijainti,
     opetustapa,
-    valintatapa
+    valintatapa,
+    hakutapa
   ) => ({
     keyword,
     order,
@@ -241,6 +250,7 @@ export const getAPIRequestParams = createSelector(
     sijainti: getCheckedFiltersIdsStr(_.concat(selectedSijainti, sijainti)),
     opetustapa: getCheckedFiltersIdsStr(opetustapa),
     valintatapa: getCheckedFiltersIdsStr(valintatapa),
+    hakutapa: getCheckedFiltersIdsStr(hakutapa),
   })
 );
 

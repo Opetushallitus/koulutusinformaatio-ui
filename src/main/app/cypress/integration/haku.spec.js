@@ -176,6 +176,31 @@ describe('Haku', () => {
         yhteispisteetChk().should('exist').should('not.be.checked');
       });
   });
+  it('Hakutapa filter checkboxes', () => {
+    cy.visit('/fi/haku/auto');
+    const yhteishakuChk = () =>
+      cy.findByRole('checkbox', { name: /Yhteishaku \(\d*\)/i });
+    const jatkuvaHakuChk = () =>
+      cy.findByRole('checkbox', { name: /Jatkuva haku \(\d*\)/i });
+    cy.findByText('Hakutapa').should('exist');
+    cy.get('[data-cy=hakutapa-filter]')
+      .should('exist')
+      .within(() => {
+        jatkuvaHakuChk().click().should('be.checked');
+        jatkuvaHakuChk().click().should('not.be.checked');
+        yhteishakuChk().click().should('be.checked');
+      });
+    cy.get('[data-cy=chip-hakutapa_01]')
+      .should('exist')
+      .within(() => {
+        cy.get('svg').should('exist').click();
+      });
+    cy.get('[data-cy=hakutapa-filter]')
+      .should('exist')
+      .within(() => {
+        yhteishakuChk().should('exist').should('not.be.checked');
+      });
+  });
   it("Koulutuskortti data should be presented correctly for 'Tutkinnon osa'", () => {
     cy.visit('/fi/haku/auto');
 

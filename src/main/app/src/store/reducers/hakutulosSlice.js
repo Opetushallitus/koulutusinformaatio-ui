@@ -35,6 +35,7 @@ export const initialState = {
   koulutusala: [],
   opetuskieli: [],
   valintatapa: [],
+  hakutapa: [],
   sijainti: [],
   selectedSijainti: [],
   opetustapa: [],
@@ -103,6 +104,7 @@ const hakutulosSlice = createSlice({
       state.koulutusala = [];
       state.opetuskieli = [];
       state.valintatapa = [];
+      state.hakutapa = [];
       state.sijainti = [];
       state.selectedSijainti = [];
       state.opetustapa = [];
@@ -294,6 +296,7 @@ export const searchAll = (
     const filters = _.pick(requestParams, [
       'opetuskieli',
       'valintatapa',
+      'hakutapa',
       'koulutustyyppi',
       'koulutusala',
       'sijainti',
@@ -373,6 +376,7 @@ export const searchAndMoveToHaku = ({ history }) => (dispatch, getState) => {
       'size',
       'opetuskieli',
       'valintatapa',
+      'hakutapa',
       'koulutustyyppi',
       'koulutusala',
       'sijainti',

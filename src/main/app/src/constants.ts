@@ -14,6 +14,7 @@ export const FILTER_TYPES = {
   SIJAINTI: 'sijainti',
   OPETUSTAPA: 'opetustapa',
   VALINTATAPA: 'valintatapa',
+  HAKUTAPA: 'hakutapa',
 } as const;
 
 export const FILTER_TYPES_ARR = [
@@ -23,6 +24,7 @@ export const FILTER_TYPES_ARR = [
   'sijainti',
   'opetustapa',
   'valintatapa',
+  'hakutapa',
 ] as const;
 
 export const DRAWER_WIDTH = 330;

@@ -5570,6 +5570,20 @@
             "valintatapajono_yp": { "nimi": { "fi": "Yhteispisteet" }, "count": 1 },
             "valintatapajono_kp": { "nimi": { "fi": "Koepisteet" }, "count": 2 },
             "valintatapajono_m": { "nimi": { "fi": "Muu" }, "count": 0 }
+          },
+          "hakutapa": {
+            "hakutapa_01": {
+              "nimi": { "fi": "Yhteishaku", "sv": "Gemensam ansökan" },
+              "count": 6
+            },
+            "hakutapa_02": {
+              "nimi": { "sv": "Separata antagningar", "fi": "Erillishaku" },
+              "count": 1
+            },
+            "hakutapa_03": {
+              "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
+              "count": 2
+            }
           }
         }
       },
@@ -10838,6 +10852,20 @@
             "valintatapajono_yp": { "nimi": { "fi": "Yhteispisteet" }, "count": 1 },
             "valintatapajono_kp": { "nimi": { "fi": "Koepisteet" }, "count": 2 },
             "valintatapajono_m": { "nimi": { "fi": "Muu" }, "count": 0 }
+          },
+          "hakutapa": {
+            "hakutapa_01": {
+              "nimi": { "fi": "Yhteishaku", "sv": "Gemensam ansökan" },
+              "count": 6
+            },
+            "hakutapa_02": {
+              "nimi": { "sv": "Separata antagningar", "fi": "Erillishaku" },
+              "count": 1
+            },
+            "hakutapa_03": {
+              "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
+              "count": 2
+            }
           }
         }
       },
@@ -16329,6 +16357,20 @@
             "valintatapajono_yp": { "nimi": { "fi": "Yhteispisteet" }, "count": 1 },
             "valintatapajono_kp": { "nimi": { "fi": "Koepisteet" }, "count": 2 },
             "valintatapajono_m": { "nimi": { "fi": "Muu" }, "count": 0 }
+          },
+          "hakutapa": {
+            "hakutapa_01": {
+              "nimi": { "fi": "Yhteishaku", "sv": "Gemensam ansökan" },
+              "count": 6
+            },
+            "hakutapa_02": {
+              "nimi": { "sv": "Separata antagningar", "fi": "Erillishaku" },
+              "count": 1
+            },
+            "hakutapa_03": {
+              "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
+              "count": 2
+            }
           }
         }
       },
@@ -21474,6 +21516,20 @@
             "valintatapajono_yp": { "nimi": { "fi": "Yhteispisteet" }, "count": 1 },
             "valintatapajono_kp": { "nimi": { "fi": "Koepisteet" }, "count": 2 },
             "valintatapajono_m": { "nimi": { "fi": "Muu" }, "count": 0 }
+          },
+          "hakutapa": {
+            "hakutapa_01": {
+              "nimi": { "fi": "Yhteishaku", "sv": "Gemensam ansökan" },
+              "count": 6
+            },
+            "hakutapa_02": {
+              "nimi": { "sv": "Separata antagningar", "fi": "Erillishaku" },
+              "count": 1
+            },
+            "hakutapa_03": {
+              "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
+              "count": 2
+            }
           }
         }
       },
@@ -26618,6 +26674,20 @@
             "valintatapajono_yp": { "nimi": { "fi": "Yhteispisteet" }, "count": 1 },
             "valintatapajono_kp": { "nimi": { "fi": "Koepisteet" }, "count": 2 },
             "valintatapajono_m": { "nimi": { "fi": "Muu" }, "count": 0 }
+          },
+          "hakutapa": {
+            "hakutapa_01": {
+              "nimi": { "fi": "Yhteishaku", "sv": "Gemensam ansökan" },
+              "count": 6
+            },
+            "hakutapa_02": {
+              "nimi": { "sv": "Separata antagningar", "fi": "Erillishaku" },
+              "count": 1
+            },
+            "hakutapa_03": {
+              "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
+              "count": 2
+            }
           }
         }
       },
@@ -31882,6 +31952,20 @@
             "valintatapajono_yp": { "nimi": { "fi": "Yhteispisteet" }, "count": 1 },
             "valintatapajono_kp": { "nimi": { "fi": "Koepisteet" }, "count": 2 },
             "valintatapajono_m": { "nimi": { "fi": "Muu" }, "count": 0 }
+          },
+          "hakutapa": {
+            "hakutapa_01": {
+              "nimi": { "fi": "Yhteishaku", "sv": "Gemensam ansökan" },
+              "count": 6
+            },
+            "hakutapa_02": {
+              "nimi": { "sv": "Separata antagningar", "fi": "Erillishaku" },
+              "count": 1
+            },
+            "hakutapa_03": {
+              "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
+              "count": 2
+            }
           }
         }
       },
@@ -37053,6 +37137,20 @@
             "valintatapajono_yp": { "nimi": { "fi": "Yhteispisteet" }, "count": 1 },
             "valintatapajono_kp": { "nimi": { "fi": "Koepisteet" }, "count": 2 },
             "valintatapajono_m": { "nimi": { "fi": "Muu" }, "count": 0 }
+          },
+          "hakutapa": {
+            "hakutapa_01": {
+              "nimi": { "fi": "Yhteishaku", "sv": "Gemensam ansökan" },
+              "count": 6
+            },
+            "hakutapa_02": {
+              "nimi": { "sv": "Separata antagningar", "fi": "Erillishaku" },
+              "count": 1
+            },
+            "hakutapa_03": {
+              "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
+              "count": 2
+            }
           }
         }
       },
