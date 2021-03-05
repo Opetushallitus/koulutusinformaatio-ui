@@ -7,8 +7,7 @@ import { Localizer as l } from '#/src/tools/Utils';
 import { Common as C } from '#/src/tools/Utils';
 
 // State data getters
-export const getIsLoading = (state) => state.hakutulos.status !== 'idle';
-export const getIsInitialized = (state) => state.hakutulos.status !== 'initial';
+export const getIsReady = (state) => state.hakutulos.status === 'idle';
 
 function getKeyword(state) {
   return state.hakutulos.keyword;

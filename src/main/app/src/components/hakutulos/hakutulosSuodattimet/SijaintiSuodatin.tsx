@@ -25,7 +25,7 @@ import {
 import {
   getAPIRequestParams,
   getSijaintiFilterProps,
-  getIsLoading,
+  getIsReady,
 } from '#/src/store/reducers/hakutulosSliceSelector';
 import { Localizer as l } from '#/src/tools/Utils';
 import { Translateable } from '#/src/types/common';
@@ -125,7 +125,7 @@ export const SijaintiSuodatin = ({
 }: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const loading = useSelector(getIsLoading);
+  const loading = !useSelector(getIsReady);
   const sijaintiFilterProps = useSelector(getSijaintiFilterProps) || {};
   const {
     firstFiveMaakunnat,

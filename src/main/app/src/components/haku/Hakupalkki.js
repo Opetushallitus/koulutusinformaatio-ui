@@ -183,7 +183,7 @@ export const Hakupalkki = () => {
     setAnchorEl(null);
   };
 
-  const isPopoverOpen = useMemo(() => Boolean(anchorEl), [anchorEl]);
+  const isPopoverOpen = Boolean(anchorEl);
   const ExpandIcon = () =>
     isPopoverOpen ? <ExpandLessOutlined /> : <ExpandMoreOutlined />;
   const id = isPopoverOpen ? 'filters-popover' : undefined;
