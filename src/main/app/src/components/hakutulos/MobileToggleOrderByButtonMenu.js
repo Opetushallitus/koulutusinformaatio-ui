@@ -10,8 +10,6 @@ import { useQueryParams } from '#/src/hooks';
 import { setSort, setOrder, searchAll } from '#/src/store/reducers/hakutulosSlice';
 import { getMobileToggleOrderByButtonMenuProps } from '#/src/store/reducers/hakutulosSliceSelector';
 
-import { useUrlParams } from './UseUrlParams';
-
 const useStyles = makeStyles(() => ({
   buttonActive: {
     backgroundColor: colors.brandGreen,
@@ -34,7 +32,6 @@ const useStyles = makeStyles(() => ({
 
 const MobileToggleOrderByButtonMenu = ({ elevation }) => {
   const classes = useStyles();
-  const { updateUrlSearchParams } = useUrlParams();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const apiRequstParams = useQueryParams();
@@ -49,7 +46,6 @@ const MobileToggleOrderByButtonMenu = ({ elevation }) => {
   } = mobileToggleOrderByButtonMenuProps;
 
   const updateSortAndOrder = (newSort, newOrder) => {
-    updateUrlSearchParams({ sort: newSort, order: newOrder }, false);
     dispatch(setSort({ newSort }));
     dispatch(setOrder({ newOrder }));
     dispatch(searchAll({ ...apiRequstParams, order: newOrder, sort: newSort }));

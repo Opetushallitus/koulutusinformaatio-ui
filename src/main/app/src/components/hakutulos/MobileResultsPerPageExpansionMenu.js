@@ -5,20 +5,18 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
+import { pageSizeArray } from '#/src/constants';
 import { useQueryParams } from '#/src/hooks';
 import { clearPaging, searchAll, setSize } from '#/src/store/reducers/hakutulosSlice';
 
 import { SuodatinMobileSlider } from './hakutulosSuodattimet/CustomizedMuiComponents';
-import { useUrlParams } from './UseUrlParams';
 
-const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
-  const { updateUrlSearchParams } = useUrlParams();
+export const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const apiRequestPaparms = useQueryParams();
-  const { pageSizeArray, size } = useSelector(
+  const { size } = useSelector(
     (state) => ({
-      pageSizeArray: state.hakutulos.pageSizeArray,
       size: state.hakutulos.size,
     }),
     shallowEqual
@@ -31,7 +29,6 @@ const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
   const valueText = (value) => value;
 
   const handleSliderValueChange = (e, newSize) => {
-    updateUrlSearchParams({ pagesize: newSize });
     dispatch(clearPaging());
     dispatch(setSize({ newSize }));
     dispatch(searchAll({ ...apiRequestPaparms, size: newSize }));
@@ -65,5 +62,3 @@ const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
     </Grid>
   );
 };
-
-export default MobileResultsPerPageExpansionMenu;

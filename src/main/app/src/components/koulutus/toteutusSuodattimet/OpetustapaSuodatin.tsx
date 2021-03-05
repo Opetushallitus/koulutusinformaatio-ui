@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Filter } from '#/src/components/hakutulos/hakutulosSuodattimet/Filter';
 import {
   FilterType,
-  SuodatinProps,
+  SuodatinComponentProps,
 } from '#/src/components/hakutulos/hakutulosSuodattimet/SuodatinTypes';
 
 import { getShownStr } from './utils';
@@ -14,7 +14,7 @@ type Props = {
   handleFilterChange: (newFilters: object) => void;
   initialValues: Array<FilterType>;
   sortedValues: Array<FilterType>;
-} & SuodatinProps;
+} & SuodatinComponentProps;
 
 export const OpetustapaSuodatin = (props: Props) => {
   const { t } = useTranslation();

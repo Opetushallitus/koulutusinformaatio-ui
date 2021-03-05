@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 
 import {
   Box,
@@ -27,18 +27,17 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { colors } from '#/src/colors';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
-import { useQueryParams } from '#/src/hooks';
 import {
-  searchAll,
+  newSearchAll,
   setKeyword,
   clearPaging,
-  setKeywordEditMode,
-  executeSearchFromStartingPage,
+  searchAndMoveToHaku,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getHakupalkkiProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { theme } from '#/src/theme';
 
 import { MobileFiltersOnTopMenu } from '../hakutulos/MobileFiltersOnTopMenu';
+import { useUrlParams } from '../hakutulos/UseUrlParams';
 import HakupalkkiFilters from './HakupalkkiFilters';
 
 const useStyles = makeStyles((theme) => ({
@@ -148,18 +147,20 @@ const useStyles = makeStyles((theme) => ({
 
 export const Hakupalkki = () => {
   const history = useHistory();
+  const { search } = useUrlParams();
   const location = useLocation();
   const { t, i18n } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { keyword, keywordEditMode, isKeywordValid, koulutusFilters } = useSelector(
-    getHakupalkkiProps
-  );
-  const apiRequestParams = useQueryParams();
+  const { koulutusFilters } = useSelector(getHakupalkkiProps);
   const etusivuPath = `/${i18n.language}/`;
   const isAtEtusivu = location.pathname === etusivuPath;
 
   const [anchorEl, setAnchorEl] = useState(null);
+  const [writtenKeyword, setWrittenKeyword] = useState(search?.keyword);
+  const isKeywordValid = useMemo(() => !_.inRange(_.size(writtenKeyword), 1, 3), [
+    writtenKeyword,
+  ]);
 
   useEffect(() => {
     if (isAtEtusivu) {
@@ -168,19 +169,19 @@ export const Hakupalkki = () => {
     }
   }, [isAtEtusivu, dispatch]);
 
-  function handleDesktopBtnClick(e) {
-    dispatch(searchAll(apiRequestParams));
+  const handleDesktopBtnClick = (e) => {
+    dispatch(newSearchAll());
     window.scrollTo({
       top: 250,
       left: 0,
       behavior: 'smooth',
     });
     setAnchorEl(e.currentTarget);
-  }
+  };
 
-  function handleClose() {
+  const handleClose = () => {
     setAnchorEl(null);
-  }
+  };
 
   const isPopoverOpen = Boolean(anchorEl);
   const ExpandIcon = () =>
@@ -189,25 +190,9 @@ export const Hakupalkki = () => {
 
   const doSearch = (event) => {
     event.preventDefault();
-    dispatch(executeSearchFromStartingPage({ apiRequestParams, history }));
+    dispatch(setKeyword({ keyword: writtenKeyword || '' }));
+    dispatch(searchAndMoveToHaku({ history }));
   };
-  const setSearch = (event) => {
-    !keywordEditMode && dispatch(setKeywordEditMode({ newKeywordEditMode: true }));
-    dispatch(setKeyword({ keyword: event.target.value || '' }));
-  };
-
-  const SearchButton = () => (
-    <Button
-      startIcon={<SearchOutlined />}
-      disabled={!isKeywordValid}
-      type="submit"
-      variant="contained"
-      color="secondary"
-      className={classes.searchButton}
-      aria-label={t('haku.etsi')}>
-      {t('haku.etsi')}
-    </Button>
-  );
 
   return (
     <ThemeProvider theme={theme}>
@@ -222,14 +207,16 @@ export const Hakupalkki = () => {
             open={!isKeywordValid}
             title={t('haku.syota-ainakin-kolme-merkkia')}>
             <InputBase
-              defaultValue={isAtEtusivu ? '' : keyword}
+              defaultValue={isAtEtusivu ? '' : writtenKeyword}
               className={classes.input}
               onKeyPress={(event) => {
                 if (event.key === 'Enter' && isKeywordValid) {
                   doSearch(event);
                 }
               }}
-              onChange={setSearch}
+              onChange={(event) => {
+                setWrittenKeyword(event.target.value);
+              }}
               type="search"
               placeholder={t('haku.kehoite')}
               inputProps={{
@@ -259,7 +246,16 @@ export const Hakupalkki = () => {
             </Hidden>
           )}
           <Hidden smDown>
-            <SearchButton />
+            <Button
+              startIcon={<SearchOutlined />}
+              disabled={!isKeywordValid}
+              type="submit"
+              variant="contained"
+              color="secondary"
+              className={classes.searchButton}
+              aria-label={t('haku.etsi')}>
+              {t('haku.etsi')}
+            </Button>
           </Hidden>
           <Hidden mdUp>
             <IconButton

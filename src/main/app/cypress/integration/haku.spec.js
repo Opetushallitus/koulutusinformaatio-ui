@@ -135,20 +135,70 @@ describe('Haku', () => {
     cy.findByText('Opetustapa').should('exist').click();
     cy.get('[data-cy=opetustapa-filter]')
       .should('exist')
-      .within((optf) => {
+      .within(() => {
         etaopetusChk().click().should('be.checked');
         etaopetusChk().click().should('not.be.checked');
         verkkoOpiskeluChk().click().should('be.checked');
       });
     cy.get('[data-cy=chip-opetuspaikkakk_3]')
       .should('exist')
-      .within((etaOpChip) => {
+      .within(() => {
         cy.get('svg').should('exist').click();
       });
     cy.get('[data-cy=opetustapa-filter]')
       .should('exist')
-      .within((optf) => {
+      .within(() => {
         verkkoOpiskeluChk().should('exist').should('not.be.checked');
+      });
+  });
+  it('Valintatapa filter checkboxes', () => {
+    cy.visit('/fi/haku/auto');
+    const koepisteetChk = () =>
+      cy.findByRole('checkbox', { name: /Koepisteet \(\d*\)/i });
+    const yhteispisteetChk = () =>
+      cy.findByRole('checkbox', { name: /Yhteispisteet \(\d*\)/i });
+    cy.findByText('Valintatapa').should('exist').click();
+    cy.get('[data-cy=valintatapa-filter]')
+      .should('exist')
+      .within(() => {
+        koepisteetChk().click().should('be.checked');
+        koepisteetChk().click().should('not.be.checked');
+        yhteispisteetChk().click().should('be.checked');
+      });
+    cy.get('[data-cy=chip-valintatapajono_yp]')
+      .should('exist')
+      .within(() => {
+        cy.get('svg').should('exist').click();
+      });
+    cy.get('[data-cy=valintatapa-filter]')
+      .should('exist')
+      .within(() => {
+        yhteispisteetChk().should('exist').should('not.be.checked');
+      });
+  });
+  it('Hakutapa filter checkboxes', () => {
+    cy.visit('/fi/haku/auto');
+    const yhteishakuChk = () =>
+      cy.findByRole('checkbox', { name: /Yhteishaku \(\d*\)/i });
+    const jatkuvaHakuChk = () =>
+      cy.findByRole('checkbox', { name: /Jatkuva haku \(\d*\)/i });
+    cy.findByText('Hakutapa').should('exist');
+    cy.get('[data-cy=hakutapa-filter]')
+      .should('exist')
+      .within(() => {
+        jatkuvaHakuChk().click().should('be.checked');
+        jatkuvaHakuChk().click().should('not.be.checked');
+        yhteishakuChk().click().should('be.checked');
+      });
+    cy.get('[data-cy=chip-hakutapa_01]')
+      .should('exist')
+      .within(() => {
+        cy.get('svg').should('exist').click();
+      });
+    cy.get('[data-cy=hakutapa-filter]')
+      .should('exist')
+      .within(() => {
+        yhteishakuChk().should('exist').should('not.be.checked');
       });
   });
   it("Koulutuskortti data should be presented correctly for 'Tutkinnon osa'", () => {

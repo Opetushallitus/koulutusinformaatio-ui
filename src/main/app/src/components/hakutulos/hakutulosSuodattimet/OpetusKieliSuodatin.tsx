@@ -13,13 +13,15 @@ import {
   getOpetuskieliFilterProps,
 } from '#/src/store/reducers/hakutulosSliceSelector';
 
-import { useUrlParams } from '../UseUrlParams';
 import { Filter } from './Filter';
-import { FilterType, OpetuskieliFilterProps, SuodatinProps } from './SuodatinTypes';
+import {
+  FilterType,
+  OpetuskieliFilterProps,
+  SuodatinComponentProps,
+} from './SuodatinTypes';
 
-export const OpetuskieliSuodatin = (filterProps: SuodatinProps) => {
+export const OpetuskieliSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
-  const { updateUrlSearchParams } = useUrlParams();
   const dispatch = useDispatch();
   const opetuskieliFilterProps = useSelector(getOpetuskieliFilterProps);
   const {
@@ -49,7 +51,6 @@ export const OpetuskieliSuodatin = (filterProps: SuodatinProps) => {
       .join(',');
 
     dispatch(setOpetuskieli({ newCheckedOpetuskielet }));
-    updateUrlSearchParams({ opetuskieli: newCheckedOpetusKieletStr });
     dispatch(clearPaging());
     dispatch(searchAll({ ...apiRequestParams, opetuskieli: newCheckedOpetusKieletStr }));
   };
@@ -61,7 +62,7 @@ export const OpetuskieliSuodatin = (filterProps: SuodatinProps) => {
 
   return (
     <Filter
-      {...filterProps}
+      {...props}
       name={t('haku.opetuskieli')}
       sortedFilterValues={sortedValues}
       handleCheck={handleCheck}

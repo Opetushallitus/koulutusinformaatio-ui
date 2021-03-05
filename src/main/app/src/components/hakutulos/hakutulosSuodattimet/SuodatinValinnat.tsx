@@ -17,8 +17,6 @@ import {
 import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { Localizer as l } from '#/src/tools/Utils';
 
-import { useUrlParams } from '../UseUrlParams';
-
 const useStyles = makeStyles(() => ({
   chipRoot: {
     marginBottom: 5,
@@ -105,7 +103,6 @@ const ChipList = ({
 };
 
 export const SuodatinValinnat = () => {
-  const { omitUrlSearchParams, updateUrlSearchParams } = useUrlParams();
   const location = useLocation();
   const dispatch = useDispatch();
   const suodatinValinnatProps = useSelector(getSuodatinValinnatProps);
@@ -123,13 +120,11 @@ export const SuodatinValinnat = () => {
       .map(({ id }) => id)
       .join(',');
 
-    updateUrlSearchParams({ [filterType]: newFilterValuesStr });
     dispatch(setSelectedFilters({ filterType, itemId }));
     dispatch(searchAll({ ...apiRequestParams, [filterType]: newFilterValuesStr }));
   };
 
   const handleClearFilters = () => {
-    omitUrlSearchParams(filters);
     dispatch(clearSelectedFilters());
     dispatch(searchAll(_.omit(apiRequestParams, _.keys(filters))));
   };

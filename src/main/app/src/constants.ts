@@ -13,6 +13,8 @@ export const FILTER_TYPES = {
   OPETUSKIELI: 'opetuskieli',
   SIJAINTI: 'sijainti',
   OPETUSTAPA: 'opetustapa',
+  VALINTATAPA: 'valintatapa',
+  HAKUTAPA: 'hakutapa',
 } as const;
 
 export const FILTER_TYPES_ARR = [
@@ -20,6 +22,9 @@ export const FILTER_TYPES_ARR = [
   'koulutusala',
   'koulutustyyppi',
   'sijainti',
+  'opetustapa',
+  'valintatapa',
+  'hakutapa',
 ] as const;
 
 export const DRAWER_WIDTH = 330;
@@ -42,3 +47,7 @@ export const HAKULOMAKE_TYYPPI = {
 } as const;
 
 export const TOP_BAR_HEIGHT = 90;
+
+// Search related
+export const pageSizeArray = [5, 10, 20, 30, 50];
+export const pageSortArray = ['score_desc', 'name_asc', 'name_desc'];
