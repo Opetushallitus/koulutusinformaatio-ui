@@ -1,11 +1,13 @@
 import React from 'react';
+
 import { Grid, makeStyles, Icon, Typography, Paper } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import { colors } from '../../colors';
 import { observer } from 'mobx-react-lite';
-import { useStores } from '../../hooks';
-import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+
+import { colors } from '../../colors';
+import { useStores } from '../../hooks';
 
 const useStyles = makeStyles({
   grid: {

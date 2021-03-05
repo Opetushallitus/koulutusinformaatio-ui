@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+
 import {
   Box,
   Drawer,
@@ -10,7 +10,10 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
+import { useTranslation } from 'react-i18next';
+
 import { colors } from '#/src/colors';
+
 import { MurupolkuFragment } from './MurupolkuFragment';
 
 const FRAGMENT_INDENT_STEP = 10;
@@ -68,7 +71,7 @@ export const MurupolkuDrawer = ({ path, onClose, isOpen }) => {
         <Box className={classes.drawerContainer}>
           {path.map(({ name, link, isHome }, index) => (
             <Box
-              key={name}
+              key={`${name} ${index}`}
               className={classes.drawerItemWrapper}
               style={{ textIndent: `${index * FRAGMENT_INDENT_STEP}px` }}>
               <MurupolkuFragment

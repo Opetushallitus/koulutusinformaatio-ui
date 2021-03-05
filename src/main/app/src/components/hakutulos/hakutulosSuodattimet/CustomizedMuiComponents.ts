@@ -1,4 +1,3 @@
-import { withStyles } from '@material-ui/core/styles';
 import {
   Checkbox,
   Chip,
@@ -8,6 +7,8 @@ import {
   ListItemText,
   Slider,
 } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+
 import { colors } from '#/src/colors';
 
 export const SuodatinCheckbox = withStyles({

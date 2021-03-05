@@ -1,6 +1,7 @@
 import React from 'react';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+
 import { Link, makeStyles } from '@material-ui/core';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import parse from 'url-parse';
 
 const useStyles = makeStyles({

@@ -1,8 +1,11 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+
 import { Grid, Typography, useTheme } from '@material-ui/core';
-import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
+
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
+
 import KoulutusKortti from './hakutulosKortit/KoulutusKortti';
 import OppilaitosKortti from './hakutulosKortit/OppilaitosKortti';
 

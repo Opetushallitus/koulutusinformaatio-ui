@@ -1,7 +1,10 @@
 import React from 'react';
-import ImageCardWithText from '#/src/components/common/ImageCardWithText';
+
 import { Grid, useTheme, useMediaQuery } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
+
+import ImageCardWithText from '#/src/components/common/ImageCardWithText';
+
 import { LocalizedLink } from './LocalizedLink';
 
 const OppilaitosOsaGrid = (props) => {

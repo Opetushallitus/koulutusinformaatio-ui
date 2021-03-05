@@ -1,8 +1,10 @@
 import React from 'react';
-import { HashLink as Link } from 'react-router-hash-link';
+
 import { makeStyles } from '@material-ui/core';
-import { colors } from '../../colors';
 import Markdown from 'markdown-to-jsx';
+import { HashLink as Link } from 'react-router-hash-link';
+
+import { colors } from '../../colors';
 
 const useStyles = makeStyles({
   link: {

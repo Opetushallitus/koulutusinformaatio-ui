@@ -1,19 +1,24 @@
 import React, { Suspense } from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
+
 import { MuiThemeProvider } from '@material-ui/core';
+import ReactDOM from 'react-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import 'typeface-open-sans';
 
-import { getKonfoStore } from '#/src/store';
-import { theme } from '#/src/theme';
-import { configureUrls } from '#/src/urls';
-import { configureI18n } from '#/src/tools/i18n';
-import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import { postClientError } from '#/src/api/konfoApi';
+import App from '#/src/App';
+import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import { useQueryOnce } from '#/src/hooks';
 import ScrollToTop from '#/src/ScrollToTop';
-import App from '#/src/App';
+import { getKonfoStore } from '#/src/store';
+import { theme } from '#/src/theme';
+import { configureI18n } from '#/src/tools/i18n';
+import { configureUrls } from '#/src/urls';
+
+const queryClient = new QueryClient();
 
 if ('serviceWorker' in navigator) {
   if (!window.Cypress) {
@@ -58,16 +63,19 @@ const InitGate = ({ children }) => {
 
 ReactDOM.render(
   <Suspense fallback={<LoadingCircle />}>
-    <Provider store={getKonfoStore()}>
-      <BrowserRouter basename={'/konfo'}>
-        <MuiThemeProvider theme={theme}>
-          <InitGate>
-            <ScrollToTop />
-            <App />
-          </InitGate>
-        </MuiThemeProvider>
-      </BrowserRouter>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <Provider store={getKonfoStore()}>
+        <BrowserRouter basename={'/konfo'}>
+          <MuiThemeProvider theme={theme}>
+            <InitGate>
+              <ScrollToTop />
+              <App />
+            </InitGate>
+          </MuiThemeProvider>
+        </BrowserRouter>
+      </Provider>
+    </QueryClientProvider>
   </Suspense>,
   document.getElementById('wrapper')
 );

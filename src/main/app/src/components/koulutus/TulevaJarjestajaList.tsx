@@ -1,10 +1,13 @@
-import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
+
+import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+
 import Spacer from '#/src/components/common/Spacer';
 import { Localizer as l } from '#/src/tools/Utils';
 import { Koodi } from '#/src/types/common';
 import { Jarjestaja } from '#/src/types/ToteutusTypes';
+
 import { OppilaitosCard } from './OppilaitosCard';
 
 const useStyles = makeStyles({

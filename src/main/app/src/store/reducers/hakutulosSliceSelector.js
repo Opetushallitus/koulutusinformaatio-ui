@@ -1,9 +1,10 @@
 import { createSelector } from '@reduxjs/toolkit';
-import qs from 'query-string';
 import _ from 'lodash';
+import qs from 'query-string';
+
+import { FILTER_TYPES } from '#/src/constants';
 import { Localizer as l } from '#/src/tools/Utils';
 import { Common as C } from '#/src/tools/Utils';
-import { FILTER_TYPES } from '#/src/constants';
 
 // State data getters
 export const getIsLoading = (state) => state.hakutulos.status === 'loading';
@@ -318,12 +319,12 @@ export const getKoulutustyyppiFilterProps = createSelector(
   (koulutusFilters, oppilaitosFilters, selectedTab, checkedKoulutustyypit) => {
     const koulutustyyppi =
       selectedTab === 'koulutus'
-        ? _.entries(koulutusFilters?.[FILTER_TYPES.KOULUTUSTYYPPI])
-        : _.entries(oppilaitosFilters?.[FILTER_TYPES.KOULUTUSTYYPPI]);
+        ? _.toPairs(koulutusFilters?.[FILTER_TYPES.KOULUTUSTYYPPI])
+        : _.toPairs(oppilaitosFilters?.[FILTER_TYPES.KOULUTUSTYYPPI]);
     const koulutustyyppiMuu =
       selectedTab === 'koulutus'
-        ? _.entries(koulutusFilters?.[FILTER_TYPES.KOULUTUSTYYPPI_MUU])
-        : _.entries(oppilaitosFilters?.[FILTER_TYPES.KOULUTUSTYYPPI_MUU]);
+        ? _.toPairs(koulutusFilters?.[FILTER_TYPES.KOULUTUSTYYPPI_MUU])
+        : _.toPairs(oppilaitosFilters?.[FILTER_TYPES.KOULUTUSTYYPPI_MUU]);
     const checkedKoulutustyypitKeys = _.map(checkedKoulutustyypit, 'id');
     return {
       koulutustyyppi,
@@ -396,7 +397,7 @@ export const getSijaintiFilterProps = createSelector(
 // Helpers
 function sortedFilterEntries(filterObj) {
   const sortedArrByCountNameDesc = _.orderBy(
-    _.entries(filterObj),
+    _.toPairs(filterObj),
     ['[1].count', `[1].nimi.[${l.getLanguage()}]`],
     ['desc', 'desc']
   );
@@ -420,11 +421,11 @@ function getSelectedFiltersNamesStr(filterArr) {
     .join(', ');
 }
 function sortedKoulutusalatEntries(filterObj) {
-  return _.orderBy(_.entries(filterObj), `[1]nimi.[${l.getLanguage()}]`);
+  return _.sortBy(_.toPairs(filterObj), `[1]nimi.[${l.getLanguage()}]`);
 }
 function getOrderedMaakunnatEntries(filterObj) {
   const orderedMaakunnat = _.orderBy(
-    _.entries(filterObj),
+    _.toPairs(filterObj),
     ['[1].count', `[1].nimi.[${l.getLanguage()}]`],
     ['desc', 'asc']
   );
@@ -433,7 +434,7 @@ function getOrderedMaakunnatEntries(filterObj) {
 }
 
 function getSijainnitForReactReselect(kunnat, orderedMaakunnatEntries) {
-  const filteredKunnatEntries = _.entries(kunnat).filter((k) => k[1].count > 0);
+  const filteredKunnatEntries = _.toPairs(kunnat).filter((k) => k[1].count > 0);
   const filteredMaakunnatEntries = orderedMaakunnatEntries.filter(
     (mk) => mk[1].count > 0
   );

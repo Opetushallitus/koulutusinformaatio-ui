@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   Box,
   Grid,
@@ -12,18 +14,19 @@ import {
   withStyles,
 } from '@material-ui/core';
 import _fp from 'lodash/fp';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { colors } from '#/src/colors';
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 import { Localizer as l, toId } from '#/src/tools/Utils';
+import { Translateable } from '#/src/types/common';
+
 import {
   Sisalto,
   SisaltoTaulukko,
   SisaltoTeksti,
   Valintatapa,
 } from './ValintaperusteTypes';
-import { Translateable } from '#/src/types/common';
 
 const StyledTableRow = withStyles((theme) => ({
   root: {

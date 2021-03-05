@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import Palaute from '../common/Palaute';
+
 import { makeStyles } from '@material-ui/core';
-import { withRouter } from 'react-router-dom';
-import { colors } from '../../colors';
-import { useTranslation } from 'react-i18next';
+import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import Fab from '@material-ui/core/Fab';
 import SentimentSatisfied from '@material-ui/icons/SentimentSatisfied';
+import { useTranslation } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
+
+import { colors } from '../../colors';
+import Palaute from '../common/Palaute';
 
 const useStyles = makeStyles((theme) => ({
   closeButton: {

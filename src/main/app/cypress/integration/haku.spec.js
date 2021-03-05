@@ -1,8 +1,10 @@
-import { playMockFile } from 'kto-ui-common/cypress/mockUtils';
+import { playMocks } from 'kto-ui-common/cypress/mockUtils';
+
+import hakuMocks from '#/cypress/mocks/haku.mocks.json';
 
 describe('Haku', () => {
   beforeEach(() => {
-    playMockFile('haku.mocks.json');
+    playMocks(hakuMocks);
   });
 
   it('Koulutustyyppi checkboxes should work hierarchically', () => {

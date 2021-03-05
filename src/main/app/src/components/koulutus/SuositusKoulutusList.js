@@ -1,12 +1,15 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+
 import { Typography, Grid, Container, makeStyles } from '@material-ui/core';
-import Spacer from '#/src/components/common/Spacer';
-import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
-import { Localizer as l } from '#/src/tools/Utils';
-import SuositusKoulutusCard from './SuositusKoulutusCard';
+import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
+
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
+import Spacer from '#/src/components/common/Spacer';
+import { Localizer as l } from '#/src/tools/Utils';
+
+import SuositusKoulutusCard from './SuositusKoulutusCard';
 
 const useStyles = makeStyles({
   container: {

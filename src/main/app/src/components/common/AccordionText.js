@@ -1,8 +1,10 @@
-import { colors } from '#/src/colors';
+import React, { useState } from 'react';
+
 import { Collapse, makeStyles, Typography } from '@material-ui/core';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
-import React, { useState } from 'react';
+
+import { colors } from '#/src/colors';
 import { sanitizedHTMLParser } from '#/src/tools/Utils';
 
 const useStyles = makeStyles(() => ({

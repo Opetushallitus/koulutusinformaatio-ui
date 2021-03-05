@@ -1,3 +1,5 @@
+import React, { useMemo } from 'react';
+
 import {
   Box,
   Button,
@@ -12,9 +14,9 @@ import AutorenewIcon from '@material-ui/icons/Autorenew';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import { format } from 'date-fns';
 import _ from 'lodash';
-import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
+
 import { colors } from '#/src/colors';
 import { LabelTooltip } from '#/src/components/common/LabelTooltip';
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
@@ -23,8 +25,9 @@ import Spacer from '#/src/components/common/Spacer';
 import { HAKULOMAKE_TYYPPI } from '#/src/constants';
 import { useOppilaitosOsoite } from '#/src/tools/UseOppilaitosOsoiteHook';
 import { Localizer as l } from '#/src/tools/Utils';
-import { formatAloitus } from './utils';
 import { Hakukohde } from '#/src/types/ToteutusTypes';
+
+import { formatAloitus } from './utils';
 
 const useStyles = makeStyles((theme) => ({
   gridHeading: {

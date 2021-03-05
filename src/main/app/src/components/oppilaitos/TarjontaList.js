@@ -1,12 +1,19 @@
 import React from 'react';
+
 import { Typography, Grid, Container, makeStyles } from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import _ from 'lodash';
+import { Link as RouterLink } from 'react-router-dom';
+
+import {
+  LoadingCircle,
+  OverlayLoadingCircle,
+} from '#/src/components/common/LoadingCircle';
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Spacer from '#/src/components/common/Spacer';
 import { ToteutusCard } from '#/src/components/common/ToteutusCard';
+
+import { usePaginatedTarjonta } from './hooks';
 import TarjontaPagination from './TarjontaPagination';
-import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles({
   container: {
@@ -20,49 +27,57 @@ const useStyles = makeStyles({
   },
 });
 
-const TarjontaList = ({ tarjonta, oid, isOppilaitosOsa }) => {
+const TarjontaList = ({ oid, isOppilaitosOsa }) => {
   const classes = useStyles();
   const { t } = useTranslation();
+  const { queryResult } = usePaginatedTarjonta({
+    oid,
+    isOppilaitosOsa,
+    isTuleva: false,
+  });
 
-  return (
-    <Container maxWidth="lg" className={classes.container}>
-      <Typography variant="h2">
-        {t('oppilaitos.oppilaitoksessa-jarjestettavat-koulutukset')}
-      </Typography>
-      <Spacer />
-      {tarjonta?.hasHits ? (
-        <Grid container className={classes.grid} direction="column" spacing={1}>
-          {_.map(_.get(tarjonta, 'localizedTarjonta'), (tts, i) => (
-            <Grid item key={i}>
-              <LocalizedLink
-                underline="none"
-                component={RouterLink}
-                to={`/toteutus/${tts?.toteutusOid}`}>
-                <ToteutusCard
-                  heading={tts?.toteutusName}
-                  description={tts?.description}
-                  locations={tts?.locations}
-                  opetustapa={tts?.opetustapa}
-                  price={tts?.price}
-                  tyyppi={tts?.tyyppi}
-                  image={tts?.kuva}
-                />
-              </LocalizedLink>
+  const { data: tarjonta = {}, status, isFetching } = queryResult;
+  const { values, total } = tarjonta;
+
+  switch (status) {
+    case 'loading':
+      return <LoadingCircle />;
+    case 'success':
+      return tarjonta.hasHits ? (
+        <Container maxWidth="lg" className={classes.container}>
+          <Typography variant="h2">
+            {t('oppilaitos.oppilaitoksessa-jarjestettavat-koulutukset')}
+          </Typography>
+          <Spacer />
+          <div style={{ position: 'relative' }}>
+            <OverlayLoadingCircle isLoading={isFetching} />
+            <Grid container className={classes.grid} direction="column" spacing={1}>
+              {values?.map((toteutus) => (
+                <Grid item key={toteutus?.toteutusOid}>
+                  <LocalizedLink
+                    underline="none"
+                    component={RouterLink}
+                    to={`/toteutus/${toteutus?.toteutusOid}`}>
+                    <ToteutusCard
+                      heading={toteutus?.toteutusName}
+                      description={toteutus?.description}
+                      locations={toteutus?.locations}
+                      opetustapa={toteutus?.opetustapa}
+                      price={toteutus?.price}
+                      tyyppi={toteutus?.tyyppi}
+                      image={toteutus?.kuva}
+                    />
+                  </LocalizedLink>
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
-      ) : (
-        <Typography variant="body1" paragraph>
-          {t('oppilaitos.ei-toteutuksia')}
-        </Typography>
-      )}
-      <TarjontaPagination
-        total={_.get(tarjonta, 'total')}
-        oid={oid}
-        isOppilaitosOsa={isOppilaitosOsa}
-      />
-    </Container>
-  );
+          </div>
+          <TarjontaPagination total={total} oid={oid} isOppilaitosOsa={isOppilaitosOsa} />
+        </Container>
+      ) : null;
+    default:
+      return null;
+  }
 };
 
 export default TarjontaList;

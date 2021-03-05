@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import _ from 'lodash';
+
 import {
   getKoulutus,
   getKoulutusKuvaus,
@@ -6,7 +8,6 @@ import {
   getSuositellutKoulutukset,
   getEperusteKuvaus,
 } from '#/src/api/konfoApi';
-import _ from 'lodash';
 import { KOULUTUS_TYYPPI } from '#/src/constants';
 
 const IDLE_STATUS = 'idle';
@@ -234,7 +235,7 @@ export const selectKoulutus = (oid) => (state) => {
       tutkintoNimi: koulutusData?.nimi,
       tutkintoNimikkeet: koulutusData.metadata?.tutkintonimike,
       opintojenLaajuus: koulutusData.metadata?.opintojenLaajuus,
-      opintojenLaajuusYksikkö: koulutusData.metadata?.opintojenLaajuusyksikko,
+      opintojenLaajuusyksikko: koulutusData.metadata?.opintojenLaajuusyksikko,
       koulutusTyyppi: koulutusData.metadata?.tyyppi,
       lisatiedot: koulutusData.metadata?.lisatiedot,
       teemakuva: koulutusData?.teemakuva,

@@ -1,9 +1,10 @@
-import _fp from 'lodash/fp';
 import { format } from 'date-fns';
-import stripTags from 'striptags';
-import i18n from './i18n';
+import _fp from 'lodash/fp';
 import ReactHtmlParser from 'react-html-parser';
+import stripTags from 'striptags';
+
 import { TOP_BAR_HEIGHT } from '../constants';
+import i18n from './i18n';
 
 export const Common = {
   // filters 'null', 'empty string' or 'undefined', but '0' or 'false' are valid values,
@@ -164,3 +165,30 @@ export const consoleWarning = (...props) => {
     console.warn(...props);
   }
 };
+
+export function getLocalizedOpintojenLaajuus(koulutus) {
+  const tutkinnonOsat = koulutus?.tutkinnonOsat || [];
+
+  let opintojenLaajuusNumero =
+    (koulutus?.opintojenLaajuus && Localizer.localize(koulutus?.opintojenLaajuus)) ||
+    koulutus?.opintojenLaajuusNumero ||
+    (tutkinnonOsat && tutkinnonOsat.map((k) => k?.opintojenLaajuusNumero).join(' + '));
+
+  if (_fp.isString(opintojenLaajuusNumero)) {
+    opintojenLaajuusNumero = opintojenLaajuusNumero.split('+').map(_fp.trim).join(' + ');
+  }
+
+  const opintojenLaajuusYksikko =
+    Localizer.localize(
+      koulutus?.opintojenLaajuusyksikko ||
+        _fp.find('opintojenLaajuusyksikko', tutkinnonOsat)?.opintojenLaajuusyksikko
+    ) || '';
+
+  const opintojenLaajuus =
+    opintojenLaajuusNumero &&
+    opintojenLaajuusYksikko &&
+    `${opintojenLaajuusNumero} ${opintojenLaajuusYksikko}`.trim();
+  return opintojenLaajuus || Localizer.getTranslationForKey('koulutus.ei-laajuutta');
+}
+
+export const condArray = (cond, item) => (cond ? [item] : []);

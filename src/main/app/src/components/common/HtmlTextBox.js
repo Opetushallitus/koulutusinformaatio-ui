@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+
 import { makeStyles, Typography, Paper, Box } from '@material-ui/core';
+import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
+
 import { educationTypeColorCode } from '../../colors';
 import Spacer from './Spacer';
-import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
 
 const useStyles = makeStyles((theme) => ({
   paper: {

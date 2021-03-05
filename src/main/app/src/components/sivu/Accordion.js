@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   Accordion as MuiAccordion,
   AccordionSummary,
@@ -5,7 +7,6 @@ import {
 } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import React from 'react';
 
 const StyledAccordion = withStyles({
   root: {

@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { searchAPI } from '#/src/api/konfoApi';
 import _ from 'lodash';
-import { Localizer as l, Common as C } from '#/src/tools/Utils';
+
+import { searchAPI } from '#/src/api/konfoApi';
 import { FILTER_TYPES, FILTER_TYPES_ARR } from '#/src/constants';
+import { Localizer as l, Common as C } from '#/src/tools/Utils';
 
 const IDLE_STATUS = 'idle';
 const LOADING_STATUS = 'loading';
@@ -423,7 +424,7 @@ function getCheckedFilterValues(ids, koulutusFilters) {
 }
 
 function pullUpAlakoodit(obj) {
-  return _.entries(obj).reduce((result, entry) => {
+  return _.toPairs(obj).reduce((result, entry) => {
     let alakoodit = _.has(entry[1], 'alakoodit') ? entry[1].alakoodit : {};
     return { ...result, [entry[0]]: entry[1], ...alakoodit };
   }, {});
@@ -461,7 +462,7 @@ function getCheckedOnTaso02Clicked(
   parentFilterId
 ) {
   const parentFilterObj = _.get(allFilterValues, parentFilterId);
-  const alakoodiName = _.get(parentFilterObj, `alakoodit.${clickedFilterId}.nimi`);
+  const alakoodiName = _.get(parentFilterObj, ['alakoodit', clickedFilterId, 'nimi']);
   const restAlakooditKeys = _.filter(
     _.keys(_.get(parentFilterObj, 'alakoodit')),
     (id) => !_.isEqual(id, clickedFilterId)

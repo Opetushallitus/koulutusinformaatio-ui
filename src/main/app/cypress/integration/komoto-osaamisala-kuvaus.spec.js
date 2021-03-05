@@ -1,8 +1,10 @@
-import { playMockFile } from 'kto-ui-common/cypress/mockUtils';
+import { playMocks } from 'kto-ui-common/cypress/mockUtils';
+
+import komotoOsaamisalaKuvausMocks from '#/cypress/mocks/komoto-osaamisala-kuvaus.mocks.json';
 
 describe('Osaamisalan description KOMOTO', () => {
   beforeEach(() => {
-    playMockFile('komoto-osaamisala-kuvaus.mocks.json');
+    playMocks(komotoOsaamisalaKuvausMocks);
   });
   it('KOMOTO includes osaamisala description', () => {
     cy.visit('/fi/toteutus/1.2.246.562.17.00000000000000000437');

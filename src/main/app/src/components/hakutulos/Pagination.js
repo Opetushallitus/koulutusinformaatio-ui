@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import MuiFlatPagination from 'material-ui-flat-pagination';
+
 import { CssBaseline, makeStyles } from '@material-ui/core';
 import { ChevronLeftOutlined, ChevronRightOutlined } from '@material-ui/icons';
-import { useUrlParams } from './UseUrlParams';
+import MuiFlatPagination from 'material-ui-flat-pagination';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { getHakutulosPagination } from '#/src/store/reducers/hakutulosSliceSelector';
+import { useQueryParams } from '#/src/hooks';
 import {
   searchKoulutukset,
   searchOppilaitokset,
 } from '#/src/store/reducers/hakutulosSlice';
-import { useQueryParams } from '#/src/hooks';
+import { getHakutulosPagination } from '#/src/store/reducers/hakutulosSliceSelector';
+
+import { useUrlParams } from './UseUrlParams';
 
 const useStyles = makeStyles((theme) => ({
   sizeSmall: {

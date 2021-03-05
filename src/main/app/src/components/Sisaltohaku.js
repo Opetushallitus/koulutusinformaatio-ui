@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LocalizedLink } from '#/src/components/common/LocalizedLink';
-import { withRouter } from 'react-router-dom';
-import Murupolku from './common/Murupolku';
-import parse from 'url-parse';
-import { useTranslation } from 'react-i18next';
-import MuiFlatPagination from 'material-ui-flat-pagination';
-import { useStores } from '../hooks';
+
 import {
   Button,
   Grid,
@@ -20,12 +14,21 @@ import {
   withStyles,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import { colors } from '../colors';
-import { observer } from 'mobx-react-lite';
 import _ from 'lodash';
-import { ReactiveBorder } from './ReactiveBorder';
+import MuiFlatPagination from 'material-ui-flat-pagination';
+import { observer } from 'mobx-react-lite';
+import { useTranslation } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
+import parse from 'url-parse';
+
+import { LocalizedLink } from '#/src/components/common/LocalizedLink';
+
 import koulutusPlaceholderImg from '../assets/images/Opolkuhts.png';
+import { colors } from '../colors';
+import { useStores } from '../hooks';
+import Murupolku from './common/Murupolku';
 import Preview from './Preview';
+import { ReactiveBorder } from './ReactiveBorder';
 
 const useStyles = makeStyles({
   sisaltohaku: {

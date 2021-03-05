@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import _ from 'lodash';
-import { useTranslation } from 'react-i18next';
+
 import { makeStyles, useTheme } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
+import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
+
 import { MurupolkuDrawer } from './MurupolkuDrawer';
 import { MurupolkuFragment } from './MurupolkuFragment';
 
@@ -34,7 +36,7 @@ const useCollapsingPath = (path) => {
   const isNarrow = useMediaQuery(theme.breakpoints.down('sm'));
 
   if (isNarrow && path.length > 2) {
-    return [_.first(path), { name: '...', isCollapsedPart: true }, _.last(path)];
+    return [_.head(path), { name: '...', isCollapsedPart: true }, _.last(path)];
   } else {
     return path;
   }
@@ -55,7 +57,7 @@ const Murupolku = ({ path }) => {
       <ol className={classes.breadcrumb}>
         {collapsingPath.map(({ name, link, isCollapsedPart, isHome }, index) => {
           return (
-            <li key={`breadcrumb-item-${index}`} className={classes.item}>
+            <li key={`${name} ${index}`} className={classes.item}>
               <MurupolkuFragment
                 name={name}
                 link={link}

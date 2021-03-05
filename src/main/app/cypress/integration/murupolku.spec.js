@@ -1,9 +1,11 @@
-import { playMockFile } from 'kto-ui-common/cypress/mockUtils';
+import { playMocks } from 'kto-ui-common/cypress/mockUtils';
+
+import murupolkuMocks from '#/cypress/mocks/murupolku.mocks.json';
 import { assertBreadcrumb } from '#/cypress/utils';
 
 describe('Murupolku', () => {
   beforeEach(() => {
-    playMockFile('murupolku.mocks.json');
+    playMocks(murupolkuMocks);
   });
 
   it('Should show correct breadcrumb for a contentful page', () => {

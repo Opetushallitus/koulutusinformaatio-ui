@@ -1,10 +1,12 @@
 import React from 'react';
+
 import { Grid, Typography, Paper, makeStyles } from '@material-ui/core';
 import {
   SchoolOutlined,
   TimelapseOutlined,
   ExtensionOutlined,
 } from '@material-ui/icons/';
+
 import { educationTypeColorCode } from '#/src/colors';
 
 type StylesProps = Pick<Props, 'tyyppi'>;

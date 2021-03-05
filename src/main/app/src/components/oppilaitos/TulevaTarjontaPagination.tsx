@@ -1,10 +1,10 @@
+import React, { useCallback } from 'react';
+
 import { CssBaseline, makeStyles } from '@material-ui/core';
 import { ChevronLeftOutlined, ChevronRightOutlined } from '@material-ui/icons';
 import MuiFlatPagination from 'material-ui-flat-pagination';
-import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchTulevaTarjontaData } from '#/src/store/reducers/oppilaitosSlice';
-import { getTulevaTarjontaPaginationProps } from '#/src/store/reducers/oppilaitosSliceSelector';
+
+import { usePaginatedTarjonta } from './hooks';
 
 const useStyles = makeStyles(() => ({
   sizeSmall: {
@@ -38,20 +38,23 @@ type Props = {
 export const TulevaTarjontaPagination = ({ total, oid, isOppilaitosOsa }: Props) => {
   const classes = useStyles();
 
-  const { size, offset, order } = useSelector(getTulevaTarjontaPaginationProps);
-  const dispatch = useDispatch();
+  const {
+    pagination: { size, offset },
+    setPagination,
+  } = usePaginatedTarjonta({
+    oid,
+    isOppilaitosOsa,
+    isTuleva: true,
+  });
 
   const handleClick = useCallback(
-    (ignored, offset, page) => {
-      dispatch(
-        fetchTulevaTarjontaData({
-          oid,
-          requestParams: { page, size, order, offset },
-          isOppilaitosOsa,
-        })
-      );
+    (e, offset, page) => {
+      setPagination({
+        page,
+        offset,
+      });
     },
-    [dispatch, oid, order, size, isOppilaitosOsa]
+    [setPagination]
   );
 
   return total > size ? (

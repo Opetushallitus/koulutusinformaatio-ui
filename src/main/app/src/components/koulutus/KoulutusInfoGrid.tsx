@@ -1,12 +1,15 @@
+import React from 'react';
+
 import { makeStyles } from '@material-ui/core';
 import ExtensionOutlinedIcon from '@material-ui/icons/ExtensionOutlined';
 import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
 import TimelapseIcon from '@material-ui/icons/Timelapse';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { KOULUTUS_TYYPPI } from '#/src/constants';
 import { Localizer as l } from '#/src/tools/Utils';
 import { Translateable } from '#/src/types/common';
+
 import { InfoGrid } from '../common/InfoGrid';
 
 const useStyles = makeStyles((theme) => ({
@@ -15,14 +18,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const hasNimike = (tyyppi: string) =>
+const hasNimike = (tyyppi?: string) =>
   tyyppi !== KOULUTUS_TYYPPI.AMM_TUTKINNON_OSA &&
   tyyppi !== KOULUTUS_TYYPPI.AMM_OSAAMISALA;
 
 type Props = {
   nimikkeet: Array<Translateable>;
-  koulutustyyppi: string;
-  laajuus: Array<Translateable | undefined>;
+  koulutustyyppi?: string;
+  laajuus: string;
   className?: string;
 };
 
@@ -47,9 +50,6 @@ export const KoulutusInfoGrid = ({
     });
   }
 
-  const laajuusString = !laajuus.includes(undefined)
-    ? laajuus.map((elem) => l.localize(elem)).join(' ')
-    : t('koulutus.ei-laajuutta');
   const koulutusTyyppiString = koulutustyyppi
     ? t(`koulutus.tyyppi-${koulutustyyppi}`)
     : '';
@@ -62,7 +62,7 @@ export const KoulutusInfoGrid = ({
   perustiedotData.push({
     icon: <TimelapseIcon className={classes.koulutusInfoGridIcon} />,
     title: t('koulutus.koulutuksen-laajuus'),
-    text: laajuusString,
+    text: laajuus,
   });
 
   return (

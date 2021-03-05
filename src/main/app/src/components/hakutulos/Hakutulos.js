@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+
 import {
   Box,
   Grid,
@@ -13,7 +12,12 @@ import {
   useTheme,
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
+import Murupolku from '#/src/components/common/Murupolku';
+import { useQueryParams } from '#/src/hooks';
 import {
   clearPaging,
   searchAll,
@@ -22,7 +26,7 @@ import {
   setSort,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getHakutulosProps } from '#/src/store/reducers/hakutulosSliceSelector';
-import Murupolku from '#/src/components/common/Murupolku';
+
 import BackendErrorMessage from './BackendErrorMessage';
 import { HakutulosResults } from './HakutulosResults';
 import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
@@ -34,7 +38,6 @@ import { SuodatinValinnat } from './hakutulosSuodattimet/SuodatinValinnat';
 import HakutulosToggle from './HakutulosToggle';
 import { MobileFiltersOnTopMenu } from './MobileFiltersOnTopMenu';
 import Pagination from './Pagination';
-import { useQueryParams } from '#/src/hooks';
 import { useUrlParams } from './UseUrlParams';
 
 const useStyles = makeStyles((theme) => ({
@@ -89,6 +92,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const getPageSortTranslationKey = (sort) => {
+  switch (sort) {
+    case 'score_desc':
+      return 'haku.jarjesta_osuvin';
+    case 'name_desc':
+      return 'haku.jarjesta_aakkoset_o_a';
+    case 'name_asc':
+      return 'haku.jarjesta_aakkoset_a_o';
+    default:
+      return '';
+  }
+};
+
 export const Hakutulos = () => {
   const { updateUrlSearchParams } = useUrlParams();
   const classes = useStyles();
@@ -127,19 +143,6 @@ export const Hakutulos = () => {
     dispatch(clearPaging());
     dispatch(setSize({ newSize }));
     dispatch(searchAll({ ...apiRequestParams, size: newSize }));
-  };
-
-  const getPageSortTranslationKey = (sort) => {
-    switch (sort) {
-      case 'score_desc':
-        return 'haku.jarjesta_osuvin';
-      case 'name_desc':
-        return 'haku.jarjesta_aakkoset_o_a';
-      case 'name_asc':
-        return 'haku.jarjesta_aakkoset_a_o';
-      default:
-        return '';
-    }
   };
 
   return (

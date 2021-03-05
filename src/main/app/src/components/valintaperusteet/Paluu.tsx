@@ -1,8 +1,10 @@
+import React from 'react';
+
 import { makeStyles } from '@material-ui/core';
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
+
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 
 const useStyles = makeStyles({

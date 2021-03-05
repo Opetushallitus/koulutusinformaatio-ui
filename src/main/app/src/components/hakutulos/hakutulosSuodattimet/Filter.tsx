@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   CircularProgress,
   Grid,
@@ -7,10 +9,11 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { ExpandMore, SearchOutlined } from '@material-ui/icons';
-import React from 'react';
 import Select, { components } from 'react-select';
+
 import { colors } from '#/src/colors';
 import { Localizer as l } from '#/src/tools/Utils';
+
 import {
   SuodatinAccordion,
   SuodatinAccordionDetails,

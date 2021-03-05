@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { makeStyles } from '@material-ui/core';
+
 import { colors } from '../../colors';
 
 const useStyles = makeStyles({

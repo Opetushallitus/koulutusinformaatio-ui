@@ -1,0 +1,82 @@
+{
+    "extends": [
+        "react-app",
+        "prettier",
+        "prettier/react",
+        "plugin:cypress/recommended",
+        "plugin:lodash/canonical"
+    ],
+    "plugins": [
+        "cypress",
+        "prettier",
+        "lodash"
+    ],
+    "env": {
+        "cypress/globals": true
+    },
+    "rules": {
+        "@typescript-eslint/ban-types": [
+            "error",
+            {
+                "types": {
+                    "object": false
+                },
+                "extendDefaults": true
+            }
+        ],
+        "@typescript-eslint/array-type": [
+            "warn",
+            {
+                "default": "generic"
+            }
+        ],
+        "prettier/prettier": [
+            "warn",
+            {
+                "usePrettierrc": true
+            }
+        ],
+        "import/no-anonymous-default-export": "off",
+        "import/order": [
+            "warn",
+            {
+                "groups": [
+                    "builtin",
+                    "external",
+                    "internal"
+                ],
+                "pathGroups": [
+                    {
+                        "pattern": "react",
+                        "group": "external",
+                        "position": "before"
+                    },
+                    {
+                        "pattern": "#/**",
+                        "group": "internal",
+                        "position": "before"
+                    }
+                ],
+                "pathGroupsExcludedImportTypes": [
+                    "react"
+                ],
+                "newlines-between": "always",
+                "alphabetize": {
+                    "order": "asc",
+                    "caseInsensitive": true
+                }
+            }
+        ],
+        "lodash/matches-prop-shorthand": "off",
+        "lodash/prefer-lodash-method": "off",
+        "lodash/prefer-lodash-chain": "off",
+        "lodash/prefer-constant": "off",
+        "lodash/prefer-noop": "off",
+        "lodash/prefer-immutable-method": "off",
+        "lodash/prefer-includes": "off",
+        "lodash/path-style": [
+            "error",
+            "as-needed"
+        ]
+    }
+}

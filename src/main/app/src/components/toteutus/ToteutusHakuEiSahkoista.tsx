@@ -1,13 +1,15 @@
-import { colors } from '#/src/colors';
-import Spacer from '#/src/components/common/Spacer';
-import { IconBackground } from '#/src/components/common/IconBackground';
-import { selectEiSahkoistaHaku } from '#/src/store/reducers/toteutusSlice';
-import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
+import React from 'react';
+
 import { Box, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useSelector } from 'react-redux';
+
+import { colors } from '#/src/colors';
+import { IconBackground } from '#/src/components/common/IconBackground';
+import Spacer from '#/src/components/common/Spacer';
+import { selectEiSahkoistaHaku } from '#/src/store/reducers/toteutusSlice';
+import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({
   hakuName: {
@@ -17,7 +19,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ToteutusHakuEiSahkoista = ({ oid }) => {
+type Props = {
+  oid: string;
+};
+
+export const ToteutusHakuEiSahkoista = ({ oid }: Props) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const eiSahkoistaData = useSelector(selectEiSahkoistaHaku(oid), shallowEqual);

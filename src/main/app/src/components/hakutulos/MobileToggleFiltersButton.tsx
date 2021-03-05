@@ -1,7 +1,9 @@
+import React, { useMemo } from 'react';
+
 import { Badge, Button, ButtonGroup, makeStyles } from '@material-ui/core';
 import { FilterList } from '@material-ui/icons';
-import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { colors } from '#/src/colors';
 
 // TODO: This is mostly copypaste styles from various files

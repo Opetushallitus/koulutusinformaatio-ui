@@ -1,8 +1,10 @@
+import React from 'react';
+
 import { Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import PublicIcon from '@material-ui/icons/Public';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
+
 import OppilaitosLogo from '#/src/assets/images/Opolkuhts.png';
 import { educationTypeColorCode } from '#/src/colors';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';

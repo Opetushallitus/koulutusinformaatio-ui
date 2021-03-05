@@ -1,12 +1,14 @@
+import React from 'react';
+
 import { Box, Card, CardContent, Grid, makeStyles, Typography } from '@material-ui/core';
 import _ from 'lodash';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { colors } from '#/src/colors';
 import { Accordion } from '#/src/components/common/Accordion';
+import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 import { formatDateString, Localizer as l, toId } from '#/src/tools/Utils';
 import { Koodi, Translateable } from '#/src/types/common';
-import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 
 const useStyles = makeStyles(() => ({
   valintakoeHeader: {

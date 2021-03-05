@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   FormControl,
   Select,
@@ -7,13 +8,14 @@ import {
   InputBase,
   Box,
 } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
-import LanguageIcon from '@material-ui/icons/Language';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import LanguageIcon from '@material-ui/icons/Language';
+import { useTranslation } from 'react-i18next';
+
 import { colors } from '#/src/colors';
+import { LANG_NAME_BY_CODE } from '#/src/constants';
 import { useLanguageState } from '#/src/hooks';
 import { supportedLanguages } from '#/src/tools/i18n';
-import { LANG_NAME_BY_CODE } from '#/src/constants';
 
 const CustomInput = withStyles((theme) => ({
   input: {

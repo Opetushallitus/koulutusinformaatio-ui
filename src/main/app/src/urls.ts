@@ -8,7 +8,7 @@ const production = {
   'konfo-backend.old-oppija': '/',
   'konfo-backend.search.koulutukset': '/konfo-backend/search/koulutukset',
   'konfo-backend.search.oppilaitokset': '/konfo-backend/search/oppilaitokset',
-  'konfo-backend.koulutus': '/konfo-backend/koulutus/',
+  'konfo-backend.koulutus': '/konfo-backend/koulutus/$1',
   'konfo-backend.suosittelu': '/konfo-backend/suosittelu',
   'konfo-backend.toteutus': '/konfo-backend/toteutus/$1',
   'konfo-backend.valintaperusteet': '/konfo-backend/valintaperuste/$1',
@@ -22,7 +22,7 @@ const production = {
     '/konfo-backend/search/oppilaitoksen-osa/$1/tarjonta',
   'konfo-backend.hakukohde': '/konfo-backend/hakukohde/$1',
   'konfo-backend.haku': '/konfo-backend/haku/$1',
-  'konfo-backend.koulutus.kuvaus': '/konfo-backend/kuvaus/',
+  'konfo-backend.koulutus.kuvaus': '/konfo-backend/kuvaus/$1',
   'konfo-backend.eperuste.kuvaus': '/konfo-backend/eperuste/$1',
 };
 

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import EuroIcon from '@material-ui/icons/Euro';
 import FlagOutlinedIcon from '@material-ui/icons/FlagOutlined';
@@ -6,21 +8,25 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import TimelapseIcon from '@material-ui/icons/Timelapse';
 import { makeStyles } from '@material-ui/styles';
+import { TFunction } from 'i18next';
 import _ from 'lodash';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 import { Localizer as l } from '#/src/tools/Utils';
+import { Translateable } from '#/src/types/common';
+import { Opetus } from '#/src/types/ToteutusTypes';
+
 import { InfoGrid } from '../common/InfoGrid';
 import { formatAloitus } from './utils';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: any) => ({
   koulutusInfoGridIcon: {
     color: theme.palette.primary.main,
   },
 }));
 
-const suunniteltuKesto = (t, vuosi, kk) => {
+const suunniteltuKesto = (t: TFunction, vuosi?: number, kk?: number) => {
   if (!vuosi && !kk) {
     return t('koulutus.ei-kestoa');
   }
@@ -33,16 +39,19 @@ const suunniteltuKesto = (t, vuosi, kk) => {
     .join('\n');
 };
 
-const localizeMap = (v) => l.localize(v);
+const localizeMap = (v: Translateable) => l.localize(v);
 
-export const ToteutusInfoGrid = ({ koulutusTyyppi, laajuus, opetus = {}, hasHaku }) => {
+type Props = {
+  laajuus: string;
+  opetus: Opetus;
+  hasHaku: boolean;
+};
+
+export const ToteutusInfoGrid = ({ laajuus, opetus = {}, hasHaku }: Props) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
   const kieliString = opetus.opetuskieli?.map(localizeMap).join('\n') ?? '';
-  const laajuusString = !laajuus.includes(undefined)
-    ? laajuus.map(localizeMap).join(' ')
-    : t('koulutus.ei-laajuutta');
   const kestoString = suunniteltuKesto(
     t,
     opetus.suunniteltuKestoVuodet,
@@ -66,34 +75,36 @@ export const ToteutusInfoGrid = ({ koulutusTyyppi, laajuus, opetus = {}, hasHaku
       title: t('toteutus.opetuskieli'),
       text: kieliString,
       modalText: !_.isEmpty(opetus.opetuskieletKuvaus) && (
-        <LocalizedHTML data={opetus.opetuskieletKuvaus} noMargin />
+        <LocalizedHTML data={opetus.opetuskieletKuvaus!} noMargin />
       ),
     },
     {
       icon: <TimelapseIcon className={classes.koulutusInfoGridIcon} />,
       title: t('koulutus.koulutuksen-laajuus'),
-      text: laajuusString,
+      text: laajuus,
     },
     {
       icon: <ScheduleIcon className={classes.koulutusInfoGridIcon} />,
       title: t('koulutus.suunniteltu-kesto'),
       text: kestoString,
       modalText: !_.isEmpty(opetus.suunniteltuKestoKuvaus) && (
-        <LocalizedHTML data={opetus.suunniteltuKestoKuvaus} noMargin />
+        <LocalizedHTML data={opetus.suunniteltuKestoKuvaus!} noMargin />
       ),
     }
   );
 
   const { alkaaText, alkaaModalText, paattyyText } = !hasHaku
     ? formatAloitus(opetus.koulutuksenAlkamiskausiUUSI, t)
-    : {};
+    : ({} as any);
 
   if (alkaaText) {
     perustiedotData.push({
       icon: <FlagOutlinedIcon className={classes.koulutusInfoGridIcon} />,
       title: t('toteutus.koulutus-alkaa'),
       text: alkaaText,
-      modalText: alkaaModalText && <LocalizedHTML data={alkaaModalText} noMargin />,
+      modalText: !_.isEmpty(alkaaModalText) && (
+        <LocalizedHTML data={alkaaModalText} noMargin />
+      ),
     });
   }
 
@@ -111,7 +122,7 @@ export const ToteutusInfoGrid = ({ koulutusTyyppi, laajuus, opetus = {}, hasHaku
       title: t('toteutus.opetusaika'),
       text: opetusAikaString,
       modalText: !_.isEmpty(opetus.opetusaikaKuvaus) && (
-        <LocalizedHTML data={opetus.opetusaikaKuvaus} noMargin />
+        <LocalizedHTML data={opetus.opetusaikaKuvaus!} noMargin />
       ),
     },
     {
@@ -119,7 +130,7 @@ export const ToteutusInfoGrid = ({ koulutusTyyppi, laajuus, opetus = {}, hasHaku
       title: t('toteutus.opetustapa'),
       text: opetustapaString,
       modalText: !_.isEmpty(opetus.opetustapaKuvaus) && (
-        <LocalizedHTML data={opetus.opetustapaKuvaus} noMargin />
+        <LocalizedHTML data={opetus.opetustapaKuvaus!} noMargin />
       ),
     },
     {
@@ -127,7 +138,7 @@ export const ToteutusInfoGrid = ({ koulutusTyyppi, laajuus, opetus = {}, hasHaku
       title: t('toteutus.maksullisuus'),
       text: maksullisuusString,
       modalText: !_.isEmpty(opetus.maksullisuusKuvaus) && (
-        <LocalizedHTML data={opetus.maksullisuusKuvaus} noMargin />
+        <LocalizedHTML data={opetus.maksullisuusKuvaus!} noMargin />
       ),
     },
     {
@@ -135,7 +146,7 @@ export const ToteutusInfoGrid = ({ koulutusTyyppi, laajuus, opetus = {}, hasHaku
       title: t('toteutus.apuraha'),
       text: apurahaString,
       modalText: !_.isEmpty(opetus.apurahaKuvaus) && (
-        <LocalizedHTML data={opetus.apurahaKuvaus} noMargin />
+        <LocalizedHTML data={opetus.apurahaKuvaus!} noMargin />
       ),
     }
   );
