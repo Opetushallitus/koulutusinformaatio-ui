@@ -9,6 +9,8 @@ export type Opetus = {
   onkoMaksullinen?: boolean;
   maksullisuusKuvaus?: Translateable;
   maksunMaara?: number;
+  onkoApuraha?: boolean;
+  apuraha?: Apuraha;
   onkoStipendia?: boolean;
   apurahaKuvaus?: Translateable;
   stipendinMaara?: number;
@@ -22,6 +24,18 @@ export type Opetus = {
   suunniteltuKestoKuukaudet?: number;
   suunniteltuKestoKuvaus?: Translateable;
   lisatiedot?: Array<Translateable>;
+};
+
+export enum Yksikko {
+  EURO = 'euro',
+  PROSENTTI = 'prosentti',
+}
+
+export type Apuraha = {
+  yksikko: Yksikko;
+  min?: number;
+  max?: number;
+  kuvaus?: Translateable;
 };
 
 export type Osaamisala = {
