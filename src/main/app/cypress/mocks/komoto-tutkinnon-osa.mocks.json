@@ -18516,7 +18516,7 @@
               }
             },
             "suunniteltuKestoVuodet": 1,
-            "onkoStipendia": false,
+            "onkoApuraha": false,
             "koulutuksenAlkamisvuosi": 2020,
             "lisatiedot": [],
             "suunniteltuKestoKuukaudet": 0,
@@ -18526,7 +18526,6 @@
             "opetuskieletKuvaus": {
               "fi": "Tarkempi opetuskuvaus <strong> moi </strong>\n<a href=\"http://google.fi\">asdf</a> hep hop\n"
             },
-            "stipendinKuvaus": {},
             "opetustapa": [
               {
                 "koodiUri": "opetuspaikkakk_1#1",

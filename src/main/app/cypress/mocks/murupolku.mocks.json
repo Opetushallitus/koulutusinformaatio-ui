@@ -26860,14 +26860,13 @@
             },
             "suunniteltuKestoKuvaus": {},
             "suunniteltuKestoVuodet": 1,
-            "onkoStipendia": false,
+            "onkoApuraha": false,
             "lisatiedot": [],
             "suunniteltuKestoKuukaudet": 0,
             "opetustapaKuvaus": {},
             "opetuskieletKuvaus": {
               "fi": "adsfasdfs"
             },
-            "stipendinKuvaus": {},
             "opetustapa": [
               {
                 "koodiUri": "opetuspaikkakk_1#1",
@@ -27021,14 +27020,13 @@
               }
             },
             "suunniteltuKestoVuodet": 1,
-            "onkoStipendia": false,
+            "onkoApuraha": false,
             "koulutuksenAlkamisvuosi": 2023,
             "lisatiedot": [],
             "koulutuksenTarkkaAlkamisaika": false,
             "suunniteltuKestoKuukaudet": 1,
             "opetustapaKuvaus": {},
             "opetuskieletKuvaus": {},
-            "stipendinKuvaus": {},
             "opetustapa": [
               {
                 "koodiUri": "opetuspaikkakk_1#1",

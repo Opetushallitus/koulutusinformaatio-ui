@@ -4,28 +4,6 @@ import { Koodi, Translateable, TODOType, ValueOf } from './common';
 
 type KoulutusTyyppi = ValueOf<typeof KOULUTUS_TYYPPI>;
 
-export type Opetus = {
-  koulutuksenAlkamiskausiUUSI?: Alkamiskausi;
-  onkoMaksullinen?: boolean;
-  maksullisuusKuvaus?: Translateable;
-  maksunMaara?: number;
-  onkoApuraha?: boolean;
-  apuraha?: Apuraha;
-  onkoStipendia?: boolean;
-  apurahaKuvaus?: Translateable;
-  stipendinMaara?: number;
-  opetuskieli?: Array<Translateable>;
-  opetuskieletKuvaus?: Translateable;
-  opetustapa?: Array<Translateable>;
-  opetustapaKuvaus?: Translateable;
-  opetusaika?: Array<Translateable>;
-  opetusaikaKuvaus?: Translateable;
-  suunniteltuKestoVuodet?: number;
-  suunniteltuKestoKuukaudet?: number;
-  suunniteltuKestoKuvaus?: Translateable;
-  lisatiedot?: Array<Translateable>;
-};
-
 export enum Yksikko {
   EURO = 'euro',
   PROSENTTI = 'prosentti',
@@ -36,6 +14,26 @@ export type Apuraha = {
   min?: number;
   max?: number;
   kuvaus?: Translateable;
+};
+
+export type Opetus = {
+  koulutuksenAlkamiskausiUUSI?: Alkamiskausi;
+  onkoMaksullinen?: boolean;
+  maksullisuusKuvaus?: Translateable;
+  maksunMaara?: number;
+  onkoApuraha?: boolean;
+  apuraha?: Apuraha;
+  apurahaKuvaus?: Translateable;
+  opetuskieli?: Array<Translateable>;
+  opetuskieletKuvaus?: Translateable;
+  opetustapa?: Array<Translateable>;
+  opetustapaKuvaus?: Translateable;
+  opetusaika?: Array<Translateable>;
+  opetusaikaKuvaus?: Translateable;
+  suunniteltuKestoVuodet?: number;
+  suunniteltuKestoKuukaudet?: number;
+  suunniteltuKestoKuvaus?: Translateable;
+  lisatiedot?: Array<Translateable>;
 };
 
 export type Osaamisala = {
