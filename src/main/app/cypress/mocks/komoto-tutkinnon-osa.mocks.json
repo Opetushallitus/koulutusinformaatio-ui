@@ -18494,7 +18494,7 @@
           },
           "opetus": {
             "maksullisuusKuvaus": {},
-            "koulutuksenAlkamiskausiUUSI": {
+            "koulutuksenAlkamiskausi": {
               "henkilokohtaisenSuunnitelmanLisatiedot": {},
               "koulutuksenAlkamiskausi": {
                 "koodiUri": "kausi_k#1",
@@ -18507,14 +18507,6 @@
               "koulutuksenAlkamisvuosi": "2020"
             },
             "suunniteltuKestoKuvaus": {},
-            "koulutuksenAlkamiskausi": {
-              "koodiUri": "kausi_k#1",
-              "nimi": {
-                "en": "Spring",
-                "sv": "Vår",
-                "fi": "Kevät"
-              }
-            },
             "suunniteltuKestoVuodet": 1,
             "onkoStipendia": false,
             "koulutuksenAlkamisvuosi": 2020,

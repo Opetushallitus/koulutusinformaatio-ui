@@ -5,7 +5,7 @@ import { Koodi, Translateable, TODOType, ValueOf } from './common';
 type KoulutusTyyppi = ValueOf<typeof KOULUTUS_TYYPPI>;
 
 export type Opetus = {
-  koulutuksenAlkamiskausiUUSI?: Alkamiskausi;
+  koulutuksenAlkamiskausi?: Alkamiskausi;
   onkoMaksullinen?: boolean;
   maksullisuusKuvaus?: Translateable;
   maksunMaara?: number;

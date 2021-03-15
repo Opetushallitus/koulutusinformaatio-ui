@@ -10248,7 +10248,7 @@
           ],
           "opetus": {
             "maksullisuusKuvaus": {},
-            "koulutuksenAlkamiskausiUUSI": {
+            "koulutuksenAlkamiskausi": {
               "henkilokohtaisenSuunnitelmanLisatiedot": {},
               "koulutuksenAlkamiskausi": {
                 "koodiUri": "kausi_k#1",
@@ -10262,14 +10262,6 @@
             },
             "suunniteltuKestoKuvaus": {
               "fi": "Yksilöllinen suunnitelma"
-            },
-            "koulutuksenAlkamiskausi": {
-              "koodiUri": "kausi_k#1",
-              "nimi": {
-                "en": "Spring",
-                "sv": "Vår",
-                "fi": "Kevät"
-              }
             },
             "suunniteltuKestoVuodet": 2,
             "onkoStipendia": false,
@@ -10554,7 +10546,7 @@
           ],
           "opetus": {
             "maksullisuusKuvaus": {},
-            "koulutuksenAlkamiskausiUUSI": {
+            "koulutuksenAlkamiskausi": {
               "henkilokohtaisenSuunnitelmanLisatiedot": {},
               "koulutuksenAlkamiskausi": {
                 "koodiUri": "kausi_k#1",

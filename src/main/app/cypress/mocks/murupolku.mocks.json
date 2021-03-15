@@ -26845,7 +26845,7 @@
           "kuvaus": {},
           "opetus": {
             "maksullisuusKuvaus": {},
-            "koulutuksenAlkamiskausiUUSI": {
+            "koulutuksenAlkamiskausi": {
               "alkamiskausityyppi": "alkamiskausi ja -vuosi",
               "henkilokohtaisenSuunnitelmanLisatiedot": {},
               "koulutuksenAlkamiskausi": {
@@ -26998,7 +26998,7 @@
           "osaamisalat": [],
           "opetus": {
             "maksullisuusKuvaus": {},
-            "koulutuksenAlkamiskausiUUSI": {
+            "koulutuksenAlkamiskausi": {
               "alkamiskausityyppi": "alkamiskausi ja -vuosi",
               "henkilokohtaisenSuunnitelmanLisatiedot": {},
               "koulutuksenAlkamiskausi": {
