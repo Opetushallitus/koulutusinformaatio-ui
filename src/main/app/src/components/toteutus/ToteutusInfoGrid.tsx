@@ -167,8 +167,8 @@ export const ToteutusInfoGrid = ({ laajuus, opetus = {}, hasHaku }: Props) => {
       icon: 'ApurahaIcon',
       title: t('toteutus.apuraha'),
       text: apurahaString,
-      modalText: !_.isEmpty(opetus.apurahaKuvaus) && (
-        <LocalizedHTML data={opetus.apurahaKuvaus!} noMargin />
+      modalText: !_.isEmpty(opetus?.apuraha?.kuvaus) && (
+        <LocalizedHTML data={opetus.apuraha?.kuvaus!} noMargin />
       ),
     }
   );
