@@ -16,6 +16,7 @@ export const FILTER_TYPES = {
   VALINTATAPA: 'valintatapa',
   HAKUKAYNNISSA: 'hakukaynnissa',
   HAKUTAPA: 'hakutapa',
+  POHJAKOULUTUSVAATIMUS: 'pohjakoulutusvaatimus',
 } as const;
 
 export const FILTER_TYPES_ARR = [
@@ -27,6 +28,7 @@ export const FILTER_TYPES_ARR = [
   'valintatapa',
   'hakukaynnissa',
   'hakutapa',
+  'pohjakoulutusvaatimus',
 ] as const;
 
 export const DRAWER_WIDTH = 330;

@@ -40,6 +40,7 @@ export const initialState = {
   sijainti: [],
   selectedSijainti: [],
   opetustapa: [],
+  pohjakoulutusvaatimus: [],
 
   size: 20,
   selectedTab: KOULUTUS,
@@ -113,6 +114,7 @@ const hakutulosSlice = createSlice({
       state.sijainti = [];
       state.selectedSijainti = [];
       state.opetustapa = [];
+      state.pohjakoulutusvaatimus = [];
     },
     setSize: (state, { payload }) => {
       state.size = payload.newSize;
@@ -387,6 +389,7 @@ export const searchAndMoveToHaku = ({ history }) => (dispatch, getState) => {
       'koulutusala',
       'sijainti',
       'opetustapa',
+      'pohjakoulutusvaatimus',
     ])
   ).toString();
   history.push(`/${lng}/haku/${hakutulos.keyword}?${restParams}`);

@@ -31,6 +31,7 @@ import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
 import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
 import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
+import { PohjakoulutusvaatimusSuodatin } from './hakutulosSuodattimet/PohjakoulutusvaatimusSuodatin';
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
 import { ValintatapaSuodatin } from './hakutulosSuodattimet/ValintatapaSuodatin';
 import { MobileResultsPerPageExpansionMenu } from './MobileResultsPerPageExpansionMenu';
@@ -154,6 +155,8 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
           <OpetuskieliSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
           <SijaintiSuodatin expanded={false} elevation={0} displaySelected />
+          <Divider className={classes.divider} />
+          <PohjakoulutusvaatimusSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
           <KoulutusalaSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />

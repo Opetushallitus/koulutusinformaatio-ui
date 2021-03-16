@@ -5584,6 +5584,13 @@
               "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
               "count": 2
             }
+          },
+          "pohjakoulutusvaatimus": {
+            "pohjakoulutusvaatimuskonfo_am": {
+              "nimi": { "fi": "Ammatillinen perustutkinto" },
+              "count": 1
+            },
+            "pohjakoulutusvaatimuskonfo_002": { "nimi": { "fi": "Lukio" }, "count": 1 }
           }
         }
       },
@@ -10866,6 +10873,13 @@
               "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
               "count": 2
             }
+          },
+          "pohjakoulutusvaatimus": {
+            "pohjakoulutusvaatimuskonfo_am": {
+              "nimi": { "fi": "Ammatillinen perustutkinto" },
+              "count": 1
+            },
+            "pohjakoulutusvaatimuskonfo_002": { "nimi": { "fi": "Lukio" }, "count": 1 }
           }
         }
       },
@@ -16371,6 +16385,13 @@
               "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
               "count": 2
             }
+          },
+          "pohjakoulutusvaatimus": {
+            "pohjakoulutusvaatimuskonfo_am": {
+              "nimi": { "fi": "Ammatillinen perustutkinto" },
+              "count": 1
+            },
+            "pohjakoulutusvaatimuskonfo_002": { "nimi": { "fi": "Lukio" }, "count": 1 }
           }
         }
       },
@@ -21530,6 +21551,13 @@
               "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
               "count": 2
             }
+          },
+          "pohjakoulutusvaatimus": {
+            "pohjakoulutusvaatimuskonfo_am": {
+              "nimi": { "fi": "Ammatillinen perustutkinto" },
+              "count": 1
+            },
+            "pohjakoulutusvaatimuskonfo_002": { "nimi": { "fi": "Lukio" }, "count": 1 }
           }
         }
       },
@@ -26688,6 +26716,13 @@
               "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
               "count": 2
             }
+          },
+          "pohjakoulutusvaatimus": {
+            "pohjakoulutusvaatimuskonfo_am": {
+              "nimi": { "fi": "Ammatillinen perustutkinto" },
+              "count": 1
+            },
+            "pohjakoulutusvaatimuskonfo_002": { "nimi": { "fi": "Lukio" }, "count": 1 }
           }
         }
       },
@@ -31966,6 +32001,13 @@
               "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
               "count": 2
             }
+          },
+          "pohjakoulutusvaatimus": {
+            "pohjakoulutusvaatimuskonfo_am": {
+              "nimi": { "fi": "Ammatillinen perustutkinto" },
+              "count": 1
+            },
+            "pohjakoulutusvaatimuskonfo_002": { "nimi": { "fi": "Lukio" }, "count": 1 }
           }
         }
       },
@@ -37151,6 +37193,13 @@
               "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
               "count": 2
             }
+          },
+          "pohjakoulutusvaatimus": {
+            "pohjakoulutusvaatimuskonfo_am": {
+              "nimi": { "fi": "Ammatillinen perustutkinto" },
+              "count": 1
+            },
+            "pohjakoulutusvaatimuskonfo_002": { "nimi": { "fi": "Lukio" }, "count": 1 }
           }
         }
       },

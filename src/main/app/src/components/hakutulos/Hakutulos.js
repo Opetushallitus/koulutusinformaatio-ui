@@ -35,6 +35,7 @@ import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
 import KoulutustyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
 import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
+import { PohjakoulutusvaatimusSuodatin } from './hakutulosSuodattimet/PohjakoulutusvaatimusSuodatin';
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
 import { SuodatinValinnat } from './hakutulosSuodattimet/SuodatinValinnat';
 import { ValintatapaSuodatin } from './hakutulosSuodattimet/ValintatapaSuodatin';
@@ -239,6 +240,7 @@ export const Hakutulos = () => {
               <KoulutustyyppiSuodatin expanded elevation={2} />
               <OpetuskieliSuodatin expanded elevation={2} />
               <SijaintiSuodatin expanded elevation={2} />
+              <PohjakoulutusvaatimusSuodatin expanded elevation={2} />
               <KoulutusalaSuodatin expanded elevation={2} />
               <HakutapaSuodatin expanded elevation={2} />
               <OpetustapaSuodatin expanded={false} elevation={2} />

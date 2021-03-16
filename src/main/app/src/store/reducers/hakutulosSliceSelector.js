@@ -59,6 +59,7 @@ function getValintatapa(state) {
 }
 const getHakukaynnissa = (state) => state.hakutulos.hakukaynnissa;
 const getHakutapa = (state) => state.hakutulos.hakutapa;
+const getPohjakoulutusvaatimus = (state) => state.hakutulos.pohjakoulutusvaatimus;
 
 const getFilter = (id) => (state) => state.hakutulos[id];
 
@@ -105,6 +106,7 @@ export const getHakutulosProps = createSelector(
     getValintatapa,
     getHakukaynnissa,
     getHakutapa,
+    getPohjakoulutusvaatimus,
   ],
   (
     keyword,
@@ -120,7 +122,8 @@ export const getHakutulosProps = createSelector(
     opetustapa,
     valintatapa,
     hakukaynnissa,
-    hakutapa
+    hakutapa,
+    pohjakoulutusvaatimus
   ) => {
     return {
       keyword,
@@ -140,6 +143,7 @@ export const getHakutulosProps = createSelector(
             opetustapa,
             valintatapa,
             hakutapa,
+            pohjakoulutusvaatimus,
           ],
           (filterArr) => _.size(filterArr) > 0
         ),
@@ -178,6 +182,7 @@ export const getSuodatinValinnatProps = createSelector(
     getValintatapa,
     getHakukaynnissa,
     getHakutapa,
+    getPohjakoulutusvaatimus,
   ],
   (
     opetuskieli,
@@ -188,7 +193,8 @@ export const getSuodatinValinnatProps = createSelector(
     opetustapa,
     valintatapa,
     hakukaynnissa,
-    hakutapa
+    hakutapa,
+    pohjakoulutusvaatimus
   ) => ({
     opetuskieli,
     koulutustyyppi,
@@ -199,6 +205,7 @@ export const getSuodatinValinnatProps = createSelector(
     // TODO: Refactor suodatinvalinnat to accept big list of ids
     hakukaynnissa: hakukaynnissa ? [{ id: 'hakukaynnissa' }] : [],
     hakutapa,
+    pohjakoulutusvaatimus,
   })
 );
 
@@ -234,6 +241,7 @@ export const getAPIRequestParams = createSelector(
     getValintatapa,
     getHakukaynnissa,
     getHakutapa,
+    getPohjakoulutusvaatimus,
   ],
   (
     keyword,
@@ -248,7 +256,8 @@ export const getAPIRequestParams = createSelector(
     opetustapa,
     valintatapa,
     hakukaynnissa,
-    hakutapa
+    hakutapa,
+    pohjakoulutusvaatimus
   ) => ({
     keyword,
     order,
@@ -262,6 +271,7 @@ export const getAPIRequestParams = createSelector(
     valintatapa: getCheckedFiltersIdsStr(valintatapa),
     hakutapa: getCheckedFiltersIdsStr(hakutapa),
     hakukaynnissa,
+    pohjakoulutusvaatimus: getCheckedFiltersIdsStr(pohjakoulutusvaatimus),
   })
 );
 
