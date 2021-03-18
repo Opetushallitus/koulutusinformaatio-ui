@@ -10272,7 +10272,7 @@
               }
             },
             "suunniteltuKestoVuodet": 2,
-            "onkoStipendia": false,
+            "onkoApuraha": false,
             "koulutuksenAlkamisvuosi": 2021,
             "lisatiedot": [
               {
@@ -10301,7 +10301,6 @@
             "suunniteltuKestoKuukaudet": 0,
             "opetustapaKuvaus": {},
             "opetuskieletKuvaus": {},
-            "stipendinKuvaus": {},
             "opetustapa": [
               {
                 "koodiUri": "opetuspaikkakk_1#1",
@@ -10576,7 +10575,7 @@
               }
             },
             "suunniteltuKestoVuodet": 3,
-            "onkoStipendia": false,
+            "onkoApuraha": false,
             "koulutuksenAlkamisvuosi": 2021,
             "lisatiedot": [
               {
@@ -10607,7 +10606,6 @@
             "suunniteltuKestoKuukaudet": 0,
             "opetustapaKuvaus": {},
             "opetuskieletKuvaus": {},
-            "stipendinKuvaus": {},
             "opetustapa": [
               {
                 "koodiUri": "opetuspaikkakk_1#1",

@@ -15,10 +15,34 @@ import { useTranslation } from 'react-i18next';
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 import { Localizer as l } from '#/src/tools/Utils';
 import { Translateable } from '#/src/types/common';
-import { Opetus } from '#/src/types/ToteutusTypes';
+import { Opetus, Yksikko } from '#/src/types/ToteutusTypes';
 
 import { InfoGrid } from '../common/InfoGrid';
 import { formatAloitus } from './utils';
+
+const getYksikkoSymbol = (yksikko?: Yksikko) => {
+  switch (yksikko) {
+    case Yksikko.EURO:
+      return '€';
+    case Yksikko.PROSENTTI:
+      return '%';
+    default:
+      return '';
+  }
+};
+
+const formatApuraha = (opetus: Opetus, t: TFunction) => {
+  const yksikko = getYksikkoSymbol(opetus?.apuraha?.yksikko);
+  if (opetus?.onkoApuraha) {
+    if (opetus?.apuraha?.min === opetus?.apuraha?.max) {
+      return `${opetus?.apuraha?.min} ${yksikko}`;
+    } else {
+      return `${opetus?.apuraha?.min} \u2013 ${opetus?.apuraha?.max} ${yksikko}`;
+    }
+  }
+
+  return t('toteutus.ei-apurahaa');
+};
 
 const useStyles = makeStyles((theme: any) => ({
   koulutusInfoGridIcon: {
@@ -63,9 +87,7 @@ export const ToteutusInfoGrid = ({ laajuus, opetus = {}, hasHaku }: Props) => {
   const maksullisuusString = opetus.onkoMaksullinen
     ? `${opetus.maksunMaara} €`
     : t('toteutus.ei-maksua');
-  const apurahaString = opetus.onkoStipendia
-    ? `${opetus.stipendinMaara} €`
-    : t('toteutus.ei-apurahaa');
+  const apurahaString = formatApuraha(opetus, t);
 
   const perustiedotData = [];
 
@@ -145,8 +167,8 @@ export const ToteutusInfoGrid = ({ laajuus, opetus = {}, hasHaku }: Props) => {
       icon: 'ApurahaIcon',
       title: t('toteutus.apuraha'),
       text: apurahaString,
-      modalText: !_.isEmpty(opetus.apurahaKuvaus) && (
-        <LocalizedHTML data={opetus.apurahaKuvaus!} noMargin />
+      modalText: !_.isEmpty(opetus?.apuraha?.kuvaus) && (
+        <LocalizedHTML data={opetus.apuraha?.kuvaus!} noMargin />
       ),
     }
   );

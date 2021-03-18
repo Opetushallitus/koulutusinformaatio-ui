@@ -5007,7 +5007,7 @@
               }
             },
             "suunniteltuKestoVuodet": 3,
-            "onkoStipendia": false,
+            "onkoApuraha": false,
             "koulutuksenAlkamisvuosi": 2020,
             "lisatiedot": [],
             "suunniteltuKestoKuukaudet": 0,
@@ -5017,7 +5017,6 @@
             "opetuskieletKuvaus": {
               "fi": "<p>opetuskieli <a href=\"https://oph.fi/\" rel=\"noopener noreferrer\" target=\"_blank\">tarkempi</a> kuvaus</p><ul><li>Olen</li><li>lista</li></ul>"
             },
-            "stipendinKuvaus": {},
             "opetustapa": [
               {
                 "koodiUri": "opetuspaikkakk_1#1",
