@@ -116,7 +116,7 @@ export const ToteutusInfoGrid = ({ laajuus, opetus = {}, hasHaku }: Props) => {
   );
 
   const { alkaaText, alkaaModalText, paattyyText } = !hasHaku
-    ? formatAloitus(opetus.koulutuksenAlkamiskausiUUSI, t)
+    ? formatAloitus(opetus.koulutuksenAlkamiskausi, t)
     : ({} as any);
 
   if (alkaaText) {

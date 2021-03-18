@@ -17,7 +17,7 @@ export type Apuraha = {
 };
 
 export type Opetus = {
-  koulutuksenAlkamiskausiUUSI?: Alkamiskausi;
+  koulutuksenAlkamiskausi?: Alkamiskausi;
   onkoMaksullinen?: boolean;
   maksullisuusKuvaus?: Translateable;
   maksunMaara?: number;

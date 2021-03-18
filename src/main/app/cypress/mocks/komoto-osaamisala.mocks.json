@@ -5271,7 +5271,7 @@
             "maksullisuusKuvaus": {
               "fi": "Juu"
             },
-            "koulutuksenAlkamiskausiUUSI": {
+            "koulutuksenAlkamiskausi": {
               "henkilokohtaisenSuunnitelmanLisatiedot": {},
               "koulutuksenAlkamiskausi": {
                 "koodiUri": "kausi_s#1",
@@ -5285,14 +5285,6 @@
             },
             "suunniteltuKestoKuvaus": {
               "fi": "Kuvaus"
-            },
-            "koulutuksenAlkamiskausi": {
-              "koodiUri": "kausi_s#1",
-              "nimi": {
-                "sv": "Höst",
-                "en": "Autumn",
-                "fi": "Syksy"
-              }
             },
             "suunniteltuKestoVuodet": 2,
             "onkoApuraha": false,
