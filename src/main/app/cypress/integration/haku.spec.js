@@ -151,31 +151,32 @@ describe('Haku', () => {
         verkkoOpiskeluChk().should('exist').should('not.be.checked');
       });
   });
-  it('Valintatapa filter checkboxes', () => {
-    cy.visit('/fi/haku/auto');
-    const koepisteetChk = () =>
-      cy.findByRole('checkbox', { name: /Koepisteet \(\d*\)/i });
-    const yhteispisteetChk = () =>
-      cy.findByRole('checkbox', { name: /Yhteispisteet \(\d*\)/i });
-    cy.findByText('Valintatapa').should('exist').click();
-    cy.get('[data-cy=valintatapa-filter]')
-      .should('exist')
-      .within(() => {
-        koepisteetChk().click().should('be.checked');
-        koepisteetChk().click().should('not.be.checked');
-        yhteispisteetChk().click().should('be.checked');
-      });
-    cy.get('[data-cy=chip-valintatapajono_yp]')
-      .should('exist')
-      .within(() => {
-        cy.get('svg').should('exist').click();
-      });
-    cy.get('[data-cy=valintatapa-filter]')
-      .should('exist')
-      .within(() => {
-        yhteispisteetChk().should('exist').should('not.be.checked');
-      });
-  });
+  // TODO: Commented until component is again visible, see ValintatapaSuodatin.tsx
+  // it('Valintatapa filter checkboxes', () => {
+  //   cy.visit('/fi/haku/auto');
+  //   const koepisteetChk = () =>
+  //     cy.findByRole('checkbox', { name: /Koepisteet \(\d*\)/i });
+  //   const yhteispisteetChk = () =>
+  //     cy.findByRole('checkbox', { name: /Yhteispisteet \(\d*\)/i });
+  //   cy.findByText('Valintatapa').should('exist').click();
+  //   cy.get('[data-cy=valintatapa-filter]')
+  //     .should('exist')
+  //     .within(() => {
+  //       koepisteetChk().click().should('be.checked');
+  //       koepisteetChk().click().should('not.be.checked');
+  //       yhteispisteetChk().click().should('be.checked');
+  //     });
+  //   cy.get('[data-cy=chip-valintatapajono_yp]')
+  //     .should('exist')
+  //     .within(() => {
+  //       cy.get('svg').should('exist').click();
+  //     });
+  //   cy.get('[data-cy=valintatapa-filter]')
+  //     .should('exist')
+  //     .within(() => {
+  //       yhteispisteetChk().should('exist').should('not.be.checked');
+  //     });
+  // });
   it('Hakutapa filter checkboxes', () => {
     cy.visit('/fi/haku/auto');
     const yhteishakuChk = () =>
