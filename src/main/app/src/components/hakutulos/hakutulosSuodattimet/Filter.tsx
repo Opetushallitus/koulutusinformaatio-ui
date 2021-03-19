@@ -9,6 +9,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { ExpandMore, SearchOutlined } from '@material-ui/icons';
+import _ from 'lodash';
 import Select, { components } from 'react-select';
 
 import { colors } from '#/src/colors';
@@ -173,7 +174,9 @@ export const Filter = ({
                       id={labelId}
                       primary={
                         <Grid container justify="space-between" wrap="nowrap">
-                          <Grid item>{l.localize(value)}</Grid>
+                          <Grid item>
+                            {_.isString(value.nimi) ? value.nimi : l.localize(value)}
+                          </Grid>
                           <Grid item>{`(${count})`}</Grid>
                         </Grid>
                       }

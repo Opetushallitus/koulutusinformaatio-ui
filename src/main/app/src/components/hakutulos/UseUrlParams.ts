@@ -12,20 +12,15 @@ export const useUrlParams = () => {
     [history.location.search]
   );
 
-  const getAsString = useCallback(() => qs.stringify(C.cleanRequestParams(search)), [
-    search,
-  ]);
-
   const updateUrlSearchParams = useCallback(
-    (updatedProps: object, resetPages = true) => {
+    (updatedProps: object) => {
       const newSearch = {
-        ...search,
         ...updatedProps,
-        ...(resetPages ? { kpage: 1, opage: 1 } : {}),
+        ...{ kpage: 1, opage: 1 },
       };
       history.replace({ search: qs.stringify(C.cleanRequestParams(newSearch)) });
     },
-    [history, search]
+    [history]
   );
 
   const isDraft = useMemo(() => !!search?.draft, [search]);
@@ -33,7 +28,6 @@ export const useUrlParams = () => {
   return {
     isDraft,
     search,
-    getAsString,
     updateUrlSearchParams,
   };
 };

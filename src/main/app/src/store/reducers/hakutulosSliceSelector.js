@@ -57,6 +57,7 @@ function getOpetustapa(state) {
 function getValintatapa(state) {
   return state.hakutulos.valintatapa;
 }
+const getHakukaynnissa = (state) => state.hakutulos.hakukaynnissa;
 const getHakutapa = (state) => state.hakutulos.hakutapa;
 
 const getFilter = (id) => (state) => state.hakutulos[id];
@@ -102,6 +103,7 @@ export const getHakutulosProps = createSelector(
     getSelectedSijainti,
     getOpetustapa,
     getValintatapa,
+    getHakukaynnissa,
     getHakutapa,
   ],
   (
@@ -117,6 +119,7 @@ export const getHakutulosProps = createSelector(
     selectedSijainti,
     opetustapa,
     valintatapa,
+    hakukaynnissa,
     hakutapa
   ) => {
     return {
@@ -125,19 +128,21 @@ export const getHakutulosProps = createSelector(
       oppilaitosHits,
       selectedTab,
       size,
-      isAnyFilterSelected: _.some(
-        [
-          opetuskieli,
-          koulutustyyppi,
-          koulutusala,
-          sijainti,
-          selectedSijainti,
-          opetustapa,
-          valintatapa,
-          hakutapa,
-        ],
-        (filterArr) => _.size(filterArr) > 0
-      ),
+      isAnyFilterSelected:
+        hakukaynnissa ||
+        _.some(
+          [
+            opetuskieli,
+            koulutustyyppi,
+            koulutusala,
+            sijainti,
+            selectedSijainti,
+            opetustapa,
+            valintatapa,
+            hakutapa,
+          ],
+          (filterArr) => _.size(filterArr) > 0
+        ),
     };
   }
 );
@@ -171,6 +176,7 @@ export const getSuodatinValinnatProps = createSelector(
     getSelectedSijainti,
     getOpetustapa,
     getValintatapa,
+    getHakukaynnissa,
     getHakutapa,
   ],
   (
@@ -181,6 +187,7 @@ export const getSuodatinValinnatProps = createSelector(
     selectedSijainti,
     opetustapa,
     valintatapa,
+    hakukaynnissa,
     hakutapa
   ) => ({
     opetuskieli,
@@ -189,6 +196,8 @@ export const getSuodatinValinnatProps = createSelector(
     sijainti: _.concat(sijainti, selectedSijainti),
     opetustapa,
     valintatapa,
+    // TODO: Refactor suodatinvalinnat to accept big list of ids
+    hakukaynnissa: hakukaynnissa ? [{ id: 'hakukaynnissa' }] : [],
     hakutapa,
   })
 );
@@ -223,6 +232,7 @@ export const getAPIRequestParams = createSelector(
     getSelectedSijainti,
     getOpetustapa,
     getValintatapa,
+    getHakukaynnissa,
     getHakutapa,
   ],
   (
@@ -237,6 +247,7 @@ export const getAPIRequestParams = createSelector(
     selectedSijainti,
     opetustapa,
     valintatapa,
+    hakukaynnissa,
     hakutapa
   ) => ({
     keyword,
@@ -250,6 +261,7 @@ export const getAPIRequestParams = createSelector(
     opetustapa: getCheckedFiltersIdsStr(opetustapa),
     valintatapa: getCheckedFiltersIdsStr(valintatapa),
     hakutapa: getCheckedFiltersIdsStr(hakutapa),
+    hakukaynnissa,
   })
 );
 
@@ -330,6 +342,22 @@ export const getFilterProps = (id) =>
         sortedValues: sortValues(usedFilter),
         checkedValues,
         localizedCheckedValues: getNameStr(checkedValues),
+      };
+    }
+  );
+
+export const hakukaynnissaSelector = () =>
+  createSelector(
+    [getKoulutusFilters, getOppilaitosFilters, getSelectedTab, getHakukaynnissa],
+    (koulutusFilters, oppilaitosFilters, selectedTab, hakukaynnissa) => {
+      const hakukaynnissaData =
+        selectedTab === 'koulutus'
+          ? koulutusFilters.hakukaynnissa
+          : oppilaitosFilters.hakukaynnissa;
+
+      return {
+        hakukaynnissa,
+        hakukaynnissaData,
       };
     }
   );

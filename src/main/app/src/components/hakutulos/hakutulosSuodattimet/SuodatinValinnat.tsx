@@ -70,6 +70,7 @@ const ChipList = ({
           root: classes.chipRoot,
           label: classes.chipLabel,
         }}
+        // NOTE: Some filters are not koodisto values and must be translated
         label={l.localize(name) || t(`haku.${id}`)}
         onDelete={getHandleDelete(filterType, id)}
       />
@@ -108,7 +109,7 @@ export const SuodatinValinnat = () => {
   const suodatinValinnatProps = useSelector(getSuodatinValinnatProps);
   const apiRequestParams = useQueryParams();
 
-  const [filters, setFilters] = useState<Record<string, Array<FilterType>>>({});
+  const [filters, setFilters] = useState<Record<string, Array<any>>>({});
 
   useEffect(() => {
     setFilters(suodatinValinnatProps);
