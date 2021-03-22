@@ -532,7 +532,7 @@
               }
             },
             "suunniteltuKestoVuodet": 3,
-            "onkoStipendia": false,
+            "onkoApuraha": false,
             "koulutuksenAlkamisvuosi": 2021,
             "lisatiedot": [
               {
@@ -553,7 +553,6 @@
               "fi": "Ohjattu opetus"
             },
             "opetuskieletKuvaus": {},
-            "stipendinKuvaus": {},
             "opetustapa": [
               {
                 "koodiUri": "opetuspaikkakk_1#1",

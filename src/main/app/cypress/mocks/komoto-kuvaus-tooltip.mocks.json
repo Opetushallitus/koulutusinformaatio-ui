@@ -4983,7 +4983,7 @@
             "maksullisuusKuvaus": {
               "fi": "<p>opetuksen <a href=\"https://github.com/Opetushallitus\" rel=\"noopener noreferrer\" target=\"_blank\">maksullisuus</a> <strong>tarkempi</strong> kuvaus</p>"
             },
-            "koulutuksenAlkamiskausiUUSI": {
+            "koulutuksenAlkamiskausi": {
               "henkilokohtaisenSuunnitelmanLisatiedot": {},
               "koulutuksenAlkamiskausi": {
                 "koodiUri": "kausi_s#1",
@@ -4998,16 +4998,8 @@
             "suunniteltuKestoKuvaus": {
               "fi": "<p><u>Tarkemman</u> kuvauksen <a href=\"https://oph.fi\" rel=\"noopener noreferrer\" target=\"_blank\">teksti</a> ja linkki</p>"
             },
-            "koulutuksenAlkamiskausi": {
-              "koodiUri": "kausi_s#1",
-              "nimi": {
-                "sv": "Höst",
-                "en": "Autumn",
-                "fi": "Syksy"
-              }
-            },
             "suunniteltuKestoVuodet": 3,
-            "onkoStipendia": false,
+            "onkoApuraha": false,
             "koulutuksenAlkamisvuosi": 2020,
             "lisatiedot": [],
             "suunniteltuKestoKuukaudet": 0,
@@ -5017,7 +5009,6 @@
             "opetuskieletKuvaus": {
               "fi": "<p>opetuskieli <a href=\"https://oph.fi/\" rel=\"noopener noreferrer\" target=\"_blank\">tarkempi</a> kuvaus</p><ul><li>Olen</li><li>lista</li></ul>"
             },
-            "stipendinKuvaus": {},
             "opetustapa": [
               {
                 "koodiUri": "opetuspaikkakk_1#1",

@@ -4,14 +4,26 @@ import { Koodi, Translateable, TODOType, ValueOf } from './common';
 
 type KoulutusTyyppi = ValueOf<typeof KOULUTUS_TYYPPI>;
 
+export enum Yksikko {
+  EURO = 'euro',
+  PROSENTTI = 'prosentti',
+}
+
+export type Apuraha = {
+  yksikko: Yksikko;
+  min?: number;
+  max?: number;
+  kuvaus?: Translateable;
+};
+
 export type Opetus = {
-  koulutuksenAlkamiskausiUUSI?: Alkamiskausi;
+  koulutuksenAlkamiskausi?: Alkamiskausi;
   onkoMaksullinen?: boolean;
   maksullisuusKuvaus?: Translateable;
   maksunMaara?: number;
-  onkoStipendia?: boolean;
+  onkoApuraha?: boolean;
+  apuraha?: Apuraha;
   apurahaKuvaus?: Translateable;
-  stipendinMaara?: number;
   opetuskieli?: Array<Translateable>;
   opetuskieletKuvaus?: Translateable;
   opetustapa?: Array<Translateable>;

@@ -10248,7 +10248,7 @@
           ],
           "opetus": {
             "maksullisuusKuvaus": {},
-            "koulutuksenAlkamiskausiUUSI": {
+            "koulutuksenAlkamiskausi": {
               "henkilokohtaisenSuunnitelmanLisatiedot": {},
               "koulutuksenAlkamiskausi": {
                 "koodiUri": "kausi_k#1",
@@ -10263,16 +10263,8 @@
             "suunniteltuKestoKuvaus": {
               "fi": "Yksilöllinen suunnitelma"
             },
-            "koulutuksenAlkamiskausi": {
-              "koodiUri": "kausi_k#1",
-              "nimi": {
-                "en": "Spring",
-                "sv": "Vår",
-                "fi": "Kevät"
-              }
-            },
             "suunniteltuKestoVuodet": 2,
-            "onkoStipendia": false,
+            "onkoApuraha": false,
             "koulutuksenAlkamisvuosi": 2021,
             "lisatiedot": [
               {
@@ -10301,7 +10293,6 @@
             "suunniteltuKestoKuukaudet": 0,
             "opetustapaKuvaus": {},
             "opetuskieletKuvaus": {},
-            "stipendinKuvaus": {},
             "opetustapa": [
               {
                 "koodiUri": "opetuspaikkakk_1#1",
@@ -10554,7 +10545,7 @@
           ],
           "opetus": {
             "maksullisuusKuvaus": {},
-            "koulutuksenAlkamiskausiUUSI": {
+            "koulutuksenAlkamiskausi": {
               "henkilokohtaisenSuunnitelmanLisatiedot": {},
               "koulutuksenAlkamiskausi": {
                 "koodiUri": "kausi_k#1",
@@ -10576,7 +10567,7 @@
               }
             },
             "suunniteltuKestoVuodet": 3,
-            "onkoStipendia": false,
+            "onkoApuraha": false,
             "koulutuksenAlkamisvuosi": 2021,
             "lisatiedot": [
               {
@@ -10607,7 +10598,6 @@
             "suunniteltuKestoKuukaudet": 0,
             "opetustapaKuvaus": {},
             "opetuskieletKuvaus": {},
-            "stipendinKuvaus": {},
             "opetustapa": [
               {
                 "koodiUri": "opetuspaikkakk_1#1",
