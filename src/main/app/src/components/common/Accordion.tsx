@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   greenSummaryRoot: {
     '&$expanded': {
       borderBottom: `1px solid ${colors.grey}`,
-      backgroundColor: colors.lightGreen2,
+      backgroundColor: colors.lightGreenBg,
       borderTop: `5px solid ${colors.brandGreen}`,
     },
   },

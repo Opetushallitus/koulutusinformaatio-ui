@@ -4,13 +4,17 @@ import { Grid, Hidden, makeStyles, Paper, Typography } from '@material-ui/core';
 import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import PublicIcon from '@material-ui/icons/Public';
-import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
+import { useTranslation } from 'react-i18next';
+// @ts-ignore
+import HTMLEllipsis from 'react-lines-ellipsis/lib/html'; // NOTE: this has no types
 
 import OppilaitosLogo from '#/src/assets/images/Opolkuhts.png';
 import { colors, educationTypeColorCode } from '#/src/colors';
 
+import { TextWithBackground } from '../common/TextWithBackground';
+
 const useStyles = makeStyles((theme) => ({
-  paper: (props) => ({
+  paper: (props: Pick<Props, 'tyyppi'>) => ({
     borderTop: `5px solid ${
       educationTypeColorCode[props.tyyppi] || educationTypeColorCode.muu
     }`,
@@ -36,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
   img: {
     width: '180px',
-    height: 'auto',
+    height: 'auto%',
     float: 'right',
     [theme.breakpoints.down('sm')]: {
       width: '80px',
@@ -46,13 +50,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ToteutusCard = (props) => {
-  const classes = useStyles(props);
-  const { organizer, heading, description, locations, opetustapa, price, image } = props;
+type Props = {
+  organizer: string;
+  heading: string;
+  description: string;
+  locations: string;
+  opetustapa: string;
+  price: string;
+  image: string;
+  tyyppi: keyof typeof educationTypeColorCode;
+  hakukaynnissa: boolean;
+};
 
+export const ToteutusCard = ({
+  organizer,
+  heading,
+  description,
+  locations,
+  opetustapa,
+  price,
+  image,
+  tyyppi,
+  hakukaynnissa,
+}: Props) => {
+  const classes = useStyles({ tyyppi });
   const ToteutusImage = () => (
     <img className={classes.img} alt={heading} src={image || OppilaitosLogo} />
   );
+  const { t } = useTranslation();
 
   return (
     <Paper className={classes.paper}>
@@ -134,6 +159,20 @@ export const ToteutusCard = (props) => {
                 <Grid item>
                   <Typography variant="body1">{price}</Typography>
                 </Grid>
+              </Grid>
+            </Grid>
+            <Grid item sm={6} md>
+              <Grid
+                container
+                spacing={1}
+                alignItems="center"
+                direction="row"
+                wrap="nowrap">
+                {hakukaynnissa && (
+                  <Grid item>
+                    <TextWithBackground>{t('haku.hakukaynnissa')}</TextWithBackground>
+                  </Grid>
+                )}
               </Grid>
             </Grid>
           </Grid>
