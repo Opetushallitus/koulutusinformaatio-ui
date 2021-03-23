@@ -95,6 +95,7 @@ export type Toteutus = {
   teemakuva: string;
   tila: string;
   timestamp: number;
+  oppilaitokset: Array<string>;
 
   // NOTE: These are given at selector
   hakuAukiType: 'ilmoittautuminen' | 'hakukohde' | null;

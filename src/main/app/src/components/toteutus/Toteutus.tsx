@@ -40,6 +40,8 @@ import {
 import { Toteutus } from '#/src/types/ToteutusTypes';
 
 import ContentWrapper from '../common/ContentWrapper';
+import { useOppilaitokset } from '../oppilaitos/hooks';
+import { Yhteystiedot } from '../oppilaitos/Yhteystiedot';
 import { HakuKaynnissaCard } from './HakuKaynnissaCard';
 import { ToteutusHakuEiSahkoista } from './ToteutusHakuEiSahkoista';
 import { ToteutusHakukohteet } from './ToteutusHakukohteet';
@@ -132,6 +134,33 @@ const useOsaamisalatPageData = ({ ePerusteId, requestParams }: OsaamisalatProps)
       refetchOnWindowFocus: false,
       enabled: !_.isNil(ePerusteId) && !_.isEmpty(requestParams),
     }
+  );
+};
+
+// NOTE: In most cases there is only one oppilaitos per KOMOTO but there is no limit in data model
+const ToteutuksenYhteystiedot = ({ oids }: { oids: Array<string> }) => {
+  const { t } = useTranslation();
+  const oppilaitokset = useOppilaitokset({
+    isOppilaitosOsa: false,
+    oids,
+  });
+  const filtered = useMemo(
+    () => oppilaitokset.filter((v) => v.data.metadata?.yhteystiedot).map((v) => v.data),
+    [oppilaitokset]
+  );
+
+  return (
+    <Box mt={4} width="100%">
+      {filtered?.map((oppilaitos: any) => (
+        <Yhteystiedot
+          key={oppilaitos.oid}
+          heading={t('toteutus.yhteystiedot')}
+          logo={oppilaitos.logo}
+          yhteystiedot={oppilaitos.metadata.yhteystiedot}
+          nimi={l.localize(oppilaitos)}
+        />
+      ))}
+    </Box>
   );
 };
 
@@ -396,6 +425,9 @@ export const ToteutusPage = () => {
               </Grid>
             </Box>
           </Box>
+        )}
+        {toteutus.oppilaitokset?.length > 0 && (
+          <ToteutuksenYhteystiedot oids={toteutus.oppilaitokset} />
         )}
       </Box>
     </ContentWrapper>

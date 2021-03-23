@@ -35,11 +35,10 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: { padding: '8px' },
   },
   img: {
-    width: '180px',
-    height: 'auto',
+    maxWidth: '150px',
+    maxHeight: '120px',
     float: 'right',
     [theme.breakpoints.down('sm')]: {
-      width: '80px',
       float: 'left',
       marginBottom: '12px',
     },

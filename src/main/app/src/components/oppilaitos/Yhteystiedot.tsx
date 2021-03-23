@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type Props = {
-  className: string;
+  className?: string;
   heading: string;
   logo: string;
   yhteystiedot: YhteystiedotType;

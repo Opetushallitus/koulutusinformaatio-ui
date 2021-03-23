@@ -193,6 +193,7 @@ export const ToteutusList = ({ oid }: Props) => {
                     toteutus.maksunMaara
                   )}
                   tyyppi={toteutus.koulutustyyppi}
+                  image={toteutus.kuva}
                 />
               </LocalizedLink>
             </Grid>
