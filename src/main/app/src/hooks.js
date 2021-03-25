@@ -35,8 +35,6 @@ export const useQueryOnce = (key, fn, props) => {
     staleTime: Infinity,
     cacheTime: Infinity,
     refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
     retry: 1,
   });
 };

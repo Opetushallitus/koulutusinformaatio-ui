@@ -67,9 +67,7 @@ type UseOppilaitosProps = {
 export const useOppilaitos = ({ oid, isOppilaitosOsa, isDraft }: UseOppilaitosProps) => {
   const { data = {}, ...rest } = useQuery(
     ['getOppilaitos', { oid, isOppilaitosOsa, isDraft }],
-    () =>
-      isOppilaitosOsa ? getOppilaitosOsa(oid, isDraft) : getOppilaitos(oid, isDraft),
-    { refetchOnWindowFocus: false, refetchOnReconnect: false, staleTime: 5000 }
+    () => (isOppilaitosOsa ? getOppilaitosOsa(oid, isDraft) : getOppilaitos(oid, isDraft))
   );
   return useMemo(() => handleOppilaitosData(isOppilaitosOsa, data, rest), [
     isOppilaitosOsa,
@@ -95,7 +93,6 @@ export const useOppilaitokset = ({
       queryFn: isOppilaitosOsa
         ? () => getOppilaitosOsa(oid, isDraft)
         : () => getOppilaitos(oid, isDraft),
-      ...{ refetchOnWindowFocus: false, refetchOnReconnect: false, staleTime: 5000 },
     }))
   );
 
@@ -183,7 +180,6 @@ export const usePaginatedTarjonta = ({
         : getOppilaitosTarjonta(fetchProps),
     {
       enabled: Boolean(oid),
-      refetchOnWindowFocus: false,
       keepPreviousData: true,
       staleTime: 60 * 1000,
       select: (tarjontaData: any) =>

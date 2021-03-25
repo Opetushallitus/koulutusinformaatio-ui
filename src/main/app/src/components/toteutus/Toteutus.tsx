@@ -131,7 +131,6 @@ const useOsaamisalatPageData = ({ ePerusteId, requestParams }: OsaamisalatProps)
     ['getOsaamisalatPageData', { ePerusteId, requestParams }],
     () => getOsaamisalatPageData({ ePerusteId, requestParams }),
     {
-      refetchOnWindowFocus: false,
       enabled: !_.isNil(ePerusteId) && !_.isEmpty(requestParams),
     }
   );
