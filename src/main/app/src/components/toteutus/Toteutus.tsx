@@ -149,11 +149,12 @@ const ToteutuksenYhteystiedot = ({ oids }: { oids: Array<string> }) => {
   );
 
   return (
-    <Box mt={4} width="100%">
+    <Box mt={8} width="100%" display="flex" flexDirection="column" alignItems="center">
+      <Typography variant="h2">{t('toteutus.yhteystiedot')}</Typography>
+      <Spacer />
       {filtered?.map((oppilaitos: any) => (
         <Yhteystiedot
           key={oppilaitos.oid}
-          heading={t('toteutus.yhteystiedot')}
           logo={oppilaitos.logo}
           yhteystiedot={oppilaitos.metadata.yhteystiedot}
           nimi={l.localize(oppilaitos)}
