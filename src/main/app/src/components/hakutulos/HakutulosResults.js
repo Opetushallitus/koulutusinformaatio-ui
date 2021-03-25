@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 
 import KoulutusKortti from './hakutulosKortit/KoulutusKortti';
-import OppilaitosKortti from './hakutulosKortit/OppilaitosKortti';
+import { OppilaitosKortti } from './hakutulosKortit/OppilaitosKortti';
 
 export const HakutulosResults = ({
   selectedTab,

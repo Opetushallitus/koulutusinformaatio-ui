@@ -146,8 +146,6 @@
     "korkeakoulu": "Korkeakoulut",
     "koulutukset": "Koulutukset",
     "koulutusalat": "Koulutusalat",
-    "koulutusohjelma": "koulutusohjelma",
-    "koulutusohjelmaa": "koulutusohjelmaa",
     "koulutustyypillä": "koulutustyypillä",
     "koulutustyyppi": "Koulutustyyppi",
     "koulutustyypillä_plural": "koulutustyypeillä",
@@ -193,6 +191,7 @@
     "tulokset-per-sivu": "Tulokset per sivu:",
     "tuloksia-per-sivu": "Tuloksia per sivu",
     "tutkintoon-johtavat": "Tutkintoon johtavat",
+    "tutkintoon-johtavaa-koulutusta": "tutkintoon johtavaa koulutusta",
     "valitse": "Valitse",
     "vertaile": "Vertaile"
   },
