@@ -7,8 +7,7 @@ import { colors } from '#/src/colors';
 
 const useStyles = makeStyles({
   textWithBackgroundBox: {
-    backgroundColor: colors.lightGreen2,
-    height: '24px',
+    backgroundColor: colors.lightGreenBg,
   },
   textWithBackgroundText: {
     textAlign: 'center',
@@ -18,16 +17,19 @@ const useStyles = makeStyles({
     color: colors.black,
     margin: '0 10px',
     lineHeight: '24px',
+    whiteSpace: 'nowrap',
   },
 });
 
-const TextWithBackground = (props) => {
+export const TextWithBackground = (props: React.PropsWithChildren<object>) => {
   const classes = useStyles();
   return (
-    <Box className={classes.textWithBackgroundBox}>
+    <Box
+      className={classes.textWithBackgroundBox}
+      display="flex"
+      justifyContent="center"
+      justifyItems="center">
       <div className={classes.textWithBackgroundText}>{props.children}</div>
     </Box>
   );
 };
-
-export default TextWithBackground;

@@ -14,6 +14,7 @@ export const FILTER_TYPES = {
   SIJAINTI: 'sijainti',
   OPETUSTAPA: 'opetustapa',
   VALINTATAPA: 'valintatapa',
+  HAKUKAYNNISSA: 'hakukaynnissa',
   HAKUTAPA: 'hakutapa',
 } as const;
 
@@ -24,6 +25,7 @@ export const FILTER_TYPES_ARR = [
   'sijainti',
   'opetustapa',
   'valintatapa',
+  'hakukaynnissa',
   'hakutapa',
 ] as const;
 

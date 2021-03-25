@@ -12,7 +12,7 @@ export type ElasticTuple = [string, { count: number; nimi: Translateable }];
 
 export type FilterType = {
   id: string;
-  nimi: Translateable;
+  nimi: Translateable | string; // Can be pretranslated too
   count: number;
 };
 

@@ -35,6 +35,7 @@ export const initialState = {
   koulutusala: [],
   opetuskieli: [],
   valintatapa: [],
+  hakukaynnissa: false, // This is the only filter which functionality does not rely on koodisto
   hakutapa: [],
   sijainti: [],
   selectedSijainti: [],
@@ -65,6 +66,9 @@ const hakutulosSlice = createSlice({
       state[filter] = exists
         ? state[filter].filter(({ id: itemId }) => id !== itemId)
         : state[filter].concat({ id, nimi, name: nimi }); // TODO: Remove name from here when it is refactored away
+    },
+    toggleHakukaynnissa: (state) => {
+      state.hakukaynnissa = !state.hakukaynnissa;
     },
     setOpetuskieli: (state, { payload }) => {
       state.opetuskieli = payload.newCheckedOpetuskielet;
@@ -104,6 +108,7 @@ const hakutulosSlice = createSlice({
       state.koulutusala = [];
       state.opetuskieli = [];
       state.valintatapa = [];
+      state.hakukaynnissa = false;
       state.hakutapa = [];
       state.sijainti = [];
       state.selectedSijainti = [];
@@ -151,11 +156,12 @@ const hakutulosSlice = createSlice({
 
         // NOTE: This sets and translates initial checked filter values
         // TODO: Really complex, refactor this
+        // TODO: Especially because we shouldn't save translated values into selected values
         if (isReload) {
           _.forEach(literals, (val, key) => {
             state[key] = val;
           });
-          _.forEach(filters, (idsStr, key) => {
+          _.forEach(filters, (filterValues, key) => {
             switch (key) {
               case FILTER_TYPES.KOULUTUSTYYPPI:
                 const koulutustyyppiFilters = pullUpAlakoodit(
@@ -165,19 +171,19 @@ const hakutulosSlice = createSlice({
                   koulutusData?.filters?.[`${key}-muu`]
                 );
                 state[key] = getCheckedFilterValues(
-                  idsStr,
+                  filterValues,
                   _.assign(koulutustyyppiFilters, koulutustyyppiMuuFilters)
                 );
                 break;
               case FILTER_TYPES.KOULUTUSALA:
                 const koulutusalaFilters = pullUpAlakoodit(koulutusData?.filters?.[key]);
-                state[key] = getCheckedFilterValues(idsStr, koulutusalaFilters);
+                state[key] = getCheckedFilterValues(filterValues, koulutusalaFilters);
                 break;
               case FILTER_TYPES.SIJAINTI:
-                const maakunnatIds = _.split(idsStr, ',').filter((id) =>
+                const maakunnatIds = _.split(filterValues, ',').filter((id) =>
                   _.startsWith(id, 'maakunta_')
                 );
-                const kunnatIds = _.split(idsStr, ',').filter((id) =>
+                const kunnatIds = _.split(filterValues, ',').filter((id) =>
                   _.startsWith(id, 'kunta_')
                 );
                 if (_.size(maakunnatIds) > 0) {
@@ -193,8 +199,14 @@ const hakutulosSlice = createSlice({
                   );
                 }
                 break;
+              case FILTER_TYPES.HAKUKAYNNISSA:
+                state.hakukaynnissa = filterValues === 'true';
+                break;
               default:
-                state[key] = getCheckedFilterValues(idsStr, koulutusData.filters[key]);
+                state[key] = getCheckedFilterValues(
+                  filterValues,
+                  koulutusData.filters[key]
+                );
                 break;
             }
           });
@@ -240,6 +252,7 @@ export const {
   searchAPICallError,
   setOpetuskieli,
   handleFilterToggle,
+  toggleHakukaynnissa,
   setKoulutustyyppi,
   setKoulutusala,
   setSijainti,
@@ -293,15 +306,7 @@ export const searchAll = (
     dispatch(searchAPICallStart());
     const koulutusData = await searchAPI.getKoulutukset(requestParams);
     const oppilaitosData = await searchAPI.getOppilaitokset(requestParams);
-    const filters = _.pick(requestParams, [
-      'opetuskieli',
-      'valintatapa',
-      'hakutapa',
-      'koulutustyyppi',
-      'koulutusala',
-      'sijainti',
-      'opetustapa',
-    ]);
+    const filters = _.pick(requestParams, FILTER_TYPES_ARR);
     const literals = _.pick(requestParams, ['size', 'order', 'sort']);
     dispatch(
       searchAllSuccess({
@@ -376,6 +381,7 @@ export const searchAndMoveToHaku = ({ history }) => (dispatch, getState) => {
       'size',
       'opetuskieli',
       'valintatapa',
+      'hakukaynnissa',
       'hakutapa',
       'koulutustyyppi',
       'koulutusala',

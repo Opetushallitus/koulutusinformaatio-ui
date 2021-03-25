@@ -151,7 +151,8 @@ describe('Haku', () => {
         verkkoOpiskeluChk().should('exist').should('not.be.checked');
       });
   });
-  it('Valintatapa filter checkboxes', () => {
+  // TODO: Skipped until component is again visible, see ValintatapaSuodatin.tsx
+  it.skip('Valintatapa filter checkboxes', () => {
     cy.visit('/fi/haku/auto');
     const koepisteetChk = () =>
       cy.findByRole('checkbox', { name: /Koepisteet \(\d*\)/i });

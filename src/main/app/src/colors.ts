@@ -3,7 +3,7 @@ export const colors = {
   brandGreen: '#3A7A10', // Header, CTA, Links
   darkGreen: '#254905', // Hover states
   lightGreen: '#9CFF5A', // Focus states
-  lightGreen2: '#CCFFCC', // Label BG
+  lightGreenBg: '#CCFFCC', // Label BG
   black: '#1D1D1D', // Headings
   darkGrey: '#4C4C4C', // paragraphs + input field text
   lightGrey: '#B2B2B2', // Disabled states
