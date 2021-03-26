@@ -149,18 +149,27 @@ const ToteutuksenYhteystiedot = ({ oids }: { oids: Array<string> }) => {
   );
 
   return (
-    <Box mt={8} width="100%" display="flex" flexDirection="column" alignItems="center">
-      <Typography variant="h2">{t('toteutus.yhteystiedot')}</Typography>
-      <Spacer />
-      {filtered?.map((oppilaitos: any) => (
-        <Yhteystiedot
-          key={oppilaitos.oid}
-          logo={oppilaitos.logo}
-          yhteystiedot={oppilaitos.metadata.yhteystiedot}
-          nimi={l.localize(oppilaitos)}
-        />
-      ))}
-    </Box>
+    <>
+      {filtered?.length > 0 && (
+        <Box
+          mt={8}
+          width="100%"
+          display="flex"
+          flexDirection="column"
+          alignItems="center">
+          <Typography variant="h2">{t('toteutus.yhteystiedot')}</Typography>
+          <Spacer />
+          {filtered?.map((oppilaitos: any) => (
+            <Yhteystiedot
+              key={oppilaitos.oid}
+              logo={oppilaitos.logo}
+              yhteystiedot={oppilaitos.metadata.yhteystiedot}
+              nimi={l.localize(oppilaitos)}
+            />
+          ))}
+        </Box>
+      )}
+    </>
   );
 };
 
@@ -391,7 +400,7 @@ export const ToteutusPage = () => {
                               {l.localize(yhteyshenkilo.puhelinnumero)}
                             </Typography>
                           </Grid>
-                          {yhteyshenkilo.wwwSivu && (
+                          {!_.isEmpty(yhteyshenkilo.wwwSivu) && (
                             <Grid item>
                               <Link
                                 target="_blank"

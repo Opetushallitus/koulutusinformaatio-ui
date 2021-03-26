@@ -15,11 +15,12 @@ async function fetchOsoitteet(oppilaitosOids: Array<string>) {
 
   return oppilaitosDatas.map((data) => {
     // NOTE: Prioritize using oppilaitoksenOsa, otherwise the address of main oppilaitos is found inside oppilaitos-property
-    const osoiteData = (data?.oppilaitoksenOsa || data?.oppilaitos?.oppilaitos).metadata
-      .yhteystiedot.osoite;
+    const osoiteData =
+      (data?.oppilaitoksenOsa || data?.oppilaitos?.oppilaitos)?.metadata.yhteystiedot
+        ?.osoite ?? null;
     return {
       oppilaitosOid: data.oid,
-      yhteystiedot: OsoiteParser.parseOsoiteData(osoiteData).yhteystiedot,
+      yhteystiedot: osoiteData && OsoiteParser.parseOsoiteData(osoiteData).yhteystiedot,
     };
   });
 }
