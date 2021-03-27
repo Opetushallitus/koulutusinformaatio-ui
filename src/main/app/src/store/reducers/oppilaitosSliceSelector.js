@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-import { Localizer as l } from '#/src/tools/Utils';
+import { getLanguage } from '#/src/tools/localization';
 
 // State data getters
 function getPage(state) {
@@ -42,6 +42,6 @@ export const getTulevaTarjontaPaginationProps = createSelector(
     size,
     order,
     offset,
-    lng: l.getLanguage(),
+    lng: getLanguage(),
   })
 );

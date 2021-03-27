@@ -24,11 +24,8 @@ import {
   selectSuositellutKoulutukset,
   selectTulevatJarjestajat,
 } from '#/src/store/reducers/koulutusSlice';
-import {
-  getLocalizedOpintojenLaajuus,
-  Localizer as l,
-  sanitizedHTMLParser,
-} from '#/src/tools/Utils';
+import { getLanguage, localize } from '#/src/tools/localization';
+import { getLocalizedOpintojenLaajuus, sanitizedHTMLParser } from '#/src/tools/Utils';
 
 import { useUrlParams } from '../hakutulos/UseUrlParams';
 import { KoulutusInfoGrid } from './KoulutusInfoGrid';
@@ -84,7 +81,7 @@ const findTutkinnonOsa = (eperuste) => (id) =>
   _.head(eperuste.tutkinnonOsat.filter((t) => t.id === id));
 
 const getKuvausHtmlSection = (t) => (captionKey, localizableText) =>
-  localizableText ? '<h3>' + t(captionKey) + '</h3>' + l.localize(localizableText) : '';
+  localizableText ? '<h3>' + t(captionKey) + '</h3>' + localize(localizableText) : '';
 
 export const KoulutusPage = () => {
   const { isDraft } = useUrlParams();
@@ -122,7 +119,7 @@ export const KoulutusPage = () => {
           'koulutus.tyotehtavatJoissaVoiToimia',
           koulutus?.tyotehtavatJoissaVoiToimia
         )
-      : l.localize(koulutus?.kuvaus);
+      : localize(koulutus?.kuvaus);
 
   const createTutkinnonOsa = (tutkinnonOsa) =>
     sanitizedHTMLParser(
@@ -136,7 +133,7 @@ export const KoulutusPage = () => {
         )
     );
 
-  const koulutusAlat = koulutus?.koulutusAla?.map((ala) => l.localize(ala))?.join(' + ');
+  const koulutusAlat = koulutus?.koulutusAla?.map((ala) => localize(ala))?.join(' + ');
 
   return loading ? (
     <LoadingCircle />
@@ -147,7 +144,7 @@ export const KoulutusPage = () => {
           <Murupolku
             path={[
               { name: t('haku.otsikko'), link: hakuUrl.url },
-              { name: l.localize(koulutus?.tutkintoNimi) },
+              { name: localize(koulutus?.tutkintoNimi) },
             ]}
           />
         </Box>
@@ -160,7 +157,7 @@ export const KoulutusPage = () => {
         </Box>
         <Box mt={1}>
           <Typography className={classes.tutkintoHeader} variant="h1" component="h1">
-            {l.localize(koulutus?.tutkintoNimi)}
+            {localize(koulutus?.tutkintoNimi)}
           </Typography>
         </Box>
         <Box mt={7.5}>
@@ -199,9 +196,9 @@ export const KoulutusPage = () => {
               } = tutkinnonOsa;
               const eperuste = findEperuste(koulutus)(ePerusteId);
               const title = [
-                `${l.localize(nimi)},`,
-                l.localize(opintojenLaajuus) || opintojenLaajuusNumero,
-                l.localize(opintojenLaajuusyksikko),
+                `${localize(nimi)},`,
+                localize(opintojenLaajuus) || opintojenLaajuusNumero,
+                localize(opintojenLaajuusyksikko),
               ].join(' ');
               const foundTutkinnonOsa = findTutkinnonOsa(eperuste)(tutkinnonosaId);
 
@@ -215,7 +212,7 @@ export const KoulutusPage = () => {
                       rel="noopener"
                       href={urls.url(
                         'eperusteet-service.eperuste.kuvaus',
-                        l.getLanguage(),
+                        getLanguage(),
                         ePerusteId,
                         tutkinnonosaViite
                       )}>

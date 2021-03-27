@@ -15,12 +15,8 @@ import { useTranslation } from 'react-i18next';
 
 import { colors } from '#/src/colors';
 import Spacer from '#/src/components/common/Spacer';
-import {
-  formatDateString,
-  Localizer as l,
-  sanitizedHTMLParser,
-  toId,
-} from '#/src/tools/Utils';
+import { localize, localizeOsoite } from '#/src/tools/localization';
+import { formatDateString, sanitizedHTMLParser, toId } from '#/src/tools/Utils';
 import { Koodi, Translateable } from '#/src/types/common';
 import { Liite } from '#/src/types/ValintaperusteTypes';
 
@@ -52,7 +48,7 @@ const OsoiteComponent = ({
             <Box m={1}>
               <Typography variant="h5">{t('valintaperuste.toimituspaikka')}</Typography>
               <Typography variant="body1">
-                {`${sahkoposti} - ${l.localizeOsoite(osoite, postinumero)}`}
+                {`${sahkoposti} - ${localizeOsoite(osoite, postinumero)}`}
               </Typography>
             </Box>
           </Grid>
@@ -88,8 +84,8 @@ const LiiteComponent = ({ nimi, kuvaus }: Liite) => (
     </Grid>
     <Grid item xs={10}>
       <Box m={1}>
-        <Typography variant="h5">{l.localize(nimi)}</Typography>
-        {sanitizedHTMLParser(l.localize(kuvaus))}
+        <Typography variant="h5">{localize(nimi)}</Typography>
+        {sanitizedHTMLParser(localize(kuvaus))}
       </Box>
     </Grid>
   </>
@@ -97,7 +93,7 @@ const LiiteComponent = ({ nimi, kuvaus }: Liite) => (
 
 const tyypeittain = (liitteet: Array<Liite>) =>
   _.sortBy(
-    Object.entries(_.groupBy(liitteet || [], (liite) => l.localize(liite.tyyppi.nimi))),
+    Object.entries(_.groupBy(liitteet || [], (liite) => localize(liite.tyyppi.nimi))),
     _.first
   );
 

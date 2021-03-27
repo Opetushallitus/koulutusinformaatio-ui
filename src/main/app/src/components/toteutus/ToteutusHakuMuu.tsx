@@ -10,8 +10,9 @@ import { AccordionText } from '#/src/components/common/AccordionText';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import Spacer from '#/src/components/common/Spacer';
 import { selectMuuHaku } from '#/src/store/reducers/toteutusSlice';
+import { localize } from '#/src/tools/localization';
 import { useOppilaitosOsoite } from '#/src/tools/UseOppilaitosOsoiteHook';
-import { formatDateRange, formatDateString, Localizer as l } from '#/src/tools/Utils';
+import { formatDateRange, formatDateString } from '#/src/tools/Utils';
 import { Translateable } from '#/src/types/common';
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +34,7 @@ const getTarjoajaYhteystiedot = (
     const tarjoajaNimi = tarjoajat.find(
       (tarjoaja) => tarjoaja.oid === osoite.oppilaitosOid
     )?.nimi;
-    return `${l.localize(tarjoajaNimi)} · ${osoite.yhteystiedot}`;
+    return `${localize(tarjoajaNimi)} · ${osoite.yhteystiedot}`;
   });
 
 type Props = { oid: string };
@@ -74,7 +75,7 @@ export const ToteutusHakuMuu = ({ oid }: Props) => {
             <Grid container direction="column" spacing={2}>
               <Grid item>
                 <Typography className={classes.hakuName}>
-                  {l.localize(muuHaku.nimi)}
+                  {localize(muuHaku.nimi)}
                 </Typography>
               </Grid>
               <Grid item container direction="row">
@@ -122,7 +123,7 @@ export const ToteutusHakuMuu = ({ oid }: Props) => {
                 <Grid item>
                   <AccordionText
                     title={t('toteutus.lisatietoa-ilmoittautumisesta')}
-                    text={l.localize(muuHaku.lisatietoaHakeutumisesta)}
+                    text={localize(muuHaku.lisatietoaHakeutumisesta)}
                   />
                 </Grid>
               )}
@@ -130,7 +131,7 @@ export const ToteutusHakuMuu = ({ oid }: Props) => {
                 <Grid item>
                   <AccordionText
                     title={t('toteutus.lisatietoa-valintaperusteista')}
-                    text={l.localize(muuHaku.lisatietoaValintaperusteista)}
+                    text={localize(muuHaku.lisatietoaValintaperusteista)}
                   />
                 </Grid>
               )}
@@ -148,7 +149,7 @@ export const ToteutusHakuMuu = ({ oid }: Props) => {
                   size="large"
                   color="primary"
                   target="_blank"
-                  href={l.localize(muuHaku.hakulomakeLinkki)}
+                  href={localize(muuHaku.hakulomakeLinkki)}
                   disabled={!muuHaku.isHakuAuki}>
                   <Typography style={{ color: colors.white }} variant="body1">
                     {t('toteutus.ilmoittaudu-koulutukseen')}

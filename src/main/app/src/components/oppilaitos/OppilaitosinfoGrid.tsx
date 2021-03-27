@@ -10,7 +10,8 @@ import _fp from 'lodash/fp';
 import { useTranslation } from 'react-i18next';
 
 import { InfoGrid } from '#/src/components/common/InfoGrid';
-import { Localizer as l, condArray } from '#/src/tools/Utils';
+import { getLanguage, localizeSortedArrayToString } from '#/src/tools/localization';
+import { condArray } from '#/src/tools/Utils';
 import { Koodi } from '#/src/types/common';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,11 +40,11 @@ export const OppilaitosinfoGrid = ({
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const paikkakunnat = l.localizeSortedArrayToString(kotipaikat);
+  const paikkakunnat = localizeSortedArrayToString(kotipaikat);
   const opetuskielet = _fp.compose(
     _fp.join(', '),
     _fp.map(_fp.capitalize),
-    _fp.map(`nimi.${l.getLanguage()}`)
+    _fp.map(`nimi.${getLanguage()}`)
   )(opetuskieli);
 
   const perustiedotData = [

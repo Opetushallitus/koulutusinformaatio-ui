@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 
 import { InfoGrid } from '#/src/components/common/InfoGrid';
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
-import { Localizer as l } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
 import { Translateable } from '#/src/types/common';
 import { Opetus, Yksikko } from '#/src/types/ToteutusTypes';
 
@@ -71,7 +71,7 @@ const suunniteltuKesto = (t: TFunction, vuosi?: number, kk?: number) => {
     .join('\n');
 };
 
-const localizeMap = (v: Translateable) => l.localize(v);
+const localizeMap = (v: Translateable) => localize(v);
 
 type Props = {
   laajuus: string;

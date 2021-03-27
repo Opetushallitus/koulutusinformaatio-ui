@@ -2,7 +2,8 @@ import axios from 'axios';
 import { urls } from 'oph-urls-js';
 import qs from 'query-string';
 
-import { Common as C, Localizer as l } from '#/src/tools/Utils';
+import { getLanguage } from '#/src/tools/localization';
+import { Common as C } from '#/src/tools/Utils';
 
 const client = axios.create({
   headers: { 'Caller-Id': '1.2.246.562.10.00000000001.konfoui' },
@@ -70,12 +71,12 @@ export const getValintaperuste = createEntityGetter('valintaperusteet');
 export const searchAPI = {
   getKoulutukset(requestParams) {
     return get(urls.url('konfo-backend.search.koulutukset'), {
-      params: { lng: l.getLanguage(), ...C.cleanRequestParams(requestParams) },
+      params: { lng: getLanguage(), ...C.cleanRequestParams(requestParams) },
     });
   },
   getOppilaitokset(requestParams) {
     return get(urls.url('konfo-backend.search.oppilaitokset'), {
-      params: { lng: l.getLanguage(), ...C.cleanRequestParams(requestParams) },
+      params: { lng: getLanguage(), ...C.cleanRequestParams(requestParams) },
     });
   },
 };

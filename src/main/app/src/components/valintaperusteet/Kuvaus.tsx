@@ -18,7 +18,8 @@ import { useTranslation } from 'react-i18next';
 
 import { colors } from '#/src/colors';
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
-import { Localizer as l, toId } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
+import { toId } from '#/src/tools/Utils';
 import { Translateable } from '#/src/types/common';
 
 import {
@@ -87,7 +88,7 @@ const Taulukko = ({ data: { rows } }: SisaltoTaulukko) => {
           <StyledTableRow>
             {headerRow?.columns.map((col, index) => (
               <HeaderCell key={`cell-${index}`} align="left">
-                {l.localize(col?.text)}
+                {localize(col?.text)}
               </HeaderCell>
             ))}
           </StyledTableRow>
@@ -99,7 +100,7 @@ const Taulukko = ({ data: { rows } }: SisaltoTaulukko) => {
               <StyledTableRow key={`row-${index}`}>
                 {columns.map((col, idx) => (
                   <Cell key={`cell-${idx}`} align="left">
-                    {l.localize(col?.text)}
+                    {localize(col?.text)}
                   </Cell>
                 ))}
               </StyledTableRow>
@@ -137,13 +138,10 @@ export const ValintatavatSisallysluettelo = (valintatavat: Array<Valintatapa>) =
     ? valintatavat.map(({ nimi, sisalto }, index) =>
         // Link to title and links to sisalto subtitles given in HTML-string
         [
-          Lnk(l.localize(nimi), index + 1, false),
+          Lnk(localize(nimi), index + 1, false),
           ...sisalto.map((s, i) =>
             s.tyyppi === 'teksti'
-              ? KuvausSisallysluettelo(
-                  s.data,
-                  `${toId(l.localize(nimi))}-teksti-${i}`
-                )(Lnk)
+              ? KuvausSisallysluettelo(s.data, `${toId(localize(nimi))}-teksti-${i}`)(Lnk)
               : null
           ),
         ]
@@ -153,8 +151,8 @@ export const ValintatavatSisallysluettelo = (valintatavat: Array<Valintatapa>) =
 const ValintatapaComponent = ({ nimi, sisalto }: Valintatapa, index: number) => (
   <div key={`valintatapa-${index}`}>
     <Box pb={1}>
-      <Typography variant="h2" id={`${toId(l.localize(nimi))}`}>
-        {l.localize(nimi)}
+      <Typography variant="h2" id={`${toId(localize(nimi))}`}>
+        {localize(nimi)}
       </Typography>
     </Box>
     {sisalto.map(SisaltoComponent)}

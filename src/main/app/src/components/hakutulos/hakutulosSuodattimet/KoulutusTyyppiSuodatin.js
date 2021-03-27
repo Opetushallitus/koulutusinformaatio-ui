@@ -20,7 +20,7 @@ import { FILTER_TYPES } from '#/src/constants';
 import { useQueryParams } from '#/src/hooks';
 import { twoLevelFilterUpdateAndSearch } from '#/src/store/reducers/hakutulosSlice';
 import { getKoulutustyyppiFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
-import { Localizer as l } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
 
 import { useUrlParams } from '../UseUrlParams';
 import {
@@ -102,7 +102,7 @@ const KoulutustyyppiSuodatin = ({
   }
 
   function getLocalizedKoulutustyyppi(alakoodiKey, alakoodiValue) {
-    return l.localize(alakoodiValue) || t(`haku.${alakoodiKey}`);
+    return localize(alakoodiValue) || t(`haku.${alakoodiKey}`);
   }
 
   // TODO: Use Filter.tsx if possible

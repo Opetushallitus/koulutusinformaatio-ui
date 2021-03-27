@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
 import {
+  AppBar,
   Box,
   Chip,
-  IconButton,
-  Icon,
-  makeStyles,
   CssBaseline,
-  AppBar,
-  Toolbar,
   Hidden,
+  Icon,
+  IconButton,
+  makeStyles,
+  Toolbar,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
@@ -22,7 +22,7 @@ import OPOLogoFI from '#/src/assets/images/OPO_Logo_Header_suomi.svg';
 import { colors } from '#/src/colors';
 import BetaBanner from '#/src/components/common/BetaBanner';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
-import { Localizer as l } from '#/src/tools/Utils';
+import { getLanguage } from '#/src/tools/localization';
 
 import LanguageDropDown from './LanguageDropDown';
 
@@ -75,7 +75,7 @@ const Header = (props) => {
   const [betaBanner, setBetaBanner] = useState(true);
 
   const OpintopolkuHeaderLogo = () => {
-    switch (l.getLanguage()) {
+    switch (getLanguage()) {
       case 'fi':
         return OPOLogoFI;
       case 'en':

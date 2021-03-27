@@ -19,7 +19,7 @@ import oppilaitos_img from '#/src/assets/images/logo-oppilaitos.png';
 import { educationTypeColorCode } from '#/src/colors';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import { MUI_BREAKPOINTS } from '#/src/constants';
-import { Localizer as l } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
 import { Koodi, Translateable } from '#/src/types/common';
 
 const useStyles = makeStyles((theme) => ({
@@ -68,17 +68,17 @@ export const OppilaitosKortti = ({ oppilaitos }: Props) => {
   const muiScreenSizeMinLg = useMediaQuery(MUI_BREAKPOINTS.MIN_LG);
   const screenSizeMinCustomXs = useMediaQuery(MUI_BREAKPOINTS.MIN_XS_400);
 
-  const paikkakunnatStr = (oppilaitos?.paikkakunnat || []).map(l.localize).join(', ');
+  const paikkakunnatStr = (oppilaitos?.paikkakunnat || []).map(localize).join(', ');
 
   const kuvaus =
-    _.truncate(l.localize(oppilaitos?.kuvaus).replace(/<[^>]*>/gm, ''), {
+    _.truncate(localize(oppilaitos?.kuvaus).replace(/<[^>]*>/gm, ''), {
       length: 255,
     }) || t('haku.ei_kuvausta');
 
   const koulutusOhjelmatStr = `${oppilaitos?.koulutusohjelmia || 0} ${t(
     'haku.tutkintoon-johtavaa-koulutusta'
   )}`;
-  const logoAltText = `${l.localize(oppilaitos)} ${t('haku.oppilaitoksen-logo')}`;
+  const logoAltText = `${localize(oppilaitos)} ${t('haku.oppilaitoksen-logo')}`;
 
   return (
     <LocalizedLink
@@ -108,7 +108,7 @@ export const OppilaitosKortti = ({ oppilaitos }: Props) => {
               alignItems="center">
               <Grid item sm={12} xs={screenSizeMinCustomXs ? 10 : 12}>
                 <Typography variant="h6" style={{ fontWeight: 'bold' }}>
-                  {l.localize(oppilaitos)}
+                  {localize(oppilaitos)}
                 </Typography>
               </Grid>
               <Hidden smUp>

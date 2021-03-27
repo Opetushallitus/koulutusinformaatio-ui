@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Button, Chip, Grid, makeStyles } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import { colors } from '#/src/colors';
@@ -15,7 +15,7 @@ import {
   setSelectedFilters,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
-import { Localizer as l } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
 
 import { useUrlParams } from '../UseUrlParams';
 
@@ -72,7 +72,7 @@ const ChipList = ({
           root: classes.chipRoot,
           label: classes.chipLabel,
         }}
-        label={l.localize(name) || t(`haku.${id}`)}
+        label={localize(name) || t(`haku.${id}`)}
         onDelete={getHandleDelete(filterType, id)}
       />
     ));

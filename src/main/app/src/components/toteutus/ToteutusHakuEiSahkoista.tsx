@@ -9,7 +9,8 @@ import { colors } from '#/src/colors';
 import { IconBackground } from '#/src/components/common/IconBackground';
 import Spacer from '#/src/components/common/Spacer';
 import { selectEiSahkoistaHaku } from '#/src/store/reducers/toteutusSlice';
-import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
+import { sanitizedHTMLParser } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({
   hakuName: {
@@ -63,9 +64,7 @@ export const ToteutusHakuEiSahkoista = ({ oid }: Props) => {
             </Grid>
             <Grid item>
               <Typography variant="body1" component="div">
-                {sanitizedHTMLParser(
-                  l.localize(eiSahkoistaData?.lisatietoaHakeutumisesta)
-                )}
+                {sanitizedHTMLParser(localize(eiSahkoistaData?.lisatietoaHakeutumisesta))}
               </Typography>
             </Grid>
           </Grid>

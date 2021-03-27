@@ -3,7 +3,8 @@ import React, { useEffect } from 'react';
 import { urls } from 'oph-urls-js';
 import OskariRPC from 'oskari-rpc';
 
-import { OsoiteParser as op, Localizer as l } from '#/src/tools/Utils';
+import { getLanguage } from '#/src/tools/localization';
+import { OsoiteParser as op } from '#/src/tools/Utils';
 
 const MARKER_ID = 'OPPILAITOS';
 const ZOOM_LEVEL = 9;
@@ -92,7 +93,7 @@ const OskariKartta = ({ id, osoite, postitoimipaikka }) => {
       title="kartta"
       id={id}
       style={{ border: 'none', width: '100%', height: '100%' }}
-      src={urls.url('kartta.publish-url', l.getLanguage())}
+      src={urls.url('kartta.publish-url', getLanguage())}
     />
   );
 };
