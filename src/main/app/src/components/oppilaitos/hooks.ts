@@ -19,11 +19,8 @@ import {
   getTarjontaPaginationProps,
   getTulevaTarjontaPaginationProps,
 } from '#/src/store/reducers/oppilaitosSliceSelector';
+import { getLocalizedMaksullisuus } from '#/src/tools/localization';
 import { Localizer as l } from '#/src/tools/Utils';
-
-// Helpers
-const getLocalizedmaksullisuus = (isMaksullinen: boolean, maksuAmount: number) =>
-  isMaksullinen ? `${maksuAmount} €` : l.getTranslationForKey('toteutus.maksuton');
 
 const removeOppilaitosName = (osaName: string, oppilaitosName: string) =>
   osaName.replace(`${oppilaitosName}, `, '');
@@ -119,7 +116,7 @@ const selectTarjonta = (tarjonta: any) => {
         description: l.localize(t.kuvaus),
         locations: l.localizeSortedArrayToString(t.kunnat),
         opetustapa: l.localizeSortedArrayToString(t.opetusajat),
-        price: getLocalizedmaksullisuus(t.onkoMaksullinen, t.maksunMaara),
+        price: getLocalizedMaksullisuus(t.maksullisuustyyppi, t.maksunMaara),
         tyyppi: t.koulutustyyppi,
         kuva: t.kuva,
         toteutusOid: t.toteutusOid,

@@ -15,6 +15,7 @@ import {
   fetchKoulutusJarjestajat,
   selectJarjestajat,
 } from '#/src/store/reducers/koulutusSlice';
+import { getLocalizedMaksullisuus } from '#/src/tools/localization';
 import { Localizer as l } from '#/src/tools/Utils';
 import { Translateable } from '#/src/types/common';
 import { Jarjestaja } from '#/src/types/ToteutusTypes';
@@ -83,9 +84,6 @@ export const ToteutusList = ({ oid }: Props) => {
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
-  const getLocalizedMaksullisuus = (isMaksullinen: boolean, maksuAmount: number) =>
-    isMaksullinen ? `${maksuAmount} €` : t('toteutus.maksuton');
 
   const [chosenFilters, setChosenFilters] = useState(initialValues);
   const chosenFilterCount = useMemo(
@@ -189,7 +187,7 @@ export const ToteutusList = ({ oid }: Props) => {
                   locations={localizeArrayToString(toteutus.kunnat)}
                   opetustapa={localizeArrayToString(toteutus.opetusajat)}
                   price={getLocalizedMaksullisuus(
-                    toteutus.onkoMaksullinen,
+                    toteutus.maksullisuustyyppi,
                     toteutus.maksunMaara
                   )}
                   tyyppi={toteutus.koulutustyyppi}
