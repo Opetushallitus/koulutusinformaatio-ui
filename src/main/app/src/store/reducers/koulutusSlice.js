@@ -214,7 +214,9 @@ export const fetchKoulutusWithRelatedData = (oid, draft) => {
   return (dispatch) => {
     Promise.all([
       dispatch(fetchKoulutus(oid, draft)),
-      dispatch(fetchSuositellutKoulutukset(oid)),
+      // NOTE: Suosittelu API is not available in any environment currently.
+      // TODO: Remove suosittelu code if it's not meant to be used anymore.
+      //dispatch(fetchSuositellutKoulutukset(oid)),
       dispatch(fetchTulevatJarjestajat(oid)),
     ]);
   };
