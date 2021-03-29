@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { TFunction } from 'i18next';
 
-import { Localizer as l } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
 import { Alkamiskausi, Alkamiskausityyppi } from '#/src/types/ToteutusTypes';
 
 export const formatAloitus = (
@@ -30,9 +30,7 @@ export const formatAloitus = (
       };
     case Alkamiskausityyppi.ALKAMISKAUSI_JA_VUOSI:
       return {
-        alkaaText: [l.localize(koulutuksenAlkamiskausi), koulutuksenAlkamisvuosi].join(
-          ' '
-        ),
+        alkaaText: [localize(koulutuksenAlkamiskausi), koulutuksenAlkamisvuosi].join(' '),
       };
     default:
       return {};

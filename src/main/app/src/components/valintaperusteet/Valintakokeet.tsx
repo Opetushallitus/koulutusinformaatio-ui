@@ -7,7 +7,8 @@ import { useTranslation } from 'react-i18next';
 import { colors } from '#/src/colors';
 import { Accordion } from '#/src/components/common/Accordion';
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
-import { formatDateString, Localizer as l, toId } from '#/src/tools/Utils';
+import { localize, localizeOsoite } from '#/src/tools/localization';
+import { formatDateString, toId } from '#/src/tools/Utils';
 import { Koodi, Translateable } from '#/src/types/common';
 
 const useStyles = makeStyles(() => ({
@@ -63,10 +64,8 @@ const TilaisuusComponent = ({
         <Grid item xs={12}>
           <Box py={1}>
             <SubHeading>{t('valintaperuste.jarjestyspaikka')}</SubHeading>
-            <Typography variant="body1">{l.localize(jarjestamispaikka)}</Typography>
-            <Typography variant="body1">
-              {l.localizeOsoite(osoite, postinumero)}
-            </Typography>
+            <Typography variant="body1">{localize(jarjestamispaikka)}</Typography>
+            <Typography variant="body1">{localizeOsoite(osoite, postinumero)}</Typography>
           </Box>
         </Grid>
       ) : null}
@@ -84,7 +83,7 @@ const TilaisuusComponent = ({
 
 export const ValintakokeetSisallysluettelo = (valintakokeet: Array<any>) => (Lnk: any) =>
   !_.isEmpty(valintakokeet)
-    ? valintakokeet.map(({ nimi }, index) => Lnk(l.localize(nimi), index + 1, false))
+    ? valintakokeet.map(({ nimi }, index) => Lnk(localize(nimi), index + 1, false))
     : null;
 
 type Tilaisuus = {
@@ -144,7 +143,7 @@ export const Valintakokeet = ({
         </Box>
       )}
       {valintakokeet.map(({ nimi, tyyppi, tilaisuudet, metadata = {} }, index) => {
-        const localizedTyyppi = l.localize(tyyppi?.nimi);
+        const localizedTyyppi = localize(tyyppi?.nimi);
         const {
           ohjeetErityisjarjestelyihin,
           ohjeetEnnakkovalmistautumiseen,
@@ -155,7 +154,7 @@ export const Valintakokeet = ({
         return (
           <div key={`valintakoe-${index}`}>
             <Card
-              id={`${toId(l.localize(nimi))}`}
+              id={`${toId(localize(nimi))}`}
               elevation={0}
               style={{
                 backgroundColor: colors.grey,
@@ -165,7 +164,7 @@ export const Valintakokeet = ({
               <CardContent>
                 <Typography variant="body1">{localizedTyyppi}</Typography>
                 <Typography className={classes.valintakoeHeader} variant="h4">
-                  {l.localize(nimi)}
+                  {localize(nimi)}
                 </Typography>
                 {!_.isEmpty(tietoja) && <LocalizedHTML data={tietoja!} />}
                 {vahimmaispisteet && (

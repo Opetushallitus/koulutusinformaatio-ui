@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   Button,
@@ -13,19 +13,19 @@ import {
 import { ExpandMore, IndeterminateCheckBoxOutlined } from '@material-ui/icons';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { MUI_BREAKPOINTS, FILTER_TYPES } from '#/src/constants';
+import { FILTER_TYPES, MUI_BREAKPOINTS } from '#/src/constants';
 import { useQueryParams } from '#/src/hooks';
 import { twoLevelFilterUpdateAndSearch } from '#/src/store/reducers/hakutulosSlice';
 import { getKoulutusalaFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
-import { Localizer as l } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
 
 import { useUrlParams } from '../UseUrlParams';
 import {
   SuodatinAccordion,
-  SuodatinAccordionSummary,
   SuodatinAccordionDetails,
+  SuodatinAccordionSummary,
   SuodatinCheckbox,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
@@ -128,7 +128,7 @@ const KoulutusalaSuodatin = ({
           primary={
             <Grid container justify="space-between" wrap="nowrap">
               <Grid item style={{ fontWeight: 'bold' }}>
-                {l.localize(openedKoulutusala[1])}
+                {localize(openedKoulutusala[1])}
               </Grid>
               <Grid item>{`(${_.get(openedKoulutusala, `[1].count`) || 0})`}</Grid>
             </Grid>
@@ -156,9 +156,7 @@ const KoulutusalaSuodatin = ({
             id={`${openedKoulutusala[0]}_${kaTaso2Id}`}
             primary={
               <Grid container justify="space-between" wrap="nowrap">
-                <Grid item>
-                  {l.localize(openedKoulutusala[1]?.alakoodit?.[kaTaso2Id])}
-                </Grid>
+                <Grid item>{localize(openedKoulutusala[1]?.alakoodit?.[kaTaso2Id])}</Grid>
                 <Grid item>
                   {`(${openedKoulutusala[1]?.alakoodit?.[kaTaso2Id]?.count || 0})`}
                 </Grid>
@@ -210,7 +208,7 @@ const KoulutusalaSuodatin = ({
                       style={
                         isSelected && !muiScreenSizeMinMd ? { fontWeight: 600 } : {}
                       }>
-                      <Grid item>{l.localize(koulutusalaArr[1])}</Grid>
+                      <Grid item>{localize(koulutusalaArr[1])}</Grid>
                       <Grid item>{`(${_.get(koulutusalaArr, '[1].count') || 0})`}</Grid>
                     </Grid>
                   }

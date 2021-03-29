@@ -19,11 +19,11 @@ import {
   getTarjontaPaginationProps,
   getTulevaTarjontaPaginationProps,
 } from '#/src/store/reducers/oppilaitosSliceSelector';
-import { Localizer as l } from '#/src/tools/Utils';
-
-// Helpers
-const getLocalizedmaksullisuus = (isMaksullinen: boolean, maksuAmount: number) =>
-  isMaksullinen ? `${maksuAmount} €` : l.getTranslationForKey('toteutus.maksuton');
+import {
+  localize,
+  localizeSortedArrayToString,
+  getLocalizedMaksullisuus,
+} from '#/src/tools/localization';
 
 const removeOppilaitosName = (osaName: string, oppilaitosName: string) =>
   osaName.replace(`${oppilaitosName}, `, '');
@@ -46,11 +46,11 @@ const handleOppilaitosData = (
             _fp.filter({ status: ACTIVE }),
             _fp.map((osa: any) => ({
               ...osa,
-              nimi: removeOppilaitosName(l.localize(osa.nimi), l.localize(data.nimi)),
+              nimi: removeOppilaitosName(localize(osa.nimi), localize(data.nimi)),
             }))
           )(data)
         : undefined,
-      esittelyHtml: l.localize(entity?.metadata?.esittely) ?? '',
+      esittelyHtml: localize(entity?.metadata?.esittely) ?? '',
       tietoaOpiskelusta: entity?.metadata?.tietoaOpiskelusta ?? [],
       kotipaikat: data?.osat?.map(_fp.prop('kotipaikka')) ?? [data?.kotipaikka],
     },
@@ -115,11 +115,11 @@ const selectTarjonta = (tarjonta: any) => {
   return {
     values: _fp.map(
       (t: any) => ({
-        toteutusName: l.localize(t.nimi),
-        description: l.localize(t.kuvaus),
-        locations: l.localizeSortedArrayToString(t.kunnat),
-        opetustapa: l.localizeSortedArrayToString(t.opetusajat),
-        price: getLocalizedmaksullisuus(t.onkoMaksullinen, t.maksunMaara),
+        toteutusName: localize(t.nimi),
+        description: localize(t.kuvaus),
+        locations: localizeSortedArrayToString(t.kunnat),
+        opetustapa: localizeSortedArrayToString(t.opetusajat),
+        price: getLocalizedMaksullisuus(t.maksullisuustyyppi, t.maksunMaara),
         tyyppi: t.koulutustyyppi,
         kuva: t.kuva,
         toteutusOid: t.toteutusOid,
@@ -136,10 +136,10 @@ const selectTulevaTarjonta = (tulevaTarjonta: any) => {
   const total = tulevaTarjonta?.total ?? 0;
   const localizedTulevaTarjonta = hits.map((k: any) => ({
     koulutusOid: k.koulutusOid,
-    koulutusName: l.localize(k.nimi),
-    tutkintonimikkeet: l.localizeSortedArrayToString(k.tutkintonimikkeet),
-    koulutustyypit: l.localizeSortedArrayToString(k.koulutustyypit),
-    opintojenlaajuus: `${l.localize(k.opintojenLaajuus)} ${l.localize(
+    koulutusName: localize(k.nimi),
+    tutkintonimikkeet: localizeSortedArrayToString(k.tutkintonimikkeet),
+    koulutustyypit: localizeSortedArrayToString(k.koulutustyypit),
+    opintojenlaajuus: `${localize(k.opintojenLaajuus)} ${localize(
       k.opintojenLaajuusyksikko
     )}`,
     tyyppi: k.koulutustyyppi,

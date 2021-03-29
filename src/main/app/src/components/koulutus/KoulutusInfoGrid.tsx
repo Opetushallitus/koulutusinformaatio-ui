@@ -7,7 +7,7 @@ import TimelapseIcon from '@material-ui/icons/Timelapse';
 import { useTranslation } from 'react-i18next';
 
 import { KOULUTUS_TYYPPI } from '#/src/constants';
-import { Localizer as l } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
 import { Translateable } from '#/src/types/common';
 
 import { InfoGrid } from '../common/InfoGrid';
@@ -41,7 +41,7 @@ export const KoulutusInfoGrid = ({
   const perustiedotData = [];
   if (hasNimike(koulutustyyppi)) {
     const nimikeString = nimikkeet
-      ? nimikkeet.map((nimikeObj) => l.localize(nimikeObj)).join('\n')
+      ? nimikkeet.map((nimikeObj) => localize(nimikeObj)).join('\n')
       : t('koulutus.ei-tutkintonimiketta');
     perustiedotData.push({
       icon: <SchoolOutlinedIcon className={classes.koulutusInfoGridIcon} />,

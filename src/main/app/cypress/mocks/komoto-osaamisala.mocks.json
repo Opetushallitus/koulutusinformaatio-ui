@@ -5305,7 +5305,7 @@
                 }
               }
             ],
-            "onkoMaksullinen": true,
+            "maksullisuustyyppi": "maksullinen",
             "opetusaikaKuvaus": {},
             "opetuskieli": [
               {

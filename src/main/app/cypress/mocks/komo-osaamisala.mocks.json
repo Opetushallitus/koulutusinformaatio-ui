@@ -237,7 +237,7 @@
             },
             "kuva": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.39218317368/e59fb6eb-c68b-4223-a7d0-4536bc4381d3.jpg",
             "oppilaitosOid": "1.2.246.562.10.81934895871",
-            "onkoMaksullinen": true,
+            "maksullisuustyyppi": "maksullinen",
             "kunnat": [
               {
                 "koodiUri": "kunta_398",

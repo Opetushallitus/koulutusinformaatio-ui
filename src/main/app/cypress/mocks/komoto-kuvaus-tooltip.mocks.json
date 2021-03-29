@@ -5019,7 +5019,7 @@
                 }
               }
             ],
-            "onkoMaksullinen": false,
+            "maksullisuustyyppi": "maksuton",
             "opetusaikaKuvaus": {
               "fi": "<p>opetusaika, <a href=\"https://github.com/Opetushallitus\" rel=\"noopener noreferrer\" target=\"_blank\">tarkempi</a> <strong>kuvaus</strong></p>"
             },

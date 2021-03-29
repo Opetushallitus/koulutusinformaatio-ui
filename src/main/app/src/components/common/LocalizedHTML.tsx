@@ -2,7 +2,8 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core';
 
-import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
+import { sanitizedHTMLParser } from '#/src/tools/Utils';
 
 type StylesProps = Pick<Props, 'noMargin'>;
 
@@ -37,7 +38,7 @@ export const LocalizedHTML = ({
 }: Props) => {
   const classes = useStyles({ noMargin });
   const content =
-    sanitizedHTMLParser(l.localize(data), {
+    sanitizedHTMLParser(localize(data), {
       transform,
     }) || defaultValue;
 

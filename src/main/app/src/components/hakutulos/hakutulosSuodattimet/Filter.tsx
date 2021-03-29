@@ -12,7 +12,7 @@ import { ExpandMore, SearchOutlined } from '@material-ui/icons';
 import Select, { components } from 'react-select';
 
 import { colors } from '#/src/colors';
-import { Localizer as l } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
 
 import {
   SuodatinAccordion,
@@ -168,7 +168,7 @@ export const Filter = ({
                       id={labelId}
                       primary={
                         <Grid container justify="space-between" wrap="nowrap">
-                          <Grid item>{l.localize(value)}</Grid>
+                          <Grid item>{localize(value)}</Grid>
                           <Grid item>{`(${count})`}</Grid>
                         </Grid>
                       }

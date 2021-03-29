@@ -12,12 +12,12 @@ import { TFunction } from 'i18next';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
+import { InfoGrid } from '#/src/components/common/InfoGrid';
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
-import { Localizer as l } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
 import { Translateable } from '#/src/types/common';
 import { Opetus, Yksikko } from '#/src/types/ToteutusTypes';
 
-import { InfoGrid } from '../common/InfoGrid';
 import { formatAloitus } from './utils';
 
 const getYksikkoSymbol = (yksikko?: Yksikko) => {
@@ -44,6 +44,14 @@ const formatApuraha = (opetus: Opetus, t: TFunction) => {
   return t('toteutus.ei-apurahaa');
 };
 
+const formatMaksullisuus = (opetus: Opetus, t: TFunction) => {
+  return opetus?.maksunMaara &&
+    opetus?.maksullisuustyyppi &&
+    ['maksullinen', 'lukuvuosimaksu'].includes(opetus?.maksullisuustyyppi)
+    ? `${opetus?.maksunMaara} €`
+    : t('toteutus.ei-maksua');
+};
+
 const useStyles = makeStyles((theme: any) => ({
   koulutusInfoGridIcon: {
     color: theme.palette.primary.main,
@@ -63,7 +71,7 @@ const suunniteltuKesto = (t: TFunction, vuosi?: number, kk?: number) => {
     .join('\n');
 };
 
-const localizeMap = (v: Translateable) => l.localize(v);
+const localizeMap = (v: Translateable) => localize(v);
 
 type Props = {
   laajuus: string;
@@ -84,9 +92,7 @@ export const ToteutusInfoGrid = ({ laajuus, opetus = {}, hasHaku }: Props) => {
 
   const opetusAikaString = opetus.opetusaika?.map(localizeMap).join('\n') ?? '';
   const opetustapaString = opetus.opetustapa?.map(localizeMap).join('\n') ?? '';
-  const maksullisuusString = opetus.onkoMaksullinen
-    ? `${opetus.maksunMaara} €`
-    : t('toteutus.ei-maksua');
+  const maksullisuusString = formatMaksullisuus(opetus, t);
   const apurahaString = formatApuraha(opetus, t);
 
   const perustiedotData = [];
@@ -157,7 +163,10 @@ export const ToteutusInfoGrid = ({ laajuus, opetus = {}, hasHaku }: Props) => {
     },
     {
       icon: <EuroIcon className={classes.koulutusInfoGridIcon} />,
-      title: t('toteutus.maksullisuus'),
+      title:
+        opetus?.maksullisuustyyppi === 'lukuvuosimaksu'
+          ? t('toteutus.lukuvuosimaksu')
+          : t('toteutus.maksullisuus'),
       text: maksullisuusString,
       modalText: !_.isEmpty(opetus.maksullisuusKuvaus) && (
         <LocalizedHTML data={opetus.maksullisuusKuvaus!} noMargin />

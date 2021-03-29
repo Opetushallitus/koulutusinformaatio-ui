@@ -19,7 +19,8 @@ import koulutusPlaceholderImg from '#/src/assets/images/Opolkuhts.png';
 import { educationTypeColorCode } from '#/src/colors';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import { MUI_BREAKPOINTS } from '#/src/constants';
-import { getLocalizedOpintojenLaajuus, Localizer as l } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
+import { getLocalizedOpintojenLaajuus } from '#/src/tools/Utils';
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {
@@ -64,8 +65,7 @@ const KoulutusKortti = ({ koulutus }) => {
 
   const kuvaus =
     _.truncate(
-      l
-        .localize(koulutus?.kuvaus)
+      localize(koulutus?.kuvaus)
         .replace(/<\/li>/gm, ',</li>')
         .replace(/\.,<\/li>/gm, '.</li>')
         .replace(/<[^>]*>/gm, ''),
@@ -77,10 +77,8 @@ const KoulutusKortti = ({ koulutus }) => {
   );
   const tutkintoNimikkeet = isOsaamisalaOrTutkinnonOsa
     ? t(`haku.${koulutus?.koulutustyyppi}`)
-    : (koulutus?.tutkintonimikkeet || [])
-        .map(l.localize)
-        .join(', ')
-        .replace(/,\s*$/, '') || t('haku.ei-tutkintonimiketta');
+    : (koulutus?.tutkintonimikkeet || []).map(localize).join(', ').replace(/,\s*$/, '') ||
+      t('haku.ei-tutkintonimiketta');
   const colorCode =
     educationTypeColorCode[koulutus?.koulutustyyppi] || educationTypeColorCode.muu;
 
@@ -106,7 +104,7 @@ const KoulutusKortti = ({ koulutus }) => {
             direction="column">
             <Grid item>
               <Typography variant="h6" style={{ fontWeight: 'bold' }}>
-                {l.localize(koulutus)}
+                {localize(koulutus)}
               </Typography>
             </Grid>
             <Hidden xsDown>
@@ -133,9 +131,7 @@ const KoulutusKortti = ({ koulutus }) => {
                     <Avatar
                       classes={{ root: classes.avatarRoot }}
                       src={koulutus?.teemakuva || koulutusPlaceholderImg}
-                      alt={`${l.localize(koulutus)} ${t(
-                        'koulutus.koulutuksen-teemakuva'
-                      )}`}
+                      alt={`${localize(koulutus)} ${t('koulutus.koulutuksen-teemakuva')}`}
                     />
                   </Grid>
                 </Hidden>
@@ -181,7 +177,7 @@ const KoulutusKortti = ({ koulutus }) => {
                   img: classes.avatarImg,
                 }}
                 src={koulutus?.teemakuva || koulutusPlaceholderImg}
-                alt={`${l.localize(koulutus)} ${t('koulutus.koulutuksen-teemakuva')}`}
+                alt={`${localize(koulutus)} ${t('koulutus.koulutuksen-teemakuva')}`}
               />
             </Grid>
           </Hidden>

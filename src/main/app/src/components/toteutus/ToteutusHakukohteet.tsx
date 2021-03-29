@@ -23,8 +23,8 @@ import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Spacer from '#/src/components/common/Spacer';
 import { HAKULOMAKE_TYYPPI } from '#/src/constants';
+import { localize } from '#/src/tools/localization';
 import { useOppilaitosOsoite } from '#/src/tools/UseOppilaitosOsoiteHook';
-import { Localizer as l } from '#/src/tools/Utils';
 import { Hakukohde } from '#/src/types/ToteutusTypes';
 
 import { formatAloitus } from './utils';
@@ -94,7 +94,7 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
             const jarjestyspaikka =
               haku.jarjestyspaikka &&
               [
-                l.localize(haku.jarjestyspaikka.nimi),
+                localize(haku.jarjestyspaikka.nimi),
                 getJarjestyspaikkaYhteystiedot(haku.jarjestyspaikka, osoitteet),
               ]
                 .filter(Boolean)
@@ -114,12 +114,12 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                         <Grid container direction="column" spacing={1}>
                           <Grid item>
                             <Typography className={classes.hakuName}>
-                              {l.localize(haku.nimi)}
+                              {localize(haku.nimi)}
                             </Typography>
                           </Grid>
                           <Grid item>
                             <Typography variant="body1" noWrap>
-                              {l.localize(haku.hakulomakeKuvaus)}
+                              {localize(haku.hakulomakeKuvaus)}
                             </Typography>
                           </Grid>
                           {jarjestyspaikka && (
@@ -167,7 +167,7 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                               size: 6,
                               heading: t('toteutus.pohjakoulutus:'),
                               content: haku.pohjakoulutusvaatimus.map((vaatimus) =>
-                                l.localize(vaatimus)
+                                localize(vaatimus)
                               ),
                               modalText: haku.pohjakoulutusvaatimusTarkenne,
                             },
@@ -226,7 +226,7 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                               size="large"
                               color="primary"
                               target="_blank"
-                              href={l.localize(haku.hakulomakeLinkki)}
+                              href={localize(haku.hakulomakeLinkki)}
                               disabled={!haku.isHakuAuki}>
                               <Typography style={{ color: colors.white }} variant="body1">
                                 {t('toteutus.tayta-lomake')}

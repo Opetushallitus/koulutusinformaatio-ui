@@ -12,7 +12,7 @@ import {
   setOpetustapa,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getOpetustapaFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
-import { Localizer as l } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
 
 import { useUrlParams } from '../UseUrlParams';
 import {
@@ -109,7 +109,7 @@ const OpetustapaSuodatin = ({
                   id={labelId}
                   primary={
                     <Grid container justify="space-between" wrap="nowrap">
-                      <Grid item>{l.localize(opetustapaValue)}</Grid>
+                      <Grid item>{localize(opetustapaValue)}</Grid>
                       <Grid item>{`(${opetustapaValue?.count})`}</Grid>
                     </Grid>
                   }
