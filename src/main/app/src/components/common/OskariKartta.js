@@ -8,16 +8,16 @@ import { OsoiteParser as op, Localizer as l } from '#/src/tools/Utils';
 const MARKER_ID = 'OPPILAITOS';
 const ZOOM_LEVEL = 9;
 
-function createChannel() {
+function createChannel(id) {
   const IFRAME_DOMAIN = urls.url('kartta.base-url');
-  const iFrame = document.getElementById('publishedMap');
+  const iFrame = document.getElementById(id);
   const channel = OskariRPC.connect(iFrame, IFRAME_DOMAIN);
   return channel;
 }
 
-const OskariKartta = ({ osoite, postitoimipaikka }) => {
+const OskariKartta = ({ id, osoite, postitoimipaikka }) => {
   useEffect(() => {
-    const channel = createChannel();
+    const channel = createChannel(id);
     let noHouseNumberSearchDone = false;
 
     channel.handleEvent('SearchResultEvent', (data) => {
@@ -85,12 +85,12 @@ const OskariKartta = ({ osoite, postitoimipaikka }) => {
     return () => {
       channel?.destroy();
     };
-  }, [postitoimipaikka, osoite]);
+  }, [id, postitoimipaikka, osoite]);
 
   return (
     <iframe
       title="kartta"
-      id="publishedMap"
+      id={id}
       style={{ border: 'none', width: '100%', height: '100%' }}
       src={urls.url('kartta.publish-url', l.getLanguage())}
     />

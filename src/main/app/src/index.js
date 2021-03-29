@@ -18,7 +18,15 @@ import { theme } from '#/src/theme';
 import { configureI18n } from '#/src/tools/i18n';
 import { configureUrls } from '#/src/urls';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      staleTime: 5000,
+    },
+  },
+});
 
 if ('serviceWorker' in navigator) {
   if (!window.Cypress) {

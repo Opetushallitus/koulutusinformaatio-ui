@@ -41,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type Props = {
-  className: string;
-  heading: string;
+  className?: string;
+  heading?: string;
   logo: string;
   yhteystiedot: YhteystiedotType;
   nimi: string;
@@ -70,9 +70,12 @@ export const Yhteystiedot = ({ className, heading, logo, yhteystiedot, nimi }: P
       alignItems="center"
       width="100%"
       className={className}>
-      <Typography variant="h2">{heading}</Typography>
-      <Spacer />
-
+      {heading && (
+        <>
+          <Typography variant="h2">{heading}</Typography>
+          <Spacer />
+        </>
+      )}
       <Grid
         className={classes.container}
         container
@@ -109,7 +112,11 @@ export const Yhteystiedot = ({ className, heading, logo, yhteystiedot, nimi }: P
         {osoite && postitoimipaikka && (
           <Grid item container justify="center" lg={6} md={7} sm={8} xs={12}>
             <Box component="div" className={classes.oskariMap}>
-              <OskariKartta osoite={osoite} postitoimipaikka={postitoimipaikka} />
+              <OskariKartta
+                id={nimi}
+                osoite={osoite}
+                postitoimipaikka={postitoimipaikka}
+              />
             </Box>
           </Grid>
         )}

@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 
 import _fp from 'lodash/fp';
-import { useQuery } from 'react-query';
+import { useQueries, useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -30,22 +30,12 @@ const removeOppilaitosName = (osaName: string, oppilaitosName: string) =>
 
 const ACTIVE = 'AKTIIVINEN';
 
-type UseOppilaitosProps = {
-  oid: string;
-  isOppilaitosOsa: boolean;
-  isDraft?: boolean;
-};
-
-export const useOppilaitos = ({ oid, isOppilaitosOsa, isDraft }: UseOppilaitosProps) => {
-  const { data = {}, ...rest } = useQuery(
-    ['getOppilaitos', { oid, isOppilaitosOsa, isDraft }],
-    () =>
-      isOppilaitosOsa ? getOppilaitosOsa(oid, isDraft) : getOppilaitos(oid, isDraft),
-    { refetchOnWindowFocus: false, refetchOnReconnect: false, staleTime: 5000 }
-  );
-
+const handleOppilaitosData = (
+  isOppilaitosOsa: boolean,
+  data: any,
+  rest: Omit<ReturnType<typeof useQuery>, 'data'>
+) => {
   const entity = isOppilaitosOsa ? data.oppilaitoksenOsa : data.oppilaitos ?? {};
-
   return {
     data: {
       ...data,
@@ -66,6 +56,53 @@ export const useOppilaitos = ({ oid, isOppilaitosOsa, isDraft }: UseOppilaitosPr
     },
     ...rest,
   };
+};
+
+type UseOppilaitosProps = {
+  oid: string;
+  isOppilaitosOsa: boolean;
+  isDraft?: boolean;
+};
+
+export const useOppilaitos = ({ oid, isOppilaitosOsa, isDraft }: UseOppilaitosProps) => {
+  const { data = {}, ...rest } = useQuery(
+    ['getOppilaitos', { oid, isOppilaitosOsa, isDraft }],
+    () => (isOppilaitosOsa ? getOppilaitosOsa(oid, isDraft) : getOppilaitos(oid, isDraft))
+  );
+  return useMemo(() => handleOppilaitosData(isOppilaitosOsa, data, rest), [
+    isOppilaitosOsa,
+    data,
+    rest,
+  ]);
+};
+
+type UseOppilaitoksetProps = {
+  oids: Array<string>;
+  isOppilaitosOsa: boolean;
+  isDraft?: boolean;
+};
+
+export const useOppilaitokset = ({
+  oids,
+  isOppilaitosOsa,
+  isDraft,
+}: UseOppilaitoksetProps) => {
+  const results = useQueries(
+    oids.map((oid) => ({
+      queryKey: ['getOppilaitos', { oid, isOppilaitosOsa, isDraft }],
+      queryFn: isOppilaitosOsa
+        ? () => getOppilaitosOsa(oid, isDraft)
+        : () => getOppilaitos(oid, isDraft),
+    }))
+  );
+
+  return useMemo(
+    () =>
+      results.map(({ data = {}, ...rest }) =>
+        handleOppilaitosData(isOppilaitosOsa, data, rest)
+      ),
+    [isOppilaitosOsa, results]
+  );
 };
 
 type UsePaginatedTarjontaProps = {
@@ -143,7 +180,6 @@ export const usePaginatedTarjonta = ({
         : getOppilaitosTarjonta(fetchProps),
     {
       enabled: Boolean(oid),
-      refetchOnWindowFocus: false,
       keepPreviousData: true,
       staleTime: 60 * 1000,
       select: (tarjontaData: any) =>
