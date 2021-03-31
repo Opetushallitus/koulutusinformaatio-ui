@@ -120,7 +120,7 @@ export const jarjestajatData = {
         fi: 'Hyria koulutus Oy',
         en: 'Hyria koulutus Oy',
       },
-      onkoMaksullinen: false,
+      maksullisuustyyppi: 'maksuton',
       kunnat: [
         {
           koodiUri: 'kunta_694',
@@ -181,7 +181,7 @@ export const jarjestajatData = {
         fi: 'Koulutuskeskus Salpaus',
         en: 'Koulutuskeskus Salpaus',
       },
-      onkoMaksullinen: false,
+      maksullisuustyyppi: 'maksuton',
       kunnat: [
         {
           koodiUri: 'kunta_398',
@@ -250,7 +250,7 @@ export const jarjestajatData = {
         fi: 'Koulutuskeskus Salpaus',
         en: 'Koulutuskeskus Salpaus',
       },
-      onkoMaksullinen: false,
+      maksullisuustyyppi: 'maksuton',
       kunnat: [
         {
           koodiUri: 'kunta_398',

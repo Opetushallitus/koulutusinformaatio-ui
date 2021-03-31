@@ -8,7 +8,8 @@ import DefaultHeroImage from '#/src/assets/images/herokuva_default.png';
 import { colors } from '#/src/colors';
 import OskariKartta from '#/src/components/common/OskariKartta';
 import Spacer from '#/src/components/common/Spacer';
-import { koodiUriToPostinumero, Localizer as l } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
+import { koodiUriToPostinumero } from '#/src/tools/Utils';
 import { Yhteystiedot as YhteystiedotType } from '#/src/types/common';
 
 const useStyles = makeStyles((theme) => ({
@@ -41,8 +42,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type Props = {
-  className: string;
-  heading: string;
+  className?: string;
+  heading?: string;
   logo: string;
   yhteystiedot: YhteystiedotType;
   nimi: string;
@@ -52,9 +53,9 @@ export const Yhteystiedot = ({ className, heading, logo, yhteystiedot, nimi }: P
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const osoite = l.localize(yhteystiedot?.osoite?.osoite);
+  const osoite = localize(yhteystiedot?.osoite?.osoite);
   const postinumero = koodiUriToPostinumero(yhteystiedot?.osoite?.postinumero?.koodiUri);
-  const postitoimipaikka = _.capitalize(l.localize(yhteystiedot?.osoite?.postinumero));
+  const postitoimipaikka = _.capitalize(localize(yhteystiedot?.osoite?.postinumero));
 
   const shownYhteystiedot =
     !osoite && !postinumero && !postitoimipaikka
@@ -70,9 +71,12 @@ export const Yhteystiedot = ({ className, heading, logo, yhteystiedot, nimi }: P
       alignItems="center"
       width="100%"
       className={className}>
-      <Typography variant="h2">{heading}</Typography>
-      <Spacer />
-
+      {heading && (
+        <>
+          <Typography variant="h2">{heading}</Typography>
+          <Spacer />
+        </>
+      )}
       <Grid
         className={classes.container}
         container
@@ -96,7 +100,7 @@ export const Yhteystiedot = ({ className, heading, logo, yhteystiedot, nimi }: P
               <Button
                 className={classes.button}
                 target="_blank"
-                href={l.localize(homePage)}
+                href={localize(homePage)}
                 fullWidth
                 variant="contained"
                 size="medium"
@@ -109,7 +113,11 @@ export const Yhteystiedot = ({ className, heading, logo, yhteystiedot, nimi }: P
         {osoite && postitoimipaikka && (
           <Grid item container justify="center" lg={6} md={7} sm={8} xs={12}>
             <Box component="div" className={classes.oskariMap}>
-              <OskariKartta osoite={osoite} postitoimipaikka={postitoimipaikka} />
+              <OskariKartta
+                id={nimi}
+                osoite={osoite}
+                postitoimipaikka={postitoimipaikka}
+              />
             </Box>
           </Grid>
         )}

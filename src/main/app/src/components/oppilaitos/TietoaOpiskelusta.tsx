@@ -4,7 +4,8 @@ import { Box, Container, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
 import Spacer from '#/src/components/common/Spacer';
-import { Localizer as l, sanitizedHTMLParser } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
+import { sanitizedHTMLParser } from '#/src/tools/Utils';
 import { Translateable } from '#/src/types/common';
 
 import { Accordion } from '../common/Accordion';
@@ -38,8 +39,8 @@ export const TietoaOpiskelusta = ({
         <Container maxWidth="md">
           <Accordion
             items={tietoaOpiskelusta.map((lisatieto) => ({
-              title: l.localize(lisatieto.otsikko),
-              content: sanitizedHTMLParser(l.localize(lisatieto.teksti)),
+              title: localize(lisatieto.otsikko),
+              content: sanitizedHTMLParser(localize(lisatieto.teksti)),
             }))}
           />
         </Container>

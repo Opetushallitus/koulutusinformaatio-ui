@@ -18528,7 +18528,7 @@
                 }
               }
             ],
-            "onkoMaksullinen": false,
+            "maksullisuustyyppi": "maksuton",
             "opetusaikaKuvaus": {},
             "opetuskieli": [
               {

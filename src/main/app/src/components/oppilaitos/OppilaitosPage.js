@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Typography, Box, Container, makeStyles } from '@material-ui/core';
+import { Box, Container, makeStyles, Typography } from '@material-ui/core';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -13,7 +13,8 @@ import Murupolku from '#/src/components/common/Murupolku';
 import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
 import { NotFound } from '#/src/NotFound';
 import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
-import { condArray, Localizer as l } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
+import { condArray } from '#/src/tools/Utils';
 
 import { useUrlParams } from '../hakutulos/UseUrlParams';
 import { useOppilaitos } from './hooks';
@@ -69,18 +70,18 @@ export const OppilaitosPage = (props) => {
                 path={[
                   { name: t('haku.otsikko'), link: hakuUrl.url },
                   ...condArray(isOppilaitosOsa, {
-                    name: l.localize(entity?.oppilaitos),
+                    name: localize(entity?.oppilaitos),
                     link: `/oppilaitos/${entity?.oppilaitos?.oid}`,
                   }),
                   {
-                    name: l.localize(entity),
+                    name: localize(entity),
                   },
                 ]}
               />
             </Box>
             <Box className={classes.title}>
               <Typography variant="h1" component="h2">
-                {l.localize(entity)}
+                {localize(entity)}
               </Typography>
             </Box>
             <Box className={classes.imageContainer} mt={7.5}>
@@ -128,7 +129,7 @@ export const OppilaitosPage = (props) => {
               heading={t('oppilaitos.yhteystiedot')}
               logo={entity?.logo}
               yhteystiedot={entity?.metadata?.yhteystiedot}
-              nimi={l.localize(entity)}
+              nimi={localize(entity)}
             />
           </Box>
         </Container>

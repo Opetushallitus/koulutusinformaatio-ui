@@ -6892,7 +6892,7 @@
             },
             "kuva": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.39218317368/e59fb6eb-c68b-4223-a7d0-4536bc4381d3.jpg",
             "oppilaitosOid": "1.2.246.562.10.81934895871",
-            "onkoMaksullinen": false,
+            "maksullisuustyyppi": "maksuton",
             "kunnat": [
               {
                 "koodiUri": "kunta_016",
@@ -6977,7 +6977,7 @@
               "en": "Omnia"
             },
             "oppilaitosOid": "1.2.246.562.10.51720121923",
-            "onkoMaksullinen": false,
+            "maksullisuustyyppi": "maksuton",
             "kunnat": [
               {
                 "koodiUri": "kunta_049",
@@ -7062,7 +7062,7 @@
               "en": "Omnia"
             },
             "oppilaitosOid": "1.2.246.562.10.51720121923",
-            "onkoMaksullinen": false,
+            "maksullisuustyyppi": "maksuton",
             "kunnat": [
               {
                 "koodiUri": "kunta_049",
@@ -7148,7 +7148,7 @@
               "en": "Ylä-Savon ammattiopisto"
             },
             "oppilaitosOid": "1.2.246.562.10.16712896824",
-            "onkoMaksullinen": false,
+            "maksullisuustyyppi": "maksuton",
             "kunnat": [
               {
                 "koodiUri": "kunta_749",
@@ -26877,7 +26877,7 @@
                 }
               }
             ],
-            "onkoMaksullinen": false,
+            "maksullisuustyyppi": "maksuton",
             "opetusaikaKuvaus": {},
             "opetuskieli": [
               {
@@ -27037,7 +27037,7 @@
                 }
               }
             ],
-            "onkoMaksullinen": false,
+            "maksullisuustyyppi": "maksuton",
             "opetusaikaKuvaus": {},
             "opetuskieli": [
               {

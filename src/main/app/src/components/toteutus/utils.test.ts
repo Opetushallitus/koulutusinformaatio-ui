@@ -2,7 +2,7 @@ import { Alkamiskausityyppi } from '#/src/types/ToteutusTypes';
 
 import { formatAloitus } from './utils';
 
-describe('Utils/Localizer', () => {
+describe('toteutus utils', () => {
   test.each([
     [
       {
@@ -14,7 +14,7 @@ describe('Utils/Localizer', () => {
         alkaaModalText: 'lisatiedot',
       },
     ],
-  ])('localizeOsoite', (input, output) => {
+  ])('formatAloitus', (input, output) => {
     expect(formatAloitus(input as any, (t: any) => t)).toEqual(output);
   });
 });

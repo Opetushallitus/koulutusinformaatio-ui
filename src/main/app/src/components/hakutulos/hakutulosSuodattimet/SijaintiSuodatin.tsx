@@ -19,22 +19,22 @@ import { colors } from '#/src/colors';
 import {
   clearPaging,
   searchAll,
-  setSijainti,
   setSelectedSijainti,
+  setSijainti,
 } from '#/src/store/reducers/hakutulosSlice';
 import {
   getAPIRequestParams,
   getSijaintiFilterProps,
   getIsReady,
 } from '#/src/store/reducers/hakutulosSliceSelector';
-import { Localizer as l } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
 import { Translateable } from '#/src/types/common';
 
 import {
-  SuodatinCheckbox,
   SuodatinAccordion,
   SuodatinAccordionDetails,
   SuodatinAccordionSummary,
+  SuodatinCheckbox,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 import { SummaryContent } from './SummaryContent';
@@ -303,7 +303,7 @@ export const SijaintiSuodatin = ({
                         id={labelId}
                         primary={
                           <Grid container justify="space-between" wrap="nowrap">
-                            <Grid item>{l.localize(data)}</Grid>
+                            <Grid item>{localize(data)}</Grid>
                             <Grid item>{`(${data?.count})`}</Grid>
                           </Grid>
                         }
@@ -337,7 +337,7 @@ export const SijaintiSuodatin = ({
                           id={labelId}
                           primary={
                             <Grid container justify="space-between" wrap="nowrap">
-                              <Grid item>{l.localize(data)}</Grid>
+                              <Grid item>{localize(data)}</Grid>
                               <Grid item>{`(${data?.count})`}</Grid>
                             </Grid>
                           }

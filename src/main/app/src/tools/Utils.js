@@ -5,6 +5,7 @@ import stripTags from 'striptags';
 
 import { TOP_BAR_HEIGHT } from '../constants';
 import i18n from './i18n';
+import { getTranslationForKey, localize } from './localization';
 
 export const Common = {
   // Filters all untruthy values, we do not want false or 0 values sent
@@ -15,56 +16,15 @@ export const koodiUriToPostinumero = (str = '') => {
   return str.match(/^posti_(\d+)/)?.[1] ?? '';
 };
 
-const lng = (nimi, lng) => nimi?.['kieli_' + lng] || nimi?.[lng] || false;
-
-const translate = (nimi) => {
-  const language = Localizer.getLanguage();
-  if ('en' === language) {
-    return lng(nimi, 'en') || lng(nimi, 'fi') || lng(nimi, 'sv') || '';
-  } else if ('sv' === language) {
-    return lng(nimi, 'sv') || lng(nimi, 'fi') || lng(nimi, 'en') || '';
-  } else {
-    return lng(nimi, 'fi') || lng(nimi, 'sv') || lng(nimi, 'en') || '';
-  }
-};
-
-export const Localizer = {
-  getLanguage: () => i18n.language,
-
-  localize: (obj) => (obj ? translate(obj.nimi || obj) : ''),
-
-  localizeSortedArrayToString: (arr = []) =>
-    _fp.compose(
-      _fp.join(', '),
-      _fp.uniq,
-      _fp.map(Localizer.localize),
-      _fp.sortBy(`nimi.${Localizer.getLanguage()}`)
-    )(arr),
-
-  getTranslationForKey: (key = '') => i18n.t(key),
-
-  localizeOsoite: (katuosoite, postinumeroKoodi) => {
-    if (!katuosoite || !postinumeroKoodi) {
-      return '';
-    }
-    const postitoimialue = `, ${koodiUriToPostinumero(
-      postinumeroKoodi?.koodiUri
-    )} ${Localizer.localize(postinumeroKoodi?.nimi)}`;
-    return `${Localizer.localize(katuosoite)}${postitoimialue}`;
-  },
-};
-
 export const OsoiteParser = {
   parseOsoiteData(osoiteData) {
-    const osoite = Localizer.localize(osoiteData.osoite);
+    const osoite = localize(osoiteData.osoite);
     const postinumero = koodiUriToPostinumero(osoiteData.postinumero.koodiUri);
-    const postitoimipaikka = _fp.capitalize(
-      Localizer.localize(osoiteData.postinumero.nimi)
-    );
+    const postitoimipaikka = _fp.capitalize(localize(osoiteData.postinumero.nimi));
     const yhteystiedot =
       osoite && postinumero && postitoimipaikka
         ? _fp.trim(`${osoite}, ${postinumero} ${postitoimipaikka}`, ', ')
-        : Localizer.getTranslationForKey('oppilaitos.ei-yhteystietoja');
+        : getTranslationForKey('oppilaitos.ei-yhteystietoja');
 
     return { osoite, postinumero, postitoimipaikka, yhteystiedot };
   },
@@ -169,7 +129,7 @@ export function getLocalizedOpintojenLaajuus(koulutus) {
   const tutkinnonOsat = koulutus?.tutkinnonOsat || [];
 
   let opintojenLaajuusNumero =
-    (koulutus?.opintojenLaajuus && Localizer.localize(koulutus?.opintojenLaajuus)) ||
+    (koulutus?.opintojenLaajuus && localize(koulutus?.opintojenLaajuus)) ||
     koulutus?.opintojenLaajuusNumero ||
     (tutkinnonOsat && tutkinnonOsat.map((k) => k?.opintojenLaajuusNumero).join(' + '));
 
@@ -178,7 +138,7 @@ export function getLocalizedOpintojenLaajuus(koulutus) {
   }
 
   const opintojenLaajuusYksikko =
-    Localizer.localize(
+    localize(
       koulutus?.opintojenLaajuusyksikko ||
         _fp.find('opintojenLaajuusyksikko', tutkinnonOsat)?.opintojenLaajuusyksikko
     ) || '';
@@ -187,7 +147,7 @@ export function getLocalizedOpintojenLaajuus(koulutus) {
     opintojenLaajuusNumero &&
     opintojenLaajuusYksikko &&
     `${opintojenLaajuusNumero} ${opintojenLaajuusYksikko}`.trim();
-  return opintojenLaajuus || Localizer.getTranslationForKey('koulutus.ei-laajuutta');
+  return opintojenLaajuus || getTranslationForKey('koulutus.ei-laajuutta');
 }
 
 export const condArray = (cond, item) => (cond ? [item] : []);

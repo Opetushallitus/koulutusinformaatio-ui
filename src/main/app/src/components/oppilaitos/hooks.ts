@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 
 import _fp from 'lodash/fp';
-import { useQuery } from 'react-query';
+import { useQueries, useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -19,33 +19,23 @@ import {
   getTarjontaPaginationProps,
   getTulevaTarjontaPaginationProps,
 } from '#/src/store/reducers/oppilaitosSliceSelector';
-import { Localizer as l } from '#/src/tools/Utils';
-
-// Helpers
-const getLocalizedmaksullisuus = (isMaksullinen: boolean, maksuAmount: number) =>
-  isMaksullinen ? `${maksuAmount} €` : l.getTranslationForKey('toteutus.maksuton');
+import {
+  localize,
+  localizeSortedArrayToString,
+  getLocalizedMaksullisuus,
+} from '#/src/tools/localization';
 
 const removeOppilaitosName = (osaName: string, oppilaitosName: string) =>
   osaName.replace(`${oppilaitosName}, `, '');
 
 const ACTIVE = 'AKTIIVINEN';
 
-type UseOppilaitosProps = {
-  oid: string;
-  isOppilaitosOsa: boolean;
-  isDraft?: boolean;
-};
-
-export const useOppilaitos = ({ oid, isOppilaitosOsa, isDraft }: UseOppilaitosProps) => {
-  const { data = {}, ...rest } = useQuery(
-    ['getOppilaitos', { oid, isOppilaitosOsa, isDraft }],
-    () =>
-      isOppilaitosOsa ? getOppilaitosOsa(oid, isDraft) : getOppilaitos(oid, isDraft),
-    { refetchOnWindowFocus: false, refetchOnReconnect: false, staleTime: 5000 }
-  );
-
+const handleOppilaitosData = (
+  isOppilaitosOsa: boolean,
+  data: any,
+  rest: Omit<ReturnType<typeof useQuery>, 'data'>
+) => {
   const entity = isOppilaitosOsa ? data.oppilaitoksenOsa : data.oppilaitos ?? {};
-
   return {
     data: {
       ...data,
@@ -56,16 +46,63 @@ export const useOppilaitos = ({ oid, isOppilaitosOsa, isDraft }: UseOppilaitosPr
             _fp.filter({ status: ACTIVE }),
             _fp.map((osa: any) => ({
               ...osa,
-              nimi: removeOppilaitosName(l.localize(osa.nimi), l.localize(data.nimi)),
+              nimi: removeOppilaitosName(localize(osa.nimi), localize(data.nimi)),
             }))
           )(data)
         : undefined,
-      esittelyHtml: l.localize(entity?.metadata?.esittely) ?? '',
+      esittelyHtml: localize(entity?.metadata?.esittely) ?? '',
       tietoaOpiskelusta: entity?.metadata?.tietoaOpiskelusta ?? [],
       kotipaikat: data?.osat?.map(_fp.prop('kotipaikka')) ?? [data?.kotipaikka],
     },
     ...rest,
   };
+};
+
+type UseOppilaitosProps = {
+  oid: string;
+  isOppilaitosOsa: boolean;
+  isDraft?: boolean;
+};
+
+export const useOppilaitos = ({ oid, isOppilaitosOsa, isDraft }: UseOppilaitosProps) => {
+  const { data = {}, ...rest } = useQuery(
+    ['getOppilaitos', { oid, isOppilaitosOsa, isDraft }],
+    () => (isOppilaitosOsa ? getOppilaitosOsa(oid, isDraft) : getOppilaitos(oid, isDraft))
+  );
+  return useMemo(() => handleOppilaitosData(isOppilaitosOsa, data, rest), [
+    isOppilaitosOsa,
+    data,
+    rest,
+  ]);
+};
+
+type UseOppilaitoksetProps = {
+  oids: Array<string>;
+  isOppilaitosOsa: boolean;
+  isDraft?: boolean;
+};
+
+export const useOppilaitokset = ({
+  oids,
+  isOppilaitosOsa,
+  isDraft,
+}: UseOppilaitoksetProps) => {
+  const results = useQueries(
+    oids.map((oid) => ({
+      queryKey: ['getOppilaitos', { oid, isOppilaitosOsa, isDraft }],
+      queryFn: isOppilaitosOsa
+        ? () => getOppilaitosOsa(oid, isDraft)
+        : () => getOppilaitos(oid, isDraft),
+    }))
+  );
+
+  return useMemo(
+    () =>
+      results.map(({ data = {}, ...rest }) =>
+        handleOppilaitosData(isOppilaitosOsa, data, rest)
+      ),
+    [isOppilaitosOsa, results]
+  );
 };
 
 type UsePaginatedTarjontaProps = {
@@ -78,11 +115,11 @@ const selectTarjonta = (tarjonta: any) => {
   return {
     values: _fp.map(
       (t: any) => ({
-        toteutusName: l.localize(t.nimi),
-        description: l.localize(t.kuvaus),
-        locations: l.localizeSortedArrayToString(t.kunnat),
-        opetustapa: l.localizeSortedArrayToString(t.opetusajat),
-        price: getLocalizedmaksullisuus(t.onkoMaksullinen, t.maksunMaara),
+        toteutusName: localize(t.nimi),
+        description: localize(t.kuvaus),
+        locations: localizeSortedArrayToString(t.kunnat),
+        opetustapa: localizeSortedArrayToString(t.opetusajat),
+        price: getLocalizedMaksullisuus(t.maksullisuustyyppi, t.maksunMaara),
         tyyppi: t.koulutustyyppi,
         kuva: t.kuva,
         toteutusOid: t.toteutusOid,
@@ -99,10 +136,10 @@ const selectTulevaTarjonta = (tulevaTarjonta: any) => {
   const total = tulevaTarjonta?.total ?? 0;
   const localizedTulevaTarjonta = hits.map((k: any) => ({
     koulutusOid: k.koulutusOid,
-    koulutusName: l.localize(k.nimi),
-    tutkintonimikkeet: l.localizeSortedArrayToString(k.tutkintonimikkeet),
-    koulutustyypit: l.localizeSortedArrayToString(k.koulutustyypit),
-    opintojenlaajuus: `${l.localize(k.opintojenLaajuus)} ${l.localize(
+    koulutusName: localize(k.nimi),
+    tutkintonimikkeet: localizeSortedArrayToString(k.tutkintonimikkeet),
+    koulutustyypit: localizeSortedArrayToString(k.koulutustyypit),
+    opintojenlaajuus: `${localize(k.opintojenLaajuus)} ${localize(
       k.opintojenLaajuusyksikko
     )}`,
     tyyppi: k.koulutustyyppi,
@@ -143,7 +180,6 @@ export const usePaginatedTarjonta = ({
         : getOppilaitosTarjonta(fetchProps),
     {
       enabled: Boolean(oid),
-      refetchOnWindowFocus: false,
       keepPreviousData: true,
       staleTime: 60 * 1000,
       select: (tarjontaData: any) =>

@@ -10,7 +10,7 @@ import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import Murupolku from '#/src/components/common/Murupolku';
 import { NotFound } from '#/src/NotFound';
 import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
-import { Localizer as l } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
 import { Translateable } from '#/src/types/common';
 
 import {
@@ -195,9 +195,9 @@ export const ValintaperustePage = () => {
         <Murupolku
           path={[
             { name: t('haku.otsikko'), link: hakuUrl.url },
-            { name: l.localize(koulutus?.nimi), link: `/koulutus/${koulutus?.oid}` },
-            { name: l.localize(toteutus?.nimi), link: toteutusLink },
-            { name: l.localize(valintaperuste?.nimi) },
+            { name: localize(koulutus?.nimi), link: `/koulutus/${koulutus?.oid}` },
+            { name: localize(toteutus?.nimi), link: toteutusLink },
+            { name: localize(valintaperuste?.nimi) },
           ]}
         />
       </Row>

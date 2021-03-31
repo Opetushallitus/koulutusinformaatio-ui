@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { Typography, Grid, Container, makeStyles } from '@material-ui/core';
+import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Spacer from '#/src/components/common/Spacer';
-import { Localizer as l } from '#/src/tools/Utils';
+import { localize, localizeSortedArrayToString } from '#/src/tools/localization';
 
 import SuositusKoulutusCard from './SuositusKoulutusCard';
 
@@ -43,10 +43,10 @@ const SuositusKoulutusList = ({ koulutukset, oid }) => {
                   component={RouterLink}
                   to={`/koulutus/${kts?.oid}`}>
                   <SuositusKoulutusCard
-                    koulutusName={l.localize(kts?.nimi)}
-                    tutkintonimikkeet={l.localizeSortedArrayToString(kts?.tutkintonimike)}
-                    opintojenlaajuus={l.localize(kts?.opintojenLaajuus)}
-                    opintojenLaajuusyksikko={l.localize(kts?.opintojenLaajuusyksikko)}
+                    koulutusName={localize(kts?.nimi)}
+                    tutkintonimikkeet={localizeSortedArrayToString(kts?.tutkintonimike)}
+                    opintojenlaajuus={localize(kts?.opintojenLaajuus)}
+                    opintojenLaajuusyksikko={localize(kts?.opintojenLaajuusyksikko)}
                     onSuosikki={kts?.onSuosikki}
                     hakuKaynnissa={kts?.hakuKaynnissa}
                     teemakuva={kts?.teemakuva}

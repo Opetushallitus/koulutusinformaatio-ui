@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { makeStyles, Link } from '@material-ui/core';
+import { Link, makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
@@ -15,7 +15,7 @@ import OPOLogoFooterEN from '#/src/assets/images/OPO_Logo_Footer_englanti.svg';
 import OPOLogoFooterSV from '#/src/assets/images/OPO_Logo_Footer_ruotsi.svg';
 import { colors } from '#/src/colors';
 import { useStores } from '#/src/hooks';
-import { Localizer as l } from '#/src/tools/Utils';
+import { getLanguage } from '#/src/tools/localization';
 
 const useStyles = makeStyles({
   footer: {
@@ -87,7 +87,7 @@ const Footer = () => {
   };
 
   const OpintopolkuFooterLogo = () => {
-    switch (l.getLanguage()) {
+    switch (getLanguage()) {
       case 'fi':
         return OPOLogoFooterFI;
       case 'en':

@@ -19,7 +19,8 @@ import oppilaitos_img from '#/src/assets/images/logo-oppilaitos.png';
 import { educationTypeColorCode } from '#/src/colors';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import { MUI_BREAKPOINTS } from '#/src/constants';
-import { Localizer as l } from '#/src/tools/Utils';
+import { localize } from '#/src/tools/localization';
+import { Koodi, Translateable } from '#/src/types/common';
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {
@@ -48,30 +49,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const OppilaitosKortti = ({ oppilaitos }) => {
+type Props = {
+  oppilaitos: {
+    koulutusohjelmia: number;
+    kuvaus?: Translateable;
+    logo?: string;
+    oid: string;
+    nimi: Translateable;
+    paikkakunnat: Array<Koodi>;
+  };
+};
+
+export const OppilaitosKortti = ({ oppilaitos }: Props) => {
+  console.log('oppilaitos', oppilaitos);
   const { t } = useTranslation();
   const classes = useStyles();
   const theme = useTheme();
   const muiScreenSizeMinLg = useMediaQuery(MUI_BREAKPOINTS.MIN_LG);
   const screenSizeMinCustomXs = useMediaQuery(MUI_BREAKPOINTS.MIN_XS_400);
 
-  const paikkakunnatStr = (oppilaitos?.paikkakunnat || [])
-    .reduce((acc, paikkakunta) => acc + l.localize(paikkakunta) + ', ', '')
-    .replace(/,\s*$/, '');
+  const paikkakunnatStr = (oppilaitos?.paikkakunnat || []).map(localize).join(', ');
 
   const kuvaus =
-    _.truncate(l.localize(oppilaitos?.kuvaus).replace(/<[^>]*>/gm, ''), {
+    _.truncate(localize(oppilaitos?.kuvaus).replace(/<[^>]*>/gm, ''), {
       length: 255,
     }) || t('haku.ei_kuvausta');
 
-  const koulutusOhjelmatStr = () => {
-    const amount = _.get(oppilaitos, 'koulutusohjelmia', 0);
-    if (amount === 0) return t('haku.ei_koulutusohjelmia');
-    if (amount === 1) return `${amount} ${t('haku.koulutusohjelma')}`;
-    return `${amount} ${t('haku.koulutusohjelmaa')}`;
-  };
-
-  const logoAltText = `${l.localize(oppilaitos)} ${t('haku.oppilaitoksen-logo')}`;
+  const koulutusOhjelmatStr = `${oppilaitos?.koulutusohjelmia || 0} ${t(
+    'haku.tutkintoon-johtavaa-koulutusta'
+  )}`;
+  const logoAltText = `${localize(oppilaitos)} ${t('haku.oppilaitoksen-logo')}`;
 
   return (
     <LocalizedLink
@@ -101,7 +108,7 @@ const OppilaitosKortti = ({ oppilaitos }) => {
               alignItems="center">
               <Grid item sm={12} xs={screenSizeMinCustomXs ? 10 : 12}>
                 <Typography variant="h6" style={{ fontWeight: 'bold' }}>
-                  {l.localize(oppilaitos)}
+                  {localize(oppilaitos)}
                 </Typography>
               </Grid>
               <Hidden smUp>
@@ -157,7 +164,7 @@ const OppilaitosKortti = ({ oppilaitos }) => {
                 </Grid>
                 <Grid item xs={11}>
                   <Typography style={{ marginLeft: theme.spacing(1) }}>
-                    {koulutusOhjelmatStr()}
+                    {koulutusOhjelmatStr}
                   </Typography>
                 </Grid>
               </Grid>
@@ -188,5 +195,3 @@ const OppilaitosKortti = ({ oppilaitos }) => {
     </LocalizedLink>
   );
 };
-
-export default OppilaitosKortti;

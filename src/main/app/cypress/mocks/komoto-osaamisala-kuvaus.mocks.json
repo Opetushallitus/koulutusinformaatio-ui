@@ -10309,7 +10309,7 @@
                 }
               }
             ],
-            "onkoMaksullinen": false,
+            "maksullisuustyyppi": "maksuton",
             "opetusaikaKuvaus": {},
             "opetuskieli": [
               {
@@ -10608,7 +10608,7 @@
                 }
               }
             ],
-            "onkoMaksullinen": false,
+            "maksullisuustyyppi": "maksuton",
             "opetusaikaKuvaus": {},
             "opetuskieli": [
               {

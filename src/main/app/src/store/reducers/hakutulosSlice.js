@@ -3,7 +3,8 @@ import _ from 'lodash';
 
 import { searchAPI } from '#/src/api/konfoApi';
 import { FILTER_TYPES, FILTER_TYPES_ARR } from '#/src/constants';
-import { Localizer as l, Common as C } from '#/src/tools/Utils';
+import { getLanguage } from '#/src/tools/localization';
+import { Common as C } from '#/src/tools/Utils';
 
 import { getAPIRequestParams } from './hakutulosSliceSelector';
 
@@ -376,7 +377,7 @@ export const searchAllOnPageReload = ({ search, keyword }) => (dispatch, getStat
 export const searchAndMoveToHaku = ({ history }) => (dispatch, getState) => {
   const { hakutulos } = getState();
   const apiRequestParams = getAPIRequestParams({ hakutulos });
-  const lng = l.getLanguage();
+  const lng = getLanguage();
   const restParams = new URLSearchParams(
     _.pick(C.cleanRequestParams(apiRequestParams), [
       'order',
@@ -479,10 +480,10 @@ function getSelectedKunnatFilterValues(kunnatIds, kunnatFilters) {
       ? [
           ...result,
           {
-            label: `${kunnatFilters?.[id]?.nimi?.[l.getLanguage()]} (${
+            label: `${kunnatFilters?.[id]?.nimi?.[getLanguage()]} (${
               kunnatFilters?.[id]?.count
             })`,
-            value: kunnatFilters?.[id]?.nimi?.[l.getLanguage()],
+            value: kunnatFilters?.[id]?.nimi?.[getLanguage()],
             isMaakunta: false,
             id: id,
             name: kunnatFilters?.[id]?.nimi,

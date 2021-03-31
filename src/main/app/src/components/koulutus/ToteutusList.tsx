@@ -15,7 +15,7 @@ import {
   fetchKoulutusJarjestajat,
   selectJarjestajat,
 } from '#/src/store/reducers/koulutusSlice';
-import { Localizer as l } from '#/src/tools/Utils';
+import { localize, getLocalizedMaksullisuus } from '#/src/tools/localization';
 import { Translateable } from '#/src/types/common';
 import { Jarjestaja } from '#/src/types/ToteutusTypes';
 
@@ -45,7 +45,7 @@ const useStyles = makeStyles({
 
 const localizeArrayToString = (toLocalizeArray: Array<{ nimi: Translateable }>) =>
   toLocalizeArray
-    ?.map((item) => l.localize(item))
+    ?.map((item) => localize(item))
     .sort()
     .join(', ');
 
@@ -83,9 +83,6 @@ export const ToteutusList = ({ oid }: Props) => {
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
-  const getLocalizedMaksullisuus = (isMaksullinen: boolean, maksuAmount: number) =>
-    isMaksullinen ? `${maksuAmount} €` : t('toteutus.maksuton');
 
   const [chosenFilters, setChosenFilters] = useState(initialValues);
   const chosenFilterCount = useMemo(
@@ -183,13 +180,13 @@ export const ToteutusList = ({ oid }: Props) => {
                 component={RouterLink}
                 to={`/toteutus/${toteutus.toteutusOid}`}>
                 <ToteutusCard
-                  organizer={l.localize(toteutus)}
-                  heading={l.localize(toteutus.toteutusNimi)}
-                  description={l.localize(toteutus.kuvaus)}
+                  organizer={localize(toteutus)}
+                  heading={localize(toteutus.toteutusNimi)}
+                  description={localize(toteutus.kuvaus)}
                   locations={localizeArrayToString(toteutus.kunnat)}
                   opetustapa={localizeArrayToString(toteutus.opetusajat)}
                   price={getLocalizedMaksullisuus(
-                    toteutus.onkoMaksullinen,
+                    toteutus.maksullisuustyyppi,
                     toteutus.maksunMaara
                   )}
                   tyyppi={toteutus.koulutustyyppi}

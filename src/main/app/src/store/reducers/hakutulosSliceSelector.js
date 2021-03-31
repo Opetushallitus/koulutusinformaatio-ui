@@ -3,7 +3,7 @@ import _ from 'lodash';
 import qs from 'query-string';
 
 import { FILTER_TYPES } from '#/src/constants';
-import { Localizer as l } from '#/src/tools/Utils';
+import { getLanguage, getTranslationForKey, localize } from '#/src/tools/localization';
 import { Common as C } from '#/src/tools/Utils';
 
 // State data getters
@@ -331,13 +331,13 @@ export const getOpetustapaFilterProps = createSelector(
 );
 
 const getNameStr = (filterArr) =>
-  filterArr.map((f) => _.capitalize(l.localize(f))).join(', ');
+  filterArr.map((f) => _.capitalize(localize(f))).join(', ');
 
 // TODO: Refactor sortedFilterEntries away
 const sortValues = (filterObj) =>
   _.orderBy(
     _.toPairs(filterObj).map(([id, values]) => ({ id, ...values })),
-    ['count', `nimi.[${l.getLanguage()}]`],
+    ['count', `nimi.[${getLanguage()}]`],
     ['desc', 'asc']
   );
 
@@ -436,7 +436,7 @@ export const getSijaintiFilterProps = createSelector(
     const orderedMaakunnat = getOrderedMaakunnatEntries(maakunnat);
     const searchHitsSijainnit = getSijainnitForReactReselect(kunnat, orderedMaakunnat);
     const selectedSijainnitStr = checkedMaakunnat
-      .map((mk) => mk?.['name']?.[l.getLanguage()])
+      .map((mk) => mk?.['name']?.[getLanguage()])
       .concat(_.map(selectedSijainnit, 'value'))
       .join(', ');
 
@@ -456,7 +456,7 @@ export const getSijaintiFilterProps = createSelector(
 function sortedFilterEntries(filterObj) {
   const sortedArrByCountNameDesc = _.orderBy(
     _.toPairs(filterObj),
-    ['[1].count', `[1].nimi.[${l.getLanguage()}]`],
+    ['[1].count', `[1].nimi.[${getLanguage()}]`],
     ['desc', 'desc']
   );
   const removedMuuKieli = _.remove(
@@ -473,18 +473,16 @@ function getCheckedFiltersIdsStr(checkedfiltersArr) {
 }
 function getSelectedFiltersNamesStr(filterArr) {
   return filterArr
-    .map((f) =>
-      _.capitalize(l.localize(f?.name) || l.getTranslationForKey(`haku.${f?.id}`))
-    )
+    .map((f) => _.capitalize(localize(f?.name) || getTranslationForKey(`haku.${f?.id}`)))
     .join(', ');
 }
 function sortedKoulutusalatEntries(filterObj) {
-  return _.sortBy(_.toPairs(filterObj), `[1]nimi.[${l.getLanguage()}]`);
+  return _.sortBy(_.toPairs(filterObj), `[1]nimi.[${getLanguage()}]`);
 }
 function getOrderedMaakunnatEntries(filterObj) {
   const orderedMaakunnat = _.orderBy(
     _.toPairs(filterObj),
-    ['[1].count', `[1].nimi.[${l.getLanguage()}]`],
+    ['[1].count', `[1].nimi.[${getLanguage()}]`],
     ['desc', 'asc']
   );
   const eiTiedossaMaakunta = _.remove(orderedMaakunnat, (n) => n[0] === 'maakunta_99');
@@ -502,8 +500,8 @@ function getSijainnitForReactReselect(kunnat, orderedMaakunnatEntries) {
       return [
         ...kuntaAccum,
         {
-          label: `${kunta[1]?.nimi?.[l.getLanguage()]} (${kunta[1]?.count})`,
-          value: kunta[1]?.nimi?.[l.getLanguage()],
+          label: `${kunta[1]?.nimi?.[getLanguage()]} (${kunta[1]?.count})`,
+          value: kunta[1]?.nimi?.[getLanguage()],
           isMaakunta: false,
           id: kunta[0],
           name: kunta[1]?.nimi,
@@ -517,8 +515,8 @@ function getSijainnitForReactReselect(kunnat, orderedMaakunnatEntries) {
       return [
         ...accumulator,
         {
-          label: `${maaKunta[1]?.nimi?.[l.getLanguage()]} (${maaKunta[1]?.count})`,
-          value: maaKunta[1]?.nimi?.[l.getLanguage()],
+          label: `${maaKunta[1]?.nimi?.[getLanguage()]} (${maaKunta[1]?.count})`,
+          value: maaKunta[1]?.nimi?.[getLanguage()],
           isMaakunta: true,
           id: maaKunta[0],
           name: maaKunta[1]?.nimi,

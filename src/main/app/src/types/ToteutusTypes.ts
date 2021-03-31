@@ -16,9 +16,11 @@ export type Apuraha = {
   kuvaus?: Translateable;
 };
 
+export type Maksullisuustyyppi = 'maksullinen' | 'maksuton' | 'lukuvuosimaksu';
+
 export type Opetus = {
   koulutuksenAlkamiskausi?: Alkamiskausi;
-  onkoMaksullinen?: boolean;
+  maksullisuustyyppi?: Maksullisuustyyppi;
   maksullisuusKuvaus?: Translateable;
   maksunMaara?: number;
   onkoApuraha?: boolean;
@@ -95,6 +97,7 @@ export type Toteutus = {
   teemakuva: string;
   tila: string;
   timestamp: number;
+  oppilaitokset: Array<string>;
 
   // NOTE: These are given at selector
   hakuAukiType: 'ilmoittautuminen' | 'hakukohde' | null;
@@ -109,7 +112,7 @@ export type Jarjestaja = {
   kuvaus: Translateable;
   maksunMaara: TODOType;
   nimi: Translateable;
-  onkoMaksullinen: boolean;
+  maksullisuustyyppi: Maksullisuustyyppi;
   opetusajat: Array<Koodi>;
   oppilaitosOid: string;
   oppilaitosTila: string; // TODO: string union type, e.g. "julkaistu" | jne

@@ -32,15 +32,14 @@ import {
   selectLoading as selectToteutusLoading,
   selectToteutus,
 } from '#/src/store/reducers/toteutusSlice';
-import {
-  getLocalizedOpintojenLaajuus,
-  Localizer as l,
-  sanitizedHTMLParser,
-} from '#/src/tools/Utils';
+import { getLanguage, localize } from '#/src/tools/localization';
+import { getLocalizedOpintojenLaajuus, sanitizedHTMLParser } from '#/src/tools/Utils';
 import { Toteutus } from '#/src/types/ToteutusTypes';
 
 import ContentWrapper from '../common/ContentWrapper';
 import { TextWithBackground } from '../common/TextWithBackground';
+import { useOppilaitokset } from '../oppilaitos/hooks';
+import { Yhteystiedot } from '../oppilaitos/Yhteystiedot';
 import { HakuKaynnissaCard } from './HakuKaynnissaCard';
 import { ToteutusHakuEiSahkoista } from './ToteutusHakuEiSahkoista';
 import { ToteutusHakukohteet } from './ToteutusHakukohteet';
@@ -104,9 +103,45 @@ const useOsaamisalatPageData = ({ ePerusteId, requestParams }: OsaamisalatProps)
     ['getOsaamisalatPageData', { ePerusteId, requestParams }],
     () => getOsaamisalatPageData({ ePerusteId, requestParams }),
     {
-      refetchOnWindowFocus: false,
       enabled: !_.isNil(ePerusteId) && !_.isEmpty(requestParams),
     }
+  );
+};
+
+// NOTE: In most cases there is only one oppilaitos per KOMOTO but there is no limit in data model
+const ToteutuksenYhteystiedot = ({ oids }: { oids: Array<string> }) => {
+  const { t } = useTranslation();
+  const oppilaitokset = useOppilaitokset({
+    isOppilaitosOsa: false,
+    oids,
+  });
+  const filtered = useMemo(
+    () => oppilaitokset.filter((v) => v.data.metadata?.yhteystiedot).map((v) => v.data),
+    [oppilaitokset]
+  );
+
+  return (
+    <>
+      {filtered?.length > 0 && (
+        <Box
+          mt={8}
+          width="100%"
+          display="flex"
+          flexDirection="column"
+          alignItems="center">
+          <Typography variant="h2">{t('toteutus.yhteystiedot')}</Typography>
+          <Spacer />
+          {filtered?.map((oppilaitos: any) => (
+            <Yhteystiedot
+              key={oppilaitos.oid}
+              logo={oppilaitos.logo}
+              yhteystiedot={oppilaitos.metadata.yhteystiedot}
+              nimi={localize(oppilaitos)}
+            />
+          ))}
+        </Box>
+      )}
+    </>
   );
 };
 
@@ -115,7 +150,7 @@ export const ToteutusPage = () => {
   const { oid } = useParams<{ oid: string }>();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const currentLanguage = l.getLanguage();
+  const currentLanguage = getLanguage();
   const { isDraft } = useUrlParams();
 
   // TODO: There is absolutely no error handling atm.
@@ -155,7 +190,7 @@ export const ToteutusPage = () => {
         (koa: any) => toa?.koodi?.koodiUri === koa?.osaamisalakoodiUri
       ) || {};
     const kuvaus = !_.isEmpty(extendedData?.kuvaus)
-      ? l.localize(extendedData?.kuvaus)
+      ? localize(extendedData?.kuvaus)
       : `<p>${t('toteutus.osaamisalalle-ei-loytynyt-kuvausta')}</p>`;
     return { ...toa, extendedData, kuvaus };
   });
@@ -197,15 +232,15 @@ export const ToteutusPage = () => {
             path={[
               { name: t('haku.otsikko'), link: hakuUrl.url },
               {
-                name: l.localize(koulutus?.tutkintoNimi),
+                name: localize(koulutus?.tutkintoNimi),
                 link: `/koulutus/${toteutus?.koulutusOid}?${hakuParamsStr}`,
               },
-              { name: l.localize(toteutus?.nimi) },
+              { name: localize(toteutus?.nimi) },
             ]}
           />
         </Box>
         <Typography style={{ marginTop: '20px' }} variant="h1">
-          {l.localize(toteutus?.nimi)}
+          {localize(toteutus?.nimi)}
         </Typography>
         <Grid
           className={classes.root}
@@ -262,7 +297,7 @@ export const ToteutusPage = () => {
         {toteutus?.metadata?.kuvaus && (
           <HtmlTextBox
             heading={t('koulutus.kuvaus')}
-            html={l.localize(toteutus.metadata.kuvaus)}
+            html={localize(toteutus.metadata.kuvaus)}
             className={classes.root}
           />
         )}
@@ -270,7 +305,7 @@ export const ToteutusPage = () => {
           <AccordionWithTitle
             titleTranslationKey="koulutus.osaamisalat"
             data={osaamisalatCombined?.map((osaamisala: any) => ({
-              title: l.localize(osaamisala?.koodi),
+              title: localize(osaamisala?.koodi),
               content: (
                 <>
                   {sanitizedHTMLParser(osaamisala?.kuvaus)}
@@ -278,8 +313,8 @@ export const ToteutusPage = () => {
                     <LocalizedLink
                       target="_blank"
                       rel="noopener"
-                      to={l.localize(osaamisala?.linkki)}>
-                      {l.localize(osaamisala?.otsikko)}
+                      to={localize(osaamisala?.linkki)}>
+                      {localize(osaamisala?.otsikko)}
                       <OpenInNewIcon fontSize="small" />
                     </LocalizedLink>
                   )}
@@ -301,8 +336,8 @@ export const ToteutusPage = () => {
           <AccordionWithTitle
             titleTranslationKey="koulutus.lisätietoa"
             data={combinedLisatiedot.map((lisatieto) => ({
-              title: l.localize(lisatieto.otsikko),
-              content: sanitizedHTMLParser(l.localize(lisatieto.teksti)),
+              title: localize(lisatieto.otsikko),
+              content: sanitizedHTMLParser(localize(lisatieto.teksti)),
             }))}
           />
         )}
@@ -319,33 +354,33 @@ export const ToteutusPage = () => {
                         <Grid container direction="column">
                           <Grid item>
                             <Typography variant="h5">
-                              {l.localize(yhteyshenkilo.nimi)}
+                              {localize(yhteyshenkilo.nimi)}
                             </Typography>
                           </Grid>
                           <Grid item>
                             <Typography variant="body1">
-                              {l.localize(yhteyshenkilo.titteli)}
+                              {localize(yhteyshenkilo.titteli)}
                             </Typography>
                           </Grid>
                           <Grid item>
                             <Typography variant="body1">
-                              {l.localize(yhteyshenkilo.sahkoposti)}
+                              {localize(yhteyshenkilo.sahkoposti)}
                             </Typography>
                           </Grid>
                           <Grid item>
                             <Typography variant="body1">
-                              {l.localize(yhteyshenkilo.puhelinnumero)}
+                              {localize(yhteyshenkilo.puhelinnumero)}
                             </Typography>
                           </Grid>
-                          {yhteyshenkilo.wwwSivu && (
+                          {!_.isEmpty(yhteyshenkilo.wwwSivu) && (
                             <Grid item>
                               <Link
                                 target="_blank"
                                 rel="noopener"
-                                href={l.localize(yhteyshenkilo.wwwSivu)}
+                                href={localize(yhteyshenkilo.wwwSivu)}
                                 variant="body1">
                                 <Grid container direction="row" alignItems="center">
-                                  {l.localize(yhteyshenkilo.wwwSivu)}
+                                  {localize(yhteyshenkilo.wwwSivu)}
                                   <OpenInNewIcon
                                     fontSize="small"
                                     style={{ marginLeft: '5px' }}
@@ -371,6 +406,9 @@ export const ToteutusPage = () => {
               </Grid>
             </Box>
           </Box>
+        )}
+        {toteutus.oppilaitokset?.length > 0 && (
+          <ToteutuksenYhteystiedot oids={toteutus.oppilaitokset} />
         )}
       </Box>
     </ContentWrapper>

@@ -23,8 +23,8 @@ import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Spacer from '#/src/components/common/Spacer';
 import { HAKULOMAKE_TYYPPI } from '#/src/constants';
+import { localize } from '#/src/tools/localization';
 import { useOppilaitosOsoite } from '#/src/tools/UseOppilaitosOsoiteHook';
-import { Localizer as l } from '#/src/tools/Utils';
 import { Hakukohde } from '#/src/types/ToteutusTypes';
 
 import { formatAloitus } from './utils';
@@ -91,6 +91,14 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
               haku.koulutuksenAlkamiskausi || {},
               t
             );
+            const jarjestyspaikka =
+              haku.jarjestyspaikka &&
+              [
+                localize(haku.jarjestyspaikka.nimi),
+                getJarjestyspaikkaYhteystiedot(haku.jarjestyspaikka, osoitteet),
+              ]
+                .filter(Boolean)
+                .join(' · ');
 
             return (
               <Grid
@@ -106,24 +114,17 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                         <Grid container direction="column" spacing={1}>
                           <Grid item>
                             <Typography className={classes.hakuName}>
-                              {l.localize(haku.nimi)}
+                              {localize(haku.nimi)}
                             </Typography>
                           </Grid>
                           <Grid item>
                             <Typography variant="body1" noWrap>
-                              {l.localize(haku.hakulomakeKuvaus)}
+                              {localize(haku.hakulomakeKuvaus)}
                             </Typography>
                           </Grid>
-                          {haku.jarjestyspaikka && (
+                          {jarjestyspaikka && (
                             <Grid item>
-                              <Typography variant="body1">
-                                {`${l.localize(
-                                  haku.jarjestyspaikka.nimi
-                                )} · ${getJarjestyspaikkaYhteystiedot(
-                                  haku.jarjestyspaikka,
-                                  osoitteet
-                                )}`}
-                              </Typography>
+                              <Typography variant="body1">{jarjestyspaikka}</Typography>
                             </Grid>
                           )}
                         </Grid>
@@ -166,7 +167,7 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                               size: 6,
                               heading: t('toteutus.pohjakoulutus:'),
                               content: haku.pohjakoulutusvaatimus.map((vaatimus) =>
-                                l.localize(vaatimus)
+                                localize(vaatimus)
                               ),
                               modalText: haku.pohjakoulutusvaatimusTarkenne,
                             },
@@ -225,7 +226,7 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                               size="large"
                               color="primary"
                               target="_blank"
-                              href={l.localize(haku.hakulomakeLinkki)}
+                              href={localize(haku.hakulomakeLinkki)}
                               disabled={!haku.isHakuAuki}>
                               <Typography style={{ color: colors.white }} variant="body1">
                                 {t('toteutus.tayta-lomake')}
@@ -233,18 +234,19 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                             </Button>
                           )}
                           {haku.valintaperusteId && (
-                            <LocalizedLink
-                              underline="none"
-                              component={RouterLink}
-                              to={`/hakukohde/${haku.hakukohdeOid}/valintaperuste`}>
-                              <Button variant="outlined" size="large" color="primary">
+                            <Button variant="outlined" size="large" color="primary">
+                              <LocalizedLink
+                                tabIndex={-1}
+                                underline="none"
+                                component={RouterLink}
+                                to={`/hakukohde/${haku.hakukohdeOid}/valintaperuste`}>
                                 <Typography
                                   style={{ color: colors.brandGreen }}
                                   variant="body1">
                                   {t('toteutus.lue-valintaperusteet')}
                                 </Typography>
-                              </Button>
-                            </LocalizedLink>
+                              </LocalizedLink>
+                            </Button>
                           )}
                         </ButtonGroup>
                       </Grid>
