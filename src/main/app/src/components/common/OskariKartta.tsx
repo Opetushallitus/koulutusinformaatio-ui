@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { urls } from 'oph-urls-js';
+// @ts-ignore no types
 import OskariRPC from 'oskari-rpc';
 
 import { getLanguage } from '#/src/tools/localization';
@@ -8,20 +9,42 @@ import { OsoiteParser as op } from '#/src/tools/Utils';
 
 const MARKER_ID = 'OPPILAITOS';
 const ZOOM_LEVEL = 9;
+const expectedOskariVersion = '2.1.0'; // TODO: current npm is 2.1.0 but response says 2.2.0 should be used
 
-function createChannel(id) {
+const createChannel = (id: string) => {
   const IFRAME_DOMAIN = urls.url('kartta.base-url');
   const iFrame = document.getElementById(id);
   const channel = OskariRPC.connect(iFrame, IFRAME_DOMAIN);
   return channel;
-}
+};
 
-const OskariKartta = ({ id, osoite, postitoimipaikka }) => {
+type Props = {
+  id: string;
+  osoite: string;
+  postitoimipaikka: string;
+};
+
+type SearchData = {
+  requestParameters: string;
+  result: {
+    locations: Array<{
+      lat: number;
+      lon: number;
+      name: string;
+      region: string;
+      village: string;
+    }>;
+    totalCount: number;
+  };
+  success: boolean;
+};
+
+export const OskariKartta = ({ id, osoite, postitoimipaikka }: Props) => {
   useEffect(() => {
     const channel = createChannel(id);
     let noHouseNumberSearchDone = false;
 
-    channel.handleEvent('SearchResultEvent', (data) => {
+    channel.handleEvent('SearchResultEvent', (data: SearchData) => {
       if (!data?.success) return;
       if (data?.result?.locations?.length > 0) {
         const { lon, lat, name } =
@@ -51,20 +74,14 @@ const OskariKartta = ({ id, osoite, postitoimipaikka }) => {
       }
     });
 
-    channel.onReady((info) => {
-      channel.log('Map is now listening');
-      const expectedOskariVersion = '2.1.0';
+    channel.onReady((info: { clientSupported: boolean; version: string }) => {
       if (!info.clientSupported) {
         channel.log(
           `Oskari reported client version (${OskariRPC.VERSION}) is not supported. 
           The client might work, but some features are not compatible.`
         );
       } else {
-        if (info.version === expectedOskariVersion) {
-          channel.log(
-            'Client is supported and Oskari version is ' + expectedOskariVersion
-          );
-        } else {
+        if (info.version !== expectedOskariVersion) {
           channel.log(
             `Oskari-instance is not the one we expect (${expectedOskariVersion})`
           );
@@ -97,5 +114,3 @@ const OskariKartta = ({ id, osoite, postitoimipaikka }) => {
     />
   );
 };
-
-export default OskariKartta;

@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
-import { Box, Button, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Box, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
+import { TFunction } from 'i18next';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
-import DefaultHeroImage from '#/src/assets/images/herokuva_default.png';
 import { colors } from '#/src/colors';
-import OskariKartta from '#/src/components/common/OskariKartta';
+import { OskariKartta } from '#/src/components/common/OskariKartta';
 import Spacer from '#/src/components/common/Spacer';
 import { localize } from '#/src/tools/localization';
 import { koodiUriToPostinumero } from '#/src/tools/Utils';
-import { Yhteystiedot as YhteystiedotType } from '#/src/types/common';
+import { Osoite, Yhteystiedot as YhteystiedotType } from '#/src/types/common';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -22,10 +22,6 @@ const useStyles = makeStyles((theme) => ({
   info: {
     width: 230,
   },
-  logoImage: {
-    maxWidth: '100%',
-    marginBottom: 10,
-  },
   oskariMap: {
     height: 350,
     width: '100%',
@@ -35,93 +31,149 @@ const useStyles = makeStyles((theme) => ({
     color: colors.black,
     fontWeight: 600,
   },
-  button: {
-    marginTop: 20,
-    fontWeight: 600,
-  },
 }));
 
-type Props = {
-  className?: string;
-  heading?: string;
-  logo: string;
-  yhteystiedot: YhteystiedotType;
-  nimi: string;
+const toShownOsoite = (osoite?: Osoite) => {
+  const lahiosoite = localize(osoite?.osoite);
+  const postinumero = koodiUriToPostinumero(osoite?.postinumero?.koodiUri);
+  const postitoimipaikka = _.capitalize(localize(osoite?.postinumero));
+
+  return !lahiosoite && !postinumero && !postitoimipaikka
+    ? null
+    : _.trim(`${lahiosoite}, ${postinumero} ${postitoimipaikka}`, ', ');
 };
 
-export const Yhteystiedot = ({ className, heading, logo, yhteystiedot, nimi }: Props) => {
+const parseYhteystieto = (t: TFunction) => ({
+  nimi,
+  postiosoite: postiosoiteProp,
+  kayntiosoite: kayntiosoiteProp,
+  sahkoposti,
+  puhelinnumero,
+}: YhteystiedotType) => {
+  const postiosoite = toShownOsoite(postiosoiteProp);
+  const kayntiosoite = toShownOsoite(kayntiosoiteProp);
+  const hasNoOsoite = !postiosoite && !kayntiosoite;
+
+  return {
+    nimi: localize(nimi),
+    postiosoite: hasNoOsoite ? t('oppilaitos.ei-yhteystietoja') : postiosoite,
+    kayntiosoite,
+    sahkoposti: localize(sahkoposti),
+    puhelinnumero: localize(puhelinnumero),
+    oskariOsoite: localize(kayntiosoiteProp?.osoite),
+    oskariPostitoimipaikka: localize(kayntiosoiteProp?.postinumero),
+  };
+};
+
+const YhteystietoRow = ({ title, text }: { title: string; text: string }) => (
+  <Grid container spacing={1} alignItems="flex-start">
+    <Grid item sm={4}>
+      <Typography variant="body1" noWrap>
+        {title}
+      </Typography>
+    </Grid>
+    <Grid item sm={8}>
+      <Typography variant="body1">{text}</Typography>
+    </Grid>
+  </Grid>
+);
+
+type Props = {
+  id: string;
+  heading?: string;
+  yhteystiedot?: Array<YhteystiedotType>;
+  hakijapalveluidenYhteystiedot?: YhteystiedotType;
+};
+
+export const hasYhteystiedot = (props: Props = {} as any) =>
+  (props.yhteystiedot && props.yhteystiedot?.length > 0) ||
+  !_.isEmpty(props.hakijapalveluidenYhteystiedot);
+
+export const Yhteystiedot = ({
+  id,
+  heading,
+  yhteystiedot,
+  hakijapalveluidenYhteystiedot,
+}: Props) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const osoite = localize(yhteystiedot?.osoite?.osoite);
-  const postinumero = koodiUriToPostinumero(yhteystiedot?.osoite?.postinumero?.koodiUri);
-  const postitoimipaikka = _.capitalize(localize(yhteystiedot?.osoite?.postinumero));
-
-  const shownYhteystiedot =
-    !osoite && !postinumero && !postitoimipaikka
-      ? t('oppilaitos.ei-yhteystietoja')
-      : _.trim(`${osoite}, ${postinumero} ${postitoimipaikka}`, ', ');
-
-  const homePage = yhteystiedot?.wwwSivu;
+  const localizedYhteystiedot = useMemo(
+    () =>
+      (yhteystiedot || [])
+        .concat(hakijapalveluidenYhteystiedot as any) // TODO: undefined cannot be concated :I
+        .filter(Boolean)
+        .map(parseYhteystieto(t)),
+    [t, hakijapalveluidenYhteystiedot, yhteystiedot]
+  );
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      width="100%"
-      className={className}>
+    <Box display="flex" flexDirection="column" alignItems="center" width="100%">
       {heading && (
         <>
           <Typography variant="h2">{heading}</Typography>
           <Spacer />
         </>
       )}
-      <Grid
-        className={classes.container}
-        container
-        spacing={5}
-        alignItems="center"
-        justify="center">
-        <Grid item container justify="center" lg md sm xs>
-          <Box className={classes.info} component="div">
-            <img
-              className={classes.logoImage}
-              src={logo || DefaultHeroImage}
-              alt={t('oppilaitos.oppilaitoksen-logo')}
-            />
-            <Typography className={classes.text} component="div" variant="body1">
-              {nimi}
-            </Typography>
-            <Typography component="div" variant="body1">
-              {shownYhteystiedot}
-            </Typography>
-            {homePage && (
-              <Button
-                className={classes.button}
-                target="_blank"
-                href={localize(homePage)}
-                fullWidth
-                variant="contained"
-                size="medium"
-                color="primary">
-                {t('oppilaitos.oppilaitoksen-www-sivut')}
-              </Button>
+      {localizedYhteystiedot.map(
+        ({
+          nimi,
+          kayntiosoite,
+          oskariOsoite,
+          oskariPostitoimipaikka,
+          postiosoite,
+          puhelinnumero,
+          sahkoposti,
+        }) => (
+          <Grid
+            key={nimi}
+            className={classes.container}
+            container
+            spacing={5}
+            alignItems="center"
+            justify="center">
+            <Grid item container justify="center" sm={12} md={6}>
+              <Paper style={{ padding: '40px', width: '100%', maxWidth: 600 }}>
+                <Typography gutterBottom variant="h4">
+                  {nimi || id}
+                </Typography>
+                {postiosoite && (
+                  <YhteystietoRow
+                    title={t('oppilaitos.postiosoite:')}
+                    text={postiosoite}
+                  />
+                )}
+                {kayntiosoite && (
+                  <YhteystietoRow
+                    title={t('oppilaitos.kayntiosoite:')}
+                    text={kayntiosoite}
+                  />
+                )}
+                {sahkoposti && (
+                  <YhteystietoRow title={t('oppilaitos.sahkoposti:')} text={sahkoposti} />
+                )}
+                {puhelinnumero && (
+                  <YhteystietoRow
+                    title={t('oppilaitos.puhelinnumero:')}
+                    text={puhelinnumero}
+                  />
+                )}
+              </Paper>
+            </Grid>
+            {oskariOsoite && oskariPostitoimipaikka && (
+              <Grid item container justify="center" md={6} sm={12}>
+                <Box component="div" className={classes.oskariMap}>
+                  <OskariKartta
+                    id={nimi || id}
+                    osoite={oskariOsoite}
+                    postitoimipaikka={oskariPostitoimipaikka}
+                  />
+                </Box>
+              </Grid>
             )}
-          </Box>
-        </Grid>
-        {osoite && postitoimipaikka && (
-          <Grid item container justify="center" lg={6} md={7} sm={8} xs={12}>
-            <Box component="div" className={classes.oskariMap}>
-              <OskariKartta
-                id={nimi}
-                osoite={osoite}
-                postitoimipaikka={postitoimipaikka}
-              />
-            </Box>
           </Grid>
-        )}
-      </Grid>
+        )
+      )}
     </Box>
   );
 };

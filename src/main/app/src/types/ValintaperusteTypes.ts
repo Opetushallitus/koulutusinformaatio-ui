@@ -1,4 +1,10 @@
-import { Koodi, Translateable, Yhteystiedot } from './common';
+import { Koodi, Osoite, Translateable } from './common';
+
+type Yhteystiedot = {
+  osoite: Osoite;
+  sahkoposti: string;
+  puhelinnumero: string;
+};
 
 export type Liite = {
   id: string;

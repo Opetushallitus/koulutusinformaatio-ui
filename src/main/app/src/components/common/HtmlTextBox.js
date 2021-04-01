@@ -68,7 +68,7 @@ const HtmlTextBox = (props) => {
         <Box className={classes.textArea}>
           <HTMLEllipsis
             unsafeHTML={html}
-            maxLine={isExpanded ? 1000 : 10}
+            maxLine={isExpanded ? 1000 : 8}
             onReflow={reflow}
           />
           {isTruncated || isExpanded ? (

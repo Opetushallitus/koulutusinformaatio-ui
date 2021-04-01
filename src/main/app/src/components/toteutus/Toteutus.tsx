@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { Box, Grid, Link, makeStyles, Typography } from '@material-ui/core';
+import { Box, Button, Grid, Link, makeStyles, Typography } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import clsx from 'clsx';
 import _ from 'lodash';
@@ -15,6 +15,7 @@ import { colors } from '#/src/colors';
 import { Accordion } from '#/src/components/common/Accordion';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
+import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Murupolku from '#/src/components/common/Murupolku';
 import Spacer from '#/src/components/common/Spacer';
@@ -39,7 +40,7 @@ import { Toteutus } from '#/src/types/ToteutusTypes';
 import ContentWrapper from '../common/ContentWrapper';
 import { TextWithBackground } from '../common/TextWithBackground';
 import { useOppilaitokset } from '../oppilaitos/hooks';
-import { Yhteystiedot } from '../oppilaitos/Yhteystiedot';
+import { hasYhteystiedot, Yhteystiedot } from '../oppilaitos/Yhteystiedot';
 import { HakuKaynnissaCard } from './HakuKaynnissaCard';
 import { ToteutusHakuEiSahkoista } from './ToteutusHakuEiSahkoista';
 import { ToteutusHakukohteet } from './ToteutusHakukohteet';
@@ -54,6 +55,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   root: { marginTop: '100px' },
+  img: {
+    maxWidth: '150px',
+    maxHeight: '120px',
+  },
 }));
 
 type AccordionProps = {
@@ -111,12 +116,21 @@ const useOsaamisalatPageData = ({ ePerusteId, requestParams }: OsaamisalatProps)
 // NOTE: In most cases there is only one oppilaitos per KOMOTO but there is no limit in data model
 const ToteutuksenYhteystiedot = ({ oids }: { oids: Array<string> }) => {
   const { t } = useTranslation();
+  const classes = useStyles();
   const oppilaitokset = useOppilaitokset({
     isOppilaitosOsa: false,
     oids,
   });
   const filtered = useMemo(
-    () => oppilaitokset.filter((v) => v.data.metadata?.yhteystiedot).map((v) => v.data),
+    () =>
+      oppilaitokset
+        .filter(
+          (v) =>
+            !_.isEmpty(v.data.metadata?.wwwSivu) ||
+            !_.isEmpty(v.data.metadata?.esittely) ||
+            hasYhteystiedot(v.data.metadata)
+        )
+        .map((v) => v.data),
     [oppilaitokset]
   );
 
@@ -129,15 +143,54 @@ const ToteutuksenYhteystiedot = ({ oids }: { oids: Array<string> }) => {
           display="flex"
           flexDirection="column"
           alignItems="center">
-          <Typography variant="h2">{t('toteutus.yhteystiedot')}</Typography>
-          <Spacer />
-          {filtered?.map((oppilaitos: any) => (
-            <Yhteystiedot
-              key={oppilaitos.oid}
-              logo={oppilaitos.logo}
-              yhteystiedot={oppilaitos.metadata.yhteystiedot}
-              nimi={localize(oppilaitos)}
-            />
+          {filtered.map((oppilaitos: any) => (
+            <>
+              <Typography variant="h2">
+                {t('oppilaitos.tietoa-oppilaitoksesta')}
+              </Typography>
+              <Spacer />
+              {oppilaitos.metadata.esittely && (
+                <Grid
+                  item
+                  container
+                  sm={12}
+                  md={6}
+                  direction="column"
+                  alignItems="center">
+                  {oppilaitos.logo && (
+                    <img
+                      className={classes.img}
+                      src={oppilaitos.logo}
+                      alt={t('oppilaitos.oppilaitoksen-logo')}
+                    />
+                  )}
+                  <LocalizedHTML data={oppilaitos.metadata.esittely} noMargin />
+                </Grid>
+              )}
+
+              {oppilaitos.metadata.wwwSivu && (
+                <Button
+                  style={{
+                    marginTop: 20,
+                    fontWeight: 600,
+                  }}
+                  target="_blank"
+                  href={localize(oppilaitos.metadata.wwwSivu?.url)}
+                  variant="contained"
+                  size="medium"
+                  color="primary">
+                  {oppilaitos.metadata.wwwSivu?.nimi
+                    ? localize(oppilaitos.metadata.wwwSivu?.nimi)
+                    : t('oppilaitos.oppilaitoksen-www-sivut')}
+                  <OpenInNewIcon fontSize="small" />
+                </Button>
+              )}
+              <Yhteystiedot
+                id={localize(oppilaitos)}
+                key={oppilaitos.oid}
+                {...oppilaitos.metadata}
+              />
+            </>
           ))}
         </Box>
       )}
