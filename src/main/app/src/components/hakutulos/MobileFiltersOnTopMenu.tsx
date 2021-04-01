@@ -26,14 +26,11 @@ import {
 } from '#/src/store/reducers/hakutulosSlice';
 import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
 
-import { HakutapaSuodatin } from './hakutulosSuodattimet/HakutapaSuodatin';
 import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
 import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
 import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
-import { PohjakoulutusvaatimusSuodatin } from './hakutulosSuodattimet/PohjakoulutusvaatimusSuodatin';
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
-import { ValintatapaSuodatin } from './hakutulosSuodattimet/ValintatapaSuodatin';
 import { MobileResultsPerPageExpansionMenu } from './MobileResultsPerPageExpansionMenu';
 import { MobileToggleFiltersButton } from './MobileToggleFiltersButton';
 import MobileToggleKoulutusOppilaitos from './MobileToggleKoulutusOppilaitos';
@@ -156,15 +153,9 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
           <Divider className={classes.divider} />
           <SijaintiSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
-          <PohjakoulutusvaatimusSuodatin expanded={false} elevation={0} displaySelected />
-          <Divider className={classes.divider} />
           <KoulutusalaSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
-          <HakutapaSuodatin expanded={false} elevation={0} displaySelected />
-          <Divider className={classes.divider} />
           <OpetustapaSuodatin expanded={false} elevation={0} displaySelected />
-          <Divider className={classes.divider} />
-          <ValintatapaSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
           {!isFrontPage && <MobileToggleOrderByButtonMenu elevation={0} />}
           {!isFrontPage && <MobileResultsPerPageExpansionMenu elevation={0} />}

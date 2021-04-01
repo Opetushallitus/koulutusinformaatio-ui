@@ -153,7 +153,8 @@ describe('Haku', () => {
         verkkoOpiskeluChk().should('exist').should('not.be.checked');
       });
   });
-  // TODO: Skipped until component is again visible, see ValintatapaSuodatin.tsx
+
+  // TODO: Skipped until component is used
   it.skip('Valintatapa filter checkboxes', () => {
     cy.visit('/fi/haku/auto');
     const koepisteetChk = () =>
@@ -179,7 +180,9 @@ describe('Haku', () => {
         yhteispisteetChk().should('exist').should('not.be.checked');
       });
   });
-  it('Hakutapa filter checkboxes', () => {
+
+  // TODO: Skipped until component is used
+  it.skip('Hakutapa filter checkboxes', () => {
     cy.visit('/fi/haku/auto');
     const yhteishakuChk = () =>
       cy.findByRole('checkbox', { name: /Yhteishaku \(\d*\)/i });
@@ -204,7 +207,9 @@ describe('Haku', () => {
         yhteishakuChk().should('exist').should('not.be.checked');
       });
   });
-  it('Pohjakoulutusvaatimus filter checkboxes', () => {
+
+  // TODO: Skipped until component is used
+  it.skip('Pohjakoulutusvaatimus filter checkboxes', () => {
     cy.visit('/fi/haku/auto');
     const ammatillinnePerustutkintoChk = () =>
       cy.findByRole('checkbox', { name: /Ammatillinen perustutkinto \(\d*\)/i });

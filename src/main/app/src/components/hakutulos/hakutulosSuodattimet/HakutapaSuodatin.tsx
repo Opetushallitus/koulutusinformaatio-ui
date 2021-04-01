@@ -21,6 +21,7 @@ const HAKUKAYNNISSA_ID = 'hakukaynnissa';
 const filterSelector = getFilterProps(FILTER_ID);
 
 // NOTE: Hakutapa includes hakukaynnissa filter so this component handles mishmashing the logics together
+// TODO: Do not use this component until backend is fixed with showing correct numbers for haku kaynnissa
 export const HakutapaSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();

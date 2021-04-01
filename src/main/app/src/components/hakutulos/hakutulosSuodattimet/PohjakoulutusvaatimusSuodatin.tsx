@@ -12,6 +12,7 @@ import { FilterProps, FilterType, SuodatinComponentProps } from './SuodatinTypes
 const FILTER_ID = 'pohjakoulutusvaatimus';
 const filterSelector = getFilterProps(FILTER_ID);
 
+// TODO: Do not use this component until backend supports filtering pohjakoulutusvaatimus with KOMO järjestäjät
 export const PohjakoulutusvaatimusSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
