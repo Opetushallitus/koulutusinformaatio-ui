@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next';
 
 import defaultTeemakuva from '#/src/assets/images/o-EDUCATION-facebook.jpg';
 import { educationTypeColorCode } from '#/src/colors';
-import TextWithBackground from '#/src/components/common/TextWithBackground';
+import { TextWithBackground } from '#/src/components/common/TextWithBackground';
 
 const useStyles = makeStyles({
   cardActions: {

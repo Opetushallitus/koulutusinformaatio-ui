@@ -37,6 +37,7 @@ import { getLocalizedOpintojenLaajuus, sanitizedHTMLParser } from '#/src/tools/U
 import { Toteutus } from '#/src/types/ToteutusTypes';
 
 import ContentWrapper from '../common/ContentWrapper';
+import { TextWithBackground } from '../common/TextWithBackground';
 import { useOppilaitokset } from '../oppilaitos/hooks';
 import { Yhteystiedot } from '../oppilaitos/Yhteystiedot';
 import { HakuKaynnissaCard } from './HakuKaynnissaCard';
@@ -53,33 +54,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   root: { marginTop: '100px' },
-  textWithBackgroundBox: {
-    backgroundColor: colors.lightGreen2,
-    height: '24px',
-  },
-  textWithBackgroundText: {
-    textAlign: 'center',
-    verticalAlign: 'center',
-    fontSize: '0.75rem',
-    fontWeight: 600,
-    color: colors.black,
-    margin: '0 10px',
-    lineHeight: '24px',
-  },
 }));
-
-const TextWithBackground = (props: React.PropsWithChildren<object>) => {
-  const classes = useStyles();
-  return (
-    <Box
-      className={classes.textWithBackgroundBox}
-      display="flex"
-      justifyContent="center"
-      justifyItems="center">
-      <div className={classes.textWithBackgroundText}>{props.children}</div>
-    </Box>
-  );
-};
 
 type AccordionProps = {
   titleTranslationKey: string;

@@ -20,7 +20,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useQueryParams } from '#/src/hooks';
 import {
-  executeSearchFromStartingPage,
+  searchAndMoveToHaku,
   clearSelectedFilters,
   searchAll,
 } from '#/src/store/reducers/hakutulosSlice';
@@ -31,11 +31,10 @@ import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodati
 import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
-import MobileResultsPerPageExpansionMenu from './MobileResultsPerPageExpansionMenu';
+import { MobileResultsPerPageExpansionMenu } from './MobileResultsPerPageExpansionMenu';
 import { MobileToggleFiltersButton } from './MobileToggleFiltersButton';
 import MobileToggleKoulutusOppilaitos from './MobileToggleKoulutusOppilaitos';
 import MobileToggleOrderByButtonMenu from './MobileToggleOrderByButtonMenu';
-import { useUrlParams } from './UseUrlParams';
 
 const useStyles = makeStyles(() => ({
   paperAnchorBottom: {
@@ -62,7 +61,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
-  const { omitUrlSearchParams } = useUrlParams();
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -94,13 +92,12 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
 
   const handleFiltersShowToggle = () => {
     if (isFrontPage) {
-      dispatch(executeSearchFromStartingPage({ apiRequestParams, history }));
+      dispatch(searchAndMoveToHaku({ history }));
     }
     toggleShowFilters();
   };
 
   const handleClearFilters = () => {
-    omitUrlSearchParams(suodatinValinnatProps);
     dispatch(clearSelectedFilters());
     dispatch(searchAll(_.omit(apiRequestParams, _.keys(suodatinValinnatProps))));
   };

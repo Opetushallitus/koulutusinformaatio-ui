@@ -17,8 +17,6 @@ import {
 import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { localize } from '#/src/tools/localization';
 
-import { useUrlParams } from '../UseUrlParams';
-
 const useStyles = makeStyles(() => ({
   chipRoot: {
     marginBottom: 5,
@@ -72,6 +70,7 @@ const ChipList = ({
           root: classes.chipRoot,
           label: classes.chipLabel,
         }}
+        // NOTE: Some filters are not koodisto values and must be translated
         label={localize(name) || t(`haku.${id}`)}
         onDelete={getHandleDelete(filterType, id)}
       />
@@ -105,13 +104,12 @@ const ChipList = ({
 };
 
 export const SuodatinValinnat = () => {
-  const { omitUrlSearchParams, updateUrlSearchParams } = useUrlParams();
   const location = useLocation();
   const dispatch = useDispatch();
   const suodatinValinnatProps = useSelector(getSuodatinValinnatProps);
   const apiRequestParams = useQueryParams();
 
-  const [filters, setFilters] = useState<Record<string, Array<FilterType>>>({});
+  const [filters, setFilters] = useState<Record<string, Array<any>>>({});
 
   useEffect(() => {
     setFilters(suodatinValinnatProps);
@@ -123,13 +121,11 @@ export const SuodatinValinnat = () => {
       .map(({ id }) => id)
       .join(',');
 
-    updateUrlSearchParams({ [filterType]: newFilterValuesStr });
     dispatch(setSelectedFilters({ filterType, itemId }));
     dispatch(searchAll({ ...apiRequestParams, [filterType]: newFilterValuesStr }));
   };
 
   const handleClearFilters = () => {
-    omitUrlSearchParams(filters);
     dispatch(clearSelectedFilters());
     dispatch(searchAll(_.omit(apiRequestParams, _.keys(filters))));
   };

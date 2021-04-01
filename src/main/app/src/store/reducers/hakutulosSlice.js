@@ -6,44 +6,47 @@ import { FILTER_TYPES, FILTER_TYPES_ARR } from '#/src/constants';
 import { getLanguage } from '#/src/tools/localization';
 import { Common as C } from '#/src/tools/Utils';
 
+import { getAPIRequestParams } from './hakutulosSliceSelector';
+
+const INITIAL = 'initial';
 const IDLE_STATUS = 'idle';
 const LOADING_STATUS = 'loading';
 const KOULUTUS = 'koulutus';
 const OPPILAITOS = 'oppilaitos';
 
 export const initialState = {
-  status: IDLE_STATUS,
+  status: INITIAL,
   error: null,
   keyword: '',
-  keywordEditMode: false,
   // Koulutukset
   koulutusHits: [],
   koulutusFilters: {},
-  koulutusCount: null,
   koulutusTotal: null,
   koulutusOffset: 0,
   koulutusPage: 1,
   // Oppilaitokset
   oppilaitosHits: [],
   oppilaitosFilters: {},
-  oppilaitosCount: null,
   oppilaitosTotal: null,
   oppilaitosOffset: 0,
   oppilaitosPage: 1,
-  // Suodattimet
+  // Selected filter values
+  // TODO: Refactor this to contain *only* ids, now it contains also names which are only used at SuodatinValinnat
   koulutustyyppi: [],
   koulutusala: [],
   opetuskieli: [],
+  valintatapa: [],
+  hakukaynnissa: false, // This is the only filter which functionality does not rely on koodisto
+  hakutapa: [],
   sijainti: [],
   selectedSijainti: [],
   opetustapa: [],
+  pohjakoulutusvaatimus: [],
 
   size: 20,
   selectedTab: KOULUTUS,
   order: 'desc',
   sort: 'score',
-  pageSizeArray: [5, 10, 20, 30, 50],
-  pageSortArray: ['score_desc', 'name_asc', 'name_desc'],
 };
 
 const hakutulosSlice = createSlice({
@@ -53,11 +56,21 @@ const hakutulosSlice = createSlice({
     setKeyword: (state, { payload }) => {
       state.keyword = payload.keyword;
     },
-    setKeywordEditMode: (state, { payload }) => {
-      state.keywordEditMode = payload.newKeywordEditMode;
-    },
     setSelectedTab: (state, { payload }) => {
       state.selectedTab = payload.newSelectedTab;
+    },
+    handleFilterToggle: (state, { payload }) => {
+      const {
+        filter,
+        item: { id, nimi },
+      } = payload;
+      const exists = state[filter].some(({ id: itemId }) => id === itemId);
+      state[filter] = exists
+        ? state[filter].filter(({ id: itemId }) => id !== itemId)
+        : state[filter].concat({ id, nimi, name: nimi }); // TODO: Remove name from here when it is refactored away
+    },
+    toggleHakukaynnissa: (state) => {
+      state.hakukaynnissa = !state.hakukaynnissa;
     },
     setOpetuskieli: (state, { payload }) => {
       state.opetuskieli = payload.newCheckedOpetuskielet;
@@ -96,9 +109,13 @@ const hakutulosSlice = createSlice({
       state.koulutustyyppi = [];
       state.koulutusala = [];
       state.opetuskieli = [];
+      state.valintatapa = [];
+      state.hakukaynnissa = false;
+      state.hakutapa = [];
       state.sijainti = [];
       state.selectedSijainti = [];
       state.opetustapa = [];
+      state.pohjakoulutusvaatimus = [];
     },
     setSize: (state, { payload }) => {
       state.size = payload.newSize;
@@ -110,7 +127,7 @@ const hakutulosSlice = createSlice({
       state.sort = payload.newSort;
     },
     searchAPICallStart(state) {
-      if (state.status === IDLE_STATUS) {
+      if (state.status === INITIAL || state.status === IDLE_STATUS) {
         state.status = LOADING_STATUS;
       }
     },
@@ -125,11 +142,9 @@ const hakutulosSlice = createSlice({
           literals,
         } = payload;
         state.koulutusHits = koulutusData.hits;
-        state.koulutusCount = _.size(koulutusData.hits);
         state.koulutusFilters = koulutusData.filters;
         state.koulutusTotal = koulutusData.total;
         state.oppilaitosHits = oppilaitosData.hits;
-        state.oppilaitosCount = _.size(oppilaitosData.hits);
         state.oppilaitosFilters = oppilaitosData.filters;
         state.oppilaitosTotal = oppilaitosData.total;
         if (
@@ -141,11 +156,15 @@ const hakutulosSlice = createSlice({
         } else if (_.size(koulutusData.hits) > 0 && isNewKeyword) {
           state.selectedTab = KOULUTUS;
         }
+
+        // NOTE: This sets and translates initial checked filter values
+        // TODO: Really complex, refactor this
+        // TODO: Especially because we shouldn't save translated values into selected values
         if (isReload) {
           _.forEach(literals, (val, key) => {
             state[key] = val;
           });
-          _.forEach(filters, (idsStr, key) => {
+          _.forEach(filters, (filterValues, key) => {
             switch (key) {
               case FILTER_TYPES.KOULUTUSTYYPPI:
                 const koulutustyyppiFilters = pullUpAlakoodit(
@@ -155,19 +174,19 @@ const hakutulosSlice = createSlice({
                   koulutusData?.filters?.[`${key}-muu`]
                 );
                 state[key] = getCheckedFilterValues(
-                  idsStr,
+                  filterValues,
                   _.assign(koulutustyyppiFilters, koulutustyyppiMuuFilters)
                 );
                 break;
               case FILTER_TYPES.KOULUTUSALA:
                 const koulutusalaFilters = pullUpAlakoodit(koulutusData?.filters?.[key]);
-                state[key] = getCheckedFilterValues(idsStr, koulutusalaFilters);
+                state[key] = getCheckedFilterValues(filterValues, koulutusalaFilters);
                 break;
               case FILTER_TYPES.SIJAINTI:
-                const maakunnatIds = _.split(idsStr, ',').filter((id) =>
+                const maakunnatIds = _.split(filterValues, ',').filter((id) =>
                   _.startsWith(id, 'maakunta_')
                 );
-                const kunnatIds = _.split(idsStr, ',').filter((id) =>
+                const kunnatIds = _.split(filterValues, ',').filter((id) =>
                   _.startsWith(id, 'kunta_')
                 );
                 if (_.size(maakunnatIds) > 0) {
@@ -183,8 +202,14 @@ const hakutulosSlice = createSlice({
                   );
                 }
                 break;
+              case FILTER_TYPES.HAKUKAYNNISSA:
+                state.hakukaynnissa = filterValues === 'true';
+                break;
               default:
-                state[key] = getCheckedFilterValues(idsStr, koulutusData.filters[key]);
+                state[key] = getCheckedFilterValues(
+                  filterValues,
+                  koulutusData.filters[key]
+                );
                 break;
             }
           });
@@ -198,7 +223,6 @@ const hakutulosSlice = createSlice({
       if (state.status === LOADING_STATUS) {
         const { koulutusData, koulutusOffset, koulutusPage } = payload;
         state.koulutusHits = koulutusData.hits;
-        state.koulutusCount = _.size(koulutusData.hits);
         state.koulutusOffset = koulutusOffset;
         state.koulutusPage = koulutusPage;
         state.error = null;
@@ -209,7 +233,6 @@ const hakutulosSlice = createSlice({
       if (state.status === LOADING_STATUS) {
         const { oppilaitosData, oppilaitosOffset, oppilaitosPage } = payload;
         state.oppilaitosHits = oppilaitosData.hits;
-        state.oppilaitosCount = _.size(oppilaitosData.hits);
         state.oppilaitosOffset = oppilaitosOffset;
         state.oppilaitosPage = oppilaitosPage;
         state.error = null;
@@ -227,11 +250,12 @@ const hakutulosSlice = createSlice({
 
 export const {
   setKeyword,
-  setKeywordEditMode,
   setSelectedTab,
   searchAPICallStart,
   searchAPICallError,
   setOpetuskieli,
+  handleFilterToggle,
+  toggleHakukaynnissa,
   setKoulutustyyppi,
   setKoulutusala,
   setSijainti,
@@ -247,7 +271,34 @@ export const {
   searchKoulutuksetSuccess,
   searchOppilaitoksetSuccess,
 } = hakutulosSlice.actions;
+
 export default hakutulosSlice.reducer;
+
+// TODO: Remove Searchall when all filters use this
+export const newSearchAll = () => async (dispatch, getState) => {
+  const state = getState();
+  const requestParams = getAPIRequestParams(state);
+  dispatch(clearPaging());
+
+  try {
+    dispatch(searchAPICallStart());
+    const koulutusData = await searchAPI.getKoulutukset(requestParams);
+    const oppilaitosData = await searchAPI.getOppilaitokset(requestParams);
+
+    const filters = _.pick(requestParams, FILTER_TYPES_ARR);
+    const literals = _.pick(requestParams, ['size', 'order', 'sort']);
+    dispatch(
+      searchAllSuccess({
+        koulutusData,
+        oppilaitosData,
+        filters,
+        literals,
+      })
+    );
+  } catch (err) {
+    dispatch(searchAPICallError(err.toString()));
+  }
+};
 
 export const searchAll = (
   requestParams,
@@ -258,13 +309,7 @@ export const searchAll = (
     dispatch(searchAPICallStart());
     const koulutusData = await searchAPI.getKoulutukset(requestParams);
     const oppilaitosData = await searchAPI.getOppilaitokset(requestParams);
-    const filters = _.pick(requestParams, [
-      'opetuskieli',
-      'koulutustyyppi',
-      'koulutusala',
-      'sijainti',
-      'opetustapa',
-    ]);
+    const filters = _.pick(requestParams, FILTER_TYPES_ARR);
     const literals = _.pick(requestParams, ['size', 'order', 'sort']);
     dispatch(
       searchAllSuccess({
@@ -280,6 +325,7 @@ export const searchAll = (
     dispatch(searchAPICallError(err.toString()));
   }
 };
+
 export const searchKoulutukset = ({
   requestParams,
   koulutusOffset,
@@ -293,6 +339,7 @@ export const searchKoulutukset = ({
     dispatch(searchAPICallError(err.toString()));
   }
 };
+
 export const searchOppilaitokset = ({
   requestParams,
   oppilaitosOffset,
@@ -309,16 +356,13 @@ export const searchOppilaitokset = ({
   }
 };
 
-export const searchAllOnPageReload = ({ apiRequestParams, search, keyword }) => (
-  dispatch,
-  getState
-) => {
+export const searchAllOnPageReload = ({ search, keyword }) => (dispatch, getState) => {
+  const state = getState();
+  const apiRequestParams = getAPIRequestParams(state);
   const cleanedUrlSearch = getCleanUrlSearch(search, apiRequestParams);
-  const { hakutulos } = getState();
-  if (
-    !_.isMatch(apiRequestParams, { ...cleanedUrlSearch, keyword }) &&
-    !hakutulos.keywordEditMode
-  ) {
+  const { hakutulos } = state;
+
+  if (!_.isMatch(apiRequestParams, { ...cleanedUrlSearch, keyword })) {
     dispatch(setKeyword({ keyword }));
     dispatch(
       searchAll(
@@ -330,25 +374,26 @@ export const searchAllOnPageReload = ({ apiRequestParams, search, keyword }) => 
   }
 };
 
-export const executeSearchFromStartingPage = ({ apiRequestParams, history }) => (
-  dispatch,
-  getState
-) => {
+export const searchAndMoveToHaku = ({ history }) => (dispatch, getState) => {
   const { hakutulos } = getState();
-  const lng = apiRequestParams.lng || 'fi';
+  const apiRequestParams = getAPIRequestParams({ hakutulos });
+  const lng = getLanguage();
   const restParams = new URLSearchParams(
     _.pick(C.cleanRequestParams(apiRequestParams), [
       'order',
       'size',
       'opetuskieli',
+      'valintatapa',
+      'hakukaynnissa',
+      'hakutapa',
       'koulutustyyppi',
       'koulutusala',
       'sijainti',
       'opetustapa',
+      'pohjakoulutusvaatimus',
     ])
   ).toString();
   history.push(`/${lng}/haku/${hakutulos.keyword}?${restParams}`);
-  dispatch(setKeywordEditMode({ newKeywordEditMode: false }));
   dispatch(searchAll(apiRequestParams, true));
 };
 
@@ -357,7 +402,6 @@ export const twoLevelFilterUpdateAndSearch = ({
   apiRequestParams,
   clickedFilterId,
   parentFilterId,
-  updateUrlSearchParams,
 }) => (dispatch, getState) => {
   const { hakutulos } = getState();
   let filterCheckedValues = _.clone(_.get(hakutulos, filterType));
@@ -409,7 +453,6 @@ export const twoLevelFilterUpdateAndSearch = ({
       break;
   }
 
-  updateUrlSearchParams({ [filterType]: filterURLParamsStr });
   dispatch(clearPaging());
   dispatch(searchAll({ ...apiRequestParams, [filterType]: filterURLParamsStr }));
 };

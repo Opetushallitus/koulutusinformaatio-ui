@@ -21,7 +21,6 @@ import { twoLevelFilterUpdateAndSearch } from '#/src/store/reducers/hakutulosSli
 import { getKoulutusalaFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { localize } from '#/src/tools/localization';
 
-import { useUrlParams } from '../UseUrlParams';
 import {
   SuodatinAccordion,
   SuodatinAccordionDetails,
@@ -46,7 +45,6 @@ const KoulutusalaSuodatin = ({
   displaySelected,
   summaryHidden = false,
 }) => {
-  const { updateUrlSearchParams } = useUrlParams();
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -81,7 +79,6 @@ const KoulutusalaSuodatin = ({
         apiRequestParams,
         clickedFilterId,
         parentFilterId,
-        updateUrlSearchParams,
       })
     );
   };

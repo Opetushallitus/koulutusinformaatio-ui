@@ -8,9 +8,8 @@ import i18n from './i18n';
 import { getTranslationForKey, localize } from './localization';
 
 export const Common = {
-  // filters 'null', 'empty string' or 'undefined', but '0' or 'false' are valid values,
-  // does not parse numbers to strings
-  cleanRequestParams: _fp.pickBy(_fp.toString),
+  // Filters all untruthy values, we do not want false or 0 values sent
+  cleanRequestParams: _fp.pickBy(_fp.identity),
 };
 
 export const koodiUriToPostinumero = (str = '') => {

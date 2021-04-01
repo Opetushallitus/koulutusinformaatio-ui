@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Filter } from '#/src/components/hakutulos/hakutulosSuodattimet/Filter';
 import {
   FilterType,
-  SuodatinProps,
+  SuodatinComponentProps,
 } from '#/src/components/hakutulos/hakutulosSuodattimet/SuodatinTypes';
 
 import { getOptionsForSelect, getShownStr } from './utils';
@@ -15,7 +15,7 @@ type Props = {
   initialValues: Array<FilterType>;
   sortedMaakunnat: Array<FilterType>;
   sortedKunnat: Array<FilterType>;
-} & SuodatinProps;
+} & SuodatinComponentProps;
 
 export const SijaintiSuodatin = (props: Props) => {
   const { t } = useTranslation();

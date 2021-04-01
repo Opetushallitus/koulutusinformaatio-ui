@@ -119,6 +119,7 @@ export type Jarjestaja = {
   toteutusOid: string;
   toteutusNimi: string;
   tutkintonimikkeet: TODOType;
+  hakukaynnissa: boolean;
 };
 
 export enum Alkamiskausityyppi {

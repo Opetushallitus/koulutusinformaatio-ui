@@ -10,34 +10,36 @@ describe('Haku', () => {
   it('Koulutustyyppi checkboxes should work hierarchically', () => {
     cy.visit('/fi/haku/auto');
 
-    cy.findByRole('checkbox', { name: /Ammatillinen koulutus/ }).as(
-      'AmmatillinenKoulutus'
-    );
-    cy.findByRole('checkbox', { name: /Ammatillinen perustutkinto/ }).as(
-      'AmmatillinenPerustutkinto'
-    );
-    cy.findByRole('checkbox', { name: /Ammattitutkinto/ }).as('Ammattitutkinto');
-    cy.findByRole('checkbox', { name: /Erikoisammattitutkinto/ }).as(
-      'Erikoisammattitutkinto'
-    );
+    cy.findByTestId('koulutustyyppi-filter').within(() => {
+      cy.findByRole('checkbox', { name: /Ammatillinen koulutus/ }).as(
+        'AmmatillinenKoulutus'
+      );
+      cy.findByRole('checkbox', { name: /Ammatillinen perustutkinto/ }).as(
+        'AmmatillinenPerustutkinto'
+      );
+      cy.findByRole('checkbox', { name: /Ammattitutkinto/ }).as('Ammattitutkinto');
+      cy.findByRole('checkbox', { name: /Erikoisammattitutkinto/ }).as(
+        'Erikoisammattitutkinto'
+      );
 
-    cy.get('@AmmatillinenKoulutus').check();
-    cy.get('@AmmatillinenPerustutkinto').should('be.checked');
-    cy.get('@Ammattitutkinto').should('be.checked');
-    cy.get('@Erikoisammattitutkinto').should('be.checked');
+      cy.get('@AmmatillinenKoulutus').check();
+      cy.get('@AmmatillinenPerustutkinto').should('be.checked');
+      cy.get('@Ammattitutkinto').should('be.checked');
+      cy.get('@Erikoisammattitutkinto').should('be.checked');
 
-    cy.get('@AmmatillinenKoulutus').uncheck();
-    cy.get('@AmmatillinenPerustutkinto').should('not.be.checked');
-    cy.get('@Ammattitutkinto').should('not.be.checked');
-    cy.get('@Erikoisammattitutkinto').should('not.be.checked');
+      cy.get('@AmmatillinenKoulutus').uncheck();
+      cy.get('@AmmatillinenPerustutkinto').should('not.be.checked');
+      cy.get('@Ammattitutkinto').should('not.be.checked');
+      cy.get('@Erikoisammattitutkinto').should('not.be.checked');
 
-    cy.get('@AmmatillinenPerustutkinto').check();
-    cy.get('@AmmatillinenKoulutus').should('have.attr', 'data-indeterminate');
+      cy.get('@AmmatillinenPerustutkinto').check();
+      cy.get('@AmmatillinenKoulutus').should('have.attr', 'data-indeterminate');
 
-    cy.get('@Ammattitutkinto').check();
-    cy.get('@Erikoisammattitutkinto').check();
+      cy.get('@Ammattitutkinto').check();
+      cy.get('@Erikoisammattitutkinto').check();
 
-    cy.get('@AmmatillinenKoulutus').should('be.checked');
+      cy.get('@AmmatillinenKoulutus').should('be.checked');
+    });
   });
   it("Koulutustyyppi switching between 'Tutkintoon johtavat' and 'Muut'", () => {
     cy.visit('/fi/haku/auto');
@@ -55,11 +57,11 @@ describe('Haku', () => {
     const tutkinnonOsaChk = () => cy.findByRole('checkbox', { name: /Tutkinnon osa /i });
     const osaamisalaChk = () => cy.findByRole('checkbox', { name: /Osaamisala /i });
 
-    ammatillinenKoulutusChk().should('exist');
-    ammatillinenPerustutkintoChk().should('exist');
-    erikoisammattitutkintoChk().should('exist');
+    cy.findByTestId('koulutustyyppi-filter').within(() => {
+      ammatillinenKoulutusChk().should('exist');
+      ammatillinenPerustutkintoChk().should('exist');
+      erikoisammattitutkintoChk().should('exist');
 
-    cy.get('[data-cy=koulutustyyppi-filter]').within((koulutustyyppppi) => {
       tutkintoonJohtavatBtn().should('have.attr', 'aria-selected', 'true');
       muutBtn().should('have.attr', 'aria-selected', 'false');
 
@@ -97,7 +99,7 @@ describe('Haku', () => {
       cy.findByRole('checkbox', {
         name: /Kone-, prosessi-, energia- ja sähkötekniikka \(\d*\)/i,
       });
-    cy.get('[data-cy=koulutusalat-filter]')
+    cy.findByTestId('koulutusalat-filter')
       .should('exist')
       .within((kaf) => {
         tekniikanAlatChk().should('exist').check();
@@ -133,22 +135,102 @@ describe('Haku', () => {
     const verkkoOpiskeluChk = () =>
       cy.findByRole('checkbox', { name: /Verkko-opiskelu \(\d*\)/i });
     cy.findByText('Opetustapa').should('exist').click();
-    cy.get('[data-cy=opetustapa-filter]')
+    cy.findByTestId('opetustapa-filter')
       .should('exist')
-      .within((optf) => {
+      .within(() => {
         etaopetusChk().click().should('be.checked');
         etaopetusChk().click().should('not.be.checked');
         verkkoOpiskeluChk().click().should('be.checked');
       });
-    cy.get('[data-cy=chip-opetuspaikkakk_3]')
+    cy.findByTestId('chip-opetuspaikkakk_3')
       .should('exist')
-      .within((etaOpChip) => {
+      .within(() => {
         cy.get('svg').should('exist').click();
       });
-    cy.get('[data-cy=opetustapa-filter]')
+    cy.findByTestId('opetustapa-filter')
       .should('exist')
-      .within((optf) => {
+      .within(() => {
         verkkoOpiskeluChk().should('exist').should('not.be.checked');
+      });
+  });
+
+  // TODO: Skipped until component is used
+  it.skip('Valintatapa filter checkboxes', () => {
+    cy.visit('/fi/haku/auto');
+    const koepisteetChk = () =>
+      cy.findByRole('checkbox', { name: /Koepisteet \(\d*\)/i });
+    const yhteispisteetChk = () =>
+      cy.findByRole('checkbox', { name: /Yhteispisteet \(\d*\)/i });
+    cy.findByText('Valintatapa').should('exist').click();
+    cy.findByTestId('valintatapa-filter')
+      .should('exist')
+      .within(() => {
+        koepisteetChk().click().should('be.checked');
+        koepisteetChk().click().should('not.be.checked');
+        yhteispisteetChk().click().should('be.checked');
+      });
+    cy.findByTestId('chip-valintatapajono_yp')
+      .should('exist')
+      .within(() => {
+        cy.get('svg').should('exist').click();
+      });
+    cy.findByTestId('valintatapa-filter')
+      .should('exist')
+      .within(() => {
+        yhteispisteetChk().should('exist').should('not.be.checked');
+      });
+  });
+
+  // TODO: Skipped until component is used
+  it.skip('Hakutapa filter checkboxes', () => {
+    cy.visit('/fi/haku/auto');
+    const yhteishakuChk = () =>
+      cy.findByRole('checkbox', { name: /Yhteishaku \(\d*\)/i });
+    const jatkuvaHakuChk = () =>
+      cy.findByRole('checkbox', { name: /Jatkuva haku \(\d*\)/i });
+    cy.findByText('Hakutapa').should('exist');
+    cy.findByTestId('hakutapa-filter')
+      .should('exist')
+      .within(() => {
+        jatkuvaHakuChk().click().should('be.checked');
+        jatkuvaHakuChk().click().should('not.be.checked');
+        yhteishakuChk().click().should('be.checked');
+      });
+    cy.findByTestId('chip-hakutapa_01')
+      .should('exist')
+      .within(() => {
+        cy.get('svg').should('exist').click();
+      });
+    cy.findByTestId('hakutapa-filter')
+      .should('exist')
+      .within(() => {
+        yhteishakuChk().should('exist').should('not.be.checked');
+      });
+  });
+
+  // TODO: Skipped until component is used
+  it.skip('Pohjakoulutusvaatimus filter checkboxes', () => {
+    cy.visit('/fi/haku/auto');
+    const ammatillinnePerustutkintoChk = () =>
+      cy.findByRole('checkbox', { name: /Ammatillinen perustutkinto \(\d*\)/i });
+    const lukioChk = () => cy.findByRole('checkbox', { name: /Lukio \(\d*\)/i });
+    cy.findByText('Koulutustausta').should('exist');
+    cy.findByTestId('pohjakoulutusvaatimus-filter')
+      .should('exist')
+      .within(() => {
+        ammatillinnePerustutkintoChk().click().should('be.checked');
+        ammatillinnePerustutkintoChk().click().should('not.be.checked');
+        lukioChk().click().should('be.checked');
+      });
+    cy.findByTestId('chip-pohjakoulutusvaatimuskonfo_002')
+      .should('exist')
+      .within(() => {
+        cy.get('svg').should('exist').click();
+      });
+    cy.findByTestId('pohjakoulutusvaatimus-filter')
+      .should('exist')
+      .within(() => {
+        lukioChk().should('exist').should('not.be.checked');
       });
   });
   it("Koulutuskortti data should be presented correctly for 'Tutkinnon osa'", () => {
@@ -160,11 +242,11 @@ describe('Haku', () => {
 
     searchBox().type('Hevosten hyvinvoinnista huolehtiminen');
     searchButton().click();
-    cy.get('[data-cy="1.2.246.562.13.00000000000000000598"]').within((kortti) => {
-      cy.get(
-        '[data-cy="tutkintonimikkeet-1.2.246.562.13.00000000000000000598"]'
-      ).contains('Tutkinnon osa');
-      cy.get('[data-cy="opintojenlaajuus-1.2.246.562.13.00000000000000000598"]').contains(
+    cy.findByTestId('1.2.246.562.13.00000000000000000598').within((kortti) => {
+      cy.findByTestId('tutkintonimikkeet-1.2.246.562.13.00000000000000000598').contains(
+        'Tutkinnon osa'
+      );
+      cy.findByTestId('opintojenlaajuus-1.2.246.562.13.00000000000000000598').contains(
         '25 + 50 osaamispistettä'
       );
     });
@@ -178,11 +260,11 @@ describe('Haku', () => {
 
     searchBox().type('Jalkojenhoidon osaamisala');
     searchButton().click();
-    cy.get('[data-cy="1.2.246.562.13.00000000000000000615"]').within((kortti) => {
-      cy.get(
-        '[data-cy="tutkintonimikkeet-1.2.246.562.13.00000000000000000615"]'
-      ).contains('Osaamisala');
-      cy.get('[data-cy="opintojenlaajuus-1.2.246.562.13.00000000000000000615"]').contains(
+    cy.findByTestId('1.2.246.562.13.00000000000000000615').within((kortti) => {
+      cy.findByTestId('tutkintonimikkeet-1.2.246.562.13.00000000000000000615').contains(
+        'Osaamisala'
+      );
+      cy.findByTestId('opintojenlaajuus-1.2.246.562.13.00000000000000000615').contains(
         '145 osaamispistettä'
       );
     });

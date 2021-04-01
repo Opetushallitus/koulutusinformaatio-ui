@@ -9,6 +9,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { ExpandMore, SearchOutlined } from '@material-ui/icons';
+import _ from 'lodash';
 import Select, { components } from 'react-select';
 
 import { colors } from '#/src/colors';
@@ -80,6 +81,7 @@ const withStyles = makeStyles(() => ({
 
 type Props = {
   name: string;
+  testId?: string;
   expanded?: boolean;
   elevation?: number;
   displaySelected?: boolean;
@@ -92,8 +94,10 @@ type Props = {
   selectPlaceholder?: string;
 };
 
+// NOTE: Do *not* put redux code here, this component is used both with and without
 export const Filter = ({
   name,
+  testId,
   expanded,
   elevation,
   displaySelected = false,
@@ -111,6 +115,7 @@ export const Filter = ({
   return (
     <SuodatinAccordion
       {...(summaryHidden && { className: classes.noBoxShadow })}
+      data-cy={testId}
       elevation={elevation}
       defaultExpanded={expanded}>
       {!summaryHidden && (
@@ -162,13 +167,16 @@ export const Filter = ({
                         checked={checkedValues.some((v) => v.id === id)}
                         tabIndex={-1}
                         disableRipple
+                        inputProps={{ 'aria-labelledby': labelId }}
                       />
                     </ListItemIcon>
                     <SuodatinListItemText
                       id={labelId}
                       primary={
                         <Grid container justify="space-between" wrap="nowrap">
-                          <Grid item>{localize(value)}</Grid>
+                          <Grid item>
+                            {_.isString(value.nimi) ? value.nimi : localize(value)}
+                          </Grid>
                           <Grid item>{`(${count})`}</Grid>
                         </Grid>
                       }

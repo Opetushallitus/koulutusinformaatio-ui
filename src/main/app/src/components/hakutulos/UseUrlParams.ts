@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from 'react';
 
-import _ from 'lodash';
 import qs from 'query-string';
 import { useHistory } from 'react-router-dom';
 
@@ -13,34 +12,13 @@ export const useUrlParams = () => {
     [history.location.search]
   );
 
-  const getAsString = useCallback(() => qs.stringify(C.cleanRequestParams(search)), [
-    search,
-  ]);
-
   const updateUrlSearchParams = useCallback(
-    (updatedProps: object, resetPages = true) => {
+    (updatedProps: object) => {
       const newSearch = {
-        ...search,
         ...updatedProps,
-        ...(resetPages ? { kpage: 1, opage: 1 } : {}),
+        ...{ kpage: 1, opage: 1 },
       };
       history.replace({ search: qs.stringify(C.cleanRequestParams(newSearch)) });
-    },
-    [history, search]
-  );
-
-  const omitUrlSearchParams = useCallback(
-    (filters: Record<string, object>) => {
-      history.replace({
-        search: qs.stringify(_.omit(search, _.keys(filters))),
-      });
-    },
-    [history, search]
-  );
-
-  const overrideUrlSearchParams = useCallback(
-    (newSearch: string) => {
-      history.replace({ search: newSearch });
     },
     [history]
   );
@@ -50,9 +28,6 @@ export const useUrlParams = () => {
   return {
     isDraft,
     search,
-    getAsString,
-    omitUrlSearchParams,
-    overrideUrlSearchParams,
     updateUrlSearchParams,
   };
 };

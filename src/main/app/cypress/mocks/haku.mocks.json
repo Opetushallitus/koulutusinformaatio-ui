@@ -50,9 +50,7 @@
               "fi": "Myynti ja tuotetuntemus"
             },
             "oid": "1.2.246.562.13.00000000000000000603",
-            "kielivalinta": [
-              "fi"
-            ],
+            "kielivalinta": ["fi"],
             "koulutus": null,
             "tutkintonimikkeet": null,
             "eperuste": null,
@@ -84,10 +82,7 @@
               "sv": "Grundexamen inom el- och automationsbranschen"
             },
             "oid": "1.2.246.562.13.00000000000000000471",
-            "kielivalinta": [
-              "fi",
-              "sv"
-            ],
+            "kielivalinta": ["fi", "sv"],
             "koulutus": {
               "koodiUri": "koulutus_351407#12",
               "nimi": {
@@ -147,10 +142,7 @@
               "sv": "Grundexamen inom bilbranschen"
             },
             "oid": "1.2.246.562.13.00000000000000000570",
-            "kielivalinta": [
-              "fi",
-              "sv"
-            ],
+            "kielivalinta": ["fi", "sv"],
             "koulutus": {
               "koodiUri": "koulutus_351301#12",
               "nimi": {
@@ -217,9 +209,7 @@
               "fi": "Auto- ja kuljetusalan peruskoulutus"
             },
             "oid": "1.2.246.562.13.00000000000000000494",
-            "kielivalinta": [
-              "fi"
-            ],
+            "kielivalinta": ["fi"],
             "koulutus": {
               "koodiUri": "koulutus_351300#12",
               "nimi": {
@@ -243,9 +233,7 @@
               "fi": "Auto- ja kuljetusalan peruskoulutus"
             },
             "oid": "1.2.246.562.13.00000000000000000189",
-            "kielivalinta": [
-              "fi"
-            ],
+            "kielivalinta": ["fi"],
             "koulutus": {
               "koodiUri": "koulutus_351300#12",
               "nimi": {
@@ -281,9 +269,7 @@
               "fi": "Autoalan perustutkinto"
             },
             "oid": "1.2.246.562.13.00000000000000000508",
-            "kielivalinta": [
-              "fi"
-            ],
+            "kielivalinta": ["fi"],
             "koulutus": {
               "koodiUri": "koulutus_351301#12",
               "nimi": {
@@ -327,11 +313,7 @@
               "en": "Vocational Qualification in Mechanical Engineering and Production Technology"
             },
             "oid": "1.2.246.562.13.00000000000000000517",
-            "kielivalinta": [
-              "fi",
-              "en",
-              "sv"
-            ],
+            "kielivalinta": ["fi", "en", "sv"],
             "koulutus": {
               "koodiUri": "koulutus_351108#7",
               "nimi": {
@@ -415,10 +397,7 @@
               "sv": "Grundexamen i logistik"
             },
             "oid": "1.2.246.562.13.00000000000000000621",
-            "kielivalinta": [
-              "fi",
-              "sv"
-            ],
+            "kielivalinta": ["fi", "sv"],
             "koulutus": {
               "koodiUri": "koulutus_381408#12",
               "nimi": {
@@ -485,10 +464,7 @@
               "en": "VET in Technology, Level 3"
             },
             "oid": "1.2.246.562.13.00000000000000000507",
-            "kielivalinta": [
-              "fi",
-              "sv"
-            ],
+            "kielivalinta": ["fi", "sv"],
             "koulutus": {
               "koodiUri": "koulutus_351000#12",
               "nimi": {
@@ -5586,6 +5562,35 @@
               },
               "count": 1
             }
+          },
+          "valintatapa": {
+            "valintatapajono_av": { "nimi": { "fi": "Avoimen väylä" }, "count": 1 },
+            "valintatapajono_tv": { "nimi": { "fi": "Todistusvalinta" }, "count": 0 },
+            "valintatapajono_km": { "nimi": { "fi": "Kilpailumenestys" }, "count": 1 },
+            "valintatapajono_yp": { "nimi": { "fi": "Yhteispisteet" }, "count": 1 },
+            "valintatapajono_kp": { "nimi": { "fi": "Koepisteet" }, "count": 2 },
+            "valintatapajono_m": { "nimi": { "fi": "Muu" }, "count": 0 }
+          },
+          "hakutapa": {
+            "hakutapa_01": {
+              "nimi": { "fi": "Yhteishaku", "sv": "Gemensam ansökan" },
+              "count": 6
+            },
+            "hakutapa_02": {
+              "nimi": { "sv": "Separata antagningar", "fi": "Erillishaku" },
+              "count": 1
+            },
+            "hakutapa_03": {
+              "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
+              "count": 2
+            }
+          },
+          "pohjakoulutusvaatimus": {
+            "pohjakoulutusvaatimuskonfo_am": {
+              "nimi": { "fi": "Ammatillinen perustutkinto" },
+              "count": 1
+            },
+            "pohjakoulutusvaatimuskonfo_002": { "nimi": { "fi": "Lukio" }, "count": 1 }
           }
         }
       },
@@ -5631,10 +5636,7 @@
               "sv": "Koulutuskeskus Salpaus",
               "en": "Koulutuskeskus Salpaus"
             },
-            "kielivalinta": [
-              "fi",
-              "sv"
-            ],
+            "kielivalinta": ["fi", "sv"],
             "koulutusohjelmia": 58,
             "logo": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.39218317368/e59fb6eb-c68b-4223-a7d0-4536bc4381d3.jpg",
             "paikkakunnat": [
@@ -5744,11 +5746,7 @@
               "fi": "Stadin ammatti- ja aikuisopisto",
               "en": "Stadin ammatti- ja aikuisopisto"
             },
-            "kielivalinta": [
-              "fi",
-              "sv",
-              "en"
-            ],
+            "kielivalinta": ["fi", "sv", "en"],
             "koulutusohjelmia": 25,
             "logo": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.52251087186/343b2c4f-c2f7-486e-a225-eae12634d088.png",
             "paikkakunnat": [
@@ -10853,6 +10851,35 @@
               },
               "count": 3
             }
+          },
+          "valintatapa": {
+            "valintatapajono_av": { "nimi": { "fi": "Avoimen väylä" }, "count": 1 },
+            "valintatapajono_tv": { "nimi": { "fi": "Todistusvalinta" }, "count": 0 },
+            "valintatapajono_km": { "nimi": { "fi": "Kilpailumenestys" }, "count": 1 },
+            "valintatapajono_yp": { "nimi": { "fi": "Yhteispisteet" }, "count": 1 },
+            "valintatapajono_kp": { "nimi": { "fi": "Koepisteet" }, "count": 2 },
+            "valintatapajono_m": { "nimi": { "fi": "Muu" }, "count": 0 }
+          },
+          "hakutapa": {
+            "hakutapa_01": {
+              "nimi": { "fi": "Yhteishaku", "sv": "Gemensam ansökan" },
+              "count": 6
+            },
+            "hakutapa_02": {
+              "nimi": { "sv": "Separata antagningar", "fi": "Erillishaku" },
+              "count": 1
+            },
+            "hakutapa_03": {
+              "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
+              "count": 2
+            }
+          },
+          "pohjakoulutusvaatimus": {
+            "pohjakoulutusvaatimuskonfo_am": {
+              "nimi": { "fi": "Ammatillinen perustutkinto" },
+              "count": 1
+            },
+            "pohjakoulutusvaatimuskonfo_002": { "nimi": { "fi": "Lukio" }, "count": 1 }
           }
         }
       },
@@ -10892,10 +10919,7 @@
               "sv": "Grundexamen inom el- och automationsbranschen"
             },
             "oid": "1.2.246.562.13.00000000000000000471",
-            "kielivalinta": [
-              "fi",
-              "sv"
-            ],
+            "kielivalinta": ["fi", "sv"],
             "koulutus": {
               "koodiUri": "koulutus_351407#12",
               "nimi": {
@@ -10955,10 +10979,7 @@
               "sv": "Grundexamen inom bilbranschen"
             },
             "oid": "1.2.246.562.13.00000000000000000570",
-            "kielivalinta": [
-              "fi",
-              "sv"
-            ],
+            "kielivalinta": ["fi", "sv"],
             "koulutus": {
               "koodiUri": "koulutus_351301#12",
               "nimi": {
@@ -11025,9 +11046,7 @@
               "fi": "Auto- ja kuljetusalan peruskoulutus"
             },
             "oid": "1.2.246.562.13.00000000000000000494",
-            "kielivalinta": [
-              "fi"
-            ],
+            "kielivalinta": ["fi"],
             "koulutus": {
               "koodiUri": "koulutus_351300#12",
               "nimi": {
@@ -11051,9 +11070,7 @@
               "fi": "Auto- ja kuljetusalan peruskoulutus"
             },
             "oid": "1.2.246.562.13.00000000000000000189",
-            "kielivalinta": [
-              "fi"
-            ],
+            "kielivalinta": ["fi"],
             "koulutus": {
               "koodiUri": "koulutus_351300#12",
               "nimi": {
@@ -11097,11 +11114,7 @@
               "en": "Vocational Qualification in Mechanical Engineering and Production Technology"
             },
             "oid": "1.2.246.562.13.00000000000000000517",
-            "kielivalinta": [
-              "fi",
-              "en",
-              "sv"
-            ],
+            "kielivalinta": ["fi", "en", "sv"],
             "koulutus": {
               "koodiUri": "koulutus_351108#7",
               "nimi": {
@@ -11185,10 +11198,7 @@
               "sv": "Grundexamen i logistik"
             },
             "oid": "1.2.246.562.13.00000000000000000621",
-            "kielivalinta": [
-              "fi",
-              "sv"
-            ],
+            "kielivalinta": ["fi", "sv"],
             "koulutus": {
               "koodiUri": "koulutus_381408#12",
               "nimi": {
@@ -11255,10 +11265,7 @@
               "en": "VET in Technology, Level 3"
             },
             "oid": "1.2.246.562.13.00000000000000000507",
-            "kielivalinta": [
-              "fi",
-              "sv"
-            ],
+            "kielivalinta": ["fi", "sv"],
             "koulutus": {
               "koodiUri": "koulutus_351000#12",
               "nimi": {
@@ -16356,6 +16363,35 @@
               },
               "count": 1
             }
+          },
+          "valintatapa": {
+            "valintatapajono_av": { "nimi": { "fi": "Avoimen väylä" }, "count": 1 },
+            "valintatapajono_tv": { "nimi": { "fi": "Todistusvalinta" }, "count": 0 },
+            "valintatapajono_km": { "nimi": { "fi": "Kilpailumenestys" }, "count": 1 },
+            "valintatapajono_yp": { "nimi": { "fi": "Yhteispisteet" }, "count": 1 },
+            "valintatapajono_kp": { "nimi": { "fi": "Koepisteet" }, "count": 2 },
+            "valintatapajono_m": { "nimi": { "fi": "Muu" }, "count": 0 }
+          },
+          "hakutapa": {
+            "hakutapa_01": {
+              "nimi": { "fi": "Yhteishaku", "sv": "Gemensam ansökan" },
+              "count": 6
+            },
+            "hakutapa_02": {
+              "nimi": { "sv": "Separata antagningar", "fi": "Erillishaku" },
+              "count": 1
+            },
+            "hakutapa_03": {
+              "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
+              "count": 2
+            }
+          },
+          "pohjakoulutusvaatimus": {
+            "pohjakoulutusvaatimuskonfo_am": {
+              "nimi": { "fi": "Ammatillinen perustutkinto" },
+              "count": 1
+            },
+            "pohjakoulutusvaatimuskonfo_002": { "nimi": { "fi": "Lukio" }, "count": 1 }
           }
         }
       },
@@ -16395,10 +16431,7 @@
               "sv": "Kompetensområdet för fotvård"
             },
             "oid": "1.2.246.562.13.00000000000000000615",
-            "kielivalinta": [
-              "fi",
-              "sv"
-            ],
+            "kielivalinta": ["fi", "sv"],
             "koulutus": {
               "koodiUri": "koulutus_371101#12",
               "nimi": {
@@ -21496,6 +21529,35 @@
               },
               "count": 0
             }
+          },
+          "valintatapa": {
+            "valintatapajono_av": { "nimi": { "fi": "Avoimen väylä" }, "count": 1 },
+            "valintatapajono_tv": { "nimi": { "fi": "Todistusvalinta" }, "count": 0 },
+            "valintatapajono_km": { "nimi": { "fi": "Kilpailumenestys" }, "count": 1 },
+            "valintatapajono_yp": { "nimi": { "fi": "Yhteispisteet" }, "count": 1 },
+            "valintatapajono_kp": { "nimi": { "fi": "Koepisteet" }, "count": 2 },
+            "valintatapajono_m": { "nimi": { "fi": "Muu" }, "count": 0 }
+          },
+          "hakutapa": {
+            "hakutapa_01": {
+              "nimi": { "fi": "Yhteishaku", "sv": "Gemensam ansökan" },
+              "count": 6
+            },
+            "hakutapa_02": {
+              "nimi": { "sv": "Separata antagningar", "fi": "Erillishaku" },
+              "count": 1
+            },
+            "hakutapa_03": {
+              "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
+              "count": 2
+            }
+          },
+          "pohjakoulutusvaatimus": {
+            "pohjakoulutusvaatimuskonfo_am": {
+              "nimi": { "fi": "Ammatillinen perustutkinto" },
+              "count": 1
+            },
+            "pohjakoulutusvaatimuskonfo_002": { "nimi": { "fi": "Lukio" }, "count": 1 }
           }
         }
       },
@@ -21514,10 +21576,7 @@
               "sv": "Koulutuskeskus Salpaus",
               "en": "Koulutuskeskus Salpaus"
             },
-            "kielivalinta": [
-              "fi",
-              "sv"
-            ],
+            "kielivalinta": ["fi", "sv"],
             "koulutusohjelmia": 58,
             "logo": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.39218317368/e59fb6eb-c68b-4223-a7d0-4536bc4381d3.jpg",
             "paikkakunnat": [
@@ -26635,6 +26694,35 @@
               },
               "count": 1
             }
+          },
+          "valintatapa": {
+            "valintatapajono_av": { "nimi": { "fi": "Avoimen väylä" }, "count": 1 },
+            "valintatapajono_tv": { "nimi": { "fi": "Todistusvalinta" }, "count": 0 },
+            "valintatapajono_km": { "nimi": { "fi": "Kilpailumenestys" }, "count": 1 },
+            "valintatapajono_yp": { "nimi": { "fi": "Yhteispisteet" }, "count": 1 },
+            "valintatapajono_kp": { "nimi": { "fi": "Koepisteet" }, "count": 2 },
+            "valintatapajono_m": { "nimi": { "fi": "Muu" }, "count": 0 }
+          },
+          "hakutapa": {
+            "hakutapa_01": {
+              "nimi": { "fi": "Yhteishaku", "sv": "Gemensam ansökan" },
+              "count": 6
+            },
+            "hakutapa_02": {
+              "nimi": { "sv": "Separata antagningar", "fi": "Erillishaku" },
+              "count": 1
+            },
+            "hakutapa_03": {
+              "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
+              "count": 2
+            }
+          },
+          "pohjakoulutusvaatimus": {
+            "pohjakoulutusvaatimuskonfo_am": {
+              "nimi": { "fi": "Ammatillinen perustutkinto" },
+              "count": 1
+            },
+            "pohjakoulutusvaatimuskonfo_002": { "nimi": { "fi": "Lukio" }, "count": 1 }
           }
         }
       },
@@ -26718,9 +26806,7 @@
               "fi": "Hevosten hyvinvoinnista huolehtiminen"
             },
             "oid": "1.2.246.562.13.00000000000000000598",
-            "kielivalinta": [
-              "fi"
-            ],
+            "kielivalinta": ["fi"],
             "koulutus": null,
             "tutkintonimikkeet": null,
             "eperuste": null,
@@ -26802,10 +26888,7 @@
               "sv": "(testi) Hevosten hyvinvoinnista huolehtiminen (sv)"
             },
             "oid": "1.2.246.562.13.00000000000000000622",
-            "kielivalinta": [
-              "fi",
-              "sv"
-            ],
+            "kielivalinta": ["fi", "sv"],
             "koulutus": null,
             "tutkintonimikkeet": null,
             "eperuste": null,
@@ -31896,6 +31979,35 @@
               },
               "count": 1
             }
+          },
+          "valintatapa": {
+            "valintatapajono_av": { "nimi": { "fi": "Avoimen väylä" }, "count": 1 },
+            "valintatapajono_tv": { "nimi": { "fi": "Todistusvalinta" }, "count": 0 },
+            "valintatapajono_km": { "nimi": { "fi": "Kilpailumenestys" }, "count": 1 },
+            "valintatapajono_yp": { "nimi": { "fi": "Yhteispisteet" }, "count": 1 },
+            "valintatapajono_kp": { "nimi": { "fi": "Koepisteet" }, "count": 2 },
+            "valintatapajono_m": { "nimi": { "fi": "Muu" }, "count": 0 }
+          },
+          "hakutapa": {
+            "hakutapa_01": {
+              "nimi": { "fi": "Yhteishaku", "sv": "Gemensam ansökan" },
+              "count": 6
+            },
+            "hakutapa_02": {
+              "nimi": { "sv": "Separata antagningar", "fi": "Erillishaku" },
+              "count": 1
+            },
+            "hakutapa_03": {
+              "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
+              "count": 2
+            }
+          },
+          "pohjakoulutusvaatimus": {
+            "pohjakoulutusvaatimuskonfo_am": {
+              "nimi": { "fi": "Ammatillinen perustutkinto" },
+              "count": 1
+            },
+            "pohjakoulutusvaatimuskonfo_002": { "nimi": { "fi": "Lukio" }, "count": 1 }
           }
         }
       },
@@ -31915,11 +32027,7 @@
               "fi": "Stadin ammatti- ja aikuisopisto",
               "en": "Stadin ammatti- ja aikuisopisto"
             },
-            "kielivalinta": [
-              "fi",
-              "sv",
-              "en"
-            ],
+            "kielivalinta": ["fi", "sv", "en"],
             "koulutusohjelmia": 25,
             "logo": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.52251087186/343b2c4f-c2f7-486e-a225-eae12634d088.png",
             "paikkakunnat": [
@@ -31945,10 +32053,7 @@
               "sv": "Koulutuskeskus Salpaus",
               "en": "Koulutuskeskus Salpaus"
             },
-            "kielivalinta": [
-              "fi",
-              "sv"
-            ],
+            "kielivalinta": ["fi", "sv"],
             "koulutusohjelmia": 58,
             "logo": "https://konfo-files.hahtuvaopintopolku.fi/oppilaitos-logo/1.2.246.562.10.39218317368/e59fb6eb-c68b-4223-a7d0-4536bc4381d3.jpg",
             "paikkakunnat": [
@@ -37066,6 +37171,35 @@
               },
               "count": 2
             }
+          },
+          "valintatapa": {
+            "valintatapajono_av": { "nimi": { "fi": "Avoimen väylä" }, "count": 1 },
+            "valintatapajono_tv": { "nimi": { "fi": "Todistusvalinta" }, "count": 0 },
+            "valintatapajono_km": { "nimi": { "fi": "Kilpailumenestys" }, "count": 1 },
+            "valintatapajono_yp": { "nimi": { "fi": "Yhteispisteet" }, "count": 1 },
+            "valintatapajono_kp": { "nimi": { "fi": "Koepisteet" }, "count": 2 },
+            "valintatapajono_m": { "nimi": { "fi": "Muu" }, "count": 0 }
+          },
+          "hakutapa": {
+            "hakutapa_01": {
+              "nimi": { "fi": "Yhteishaku", "sv": "Gemensam ansökan" },
+              "count": 6
+            },
+            "hakutapa_02": {
+              "nimi": { "sv": "Separata antagningar", "fi": "Erillishaku" },
+              "count": 1
+            },
+            "hakutapa_03": {
+              "nimi": { "fi": "Jatkuva haku", "sv": "Fortgående ansökan" },
+              "count": 2
+            }
+          },
+          "pohjakoulutusvaatimus": {
+            "pohjakoulutusvaatimuskonfo_am": {
+              "nimi": { "fi": "Ammatillinen perustutkinto" },
+              "count": 1
+            },
+            "pohjakoulutusvaatimuskonfo_002": { "nimi": { "fi": "Lukio" }, "count": 1 }
           }
         }
       },

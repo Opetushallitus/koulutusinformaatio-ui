@@ -24,13 +24,12 @@ import {
 } from '#/src/store/reducers/hakutulosSlice';
 import {
   getAPIRequestParams,
-  getIsLoading,
   getSijaintiFilterProps,
+  getIsReady,
 } from '#/src/store/reducers/hakutulosSliceSelector';
 import { localize } from '#/src/tools/localization';
 import { Translateable } from '#/src/types/common';
 
-import { useUrlParams } from '../UseUrlParams';
 import {
   SuodatinAccordion,
   SuodatinAccordionDetails,
@@ -39,7 +38,7 @@ import {
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 import { SummaryContent } from './SummaryContent';
-import { ElasticTuple, SuodatinProps } from './SuodatinTypes';
+import { ElasticTuple, SuodatinComponentProps } from './SuodatinTypes';
 
 const useStyles = makeStyles(() => ({
   buttonLabel: {
@@ -123,11 +122,10 @@ export const SijaintiSuodatin = ({
   elevation,
   displaySelected,
   summaryHidden = false,
-}: SuodatinProps) => {
-  const { updateUrlSearchParams } = useUrlParams();
+}: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const loading = useSelector(getIsLoading);
+  const loading = !useSelector(getIsReady);
   const sijaintiFilterProps = useSelector(getSijaintiFilterProps) || {};
   const {
     firstFiveMaakunnat,
@@ -177,7 +175,6 @@ export const SijaintiSuodatin = ({
       .join(',');
 
     dispatch(setSelectedSijainti({ newSelectedSijainnit }));
-    updateUrlSearchParams({ sijainti: selectedSijainnitStr });
     dispatch(clearPaging());
     dispatch(searchAll({ ...apiRequestParams, sijainti: selectedSijainnitStr }));
   };
@@ -202,7 +199,6 @@ export const SijaintiSuodatin = ({
       .map(({ id }) => id)
       .concat(selectedSijainnit.map(({ id }) => id))
       .join(',');
-    updateUrlSearchParams({ sijainti: newCheckedOrSelectedSijainnitStr });
     dispatch(setSijainti({ newCheckedOrSelectedMaakunnat }));
     dispatch(clearPaging());
     dispatch(

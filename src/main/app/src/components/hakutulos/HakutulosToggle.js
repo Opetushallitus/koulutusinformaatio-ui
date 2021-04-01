@@ -10,7 +10,6 @@ import { setSelectedTab } from '#/src/store/reducers/hakutulosSlice';
 import { getHakutulosToggleProps } from '#/src/store/reducers/hakutulosSliceSelector';
 
 import { MUI_BREAKPOINTS } from '../../constants';
-import { useUrlParams } from './UseUrlParams';
 
 const useStyles = makeStyles((theme) => ({
   tabIconMargin: {
@@ -41,8 +40,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const HakutulosToggle = () => {
-  const { updateUrlSearchParams } = useUrlParams();
-
   const { t } = useTranslation();
   const { selectedTab, koulutusTotal, oppilaitosTotal } = useSelector(
     getHakutulosToggleProps
@@ -52,7 +49,6 @@ const HakutulosToggle = () => {
   const muiScreenSizeMinMd = useMediaQuery(MUI_BREAKPOINTS.MIN_MD);
 
   const handleSelectedTab = (e, newSelectedTab) => {
-    updateUrlSearchParams({ tab: newSelectedTab });
     dispatch(setSelectedTab({ newSelectedTab }));
   };
 

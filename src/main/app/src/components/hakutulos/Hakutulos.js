@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import Murupolku from '#/src/components/common/Murupolku';
+import { pageSizeArray, pageSortArray } from '#/src/constants';
 import { useQueryParams } from '#/src/hooks';
 import {
   clearPaging,
@@ -38,7 +39,6 @@ import { SuodatinValinnat } from './hakutulosSuodattimet/SuodatinValinnat';
 import HakutulosToggle from './HakutulosToggle';
 import { MobileFiltersOnTopMenu } from './MobileFiltersOnTopMenu';
 import Pagination from './Pagination';
-import { useUrlParams } from './UseUrlParams';
 
 const useStyles = makeStyles((theme) => ({
   hakutulosSisalto: {
@@ -106,7 +106,6 @@ const getPageSortTranslationKey = (sort) => {
 };
 
 export const Hakutulos = () => {
-  const { updateUrlSearchParams } = useUrlParams();
   const classes = useStyles();
   const theme = useTheme();
   const { t } = useTranslation();
@@ -130,7 +129,6 @@ export const Hakutulos = () => {
     const newSort = newPageSort === 'score_desc' ? 'score' : 'name';
 
     setPageSort(newPageSort);
-    updateUrlSearchParams({ sort: newSort, order: newOrder }, false);
     dispatch(setSort({ newSort }));
     dispatch(setOrder({ newOrder }));
     dispatch(searchAll({ ...apiRequestParams, order: newOrder, sort: newSort }));
@@ -139,7 +137,6 @@ export const Hakutulos = () => {
     const newSize = e.target.value;
 
     setPageSize(newSize);
-    updateUrlSearchParams({ size: newSize });
     dispatch(clearPaging());
     dispatch(setSize({ newSize }));
     dispatch(searchAll({ ...apiRequestParams, size: newSize }));
@@ -196,7 +193,7 @@ export const Hakutulos = () => {
                   }}
                   value={pageSize}
                   onChange={handlePageSizeChange}>
-                  {hakutulosProps.pageSizeArray.map((size) => (
+                  {pageSizeArray.map((size) => (
                     <MenuItem
                       key={size}
                       classes={{ root: classes.menuItemRoot }}
@@ -218,7 +215,7 @@ export const Hakutulos = () => {
                   }}
                   value={pageSort}
                   onChange={handlePageSortChange}>
-                  {hakutulosProps.pageSortArray.map((sort) => (
+                  {pageSortArray.map((sort) => (
                     <MenuItem
                       key={sort}
                       classes={{ root: classes.menuItemRoot }}
