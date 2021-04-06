@@ -40,7 +40,10 @@
     "hakijan-terveydentila-ja-toimintakyky": "Hakijan terveydentila ja toimintakyky",
     "alin-hyvaksytty-pistemaara": "Alin hyväksytty pistemäärä",
     "valintakokeet-yleiskuvaus-valintaperuste": "Valintakokeiden yleiskuvaus valintaperusteista",
-    "valintakokeet-yleiskuvaus-hakukohde": "Valintakokeiden yleiskuvaus hakukohteelta"
+    "valintakokeet-yleiskuvaus-hakukohde": "Valintakokeiden yleiskuvaus hakukohteelta",
+    "enimmaispisteet": "Enimmäispistemäärä",
+    "vahimmaispisteet": "Vähimmäispistemäärä",
+    "kynnysehto": "Kynnysehto"
   },
   "palvelut": {
     "otsikko-muut-palvelut": "Muut palvelut",

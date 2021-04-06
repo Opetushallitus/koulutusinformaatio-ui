@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Grid, makeStyles } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import { HashLink as Link } from 'react-router-hash-link';
 
 import { colors } from '#/src/colors';
@@ -38,28 +39,25 @@ const useStyles = makeStyles({
   },
 });
 
-const Lnk = (text: string, index: number, addIndexToAnchor: boolean) => {
-  const classes = useStyles();
-  const anchor = toId(text);
-
-  return (
-    <Link
-      key={`${anchor}-${index}`}
-      className={classes.link}
-      aria-label={text}
-      to={`#${anchor}${addIndexToAnchor ? '-' + index : ''}`}
-      scroll={(el: HTMLElement) => scrollIntoView(el)}>
-      {text}
-    </Link>
-  );
-};
-
 type Props = {
-  children: Array<any>;
+  kuvausVisible: boolean;
+  valintatavatVisible: boolean;
+  valintakokeetVisible: boolean;
+  sorakuvausVisible: boolean;
+  liitteetVisible: boolean;
 };
 
-export const Sisallysluettelo = ({ children }: Props) => {
+export const Sisallysluettelo = (props: Props) => {
+  const { t } = useTranslation();
   const classes = useStyles();
+  const visibleIds = [
+    props.kuvausVisible && t('valintaperuste.kuvaus'),
+    props.valintatavatVisible && t('valintaperuste.valintatavat'),
+    props.valintakokeetVisible && t('valintaperuste.valintakokeet'),
+    props.sorakuvausVisible && t('valintaperuste.sorakuvaus'),
+    props.liitteetVisible && t('valintaperuste.liitteet'),
+  ].filter(Boolean) as Array<string>;
+
   return (
     <Grid
       container
@@ -68,9 +66,16 @@ export const Sisallysluettelo = ({ children }: Props) => {
       alignItems="center"
       className={classes.toc}>
       <Grid item xs={10}>
-        {children.map((l, i) =>
-          l((t: string, index: number, addIndex: boolean) => Lnk(t, index || i, addIndex))
-        )}
+        {visibleIds.map((name, i) => (
+          <Link
+            key={`${name}-${i}`}
+            className={classes.link}
+            aria-label={name}
+            to={`#${toId(name)}`}
+            scroll={(el: HTMLElement) => scrollIntoView(el)}>
+            {name}
+          </Link>
+        ))}
       </Grid>
     </Grid>
   );

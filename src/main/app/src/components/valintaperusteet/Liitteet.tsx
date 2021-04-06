@@ -14,9 +14,9 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import { colors } from '#/src/colors';
-import Spacer from '#/src/components/common/Spacer';
+import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 import { localize, localizeOsoite } from '#/src/tools/localization';
-import { formatDateString, sanitizedHTMLParser, toId } from '#/src/tools/Utils';
+import { formatDateString, toId } from '#/src/tools/Utils';
 import { Koodi, Translateable } from '#/src/types/common';
 import { Liite } from '#/src/types/ValintaperusteTypes';
 
@@ -35,7 +35,7 @@ const OsoiteComponent = ({
 }: OsoiteProps) => {
   const { t } = useTranslation();
   return (
-    <>
+    <Grid item container xs={12}>
       <Grid item xs={12}>
         <Box m={1}>
           <Divider />
@@ -63,29 +63,26 @@ const OsoiteComponent = ({
           <Typography variant="body1">{formatDateString(toimitusaika)}</Typography>
         </Box>
       </Grid>
-    </>
+    </Grid>
   );
 };
 
 const FileIcon = withStyles(() => ({
   root: {
     color: colors.brandGreen,
+    marginTop: 12,
   },
 }))(InsertDriveFileOutlinedIcon);
 
 const LiiteComponent = ({ nimi, kuvaus }: Liite) => (
   <>
-    <Grid item xs={2}>
-      <Grid container alignItems="flex-start" justify="flex-end" direction="row">
-        <Box m={1}>
-          <FileIcon />
-        </Box>
-      </Grid>
+    <Grid item container xs={2} justify="flex-end">
+      <FileIcon />
     </Grid>
     <Grid item xs={10}>
       <Box m={1}>
         <Typography variant="h5">{localize(nimi)}</Typography>
-        {sanitizedHTMLParser(localize(kuvaus))}
+        <LocalizedHTML data={kuvaus} />
       </Box>
     </Grid>
   </>
@@ -117,17 +114,15 @@ export const Liitteet = ({ liitteet }: Props) => {
   const tyyppiJaLiite = tyypeittain(liitteet);
 
   return (
-    <>
-      {tyyppiJaLiite.length > 0 && (
-        <Box py={2}>
-          <Typography id={toId(t('valintaperuste.liitteet'))} variant="h2">
-            {t('valintaperuste.liitteet')}
-          </Typography>
-          <Spacer />
-        </Box>
-      )}
+    <Grid item container direction="column" xs={12}>
+      <Box py={4}>
+        <Divider />
+      </Box>
+      <Typography id={toId(t('valintaperuste.liitteet'))} variant="h2">
+        {t('valintaperuste.liitteet')}
+      </Typography>
       {tyyppiJaLiite.map(([tyyppi, liitteet]) => {
-        const yhteisetOsoitteet = _.uniq(liitteet.map(liiteAsOsoite));
+        const yhteisetOsoitteet = _.uniqWith(liitteet.map(liiteAsOsoite), _.isEqual);
         const jaettuOsoite = yhteisetOsoitteet.length === 1;
 
         return (
@@ -139,18 +134,20 @@ export const Liitteet = ({ liitteet }: Props) => {
             </Box>
             <Card elevation={2}>
               <CardContent>
-                {liitteet.map((liite, index) => (
-                  <Grid container key={`liite-${index}`}>
-                    <LiiteComponent {...liite} />
-                    {!jaettuOsoite && <OsoiteComponent {...liiteAsOsoite(liite)} />}
-                  </Grid>
-                ))}
+                <Grid container>
+                  {liitteet.map((liite, index) => (
+                    <React.Fragment key={`liite-${index}`}>
+                      <LiiteComponent {...liite} />
+                      {!jaettuOsoite && <OsoiteComponent {...liiteAsOsoite(liite)} />}
+                    </React.Fragment>
+                  ))}
+                </Grid>
                 {jaettuOsoite && <OsoiteComponent {..._.head(yhteisetOsoitteet)!} />}
               </CardContent>
             </Card>
           </div>
         );
       })}
-    </>
+    </Grid>
   );
 };

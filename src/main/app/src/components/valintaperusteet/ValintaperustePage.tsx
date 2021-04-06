@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Divider, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import _fp from 'lodash/fp';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -19,13 +19,14 @@ import {
   useValintaperustePageData,
   useValintaperustePreviewPageData,
 } from './hooks';
-import { Kuvaus, KuvausSisallysluettelo, ValintatavatSisallysluettelo } from './Kuvaus';
-import { Liitteet, LiitteetSisallysluettelo } from './Liitteet';
+import { Kuvaus } from './Kuvaus';
+import { Liitteet } from './Liitteet';
 import { Paluu } from './Paluu';
 import { Sisallysluettelo } from './Sisallysluettelo';
 import { Sora } from './Sora';
-import { Valintakokeet, ValintakokeetSisallysluettelo } from './Valintakokeet';
+import { Valintakokeet } from './Valintakokeet';
 import { Sisalto } from './ValintaperusteTypes';
+import { Valintatavat } from './Valintatavat';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -64,41 +65,35 @@ const ValintaperusteContent = ({
   valintatavat,
   yleiskuvaukset,
 }: ContentProps) => {
-  const { t } = useTranslation();
+  const kuvausVisible = !_fp.isEmpty(kuvaus) || sisalto?.length > 0;
+  const valintatavatVisible = valintatavat?.length > 0;
+  const valintakokeetVisible = valintakokeet?.length > 0;
+  const sorakuvausVisible = !!valintaperuste?.sorakuvaus;
+  const liitteetVisible = hakukohde?.liitteet.length > 0;
 
   return (
     <>
       <Grid item xs={12} md={3}>
-        {/* TODO: Refactor Sisallysluettelo, this is really complex to read */}
-        {/* e.g. just give a precalculated bunch of ids to the component */}
-        <Sisallysluettelo>
-          {[
-            (l: any) => l(t('valintaperuste.kuvaus')),
-            // Links to any kuvaus or sisalto subtitles given in HTML-string
-            KuvausSisallysluettelo(kuvaus, 'kuvaus-sisallysluettelo'),
-            ...(sisalto?.length > 0
-              ? sisalto.map((s, i) => KuvausSisallysluettelo(s.data, `sisalto-${i}`))
-              : []),
-
-            ValintatavatSisallysluettelo(valintatavat),
-            ValintakokeetSisallysluettelo(valintakokeet),
-            (l: any) =>
-              valintaperuste.sorakuvaus
-                ? l(t('valintaperuste.hakijan-terveydentila-ja-toimintakyky'))
-                : null,
-            (l: any) =>
-              !_fp.isEmpty(hakukohde?.liitteet) ? l(t('valintaperuste.liitteet')) : null,
-            LiitteetSisallysluettelo(hakukohde?.liitteet),
-          ]}
-        </Sisallysluettelo>
+        <Sisallysluettelo
+          {...{
+            kuvausVisible,
+            valintatavatVisible,
+            valintakokeetVisible,
+            sorakuvausVisible,
+            liitteetVisible,
+          }}
+        />
       </Grid>
-      <Grid item xs={12} md={6}>
-        <Kuvaus kuvaus={kuvaus} sisalto={sisalto} valintatavat={valintatavat} />
-        {valintakokeet.length > 0 && (
+      <Grid item container xs={12} md={6} spacing={2}>
+        {/* TODO: Hakukelpoisuus here when implemented */}
+        {kuvausVisible && <Kuvaus kuvaus={kuvaus} sisalto={sisalto} />}
+        {valintatavatVisible && <Valintatavat valintatavat={valintatavat} />}
+        {valintakokeetVisible && (
           <Valintakokeet yleiskuvaukset={yleiskuvaukset} valintakokeet={valintakokeet} />
         )}
-        {valintaperuste.sorakuvaus && <Sora {...valintaperuste.sorakuvaus} />}
-        <Liitteet liitteet={hakukohde?.liitteet} />
+        {sorakuvausVisible && <Sora {...valintaperuste.sorakuvaus} />}
+        {/* TODO: Valintaperusteiden lisätiedot here when implemented */}
+        {liitteetVisible && <Liitteet liitteet={hakukohde?.liitteet} />}
       </Grid>
     </>
   );
@@ -141,9 +136,6 @@ export const ValintaperustePreviewPage = () => {
           <Typography variant="h1" component="h1">
             {t('lomake.valintaperusteet')}
           </Typography>
-        </Box>
-        <Box pb={2}>
-          <Divider />
         </Box>
       </Grid>
       <Grid item xs={12} md={3} />
@@ -214,9 +206,6 @@ export const ValintaperustePage = () => {
             <Typography variant="h1" component="h1">
               {t('lomake.valintaperusteet')}
             </Typography>
-          </Box>
-          <Box pb={2}>
-            <Divider />
           </Box>
         </Grid>
         <Grid item xs={12} md={3} />

@@ -23,6 +23,9 @@ export type SisaltoTaulukko = {
 export type Sisalto = Array<SisaltoTeksti | SisaltoTaulukko>;
 
 export type Valintatapa = {
+  enimmaispisteet?: number;
+  kynnysehto?: Translateable;
   nimi: Translateable;
   sisalto: Sisalto;
+  vahimmaispisteet?: number;
 };
