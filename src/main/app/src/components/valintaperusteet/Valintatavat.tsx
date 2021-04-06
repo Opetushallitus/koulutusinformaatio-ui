@@ -35,7 +35,7 @@ export const Valintatavat = ({ valintatavat }: { valintatavat: Array<Valintatapa
                     {t('valintaperuste.vahimmaispisteet')}
                   </Typography>
                   <Typography variant="body1" component="div">
-                    {enimmaispisteet}
+                    {vahimmaispisteet}
                   </Typography>
                 </Grid>
                 {enimmaispisteet && (
@@ -44,7 +44,7 @@ export const Valintatavat = ({ valintatavat }: { valintatavat: Array<Valintatapa
                       {t('valintaperuste.enimmaispisteet')}
                     </Typography>
                     <Typography variant="body1" component="div">
-                      {vahimmaispisteet}
+                      {enimmaispisteet}
                     </Typography>
                   </Grid>
                 )}
