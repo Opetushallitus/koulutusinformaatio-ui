@@ -52,11 +52,10 @@ const parseYhteystieto = (t: TFunction) => ({
 }: YhteystiedotType) => {
   const postiosoite = toShownOsoite(postiosoiteProp);
   const kayntiosoite = toShownOsoite(kayntiosoiteProp);
-  const hasNoOsoite = !postiosoite && !kayntiosoite;
 
   return {
     nimi: localize(nimi),
-    postiosoite: hasNoOsoite ? t('oppilaitos.ei-yhteystietoja') : postiosoite,
+    postiosoite,
     kayntiosoite,
     sahkoposti: localize(sahkoposti),
     puhelinnumero: localize(puhelinnumero),
