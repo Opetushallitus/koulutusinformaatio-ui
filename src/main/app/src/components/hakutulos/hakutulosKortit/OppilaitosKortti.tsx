@@ -61,7 +61,6 @@ type Props = {
 };
 
 export const OppilaitosKortti = ({ oppilaitos }: Props) => {
-  console.log('oppilaitos', oppilaitos);
   const { t } = useTranslation();
   const classes = useStyles();
   const theme = useTheme();

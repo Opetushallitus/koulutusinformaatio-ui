@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Box, Container, makeStyles, Typography } from '@material-ui/core';
+import { Box, Button, Container, makeStyles, Typography } from '@material-ui/core';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -23,7 +24,7 @@ import OppilaitosOsaList from './OppilaitosOsaList';
 import TarjontaList from './TarjontaList';
 import { TietoaOpiskelusta } from './TietoaOpiskelusta';
 import { TulevaTarjontaList } from './TulevaTarjontaList';
-import { Yhteystiedot } from './Yhteystiedot';
+import { hasYhteystiedot, Yhteystiedot } from './Yhteystiedot';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: '100px' },
@@ -36,6 +37,10 @@ const useStyles = makeStyles((theme) => ({
   alatText: {
     ...theme.typography.body1,
     fontSize: '1.25rem',
+  },
+  button: {
+    marginTop: 20,
+    fontWeight: 600,
   },
 }));
 
@@ -107,6 +112,20 @@ export const OppilaitosPage = (props) => {
                 className={classes.root}
               />
             )}
+            {entity?.metadata?.wwwSivu && (
+              <Button
+                className={classes.button}
+                target="_blank"
+                href={localize(entity.metadata.wwwSivu?.url)}
+                variant="contained"
+                size="medium"
+                color="primary">
+                {entity.metadata.wwwSivu.nimi
+                  ? localize(entity.metadata.wwwSivu.nimi)
+                  : t('oppilaitos.oppilaitoksen-www-sivut')}
+                <OpenInNewIcon fontSize="small" />
+              </Button>
+            )}
 
             <TarjontaList oid={oid} isOppilaitosOsa={isOppilaitosOsa} />
             <TulevaTarjontaList oid={oid} isOppilaitosOsa={isOppilaitosOsa} />
@@ -124,13 +143,13 @@ export const OppilaitosPage = (props) => {
                 title={t('oppilaitos.tutustu-toimipisteisiin')}
               />
             )}
-            <Yhteystiedot
-              className={classes.root}
-              heading={t('oppilaitos.yhteystiedot')}
-              logo={entity?.logo}
-              yhteystiedot={entity?.metadata?.yhteystiedot}
-              nimi={localize(entity)}
-            />
+            {hasYhteystiedot(entity?.metadata) && (
+              <Yhteystiedot
+                id={localize(entity)}
+                heading={t('oppilaitos.yhteystiedot')}
+                {...entity.metadata}
+              />
+            )}
           </Box>
         </Container>
       );
