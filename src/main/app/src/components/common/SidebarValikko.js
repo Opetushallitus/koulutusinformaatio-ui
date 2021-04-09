@@ -7,12 +7,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { observer } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
+import { useContentful } from '#/src/hooks';
+
 import { colors } from '../../colors';
-import { useStores } from '../../hooks';
 
 const useStyles = makeStyles({
   root: {
@@ -123,9 +123,7 @@ const SidebarValikko = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const { i18n } = useTranslation();
-  const {
-    contentfulStore: { forwardTo },
-  } = useStores();
+  const { forwardTo } = useContentful();
   const { parent, select, deselect, closeMenu, name, id, links } = props;
   const forwardToPage = (id) => {
     history.push(`/${i18n.language}${forwardTo(id)}`);
@@ -170,4 +168,4 @@ const SidebarValikko = (props) => {
   );
 };
 
-export default observer(SidebarValikko);
+export default SidebarValikko;

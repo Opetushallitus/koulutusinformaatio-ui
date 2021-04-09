@@ -16,16 +16,15 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 import _ from 'lodash';
 import MuiFlatPagination from 'material-ui-flat-pagination';
-import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import parse from 'url-parse';
 
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
+import { useContentful } from '#/src/hooks';
 
 import koulutusPlaceholderImg from '../assets/images/Opolkuhts.png';
 import { colors } from '../colors';
-import { useStores } from '../hooks';
 import Murupolku from './common/Murupolku';
 import Preview from './Preview';
 import { ReactiveBorder } from './ReactiveBorder';
@@ -113,15 +112,14 @@ const Result = withStyles({
   );
 });
 
-const Sisaltohaku = observer((props) => {
+const Sisaltohaku = (props) => {
   const pageSize = 50;
   const asKeywords = (s) => s.toLowerCase().split(/[ ,]+/);
-  const { contentfulStore } = useStores();
-  const { sivu, uutinen } = contentfulStore.data;
+  const { data, forwardTo, assetUrl } = useContentful();
+  const { sivu, uutinen } = data;
   const { t, i18n } = useTranslation();
   const classes = useStyles();
 
-  const { forwardTo } = contentfulStore;
   const index = Object.entries(sivu)
     .filter(([key, { id }]) => key === id)
     .map(([, { id, sideContent, content }]) => {
@@ -158,7 +156,7 @@ const Sisaltohaku = observer((props) => {
   const activeSearch = hakusana !== '';
   useEffect(() => {
     doSearch(null);
-  }, [contentfulStore.data.loading]); /* eslint-disable-line */
+  }, [data.loading]); /* eslint-disable-line */
 
   const pagination = (state.results || []).length > pageSize;
   const paginate = () => {
@@ -204,7 +202,7 @@ const Sisaltohaku = observer((props) => {
           </Paper>
         </Grid>
         {activeSearch && _.isEmpty(state.results) ? (
-          contentfulStore.data.loading ? null : (
+          data.loading ? null : (
             <React.Fragment>
               <Grid item xs={12}>
                 <h1>{t('sisaltohaku.eituloksia')}</h1>
@@ -229,7 +227,7 @@ const Sisaltohaku = observer((props) => {
                   key={id}
                   url={forwardTo(s.id)}
                   sivu={s}
-                  assetUrl={contentfulStore.assetUrl(image.url)}
+                  assetUrl={assetUrl(image.url)}
                   image={image}
                 />
               );
@@ -249,6 +247,6 @@ const Sisaltohaku = observer((props) => {
       </Grid>
     </ReactiveBorder>
   );
-});
+};
 
 export default withRouter(Sisaltohaku);

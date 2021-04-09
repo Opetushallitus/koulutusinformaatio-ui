@@ -6,13 +6,12 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import _ from 'lodash';
 import Markdown from 'markdown-to-jsx';
-import { observer } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 
 import { colors } from '#/src/colors';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
-import { useStores } from '#/src/hooks';
+import { useContentful } from '#/src/hooks';
 
 import Jumpotron from './Jumpotron';
 import Kortti from './kortti/Kortti';
@@ -53,14 +52,13 @@ const useStyles = makeStyles({
 
 const getSingle = (entry) => Object.values(entry || {})[0] || {};
 
-const EtusivuComponent = observer(({ history }) => {
+const EtusivuComponent = ({ history }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { i18n } = useTranslation();
-  const { contentfulStore } = useStores();
-  const { info, uutiset, kortit } = contentfulStore.data;
+  const { data, isLoading, forwardTo } = useContentful();
+  const { info, uutiset, kortit } = data;
 
-  const { forwardTo } = contentfulStore;
   const forwardToPage = (id) => {
     history.push(`/${i18n.language}${forwardTo(id)}`);
   };
@@ -73,7 +71,7 @@ const EtusivuComponent = observer(({ history }) => {
   return (
     <React.Fragment>
       <Jumpotron />
-      {contentfulStore.data.loading ? (
+      {isLoading ? (
         <LoadingCircle />
       ) : (
         <>
@@ -128,6 +126,6 @@ const EtusivuComponent = observer(({ history }) => {
       )}
     </React.Fragment>
   );
-});
+};
 
 export const Etusivu = withRouter(EtusivuComponent);

@@ -2,13 +2,12 @@ import React from 'react';
 
 import { makeStyles, Typography, Grid, Card, CardMedia } from '@material-ui/core';
 import Markdown from 'markdown-to-jsx';
-import { observer } from 'mobx-react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
+import { useContentful } from '#/src/hooks';
 
 import { colors } from '../../colors';
-import { useStores } from '../../hooks';
 import { Accordion, Summary } from './Accordion';
 import { LinkOrYoutube } from './LinkOrYoutube';
 
@@ -42,9 +41,8 @@ const useStyles = makeStyles({
 
 const Sisalto = ({ content, alwaysFullWidth, excludeMedia }) => {
   const classes = useStyles();
-  const { contentfulStore } = useStores();
-  const { forwardTo } = contentfulStore;
-  const { sivu, asset } = contentfulStore.data;
+  const { data, forwardTo, assetUrl } = useContentful();
+  const { sivu, asset } = data;
   const ImageComponent = ({ src, alt }) => {
     const url = src.replace('//images.ctfassets.net/', '');
     const a = asset[url];
@@ -59,7 +57,7 @@ const Sisalto = ({ content, alwaysFullWidth, excludeMedia }) => {
           <Card className={classes.card} elevation={0}>
             <CardMedia
               className={classes.media}
-              image={contentfulStore.assetUrl(url)}
+              image={assetUrl(url)}
               title={a ? a.name : alt}
               aria-label={a ? a.description : alt}
             />
@@ -140,4 +138,4 @@ const Sisalto = ({ content, alwaysFullWidth, excludeMedia }) => {
     </Markdown>
   );
 };
-export default observer(Sisalto);
+export default Sisalto;

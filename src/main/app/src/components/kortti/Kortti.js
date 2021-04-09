@@ -6,13 +6,12 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Icon from '@material-ui/core/Icon';
 import clsx from 'clsx';
-import { observer } from 'mobx-react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
+import { useContentful } from '#/src/hooks';
 
 import { colors } from '../../colors';
-import { useStores } from '../../hooks';
 
 const useStyles = makeStyles({
   card: {
@@ -55,15 +54,14 @@ const useStyles = makeStyles({
 
 const Kortti = ({ id }) => {
   const classes = useStyles();
-  const { contentfulStore } = useStores();
-  const { asset, sivu } = contentfulStore.data;
-  const { forwardTo } = contentfulStore;
-  const kortti = contentfulStore.data.kortti[id];
+  const { data, forwardTo, assetUrl } = useContentful();
+  const { asset, sivu } = data;
+  const kortti = data.kortti[id];
 
   const linkit = kortti.linkit || [];
   const getImgUrl = (uutinen) => {
     const a = asset[uutinen.image?.id];
-    return a ? contentfulStore.assetUrl(a.url) : null;
+    return a ? assetUrl(a.url) : null;
   };
 
   return (
@@ -96,4 +94,4 @@ const Kortti = ({ id }) => {
   );
 };
 
-export default observer(Kortti);
+export default Kortti;

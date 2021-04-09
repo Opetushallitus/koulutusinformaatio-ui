@@ -9,12 +9,12 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Grid from '@material-ui/core/Grid';
 import clsx from 'clsx';
 import Markdown from 'markdown-to-jsx';
-import { observer } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 
+import { useContentful } from '#/src/hooks';
+
 import { colors } from '../../colors';
-import { useStores } from '../../hooks';
 
 const useStyles = makeStyles({
   card: {
@@ -48,13 +48,12 @@ const useStyles = makeStyles({
   },
 });
 
-const Palvelu = observer(({ id, history }) => {
+const Palvelu = ({ id, history }) => {
   const classes = useStyles();
-  const { contentfulStore } = useStores();
+  const { data, forwardTo, assetUrl } = useContentful();
   const { i18n } = useTranslation();
-  const { forwardTo } = contentfulStore;
-  const { asset } = contentfulStore.data;
-  const palvelu = contentfulStore.data.palvelu[id];
+  const { asset } = data;
+  const palvelu = data.palvelu[id];
 
   const a = palvelu.image ? asset[palvelu.image.id] : null;
   const color = palvelu.color || 'sininen';
@@ -86,7 +85,7 @@ const Palvelu = observer(({ id, history }) => {
           avatar={
             <Avatar
               aria-label={'TODO'}
-              src={contentfulStore.assetUrl(a.url)}
+              src={assetUrl(a.url)}
               className={classes.avatar}
             />
           }
@@ -113,6 +112,6 @@ const Palvelu = observer(({ id, history }) => {
       </Card>
     </Grid>
   );
-});
+};
 
 export default withRouter(Palvelu);

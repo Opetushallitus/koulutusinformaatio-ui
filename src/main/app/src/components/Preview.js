@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { observer } from 'mobx-react-lite';
 import removeMd from 'remove-markdown';
 
-const Preview = observer(({ markdown }) => {
+const Preview = ({ markdown }) => {
   const textAsSentences = removeMd(markdown).match(/[^.!?]+[.!?]+/g);
   const atLeastLetters = 200;
   return (
@@ -16,6 +15,6 @@ const Preview = observer(({ markdown }) => {
       }, '')}
     </p>
   );
-});
+};
 
 export default Preview;

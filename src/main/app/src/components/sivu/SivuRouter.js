@@ -3,14 +3,13 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import _ from 'lodash';
-import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 import { useParams, Link as RouterLink, Redirect } from 'react-router-dom';
 
 import { colors } from '#/src/colors';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
-import { useStores } from '#/src/hooks';
+import { useContentful } from '#/src/hooks';
 
 import Sivu from './Sivu';
 import SivuKooste from './SivuKooste';
@@ -64,20 +63,19 @@ const NotFound = ({ loading }) => {
 };
 
 const SivuRouter = () => {
-  const { contentfulStore } = useStores();
   const { id: slug, lng: lngParam } = useParams();
-  const { sivu, sivuKooste, loading } = contentfulStore.data;
-  const slugsToIds = contentfulStore.slugsToIds;
-  const idInfo = slugsToIds[slug];
+  const { data, slugsToIds, isLoading } = useContentful();
+  const { sivu, sivuKooste } = data;
+  const idInfo = slugsToIds?.[slug];
 
-  if (loading) return <LoadingCircle />;
+  if (isLoading) return <LoadingCircle />;
   if (idInfo?.language === lngParam) {
     if (sivu[slug]) {
       return <Sivu id={slug} />;
     } else if (sivuKooste[slug]) {
       return <SivuKooste id={slug} />;
     } else {
-      return <NotFound loading={loading} />;
+      return <NotFound loading={isLoading} />;
     }
   } else {
     const newSlug = _.findKey(
@@ -87,9 +85,9 @@ const SivuRouter = () => {
     if (newSlug) {
       return <Redirect to={`/${lngParam}/sivu/${newSlug}`} />;
     } else {
-      return <NotFound loading={loading} />;
+      return <NotFound loading={isLoading} />;
     }
   }
 };
 
-export default observer(SivuRouter);
+export default SivuRouter;

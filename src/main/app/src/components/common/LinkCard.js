@@ -2,12 +2,12 @@ import React from 'react';
 
 import { Grid, makeStyles, Icon, Typography, Paper } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
+import { useContentful } from '#/src/hooks';
+
 import { colors } from '../../colors';
-import { useStores } from '../../hooks';
 
 const useStyles = makeStyles({
   grid: {
@@ -34,10 +34,9 @@ const useStyles = makeStyles({
 });
 
 const LinkCard = (props) => {
-  const { contentfulStore } = useStores();
+  const { forwardTo, assetUrl } = useContentful();
   const history = useHistory();
   const { i18n } = useTranslation();
-  const { forwardTo } = contentfulStore;
   const { icon, text, sivu } = props;
   const url = (icon || {}).url;
   const forwardToPage = (id) => {
@@ -56,7 +55,7 @@ const LinkCard = (props) => {
         <Grid item xs={2}>
           {url ? (
             <Icon className={classes.icon}>
-              <img src={contentfulStore.assetUrl(url)} alt={(icon || {}).description} />
+              <img src={assetUrl(url)} alt={(icon || {}).description} />
             </Icon>
           ) : null}
         </Grid>
@@ -72,4 +71,4 @@ const LinkCard = (props) => {
     </Paper>
   );
 };
-export default observer(LinkCard);
+export default LinkCard;

@@ -2,10 +2,10 @@ import React from 'react';
 
 import { Typography, Grid } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import { observer } from 'mobx-react-lite';
 import { withRouter } from 'react-router-dom';
 
-import { useStores } from '../../hooks';
+import { useContentful } from '#/src/hooks';
+
 import InfoCardGrid from '../common/InfoCardGrid';
 import { InfoGrid } from '../common/InfoGrid';
 import Tree from '../common/Tree';
@@ -31,28 +31,24 @@ const uutisHelper = (data, noPics, greenTitle) => {
 };
 
 const Module = ({ module }) => {
-  const { contentfulStore } = useStores();
+  const { data } = useContentful();
   if (module.type === 'infoGrid') {
-    const { data, id } = contentfulStore.data.infoGrid[module.id];
-    const gridData = data ? JSON.parse(data) : [];
+    const { data: infoGridData, id } = data.infoGrid[module.id];
+    const gridData = infoGridData ? JSON.parse(infoGridData) : [];
     return <InfoGrid heading="Perustiedot" id={id} gridData={gridData} />;
   } else if (module.type === 'uutiset') {
-    const { name, id, showImage, greenText } = contentfulStore.data.uutiset[module.id];
+    const { name, id, showImage, greenText } = data.uutiset[module.id];
 
     return (
       <InfoCardGrid
         id={id}
         title={name}
-        cards={uutisHelper(
-          contentfulStore.data.uutinen,
-          showImage === 'false',
-          greenText === 'true'
-        )}
+        cards={uutisHelper(data.uutinen, showImage === 'false', greenText === 'true')}
       />
     );
   } else if (module.type === 'puu') {
-    const { name, id, left, right } = contentfulStore.data.puu[module.id];
-    const { lehti } = contentfulStore.data;
+    const { name, id, left, right } = data.puu[module.id];
+    const { lehti } = data;
 
     return (
       <Tree
@@ -63,14 +59,10 @@ const Module = ({ module }) => {
       />
     );
   } else if (module.type === 'content') {
-    const { content } = contentfulStore.data.content[module.id];
+    const { content } = data.content[module.id];
     return (
       <Grid item xs={12} sm={10} md={8} lg={6}>
-        <Sisalto
-          content={content}
-          alwaysFullWidth={true}
-          contentfulStore={contentfulStore}
-        />
+        <Sisalto content={content} alwaysFullWidth={true} />
       </Grid>
     );
   } else {
@@ -79,12 +71,12 @@ const Module = ({ module }) => {
 };
 
 const SivuKooste = ({ id }) => {
-  const { contentfulStore } = useStores();
+  const { data } = useContentful();
   const pageId = id;
   const pads = {
     padding: '25px 90px',
   };
-  const kooste = contentfulStore.data.sivuKooste[pageId] || {};
+  const kooste = data.sivuKooste[pageId] || {};
 
   return (
     <React.Fragment>
@@ -101,4 +93,4 @@ const SivuKooste = ({ id }) => {
   );
 };
 
-export default withRouter(observer(SivuKooste));
+export default withRouter(SivuKooste);
