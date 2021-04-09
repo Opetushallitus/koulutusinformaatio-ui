@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import _fp from 'lodash/fp';
@@ -87,7 +87,12 @@ const ValintaperusteContent = ({
       <Grid item container xs={12} md={6} spacing={2}>
         {/* TODO: Hakukelpoisuus here when implemented */}
         {kuvausVisible && <Kuvaus kuvaus={kuvaus} sisalto={sisalto} />}
-        {valintatavatVisible && <Valintatavat valintatavat={valintatavat} />}
+        {valintatavatVisible && (
+          <Valintatavat
+            valintatavat={valintatavat}
+            hakukohteenKynnysehto={hakukohde?.metadata?.kynnysehto}
+          />
+        )}
         {valintakokeetVisible && (
           <Valintakokeet yleiskuvaukset={yleiskuvaukset} valintakokeet={valintakokeet} />
         )}
@@ -167,13 +172,26 @@ export const ValintaperustePage = () => {
   const { valintaperuste, koulutus, toteutus, hakukohde } = data;
 
   const {
-    metadata: { kuvaus, sisalto, valintakokeidenYleiskuvaus, valintatavat },
-  } = valintaperuste || { metadata: { kuvaus: {}, valintatavat: [] } };
-  const toteutusLink = toteutus && `/toteutus/${toteutus.oid}`;
+    metadata: { kuvaus = {}, sisalto, valintakokeidenYleiskuvaus, valintatavat = [] },
+    valintakokeet: valintaperusteenValintakokeet = [],
+  } = valintaperuste || { metadata: {} };
 
-  // TODO: when kouta-ui is refactored to use inheritance modify this to not use valintaperuste valintakokeet here
-  const valintakokeet =
-    _fp.concat(hakukohde?.valintakokeet, valintaperuste?.valintakokeet) || [];
+  const {
+    metadata: { valintaperusteenValintakokeidenLisatilaisuudet: lisatilaisuudet = [] },
+    valintakokeet: hakukohteenValintakokeet = [],
+  } = hakukohde || { metadata: {} };
+
+  const toteutusLink = toteutus && `/toteutus/${toteutus.oid}`;
+  const valintakokeet = useMemo(() => {
+    const usedValintaperusteenKokeet = (valintaperusteenValintakokeet || []).map(
+      (v: any) => {
+        const added = lisatilaisuudet?.find((t: any) => t.id === v.id)?.tilaisuudet;
+        return added ? _fp.set('tilaisuudet', _fp.concat(v.tilaisuudet, added), v) : v;
+      }
+    );
+    return _fp.concat(hakukohteenValintakokeet, usedValintaperusteenKokeet) || [];
+  }, [hakukohteenValintakokeet, valintaperusteenValintakokeet, lisatilaisuudet]);
+
   const yleiskuvaukset = {
     hakukohde: hakukohde?.metadata?.valintakokeidenYleiskuvaus,
     valintaperuste: valintakokeidenYleiskuvaus,

@@ -43,7 +43,8 @@
     "valintakokeet-yleiskuvaus-hakukohde": "Valintakokeiden yleiskuvaus hakukohteelta",
     "enimmaispisteet": "Enimmäispistemäärä",
     "vahimmaispisteet": "Vähimmäispistemäärä",
-    "kynnysehto": "Kynnysehto"
+    "kynnysehto": "Kynnysehto",
+    "hakukohteenKynnysehto": "Hakukohteen kynnysehto"
   },
   "palvelut": {
     "otsikko-muut-palvelut": "Muut palvelut",

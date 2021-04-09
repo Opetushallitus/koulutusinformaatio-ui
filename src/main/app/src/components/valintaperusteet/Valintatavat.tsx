@@ -7,11 +7,14 @@ import { useTranslation } from 'react-i18next';
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 import { localize } from '#/src/tools/localization';
 import { toId } from '#/src/tools/Utils';
+import { Translateable } from '#/src/types/common';
 
 import { SisaltoComponent } from './Sisalto';
 import { Valintatapa } from './ValintaperusteTypes';
 
-export const Valintatavat = ({ valintatavat }: { valintatavat: Array<Valintatapa> }) => {
+type Props = { hakukohteenKynnysehto: Translateable; valintatavat: Array<Valintatapa> };
+
+export const Valintatavat = ({ hakukohteenKynnysehto, valintatavat }: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -59,6 +62,14 @@ export const Valintatavat = ({ valintatavat }: { valintatavat: Array<Valintatapa
             {sisalto.map(SisaltoComponent)}
           </React.Fragment>
         )
+      )}
+      {!_.isEmpty(hakukohteenKynnysehto) && (
+        <Box py={1}>
+          <Typography variant="h5">
+            {t('valintaperuste.hakukohteenKynnysehto')}
+          </Typography>
+          <LocalizedHTML data={hakukohteenKynnysehto} />
+        </Box>
       )}
     </Grid>
   );
