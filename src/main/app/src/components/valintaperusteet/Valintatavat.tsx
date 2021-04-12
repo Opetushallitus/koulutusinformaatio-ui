@@ -32,7 +32,12 @@ export const Valintatavat = ({ hakukohteenKynnysehto, valintatavat }: Props) => 
               <Typography variant="h3">{localize(nimi)}</Typography>
             </Box>
             {vahimmaispisteet && (
-              <Grid container direction="row" xs={8} style={{ paddingBottom: '8px' }}>
+              <Grid
+                container
+                item
+                direction="row"
+                xs={8}
+                style={{ paddingBottom: '8px' }}>
                 <Grid item container direction="column" xs={12} sm={6}>
                   <Typography variant="h5">
                     {t('valintaperuste.vahimmaispisteet')}

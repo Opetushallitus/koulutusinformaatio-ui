@@ -90,7 +90,7 @@ const LiiteComponent = ({ nimi, kuvaus }: Liite) => (
 
 const tyypeittain = (liitteet: Array<Liite>) =>
   _.sortBy(
-    Object.entries(_.groupBy(liitteet || [], (liite) => localize(liite.tyyppi.nimi))),
+    Object.entries(_.groupBy(liitteet || [], (liite) => localize(liite?.tyyppi))),
     _.first
   );
 
