@@ -14,7 +14,6 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import Star from '@material-ui/icons/Star';
-import { observer } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
 
 import { sendPalaute } from '#/src/api/konfoApi';
@@ -198,4 +197,4 @@ const Palaute = (props) => {
     </Dialog>
   );
 };
-export default observer(Palaute);
+export default Palaute;

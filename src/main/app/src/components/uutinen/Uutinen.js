@@ -6,12 +6,12 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Markdown from 'markdown-to-jsx';
-import { observer } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 
+import { useContentful } from '#/src/hooks';
+
 import { colors } from '../../colors';
-import { useStores } from '../../hooks';
 
 const useStyles = makeStyles({
   card: {
@@ -44,22 +44,21 @@ const useStyles = makeStyles({
   },
 });
 
-const Uutinen = observer(({ id, history }) => {
+const Uutinen = ({ id, history }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
-  const { contentfulStore } = useStores();
-  const { forwardTo } = contentfulStore;
-  const uutinen = contentfulStore.data.uutinen[id];
+  const { data, forwardTo, assetUrl } = useContentful();
+  const uutinen = data.uutinen[id];
   const link = (uutinen.sivu || {}).id;
 
-  const { asset } = contentfulStore.data;
+  const { asset } = data;
   const imgUrl = (uutinen) => {
     const assetForEntry = (entry) => {
       const image = entry.image || {};
       return image ? asset[image.id] : null;
     };
     const a = assetForEntry(uutinen);
-    return a ? contentfulStore.assetUrl(a.url) : null;
+    return a ? assetUrl(a.url) : null;
   };
 
   const forwardToPage = (id) => {
@@ -96,6 +95,6 @@ const Uutinen = observer(({ id, history }) => {
       </Card>
     </Grid>
   );
-});
+};
 
 export default withRouter(Uutinen);

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import _ from 'lodash';
 import { urls } from 'oph-urls-js';
 import qs from 'query-string';
 
@@ -96,3 +97,42 @@ export const sendPalaute = ({ arvosana, palaute }) =>
       'content-type': 'application/x-www-form-urlencoded',
     },
   });
+
+export const getContentfulManifest = () =>
+  axios.get(urls.url('konfo-backend.content', 'manifest.json'));
+
+function reduceToKeyValue(values = []) {
+  return values.reduce((res, value) => {
+    res[value.id] = value;
+    if (value.url) {
+      res[value.url] = value;
+    }
+    if (value.slug) {
+      res[value.slug] = value;
+    }
+    if (value.sivu?.id) {
+      res[value.sivu.id] = value;
+    }
+    return res;
+  }, {});
+}
+
+export const getContentfulData = (manifest, lang) => {
+  return Promise.all(
+    _.map(manifest?.data, (v, key) => {
+      const url = urls.url('konfo-backend.content', '') + v[lang];
+      return axios.get(url).then((res) => {
+        return { [key]: reduceToKeyValue(res?.data) };
+      });
+    })
+  ).then((all) => {
+    const contentfulData = Object.assign({}, ...all);
+    const slugsToIds = Object.fromEntries(
+      Object.values(contentfulData?.sivu).map((sivu) => [
+        sivu.slug,
+        { language: lang, id: sivu.id },
+      ])
+    );
+    return { contentfulData, slugsToIds };
+  });
+};

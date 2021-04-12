@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import { MuiThemeProvider, makeStyles, useMediaQuery } from '@material-ui/core';
 import clsx from 'clsx';
-import { Provider } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
@@ -29,11 +28,7 @@ import {
   ValintaperustePreviewPage,
 } from './components/valintaperusteet/ValintaperustePage';
 import { DRAWER_WIDTH } from './constants';
-import { useStores } from './hooks';
-import KonfoStore from './stores/konfo-store';
 import { theme } from './theme';
-
-const konfoStore = new KonfoStore();
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,13 +82,11 @@ const TranslatedRoutes = ({ match, location }) => {
   const { i18n } = useTranslation();
   const selectedLanguage = match.params.lng;
 
-  const { contentfulStore } = useStores();
   useEffect(() => {
     if (supportedLanguages.includes(selectedLanguage)) {
-      contentfulStore.reset(selectedLanguage);
       i18n.changeLanguage(selectedLanguage);
     }
-  }, [i18n, selectedLanguage, contentfulStore]);
+  }, [i18n, selectedLanguage]);
 
   if (!supportedLanguages.includes(selectedLanguage)) {
     const newLocation = {
@@ -151,7 +144,6 @@ const TranslatedRoutes = ({ match, location }) => {
 
 const App = () => {
   const classes = useStyles();
-  const contentfulStore = konfoStore.contentfulStore;
 
   const matches = useMediaQuery('(max-width: 600px)');
 
@@ -164,27 +156,25 @@ const App = () => {
   };
 
   return (
-    <Provider contentfulStore={contentfulStore}>
-      <MuiThemeProvider theme={theme}>
-        <React.Fragment>
-          <div className={classes.root}>
-            <Draft />
-            <Header toggleMenu={toggleMenu} isOpen={menuVisible} />
-            <SideMenu small={matches} menuVisible={menuVisible} closeMenu={closeMenu} />
-            <main
-              id="app-main-content"
-              className={clsx(matches ? classes.smContent : classes.content, {
-                [matches ? classes.smContentShift : classes.contentShift]: menuVisible,
-              })}>
-              <Route path="/:lng?" component={TranslatedRoutes} />
-              <Palvelut />
-              <Footer />
-            </main>
-          </div>
-          <PalautePopup />
-        </React.Fragment>
-      </MuiThemeProvider>
-    </Provider>
+    <MuiThemeProvider theme={theme}>
+      <React.Fragment>
+        <div className={classes.root}>
+          <Draft />
+          <Header toggleMenu={toggleMenu} isOpen={menuVisible} />
+          <SideMenu small={matches} menuVisible={menuVisible} closeMenu={closeMenu} />
+          <main
+            id="app-main-content"
+            className={clsx(matches ? classes.smContent : classes.content, {
+              [matches ? classes.smContentShift : classes.contentShift]: menuVisible,
+            })}>
+            <Route path="/:lng?" component={TranslatedRoutes} />
+            <Palvelut />
+            <Footer />
+          </main>
+        </div>
+        <PalautePopup />
+      </React.Fragment>
+    </MuiThemeProvider>
   );
 };
 

@@ -10,7 +10,6 @@ import {
   Hidden,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import { observer } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
@@ -20,7 +19,7 @@ import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import Murupolku from '#/src/components/common/Murupolku';
 import SidebarValikko from '#/src/components/common/SidebarValikko';
 import { DRAWER_WIDTH } from '#/src/constants';
-import { useStores } from '#/src/hooks';
+import { useContentful } from '#/src/hooks';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -85,11 +84,11 @@ const SideMenu = (props) => {
   const { t, i18n } = useTranslation();
   const history = useHistory();
   const classes = useStyles();
-  const { contentfulStore } = useStores();
+  const { data } = useContentful();
   const [selected, setSelected] = useState([]);
   const [search, setSearch] = useState('');
 
-  const { valikot, valikko, loading } = contentfulStore.data;
+  const { valikot, valikko, loading } = data;
   const selectValikko = (valikko) => setSelected([...selected, valikko]);
   const popSelected = () => setSelected(selected.slice(0, -1));
   const last = (a) => (a ? a[a.length - 1] : null);
@@ -194,4 +193,4 @@ const SideMenu = (props) => {
   );
 };
 
-export default observer(SideMenu);
+export default SideMenu;

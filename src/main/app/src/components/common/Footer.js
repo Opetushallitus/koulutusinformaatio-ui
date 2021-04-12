@@ -6,7 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import clsx from 'clsx';
 import Markdown from 'markdown-to-jsx';
-import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 
 import OPOLogoFooterFI from '#/src/assets/images/OpetushallitusIcon.svg';
@@ -14,7 +13,7 @@ import OPHIcon from '#/src/assets/images/OPH logo.png';
 import OPOLogoFooterEN from '#/src/assets/images/OPO_Logo_Footer_englanti.svg';
 import OPOLogoFooterSV from '#/src/assets/images/OPO_Logo_Footer_ruotsi.svg';
 import { colors } from '#/src/colors';
-import { useStores } from '#/src/hooks';
+import { useContentful } from '#/src/hooks';
 import { getLanguage } from '#/src/tools/localization';
 
 const useStyles = makeStyles({
@@ -68,13 +67,11 @@ const useStyles = makeStyles({
 
 const Footer = () => {
   const { t } = useTranslation();
-  const { contentfulStore } = useStores();
+  const { data } = useContentful();
   const matches = useMediaQuery('(min-width: 979px)');
   const classes = useStyles();
   const single = (entry) => Object.values(entry || {})[0] || {};
-  const { content, contentRight, contentCenter, lopputekstit } = single(
-    contentfulStore.data.footer
-  );
+  const { content, contentRight, contentCenter, lopputekstit } = single(data.footer);
   const overrides = {
     overrides: {
       a: {
@@ -156,4 +153,4 @@ const Footer = () => {
   );
 };
 
-export default observer(Footer);
+export default Footer;

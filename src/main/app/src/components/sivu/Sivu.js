@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 
 import { makeStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import { observer } from 'mobx-react-lite';
 import { withRouter } from 'react-router-dom';
 
+import { useContentful } from '#/src/hooks';
+
 import { colors } from '../../colors';
-import { useStores } from '../../hooks';
 import Murupolku from '../common/Murupolku';
 import Sisalto from './Sisalto';
 import TableOfContents from './TableOfContents';
@@ -39,10 +39,9 @@ const useStyles = makeStyles({
   },
 });
 
-const Sivu = observer(({ id }) => {
+const Sivu = ({ id }) => {
   const classes = useStyles();
-  const { contentfulStore } = useStores();
-  const { murupolku } = contentfulStore;
+  const { data, murupolku } = useContentful();
 
   useEffect(() => {
     const el = window.location.hash
@@ -54,7 +53,7 @@ const Sivu = observer(({ id }) => {
   });
 
   const pageId = id;
-  const { sivu } = contentfulStore.data;
+  const { sivu } = data;
   const page = sivu[pageId];
 
   const { content, description, name } = page;
@@ -87,6 +86,6 @@ const Sivu = observer(({ id }) => {
       </div>
     </React.Fragment>
   );
-});
+};
 
 export default withRouter(Sivu);

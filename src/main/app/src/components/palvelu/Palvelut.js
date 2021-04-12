@@ -5,12 +5,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import clsx from 'clsx';
 import _ from 'lodash';
-import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 
+import { useContentful } from '#/src/hooks';
+
 import { colors } from '../../colors';
-import { useStores } from '../../hooks';
 import Palvelu from './Palvelu';
 
 const useStyles = makeStyles({
@@ -37,11 +37,11 @@ const useStyles = makeStyles({
   },
 });
 
-const Palvelut = observer(() => {
+const Palvelut = () => {
   const { t } = useTranslation();
-  const { contentfulStore } = useStores();
+  const { data } = useContentful();
   const matches = useMediaQuery('(min-width: 979px)');
-  const { ohjeetJaTuki, palvelut } = contentfulStore.data || {};
+  const { ohjeetJaTuki, palvelut } = data || {};
   const classes = useStyles();
 
   const single = (entry) => Object.values(entry || [])[0] || {};
@@ -76,6 +76,6 @@ const Palvelut = observer(() => {
       </Grid>
     </div>
   );
-});
+};
 
 export default withRouter(Palvelut);
