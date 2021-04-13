@@ -123,7 +123,7 @@ const useStyles = makeStyles({
 const CookieModal = (props) => {
   const classes = useStyles();
 
-  const mandatoryCookieName = 'oph-konfo-mandatory-cookies-accepted';
+  const mandatoryCookieName = 'oph-mandatory-cookies-accepted';
 
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [fullCookieInfoOpen, setFullCookieInfoOpen] = useState(false);
@@ -161,13 +161,13 @@ const CookieModal = (props) => {
       path: '/',
     });
     if (statisticCookiesAccepted) {
-      Cookies.set('oph-konfo-statistic-cookies-accepted', 'true', {
+      Cookies.set('oph-statistic-cookies-accepted', 'true', {
         expires: 1800,
         path: '/',
       });
     }
     if (marketingCookiesAccepted) {
-      Cookies.set('oph-konfo-marketing-cookies-accepted', 'true', {
+      Cookies.set('oph-marketing-cookies-accepted', 'true', {
         expires: 1800,
         path: '/',
       });
