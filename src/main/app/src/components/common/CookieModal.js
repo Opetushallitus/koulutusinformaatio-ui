@@ -58,6 +58,10 @@ const useStyles = makeStyles({
       'margin-bottom': '15px',
       'text-decoration': 'none',
     },
+    '@media (max-width:960px)': {
+      width: '90%',
+      left: '5%',
+    },
   },
 
   settings: {
