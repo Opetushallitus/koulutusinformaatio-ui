@@ -1,11 +1,10 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Checkbox } from '@material-ui/core';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import Cookies from 'js-cookie';
 import Markdown from 'markdown-to-jsx';
-import { observer } from 'mobx-react-lite';
 
 import { useContentful } from '#/src/hooks';
 
@@ -63,7 +62,7 @@ const useStyles = makeStyles({
 
   settings: {
     'margin-top': '15px',
-    'margin-left': '3%',
+    'margin-left': '2%',
   },
 
   settingsCheckbox: {
@@ -132,8 +131,10 @@ const CookieModal = (props) => {
     Cookies.get(mandatoryCookieName)
   );
 
+  const [statisticCookiesAccepted, setStatisticCookiesAccepted] = useState(false);
+  const [marketingCookiesAccepted, setMarketingCookiesAccepted] = useState(false);
+
   const { data, isLoading } = useContentful();
-  console.log('isLoading:' + isLoading);
 
   const single = (entry) => Object.values(entry || [])[0] || {};
 
@@ -155,19 +156,17 @@ const CookieModal = (props) => {
 
   function handleAcceptCookies(e) {
     e.preventDefault();
-    const statisticCheckBox = document.getElementById('statisticCookies');
-    const marketingCheckBox = document.getElementById('marketingCookies');
     Cookies.set(mandatoryCookieName, 'true', {
       expires: 1800,
       path: '/',
     });
-    if (statisticCheckBox && statisticCheckBox.checked) {
+    if (statisticCookiesAccepted) {
       Cookies.set('oph-konfo-statistic-cookies-accepted', 'true', {
         expires: 1800,
         path: '/',
       });
     }
-    if (marketingCheckBox && marketingCheckBox.checked) {
+    if (marketingCookiesAccepted) {
       Cookies.set('oph-konfo-marketing-cookies-accepted', 'true', {
         expires: 1800,
         path: '/',
@@ -178,35 +177,37 @@ const CookieModal = (props) => {
 
   const openSettings = (
     <div id="cookie-modal-settings" className={classes.settings}>
-      <div className="cookie-modal-text"> {fields.settingsHeaderText}</div>
-      <input
-        type="checkbox"
-        id="mandatoryCookies"
-        name="mandatoryCookies"
-        value="mandatoryCookies"
-        className={classes.settingsCheckbox}
-        checked={true}
-        disabled={true}
-      />
-      <label htmlFor="mandatoryCookies">{fields.settingsAcceptMandatoryText}</label>
-      <br />
-      <input
-        type="checkbox"
-        id="statisticCookies"
-        name="statisticCookies"
-        value="statisticCookies"
-        className={classes.settingsCheckbox}
-      />
-      <label htmlFor="statisticCookies">{fields.settingsAcceptStatisticText}</label>
-      <br />
-      <input
-        type="checkbox"
-        id="marketingCookies"
-        name="marketingCookies"
-        value="marketingCookies"
-        className={classes.settingsCheckbox}
-      />
-      <label htmlFor="marketingCookies">{fields.settingsAcceptMarketingText}</label>
+      <hr />
+      <h3 className="cookie-modal-text"> {fields.settingsHeaderText}</h3>
+      <div>
+        <Checkbox
+          id="mandatoryCookies"
+          className={classes.settingsCheckbox}
+          checked
+          disabled
+        />
+        <label htmlFor="mandatoryCookies">{fields.settingsAcceptMandatoryText}</label>
+      </div>
+      <div>
+        <Checkbox
+          id="statisticCookies"
+          className={classes.settingsCheckbox}
+          checked={statisticCookiesAccepted}
+          disableripple
+          onClick={() => setStatisticCookiesAccepted(!statisticCookiesAccepted)}
+        />
+        <label htmlFor="statisticCookies">{fields.settingsAcceptStatisticText}</label>
+      </div>
+      <div>
+        <Checkbox
+          id="marketingCookies"
+          className={classes.settingsCheckbox}
+          checked={marketingCookiesAccepted}
+          disableripple
+          onClick={() => setMarketingCookiesAccepted(!marketingCookiesAccepted)}
+        />
+        <label htmlFor="marketingCookies">{fields.settingsAcceptMarketingText}</label>
+      </div>
     </div>
   );
 
