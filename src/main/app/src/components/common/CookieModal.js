@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 
-import { makeStyles, Checkbox } from '@material-ui/core';
+import { makeStyles, Checkbox, Button, Typography, ButtonGroup } from '@material-ui/core';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import Cookies from 'js-cookie';
 import Markdown from 'markdown-to-jsx';
 
+import { colors } from '#/src/colors';
 import { useContentful } from '#/src/hooks';
 
 const useStyles = makeStyles({
@@ -79,48 +80,17 @@ const useStyles = makeStyles({
     },
   },
 
-  settingsButton: {
-    'margin-top': '15px',
-    'margin-right': '5px',
-    height: '40px',
-    color: '#3A7A10',
-    'background-color': 'white',
-    padding: '4px 12px 4px',
-    cursor: 'pointer',
-    border: '2px solid transparent',
-    'border-color': '#3A7A10',
-    'border-radius': '4px',
-    'font-weight': '600',
-    float: 'right',
-    '&:hover': {
-      backgroundColor: '#e6ffc1',
-    },
-  },
-
-  acceptButton: {
-    'margin-top': '15px',
-    'margin-right': '5px',
-    height: '40px',
-    color: '#FFFFFF',
-    'background-color': '#3A7A10',
-    padding: '4px 12px 4px',
-    cursor: 'pointer',
-    border: '1px solid transparent',
-    'border-radius': '4px',
-    'border-color': '#3A7A10',
-    'font-weight': '600',
-    float: 'right',
-    '&:hover': {
-      backgroundColor: '#43a047',
-    },
-  },
-
   textExpandLink: {
     color: '#3A7A10',
     'margin-top': '5px',
     'margin-bottom': '15px',
     'margin-left': '3%',
     'font-weight': 'bold',
+  },
+
+  buttons: {
+    float: 'right',
+    'padding-right': '20px',
   },
 });
 
@@ -241,18 +211,31 @@ const CookieModal = (props) => {
         ) : null}
         {settingsOpen ? openSettings : null}
         <div>
-          <button
-            id="cookie-modal-accept-btn"
-            className={classes.acceptButton}
-            onClick={handleAcceptCookies}>
-            {fields.acceptButtonText}
-          </button>
-          <button
-            id="cookie-modal-settings-btn"
-            className={classes.settingsButton}
-            onClick={() => setSettingsOpen(!settingsOpen)}>
-            {settingsOpen ? fields.settingsButtonCloseText : fields.settingsButtonText}
-          </button>
+          <ButtonGroup
+            className={classes.buttons}
+            orientation="horizontal"
+            color="primary">
+            <Button
+              variant="outlined"
+              size="large"
+              color="primary"
+              onClick={() => setSettingsOpen(!settingsOpen)}>
+              <Typography style={{ color: colors.brandGreen }} variant="body1">
+                {settingsOpen
+                  ? fields.settingsButtonCloseText
+                  : fields.settingsButtonText}
+              </Typography>
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              color="primary"
+              onClick={handleAcceptCookies}>
+              <Typography style={{ color: colors.white }} variant="body1">
+                {fields.acceptButtonText}
+              </Typography>
+            </Button>
+          </ButtonGroup>
         </div>
       </div>
     </div>
