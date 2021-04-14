@@ -105,13 +105,6 @@ export const OppilaitosPage = (props) => {
               opetuskieli={entity?.opetuskieli ?? []}
               koulutusohjelmia={entity?.koulutusohjelmia ?? ''}
             />
-            {esittelyHtml && (
-              <HtmlTextBox
-                heading={t('oppilaitos.esittely')}
-                html={esittelyHtml}
-                className={classes.root}
-              />
-            )}
             {entity?.metadata?.wwwSivu && (
               <Button
                 className={classes.button}
@@ -120,13 +113,19 @@ export const OppilaitosPage = (props) => {
                 variant="contained"
                 size="medium"
                 color="primary">
-                {entity.metadata.wwwSivu.nimi
-                  ? localize(entity.metadata.wwwSivu.nimi)
+                {!_.isEmpty(entity.metadata.wwwSivu.nimi)
+                  ? localize(entity.metadata.wwwSivu)
                   : t('oppilaitos.oppilaitoksen-www-sivut')}
                 <OpenInNewIcon fontSize="small" />
               </Button>
             )}
-
+            {esittelyHtml && (
+              <HtmlTextBox
+                heading={t('oppilaitos.esittely')}
+                html={esittelyHtml}
+                className={classes.root}
+              />
+            )}
             <TarjontaList oid={oid} isOppilaitosOsa={isOppilaitosOsa} />
             <TulevaTarjontaList oid={oid} isOppilaitosOsa={isOppilaitosOsa} />
 
