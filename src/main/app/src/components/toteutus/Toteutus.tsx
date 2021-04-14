@@ -175,12 +175,12 @@ const ToteutuksenYhteystiedot = ({ oids }: { oids: Array<string> }) => {
                     fontWeight: 600,
                   }}
                   target="_blank"
-                  href={localize(oppilaitos.metadata.wwwSivu?.url)}
+                  href={localize(oppilaitos.metadata.wwwSivu.url)}
                   variant="contained"
                   size="medium"
                   color="primary">
-                  {oppilaitos.metadata.wwwSivu?.nimi
-                    ? localize(oppilaitos.metadata.wwwSivu?.nimi)
+                  {!_.isEmpty(oppilaitos.metadata.wwwSivu.nimi)
+                    ? localize(oppilaitos.metadata.wwwSivu)
                     : t('oppilaitos.oppilaitoksen-www-sivut')}
                   <OpenInNewIcon fontSize="small" />
                 </Button>
