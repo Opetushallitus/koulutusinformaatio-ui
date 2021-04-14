@@ -44,21 +44,15 @@ const useStyles = makeStyles({
   modalContent: {
     position: 'absolute',
     'z-index': '9999',
-    'background-color': 'white',
+    'background-color': colors.white,
     width: '60%',
     border: '1px solid #ccc',
-    'box-shadow': '1px 1px 1px black',
+    'box-shadow': '1px 1px 1px ' + colors.black,
     padding: '16px',
     left: '20%',
     top: '5%',
     'box-sizing': 'border-box',
     'border-radius': '10px',
-    a: {
-      color: '#0a789c !important',
-      'margin-top': '5px',
-      'margin-bottom': '15px',
-      'text-decoration': 'none',
-    },
     '@media (max-width:960px)': {
       width: '90%',
       left: '5%',
@@ -75,13 +69,13 @@ const useStyles = makeStyles({
     'box-shadow': 'none',
     'font-size': '2em',
     ':checked': {
-      'background-color': '#3A7A10',
+      'background-color': colors.brandGreen,
       icon: 'pointer',
     },
   },
 
   textExpandLink: {
-    color: '#3A7A10',
+    color: colors.brandGreen,
     'margin-top': '5px',
     'margin-bottom': '15px',
     'margin-left': '3%',
