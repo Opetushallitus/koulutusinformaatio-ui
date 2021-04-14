@@ -60,6 +60,7 @@ const initialContentfulData = {
   valikot: {},
   ohjeetJaTuki: {},
   uutiset: {},
+  cookieModalText: {},
 };
 
 function usePreviousNonEmpty(value) {
