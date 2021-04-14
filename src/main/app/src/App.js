@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import CookieModal from '#/src/components/common/CookieModal';
+import { CookieModal } from '#/src/components/common/CookieModal';
 import { NotFound } from '#/src/NotFound';
 import { supportedLanguages } from '#/src/tools/i18n';
 

@@ -1,29 +1,24 @@
 import React, { useState } from 'react';
 
-import { makeStyles, Checkbox, Button, Typography, ButtonGroup } from '@material-ui/core';
+import { makeStyles, Button, Typography, ButtonGroup } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
+import Modal from '@material-ui/core/Modal';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import Cookies from 'js-cookie';
 import Markdown from 'markdown-to-jsx';
+import { useTranslation } from 'react-i18next';
 
 import { colors } from '#/src/colors';
+import { KonfoCheckbox } from '#/src/components/hakutulos/hakutulosSuodattimet/CustomizedMuiComponents';
 import { useContentful } from '#/src/hooks';
 
 const useStyles = makeStyles({
   modalBackdrop: {
-    width: '100%',
-    height: '100%',
-    position: 'fixed',
-    'z-index': '9999',
-    left: '0',
-    top: '0',
-    'background-color': 'rgba(0, 0, 0, 0.5)',
-    color: '#000000',
-    display: 'block',
     'overflow-y': 'auto',
   },
 
-  modal_header: {
+  modalHeader: {
     'margin-top': '0px',
     'margin-left': '3%',
     'margin-right': '3%',
@@ -45,14 +40,14 @@ const useStyles = makeStyles({
     position: 'absolute',
     'z-index': '9999',
     'background-color': colors.white,
-    width: '60%',
     border: '1px solid #ccc',
     'box-shadow': '1px 1px 1px ' + colors.black,
     padding: '16px',
-    left: '20%',
-    top: '5%',
     'box-sizing': 'border-box',
     'border-radius': '10px',
+    width: '60%',
+    left: '20%',
+    top: '5%',
     '@media (max-width:960px)': {
       width: '90%',
       left: '5%',
@@ -65,37 +60,48 @@ const useStyles = makeStyles({
   },
 
   settingsCheckbox: {
-    outline: '1px #3A7A10',
     'box-shadow': 'none',
     'font-size': '2em',
-    ':checked': {
-      'background-color': colors.brandGreen,
-      icon: 'pointer',
-    },
+    padding: '5px 2px 5px 5px',
   },
 
   textExpandLink: {
     color: colors.brandGreen,
     'margin-top': '5px',
     'margin-bottom': '15px',
-    'margin-left': '3%',
+    'margin-left': '2%',
     'font-weight': 'bold',
+    display: 'inline',
   },
 
   buttons: {
     float: 'right',
     'padding-right': '20px',
   },
+
+  divider: {
+    'margin-bottom': '15px',
+  },
+
+  settingsHeader: {
+    margin: '9px 8px 3px 8px',
+    'padding-bottom': '10px',
+    'font-size': '1.5em',
+  },
 });
 
-const CookieModal = (props) => {
-  const classes = useStyles();
+const mandatoryCookieName = 'oph-mandatory-cookies-accepted';
 
-  const mandatoryCookieName = 'oph-mandatory-cookies-accepted';
+const single = (entry) => Object.values(entry || [])[0] || {};
+
+export const CookieModal = () => {
+  const { t } = useTranslation();
+
+  const classes = useStyles();
 
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [fullCookieInfoOpen, setFullCookieInfoOpen] = useState(false);
-  const [cookiesAlreadyAccepted, setCookiesAlreadyAccepted] = useState(
+  const [cookiesAccepted, setCookiesAccepted] = useState(
     Cookies.get(mandatoryCookieName)
   );
 
@@ -104,22 +110,25 @@ const CookieModal = (props) => {
 
   const { data, isLoading } = useContentful();
 
-  const single = (entry) => Object.values(entry || [])[0] || {};
-
   const contentfulTexts = single(data.cookieModalText);
 
   const fields = {
     shortContent: contentfulTexts['shortContent'] || '',
     fullContent: contentfulTexts['fullContent'] || '',
-    heading: contentfulTexts['heading'] || '',
+    heading: contentfulTexts['heading'] || t('cookieModal.heading'),
     expandLinkText: contentfulTexts['expandLinkText'] || '',
-    settingsButtonText: contentfulTexts['settingsButtonText'] || '',
-    settingsButtonCloseText: contentfulTexts['settingsButtonCloseText'] || '',
-    acceptButtonText: contentfulTexts['acceptButtonText'] || 'Hyväksy',
+    settingsButtonText:
+      contentfulTexts['settingsButtonText'] || t('cookieModal.settings'),
+    settingsButtonCloseText:
+      contentfulTexts['settingsButtonCloseText'] || t('cookieModal.settings'),
+    acceptButtonText: contentfulTexts['acceptButtonText'] || t('cookieModal.accept'),
     settingsHeaderText: contentfulTexts['settingsHeaderText'] || '',
-    settingsAcceptMandatoryText: contentfulTexts['settingsAcceptMandatoryText'] || '',
-    settingsAcceptStatisticText: contentfulTexts['settingsAcceptStatisticText'] || '',
-    settingsAcceptMarketingText: contentfulTexts['settingsAcceptMarketingText'] || '',
+    settingsAcceptMandatoryText:
+      contentfulTexts['settingsAcceptMandatoryText'] || t('cookieModal.mandatory'),
+    settingsAcceptStatisticText:
+      contentfulTexts['settingsAcceptStatisticText'] || t('cookieModal.statistic'),
+    settingsAcceptMarketingText:
+      contentfulTexts['settingsAcceptMarketingText'] || t('cookieModal.marketing'),
   };
 
   function handleAcceptCookies(e) {
@@ -140,15 +149,17 @@ const CookieModal = (props) => {
         path: '/',
       });
     }
-    setCookiesAlreadyAccepted(true);
+    setCookiesAccepted(true);
   }
 
   const openSettings = (
     <div id="cookie-modal-settings" className={classes.settings}>
-      <hr />
-      <h3 className="cookie-modal-text"> {fields.settingsHeaderText}</h3>
+      <Divider className={classes.divider} />
+      <Typography variant="h3" className={classes.settingsHeader}>
+        {fields.settingsHeaderText}
+      </Typography>
       <div>
-        <Checkbox
+        <KonfoCheckbox
           id="mandatoryCookies"
           className={classes.settingsCheckbox}
           checked
@@ -157,7 +168,7 @@ const CookieModal = (props) => {
         <label htmlFor="mandatoryCookies">{fields.settingsAcceptMandatoryText}</label>
       </div>
       <div>
-        <Checkbox
+        <KonfoCheckbox
           id="statisticCookies"
           className={classes.settingsCheckbox}
           checked={statisticCookiesAccepted}
@@ -167,7 +178,7 @@ const CookieModal = (props) => {
         <label htmlFor="statisticCookies">{fields.settingsAcceptStatisticText}</label>
       </div>
       <div>
-        <Checkbox
+        <KonfoCheckbox
           id="marketingCookies"
           className={classes.settingsCheckbox}
           checked={marketingCookiesAccepted}
@@ -185,55 +196,56 @@ const CookieModal = (props) => {
     <ArrowDropDown className={classes.icon} />
   );
 
-  return isLoading || cookiesAlreadyAccepted ? null : (
-    <div id="cookie-modal-backdrop" className={classes.modalBackdrop}>
+  return (
+    <Modal
+      id="cookie-modal-backdrop"
+      className={classes.modalBackdrop}
+      open={!(isLoading || cookiesAccepted)}>
       <div id="cookie-modal-content" className={classes.modalContent}>
-        <h2 className={classes.modal_header}> {fields.heading} </h2>
-        <div className={classes.modalText}>{fields.shortContent}</div>
-        <div>
-          <p
-            id="cookie-text-expand-link"
-            className={classes.textExpandLink}
-            onClick={() => setFullCookieInfoOpen(!fullCookieInfoOpen)}>
+        <Typography variant="h2" className={classes.modalHeader}>
+          {fields.heading}
+        </Typography>
+        <Typography variant="body1" className={classes.modalText}>
+          {fields.shortContent}
+        </Typography>
+        <div
+          id="cookie-text-expand-link"
+          className={classes.textExpandLink}
+          onClick={() => setFullCookieInfoOpen(!fullCookieInfoOpen)}>
+          <Typography variant="body1" className={classes.textExpandLink}>
             {fields.expandLinkText} {expandIcon}
-          </p>
+          </Typography>
         </div>
         {fullCookieInfoOpen ? (
-          <div id="cookie-modal-fulltext" className={classes.modalText}>
+          <Typography
+            variant="body1"
+            id="cookie-modal-fulltext"
+            className={classes.modalText}>
             <Markdown>{fields.fullContent}</Markdown>
-          </div>
+          </Typography>
         ) : null}
         {settingsOpen ? openSettings : null}
-        <div>
-          <ButtonGroup
-            className={classes.buttons}
-            orientation="horizontal"
-            color="primary">
-            <Button
-              variant="outlined"
-              size="large"
-              color="primary"
-              onClick={() => setSettingsOpen(!settingsOpen)}>
-              <Typography style={{ color: colors.brandGreen }} variant="body1">
-                {settingsOpen
-                  ? fields.settingsButtonCloseText
-                  : fields.settingsButtonText}
-              </Typography>
-            </Button>
-            <Button
-              variant="contained"
-              size="large"
-              color="primary"
-              onClick={handleAcceptCookies}>
-              <Typography style={{ color: colors.white }} variant="body1">
-                {fields.acceptButtonText}
-              </Typography>
-            </Button>
-          </ButtonGroup>
-        </div>
+        <ButtonGroup className={classes.buttons} orientation="horizontal" color="primary">
+          <Button
+            variant="outlined"
+            size="large"
+            color="primary"
+            onClick={() => setSettingsOpen(!settingsOpen)}>
+            <Typography style={{ color: colors.brandGreen }} variant="body1">
+              {settingsOpen ? fields.settingsButtonCloseText : fields.settingsButtonText}
+            </Typography>
+          </Button>
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            onClick={handleAcceptCookies}>
+            <Typography style={{ color: colors.white }} variant="body1">
+              {fields.acceptButtonText}
+            </Typography>
+          </Button>
+        </ButtonGroup>
       </div>
-    </div>
+    </Modal>
   );
 };
-
-export default CookieModal;

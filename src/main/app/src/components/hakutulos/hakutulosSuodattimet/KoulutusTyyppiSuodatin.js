@@ -23,7 +23,7 @@ import { getKoulutustyyppiFilterProps } from '#/src/store/reducers/hakutulosSlic
 import { localize } from '#/src/tools/localization';
 
 import {
-  SuodatinCheckbox,
+  KonfoCheckbox,
   SuodatinAccordion,
   SuodatinAccordionDetails,
   SuodatinAccordionSummary,
@@ -154,7 +154,7 @@ const KoulutustyyppiSuodatin = ({
                         button
                         onClick={handleKoulutustyyppiClick(koulutustyyppiKey)}>
                         <ListItemIcon>
-                          <SuodatinCheckbox
+                          <KonfoCheckbox
                             indeterminateIcon={<IndeterminateCheckBoxOutlined />}
                             indeterminate={isIndeterminate([
                               koulutustyyppiKey,
@@ -194,7 +194,7 @@ const KoulutustyyppiSuodatin = ({
                                 koulutustyyppiKey
                               )}>
                               <ListItemIcon>
-                                <SuodatinCheckbox
+                                <KonfoCheckbox
                                   edge="start"
                                   checked={_.some(
                                     checkedKoulutustyypit,
