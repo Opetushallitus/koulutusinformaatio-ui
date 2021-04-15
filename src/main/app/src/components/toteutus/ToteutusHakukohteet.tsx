@@ -118,9 +118,7 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                             </Typography>
                           </Grid>
                           <Grid item>
-                            <Typography variant="body1" noWrap>
-                              {localize(haku.hakulomakeKuvaus)}
-                            </Typography>
+                            <LocalizedHTML data={haku.hakulomakeKuvaus} noMargin />
                           </Grid>
                           {jarjestyspaikka && (
                             <Grid item>
