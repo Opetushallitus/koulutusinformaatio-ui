@@ -10381,7 +10381,10 @@
                 "pohjakoulutusvaatimusTarkenne": {
                   "fi": "<p>Työkokemus tai muuten hankittu osaaminen riittää</p>"
                 },
-                "aloituspaikat": 22,
+                "aloituspaikat": {
+                  "lukumaara": 50,
+                  "ensikertalaisille": 20
+                },
                 "hakulomaketyyppi": "ataru",
                 "pohjakoulutusvaatimus": [
                   {
@@ -10669,7 +10672,10 @@
               {
                 "hakulomakeKuvaus": {},
                 "pohjakoulutusvaatimusTarkenne": {},
-                "aloituspaikat": 45,
+                "aloituspaikat": {
+                  "lukumaara": 50,
+                  "ensikertalaisille": 20
+                },
                 "hakulomaketyyppi": "ataru",
                 "pohjakoulutusvaatimus": [
                   {
