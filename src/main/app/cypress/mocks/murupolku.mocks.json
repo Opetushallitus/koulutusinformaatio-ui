@@ -26974,14 +26974,6 @@
               "koulutuksenAlkamisvuosi": "2023"
             },
             "suunniteltuKestoKuvaus": {},
-            "koulutuksenAlkamiskausi": {
-              "koodiUri": "kausi_s#1",
-              "nimi": {
-                "sv": "Höst",
-                "en": "Autumn",
-                "fi": "Syksy"
-              }
-            },
             "suunniteltuKestoVuodet": 1,
             "onkoApuraha": false,
             "koulutuksenAlkamisvuosi": 2023,
