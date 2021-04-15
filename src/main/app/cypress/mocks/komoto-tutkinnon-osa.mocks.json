@@ -18466,6 +18466,7 @@
           "oid": "1.2.246.562.10.594252633210"
         },
         "metadata": {
+          "aloituspaikat": 123,
           "kuvaus": {
             "fi": "<p>Testikuvaus <strong>lorem ipsum </strong>asdf</p>"
           },
