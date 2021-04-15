@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 
-import { makeStyles, Button, Typography, ButtonGroup } from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
-import Modal from '@material-ui/core/Modal';
+import {
+  makeStyles,
+  Button,
+  Typography,
+  ButtonGroup,
+  Divider,
+  Modal,
+} from '@material-ui/core';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import Cookies from 'js-cookie';
@@ -231,18 +236,14 @@ export const CookieModal = () => {
             size="large"
             color="primary"
             onClick={() => setSettingsOpen(!settingsOpen)}>
-            <Typography style={{ color: colors.brandGreen }} variant="body1">
-              {settingsOpen ? fields.settingsButtonCloseText : fields.settingsButtonText}
-            </Typography>
+            {settingsOpen ? fields.settingsButtonCloseText : fields.settingsButtonText}
           </Button>
           <Button
             variant="contained"
             size="large"
             color="primary"
             onClick={handleAcceptCookies}>
-            <Typography style={{ color: colors.white }} variant="body1">
-              {fields.acceptButtonText}
-            </Typography>
+            {fields.acceptButtonText}
           </Button>
         </ButtonGroup>
       </div>
