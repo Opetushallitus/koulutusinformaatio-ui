@@ -9,7 +9,6 @@
         "hakulomakeKuvaus": {},
         "pohjakoulutusvaatimusTarkenne": {},
         "kaytetaanHaunHakulomaketta": true,
-        "aloituspaikat": 1,
         "toteutus": {
           "oid": "1.2.246.562.17.00000000000000000434",
           "organisaatio": {
@@ -284,7 +283,11 @@
           "oid": "1.2.246.562.10.52251087186"
         },
         "metadata": {
-          "valintakokeidenYleiskuvaus": {}
+          "valintakokeidenYleiskuvaus": {},
+          "aloituspaikat": {
+            "lukumaara": 50,
+            "ensikertalaisille": 20
+          }
         },
         "valintakokeet": []
       },
@@ -26971,14 +26974,6 @@
               "koulutuksenAlkamisvuosi": "2023"
             },
             "suunniteltuKestoKuvaus": {},
-            "koulutuksenAlkamiskausi": {
-              "koodiUri": "kausi_s#1",
-              "nimi": {
-                "sv": "Höst",
-                "en": "Autumn",
-                "fi": "Syksy"
-              }
-            },
             "suunniteltuKestoVuodet": 1,
             "onkoApuraha": false,
             "koulutuksenAlkamisvuosi": 2023,
@@ -27040,7 +27035,10 @@
               {
                 "hakulomakeKuvaus": {},
                 "pohjakoulutusvaatimusTarkenne": {},
-                "aloituspaikat": 1,
+                "aloituspaikat": {
+                  "lukumaara": 50,
+                  "ensikertalaisille": 20
+                },
                 "hakulomaketyyppi": "muu",
                 "alkamiskausi": {
                   "koodiUri": "kausi_s#1",

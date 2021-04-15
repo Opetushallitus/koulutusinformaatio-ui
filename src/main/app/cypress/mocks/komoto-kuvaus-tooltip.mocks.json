@@ -5095,7 +5095,10 @@
               {
                 "hakulomakeKuvaus": {},
                 "pohjakoulutusvaatimusTarkenne": {},
-                "aloituspaikat": 12,
+                "aloituspaikat": {
+                  "lukumaara": 50,
+                  "ensikertalaisille": 20
+                },
                 "hakulomaketyyppi": "ataru",
                 "pohjakoulutusvaatimus": [
                   {

@@ -138,7 +138,11 @@ export type Alkamiskausi = {
 };
 
 export type Hakukohde = {
-  aloituspaikat: string;
+  aloituspaikat: {
+    lukumaara?: number;
+    ensikertalaisille?: number;
+    kuvaus?: Translateable;
+  };
   hakuajat: Array<{ alkaa: string; paattyy: string }>;
   hakukohdeOid: string;
   hakulomakeAtaruId: string;

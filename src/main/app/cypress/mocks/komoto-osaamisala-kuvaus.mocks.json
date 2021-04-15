@@ -10381,7 +10381,10 @@
                 "pohjakoulutusvaatimusTarkenne": {
                   "fi": "<p>Työkokemus tai muuten hankittu osaaminen riittää</p>"
                 },
-                "aloituspaikat": 22,
+                "aloituspaikat": {
+                  "lukumaara": 50,
+                  "ensikertalaisille": 20
+                },
                 "hakulomaketyyppi": "ataru",
                 "pohjakoulutusvaatimus": [
                   {
@@ -10558,14 +10561,6 @@
               "koulutuksenAlkamisvuosi": "2021"
             },
             "suunniteltuKestoKuvaus": {},
-            "koulutuksenAlkamiskausi": {
-              "koodiUri": "kausi_k#1",
-              "nimi": {
-                "en": "Spring",
-                "sv": "Vår",
-                "fi": "Kevät"
-              }
-            },
             "suunniteltuKestoVuodet": 3,
             "onkoApuraha": false,
             "koulutuksenAlkamisvuosi": 2021,
@@ -10669,7 +10664,10 @@
               {
                 "hakulomakeKuvaus": {},
                 "pohjakoulutusvaatimusTarkenne": {},
-                "aloituspaikat": 45,
+                "aloituspaikat": {
+                  "lukumaara": 50,
+                  "ensikertalaisille": 20
+                },
                 "hakulomaketyyppi": "ataru",
                 "pohjakoulutusvaatimus": [
                   {

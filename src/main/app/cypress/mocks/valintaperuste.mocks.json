@@ -9,7 +9,6 @@
         "hakulomakeKuvaus": {},
         "pohjakoulutusvaatimusTarkenne": {},
         "kaytetaanHaunHakulomaketta": true,
-        "aloituspaikat": 10,
         "toteutus": {
           "oid": "1.2.246.562.17.00000000000000000001",
           "organisaatio": {
@@ -279,7 +278,11 @@
           "oid": "1.2.246.562.10.83097956748"
         },
         "metadata": {
-          "valintakokeidenYleiskuvaus": {}
+          "valintakokeidenYleiskuvaus": {},
+          "aloituspaikat": {
+            "lukumaara": 50,
+            "ensikertalaisille": 20
+          }
         },
         "valintakokeet": []
       }
@@ -648,7 +651,10 @@
               {
                 "hakulomakeKuvaus": {},
                 "pohjakoulutusvaatimusTarkenne": {},
-                "aloituspaikat": 10,
+                "aloituspaikat": {
+                  "lukumaara": 50,
+                  "ensikertalaisille": 20
+                },
                 "hakulomaketyyppi": "ataru",
                 "pohjakoulutusvaatimus": [
                   {

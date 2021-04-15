@@ -118,9 +118,7 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                             </Typography>
                           </Grid>
                           <Grid item>
-                            <Typography variant="body1" noWrap>
-                              {localize(haku.hakulomakeKuvaus)}
-                            </Typography>
+                            <LocalizedHTML data={haku.hakulomakeKuvaus} noMargin />
                           </Grid>
                           {jarjestyspaikka && (
                             <Grid item>
@@ -171,10 +169,10 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                               ),
                               modalText: haku.pohjakoulutusvaatimusTarkenne,
                             },
-                            haku.aloituspaikat && {
+                            haku.aloituspaikat?.lukumaara && {
                               size: 6,
                               heading: t('toteutus.opiskelupaikkoja:'),
-                              content: [haku.aloituspaikat],
+                              content: [haku.aloituspaikat.lukumaara],
                             },
                           ]
                             .filter(Boolean)
