@@ -5240,7 +5240,6 @@
           "oid": "1.2.246.562.10.594252633210"
         },
         "metadata": {
-          "aloituspaikat": 123,
           "kuvaus": {
             "fi": "<p>Olen testikuvaus </p><p></p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras orci nunc, mollis ut dolor quis, mollis auctor felis. Nunc euismod iaculis auctor. Sed erat ante, fermentum quis efficitur eget, suscipit sed tortor. Morbi sed iaculis risus, euismod feugiat leo. Etiam nibh arcu, bibendum vel metus eu, tincidunt ultrices leo. Vivamus eu aliquet lorem. Nulla at est iaculis, maximus purus non, finibus sem. Donec tristique, sem sed gravida sollicitudin, ex sem sodales orci, at tristique sem ex ac nulla.</p>"
           },
