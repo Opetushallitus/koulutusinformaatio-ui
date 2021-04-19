@@ -1,6 +1,14 @@
 import React from 'react';
 
-import { Box, Card, CardContent, Grid, makeStyles, Typography } from '@material-ui/core';
+import {
+  Box,
+  Card,
+  CardContent,
+  Divider,
+  Grid,
+  makeStyles,
+  Typography,
+} from '@material-ui/core';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
@@ -81,11 +89,6 @@ const TilaisuusComponent = ({
   );
 };
 
-export const ValintakokeetSisallysluettelo = (valintakokeet: Array<any>) => (Lnk: any) =>
-  !_.isEmpty(valintakokeet)
-    ? valintakokeet.map(({ nimi }, index) => Lnk(localize(nimi), index + 1, false))
-    : null;
-
 type Tilaisuus = {
   lisatietoja: Translateable;
   jarjestamispaikka: Translateable;
@@ -122,11 +125,14 @@ export const Valintakokeet = ({
   const { t } = useTranslation();
 
   return (
-    <>
-      <Box py={1}>
-        <Typography variant="h2">{t('valintaperuste.valintakokeet')}</Typography>
+    <Grid item container direction="column" xs={12}>
+      <Box py={4}>
+        <Divider />
       </Box>
-      {valintaperusteYk && (
+      <Typography variant="h2" id={toId(t('valintaperuste.valintakokeet'))}>
+        {t('valintaperuste.valintakokeet')}
+      </Typography>
+      {!_.isEmpty(valintaperusteYk) && (
         <Box py={1}>
           <Typography variant="h3">
             {t('valintaperuste.valintakokeet-yleiskuvaus-valintaperuste')}
@@ -134,7 +140,7 @@ export const Valintakokeet = ({
           <LocalizedHTML data={valintaperusteYk} />
         </Box>
       )}
-      {hakukohdeYk && (
+      {!_.isEmpty(hakukohdeYk) && (
         <Box py={1}>
           <Typography variant="h3">
             {t('valintaperuste.valintakokeet-yleiskuvaus-hakukohde')}
@@ -210,6 +216,6 @@ export const Valintakokeet = ({
           </div>
         );
       })}
-    </>
+    </Grid>
   );
 };
