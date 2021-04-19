@@ -39,11 +39,14 @@ const useStyles = makeStyles({
   },
 });
 
+// NOTE: Tämän voisi varmaan tehdä geneerisesti mutta ehkä selkeämpi näin
 type Props = {
+  hakukelpoisuusVisible: boolean;
   kuvausVisible: boolean;
   valintatavatVisible: boolean;
   valintakokeetVisible: boolean;
   sorakuvausVisible: boolean;
+  lisatiedotVisible: boolean;
   liitteetVisible: boolean;
 };
 
@@ -51,10 +54,12 @@ export const Sisallysluettelo = (props: Props) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const visibleIds = [
+    props.hakukelpoisuusVisible && t('valintaperuste.hakukelpoisuus'),
     props.kuvausVisible && t('valintaperuste.kuvaus'),
     props.valintatavatVisible && t('valintaperuste.valintatavat'),
     props.valintakokeetVisible && t('valintaperuste.valintakokeet'),
     props.sorakuvausVisible && t('valintaperuste.sorakuvaus'),
+    props.lisatiedotVisible && t('valintaperuste.lisatiedot'),
     props.liitteetVisible && t('valintaperuste.liitteet'),
   ].filter(Boolean) as Array<string>;
 
