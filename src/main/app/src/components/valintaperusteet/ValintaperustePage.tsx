@@ -11,8 +11,8 @@ import Murupolku from '#/src/components/common/Murupolku';
 import { NotFound } from '#/src/NotFound';
 import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import { localize } from '#/src/tools/localization';
-import { Translateable } from '#/src/types/common';
 
+import { Hakukelpoisuus } from './Hakukelpoisuus';
 import {
   PageData,
   PreviewPageData,
@@ -21,11 +21,11 @@ import {
 } from './hooks';
 import { Kuvaus } from './Kuvaus';
 import { Liitteet } from './Liitteet';
+import { Lisatiedot } from './Lisatiedot';
 import { Paluu } from './Paluu';
 import { Sisallysluettelo } from './Sisallysluettelo';
 import { Sora } from './Sora';
 import { Valintakokeet } from './Valintakokeet';
-import { Sisalto } from './ValintaperusteTypes';
 import { Valintatavat } from './Valintatavat';
 
 const useStyles = makeStyles(() => ({
@@ -48,8 +48,6 @@ const Row: React.FC = ({ children }) => {
 
 type ContentProps = {
   hakukohde?: any;
-  kuvaus: Translateable;
-  sisalto: Sisalto;
   valintakokeet: any;
   valintaperuste: any;
   valintatavat: any;
@@ -58,17 +56,18 @@ type ContentProps = {
 
 const ValintaperusteContent = ({
   hakukohde,
-  kuvaus,
-  sisalto,
   valintakokeet,
   valintaperuste,
   valintatavat,
   yleiskuvaukset,
 }: ContentProps) => {
+  const { hakukelpoisuus, kuvaus, lisatiedot, sisalto } = valintaperuste?.metadata || {};
+  const hakukelpoisuusVisible = !_fp.isEmpty(hakukelpoisuus);
   const kuvausVisible = !_fp.isEmpty(kuvaus) || sisalto?.length > 0;
   const valintatavatVisible = valintatavat?.length > 0;
   const valintakokeetVisible = valintakokeet?.length > 0;
   const sorakuvausVisible = !!valintaperuste?.sorakuvaus;
+  const lisatiedotVisible = !_fp.isEmpty(lisatiedot);
   const liitteetVisible = hakukohde?.liitteet.length > 0;
 
   return (
@@ -76,16 +75,18 @@ const ValintaperusteContent = ({
       <Grid item xs={12} md={3}>
         <Sisallysluettelo
           {...{
+            hakukelpoisuusVisible,
             kuvausVisible,
             valintatavatVisible,
             valintakokeetVisible,
             sorakuvausVisible,
+            lisatiedotVisible,
             liitteetVisible,
           }}
         />
       </Grid>
       <Grid item container xs={12} md={6} spacing={2}>
-        {/* TODO: Hakukelpoisuus here when implemented */}
+        {hakukelpoisuusVisible && <Hakukelpoisuus hakukelpoisuus={hakukelpoisuus} />}
         {kuvausVisible && <Kuvaus kuvaus={kuvaus} sisalto={sisalto} />}
         {valintatavatVisible && (
           <Valintatavat
@@ -97,7 +98,7 @@ const ValintaperusteContent = ({
           <Valintakokeet yleiskuvaukset={yleiskuvaukset} valintakokeet={valintakokeet} />
         )}
         {sorakuvausVisible && <Sora {...valintaperuste.sorakuvaus} />}
-        {/* TODO: Valintaperusteiden lisätiedot here when implemented */}
+        {lisatiedotVisible && <Lisatiedot lisatiedot={lisatiedot} />}
         {liitteetVisible && <Liitteet liitteet={hakukohde?.liitteet} />}
       </Grid>
     </>
@@ -119,7 +120,7 @@ export const ValintaperustePreviewPage = () => {
   const { valintaperuste } = data;
 
   const {
-    metadata: { kuvaus, sisalto, valintakokeidenYleiskuvaus, valintatavat },
+    metadata: { valintakokeidenYleiskuvaus, valintatavat },
     valintakokeet,
   } = valintaperuste || { metadata: { kuvaus: {}, valintatavat: [] } };
   const yleiskuvaukset = {
@@ -146,10 +147,8 @@ export const ValintaperustePreviewPage = () => {
       <Grid item xs={12} md={3} />
       <ValintaperusteContent
         {...{
-          kuvaus,
-          sisalto,
-          valintakokeet,
           valintaperuste,
+          valintakokeet,
           valintatavat,
           yleiskuvaukset,
         }}
@@ -172,7 +171,7 @@ export const ValintaperustePage = () => {
   const { valintaperuste, koulutus, toteutus, hakukohde } = data;
 
   const {
-    metadata: { kuvaus = {}, sisalto, valintakokeidenYleiskuvaus, valintatavat = [] },
+    metadata: { valintakokeidenYleiskuvaus, valintatavat = [] },
     valintakokeet: valintaperusteenValintakokeet = [],
   } = valintaperuste || { metadata: {} };
 
@@ -230,10 +229,8 @@ export const ValintaperustePage = () => {
         <ValintaperusteContent
           {...{
             hakukohde,
-            kuvaus,
-            sisalto,
-            valintakokeet,
             valintaperuste,
+            valintakokeet,
             valintatavat,
             yleiskuvaukset,
           }}
