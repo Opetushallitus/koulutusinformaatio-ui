@@ -3,6 +3,14 @@
     "title": "Opintopolun uudesta beta-versiosta löydät tietoa jatkuvan haun ammatillisista koulutuksista.",
     "siirry": "Siirry vanhaan Opintopolkuun"
   },
+  "cookieModal": {
+    "accept": "Hyväksy",
+    "settings": "Asetukset",
+    "heading": "Evästeet",
+    "mandatory": "Pakolliset evästeet",
+    "statistic": "Tilastolliset evästeet",
+    "marketing": "Markkinointievästeet"
+  },
   "opintopolku": {
     "brand": "Opintopolku linkki",
     "otsikko": "Opintopolku",

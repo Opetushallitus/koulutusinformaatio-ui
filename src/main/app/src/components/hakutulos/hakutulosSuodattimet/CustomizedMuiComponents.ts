@@ -11,7 +11,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { colors } from '#/src/colors';
 
-export const SuodatinCheckbox = withStyles({
+export const KonfoCheckbox = withStyles({
   root: {
     padding: '0 9px 0 9px',
   },

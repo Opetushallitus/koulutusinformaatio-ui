@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
+import { CookieModal } from '#/src/components/common/CookieModal';
 import { NotFound } from '#/src/NotFound';
 import { supportedLanguages } from '#/src/tools/i18n';
 
@@ -162,6 +163,7 @@ const App = () => {
           <Draft />
           <Header toggleMenu={toggleMenu} isOpen={menuVisible} />
           <SideMenu small={matches} menuVisible={menuVisible} closeMenu={closeMenu} />
+          <CookieModal />
           <main
             id="app-main-content"
             className={clsx(matches ? classes.smContent : classes.content, {

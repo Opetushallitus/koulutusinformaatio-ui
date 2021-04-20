@@ -34,7 +34,7 @@ import {
   SuodatinAccordion,
   SuodatinAccordionDetails,
   SuodatinAccordionSummary,
-  SuodatinCheckbox,
+  KonfoCheckbox,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 import { SummaryContent } from './SummaryContent';
@@ -87,7 +87,7 @@ type OptionProps = {
 const Option = ({ data, innerProps, isFocused }: OptionProps) => (
   // innerProps contain interaction functions e.g. onClick
   <ListItem dense button {...innerProps} selected={isFocused}>
-    <SuodatinCheckbox
+    <KonfoCheckbox
       checked={data?.checked}
       disableRipple
       role="presentation"
@@ -288,7 +288,7 @@ export const SijaintiSuodatin = ({
                       button
                       onClick={handleMaakuntaToggle(maakuntaTuple)}>
                       <ListItemIcon>
-                        <SuodatinCheckbox
+                        <KonfoCheckbox
                           edge="start"
                           checked={checkedMaakunnat.some(
                             ({ id: checkedId }) => checkedId === id
@@ -323,7 +323,7 @@ export const SijaintiSuodatin = ({
                         button
                         onClick={handleMaakuntaToggle(maakuntaTuple)}>
                         <ListItemIcon>
-                          <SuodatinCheckbox
+                          <KonfoCheckbox
                             edge="start"
                             checked={checkedMaakunnat.some(
                               ({ id: checkedId }) => checkedId === id

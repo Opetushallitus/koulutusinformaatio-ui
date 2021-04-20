@@ -15,7 +15,7 @@ import { getOpetustapaFilterProps } from '#/src/store/reducers/hakutulosSliceSel
 import { localize } from '#/src/tools/localization';
 
 import {
-  SuodatinCheckbox,
+  KonfoCheckbox,
   SuodatinAccordion,
   SuodatinAccordionDetails,
   SuodatinAccordionSummary,
@@ -93,7 +93,7 @@ const OpetustapaSuodatin = ({
                 button
                 onClick={handleCheck(opetustapaKey, opetustapaValue)}>
                 <ListItemIcon>
-                  <SuodatinCheckbox
+                  <KonfoCheckbox
                     edge="start"
                     checked={checkedOpetustavat.some(({ id }) => id === opetustapaKey)}
                     tabIndex={-1}

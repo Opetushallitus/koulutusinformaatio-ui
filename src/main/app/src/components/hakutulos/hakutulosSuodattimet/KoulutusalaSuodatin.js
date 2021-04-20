@@ -25,7 +25,7 @@ import {
   SuodatinAccordion,
   SuodatinAccordionDetails,
   SuodatinAccordionSummary,
-  SuodatinCheckbox,
+  KonfoCheckbox,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 import { SummaryContent } from './SummaryContent';
@@ -110,7 +110,7 @@ const KoulutusalaSuodatin = ({
         button
         onClick={handleKoulutusalaInnerToggle(openedKoulutusala[0])}>
         <ListItemIcon>
-          <SuodatinCheckbox
+          <KonfoCheckbox
             indeterminateIcon={<IndeterminateCheckBoxOutlined />}
             indeterminate={isIndeterminate(openedKoulutusala)}
             edge="start"
@@ -141,7 +141,7 @@ const KoulutusalaSuodatin = ({
           button
           onClick={handleKoulutusalaInnerToggle(kaTaso2Id, openedKoulutusala[0])}>
           <ListItemIcon>
-            <SuodatinCheckbox
+            <KonfoCheckbox
               edge="start"
               checked={checkedKoulutusalat.some(({ id }) => id === kaTaso2Id)}
               tabIndex={-1}
