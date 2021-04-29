@@ -181,8 +181,7 @@ describe('Haku', () => {
       });
   });
 
-  // TODO: Skipped until component is used
-  it.skip('Hakutapa filter checkboxes', () => {
+  it('Hakutapa filter checkboxes', () => {
     cy.visit('/fi/haku/auto');
     const yhteishakuChk = () =>
       cy.findByRole('checkbox', { name: /Yhteishaku \(\d*\)/i });

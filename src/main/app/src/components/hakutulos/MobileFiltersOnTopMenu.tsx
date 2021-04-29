@@ -26,6 +26,7 @@ import {
 } from '#/src/store/reducers/hakutulosSlice';
 import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
 
+import { HakutapaSuodatin } from './hakutulosSuodattimet/HakutapaSuodatin';
 import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
 import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
 import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin';
@@ -154,6 +155,8 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
           <SijaintiSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
           <KoulutusalaSuodatin expanded={false} elevation={0} displaySelected />
+          <Divider className={classes.divider} />
+          <HakutapaSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
           <OpetustapaSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
