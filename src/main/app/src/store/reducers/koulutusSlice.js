@@ -241,6 +241,7 @@ export const selectKoulutus = (oid) => (state) => {
       koulutusTyyppi: koulutusData.metadata?.tyyppi,
       lisatiedot: koulutusData.metadata?.lisatiedot,
       teemakuva: koulutusData?.teemakuva,
+      sorakuvaus: koulutusData?.sorakuvaus,
     };
   } else {
     return undefined;
