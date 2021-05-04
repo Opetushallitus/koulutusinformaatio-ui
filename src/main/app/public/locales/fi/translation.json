@@ -45,7 +45,6 @@
     "hakuaika": "Hakuaika",
     "opiskelupaikkoja": "Opiskelupaikkoja",
     "pohjakoulutus": "Pohjakoulutus",
-    "hakijan-terveydentila-ja-toimintakyky": "Hakijan terveydentila ja toimintakyky",
     "alin-hyvaksytty-pistemaara": "Alin hyväksytty pistemäärä",
     "valintakokeet-yleiskuvaus-valintaperuste": "Valintakokeiden yleiskuvaus valintaperusteista",
     "valintakokeet-yleiskuvaus-hakukohde": "Valintakokeiden yleiskuvaus hakukohteelta",
@@ -310,7 +309,8 @@
     "sinua-saattaa-kiinnostaa-myos": "Sinua saattaa kiinnostaa myös",
     "ei-suositeltuja-koulutuksia": "Samankaltaisia koulutuksia ei löytynyt",
     "koulutuksen-teemakuva": "Koulutuksen teemakuva",
-    "muut-koulutusta-jarjestavat-oppilaitokset": "Muut koulutusta järjestävät oppilaitokset"
+    "muut-koulutusta-jarjestavat-oppilaitokset": "Muut koulutusta järjestävät oppilaitokset",
+    "hakijan-terveydentila-ja-toimintakyky": "Hakijan terveydentila ja toimintakyky"
   },
   "vertailu": {
     "takaisin-edelliselle-sivulle": "Takaisin edelliselle sivulle",

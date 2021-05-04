@@ -23,17 +23,21 @@ const tagHeaders = (node: any) => {
   }
 };
 
-type Props = { metadata: { kuvaus: object } };
+type Props = { data: { metadata: { kuvaus: object } } };
 
-export const Sora = ({ metadata: { kuvaus } }: Props) => {
+export const SoraKuvaus = ({ data }: Props) => {
   const { t } = useTranslation();
+  const {
+    metadata: { kuvaus },
+  } = data;
+
   return (
     <>
       <Grid container spacing={2} justify="flex-start" alignItems="flex-start">
         <Grid item xs={12} sm={12} md={12}>
           <Box py={2}>
             <Typography variant="h2" id="hakijan-terveydentila-ja-toimintakyky">
-              {t('valintaperuste.hakijan-terveydentila-ja-toimintakyky')}
+              {t('koulutus.hakijan-terveydentila-ja-toimintakyky')}
             </Typography>
           </Box>
           <LocalizedHTML data={kuvaus} transform={tagHeaders} />

@@ -45,7 +45,6 @@ type Props = {
   kuvausVisible: boolean;
   valintatavatVisible: boolean;
   valintakokeetVisible: boolean;
-  sorakuvausVisible: boolean;
   lisatiedotVisible: boolean;
   liitteetVisible: boolean;
 };
@@ -58,7 +57,6 @@ export const Sisallysluettelo = (props: Props) => {
     props.kuvausVisible && t('valintaperuste.kuvaus'),
     props.valintatavatVisible && t('valintaperuste.valintatavat'),
     props.valintakokeetVisible && t('valintaperuste.valintakokeet'),
-    props.sorakuvausVisible && t('valintaperuste.sorakuvaus'),
     props.lisatiedotVisible && t('valintaperuste.lisatiedot'),
     props.liitteetVisible && t('valintaperuste.liitteet'),
   ].filter(Boolean) as Array<string>;
