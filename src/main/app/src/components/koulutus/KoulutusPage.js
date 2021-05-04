@@ -135,6 +135,8 @@ export const KoulutusPage = () => {
 
   const koulutusAlat = koulutus?.koulutusAla?.map((ala) => localize(ala))?.join(' + ');
 
+  const soraKuvaus = koulutus?.sorakuvaus;
+
   return loading ? (
     <LoadingCircle />
   ) : (
@@ -237,6 +239,13 @@ export const KoulutusPage = () => {
           <Box width="95%" id="tulevatJarjestajat">
             <TulevaJarjestajaList jarjestajat={tulevatJarjestajat} />
           </Box>
+        )}
+        {soraKuvaus && (
+          <HtmlTextBox
+            heading={t('koulutus.hakijan-terveydentila-ja-toimintakyky')}
+            html={localize(soraKuvaus?.metadata?.kuvaus)}
+            className={classes.root}
+          />
         )}
       </Box>
     </ContentWrapper>

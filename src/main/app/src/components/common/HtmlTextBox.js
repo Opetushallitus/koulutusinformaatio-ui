@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 
 import { makeStyles, Typography, Paper, Box } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
 
-import { educationTypeColorCode } from '../../colors';
+import { educationTypeColorCode } from '#/src/colors';
+
 import Spacer from './Spacer';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,6 +42,8 @@ const useStyles = makeStyles((theme) => ({
 
 const HtmlTextBox = (props) => {
   const { heading, className, html } = props;
+
+  const { t } = useTranslation();
   const [isTruncated, setIsTruncated] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -74,7 +78,7 @@ const HtmlTextBox = (props) => {
           {isTruncated || isExpanded ? (
             <div className={classes.showLink}>
               <button className={classes.linkButton} onClick={toggleLines}>
-                {isExpanded ? 'Näytä vähemmän' : 'Lue lisää'}
+                {isExpanded ? t('haku.näytä_vähemmän') : t('haku.näytä_lisää')}
               </button>
             </div>
           ) : null}

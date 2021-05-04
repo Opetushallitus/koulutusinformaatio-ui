@@ -24,7 +24,6 @@ import { Liitteet } from './Liitteet';
 import { Lisatiedot } from './Lisatiedot';
 import { Paluu } from './Paluu';
 import { Sisallysluettelo } from './Sisallysluettelo';
-import { Sora } from './Sora';
 import { Valintakokeet } from './Valintakokeet';
 import { Valintatavat } from './Valintatavat';
 
@@ -66,7 +65,6 @@ const ValintaperusteContent = ({
   const kuvausVisible = !_fp.isEmpty(kuvaus) || sisalto?.length > 0;
   const valintatavatVisible = valintatavat?.length > 0;
   const valintakokeetVisible = valintakokeet?.length > 0;
-  const sorakuvausVisible = !!valintaperuste?.sorakuvaus;
   const lisatiedotVisible = !_fp.isEmpty(lisatiedot);
   const liitteetVisible = hakukohde?.liitteet.length > 0;
 
@@ -79,7 +77,6 @@ const ValintaperusteContent = ({
             kuvausVisible,
             valintatavatVisible,
             valintakokeetVisible,
-            sorakuvausVisible,
             lisatiedotVisible,
             liitteetVisible,
           }}
@@ -97,7 +94,6 @@ const ValintaperusteContent = ({
         {valintakokeetVisible && (
           <Valintakokeet yleiskuvaukset={yleiskuvaukset} valintakokeet={valintakokeet} />
         )}
-        {sorakuvausVisible && <Sora {...valintaperuste.sorakuvaus} />}
         {lisatiedotVisible && <Lisatiedot lisatiedot={lisatiedot} />}
         {liitteetVisible && <Liitteet liitteet={hakukohde?.liitteet} />}
       </Grid>
