@@ -119,7 +119,6 @@
     "palaa": "Palaa Opintopolkuun"
   },
   "haku": {
-    "otsikko": "Hakutulokset",
     "amk-alempi": "AMK - tutkinto",
     "amk-ylempi": "Ylempi AMK",
     "amm": "Ammatillinen koulutus",
@@ -183,6 +182,7 @@
     "oppilaitokset": "Oppilaitokset",
     "opetustapa": "Opetustapa",
     "ota-vertailuun": "Ota vertailuun",
+    "otsikko": "Hakutulokset",
     "paikkakunnalla": "paikkakunnalla",
     "paikkakunnalla_plural": "paikkakunnilla",
     "paikkakunta": "Paikkakunta",
