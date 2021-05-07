@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '1600px',
   },
   title: { marginTop: 40 },
-  imageContainer: { maxWidth: '1600px', maxHeight: '400px' },
   alatText: {
     ...theme.typography.body1,
     fontSize: '1.25rem',
@@ -89,7 +88,7 @@ export const OppilaitosPage = (props) => {
                 {localize(entity)}
               </Typography>
             </Box>
-            <Box className={classes.imageContainer} mt={7.5}>
+            <Box mt={7.5}>
               <TeemakuvaImage
                 imgUrl={entity?.teemakuva}
                 altText={t('oppilaitos.oppilaitoksen-teemakuva')}
