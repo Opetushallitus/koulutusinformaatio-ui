@@ -59,6 +59,7 @@ function getValintatapa(state) {
 }
 const getHakukaynnissa = (state) => state.hakutulos.hakukaynnissa;
 const getHakutapa = (state) => state.hakutulos.hakutapa;
+const getYhteishaku = (state) => state.hakutulos.yhteishaku;
 const getPohjakoulutusvaatimus = (state) => state.hakutulos.pohjakoulutusvaatimus;
 
 const getFilter = (id) => (state) => state.hakutulos[id];
@@ -106,6 +107,7 @@ export const getHakutulosProps = createSelector(
     getValintatapa,
     getHakukaynnissa,
     getHakutapa,
+    getYhteishaku,
     getPohjakoulutusvaatimus,
   ],
   (
@@ -123,6 +125,7 @@ export const getHakutulosProps = createSelector(
     valintatapa,
     hakukaynnissa,
     hakutapa,
+    yhteishaku,
     pohjakoulutusvaatimus
   ) => {
     return {
@@ -143,6 +146,7 @@ export const getHakutulosProps = createSelector(
             opetustapa,
             valintatapa,
             hakutapa,
+            yhteishaku,
             pohjakoulutusvaatimus,
           ],
           (filterArr) => _.size(filterArr) > 0
@@ -182,6 +186,7 @@ export const getSuodatinValinnatProps = createSelector(
     getValintatapa,
     getHakukaynnissa,
     getHakutapa,
+    getYhteishaku,
     getPohjakoulutusvaatimus,
   ],
   (
@@ -194,6 +199,7 @@ export const getSuodatinValinnatProps = createSelector(
     valintatapa,
     hakukaynnissa,
     hakutapa,
+    yhteishaku,
     pohjakoulutusvaatimus
   ) => ({
     opetuskieli,
@@ -205,6 +211,7 @@ export const getSuodatinValinnatProps = createSelector(
     // TODO: Refactor suodatinvalinnat to accept big list of ids
     hakukaynnissa: hakukaynnissa ? [{ id: 'hakukaynnissa' }] : [],
     hakutapa,
+    yhteishaku,
     pohjakoulutusvaatimus,
   })
 );
@@ -241,6 +248,7 @@ export const getAPIRequestParams = createSelector(
     getValintatapa,
     getHakukaynnissa,
     getHakutapa,
+    getYhteishaku,
     getPohjakoulutusvaatimus,
   ],
   (
@@ -257,6 +265,7 @@ export const getAPIRequestParams = createSelector(
     valintatapa,
     hakukaynnissa,
     hakutapa,
+    yhteishaku,
     pohjakoulutusvaatimus
   ) => ({
     keyword,
@@ -271,6 +280,7 @@ export const getAPIRequestParams = createSelector(
     valintatapa: getCheckedFiltersIdsStr(valintatapa),
     hakutapa: getCheckedFiltersIdsStr(hakutapa),
     hakukaynnissa,
+    yhteishaku: getCheckedFiltersIdsStr(yhteishaku),
     pohjakoulutusvaatimus: getCheckedFiltersIdsStr(pohjakoulutusvaatimus),
   })
 );
@@ -349,8 +359,15 @@ export const getFilterProps = (id) =>
         selectedTab === 'koulutus' ? koulutusFilters[id] : oppilaitosFilters[id];
 
       return {
-        sortedValues: sortValues(usedFilter),
-        checkedValues,
+        values: sortValues(usedFilter).map((v) => ({
+          ...v,
+          filterId: id,
+          checked: checkedValues.some((checked) => checked.id === v.id),
+          alakoodit: sortValues(v.alakoodit)?.map((alakoodi) => ({
+            ...alakoodi,
+            checked: checkedValues.some((checked) => checked.id === alakoodi.id),
+          })),
+        })),
         localizedCheckedValues: getNameStr(checkedValues),
       };
     }

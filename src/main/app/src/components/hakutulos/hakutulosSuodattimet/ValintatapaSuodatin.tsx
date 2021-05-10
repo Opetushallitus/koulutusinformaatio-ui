@@ -3,11 +3,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { handleFilterToggle, newSearchAll } from '#/src/store/reducers/hakutulosSlice';
+import { handleFiltersChange, newSearchAll } from '#/src/store/reducers/hakutulosSlice';
 import { getFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
 
 import { Filter } from './Filter';
-import { FilterProps, FilterType, SuodatinComponentProps } from './SuodatinTypes';
+import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
 
 const FILTER_ID = 'valintatapa';
 const filterSelector = getFilterProps(FILTER_ID);
@@ -16,13 +16,12 @@ const filterSelector = getFilterProps(FILTER_ID);
 export const ValintatapaSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { sortedValues, checkedValues, localizedCheckedValues } = useSelector<
-    any,
-    FilterProps
-  >(filterSelector);
+  const { values, localizedCheckedValues } = useSelector<any, FilterProps>(
+    filterSelector
+  );
 
-  const handleCheck = (item: FilterType) => {
-    dispatch(handleFilterToggle({ filter: FILTER_ID, item }));
+  const handleCheck = (item: FilterValue) => {
+    dispatch(handleFiltersChange([{ item }]));
     dispatch(newSearchAll());
   };
 
@@ -31,10 +30,9 @@ export const ValintatapaSuodatin = (props: SuodatinComponentProps) => {
       {...props}
       testId="valintatapa-filter"
       name={t('haku.valintatapa')}
-      sortedFilterValues={sortedValues}
+      values={values}
       handleCheck={handleCheck}
       checkedStr={localizedCheckedValues}
-      checkedValues={checkedValues}
     />
   );
 };

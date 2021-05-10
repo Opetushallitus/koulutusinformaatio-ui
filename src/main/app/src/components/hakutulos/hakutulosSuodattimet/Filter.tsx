@@ -8,7 +8,11 @@ import {
   ListItemIcon,
   makeStyles,
 } from '@material-ui/core';
-import { ExpandMore, SearchOutlined } from '@material-ui/icons';
+import {
+  ExpandMore,
+  IndeterminateCheckBoxOutlined,
+  SearchOutlined,
+} from '@material-ui/icons';
 import _ from 'lodash';
 import Select, { components } from 'react-select';
 
@@ -23,7 +27,7 @@ import {
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 import { SummaryContent } from './SummaryContent';
-import { FilterType } from './SuodatinTypes';
+import { FilterValue } from './SuodatinTypes';
 
 type Styles = React.ComponentProps<typeof Select>['styles'];
 const customStyles: Styles = {
@@ -73,9 +77,12 @@ const Option = ({ data, innerProps, isFocused }: OptionProps) => (
   </ListItem>
 );
 
-const withStyles = makeStyles(() => ({
+const withStyles = makeStyles((theme) => ({
   noBoxShadow: {
     boxShadow: 'none',
+  },
+  intendedCheckbox: {
+    paddingLeft: theme.spacing(2.2),
   },
 }));
 
@@ -86,10 +93,10 @@ type Props = {
   elevation?: number;
   displaySelected?: boolean;
   summaryHidden?: boolean;
-  sortedFilterValues: Array<FilterType>;
-  handleCheck: (value: FilterType) => void;
+
+  values: Array<FilterValue>;
+  handleCheck: (value: FilterValue) => void;
   checkedStr?: string;
-  checkedValues: Array<{ id: string }>;
   options?: any;
   selectPlaceholder?: string;
 };
@@ -102,10 +109,9 @@ export const Filter = ({
   elevation,
   displaySelected = false,
   summaryHidden = false,
-  sortedFilterValues,
+  values,
   handleCheck,
   checkedStr,
-  checkedValues,
   options,
   selectPlaceholder,
 }: Props) => {
@@ -156,15 +162,22 @@ export const Filter = ({
           )}
           <Grid item>
             <List style={{ width: '100%' }}>
-              {sortedFilterValues.map((value) => {
-                const { id, count } = value;
+              {values.map((value) => {
+                const { id, checked, count, intended, indeterminate } = value;
                 const labelId = `language-list-label-${id}`;
                 return (
-                  <ListItem key={id} dense button onClick={() => handleCheck(value)}>
+                  <ListItem
+                    key={id}
+                    dense
+                    button
+                    onClick={() => handleCheck(value)}
+                    className={intended ? classes.intendedCheckbox : ''}>
                     <ListItemIcon>
                       <KonfoCheckbox
                         edge="start"
-                        checked={checkedValues.some((v) => v.id === id)}
+                        checked={checked}
+                        indeterminateIcon={<IndeterminateCheckBoxOutlined />}
+                        indeterminate={indeterminate}
                         tabIndex={-1}
                         disableRipple
                         inputProps={{ 'aria-labelledby': labelId }}

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  handleFilterToggle,
+  handleFiltersChange,
   toggleHakukaynnissa,
   newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
@@ -14,70 +14,80 @@ import {
 } from '#/src/store/reducers/hakutulosSliceSelector';
 
 import { Filter } from './Filter';
-import { FilterProps, FilterType, SuodatinComponentProps } from './SuodatinTypes';
+import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
+import { flattenCheckboxValues, getFilterStateChanges } from './utils';
 
-const FILTER_ID = 'hakutapa';
+const HAKUTAPA_FILTER_ID = 'hakutapa';
 const HAKUKAYNNISSA_ID = 'hakukaynnissa';
-const filterSelector = getFilterProps(FILTER_ID);
+const YHTEISHAKU_FILTER_ID = 'yhteishaku';
+const YHTEISHAKU_KOODI_URI = 'hakutapa_01';
+const hakutapaFilterSelector = getFilterProps(HAKUTAPA_FILTER_ID);
+const yhteishakuFilterSelector = getFilterProps(YHTEISHAKU_FILTER_ID);
 
-// NOTE: Hakutapa includes hakukaynnissa filter so this component handles mishmashing the logics together
-// TODO: Do not use this component until backend is fixed with showing correct numbers for haku kaynnissa
+// NOTE: Hakutapa sisältää hakukaynnissa ja yhteishaku suodattimet -> tämä komponentti hoitaa yhdistelylogiikan
 export const HakutapaSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { sortedValues, checkedValues, localizedCheckedValues } = useSelector<
-    any,
-    FilterProps
-  >(filterSelector);
 
   const { hakukaynnissaData, hakukaynnissa } = useSelector(hakukaynnissaSelector());
-
-  const sortedValuesWithHakukaynnissa = useMemo(
-    () =>
-      sortedValues?.length > 0 // Do not show hakukaynnissa if no other haku values are found (loading)
-        ? [
-            {
-              id: HAKUKAYNNISSA_ID,
-              nimi: t('haku.hakukaynnissa'),
-              count: hakukaynnissaData?.count,
-            },
-            ...sortedValues,
-          ]
-        : [],
-    [sortedValues, t, hakukaynnissaData]
+  const { values, localizedCheckedValues } = useSelector<any, FilterProps>(
+    hakutapaFilterSelector
+  );
+  const {
+    values: yhteishakuValues,
+    localizedCheckedValues: localizedYhteishakuCheckedValues,
+  } = useSelector<any, FilterProps>(yhteishakuFilterSelector);
+  const mergedValues = values.map((v) =>
+    v.id === YHTEISHAKU_KOODI_URI ? { ...v, alakoodit: yhteishakuValues } : v
   );
 
-  const checkedValuesWithHakukaynnissa = useMemo(
-    () => (hakukaynnissa ? [{ id: HAKUKAYNNISSA_ID }, ...checkedValues] : checkedValues),
-    [checkedValues, hakukaynnissa]
-  );
+  const filterValues = useMemo(() => {
+    if (mergedValues?.length === 0) {
+      return []; // Piilota hakukaynnissa -rajain jos muita arvoja ei ole löytynyt
+    }
 
-  const localizedCheckedValuesWithHakukaynnissa = useMemo(
-    () =>
-      hakukaynnissa
-        ? [t('haku.hakukaynnissa'), localizedCheckedValues].filter(Boolean).join(', ')
-        : localizedCheckedValues,
-    [localizedCheckedValues, hakukaynnissa, t]
-  );
+    return [
+      {
+        id: HAKUKAYNNISSA_ID,
+        filterId: HAKUKAYNNISSA_ID,
+        nimi: t('haku.hakukaynnissa'),
+        count: hakukaynnissaData?.count,
+        checked: hakukaynnissa,
+      },
+      ...flattenCheckboxValues(mergedValues),
+    ];
+  }, [hakukaynnissa, mergedValues, t, hakukaynnissaData]);
 
-  const handleCheck = (item: FilterType) => {
+  const handleCheck = (item: FilterValue) => {
     if (item.id === HAKUKAYNNISSA_ID) {
       dispatch(toggleHakukaynnissa());
     } else {
-      dispatch(handleFilterToggle({ filter: FILTER_ID, item }));
+      const operations = getFilterStateChanges(mergedValues)(item);
+      dispatch(handleFiltersChange(operations));
     }
     dispatch(newSearchAll());
   };
+
+  const usedCheckedStr = useMemo(
+    () =>
+      [
+        hakukaynnissa && t('haku.hakukaynnissa'),
+        localizedCheckedValues,
+        localizedYhteishakuCheckedValues,
+      ]
+        .filter(Boolean)
+        .join(', '),
+    [localizedCheckedValues, localizedYhteishakuCheckedValues, hakukaynnissa, t]
+  );
 
   return (
     <Filter
       {...props}
       testId="hakutapa-filter"
       name={t('haku.hakutapa')}
-      sortedFilterValues={sortedValuesWithHakukaynnissa}
+      values={filterValues}
       handleCheck={handleCheck}
-      checkedStr={localizedCheckedValuesWithHakukaynnissa}
-      checkedValues={checkedValuesWithHakukaynnissa}
+      checkedStr={usedCheckedStr}
     />
   );
 };

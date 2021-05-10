@@ -16,6 +16,7 @@ export const FILTER_TYPES = {
   VALINTATAPA: 'valintatapa',
   HAKUKAYNNISSA: 'hakukaynnissa',
   HAKUTAPA: 'hakutapa',
+  YHTEISHAKU: 'yhteishaku',
   POHJAKOULUTUSVAATIMUS: 'pohjakoulutusvaatimus',
 } as const;
 
@@ -28,6 +29,7 @@ export const FILTER_TYPES_ARR = [
   'valintatapa',
   'hakukaynnissa',
   'hakutapa',
+  'yhteishaku',
   'pohjakoulutusvaatimus',
 ] as const;
 

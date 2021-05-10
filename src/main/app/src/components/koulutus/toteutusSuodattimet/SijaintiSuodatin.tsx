@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Filter } from '#/src/components/hakutulos/hakutulosSuodattimet/Filter';
 import {
-  FilterType,
+  FilterValue,
   SuodatinComponentProps,
 } from '#/src/components/hakutulos/hakutulosSuodattimet/SuodatinTypes';
 
@@ -12,9 +12,9 @@ import { getOptionsForSelect, getShownStr } from './utils';
 
 type Props = {
   handleFilterChange: (newFilters: object) => void;
-  initialValues: Array<FilterType>;
-  sortedMaakunnat: Array<FilterType>;
-  sortedKunnat: Array<FilterType>;
+  initialValues: Array<FilterValue>;
+  sortedMaakunnat: Array<FilterValue>;
+  sortedKunnat: Array<FilterValue>;
 } & SuodatinComponentProps;
 
 export const SijaintiSuodatin = (props: Props) => {
@@ -35,7 +35,7 @@ export const SijaintiSuodatin = (props: Props) => {
   const checkedStr = useMemo(() => getShownStr(checkedValues), [checkedValues]);
 
   const handleCheck = useCallback(
-    (value: FilterType) => {
+    (value: FilterValue) => {
       const wasChecked = checkedValues.some((v) => v.id === value.id);
       const newCheckedValues = wasChecked
         ? checkedValues.filter((v) => v.id !== value.id)
@@ -61,15 +61,19 @@ export const SijaintiSuodatin = (props: Props) => {
     [checkedValues, sortedMaakunnat, sortedKunnat, t]
   );
 
+  const usedValues = sortedMaakunnat.map((v) => ({
+    ...v,
+    checked: checkedValues.some((checked) => v.id === checked.id),
+  }));
+
   return (
     <Filter
       options={groupedSijainnit}
       selectPlaceholder={t('haku.etsi')}
       name={t('haku.sijainti')}
-      sortedFilterValues={sortedMaakunnat}
+      values={usedValues}
       handleCheck={handleCheck}
       checkedStr={checkedStr}
-      checkedValues={checkedValues}
       displaySelected
       {...rest}
     />

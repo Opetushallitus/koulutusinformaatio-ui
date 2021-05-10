@@ -41,13 +41,13 @@ const useStyles = makeStyles(() => ({
 }));
 
 // TODO: This is NOT same type as new refactored filters, name !== nimi
-type FilterType = {
+type FilterValue = {
   id: string;
   name: any;
 };
 
 type ChosenFiltersProps = {
-  filters: Record<string, Array<FilterType>>;
+  filters: Record<string, Array<FilterValue>>;
   getHandleDelete: (filterType: string, itemId: string) => VoidFunction;
   handleClearFilters: VoidFunction;
 };
@@ -60,7 +60,7 @@ const ChipList = ({
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const displayChips = ([filterType, items]: [string, Array<FilterType>]) =>
+  const displayChips = ([filterType, items]: [string, Array<FilterValue>]) =>
     items.map(({ id, name }) => (
       <Chip
         size="small"

@@ -19,7 +19,7 @@ import { localize, getLocalizedMaksullisuus } from '#/src/tools/localization';
 import { Translateable } from '#/src/types/common';
 import { Jarjestaja } from '#/src/types/ToteutusTypes';
 
-import { FilterType } from '../hakutulos/hakutulosSuodattimet/SuodatinTypes';
+import { FilterValue } from '../hakutulos/hakutulosSuodattimet/SuodatinTypes';
 import { MobileFiltersOnTopMenu } from './toteutusSuodattimet/MobileFiltersOnTopMenu';
 import { OpetuskieliSuodatin } from './toteutusSuodattimet/OpetusKieliSuodatin';
 import { OpetustapaSuodatin } from './toteutusSuodattimet/OpetustapaSuodatin';
@@ -56,7 +56,7 @@ type Props = {
 type JarjestajaData = {
   jarjestajat: Array<Jarjestaja>;
   loading: boolean;
-  sortedFilters: Record<string, Array<FilterType>>;
+  sortedFilters: Record<string, Array<FilterValue>>;
 };
 
 const getQueryStr = (values: Array<{ id: string }>) =>
@@ -69,7 +69,7 @@ export const ToteutusList = ({ oid }: Props) => {
   );
 
   const valinnatFromHaku = useSelector(getSuodatinValinnatProps);
-  const initialValues: Record<string, Array<FilterType>> = useMemo(
+  const initialValues: Record<string, Array<FilterValue>> = useMemo(
     () =>
       _fp.pipe(
         _fp.pick(['opetuskieli', 'sijainti', 'opetustapa']),
