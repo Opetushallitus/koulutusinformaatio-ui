@@ -1,15 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
-import {
-  Button,
-  CircularProgress,
-  Grid,
-  List,
-  ListItem,
-  ListItemIcon,
-  makeStyles,
-} from '@material-ui/core';
-import { ExpandLess, ExpandMore, SearchOutlined } from '@material-ui/icons';
+import { CircularProgress, ListItem } from '@material-ui/core';
+import { SearchOutlined } from '@material-ui/icons';
 import _fp from 'lodash/fp';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,37 +9,15 @@ import Select, { components } from 'react-select';
 
 import { colors } from '#/src/colors';
 import {
-  clearPaging,
-  searchAll,
-  setSelectedSijainti,
-  setSijainti,
+  handleFilterOperations,
+  newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
-import {
-  getAPIRequestParams,
-  getSijaintiFilterProps,
-  getIsReady,
-} from '#/src/store/reducers/hakutulosSliceSelector';
+import { getFilterProps, getIsReady } from '#/src/store/reducers/hakutulosSliceSelector';
 import { localize } from '#/src/tools/localization';
-import { Translateable } from '#/src/types/common';
 
-import {
-  SuodatinAccordion,
-  SuodatinAccordionDetails,
-  SuodatinAccordionSummary,
-  KonfoCheckbox,
-  SuodatinListItemText,
-} from './CustomizedMuiComponents';
-import { SummaryContent } from './SummaryContent';
-import { ElasticTuple, SuodatinComponentProps } from './SuodatinTypes';
-
-const useStyles = makeStyles(() => ({
-  buttonLabel: {
-    fontSize: 14,
-  },
-  noBoxShadow: {
-    boxShadow: 'none',
-  },
-}));
+import { KonfoCheckbox } from './CustomizedMuiComponents';
+import { Filter } from './Filter';
+import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
 
 type Styles = React.ComponentProps<typeof Select>['styles'];
 const customStyles: Styles = {
@@ -56,6 +26,7 @@ const customStyles: Styles = {
     minHeight: '34px',
     borderRadius: '2px',
     cursor: 'text',
+    marginBottom: '12px',
   }),
   indicatorSeparator: (provided) => ({
     ...provided,
@@ -68,7 +39,6 @@ const customStyles: Styles = {
 };
 
 // Overridden react-select components
-
 const LoadingIndicator = () => <CircularProgress size={25} color="inherit" />;
 
 type RSDropdownIndicatorProps = React.ComponentProps<typeof components.DropdownIndicator>;
@@ -84,6 +54,7 @@ type OptionProps = {
   innerProps: RSOptionProps['innerProps'];
   isFocused: boolean;
 };
+
 const Option = ({ data, innerProps, isFocused }: OptionProps) => (
   // innerProps contain interaction functions e.g. onClick
   <ListItem dense button {...innerProps} selected={isFocused}>
@@ -97,268 +68,109 @@ const Option = ({ data, innerProps, isFocused }: OptionProps) => (
   </ListItem>
 );
 
-type Maakunta = {
-  id: string;
-  name: Translateable;
-  isMaakunta: boolean;
-  value?: string;
-  label?: string;
-};
+const MAAKUNTA_FILTER_ID = 'maakunta';
+const KUNTA_FILTER_ID = 'kunta';
+const maakuntaSelector = getFilterProps(MAAKUNTA_FILTER_ID);
+const kuntaSelector = getFilterProps(KUNTA_FILTER_ID);
 
-const isChecked = (arr: Array<Maakunta>, value: Maakunta) =>
-  arr.some((o) => o.id === value.id);
+const getSelectOption = (value: FilterValue, isMaakunta: boolean) => ({
+  ...value,
+  label: `${localize(value)} (${value.count})`,
+  value: localize(value),
+  isMaakunta,
+  name: value.nimi, // TODO: tarviiko tätä?
+});
 
-type SijaintiFilterProps = {
-  firstFiveMaakunnat: Array<ElasticTuple>;
-  restMaakunnat: Array<ElasticTuple>;
-  selectedSijainnit: Array<Maakunta>;
-  searchHitsSijainnit: Array<Maakunta>;
-  checkedMaakunnat: Array<Maakunta>;
-  selectedSijainnitStr: string;
-};
-
-export const SijaintiSuodatin = ({
-  expanded,
-  elevation,
-  displaySelected,
-  summaryHidden = false,
-}: SuodatinComponentProps) => {
+const SijaintiSelect = ({
+  isLoading,
+  options,
+  handleCheck,
+}: Pick<
+  React.ComponentProps<typeof Select>,
+  'isLoading' | 'options' | 'handleCheck'
+>) => {
   const { t } = useTranslation();
-  const classes = useStyles();
-  const loading = !useSelector(getIsReady);
-  const sijaintiFilterProps = useSelector(getSijaintiFilterProps) || {};
-  const {
-    firstFiveMaakunnat,
-    restMaakunnat,
-    selectedSijainnit,
-    searchHitsSijainnit = [],
-    checkedMaakunnat,
-    selectedSijainnitStr = '',
-  }: SijaintiFilterProps = sijaintiFilterProps as any;
-  const apiRequestParams = useSelector(getAPIRequestParams);
+  return (
+    <Select
+      components={{ DropdownIndicator, LoadingIndicator, Option }}
+      styles={customStyles}
+      value=""
+      isLoading={isLoading}
+      name="district-search"
+      options={options}
+      className="basic-multi-select"
+      classNamePrefix="select"
+      placeholder={t('haku.etsi-paikkakunta-tai-alue')}
+      onChange={(e) => handleCheck(e)}
+      theme={(theme) => ({
+        ...theme,
+        colors: {
+          ...theme.colors,
+          primary25: colors.darkGrey,
+          primary: colors.brandGreen,
+        },
+      })}
+    />
+  );
+};
+
+export const SijaintiSuodatin = (props: SuodatinComponentProps) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const [showRest, setShowRest] = useState(false);
+  const {
+    values: kuntaValues,
+    localizedCheckedValues: localizedKuntaValues,
+  } = useSelector<any, FilterProps>(kuntaSelector);
+  const {
+    values: maakuntaValues,
+    localizedCheckedValues: localizedMaakuntaValues,
+  } = useSelector<any, FilterProps>(maakuntaSelector);
 
-  const handleMaakuntaToggle = (maakuntaArr: ElasticTuple) => () => {
-    const maakuntaFilterObj = {
-      id: maakuntaArr[0],
-      name: maakuntaArr[1]?.nimi,
-      isMaakunta: true,
-    };
-    const newValitutMaakunnat = [...checkedMaakunnat];
-    const currentIndex = checkedMaakunnat.findIndex(
-      ({ id }) => id === maakuntaFilterObj.id
-    );
+  const loading = !useSelector(getIsReady);
 
-    if (currentIndex !== -1) {
-      newValitutMaakunnat.splice(currentIndex, 1);
-    } else {
-      newValitutMaakunnat.push(maakuntaFilterObj);
-    }
-
-    setCheckedMaakunnat(newValitutMaakunnat);
-  };
-
-  const handleSelectedSijannitToggle = (selected: Maakunta) => {
-    if (selected?.isMaakunta) {
-      return handleSelectedSijaintiIsMaakunta(selected);
-    }
-
-    const wasSelected = selectedSijainnit.some(({ id }) => id === selected.id);
-    const newSelectedSijainnit = wasSelected
-      ? selectedSijainnit.filter(({ id }) => id !== selected.id)
-      : [...selectedSijainnit, selected] || [];
-    const selectedSijainnitStr = newSelectedSijainnit
-      .map(({ id }) => id)
-      .concat(checkedMaakunnat.map(({ id }) => id))
-      .join(',');
-
-    dispatch(setSelectedSijainti({ newSelectedSijainnit }));
-    dispatch(clearPaging());
-    dispatch(searchAll({ ...apiRequestParams, sijainti: selectedSijainnitStr }));
-  };
-
-  const handleSelectedSijaintiIsMaakunta = (checked: Maakunta) => {
-    const wasChecked = checkedMaakunnat.some(({ id }) => id === checked.id);
-
-    const maakuntaFilterObj = {
-      id: checked?.id,
-      name: checked?.name,
-      isMaakunta: true,
-    };
-    const newValitutMaakunnat = wasChecked
-      ? checkedMaakunnat.filter(({ id }) => id !== checked.id)
-      : [...checkedMaakunnat, maakuntaFilterObj];
-
-    setCheckedMaakunnat(newValitutMaakunnat);
-  };
-
-  const setCheckedMaakunnat = (newCheckedOrSelectedMaakunnat: Array<Maakunta>) => {
-    const newCheckedOrSelectedSijainnitStr = newCheckedOrSelectedMaakunnat
-      .map(({ id }) => id)
-      .concat(selectedSijainnit.map(({ id }) => id))
-      .join(',');
-    dispatch(setSijainti({ newCheckedOrSelectedMaakunnat }));
-    dispatch(clearPaging());
-    dispatch(
-      searchAll({ ...apiRequestParams, sijainti: newCheckedOrSelectedSijainnitStr })
-    );
+  const handleCheck = (item: FilterValue) => {
+    dispatch(handleFilterOperations([{ item, operation: 'TOGGLE' }]));
+    dispatch(newSearchAll());
   };
 
   const groupedSijainnit = useMemo(
     () => [
       {
         label: t('haku.kaupungit-tai-kunnat'),
-        options: _fp.compose([
-          _fp.sortBy('label'),
-          _fp.map<Maakunta, Maakunta>((h) => ({
-            ...h,
-            checked: isChecked(selectedSijainnit, h),
-          })),
-          _fp.filter<Maakunta>((h) => !h.isMaakunta),
-        ])(searchHitsSijainnit),
+        options: _fp.sortBy('label')(
+          kuntaValues.filter((v) => v.count > 0).map((v) => getSelectOption(v, false))
+        ),
       },
       {
         label: t('haku.maakunnat'),
-        options: _fp.compose([
-          _fp.sortBy('label'),
-          _fp.map<Maakunta, Maakunta>((h) => ({
-            ...h,
-            checked: isChecked(checkedMaakunnat, h),
-          })),
-          _fp.filter<Maakunta>((h) => h.isMaakunta),
-        ])(searchHitsSijainnit),
+        options: _fp.sortBy('label')(
+          maakuntaValues.filter((v) => v.count > 0).map((v) => getSelectOption(v, true))
+        ),
       },
     ],
-    [searchHitsSijainnit, selectedSijainnit, checkedMaakunnat, t]
+    [kuntaValues, maakuntaValues, t]
   );
 
-  // TODO: Use Filter.tsx if possible
+  const usedLocalizedCheckedValues = [localizedKuntaValues, localizedMaakuntaValues]
+    .filter(Boolean)
+    .join(', ');
+
   return (
-    <SuodatinAccordion
-      {...(summaryHidden && { className: classes.noBoxShadow })}
-      elevation={elevation}
-      defaultExpanded={expanded}>
-      {!summaryHidden && (
-        <SuodatinAccordionSummary expandIcon={<ExpandMore />}>
-          <SummaryContent
-            selectedFiltersStr={selectedSijainnitStr}
-            maxCharLengthBeforeChipWithNumber={20}
-            filterName={t('haku.sijainti')}
-            displaySelected={displaySelected}
-          />
-        </SuodatinAccordionSummary>
-      )}
-      <SuodatinAccordionDetails {...(summaryHidden && { style: { padding: 0 } })}>
-        <Grid container direction="column">
-          <Grid item style={{ padding: '20px 0' }}>
-            <Select
-              components={{ DropdownIndicator, LoadingIndicator, Option }}
-              styles={customStyles}
-              value=""
-              isLoading={loading}
-              name="district-search"
-              options={groupedSijainnit}
-              className="basic-multi-select"
-              classNamePrefix="select"
-              placeholder={t('haku.etsi-paikkakunta-tai-alue')}
-              onChange={(e) => handleSelectedSijannitToggle(e)}
-              theme={(theme) => ({
-                ...theme,
-                colors: {
-                  ...theme.colors,
-                  primary25: colors.darkGrey,
-                  primary: colors.brandGreen,
-                },
-              })}
-            />
-          </Grid>
-          {!summaryHidden && (
-            <Grid item>
-              <List style={{ width: '100%' }}>
-                {firstFiveMaakunnat.map((maakuntaTuple) => {
-                  const [id, data] = maakuntaTuple;
-                  const labelId = `educationtype-outerlist-label-${id}`;
-                  return (
-                    <ListItem
-                      key={id}
-                      id={id}
-                      dense
-                      button
-                      onClick={handleMaakuntaToggle(maakuntaTuple)}>
-                      <ListItemIcon>
-                        <KonfoCheckbox
-                          edge="start"
-                          checked={checkedMaakunnat.some(
-                            ({ id: checkedId }) => checkedId === id
-                          )}
-                          tabIndex={-1}
-                          disableRipple
-                          inputProps={{ 'aria-labelledby': labelId }}
-                          style={{ pointerEvents: 'none' }}
-                        />
-                      </ListItemIcon>
-                      <SuodatinListItemText
-                        id={labelId}
-                        primary={
-                          <Grid container justify="space-between" wrap="nowrap">
-                            <Grid item>{localize(data)}</Grid>
-                            <Grid item>{`(${data?.count})`}</Grid>
-                          </Grid>
-                        }
-                      />
-                    </ListItem>
-                  );
-                })}
-                {showRest &&
-                  restMaakunnat.map((maakuntaTuple) => {
-                    const [id, data] = maakuntaTuple;
-                    const labelId = `educationtype-outerlist-label-${id}`;
-                    return (
-                      <ListItem
-                        key={id}
-                        id={id}
-                        dense
-                        button
-                        onClick={handleMaakuntaToggle(maakuntaTuple)}>
-                        <ListItemIcon>
-                          <KonfoCheckbox
-                            edge="start"
-                            checked={checkedMaakunnat.some(
-                              ({ id: checkedId }) => checkedId === id
-                            )}
-                            tabIndex={-1}
-                            disableRipple
-                            inputProps={{ 'aria-labelledby': labelId }}
-                          />
-                        </ListItemIcon>
-                        <SuodatinListItemText
-                          id={labelId}
-                          primary={
-                            <Grid container justify="space-between" wrap="nowrap">
-                              <Grid item>{localize(data)}</Grid>
-                              <Grid item>{`(${data?.count})`}</Grid>
-                            </Grid>
-                          }
-                        />
-                      </ListItem>
-                    );
-                  })}
-                <Button
-                  color="secondary"
-                  size="small"
-                  classes={{ label: classes.buttonLabel }}
-                  endIcon={showRest ? <ExpandLess /> : <ExpandMore />}
-                  fullWidth
-                  onClick={() => setShowRest(!showRest)}>
-                  {showRest ? t('haku.näytä_vähemmän') : t('haku.näytä_lisää')}
-                </Button>
-              </List>
-            </Grid>
-          )}
-        </Grid>
-      </SuodatinAccordionDetails>
-    </SuodatinAccordion>
+    <Filter
+      {...props}
+      name={t('haku.sijainti')}
+      values={maakuntaValues}
+      handleCheck={handleCheck}
+      checkedStr={usedLocalizedCheckedValues}
+      expandValues
+      additionalContent={
+        <SijaintiSelect
+          isLoading={loading}
+          handleCheck={handleCheck}
+          options={groupedSijainnit}
+        />
+      }
+    />
   );
 };

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
+  Button,
   CircularProgress,
   Grid,
   List,
@@ -9,11 +10,13 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import {
+  ExpandLess,
   ExpandMore,
   IndeterminateCheckBoxOutlined,
   SearchOutlined,
 } from '@material-ui/icons';
 import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
 import Select, { components } from 'react-select';
 
 import { colors } from '#/src/colors';
@@ -78,6 +81,9 @@ const Option = ({ data, innerProps, isFocused }: OptionProps) => (
 );
 
 const withStyles = makeStyles((theme) => ({
+  buttonLabel: {
+    fontSize: 14,
+  },
   noBoxShadow: {
     boxShadow: 'none',
   },
@@ -93,6 +99,7 @@ type Props = {
   elevation?: number;
   displaySelected?: boolean;
   summaryHidden?: boolean;
+  expandValues?: boolean;
 
   values: Array<FilterValue>;
   handleCheck: (value: FilterValue) => void;
@@ -101,6 +108,8 @@ type Props = {
   selectPlaceholder?: string;
   additionalContent?: JSX.Element;
 };
+
+const HIDE_NOT_EXPANDED_AMOUNT = 5;
 
 // NOTE: Do *not* put redux code here, this component is used both with and without
 export const Filter = ({
@@ -116,9 +125,12 @@ export const Filter = ({
   options,
   selectPlaceholder,
   additionalContent,
+  expandValues,
 }: Props) => {
+  const { t } = useTranslation();
   const classes = withStyles();
   const loading = false;
+  const [hideRest, setHideRest] = useState(expandValues);
 
   return (
     <SuodatinAccordion
@@ -165,7 +177,10 @@ export const Filter = ({
           )}
           <Grid item>
             <List style={{ width: '100%' }}>
-              {values.map((value) => {
+              {values.map((value, i) => {
+                if (expandValues && hideRest && i >= HIDE_NOT_EXPANDED_AMOUNT) {
+                  return null;
+                }
                 const { id, checked, count, intended, indeterminate } = value;
                 const labelId = `language-list-label-${id}`;
                 return (
@@ -202,6 +217,17 @@ export const Filter = ({
               })}
             </List>
           </Grid>
+          {expandValues && (
+            <Button
+              color="secondary"
+              size="small"
+              classes={{ label: classes.buttonLabel }}
+              endIcon={hideRest ? <ExpandMore /> : <ExpandLess />}
+              fullWidth
+              onClick={() => setHideRest(!hideRest)}>
+              {hideRest ? t('haku.näytä_lisää') : t('haku.näytä_vähemmän')}
+            </Button>
+          )}
         </Grid>
       </SuodatinAccordionDetails>
     </SuodatinAccordion>
