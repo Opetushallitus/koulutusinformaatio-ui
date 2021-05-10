@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Filter } from '#/src/components/hakutulos/hakutulosSuodattimet/Filter';
 import {
-  FilterType,
+  FilterValue,
   SuodatinComponentProps,
 } from '#/src/components/hakutulos/hakutulosSuodattimet/SuodatinTypes';
 
@@ -12,8 +12,8 @@ import { getShownStr } from './utils';
 
 type Props = {
   handleFilterChange: (newFilters: object) => void;
-  initialValues: Array<FilterType>;
-  sortedValues: Array<FilterType>;
+  initialValues: Array<FilterValue>;
+  sortedValues: Array<FilterValue>;
 } & SuodatinComponentProps;
 
 export const OpetustapaSuodatin = (props: Props) => {
@@ -27,7 +27,7 @@ export const OpetustapaSuodatin = (props: Props) => {
   const checkedStr = useMemo(() => getShownStr(checkedValues), [checkedValues]);
 
   const handleCheck = useCallback(
-    (value: FilterType) => {
+    (value: FilterValue) => {
       const { id } = value;
       const wasChecked = checkedValues.some((v) => v.id === id);
       const newCheckedValues = wasChecked
@@ -40,13 +40,17 @@ export const OpetustapaSuodatin = (props: Props) => {
     [checkedValues, handleFilterChange]
   );
 
+  const usedValues = sortedValues.map((v) => ({
+    ...v,
+    checked: checkedValues.some((checked) => v.id === checked.id),
+  }));
+
   return (
     <Filter
       name={t('haku.opetustapa')}
-      sortedFilterValues={sortedValues}
+      values={usedValues}
       handleCheck={handleCheck}
       checkedStr={checkedStr}
-      checkedValues={checkedValues}
       displaySelected
       {...rest}
     />

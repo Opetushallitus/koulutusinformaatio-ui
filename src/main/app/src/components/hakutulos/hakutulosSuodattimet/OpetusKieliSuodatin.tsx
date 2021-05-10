@@ -15,10 +15,12 @@ import {
 
 import { Filter } from './Filter';
 import {
-  FilterType,
+  FilterValue,
   OpetuskieliFilterProps,
   SuodatinComponentProps,
 } from './SuodatinTypes';
+
+const OPETUSKIELI_FILTER_ID = 'opetuskieli';
 
 export const OpetuskieliSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
@@ -31,7 +33,7 @@ export const OpetuskieliSuodatin = (props: SuodatinComponentProps) => {
   }: OpetuskieliFilterProps = opetuskieliFilterProps as any;
   const apiRequestParams = useSelector(getAPIRequestParams);
 
-  const handleCheck = (opetuskieliObj: FilterType) => {
+  const handleCheck = (opetuskieliObj: FilterValue) => {
     const checkedOpetuskieliObj = {
       id: opetuskieliObj.id,
       name: opetuskieliObj.nimi,
@@ -55,19 +57,24 @@ export const OpetuskieliSuodatin = (props: SuodatinComponentProps) => {
     dispatch(searchAll({ ...apiRequestParams, opetuskieli: newCheckedOpetusKieletStr }));
   };
 
-  const sortedValues = useMemo(
-    () => sortedOpetuskielet.map(([id, values]) => ({ id, ...values })),
-    [sortedOpetuskielet]
+  const values = useMemo(
+    () =>
+      sortedOpetuskielet.map(([id, values]) => ({
+        id,
+        ...values,
+        filterId: OPETUSKIELI_FILTER_ID,
+        checked: checkedOpetuskielet.some((v) => v.id === id),
+      })),
+    [checkedOpetuskielet, sortedOpetuskielet]
   );
 
   return (
     <Filter
       {...props}
       name={t('haku.opetuskieli')}
-      sortedFilterValues={sortedValues}
+      values={values}
       handleCheck={handleCheck}
       checkedStr={checkedOpetuskieletStr}
-      checkedValues={checkedOpetuskielet}
     />
   );
 };

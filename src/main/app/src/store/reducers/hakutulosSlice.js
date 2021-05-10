@@ -36,8 +36,9 @@ export const initialState = {
   koulutusala: [],
   opetuskieli: [],
   valintatapa: [],
-  hakukaynnissa: false, // This is the only filter which functionality does not rely on koodisto
+  hakukaynnissa: false,
   hakutapa: [],
+  yhteishaku: [], // NOTE: tämä suodatin ei käytä koodistoarvoja vaan hakuOideja
   sijainti: [],
   selectedSijainti: [],
   opetustapa: [],
@@ -59,15 +60,21 @@ const hakutulosSlice = createSlice({
     setSelectedTab: (state, { payload }) => {
       state.selectedTab = payload.newSelectedTab;
     },
-    handleFilterToggle: (state, { payload }) => {
-      const {
-        filter,
-        item: { id, nimi },
-      } = payload;
-      const exists = state[filter].some(({ id: itemId }) => id === itemId);
-      state[filter] = exists
-        ? state[filter].filter(({ id: itemId }) => id !== itemId)
-        : state[filter].concat({ id, nimi, name: nimi }); // TODO: Remove name from here when it is refactored away
+    // NOTE: Tämä on uusi rajapinta eikä kaikki rajaimet vielä käytä tätä
+    // TODO: Muokkaa kaikki rajaimet käyttämään tätä
+    // payload [{id: string, item: FilterValue, operation: "SET" | "UNSET" | "TOGGLE"}]
+    handleFiltersChange: (state, { payload: filterOperations = [] }) => {
+      filterOperations.forEach(({ item, operation = 'TOGGLE' }) => {
+        const id = item.filterId;
+        const exists = state[id].some(({ id: itemId }) => item.id === itemId);
+        const shouldAdd = (operation === 'SET' || operation === 'TOGGLE') && !exists;
+        const shouldRemove = (operation === 'UNSET' || operation === 'TOGGLE') && exists;
+        if (shouldAdd) {
+          state[id] = state[id].concat({ id: item.id, nimi: item.nimi, name: item.nimi }); // TODO: Remove name from here when it is refactored away
+        } else if (shouldRemove) {
+          state[id] = state[id].filter(({ id: itemId }) => item.id !== itemId);
+        }
+      });
     },
     toggleHakukaynnissa: (state) => {
       state.hakukaynnissa = !state.hakukaynnissa;
@@ -112,6 +119,7 @@ const hakutulosSlice = createSlice({
       state.valintatapa = [];
       state.hakukaynnissa = false;
       state.hakutapa = [];
+      state.yhteishaku = [];
       state.sijainti = [];
       state.selectedSijainti = [];
       state.opetustapa = [];
@@ -254,7 +262,7 @@ export const {
   searchAPICallStart,
   searchAPICallError,
   setOpetuskieli,
-  handleFilterToggle,
+  handleFiltersChange,
   toggleHakukaynnissa,
   setKoulutustyyppi,
   setKoulutusala,
@@ -386,6 +394,7 @@ export const searchAndMoveToHaku = ({ history }) => (dispatch, getState) => {
       'valintatapa',
       'hakukaynnissa',
       'hakutapa',
+      'yhteishaku',
       'koulutustyyppi',
       'koulutusala',
       'sijainti',
