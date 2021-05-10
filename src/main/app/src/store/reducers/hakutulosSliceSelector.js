@@ -44,11 +44,11 @@ function getKoulutustyyppi(state) {
 function getKoulutusala(state) {
   return state.hakutulos.koulutusala;
 }
-function getSijainti(state) {
-  return state.hakutulos.sijainti;
+function getKunta(state) {
+  return state.hakutulos.kunta;
 }
-function getSelectedSijainti(state) {
-  return state.hakutulos.selectedSijainti;
+function getMaakunta(state) {
+  return state.hakutulos.maakunta;
 }
 function getOpetustapa(state) {
   return state.hakutulos.opetustapa;
@@ -100,8 +100,8 @@ export const getHakutulosProps = createSelector(
     getOpetuskieli,
     getKoulutustyyppi,
     getKoulutusala,
-    getSijainti,
-    getSelectedSijainti,
+    getKunta,
+    getMaakunta,
     getOpetustapa,
     getValintatapa,
     getHakukaynnissa,
@@ -118,8 +118,8 @@ export const getHakutulosProps = createSelector(
     opetuskieli,
     koulutustyyppi,
     koulutusala,
-    sijainti,
-    selectedSijainti,
+    kunta,
+    maakunta,
     opetustapa,
     valintatapa,
     hakukaynnissa,
@@ -140,8 +140,8 @@ export const getHakutulosProps = createSelector(
             opetuskieli,
             koulutustyyppi,
             koulutusala,
-            sijainti,
-            selectedSijainti,
+            kunta,
+            maakunta,
             opetustapa,
             valintatapa,
             hakutapa,
@@ -179,8 +179,8 @@ export const getSuodatinValinnatProps = createSelector(
     getOpetuskieli,
     getKoulutustyyppi,
     getKoulutusala,
-    getSijainti,
-    getSelectedSijainti,
+    getKunta,
+    getMaakunta,
     getOpetustapa,
     getValintatapa,
     getHakukaynnissa,
@@ -192,8 +192,8 @@ export const getSuodatinValinnatProps = createSelector(
     opetuskieli,
     koulutustyyppi,
     koulutusala,
-    sijainti,
-    selectedSijainti,
+    kunta,
+    maakunta,
     opetustapa,
     valintatapa,
     hakukaynnissa,
@@ -204,7 +204,8 @@ export const getSuodatinValinnatProps = createSelector(
     opetuskieli,
     koulutustyyppi,
     koulutusala,
-    sijainti: _.concat(sijainti, selectedSijainti),
+    kunta,
+    maakunta,
     opetustapa,
     valintatapa,
     // TODO: Refactor suodatinvalinnat to accept big list of ids
@@ -241,8 +242,8 @@ export const getAPIRequestParams = createSelector(
     getOpetuskieli,
     getKoulutustyyppi,
     getKoulutusala,
-    getSijainti,
-    getSelectedSijainti,
+    getKunta,
+    getMaakunta,
     getOpetustapa,
     getValintatapa,
     getHakukaynnissa,
@@ -258,8 +259,8 @@ export const getAPIRequestParams = createSelector(
     opetuskieli,
     koulutustyyppi,
     koulutusala,
-    sijainti,
-    selectedSijainti,
+    kunta,
+    maakunta,
     opetustapa,
     valintatapa,
     hakukaynnissa,
@@ -274,7 +275,7 @@ export const getAPIRequestParams = createSelector(
     opetuskieli: getCheckedFiltersIdsStr(opetuskieli),
     koulutustyyppi: getCheckedFiltersIdsStr(koulutustyyppi),
     koulutusala: getCheckedFiltersIdsStr(koulutusala),
-    sijainti: getCheckedFiltersIdsStr(_.concat(selectedSijainti, sijainti)),
+    sijainti: getCheckedFiltersIdsStr(_.concat(kunta, maakunta)),
     opetustapa: getCheckedFiltersIdsStr(opetustapa),
     valintatapa: getCheckedFiltersIdsStr(valintatapa),
     hakutapa: getCheckedFiltersIdsStr(hakutapa),
@@ -375,45 +376,6 @@ export const getKoulutusalaFilterProps = createSelector(
   }
 );
 
-// TODO: Some types written at SijaintiSuodatin.tsx
-export const getSijaintiFilterProps = createSelector(
-  [
-    getKoulutusFilters,
-    getOppilaitosFilters,
-    getSelectedTab,
-    getSijainti,
-    getSelectedSijainti,
-  ],
-  (
-    koulutusFilters,
-    oppilaitosFilters,
-    selectedTab,
-    checkedMaakunnat,
-    selectedSijainnit
-  ) => {
-    const maakunnat =
-      selectedTab === 'koulutus' ? koulutusFilters.maakunta : oppilaitosFilters.maakunta;
-    const kunnat =
-      selectedTab === 'koulutus' ? koulutusFilters.kunta : oppilaitosFilters.kunta;
-    const orderedMaakunnat = getOrderedMaakunnatEntries(maakunnat);
-    const searchHitsSijainnit = getSijainnitForReactReselect(kunnat, orderedMaakunnat);
-    const selectedSijainnitStr = checkedMaakunnat
-      .map((mk) => mk?.['name']?.[getLanguage()])
-      .concat(_.map(selectedSijainnit, 'value'))
-      .join(', ');
-
-    return {
-      firstFiveMaakunnat: _.slice(orderedMaakunnat, 0, 5),
-      restMaakunnat: _.slice(orderedMaakunnat, 5, orderedMaakunnat.length),
-      checkedMaakunnat,
-      selectedSijainnit,
-      searchHitsSijainnit,
-      selectedTab,
-      selectedSijainnitStr,
-    };
-  }
-);
-
 // Helpers
 function getCheckedFiltersIdsStr(checkedfiltersArr) {
   if (checkedfiltersArr) {
@@ -428,52 +390,4 @@ function getSelectedFiltersNamesStr(filterArr) {
 }
 function sortedKoulutusalatEntries(filterObj) {
   return _.sortBy(_.toPairs(filterObj), `[1]nimi.[${getLanguage()}]`);
-}
-function getOrderedMaakunnatEntries(filterObj) {
-  const orderedMaakunnat = _.orderBy(
-    _.toPairs(filterObj),
-    ['[1].count', `[1].nimi.[${getLanguage()}]`],
-    ['desc', 'asc']
-  );
-  const eiTiedossaMaakunta = _.remove(orderedMaakunnat, (n) => n[0] === 'maakunta_99');
-  return _.concat(orderedMaakunnat, eiTiedossaMaakunta);
-}
-
-function getSijainnitForReactReselect(kunnat, orderedMaakunnatEntries) {
-  const filteredKunnatEntries = _.toPairs(kunnat).filter((k) => k[1].count > 0);
-  const filteredMaakunnatEntries = orderedMaakunnatEntries.filter(
-    (mk) => mk[1].count > 0
-  );
-
-  const reactSelectKunnat = filteredKunnatEntries.reduce(
-    (kuntaAccum, kunta, kuntaIndex) => {
-      return [
-        ...kuntaAccum,
-        {
-          label: `${kunta[1]?.nimi?.[getLanguage()]} (${kunta[1]?.count})`,
-          value: kunta[1]?.nimi?.[getLanguage()],
-          isMaakunta: false,
-          id: kunta[0],
-          name: kunta[1]?.nimi,
-        },
-      ];
-    },
-    []
-  );
-  const searchHitsSijainnit = filteredMaakunnatEntries.reduce(
-    (accumulator, maaKunta, kuntaIndex) => {
-      return [
-        ...accumulator,
-        {
-          label: `${maaKunta[1]?.nimi?.[getLanguage()]} (${maaKunta[1]?.count})`,
-          value: maaKunta[1]?.nimi?.[getLanguage()],
-          isMaakunta: true,
-          id: maaKunta[0],
-          name: maaKunta[1]?.nimi,
-        },
-      ];
-    },
-    reactSelectKunnat
-  );
-  return searchHitsSijainnit;
 }

@@ -40,8 +40,8 @@ export const initialState = {
   hakukaynnissa: false,
   hakutapa: [],
   yhteishaku: [], // NOTE: tämä suodatin ei käytä koodistoarvoja vaan hakuOideja
-  sijainti: [],
-  selectedSijainti: [],
+  kunta: [],
+  maakunta: [],
   opetustapa: [],
   pohjakoulutusvaatimus: [],
 
@@ -81,23 +81,8 @@ const hakutulosSlice = createSlice({
     toggleHakukaynnissa: (state) => {
       state.hakukaynnissa = !state.hakukaynnissa;
     },
-    setOpetuskieli: (state, { payload }) => {
-      state.opetuskieli = payload.newCheckedOpetuskielet;
-    },
-    setKoulutustyyppi: (state, { payload }) => {
-      state.koulutustyyppi = payload.newCheckedKoulutustyypit;
-    },
-    setSijainti: (state, { payload }) => {
-      state.sijainti = payload.newCheckedOrSelectedMaakunnat;
-    },
-    setSelectedSijainti: (state, { payload }) => {
-      state.selectedSijainti = payload.newSelectedSijainnit;
-    },
     setKoulutusala: (state, { payload }) => {
       state.koulutusala = payload.newCheckedKoulutusalat;
-    },
-    setOpetustapa: (state, { payload }) => {
-      state.opetustapa = payload.newCheckedOpetustavat;
     },
     clearPaging: (state) => {
       state.koulutusPage = 1;
@@ -107,23 +92,19 @@ const hakutulosSlice = createSlice({
     },
     setSelectedFilters: (state, { payload }) => {
       const { filterType, itemId } = payload;
-      if (filterType === 'sijainti') {
-        state.sijainti = state.sijainti.filter(({ id }) => id !== itemId);
-        state.selectedSijainti = state.selectedSijainti.filter(({ id }) => id !== itemId);
-      } else {
-        state[filterType] = state[filterType].filter(({ id }) => id !== itemId);
-      }
+      state[filterType] = state[filterType].filter(({ id }) => id !== itemId);
     },
     clearSelectedFilters: (state) => {
       state.koulutustyyppi = [];
+      state['koulutustyyppi-muu'] = [];
       state.koulutusala = [];
       state.opetuskieli = [];
       state.valintatapa = [];
       state.hakukaynnissa = false;
       state.hakutapa = [];
       state.yhteishaku = [];
-      state.sijainti = [];
-      state.selectedSijainti = [];
+      state.kunta = [];
+      state.maakunta = [];
       state.opetustapa = [];
       state.pohjakoulutusvaatimus = [];
     },
@@ -176,41 +157,9 @@ const hakutulosSlice = createSlice({
           });
           _.forEach(filters, (filterValues, key) => {
             switch (key) {
-              case FILTER_TYPES.KOULUTUSTYYPPI:
-                const koulutustyyppiFilters = pullUpAlakoodit(
-                  koulutusData?.filters?.[key]
-                );
-                const koulutustyyppiMuuFilters = pullUpAlakoodit(
-                  koulutusData?.filters?.[`${key}-muu`]
-                );
-                state[key] = getCheckedFilterValues(
-                  filterValues,
-                  _.assign(koulutustyyppiFilters, koulutustyyppiMuuFilters)
-                );
-                break;
               case FILTER_TYPES.KOULUTUSALA:
                 const koulutusalaFilters = pullUpAlakoodit(koulutusData?.filters?.[key]);
                 state[key] = getCheckedFilterValues(filterValues, koulutusalaFilters);
-                break;
-              case FILTER_TYPES.SIJAINTI:
-                const maakunnatIds = _.split(filterValues, ',').filter((id) =>
-                  _.startsWith(id, 'maakunta_')
-                );
-                const kunnatIds = _.split(filterValues, ',').filter((id) =>
-                  _.startsWith(id, 'kunta_')
-                );
-                if (_.size(maakunnatIds) > 0) {
-                  state.sijainti = getCheckedFilterValues(
-                    maakunnatIds.join(','),
-                    koulutusData?.filters?.maakunta
-                  );
-                }
-                if (_.size(kunnatIds) > 0) {
-                  state.selectedSijainti = getSelectedKunnatFilterValues(
-                    kunnatIds,
-                    koulutusData?.filters?.kunta
-                  );
-                }
                 break;
               case FILTER_TYPES.HAKUKAYNNISSA:
                 state.hakukaynnissa = filterValues === 'true';
@@ -263,14 +212,9 @@ export const {
   setSelectedTab,
   searchAPICallStart,
   searchAPICallError,
-  setOpetuskieli,
   handleFilterOperations,
   toggleHakukaynnissa,
-  setKoulutustyyppi,
   setKoulutusala,
-  setSijainti,
-  setSelectedSijainti,
-  setOpetustapa,
   clearPaging,
   clearSelectedFilters,
   setSelectedFilters,
@@ -454,17 +398,7 @@ export const twoLevelFilterUpdateAndSearch = ({
   filterCheckedValues = _.sortBy(_.uniqBy(filterCheckedValues, 'id'), 'id');
   const filterURLParamsStr = _.join(_.map(filterCheckedValues, 'id'), ',');
 
-  switch (filterType) {
-    case FILTER_TYPES.KOULUTUSALA:
-      dispatch(setKoulutusala({ newCheckedKoulutusalat: filterCheckedValues }));
-      break;
-    case FILTER_TYPES.KOULUTUSTYYPPI:
-      dispatch(setKoulutustyyppi({ newCheckedKoulutustyypit: filterCheckedValues }));
-      break;
-    default:
-      break;
-  }
-
+  dispatch(setKoulutusala({ newCheckedKoulutusalat: filterCheckedValues }));
   dispatch(clearPaging());
   dispatch(searchAll({ ...apiRequestParams, [filterType]: filterURLParamsStr }));
 };
@@ -484,25 +418,6 @@ function pullUpAlakoodit(obj) {
     let alakoodit = _.has(entry[1], 'alakoodit') ? entry[1].alakoodit : {};
     return { ...result, [entry[0]]: entry[1], ...alakoodit };
   }, {});
-}
-
-function getSelectedKunnatFilterValues(kunnatIds, kunnatFilters) {
-  return kunnatIds.reduce((result, id) => {
-    return _.has(kunnatFilters, id)
-      ? [
-          ...result,
-          {
-            label: `${kunnatFilters?.[id]?.nimi?.[getLanguage()]} (${
-              kunnatFilters?.[id]?.count
-            })`,
-            value: kunnatFilters?.[id]?.nimi?.[getLanguage()],
-            isMaakunta: false,
-            id: id,
-            name: kunnatFilters?.[id]?.nimi,
-          },
-        ]
-      : result;
-  }, []);
 }
 
 function getCleanUrlSearch(search, apiRequestParams) {

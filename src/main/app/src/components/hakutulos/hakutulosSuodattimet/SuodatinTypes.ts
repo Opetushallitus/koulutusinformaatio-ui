@@ -7,9 +7,6 @@ export type SuodatinComponentProps = {
   summaryHidden?: boolean;
 };
 
-// TODO: Refactor this tuple as filtertype in state
-export type ElasticTuple = [string, { count: number; nimi: Translateable }];
-
 export type FilterValue = {
   id: string;
   filterId: string;
@@ -25,15 +22,4 @@ export type FilterValue = {
 export type FilterProps = {
   values: Array<FilterValue>;
   localizedCheckedValues: string; // Concatenated for mobile
-};
-
-export type OpetuskieliFilterProps = {
-  checkedOpetuskielet: Array<FilterValue>;
-  checkedOpetuskieletStr: string;
-  sortedOpetuskielet: Array<ElasticTuple>;
-};
-
-export type SijaintiFilterProps = {
-  checkedMaakunnat: Array<FilterValue>;
-  selectedSijainnit: Array<FilterValue>;
 };
