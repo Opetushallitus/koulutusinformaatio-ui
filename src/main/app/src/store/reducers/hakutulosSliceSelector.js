@@ -2,7 +2,6 @@ import { createSelector } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import qs from 'query-string';
 
-import { FILTER_TYPES } from '#/src/constants';
 import { getLanguage, getTranslationForKey, localize } from '#/src/tools/localization';
 import { Common as C } from '#/src/tools/Utils';
 
@@ -309,25 +308,9 @@ export const getHakuUrl = createSelector(
   }
 );
 
-export const getOpetustapaFilterProps = createSelector(
-  [getKoulutusFilters, getOppilaitosFilters, getSelectedTab, getOpetustapa],
-  (koulutusFilters, oppilaitosFilters, selectedTab, checkedOpetustavat) => {
-    const opetustapaFilter =
-      selectedTab === 'koulutus'
-        ? koulutusFilters.opetustapa
-        : oppilaitosFilters.opetustapa;
-    return {
-      sortedOpetustavat: sortedFilterEntries(opetustapaFilter),
-      checkedOpetustavat,
-      checkedOpetustavatStr: getSelectedFiltersNamesStr(checkedOpetustavat),
-    };
-  }
-);
-
 const getNameStr = (filterArr = []) =>
   filterArr.map((f) => _.capitalize(localize(f))).join(', ');
 
-// TODO: Refactor sortedFilterEntries away
 const sortValues = (filterObj) =>
   _.orderBy(
     _.toPairs(filterObj).map(([id, values]) => ({ id, ...values })),
@@ -432,18 +415,6 @@ export const getSijaintiFilterProps = createSelector(
 );
 
 // Helpers
-function sortedFilterEntries(filterObj) {
-  const sortedArrByCountNameDesc = _.orderBy(
-    _.toPairs(filterObj),
-    ['[1].count', `[1].nimi.[${getLanguage()}]`],
-    ['desc', 'desc']
-  );
-  const removedMuuKieli = _.remove(
-    sortedArrByCountNameDesc,
-    (n) => n[0] === 'oppilaitoksenopetuskieli_9'
-  );
-  return _.concat(sortedArrByCountNameDesc, removedMuuKieli);
-}
 function getCheckedFiltersIdsStr(checkedfiltersArr) {
   if (checkedfiltersArr) {
     return _.join(_.sortBy(_.map(checkedfiltersArr, 'id')), ',');

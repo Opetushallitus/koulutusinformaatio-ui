@@ -64,7 +64,7 @@ const hakutulosSlice = createSlice({
     // NOTE: Tämä on uusi rajapinta eikä kaikki rajaimet vielä käytä tätä
     // TODO: Muokkaa kaikki rajaimet käyttämään tätä
     // payload [{id: string, item: FilterValue, operation: "SET" | "UNSET" | "TOGGLE"}]
-    handleFiltersChange: (state, { payload: filterOperations = [] }) => {
+    handleFilterOperations: (state, { payload: filterOperations = [] }) => {
       filterOperations.forEach(({ item, operation = 'TOGGLE' }) => {
         console.log('item', item);
         const id = item.filterId;
@@ -264,7 +264,7 @@ export const {
   searchAPICallStart,
   searchAPICallError,
   setOpetuskieli,
-  handleFiltersChange,
+  handleFilterOperations,
   toggleHakukaynnissa,
   setKoulutustyyppi,
   setKoulutusala,

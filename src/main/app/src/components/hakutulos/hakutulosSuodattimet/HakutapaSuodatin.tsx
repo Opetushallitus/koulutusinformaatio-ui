@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  handleFiltersChange,
+  handleFilterOperations,
   toggleHakukaynnissa,
   newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
@@ -63,7 +63,7 @@ export const HakutapaSuodatin = (props: SuodatinComponentProps) => {
       dispatch(toggleHakukaynnissa());
     } else {
       const operations = getFilterStateChanges(mergedValues)(item);
-      dispatch(handleFiltersChange(operations));
+      dispatch(handleFilterOperations(operations));
     }
     dispatch(newSearchAll());
   };

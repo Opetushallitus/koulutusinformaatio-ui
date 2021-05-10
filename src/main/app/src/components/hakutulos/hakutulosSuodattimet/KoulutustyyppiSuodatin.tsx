@@ -5,7 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { colors } from '#/src/colors';
-import { handleFiltersChange, newSearchAll } from '#/src/store/reducers/hakutulosSlice';
+import {
+  handleFilterOperations,
+  newSearchAll,
+} from '#/src/store/reducers/hakutulosSlice';
 import { getFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
 
 import { Filter } from './Filter';
@@ -65,7 +68,7 @@ export const KoulutustyyppiSuodatin = (props: SuodatinComponentProps) => {
   const getOperations = getFilterStateChanges(isMuuSelected ? muuValues : values);
   const handleCheck = (item: FilterValue) => {
     const operations = getOperations(item);
-    dispatch(handleFiltersChange(operations));
+    dispatch(handleFilterOperations(operations));
     dispatch(newSearchAll());
   };
 
