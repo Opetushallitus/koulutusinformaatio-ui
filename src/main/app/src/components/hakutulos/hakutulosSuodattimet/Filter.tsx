@@ -99,6 +99,7 @@ type Props = {
   checkedStr?: string;
   options?: any;
   selectPlaceholder?: string;
+  additionalContent?: JSX.Element;
 };
 
 // NOTE: Do *not* put redux code here, this component is used both with and without
@@ -114,6 +115,7 @@ export const Filter = ({
   checkedStr,
   options,
   selectPlaceholder,
+  additionalContent,
 }: Props) => {
   const classes = withStyles();
   const loading = false;
@@ -136,6 +138,7 @@ export const Filter = ({
       )}
       <SuodatinAccordionDetails {...(summaryHidden && { style: { padding: 0 } })}>
         <Grid container direction="column">
+          {additionalContent}
           {options && (
             <Grid item style={{ padding: '20px 0' }}>
               <Select

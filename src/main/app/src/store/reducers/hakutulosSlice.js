@@ -33,6 +33,7 @@ export const initialState = {
   // Selected filter values
   // TODO: Refactor this to contain *only* ids, now it contains also names which are only used at SuodatinValinnat
   koulutustyyppi: [],
+  'koulutustyyppi-muu': [],
   koulutusala: [],
   opetuskieli: [],
   valintatapa: [],
@@ -65,6 +66,7 @@ const hakutulosSlice = createSlice({
     // payload [{id: string, item: FilterValue, operation: "SET" | "UNSET" | "TOGGLE"}]
     handleFiltersChange: (state, { payload: filterOperations = [] }) => {
       filterOperations.forEach(({ item, operation = 'TOGGLE' }) => {
+        console.log('item', item);
         const id = item.filterId;
         const exists = state[id].some(({ id: itemId }) => item.id === itemId);
         const shouldAdd = (operation === 'SET' || operation === 'TOGGLE') && !exists;
@@ -406,6 +408,7 @@ export const searchAndMoveToHaku = ({ history }) => (dispatch, getState) => {
   dispatch(searchAll(apiRequestParams, true));
 };
 
+// TODO: Muokkaa koulutusalasuodatin käyttämään uusia metodeja ja poista tämä
 export const twoLevelFilterUpdateAndSearch = ({
   filterType,
   apiRequestParams,
