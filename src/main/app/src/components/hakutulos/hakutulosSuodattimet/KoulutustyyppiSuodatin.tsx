@@ -62,8 +62,9 @@ export const KoulutustyyppiSuodatin = (props: SuodatinComponentProps) => {
     [isMuuSelected, muuValues, values, t]
   );
 
+  const getOperations = getFilterStateChanges(isMuuSelected ? muuValues : values);
   const handleCheck = (item: FilterValue) => {
-    const operations = getFilterStateChanges(isMuuSelected ? muuValues : values)(item);
+    const operations = getOperations(item);
     dispatch(handleFiltersChange(operations));
     dispatch(newSearchAll());
   };

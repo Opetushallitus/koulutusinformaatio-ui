@@ -309,22 +309,6 @@ export const getHakuUrl = createSelector(
   }
 );
 
-export const getOpetuskieliFilterProps = createSelector(
-  [getKoulutusFilters, getOppilaitosFilters, getSelectedTab, getOpetuskieli],
-  (koulutusFilters, oppilaitosFilters, selectedTab, checkedOpetuskielet) => {
-    const opetuskieliFilter =
-      selectedTab === 'koulutus'
-        ? koulutusFilters.opetuskieli
-        : oppilaitosFilters.opetuskieli;
-    return {
-      sortedOpetuskielet: sortedFilterEntries(opetuskieliFilter),
-      selectedTab,
-      checkedOpetuskielet,
-      checkedOpetuskieletStr: getSelectedFiltersNamesStr(checkedOpetuskielet),
-    };
-  }
-);
-
 export const getOpetustapaFilterProps = createSelector(
   [getKoulutusFilters, getOppilaitosFilters, getSelectedTab, getOpetustapa],
   (koulutusFilters, oppilaitosFilters, selectedTab, checkedOpetustavat) => {
