@@ -358,36 +358,10 @@ export const hakukaynnissaSelector = () =>
     }
   );
 
-export const getKoulutusalaFilterProps = createSelector(
-  [getKoulutusFilters, getOppilaitosFilters, getSelectedTab, getKoulutusala],
-  (koulutusFilters, oppilaitosFilters, selectedTab, checkedKoulutusalat) => {
-    const koulutusala =
-      selectedTab === 'koulutus'
-        ? koulutusFilters.koulutusala
-        : oppilaitosFilters.koulutusala;
-    const checkedKoulutusalatKeys = _.map(checkedKoulutusalat, 'id');
-    return {
-      sortedKoulutusalat: sortedKoulutusalatEntries(koulutusala),
-      selectedTab,
-      checkedKoulutusalat,
-      checkedKoulutusalatKeys,
-      checkedKoulutusalatStr: getSelectedFiltersNamesStr(checkedKoulutusalat),
-    };
-  }
-);
-
 // Helpers
 function getCheckedFiltersIdsStr(checkedfiltersArr) {
   if (checkedfiltersArr) {
     return _.join(_.sortBy(_.map(checkedfiltersArr, 'id')), ',');
   }
   return '';
-}
-function getSelectedFiltersNamesStr(filterArr) {
-  return filterArr
-    .map((f) => _.capitalize(localize(f?.name) || getTranslationForKey(`haku.${f?.id}`)))
-    .join(', ');
-}
-function sortedKoulutusalatEntries(filterObj) {
-  return _.sortBy(_.toPairs(filterObj), `[1]nimi.[${getLanguage()}]`);
 }
