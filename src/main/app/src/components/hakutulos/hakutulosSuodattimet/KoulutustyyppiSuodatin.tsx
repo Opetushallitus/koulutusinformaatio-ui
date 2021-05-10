@@ -13,7 +13,7 @@ import { getFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
 
 import { Filter } from './Filter';
 import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
-import { flattenCheckboxValues, getFilterStateChanges } from './utils';
+import { getFilterStateChanges } from './utils';
 
 const withStyles = makeStyles(() => ({
   noBoxShadow: {
@@ -58,9 +58,13 @@ export const KoulutustyyppiSuodatin = (props: SuodatinComponentProps) => {
 
   const filterValues = useMemo(
     () =>
-      flattenCheckboxValues(isMuuSelected ? muuValues : values).map((v) => ({
+      (isMuuSelected ? muuValues : values).map((v) => ({
         ...v,
         nimi: v.nimi || t(`haku.${v.id}`), // Kaikille koulutustyypeille ei tule backendista käännöksiä
+        alakoodit: v.alakoodit?.map((alakoodi) => ({
+          ...alakoodi,
+          nimi: alakoodi.nimi || t(`haku.${alakoodi.id}`),
+        })),
       })),
     [isMuuSelected, muuValues, values, t]
   );
@@ -78,6 +82,7 @@ export const KoulutustyyppiSuodatin = (props: SuodatinComponentProps) => {
 
   return (
     <Filter
+      defaultExpandAlakoodit={true}
       {...props}
       testId="koulutustyyppi-filter"
       name={t('haku.koulutustyyppi')}

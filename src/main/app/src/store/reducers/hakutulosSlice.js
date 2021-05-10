@@ -353,13 +353,6 @@ function getCheckedFilterValues(ids, koulutusFilters) {
   }, []);
 }
 
-function pullUpAlakoodit(obj) {
-  return _.toPairs(obj).reduce((result, entry) => {
-    let alakoodit = _.has(entry[1], 'alakoodit') ? entry[1].alakoodit : {};
-    return { ...result, [entry[0]]: entry[1], ...alakoodit };
-  }, {});
-}
-
 function getCleanUrlSearch(search, apiRequestParams) {
   return _.mapValues(_.pick(search, _.keys(apiRequestParams)), (value, key) =>
     _.includes(FILTER_TYPES_ARR, key) ? _.join(_.sortBy(_.split(value, ',')), ',') : value
