@@ -28,7 +28,7 @@ import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSel
 
 import { HakutapaSuodatin } from './hakutulosSuodattimet/HakutapaSuodatin';
 import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
-import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
+import { KoulutustyyppiSuodatin } from './hakutulosSuodattimet/KoulutustyyppiSuodatin';
 import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
@@ -148,7 +148,7 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
         <Container classes={{ root: classes.containerRoot }}>
           {isFrontPage && <MobileToggleKoulutusOppilaitos />}
           {isFrontPage && <Divider className={classes.divider} />}
-          <KoulutusTyyppiSuodatin expanded={false} elevation={0} displaySelected />
+          <KoulutustyyppiSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
           <OpetuskieliSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />

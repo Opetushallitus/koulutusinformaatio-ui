@@ -340,7 +340,7 @@ export const getOpetustapaFilterProps = createSelector(
   }
 );
 
-const getNameStr = (filterArr) =>
+const getNameStr = (filterArr = []) =>
   filterArr.map((f) => _.capitalize(localize(f))).join(', ');
 
 // TODO: Refactor sortedFilterEntries away
@@ -365,6 +365,7 @@ export const getFilterProps = (id) =>
           checked: checkedValues.some((checked) => checked.id === v.id),
           alakoodit: sortValues(v.alakoodit)?.map((alakoodi) => ({
             ...alakoodi,
+            filterId: id,
             checked: checkedValues.some((checked) => checked.id === alakoodi.id),
           })),
         })),
@@ -388,29 +389,6 @@ export const hakukaynnissaSelector = () =>
       };
     }
   );
-
-export const getKoulutustyyppiFilterProps = createSelector(
-  [getKoulutusFilters, getOppilaitosFilters, getSelectedTab, getKoulutustyyppi],
-  (koulutusFilters, oppilaitosFilters, selectedTab, checkedKoulutustyypit) => {
-    const koulutustyyppi =
-      selectedTab === 'koulutus'
-        ? _.toPairs(koulutusFilters?.[FILTER_TYPES.KOULUTUSTYYPPI])
-        : _.toPairs(oppilaitosFilters?.[FILTER_TYPES.KOULUTUSTYYPPI]);
-    const koulutustyyppiMuu =
-      selectedTab === 'koulutus'
-        ? _.toPairs(koulutusFilters?.[FILTER_TYPES.KOULUTUSTYYPPI_MUU])
-        : _.toPairs(oppilaitosFilters?.[FILTER_TYPES.KOULUTUSTYYPPI_MUU]);
-    const checkedKoulutustyypitKeys = _.map(checkedKoulutustyypit, 'id');
-    return {
-      koulutustyyppi,
-      koulutustyyppiMuu,
-      selectedTab,
-      checkedKoulutustyypit,
-      checkedKoulutustyypitKeys,
-      checkedKoulutustyypitStr: getSelectedFiltersNamesStr(checkedKoulutustyypit),
-    };
-  }
-);
 
 export const getKoulutusalaFilterProps = createSelector(
   [getKoulutusFilters, getOppilaitosFilters, getSelectedTab, getKoulutusala],
