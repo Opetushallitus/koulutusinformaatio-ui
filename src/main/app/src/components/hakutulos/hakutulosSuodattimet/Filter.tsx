@@ -4,9 +4,11 @@ import {
   Button,
   CircularProgress,
   Grid,
+  IconButton,
   List,
   ListItem,
   ListItemIcon,
+  ListItemSecondaryAction,
   makeStyles,
 } from '@material-ui/core';
 import {
@@ -20,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 import Select, { components } from 'react-select';
 
 import { colors } from '#/src/colors';
-import { localize } from '#/src/tools/localization';
+import { localize, localizeIfNimiObject } from '#/src/tools/localization';
 
 import {
   SuodatinAccordion,
@@ -31,6 +33,8 @@ import {
 } from './CustomizedMuiComponents';
 import { SummaryContent } from './SummaryContent';
 import { FilterValue } from './SuodatinTypes';
+
+const HIDE_NOT_EXPANDED_AMOUNT = 5;
 
 type Styles = React.ComponentProps<typeof Select>['styles'];
 const customStyles: Styles = {
@@ -92,6 +96,93 @@ const withStyles = makeStyles((theme) => ({
   },
 }));
 
+type CheckboxProps = {
+  value: FilterValue;
+  handleCheck: (v: FilterValue) => void;
+  intended?: boolean;
+  expandButton?: JSX.Element;
+};
+
+const FilterCheckbox = ({
+  handleCheck,
+  intended,
+  value,
+  expandButton,
+}: CheckboxProps) => {
+  const { count, id, nimi, checked } = value;
+  const labelId = `list-label-${id}`;
+  const classes = withStyles();
+  return (
+    <ListItem
+      key={id}
+      dense
+      button
+      onClick={() => handleCheck(value)}
+      className={intended ? classes.intendedCheckbox : ''}>
+      <ListItemIcon>
+        <KonfoCheckbox
+          edge="start"
+          checked={checked}
+          indeterminateIcon={<IndeterminateCheckBoxOutlined />}
+          indeterminate={isIndeterminate(value)}
+          tabIndex={-1}
+          disableRipple
+          inputProps={{ 'aria-labelledby': labelId }}
+        />
+      </ListItemIcon>
+      <SuodatinListItemText
+        id={labelId}
+        primary={
+          <>
+            <Grid item>{_.isString(nimi) ? nimi : localize(nimi)}</Grid>
+          </>
+        }
+      />
+      {expandButton && <ListItemIcon>{expandButton}</ListItemIcon>}
+      <ListItemSecondaryAction style={{ right: '4px' }}>
+        {`(${count})`}
+      </ListItemSecondaryAction>
+    </ListItem>
+  );
+};
+
+const FilterCheckboxGroup = ({
+  defaultExpandAlakoodit,
+  handleCheck,
+  value,
+}: {
+  defaultExpandAlakoodit: boolean;
+  handleCheck: (v: FilterValue) => void;
+  value: FilterValue;
+}) => {
+  const { t } = useTranslation();
+  const [isOpen, setIsOpen] = useState(defaultExpandAlakoodit);
+  const handleToggle = (e: any) => {
+    e.stopPropagation();
+    setIsOpen(!isOpen);
+  };
+  return (
+    <>
+      <FilterCheckbox
+        value={value}
+        handleCheck={handleCheck}
+        expandButton={
+          <IconButton
+            size="small"
+            aria-label={`${localizeIfNimiObject(value)} ${t('haku.nayta-lisarajaimet')}`}
+            onClick={handleToggle}>
+            {isOpen ? <ExpandLess /> : <ExpandMore />}
+          </IconButton>
+        }
+      />
+      {isOpen &&
+        value.alakoodit?.map((v) => (
+          <FilterCheckbox key={v.id} value={v} handleCheck={handleCheck} intended />
+        ))}
+    </>
+  );
+};
+
 type Props = {
   name: string;
   testId?: string;
@@ -100,6 +191,7 @@ type Props = {
   displaySelected?: boolean;
   summaryHidden?: boolean;
   expandValues?: boolean;
+  defaultExpandAlakoodit?: boolean;
 
   values: Array<FilterValue>;
   handleCheck: (value: FilterValue) => void;
@@ -109,7 +201,8 @@ type Props = {
   additionalContent?: JSX.Element;
 };
 
-const HIDE_NOT_EXPANDED_AMOUNT = 5;
+export const isIndeterminate = (v: FilterValue) =>
+  !v.checked && !!v.alakoodit?.some((alakoodi) => alakoodi.checked);
 
 // NOTE: Do *not* put redux code here, this component is used both with and without
 export const Filter = ({
@@ -125,7 +218,8 @@ export const Filter = ({
   options,
   selectPlaceholder,
   additionalContent,
-  expandValues,
+  expandValues = false,
+  defaultExpandAlakoodit = false,
 }: Props) => {
   const { t } = useTranslation();
   const classes = withStyles();
@@ -181,38 +275,20 @@ export const Filter = ({
                 if (expandValues && hideRest && i >= HIDE_NOT_EXPANDED_AMOUNT) {
                   return null;
                 }
-                const { id, checked, count, intended, indeterminate } = value;
-                const labelId = `language-list-label-${id}`;
-                return (
-                  <ListItem
-                    key={id}
-                    dense
-                    button
-                    onClick={() => handleCheck(value)}
-                    className={intended ? classes.intendedCheckbox : ''}>
-                    <ListItemIcon>
-                      <KonfoCheckbox
-                        edge="start"
-                        checked={checked}
-                        indeterminateIcon={<IndeterminateCheckBoxOutlined />}
-                        indeterminate={indeterminate}
-                        tabIndex={-1}
-                        disableRipple
-                        inputProps={{ 'aria-labelledby': labelId }}
-                      />
-                    </ListItemIcon>
-                    <SuodatinListItemText
-                      id={labelId}
-                      primary={
-                        <Grid container justify="space-between" wrap="nowrap">
-                          <Grid item>
-                            {_.isString(value.nimi) ? value.nimi : localize(value)}
-                          </Grid>
-                          <Grid item>{`(${count})`}</Grid>
-                        </Grid>
-                      }
-                    />
-                  </ListItem>
+
+                return _.isEmpty(value.alakoodit) ? (
+                  <FilterCheckbox
+                    key={value.id}
+                    value={value}
+                    handleCheck={handleCheck}
+                  />
+                ) : (
+                  <FilterCheckboxGroup
+                    key={value.id}
+                    defaultExpandAlakoodit={defaultExpandAlakoodit}
+                    value={value}
+                    handleCheck={handleCheck}
+                  />
                 );
               })}
             </List>

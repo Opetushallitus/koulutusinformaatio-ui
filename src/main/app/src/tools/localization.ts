@@ -24,6 +24,9 @@ export const translate = (nimi: any) => {
 
 export const localize = (obj: any) => (obj ? translate(obj.nimi || obj) : '');
 
+export const localizeIfNimiObject = (obj: any) =>
+  obj ? (_fp.isString(obj.nimi) ? obj.nimi : translate(obj.nimi || obj)) : '';
+
 export const localizeSortedArrayToString = (arr: Array<Koodi> = []) =>
   _fp.compose(
     _fp.join(', '),

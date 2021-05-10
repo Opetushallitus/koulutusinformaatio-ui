@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import qs from 'query-string';
 
-import { getLanguage, getTranslationForKey, localize } from '#/src/tools/localization';
+import { getLanguage, localize } from '#/src/tools/localization';
 import { Common as C } from '#/src/tools/Utils';
 
 // State data getters

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,7 @@ import { getFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
 
 import { Filter } from './Filter';
 import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
-import { flattenCheckboxValues, getFilterStateChanges } from './utils';
+import { getFilterStateChanges } from './utils';
 
 const KOULUTUSALA_FILTER_ID = 'koulutusala';
 const koulutusalaSelector = getFilterProps(KOULUTUSALA_FILTER_ID);
@@ -23,8 +23,6 @@ export const KoulutusalaSuodatin = (props: SuodatinComponentProps) => {
   const { values, localizedCheckedValues } = useSelector<any, FilterProps>(
     koulutusalaSelector
   );
-
-  const filterValues = useMemo(() => flattenCheckboxValues(values), [values]);
 
   const getOperations = getFilterStateChanges(values);
   const handleCheck = (item: FilterValue) => {
@@ -38,7 +36,7 @@ export const KoulutusalaSuodatin = (props: SuodatinComponentProps) => {
       {...props}
       testId="koulutusala-filter"
       name={t('haku.koulutusalat')}
-      values={filterValues}
+      values={values}
       handleCheck={handleCheck}
       checkedStr={localizedCheckedValues}
     />

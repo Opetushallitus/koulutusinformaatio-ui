@@ -1,21 +1,4 @@
-import _fp from 'lodash/fp';
-
 import { FilterValue } from './SuodatinTypes';
-
-// Statesta saadaan arvot kaksitasoisina mutta ne on helpompi rendata flattina
-export const flattenCheckboxValues = _fp.flatMap<FilterValue, FilterValue>((v) => {
-  if (!v.alakoodit) {
-    return v;
-  }
-
-  const isValueIndeterminate =
-    !v.checked && v.alakoodit.some((alakoodi) => alakoodi.checked);
-
-  return [
-    { ...v, indeterminate: isValueIndeterminate },
-    ...v.alakoodit.map((alakoodi) => ({ ...alakoodi, intended: true })),
-  ];
-});
 
 // Alakoodeja sisältävä suodatinvalinta vaatii erityiskäsittelyä
 export const getFilterStateChanges = (values: Array<FilterValue>) => (

@@ -5,6 +5,7 @@ export type SuodatinComponentProps = {
   elevation?: number;
   displaySelected?: boolean;
   summaryHidden?: boolean;
+  defaultExpandAlakoodit?: boolean;
 };
 
 export type FilterValue = {
@@ -14,8 +15,6 @@ export type FilterValue = {
   checked: boolean;
   count: number;
   alakoodit?: Array<FilterValue>;
-  indeterminate?: boolean;
-  intended?: boolean;
 };
 
 // General type for all filters // TODO: Make every filter use this

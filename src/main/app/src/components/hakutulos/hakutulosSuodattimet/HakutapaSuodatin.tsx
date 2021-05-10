@@ -15,7 +15,7 @@ import {
 
 import { Filter } from './Filter';
 import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
-import { flattenCheckboxValues, getFilterStateChanges } from './utils';
+import { getFilterStateChanges } from './utils';
 
 const HAKUTAPA_FILTER_ID = 'hakutapa';
 const HAKUKAYNNISSA_ID = 'hakukaynnissa';
@@ -54,7 +54,7 @@ export const HakutapaSuodatin = (props: SuodatinComponentProps) => {
         count: hakukaynnissaData?.count,
         checked: hakukaynnissa,
       },
-      ...flattenCheckboxValues(mergedValues),
+      ...mergedValues,
     ];
   }, [hakukaynnissa, mergedValues, t, hakukaynnissaData]);
 
