@@ -31,7 +31,7 @@ import { getHakutulosProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import BackendErrorMessage from './BackendErrorMessage';
 import { HakutulosResults } from './HakutulosResults';
 import { HakutapaSuodatin } from './hakutulosSuodattimet/HakutapaSuodatin';
-import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
+import { KoulutusalaSuodatin } from './hakutulosSuodattimet/KoulutusalaSuodatin';
 import { KoulutustyyppiSuodatin } from './hakutulosSuodattimet/KoulutustyyppiSuodatin';
 import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import { OpetustapaSuodatin } from './hakutulosSuodattimet/OpetustapaSuodatin';

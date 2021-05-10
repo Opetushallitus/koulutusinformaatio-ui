@@ -19,6 +19,11 @@ import { KonfoCheckbox } from './CustomizedMuiComponents';
 import { Filter } from './Filter';
 import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
 
+const MAAKUNTA_FILTER_ID = 'maakunta';
+const KUNTA_FILTER_ID = 'kunta';
+const maakuntaSelector = getFilterProps(MAAKUNTA_FILTER_ID);
+const kuntaSelector = getFilterProps(KUNTA_FILTER_ID);
+
 type Styles = React.ComponentProps<typeof Select>['styles'];
 const customStyles: Styles = {
   control: (provided) => ({
@@ -68,19 +73,6 @@ const Option = ({ data, innerProps, isFocused }: OptionProps) => (
   </ListItem>
 );
 
-const MAAKUNTA_FILTER_ID = 'maakunta';
-const KUNTA_FILTER_ID = 'kunta';
-const maakuntaSelector = getFilterProps(MAAKUNTA_FILTER_ID);
-const kuntaSelector = getFilterProps(KUNTA_FILTER_ID);
-
-const getSelectOption = (value: FilterValue, isMaakunta: boolean) => ({
-  ...value,
-  label: `${localize(value)} (${value.count})`,
-  value: localize(value),
-  isMaakunta,
-  name: value.nimi, // TODO: tarviiko tätä?
-});
-
 const SijaintiSelect = ({
   isLoading,
   options,
@@ -113,6 +105,14 @@ const SijaintiSelect = ({
     />
   );
 };
+
+const getSelectOption = (value: FilterValue, isMaakunta: boolean) => ({
+  ...value,
+  label: `${localize(value)} (${value.count})`,
+  value: localize(value),
+  isMaakunta,
+  name: value.nimi, // TODO: tarviiko tätä?
+});
 
 export const SijaintiSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();

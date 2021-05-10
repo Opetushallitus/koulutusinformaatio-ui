@@ -81,9 +81,6 @@ const hakutulosSlice = createSlice({
     toggleHakukaynnissa: (state) => {
       state.hakukaynnissa = !state.hakukaynnissa;
     },
-    setKoulutusala: (state, { payload }) => {
-      state.koulutusala = payload.newCheckedKoulutusalat;
-    },
     clearPaging: (state) => {
       state.koulutusPage = 1;
       state.oppilaitosPage = 1;
@@ -148,19 +145,14 @@ const hakutulosSlice = createSlice({
           state.selectedTab = KOULUTUS;
         }
 
-        // NOTE: This sets and translates initial checked filter values
-        // TODO: Really complex, refactor this
-        // TODO: Especially because we shouldn't save translated values into selected values
+        // NOTE: Tämä asettaa ja kääntää initial arvot stateen
+        // TODO: Tästä pitäisi purkaa käännettyjen arvojen tallennus stateen
         if (isReload) {
           _.forEach(literals, (val, key) => {
             state[key] = val;
           });
           _.forEach(filters, (filterValues, key) => {
             switch (key) {
-              case FILTER_TYPES.KOULUTUSALA:
-                const koulutusalaFilters = pullUpAlakoodit(koulutusData?.filters?.[key]);
-                state[key] = getCheckedFilterValues(filterValues, koulutusalaFilters);
-                break;
               case FILTER_TYPES.HAKUKAYNNISSA:
                 state.hakukaynnissa = filterValues === 'true';
                 break;
@@ -214,7 +206,6 @@ export const {
   searchAPICallError,
   handleFilterOperations,
   toggleHakukaynnissa,
-  setKoulutusala,
   clearPaging,
   clearSelectedFilters,
   setSelectedFilters,
@@ -352,57 +343,6 @@ export const searchAndMoveToHaku = ({ history }) => (dispatch, getState) => {
   dispatch(searchAll(apiRequestParams, true));
 };
 
-// TODO: Muokkaa koulutusalasuodatin käyttämään uusia metodeja ja poista tämä
-export const twoLevelFilterUpdateAndSearch = ({
-  filterType,
-  apiRequestParams,
-  clickedFilterId,
-  parentFilterId,
-}) => (dispatch, getState) => {
-  const { hakutulos } = getState();
-  let filterCheckedValues = _.clone(_.get(hakutulos, filterType));
-  const filterAllValues = getFilterAllValues(filterType, hakutulos);
-  const firstLevelKeys = _.keys(filterAllValues);
-  const isFirstFilterLevelId = _.includes(firstLevelKeys, clickedFilterId);
-  const checkedIndex = _.findIndex(
-    filterCheckedValues,
-    ({ id }) => id === clickedFilterId
-  );
-  if (checkedIndex === -1) {
-    if (isFirstFilterLevelId) {
-      filterCheckedValues = getCheckedOnTaso01Clicked(
-        filterAllValues,
-        clickedFilterId,
-        filterCheckedValues
-      );
-    } else if (_.includes(firstLevelKeys, parentFilterId)) {
-      filterCheckedValues = getCheckedOnTaso02Clicked(
-        filterAllValues,
-        filterCheckedValues,
-        clickedFilterId,
-        parentFilterId
-      );
-    }
-  } else {
-    if (isFirstFilterLevelId) {
-      const idsToRemove = getFilterIdsToRemove(filterAllValues, clickedFilterId);
-      _.remove(filterCheckedValues, (elem) => _.includes(idsToRemove, elem.id));
-    } else {
-      filterCheckedValues.splice(checkedIndex, 1);
-      _.remove(filterCheckedValues, (elem) =>
-        _.includes([clickedFilterId, parentFilterId], elem.id)
-      );
-    }
-  }
-
-  filterCheckedValues = _.sortBy(_.uniqBy(filterCheckedValues, 'id'), 'id');
-  const filterURLParamsStr = _.join(_.map(filterCheckedValues, 'id'), ',');
-
-  dispatch(setKoulutusala({ newCheckedKoulutusalat: filterCheckedValues }));
-  dispatch(clearPaging());
-  dispatch(searchAll({ ...apiRequestParams, [filterType]: filterURLParamsStr }));
-};
-
 // Helpers
 function getCheckedFilterValues(ids, koulutusFilters) {
   const idsArray = _.split(ids, ',');
@@ -423,101 +363,5 @@ function pullUpAlakoodit(obj) {
 function getCleanUrlSearch(search, apiRequestParams) {
   return _.mapValues(_.pick(search, _.keys(apiRequestParams)), (value, key) =>
     _.includes(FILTER_TYPES_ARR, key) ? _.join(_.sortBy(_.split(value, ',')), ',') : value
-  );
-}
-
-function getCheckedOnTaso02Clicked(
-  allFilterValues,
-  checkedValues,
-  clickedFilterId,
-  parentFilterId
-) {
-  const parentFilterObj = _.get(allFilterValues, parentFilterId);
-  const alakoodiName = _.get(parentFilterObj, ['alakoodit', clickedFilterId, 'nimi']);
-  const restAlakooditKeys = _.filter(
-    _.keys(_.get(parentFilterObj, 'alakoodit')),
-    (id) => !_.isEqual(id, clickedFilterId)
-  );
-  const allRestAlakooditChecked =
-    _.size(checkedValues) > 0 &&
-    _.every(restAlakooditKeys, (id) =>
-      _.includes([..._.map(checkedValues, 'id'), clickedFilterId], id)
-    );
-  if (allRestAlakooditChecked) {
-    return [
-      ...checkedValues,
-      { id: parentFilterId, name: _.get(parentFilterObj, 'nimi') },
-      { id: clickedFilterId, name: alakoodiName },
-    ];
-  } else {
-    return [
-      ...checkedValues,
-      {
-        id: clickedFilterId,
-        name: alakoodiName,
-      },
-    ];
-  }
-}
-
-function getFilterAllValues(filterType, hakutulos) {
-  const _tab =
-    hakutulos?.selectedTab === KOULUTUS ? 'koulutusFilters' : 'oppilaitosFilters';
-  return _.reduce(
-    hakutulos?.[_tab],
-    (acc, val, key) => {
-      if (
-        filterType === FILTER_TYPES.KOULUTUSTYYPPI &&
-        _.includes([FILTER_TYPES.KOULUTUSTYYPPI, FILTER_TYPES.KOULUTUSTYYPPI_MUU], key)
-      ) {
-        return _.isObject(val) ? { ...acc, ...val } : acc;
-      } else if (filterType === key) {
-        return { ...acc, ...val };
-      }
-      return acc;
-    },
-    {}
-  );
-}
-
-function getCheckedOnTaso01Clicked(filterAllValues, clickedFilterId, checkedValues) {
-  return _.compact(
-    _.concat(
-      checkedValues,
-      _.reduce(
-        filterAllValues,
-        (acc, val, key) => {
-          if (key === clickedFilterId) {
-            let parentFilterObj = {
-              id: key,
-              name: _.get(val, 'nimi'),
-            };
-            let _alakoodit = _.reduce(
-              _.get(val, 'alakoodit'),
-              (acc, val, key) => {
-                return [...acc, { id: key, name: _.get(val, 'nimi') }];
-              },
-              []
-            );
-            acc = _.concat(parentFilterObj, _alakoodit);
-          }
-          return acc;
-        },
-        []
-      )
-    )
-  );
-}
-
-function getFilterIdsToRemove(filterAllValues, clickedFilterId) {
-  return _.reduce(
-    filterAllValues,
-    (acc, val, key) => {
-      if (_.isEqual(key, clickedFilterId)) {
-        acc = _.concat(acc, _.keys(_.get(val, 'alakoodit')));
-      }
-      return acc;
-    },
-    [clickedFilterId]
   );
 }
