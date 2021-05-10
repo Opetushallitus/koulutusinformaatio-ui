@@ -3,7 +3,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { handleFiltersChange, newSearchAll } from '#/src/store/reducers/hakutulosSlice';
+import {
+  handleFilterOperations,
+  newSearchAll,
+} from '#/src/store/reducers/hakutulosSlice';
 import { getFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
 
 import { Filter } from './Filter';
@@ -21,7 +24,7 @@ export const ValintatapaSuodatin = (props: SuodatinComponentProps) => {
   );
 
   const handleCheck = (item: FilterValue) => {
-    dispatch(handleFiltersChange([{ item }]));
+    dispatch(handleFilterOperations([{ item, operation: 'TOGGLE' }]));
     dispatch(newSearchAll());
   };
 

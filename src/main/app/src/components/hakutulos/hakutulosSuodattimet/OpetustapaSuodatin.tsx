@@ -12,15 +12,15 @@ import { getFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { Filter } from './Filter';
 import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
 
-const OPETUSKIELI_FILTER_ID = 'opetuskieli';
-const opetuskieliSelector = getFilterProps(OPETUSKIELI_FILTER_ID);
+const OPETUSTAPA_FILTER_ID = 'opetustapa';
+const opetustapaSelector = getFilterProps(OPETUSTAPA_FILTER_ID);
 
-export const OpetuskieliSuodatin = (props: SuodatinComponentProps) => {
+export const OpetustapaSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const { values, localizedCheckedValues } = useSelector<any, FilterProps>(
-    opetuskieliSelector
+    opetustapaSelector
   );
 
   const handleCheck = (item: FilterValue) => {
@@ -31,7 +31,7 @@ export const OpetuskieliSuodatin = (props: SuodatinComponentProps) => {
   return (
     <Filter
       {...props}
-      name={t('haku.opetuskieli')}
+      name={t('haku.opetustapa')}
       values={values}
       handleCheck={handleCheck}
       checkedStr={localizedCheckedValues}

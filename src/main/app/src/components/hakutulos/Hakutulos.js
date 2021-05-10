@@ -34,7 +34,7 @@ import { HakutapaSuodatin } from './hakutulosSuodattimet/HakutapaSuodatin';
 import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
 import { KoulutustyyppiSuodatin } from './hakutulosSuodattimet/KoulutustyyppiSuodatin';
 import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin';
-import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
+import { OpetustapaSuodatin } from './hakutulosSuodattimet/OpetustapaSuodatin';
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
 import { SuodatinValinnat } from './hakutulosSuodattimet/SuodatinValinnat';
 import HakutulosToggle from './HakutulosToggle';
