@@ -1,4 +1,4 @@
-import { isAfter, isBefore } from 'date-fns';
+import { isAfter, isBefore, subMonths } from 'date-fns';
 
 export const isHakuAuki = (hakuajat = []) =>
   hakuajat.some((hakuaika) => {
@@ -8,7 +8,10 @@ export const isHakuAuki = (hakuajat = []) =>
     return isAfterStart && isBeforeEnd;
   });
 
-export const isHakuEndInFuture = (hakuajat) => {
+// Puoli vuotta sitten päättyneet tai uudemmat ovat relevantteja oppijalle
+export const isHakuTimeRelevant = (hakuajat) => {
   const now = new Date();
-  return hakuajat.some((aika) => !aika.paattyy || isBefore(now, new Date(aika.paattyy)));
+  return hakuajat.some(
+    (aika) => !aika.paattyy || isBefore(subMonths(now, 6), new Date(aika.paattyy))
+  );
 };

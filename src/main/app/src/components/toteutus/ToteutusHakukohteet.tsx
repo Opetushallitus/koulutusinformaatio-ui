@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
+import PinDrop from '@material-ui/icons/PinDrop';
 import { format } from 'date-fns';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +26,7 @@ import Spacer from '#/src/components/common/Spacer';
 import { HAKULOMAKE_TYYPPI } from '#/src/constants';
 import { localize } from '#/src/tools/localization';
 import { useOppilaitosOsoite } from '#/src/tools/UseOppilaitosOsoiteHook';
+import { Translateable } from '#/src/types/common';
 import { Hakukohde } from '#/src/types/ToteutusTypes';
 
 import { formatAloitus } from './utils';
@@ -260,13 +262,22 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
   );
 };
 
-type Props = {
-  jatkuvatHaut: Array<Hakukohde>;
-  erillisHaut: Array<Hakukohde>;
-  yhteisHaut: Array<Hakukohde>;
+const typeToIconMap = {
+  hakutapa_01: CalendarTodayOutlinedIcon, // Yhteishaku
+  hakutapa_02: PinDrop, // Erillishaku
+  hakutapa_03: AutorenewIcon, // Jatkuva haku
+  hakutapa_04: AutorenewIcon, // Joustava haku
+  // TODO: hakutapa_05 + 06: Lisähaku / Siirtohaku (järjestys selvitettävä)
 };
 
-export const ToteutusHakukohteet = ({ jatkuvatHaut, erillisHaut, yhteisHaut }: Props) => {
+const getHakutyyppiIcon = (koodiUri: keyof typeof typeToIconMap) =>
+  typeToIconMap[koodiUri];
+
+type Props = {
+  haut: Record<string, { nimi: Translateable; hakukohteet: Array<Hakukohde> }>;
+};
+
+export const ToteutusHakukohteet = ({ haut }: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -280,27 +291,16 @@ export const ToteutusHakukohteet = ({ jatkuvatHaut, erillisHaut, yhteisHaut }: P
       <Typography variant="h2">{t('toteutus.koulutuksen-hakukohteet')}</Typography>
       <Spacer />
       <Grid container direction="column" spacing={6}>
-        {jatkuvatHaut?.length > 0 && (
-          <HakuCardGrid
-            tyyppiOtsikko={t('toteutus.jatkuvahaku')}
-            haut={jatkuvatHaut}
-            icon={<AutorenewIcon />}
-          />
-        )}
-        {yhteisHaut?.length > 0 && (
-          <HakuCardGrid
-            tyyppiOtsikko={t('toteutus.yhteishaku')}
-            haut={yhteisHaut}
-            icon={<CalendarTodayOutlinedIcon />}
-          />
-        )}
-        {erillisHaut?.length > 0 && (
-          <HakuCardGrid
-            tyyppiOtsikko={t('toteutus.erillishaku')}
-            haut={erillisHaut}
-            icon={<CalendarTodayOutlinedIcon />}
-          />
-        )}
+        {Object.entries(haut).map(([key, haku]) => {
+          const IconComponent = getHakutyyppiIcon(key as keyof typeof typeToIconMap);
+          return (
+            <HakuCardGrid
+              tyyppiOtsikko={localize(haku)}
+              haut={haku.hakukohteet}
+              icon={<IconComponent />}
+            />
+          );
+        })}
       </Grid>
     </Box>
   );
