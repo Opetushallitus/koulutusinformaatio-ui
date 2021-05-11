@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import _ from 'lodash';
+import _fp from 'lodash/fp';
 
 import { getToteutus } from '#/src/api/konfoApi';
 import { HAKULOMAKE_TYYPPI } from '#/src/constants';
@@ -60,13 +60,10 @@ export const fetchToteutus = (oid, isDraft) => async (dispatch) => {
 const getWithoutVersion = (koodi) => koodi.slice(0, koodi.lastIndexOf('#'));
 
 const getHakukohteetWithTypes = (toteutus) => {
-  const hakutavat = _.sortBy(
-    _.uniqBy(
-      toteutus.hakutiedot?.map((hakutieto) => hakutieto.hakutapa) ?? [],
-      'koodiUri'
-    ),
-    'koodiUri'
-  );
+  const hakutavat = _fp.flow(
+    _fp.sortBy('koodiUri'),
+    _fp.uniqBy('koodiUri')
+  )(toteutus.hakutiedot?.map((hakutieto) => hakutieto.hakutapa) ?? []);
 
   // Konfossa halutaan näyttää hakukohteet hakutyypeittäin, ei per haku
   return hakutavat.reduce(
@@ -105,14 +102,17 @@ export const selectMuuHaku = (oid) => (state) => {
 
   // TODO: SORA-kuvaus - atm. we only get an Id from the API but we cannot do anything with it
   return {
-    ..._.pick(toteutus.metadata, [
-      'aloituspaikat',
-      'hakuaika',
-      'hakulomakeLinkki',
-      'hakutermi',
-      'lisatietoaHakeutumisesta',
-      'lisatietoaValintaperusteista',
-    ]),
+    ..._fp.pick(
+      [
+        'aloituspaikat',
+        'hakuaika',
+        'hakulomakeLinkki',
+        'hakutermi',
+        'lisatietoaHakeutumisesta',
+        'lisatietoaValintaperusteista',
+      ],
+      toteutus.metadata
+    ),
     isHakuAuki: hakuAuki,
     nimi: toteutus.nimi,
     // TODO: we do not get osoite from the API atm. so just use all the tarjoajat to fetch oppilaitoksenOsat
@@ -124,7 +124,7 @@ export const selectMuuHaku = (oid) => (state) => {
 export const selectEiSahkoistaHaku = (oid) => (state) => {
   const toteutus = selectToteutus(oid)(state);
   return {
-    ..._.pick(toteutus.metadata, ['lisatietoaHakeutumisesta']),
+    ..._fp.pick(['lisatietoaHakeutumisesta'], toteutus.metadata),
   };
 };
 
