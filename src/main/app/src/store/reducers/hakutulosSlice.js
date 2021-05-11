@@ -66,7 +66,6 @@ const hakutulosSlice = createSlice({
     // payload [{id: string, item: FilterValue, operation: "SET" | "UNSET" | "TOGGLE"}]
     handleFilterOperations: (state, { payload: filterOperations = [] }) => {
       filterOperations.forEach(({ item, operation = 'TOGGLE' }) => {
-        console.log('item', item);
         const id = item.filterId;
         const exists = state[id].some(({ id: itemId }) => item.id === itemId);
         const shouldAdd = (operation === 'SET' || operation === 'TOGGLE') && !exists;

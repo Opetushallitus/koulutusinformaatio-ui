@@ -48,17 +48,15 @@ export const KoulutustyyppiSuodatin = (props: SuodatinComponentProps) => {
   const dispatch = useDispatch();
 
   const [isMuuSelected, setIsMuuSelected] = useState(false);
-  const { values, localizedCheckedValues } = useSelector<any, FilterProps>(
-    koulutusSelector
-  );
-  const {
-    values: muuValues,
-    localizedCheckedValues: muuLocalizedCheckedValues,
-  } = useSelector<any, FilterProps>(koulutusMuuSelector);
+  const { values } = useSelector<any, FilterProps>(koulutusSelector);
+  const { values: muuValues } = useSelector<any, FilterProps>(koulutusMuuSelector);
 
   const filterValues = useMemo(
     () =>
-      (isMuuSelected ? muuValues : values).map((v) => ({
+      [
+        ...values.map((v) => ({ ...v, hidden: isMuuSelected })),
+        ...muuValues.map((v) => ({ ...v, hidden: !isMuuSelected })),
+      ].map((v) => ({
         ...v,
         nimi: v.nimi || t(`haku.${v.id}`), // Kaikille koulutustyypeille ei tule backendista käännöksiä
         alakoodit: v.alakoodit?.map((alakoodi) => ({
@@ -76,10 +74,6 @@ export const KoulutustyyppiSuodatin = (props: SuodatinComponentProps) => {
     dispatch(newSearchAll());
   };
 
-  const usedCheckedStr = isMuuSelected
-    ? muuLocalizedCheckedValues
-    : localizedCheckedValues;
-
   return (
     <Filter
       defaultExpandAlakoodit={true}
@@ -88,7 +82,6 @@ export const KoulutustyyppiSuodatin = (props: SuodatinComponentProps) => {
       name={t('haku.koulutustyyppi')}
       values={filterValues}
       handleCheck={handleCheck}
-      checkedStr={usedCheckedStr}
       additionalContent={
         <Grid item xs={12} style={{ padding: '20px 0' }}>
           <ButtonGroup fullWidth>

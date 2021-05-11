@@ -19,9 +19,7 @@ export const OpetustapaSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const { values, localizedCheckedValues } = useSelector<any, FilterProps>(
-    opetustapaSelector
-  );
+  const { values } = useSelector<any, FilterProps>(opetustapaSelector);
 
   const handleCheck = (item: FilterValue) => {
     dispatch(handleFilterOperations([{ item, operation: 'TOGGLE' }]));
@@ -34,7 +32,6 @@ export const OpetustapaSuodatin = (props: SuodatinComponentProps) => {
       name={t('haku.opetustapa')}
       values={values}
       handleCheck={handleCheck}
-      checkedStr={localizedCheckedValues}
     />
   );
 };

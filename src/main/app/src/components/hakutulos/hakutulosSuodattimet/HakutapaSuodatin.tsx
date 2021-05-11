@@ -30,13 +30,10 @@ export const HakutapaSuodatin = (props: SuodatinComponentProps) => {
   const dispatch = useDispatch();
 
   const { hakukaynnissaData, hakukaynnissa } = useSelector(hakukaynnissaSelector());
-  const { values, localizedCheckedValues } = useSelector<any, FilterProps>(
-    hakutapaFilterSelector
+  const { values } = useSelector<any, FilterProps>(hakutapaFilterSelector);
+  const { values: yhteishakuValues } = useSelector<any, FilterProps>(
+    yhteishakuFilterSelector
   );
-  const {
-    values: yhteishakuValues,
-    localizedCheckedValues: localizedYhteishakuCheckedValues,
-  } = useSelector<any, FilterProps>(yhteishakuFilterSelector);
   const mergedValues = values.map((v) =>
     v.id === YHTEISHAKU_KOODI_URI ? { ...v, alakoodit: yhteishakuValues } : v
   );
@@ -68,18 +65,6 @@ export const HakutapaSuodatin = (props: SuodatinComponentProps) => {
     dispatch(newSearchAll());
   };
 
-  const usedCheckedStr = useMemo(
-    () =>
-      [
-        hakukaynnissa && t('haku.hakukaynnissa'),
-        localizedCheckedValues,
-        localizedYhteishakuCheckedValues,
-      ]
-        .filter(Boolean)
-        .join(', '),
-    [localizedCheckedValues, localizedYhteishakuCheckedValues, hakukaynnissa, t]
-  );
-
   return (
     <Filter
       {...props}
@@ -87,7 +72,6 @@ export const HakutapaSuodatin = (props: SuodatinComponentProps) => {
       name={t('haku.hakutapa')}
       values={filterValues}
       handleCheck={handleCheck}
-      checkedStr={usedCheckedStr}
     />
   );
 };

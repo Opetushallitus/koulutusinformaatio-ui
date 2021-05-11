@@ -8,7 +8,7 @@ import {
   SuodatinComponentProps,
 } from '#/src/components/hakutulos/hakutulosSuodattimet/SuodatinTypes';
 
-import { getOptionsForSelect, getShownStr } from './utils';
+import { getOptionsForSelect } from './utils';
 
 type Props = {
   handleFilterChange: (newFilters: object) => void;
@@ -31,8 +31,6 @@ export const SijaintiSuodatin = (props: Props) => {
   useEffect(() => {
     setCheckedValues(initialValues);
   }, [initialValues]);
-
-  const checkedStr = useMemo(() => getShownStr(checkedValues), [checkedValues]);
 
   const handleCheck = useCallback(
     (value: FilterValue) => {
@@ -73,7 +71,6 @@ export const SijaintiSuodatin = (props: Props) => {
       name={t('haku.sijainti')}
       values={usedValues}
       handleCheck={handleCheck}
-      checkedStr={checkedStr}
       displaySelected
       {...rest}
     />

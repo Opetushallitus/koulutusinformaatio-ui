@@ -195,7 +195,6 @@ type Props = {
 
   values: Array<FilterValue>;
   handleCheck: (value: FilterValue) => void;
-  checkedStr?: string;
   options?: any;
   selectPlaceholder?: string;
   additionalContent?: JSX.Element;
@@ -210,11 +209,12 @@ export const Filter = ({
   testId,
   expanded,
   elevation,
+  // TODO: display selected kertoo että näytetään infoa valituista,
+  // summaryHidden kertoo että näytetään mutta ei haluta näyttää tekstiä
   displaySelected = false,
   summaryHidden = false,
   values,
   handleCheck,
-  checkedStr,
   options,
   selectPlaceholder,
   additionalContent,
@@ -235,9 +235,8 @@ export const Filter = ({
       {!summaryHidden && (
         <SuodatinAccordionSummary expandIcon={<ExpandMore />}>
           <SummaryContent
-            selectedFiltersStr={checkedStr}
-            maxCharLengthBeforeChipWithNumber={20}
             filterName={name}
+            values={values}
             displaySelected={displaySelected}
           />
         </SuodatinAccordionSummary>
@@ -271,26 +270,28 @@ export const Filter = ({
           )}
           <Grid item>
             <List style={{ width: '100%' }}>
-              {values.map((value, i) => {
-                if (expandValues && hideRest && i >= HIDE_NOT_EXPANDED_AMOUNT) {
-                  return null;
-                }
+              {values
+                .filter((v) => !v.hidden)
+                .map((value, i) => {
+                  if (expandValues && hideRest && i >= HIDE_NOT_EXPANDED_AMOUNT) {
+                    return null;
+                  }
 
-                return _.isEmpty(value.alakoodit) ? (
-                  <FilterCheckbox
-                    key={value.id}
-                    value={value}
-                    handleCheck={handleCheck}
-                  />
-                ) : (
-                  <FilterCheckboxGroup
-                    key={value.id}
-                    defaultExpandAlakoodit={defaultExpandAlakoodit}
-                    value={value}
-                    handleCheck={handleCheck}
-                  />
-                );
-              })}
+                  return _.isEmpty(value.alakoodit) ? (
+                    <FilterCheckbox
+                      key={value.id}
+                      value={value}
+                      handleCheck={handleCheck}
+                    />
+                  ) : (
+                    <FilterCheckboxGroup
+                      key={value.id}
+                      defaultExpandAlakoodit={defaultExpandAlakoodit}
+                      value={value}
+                      handleCheck={handleCheck}
+                    />
+                  );
+                })}
             </List>
           </Grid>
           {expandValues && (
