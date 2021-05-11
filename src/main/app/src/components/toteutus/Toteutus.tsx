@@ -259,7 +259,7 @@ export const ToteutusPage = () => {
   }, [isDraft, toteutus, dispatch, oid, koulutus, koulutusOid, koulutusNotFetched]);
 
   const opetus = toteutus?.metadata?.opetus;
-  const hasAnyHaku = Object.values(haut).some((v: any) => v.hakukohteet.length > 0);
+  const hasAnyHaku = _.some(haut, (v: any) => v.hakukohteet.length > 0);
   const hakuUrl = useSelector(getHakuUrl);
   const { hakuParamsStr } = useSelector(getHakuParams);
 

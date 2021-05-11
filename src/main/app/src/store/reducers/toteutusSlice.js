@@ -61,9 +61,10 @@ const getWithoutVersion = (koodi) => koodi.slice(0, koodi.lastIndexOf('#'));
 
 const getHakukohteetWithTypes = (toteutus) => {
   const hakutavat = _fp.flow(
+    _fp.map(_fp.prop('hakutapa')),
     _fp.sortBy('koodiUri'),
     _fp.uniqBy('koodiUri')
-  )(toteutus.hakutiedot?.map((hakutieto) => hakutieto.hakutapa) ?? []);
+  )(toteutus.hakutiedot);
 
   // Konfossa halutaan näyttää hakukohteet hakutyypeittäin, ei per haku
   return hakutavat.reduce(
@@ -73,8 +74,7 @@ const getHakukohteetWithTypes = (toteutus) => {
         nimi: hakutapa.nimi,
         hakukohteet: toteutus.hakutiedot
           .filter((hakutieto) => hakutieto.hakutapa.koodiUri === hakutapa.koodiUri)
-          .map((hakutieto) => hakutieto.hakukohteet)
-          .flat()
+          .flatMap((hakutieto) => hakutieto.hakukohteet)
           .filter((hakukohde) => isHakuTimeRelevant(hakukohde.hakuajat))
           .map((hakukohde) => ({
             ...hakukohde,

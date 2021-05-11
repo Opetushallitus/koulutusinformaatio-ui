@@ -291,7 +291,7 @@ export const ToteutusHakukohteet = ({ haut }: Props) => {
       <Typography variant="h2">{t('toteutus.koulutuksen-hakukohteet')}</Typography>
       <Spacer />
       <Grid container direction="column" spacing={6}>
-        {Object.entries(haut).map(([key, haku]) => {
+        {_.map(haut, (haku, key) => {
           const IconComponent = getHakutyyppiIcon(key as keyof typeof typeToIconMap);
           return (
             <HakuCardGrid
