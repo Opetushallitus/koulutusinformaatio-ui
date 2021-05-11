@@ -271,7 +271,7 @@ const typeToIconMap = {
 };
 
 const getHakutyyppiIcon = (koodiUri: keyof typeof typeToIconMap) =>
-  typeToIconMap[koodiUri];
+  typeToIconMap[koodiUri] || CalendarTodayOutlinedIcon;
 
 type Props = {
   haut: Record<string, { nimi: Translateable; hakukohteet: Array<Hakukohde> }>;
