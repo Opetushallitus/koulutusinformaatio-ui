@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
 
 import { searchAPI } from '#/src/api/konfoApi';
-import { FILTER_TYPES, FILTER_TYPES_ARR } from '#/src/constants';
+import { FILTER_TYPES, FILTER_TYPES_ARR_FOR_KONFO_BACKEND } from '#/src/constants';
 import { getLanguage } from '#/src/tools/localization';
 import { Common as C } from '#/src/tools/Utils';
 
@@ -30,8 +30,8 @@ export const initialState = {
   oppilaitosTotal: null,
   oppilaitosOffset: 0,
   oppilaitosPage: 1,
-  // Selected filter values
-  // TODO: Refactor this to contain *only* ids, now it contains also names which are only used at SuodatinValinnat
+
+  // Persistoidut suodatinvalinnat, listoja id-arvoista
   koulutustyyppi: [],
   'koulutustyyppi-muu': [],
   koulutusala: [],
@@ -62,33 +62,43 @@ const hakutulosSlice = createSlice({
       state.selectedTab = payload.newSelectedTab;
     },
     // NOTE: Tämä on uusi rajapinta eikä kaikki rajaimet vielä käytä tätä
-    // TODO: Muokkaa kaikki rajaimet käyttämään tätä
-    // payload [{id: string, item: FilterValue, operation: "SET" | "UNSET" | "TOGGLE"}]
+    // payload [{itemId: FilterValue, operation: "SET" | "UNSET" | "TOGGLE"}]
     handleFilterOperations: (state, { payload: filterOperations = [] }) => {
       filterOperations.forEach(({ item, operation = 'TOGGLE' }) => {
         const id = item.filterId;
-        const exists = state[id].some(({ id: itemId }) => item.id === itemId);
+        // NOTE: hakukaynnissa on ainoa boolean-suodatin, käsitellään erikseen
+        if (id === FILTER_TYPES.HAKUKAYNNISSA) {
+          switch (operation) {
+            case 'TOGGLE':
+              state.hakukaynnissa = !state.hakukaynnissa;
+              break;
+            case 'SET':
+              state.hakukaynnissa = true;
+              break;
+            case 'UNSET':
+              state.hakukaynnissa = false;
+              break;
+            default:
+              break;
+          }
+          return;
+        }
+
+        const exists = state[id].some((itemId) => item.id === itemId);
         const shouldAdd = (operation === 'SET' || operation === 'TOGGLE') && !exists;
         const shouldRemove = (operation === 'UNSET' || operation === 'TOGGLE') && exists;
         if (shouldAdd) {
-          state[id] = state[id].concat({ id: item.id, nimi: item.nimi, name: item.nimi }); // TODO: Remove name from here when it is refactored away
+          state[id] = state[id].concat(item.id);
         } else if (shouldRemove) {
-          state[id] = state[id].filter(({ id: itemId }) => item.id !== itemId);
+          state[id] = state[id].filter((itemId) => item.id !== itemId);
         }
       });
-    },
-    toggleHakukaynnissa: (state) => {
-      state.hakukaynnissa = !state.hakukaynnissa;
     },
     clearPaging: (state) => {
       state.koulutusPage = 1;
       state.oppilaitosPage = 1;
       state.koulutusOffset = 0;
       state.oppilaitosOffset = 0;
-    },
-    setSelectedFilters: (state, { payload }) => {
-      const { filterType, itemId } = payload;
-      state[filterType] = state[filterType].filter(({ id }) => id !== itemId);
     },
     clearSelectedFilters: (state) => {
       state.koulutustyyppi = [];
@@ -145,7 +155,6 @@ const hakutulosSlice = createSlice({
         }
 
         // NOTE: Tämä asettaa ja kääntää initial arvot stateen
-        // TODO: Tästä pitäisi purkaa käännettyjen arvojen tallennus stateen
         if (isReload) {
           _.forEach(literals, (val, key) => {
             state[key] = val;
@@ -156,10 +165,7 @@ const hakutulosSlice = createSlice({
                 state.hakukaynnissa = filterValues === 'true';
                 break;
               default:
-                state[key] = getCheckedFilterValues(
-                  filterValues,
-                  koulutusData.filters[key]
-                );
+                state[key] = filterValues.split(',');
                 break;
             }
           });
@@ -204,10 +210,8 @@ export const {
   searchAPICallStart,
   searchAPICallError,
   handleFilterOperations,
-  toggleHakukaynnissa,
   clearPaging,
   clearSelectedFilters,
-  setSelectedFilters,
   setOrder,
   setSort,
   setSize,
@@ -229,7 +233,7 @@ export const newSearchAll = () => async (dispatch, getState) => {
     const koulutusData = await searchAPI.getKoulutukset(requestParams);
     const oppilaitosData = await searchAPI.getOppilaitokset(requestParams);
 
-    const filters = _.pick(requestParams, FILTER_TYPES_ARR);
+    const filters = _.pick(requestParams, FILTER_TYPES_ARR_FOR_KONFO_BACKEND);
     const literals = _.pick(requestParams, ['size', 'order', 'sort']);
     dispatch(
       searchAllSuccess({
@@ -253,7 +257,7 @@ export const searchAll = (
     dispatch(searchAPICallStart());
     const koulutusData = await searchAPI.getKoulutukset(requestParams);
     const oppilaitosData = await searchAPI.getOppilaitokset(requestParams);
-    const filters = _.pick(requestParams, FILTER_TYPES_ARR);
+    const filters = _.pick(requestParams, FILTER_TYPES_ARR_FOR_KONFO_BACKEND);
     const literals = _.pick(requestParams, ['size', 'order', 'sort']);
     dispatch(
       searchAllSuccess({
@@ -343,17 +347,10 @@ export const searchAndMoveToHaku = ({ history }) => (dispatch, getState) => {
 };
 
 // Helpers
-function getCheckedFilterValues(ids, koulutusFilters) {
-  const idsArray = _.split(ids, ',');
-  return idsArray.reduce((result, id) => {
-    return _.has(koulutusFilters, id)
-      ? [...result, { id: id, name: koulutusFilters?.[id]?.nimi }]
-      : result;
-  }, []);
-}
-
 function getCleanUrlSearch(search, apiRequestParams) {
   return _.mapValues(_.pick(search, _.keys(apiRequestParams)), (value, key) =>
-    _.includes(FILTER_TYPES_ARR, key) ? _.join(_.sortBy(_.split(value, ',')), ',') : value
+    _.includes(FILTER_TYPES_ARR_FOR_KONFO_BACKEND, key)
+      ? _.join(_.sortBy(_.split(value, ',')), ',')
+      : value
   );
 }

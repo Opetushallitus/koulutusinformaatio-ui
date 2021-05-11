@@ -3,6 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { FILTER_TYPES } from '#/src/constants';
 import {
   handleFilterOperations,
   newSearchAll,
@@ -12,8 +13,7 @@ import { getFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { Filter } from './Filter';
 import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
 
-const FILTER_ID = 'pohjakoulutusvaatimus';
-const filterSelector = getFilterProps(FILTER_ID);
+const filterSelector = getFilterProps(FILTER_TYPES.POHJAKOULUTUSVAATIMUS);
 
 // TODO: Do not use this component until backend supports filtering pohjakoulutusvaatimus with KOMO järjestäjät
 export const PohjakoulutusvaatimusSuodatin = (props: SuodatinComponentProps) => {

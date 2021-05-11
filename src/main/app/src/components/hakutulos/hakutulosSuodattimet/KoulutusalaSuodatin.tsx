@@ -3,6 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { FILTER_TYPES } from '#/src/constants';
 import {
   handleFilterOperations,
   newSearchAll,
@@ -13,8 +14,7 @@ import { Filter } from './Filter';
 import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
 import { getFilterStateChanges } from './utils';
 
-const KOULUTUSALA_FILTER_ID = 'koulutusala';
-const koulutusalaSelector = getFilterProps(KOULUTUSALA_FILTER_ID);
+const koulutusalaSelector = getFilterProps(FILTER_TYPES.KOULUTUSALA);
 
 export const KoulutusalaSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();

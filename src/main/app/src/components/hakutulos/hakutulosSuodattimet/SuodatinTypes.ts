@@ -18,7 +18,6 @@ export type FilterValue = {
   hidden?: boolean; // Jotkut rajaimet eivät näytä kaikkia arvoja kerralla (koulutustyyppi), mutta kaikki arvot tarvitaan
 };
 
-// General type for all filters
 export type FilterProps = {
   values: Array<FilterValue>;
 };

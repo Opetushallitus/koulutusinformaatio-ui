@@ -10,7 +10,7 @@ import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Spacer from '#/src/components/common/Spacer';
 import { ToteutusCard } from '#/src/components/common/ToteutusCard';
-import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
+import { getCheckedToteutusFilters } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
   fetchKoulutusJarjestajat,
   selectJarjestajat,
@@ -63,28 +63,19 @@ const getQueryStr = (values: Array<{ id: string }>) =>
   values.map(({ id }) => id).join(',');
 
 export const ToteutusList = ({ oid }: Props) => {
+  const { t } = useTranslation();
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  // NOTE: Tämä haetaan vain kerran alkuarvoja varten
+  const initialCheckedFilters = useSelector<any, Record<string, Array<FilterValue>>>(
+    getCheckedToteutusFilters
+  );
+  const [chosenFilters, setChosenFilters] = useState(initialCheckedFilters);
+
   const { jarjestajat, loading, sortedFilters }: JarjestajaData = useSelector(
     selectJarjestajat
   );
-
-  const valinnatFromHaku = useSelector(getSuodatinValinnatProps);
-  const initialValues: Record<string, Array<FilterValue>> = useMemo(
-    () =>
-      _fp.pipe(
-        _fp.pick(['opetuskieli', 'sijainti', 'opetustapa']),
-        // TODO: Refactor name to nimi in state
-        _fp.mapValues((arr: Array<any>) =>
-          arr.map(({ name, ...rest }) => ({ nimi: name, ...rest }))
-        )
-      )(valinnatFromHaku) as any,
-    [valinnatFromHaku]
-  );
-
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-
-  const [chosenFilters, setChosenFilters] = useState(initialValues);
   const chosenFilterCount = useMemo(
     () => _fp.sum(Object.values(chosenFilters).map((v) => v.length)),
     [chosenFilters]
@@ -109,9 +100,9 @@ export const ToteutusList = ({ oid }: Props) => {
 
   // Initial fetch with params from Haku
   useEffect(() => {
-    const queryStrings = _fp.mapValues(getQueryStr, initialValues);
+    const queryStrings = _fp.mapValues(getQueryStr, initialCheckedFilters);
     dispatch(fetchKoulutusJarjestajat(oid, queryStrings));
-  }, [dispatch, oid, initialValues]);
+  }, [dispatch, oid, initialCheckedFilters]);
 
   const someSelected = useMemo(
     () => Object.values(chosenFilters).some((v) => v.length > 0),
@@ -132,14 +123,16 @@ export const ToteutusList = ({ oid }: Props) => {
           <Grid item className={classes.filter}>
             <OpetuskieliSuodatin
               handleFilterChange={handleFilterChange}
-              initialValues={initialValues.opetuskieli}
+              initialValues={initialCheckedFilters.opetuskieli}
               sortedValues={sortedFilters.opetuskieli}
             />
           </Grid>
           <Grid item className={classes.filter}>
             <SijaintiSuodatin
               handleFilterChange={handleFilterChange}
-              initialValues={initialValues.sijainti}
+              initialValues={initialCheckedFilters.maakunta.concat(
+                initialCheckedFilters.kunta
+              )}
               sortedMaakunnat={sortedFilters.maakunta}
               sortedKunnat={sortedFilters.kunta}
             />
@@ -147,7 +140,7 @@ export const ToteutusList = ({ oid }: Props) => {
           <Grid item className={classes.filter}>
             <OpetustapaSuodatin
               handleFilterChange={handleFilterChange}
-              initialValues={initialValues.opetustapa}
+              initialValues={initialCheckedFilters.opetustapa}
               sortedValues={sortedFilters.opetustapa}
             />
           </Grid>
