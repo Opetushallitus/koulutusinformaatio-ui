@@ -3,6 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { FILTER_TYPES } from '#/src/constants';
 import {
   handleFilterOperations,
   newSearchAll,
@@ -12,8 +13,7 @@ import { getFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import { Filter } from './Filter';
 import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
 
-const OPETUSKIELI_FILTER_ID = 'opetuskieli';
-const opetuskieliSelector = getFilterProps(OPETUSKIELI_FILTER_ID);
+const opetuskieliSelector = getFilterProps(FILTER_TYPES.OPETUSKIELI);
 
 export const OpetuskieliSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { colors } from '#/src/colors';
+import { FILTER_TYPES } from '#/src/constants';
 import {
   handleFilterOperations,
   newSearchAll,
@@ -37,10 +38,8 @@ const withStyles = makeStyles(() => ({
   },
 }));
 
-const KOULUTUSTYYPPI_FILTER_ID = 'koulutustyyppi';
-const KOULUTUSTYYPPI_MUU_FILTER_ID = 'koulutustyyppi-muu';
-const koulutusSelector = getFilterProps(KOULUTUSTYYPPI_FILTER_ID);
-const koulutusMuuSelector = getFilterProps(KOULUTUSTYYPPI_MUU_FILTER_ID);
+const koulutusSelector = getFilterProps(FILTER_TYPES.KOULUTUSTYYPPI);
+const koulutusMuuSelector = getFilterProps(FILTER_TYPES.KOULUTUSTYYPPI_MUU);
 
 export const KoulutustyyppiSuodatin = (props: SuodatinComponentProps) => {
   const classes = withStyles();

@@ -3,9 +3,9 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { FILTER_TYPES } from '#/src/constants';
 import {
   handleFilterOperations,
-  toggleHakukaynnissa,
   newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
 import {
@@ -17,12 +17,9 @@ import { Filter } from './Filter';
 import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
 import { getFilterStateChanges } from './utils';
 
-const HAKUTAPA_FILTER_ID = 'hakutapa';
-const HAKUKAYNNISSA_ID = 'hakukaynnissa';
-const YHTEISHAKU_FILTER_ID = 'yhteishaku';
 const YHTEISHAKU_KOODI_URI = 'hakutapa_01';
-const hakutapaFilterSelector = getFilterProps(HAKUTAPA_FILTER_ID);
-const yhteishakuFilterSelector = getFilterProps(YHTEISHAKU_FILTER_ID);
+const hakutapaFilterSelector = getFilterProps(FILTER_TYPES.HAKUTAPA);
+const yhteishakuFilterSelector = getFilterProps(FILTER_TYPES.YHTEISHAKU);
 
 // NOTE: Hakutapa sisältää hakukaynnissa ja yhteishaku suodattimet -> tämä komponentti hoitaa yhdistelylogiikan
 export const HakutapaSuodatin = (props: SuodatinComponentProps) => {
@@ -45,8 +42,8 @@ export const HakutapaSuodatin = (props: SuodatinComponentProps) => {
 
     return [
       {
-        id: HAKUKAYNNISSA_ID,
-        filterId: HAKUKAYNNISSA_ID,
+        id: FILTER_TYPES.HAKUKAYNNISSA,
+        filterId: FILTER_TYPES.HAKUKAYNNISSA,
         nimi: t('haku.hakukaynnissa'),
         count: hakukaynnissaData?.count,
         checked: hakukaynnissa,
@@ -56,8 +53,8 @@ export const HakutapaSuodatin = (props: SuodatinComponentProps) => {
   }, [hakukaynnissa, mergedValues, t, hakukaynnissaData]);
 
   const handleCheck = (item: FilterValue) => {
-    if (item.id === HAKUKAYNNISSA_ID) {
-      dispatch(toggleHakukaynnissa());
+    if (item.filterId === FILTER_TYPES.HAKUKAYNNISSA) {
+      dispatch(handleFilterOperations([{ item }]));
     } else {
       const operations = getFilterStateChanges(mergedValues)(item);
       dispatch(handleFilterOperations(operations));

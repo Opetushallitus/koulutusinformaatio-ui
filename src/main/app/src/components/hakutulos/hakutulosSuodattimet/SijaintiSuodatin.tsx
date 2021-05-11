@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Select, { components } from 'react-select';
 
 import { colors } from '#/src/colors';
+import { FILTER_TYPES } from '#/src/constants';
 import {
   handleFilterOperations,
   newSearchAll,
@@ -19,10 +20,8 @@ import { KonfoCheckbox } from './CustomizedMuiComponents';
 import { Filter } from './Filter';
 import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
 
-const MAAKUNTA_FILTER_ID = 'maakunta';
-const KUNTA_FILTER_ID = 'kunta';
-const maakuntaSelector = getFilterProps(MAAKUNTA_FILTER_ID);
-const kuntaSelector = getFilterProps(KUNTA_FILTER_ID);
+const maakuntaSelector = getFilterProps(FILTER_TYPES.MAAKUNTA);
+const kuntaSelector = getFilterProps(FILTER_TYPES.KUNTA);
 
 type Styles = React.ComponentProps<typeof Select>['styles'];
 const customStyles: Styles = {

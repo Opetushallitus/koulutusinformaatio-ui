@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { Button, Chip, Grid, makeStyles } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
-import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 
 import { colors } from '#/src/colors';
-import { useQueryParams } from '#/src/hooks';
 import {
   clearSelectedFilters,
-  searchAll,
-  setSelectedFilters,
+  handleFilterOperations,
+  newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
-import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
+import { getAllSelectedFilters } from '#/src/store/reducers/hakutulosSliceSelector';
 import { localize } from '#/src/tools/localization';
+
+import { FilterValue } from './SuodatinTypes';
 
 const useStyles = makeStyles(() => ({
   chipRoot: {
@@ -40,15 +39,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-// TODO: This is NOT same type as new refactored filters, name !== nimi
-type FilterValue = {
-  id: string;
-  name: any;
-};
-
 type ChosenFiltersProps = {
-  filters: Record<string, Array<FilterValue>>;
-  getHandleDelete: (filterType: string, itemId: string) => VoidFunction;
+  filters: Array<FilterValue>;
+  getHandleDelete: (entry: FilterValue) => VoidFunction;
   handleClearFilters: VoidFunction;
 };
 
@@ -60,22 +53,6 @@ const ChipList = ({
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const displayChips = ([filterType, items]: [string, Array<FilterValue>]) =>
-    items.map(({ id, name }) => (
-      <Chip
-        size="small"
-        data-cy={`chip-${id}`}
-        key={`chip_${id}`}
-        classes={{
-          root: classes.chipRoot,
-          label: classes.chipLabel,
-        }}
-        // NOTE: Some filters are not koodisto values and must be translated
-        label={localize(name) || t(`haku.${id}`)}
-        onDelete={getHandleDelete(filterType, id)}
-      />
-    ));
-
   return (
     <Grid
       container
@@ -83,9 +60,20 @@ const ChipList = ({
       justify="space-between"
       style={{ paddingBottom: '5px' }}>
       <Grid item style={{ paddingTop: '5px' }}>
-        {Object.entries(filters).map((entry) =>
-          entry[1].length > 0 ? displayChips(entry) : ''
-        )}
+        {filters.map((entry) => (
+          <Chip
+            size="small"
+            data-cy={`chip-${entry.id}`}
+            key={`chip_${entry.id}`}
+            classes={{
+              root: classes.chipRoot,
+              label: classes.chipLabel,
+            }}
+            // NOTE: Some filters are not koodisto values and must be translated
+            label={localize(entry) || t(`haku.${entry.id}`)}
+            onDelete={getHandleDelete(entry)}
+          />
+        ))}
       </Grid>
       <Grid item>
         <Button
@@ -104,30 +92,17 @@ const ChipList = ({
 };
 
 export const SuodatinValinnat = () => {
-  const location = useLocation();
   const dispatch = useDispatch();
-  const suodatinValinnatProps = useSelector(getSuodatinValinnatProps);
-  const apiRequestParams = useQueryParams();
+  const filters = useSelector(getAllSelectedFilters);
 
-  const [filters, setFilters] = useState<Record<string, Array<any>>>({});
-
-  useEffect(() => {
-    setFilters(suodatinValinnatProps);
-  }, [suodatinValinnatProps, location]);
-
-  const getHandleDelete = (filterType: string, itemId: string) => () => {
-    const newFilterValuesStr = filters[filterType]
-      .filter(({ id }) => id !== itemId)
-      .map(({ id }) => id)
-      .join(',');
-
-    dispatch(setSelectedFilters({ filterType, itemId }));
-    dispatch(searchAll({ ...apiRequestParams, [filterType]: newFilterValuesStr }));
+  const getHandleDelete = (item: FilterValue) => () => {
+    dispatch(handleFilterOperations([{ item, operation: 'UNSET' }]));
+    dispatch(newSearchAll());
   };
 
   const handleClearFilters = () => {
     dispatch(clearSelectedFilters());
-    dispatch(searchAll(_.omit(apiRequestParams, _.keys(filters))));
+    dispatch(newSearchAll());
   };
 
   return (

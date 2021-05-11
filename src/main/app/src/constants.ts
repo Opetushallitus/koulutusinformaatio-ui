@@ -11,7 +11,8 @@ export const FILTER_TYPES = {
   KOULUTUSTYYPPI: 'koulutustyyppi',
   KOULUTUSTYYPPI_MUU: 'koulutustyyppi-muu',
   OPETUSKIELI: 'opetuskieli',
-  SIJAINTI: 'sijainti',
+  KUNTA: 'kunta',
+  MAAKUNTA: 'maakunta',
   OPETUSTAPA: 'opetustapa',
   VALINTATAPA: 'valintatapa',
   HAKUKAYNNISSA: 'hakukaynnissa',
@@ -21,6 +22,21 @@ export const FILTER_TYPES = {
 } as const;
 
 export const FILTER_TYPES_ARR = [
+  'opetuskieli',
+  'koulutusala',
+  'koulutustyyppi',
+  'kunta',
+  'maakunta',
+  'opetustapa',
+  'valintatapa',
+  'hakukaynnissa',
+  'hakutapa',
+  'yhteishaku',
+  'pohjakoulutusvaatimus',
+] as const;
+
+// TODO: konfo-backend haluaa turhaan kunta + maakunta rajaimet yhtenä könttinä (sijainti), se pitäisi purkaa sieltä
+export const FILTER_TYPES_ARR_FOR_KONFO_BACKEND = [
   'opetuskieli',
   'koulutusala',
   'koulutustyyppi',
