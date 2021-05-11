@@ -19,9 +19,7 @@ const filterSelector = getFilterProps(FILTER_ID);
 export const PohjakoulutusvaatimusSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { values, localizedCheckedValues } = useSelector<any, FilterProps>(
-    filterSelector
-  );
+  const { values } = useSelector<any, FilterProps>(filterSelector);
 
   const handleCheck = (item: FilterValue) => {
     dispatch(handleFilterOperations([{ item, operation: 'TOGGLE' }]));
@@ -35,7 +33,6 @@ export const PohjakoulutusvaatimusSuodatin = (props: SuodatinComponentProps) => 
       name={t('haku.pohjakoulutusvaatimus')}
       values={values}
       handleCheck={handleCheck}
-      checkedStr={localizedCheckedValues}
     />
   );
 };

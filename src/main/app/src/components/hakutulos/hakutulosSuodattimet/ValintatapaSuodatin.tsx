@@ -19,9 +19,7 @@ const filterSelector = getFilterProps(FILTER_ID);
 export const ValintatapaSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { values, localizedCheckedValues } = useSelector<any, FilterProps>(
-    filterSelector
-  );
+  const { values } = useSelector<any, FilterProps>(filterSelector);
 
   const handleCheck = (item: FilterValue) => {
     dispatch(handleFilterOperations([{ item, operation: 'TOGGLE' }]));
@@ -35,7 +33,6 @@ export const ValintatapaSuodatin = (props: SuodatinComponentProps) => {
       name={t('haku.valintatapa')}
       values={values}
       handleCheck={handleCheck}
-      checkedStr={localizedCheckedValues}
     />
   );
 };

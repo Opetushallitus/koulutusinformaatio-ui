@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
@@ -7,8 +7,6 @@ import {
   FilterValue,
   SuodatinComponentProps,
 } from '#/src/components/hakutulos/hakutulosSuodattimet/SuodatinTypes';
-
-import { getShownStr } from './utils';
 
 type Props = {
   handleFilterChange: (newFilters: object) => void;
@@ -24,7 +22,6 @@ export const OpetuskieliSuodatin = (props: Props) => {
   useEffect(() => {
     setCheckedValues(initialValues);
   }, [initialValues]);
-  const checkedStr = useMemo(() => getShownStr(checkedValues), [checkedValues]);
 
   const handleCheck = useCallback(
     (value: FilterValue) => {
@@ -50,7 +47,6 @@ export const OpetuskieliSuodatin = (props: Props) => {
       name={t('haku.opetuskieli')}
       values={usedValues}
       handleCheck={handleCheck}
-      checkedStr={checkedStr}
       displaySelected
       {...rest}
     />

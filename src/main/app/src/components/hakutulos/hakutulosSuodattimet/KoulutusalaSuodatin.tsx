@@ -20,9 +20,7 @@ export const KoulutusalaSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const { values, localizedCheckedValues } = useSelector<any, FilterProps>(
-    koulutusalaSelector
-  );
+  const { values } = useSelector<any, FilterProps>(koulutusalaSelector);
 
   const getOperations = getFilterStateChanges(values);
   const handleCheck = (item: FilterValue) => {
@@ -38,7 +36,6 @@ export const KoulutusalaSuodatin = (props: SuodatinComponentProps) => {
       name={t('haku.koulutusalat')}
       values={values}
       handleCheck={handleCheck}
-      checkedStr={localizedCheckedValues}
     />
   );
 };

@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import qs from 'query-string';
 
-import { getLanguage, localize } from '#/src/tools/localization';
+import { getLanguage } from '#/src/tools/localization';
 import { Common as C } from '#/src/tools/Utils';
 
 // State data getters
@@ -309,9 +309,6 @@ export const getHakuUrl = createSelector(
   }
 );
 
-const getNameStr = (filterArr = []) =>
-  filterArr.map((f) => _.capitalize(localize(f))).join(', ');
-
 const sortValues = (filterObj) =>
   _.orderBy(
     _.toPairs(filterObj).map(([id, values]) => ({ id, ...values })),
@@ -337,7 +334,6 @@ export const getFilterProps = (id) =>
             checked: checkedValues.some((checked) => checked.id === alakoodi.id),
           })),
         })),
-        localizedCheckedValues: getNameStr(checkedValues),
       };
     }
   );

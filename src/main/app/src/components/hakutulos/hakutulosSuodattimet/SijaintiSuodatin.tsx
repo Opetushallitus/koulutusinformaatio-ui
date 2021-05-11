@@ -118,14 +118,8 @@ export const SijaintiSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const {
-    values: kuntaValues,
-    localizedCheckedValues: localizedKuntaValues,
-  } = useSelector<any, FilterProps>(kuntaSelector);
-  const {
-    values: maakuntaValues,
-    localizedCheckedValues: localizedMaakuntaValues,
-  } = useSelector<any, FilterProps>(maakuntaSelector);
+  const { values: kuntaValues } = useSelector<any, FilterProps>(kuntaSelector);
+  const { values: maakuntaValues } = useSelector<any, FilterProps>(maakuntaSelector);
 
   const loading = !useSelector(getIsReady);
 
@@ -152,17 +146,12 @@ export const SijaintiSuodatin = (props: SuodatinComponentProps) => {
     [kuntaValues, maakuntaValues, t]
   );
 
-  const usedLocalizedCheckedValues = [localizedKuntaValues, localizedMaakuntaValues]
-    .filter(Boolean)
-    .join(', ');
-
   return (
     <Filter
       {...props}
       name={t('haku.sijainti')}
       values={maakuntaValues}
       handleCheck={handleCheck}
-      checkedStr={usedLocalizedCheckedValues}
       expandValues
       additionalContent={
         <SijaintiSelect
