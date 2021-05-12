@@ -197,6 +197,7 @@ type Props = {
   values: Array<FilterValue>;
   handleCheck: (value: FilterValue) => void;
   options?: any;
+  optionsLoading?: boolean;
   selectPlaceholder?: string;
   additionalContent?: JSX.Element;
 };
@@ -210,13 +211,15 @@ export const Filter = ({
   testId,
   expanded,
   elevation,
-  // TODO: display selected kertoo että näytetään infoa valituista,
+  // display selected kertoo että näytetään infoa valituista,
   // summaryHidden kertoo että näytetään mutta ei haluta näyttää tekstiä
+  // TODO: Liikaa boolean propseja, tekee huonon komponenttirajapinnan
   displaySelected = false,
   summaryHidden = false,
   values,
   handleCheck,
   options,
+  optionsLoading,
   selectPlaceholder,
   additionalContent,
   expandValues = false,
@@ -224,7 +227,6 @@ export const Filter = ({
 }: Props) => {
   const { t } = useTranslation();
   const classes = withStyles();
-  const loading = false;
   const [hideRest, setHideRest] = useState(expandValues);
 
   return (
@@ -251,12 +253,12 @@ export const Filter = ({
                 components={{ DropdownIndicator, LoadingIndicator, Option }}
                 styles={customStyles}
                 value=""
-                isLoading={loading}
+                isLoading={optionsLoading}
                 name="district-search"
                 options={options}
                 className="basic-multi-select"
                 classNamePrefix="select"
-                placeholder={selectPlaceholder}
+                placeholder={selectPlaceholder || t('haku.etsi')}
                 onChange={handleCheck}
                 theme={(theme) => ({
                   ...theme,

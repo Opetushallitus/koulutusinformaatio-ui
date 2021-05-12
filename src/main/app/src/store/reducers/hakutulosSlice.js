@@ -156,6 +156,11 @@ const hakutulosSlice = createSlice({
           });
           _.forEach(filters, (filterValues, key) => {
             switch (key) {
+              case FILTER_TYPES.SIJAINTI:
+                const values = filterValues.split(',');
+                state.maakunta = values.filter((v) => v.startsWith('maakunta'));
+                state.kunta = values.filter((v) => v.startsWith('kunta'));
+                break;
               case FILTER_TYPES.HAKUKAYNNISSA:
                 state.hakukaynnissa = filterValues === 'true';
                 break;
