@@ -13,7 +13,6 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
-import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';

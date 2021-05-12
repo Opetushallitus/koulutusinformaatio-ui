@@ -32,7 +32,7 @@ export const KoulutusalaSuodatin = (props: SuodatinComponentProps) => {
   return (
     <Filter
       {...props}
-      testId="koulutusala-filter"
+      testId="koulutusalat-filter"
       name={t('haku.koulutusalat')}
       values={values}
       handleCheck={handleCheck}

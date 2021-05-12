@@ -110,7 +110,7 @@ const FilterCheckbox = ({
   expandButton,
 }: CheckboxProps) => {
   const { count, id, nimi, checked } = value;
-  const labelId = `list-label-${id}`;
+  const labelId = `filter-list-label-${id}`;
   const classes = withStyles();
   return (
     <ListItem
@@ -170,7 +170,8 @@ const FilterCheckboxGroup = ({
           <IconButton
             size="small"
             aria-label={`${localizeIfNimiObject(value)} ${t('haku.nayta-lisarajaimet')}`}
-            onClick={handleToggle}>
+            onClick={handleToggle}
+            data-cy={`show-more-${value.id}`}>
             {isOpen ? <ExpandLess /> : <ExpandMore />}
           </IconButton>
         }

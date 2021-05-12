@@ -29,6 +29,7 @@ export const OpetustapaSuodatin = (props: SuodatinComponentProps) => {
   return (
     <Filter
       {...props}
+      testId="opetustapa-filter"
       name={t('haku.opetustapa')}
       values={values}
       handleCheck={handleCheck}

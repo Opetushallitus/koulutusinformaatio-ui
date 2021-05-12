@@ -54,8 +54,8 @@ describe('Haku', () => {
       cy.findByRole('checkbox', { name: /Ammatillinen perustutkinto/i });
     const erikoisammattitutkintoChk = () =>
       cy.findByRole('checkbox', { name: /Erikoisammattitutkinto/i });
-    const tutkinnonOsaChk = () => cy.findByRole('checkbox', { name: /Tutkinnon osa /i });
-    const osaamisalaChk = () => cy.findByRole('checkbox', { name: /Osaamisala /i });
+    const tutkinnonOsaChk = () => cy.findByRole('checkbox', { name: /Tutkinnon osa/i });
+    const osaamisalaChk = () => cy.findByRole('checkbox', { name: /Osaamisala/i });
 
     cy.findByTestId('koulutustyyppi-filter').within(() => {
       ammatillinenKoulutusChk().should('exist');
@@ -87,22 +87,24 @@ describe('Haku', () => {
     cy.visit('/fi/haku/auto');
     cy.findAllByRole('progressbar').should('not.exist');
     cy.findByText('Koulutusalat').should('exist');
-    cy.findByText('Tekniikan alat').click().should('not.be.visible');
 
-    const tekniikanAlatChk = () =>
-      cy.findByRole('checkbox', { name: /Tekniikan alat \(\d*\)/i });
+    const tekniikanAlatChk = () => cy.findByRole('checkbox', { name: /Tekniikan alat/i });
     const arkkitehtuuriJaRakentaminen = () =>
-      cy.findByRole('checkbox', { name: /Arkkitehtuuri ja rakentaminen \(\d*\)/i });
+      cy.findByRole('checkbox', { name: /Arkkitehtuuri ja rakentaminen/i });
     const materiaaliJaProsessitekniikka = () =>
-      cy.findByRole('checkbox', { name: /Materiaali- ja prosessitekniikka \(\d*\)/i });
+      cy.findByRole('checkbox', { name: /Materiaali- ja prosessitekniikka/i });
     const koneProsessiEnergiaSahkoTekniikka = () =>
       cy.findByRole('checkbox', {
-        name: /Kone-, prosessi-, energia- ja sähkötekniikka \(\d*\)/i,
+        name: /Kone-, prosessi-, energia- ja sähkötekniikka/i,
       });
     cy.findByTestId('koulutusalat-filter')
       .should('exist')
-      .within((kaf) => {
+      .within(() => {
         tekniikanAlatChk().should('exist').check();
+
+        cy.findByTestId(
+          'show-more-kansallinenkoulutusluokitus2016koulutusalataso1_07'
+        ).click(); // tekniikanAlat koodiUri
 
         tekniikanAlatChk().should('have.attr', 'data-indeterminate', 'false');
         arkkitehtuuriJaRakentaminen().should('be.checked');
@@ -131,9 +133,9 @@ describe('Haku', () => {
   });
   it('Opetustapa filter checkboxes and mobile summary view', () => {
     cy.visit('/fi/haku/auto');
-    const etaopetusChk = () => cy.findByRole('checkbox', { name: /Etäopetus \(\d*\)/i });
+    const etaopetusChk = () => cy.findByRole('checkbox', { name: /Etäopetus/i });
     const verkkoOpiskeluChk = () =>
-      cy.findByRole('checkbox', { name: /Verkko-opiskelu \(\d*\)/i });
+      cy.findByRole('checkbox', { name: /Verkko-opiskelu/i });
     cy.findByText('Opetustapa').should('exist').click();
     cy.findByTestId('opetustapa-filter')
       .should('exist')
@@ -157,10 +159,8 @@ describe('Haku', () => {
   // TODO: Skipped until component is used
   it.skip('Valintatapa filter checkboxes', () => {
     cy.visit('/fi/haku/auto');
-    const koepisteetChk = () =>
-      cy.findByRole('checkbox', { name: /Koepisteet \(\d*\)/i });
-    const yhteispisteetChk = () =>
-      cy.findByRole('checkbox', { name: /Yhteispisteet \(\d*\)/i });
+    const koepisteetChk = () => cy.findByRole('checkbox', { name: /Koepisteet/i });
+    const yhteispisteetChk = () => cy.findByRole('checkbox', { name: /Yhteispisteet/i });
     cy.findByText('Valintatapa').should('exist').click();
     cy.findByTestId('valintatapa-filter')
       .should('exist')
@@ -183,10 +183,8 @@ describe('Haku', () => {
 
   it('Hakutapa filter checkboxes', () => {
     cy.visit('/fi/haku/auto');
-    const yhteishakuChk = () =>
-      cy.findByRole('checkbox', { name: /Yhteishaku \(\d*\)/i });
-    const jatkuvaHakuChk = () =>
-      cy.findByRole('checkbox', { name: /Jatkuva haku \(\d*\)/i });
+    const yhteishakuChk = () => cy.findByRole('checkbox', { name: /Yhteishaku/i });
+    const jatkuvaHakuChk = () => cy.findByRole('checkbox', { name: /Jatkuva haku/i });
     cy.findByText('Hakutapa').should('exist');
     cy.findByTestId('hakutapa-filter')
       .should('exist')
@@ -211,8 +209,8 @@ describe('Haku', () => {
   it.skip('Pohjakoulutusvaatimus filter checkboxes', () => {
     cy.visit('/fi/haku/auto');
     const ammatillinnePerustutkintoChk = () =>
-      cy.findByRole('checkbox', { name: /Ammatillinen perustutkinto \(\d*\)/i });
-    const lukioChk = () => cy.findByRole('checkbox', { name: /Lukio \(\d*\)/i });
+      cy.findByRole('checkbox', { name: /Ammatillinen perustutkinto/i });
+    const lukioChk = () => cy.findByRole('checkbox', { name: /Lukio/i });
     cy.findByText('Koulutustausta').should('exist');
     cy.findByTestId('pohjakoulutusvaatimus-filter')
       .should('exist')
