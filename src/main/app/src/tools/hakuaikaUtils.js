@@ -8,10 +8,10 @@ export const isHakuAuki = (hakuajat = []) =>
     return isAfterStart && isBeforeEnd;
   });
 
-// Puoli vuotta sitten päättyneet tai uudemmat ovat relevantteja oppijalle
+// 3 kk sitten päättyneet tai uudemmat ovat relevantteja oppijalle
 export const isHakuTimeRelevant = (hakuajat) => {
   const now = new Date();
   return hakuajat.some(
-    (aika) => !aika.paattyy || isBefore(subMonths(now, 6), new Date(aika.paattyy))
+    (aika) => !aika.paattyy || isBefore(subMonths(now, 3), new Date(aika.paattyy))
   );
 };
