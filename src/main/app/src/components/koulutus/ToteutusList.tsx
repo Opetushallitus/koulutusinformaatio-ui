@@ -60,13 +60,30 @@ type JarjestajaData = {
 };
 
 const getQueryStr = (values: Record<string, Array<string>>) => {
-  // TODO: konfo-backend haluaa sijainti -rajaimen maakunta ja kunta sijaan, pitäisi refaktoroida sieltä pois
+  // TODO: konfo-backend haluaa maakunta ja kunta -rajainten sijaan "sijainti" -rajaime, pitäisi refaktoroida sinne maakunta + kunta käyttöön
   const valuesWithSijainti = _fp.omit(['kunta', 'maakunta'], {
     ...values,
     sijainti: [...values.maakunta, ...values.kunta],
   });
   return _fp.mapValues((v) => v!.join(','), valuesWithSijainti);
 };
+
+// NOTE: Tämä ei hanskaa alakoodeja vielä, koska sellaisia suodattimia ei vielä ole KOMOTO -sivulla
+const mergeCheckedValues = (
+  sortedValues: Record<string, Array<FilterValue>>,
+  checkedValues: Record<string, Array<string>>
+) =>
+  _fp.mapValues(
+    (values) =>
+      values.map((v) => ({
+        ...v,
+        checked: _fp.some(
+          (checkedList) => checkedList.some((id) => v.id === id),
+          checkedValues
+        ),
+      })),
+    sortedValues
+  );
 
 export const ToteutusList = ({ oid }: Props) => {
   const { t } = useTranslation();
@@ -78,43 +95,44 @@ export const ToteutusList = ({ oid }: Props) => {
     getCheckedToteutusFilters
   );
   const [initialValues] = useState(initialCheckedFilters); // Estetään uudelleenluonti
-  const [chosenFilters, setChosenFilters] = useState(initialValues);
+  const [checkedValues, setCheckedValues] = useState(initialValues);
 
   const { jarjestajat, loading, sortedFilters }: JarjestajaData = useSelector(
     selectJarjestajat
   );
-  const chosenFilterCount = useMemo(
-    () => _fp.sum(Object.values(chosenFilters).map((v) => v.length)),
-    [chosenFilters]
-  );
 
-  const handleFilterChange = useCallback(
-    (newChosenFilters: object) => {
-      const usedFilters = { ...chosenFilters, ...newChosenFilters };
-      setChosenFilters(usedFilters);
-      const queryStrings = getQueryStr(usedFilters);
-      dispatch(fetchKoulutusJarjestajat(oid, queryStrings));
-    },
-    [dispatch, oid, chosenFilters]
-  );
+  const usedValues = useMemo(() => mergeCheckedValues(sortedFilters, checkedValues), [
+    sortedFilters,
+    checkedValues,
+  ]);
+  const someSelected = _fp.some((v) => v.length > 0, checkedValues);
 
-  const handleFiltersClear = useCallback(() => {
-    const usedFilters = _fp.mapValues((_) => [], chosenFilters);
-    setChosenFilters(usedFilters);
-    const queryStrings = getQueryStr(usedFilters);
-    dispatch(fetchKoulutusJarjestajat(oid, queryStrings));
-  }, [dispatch, oid, chosenFilters]);
-
-  // Initial fetch with params from Haku
+  // Haetaan järjestäjätulokset hakusivulta periytyneillä rajaimilla
   useEffect(() => {
     const queryStrings = getQueryStr(initialValues);
     dispatch(fetchKoulutusJarjestajat(oid, queryStrings));
   }, [dispatch, oid, initialValues]);
 
-  const someSelected = useMemo(
-    () => Object.values(chosenFilters).some((v) => v.length > 0),
-    [chosenFilters]
-  );
+  const handleFilterChange = (value: FilterValue) => {
+    const { id, filterId } = value;
+    const filter = checkedValues[filterId];
+    const wasChecked = filter.some((v) => v === id);
+    const newFilter = wasChecked
+      ? filter.filter((v) => v !== id)
+      : filter.concat(value.id);
+    const newCheckedValues = { ...checkedValues, [filterId]: newFilter };
+
+    setCheckedValues(newCheckedValues);
+    const queryStrings = getQueryStr(newCheckedValues);
+    dispatch(fetchKoulutusJarjestajat(oid, queryStrings));
+  };
+
+  const handleFiltersClear = useCallback(() => {
+    const usedFilters = _fp.mapValues((_) => [], checkedValues);
+    setCheckedValues(usedFilters);
+    const queryStrings = getQueryStr(usedFilters);
+    dispatch(fetchKoulutusJarjestajat(oid, queryStrings));
+  }, [dispatch, oid, checkedValues]);
 
   return (
     <Container maxWidth="lg" className={classes.container}>
@@ -130,34 +148,30 @@ export const ToteutusList = ({ oid }: Props) => {
           <Grid item className={classes.filter}>
             <OpetuskieliSuodatin
               handleFilterChange={handleFilterChange}
-              initialValues={initialCheckedFilters.opetuskieli}
-              sortedValues={sortedFilters.opetuskieli}
+              values={usedValues.opetuskieli}
             />
           </Grid>
           <Grid item className={classes.filter}>
             <SijaintiSuodatin
+              loading={loading}
               handleFilterChange={handleFilterChange}
-              initialMaakunnat={initialCheckedFilters.maakunta}
-              initialKunnat={initialCheckedFilters.kunta}
-              sortedMaakunnat={sortedFilters.maakunta}
-              sortedKunnat={sortedFilters.kunta}
+              maakuntaValues={usedValues.maakunta}
+              kuntaValues={usedValues.kunta}
             />
           </Grid>
           <Grid item className={classes.filter}>
             <OpetustapaSuodatin
               handleFilterChange={handleFilterChange}
-              initialValues={initialCheckedFilters.opetustapa}
-              sortedValues={sortedFilters.opetustapa}
+              values={usedValues.opetustapa}
             />
           </Grid>
         </Grid>
       </Hidden>
       <Hidden mdUp>
         <MobileFiltersOnTopMenu
-          chosenFilters={chosenFilters}
-          sortedValues={sortedFilters}
+          values={usedValues}
+          loading={loading}
           hitCount={jarjestajat?.length}
-          chosenFilterCount={chosenFilterCount}
           handleFilterChange={handleFilterChange}
           clearChosenFilters={handleFiltersClear}
         />

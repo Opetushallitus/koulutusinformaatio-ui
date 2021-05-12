@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
+import _fp from 'lodash/fp';
 
 import {
   getKoulutus,
@@ -259,13 +260,15 @@ export const selectTulevatJarjestajat = (state, oid) =>
   state.koulutus.tulevatJarjestajat[oid]?.hits;
 
 export const selectJarjestajat = (state) => {
-  // This modifies { filter: { id: { data } } } to { filter: [{id, data}]} for more simple usage
+  // NOTE: _fp.mapValues ei anna object keytä iterateelle -> käytetään _.mapValues
   const sortedFilters = _.mapValues(
     state.koulutus.jarjestajatFilters || {},
-    (o, filterId) =>
-      Object.entries(o || {})
-        .map(([id, values]) => ({ id, filterId, ...values }))
-        .filter((v) => v.count > 0)
+    (filter, filterId) =>
+      _fp.flow(
+        (asdf) =>
+          _.mapValues(asdf, (filterValue, id) => ({ id, filterId, ...filterValue })),
+        _fp.filter((v) => v.count > 0)
+      )(filter)
   );
 
   return {

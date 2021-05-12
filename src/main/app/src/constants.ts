@@ -19,6 +19,8 @@ export const FILTER_TYPES = {
   HAKUTAPA: 'hakutapa',
   YHTEISHAKU: 'yhteishaku',
   POHJAKOULUTUSVAATIMUS: 'pohjakoulutusvaatimus',
+
+  SIJAINTI: 'sijainti', // TODO: Poista tämä kun konfo-backend ei enää käytä sijaintirajainta vaan kunta + maakunta
 } as const;
 
 export const FILTER_TYPES_ARR = [
@@ -36,6 +38,7 @@ export const FILTER_TYPES_ARR = [
 ] as const;
 
 // TODO: konfo-backend haluaa turhaan kunta + maakunta rajaimet yhtenä könttinä (sijainti), se pitäisi purkaa sieltä
+// Tämän voi poistaa sitten kun konfo-backend ottaa vastaan maakunta + kunta rajaimet
 export const FILTER_TYPES_ARR_FOR_KONFO_BACKEND = [
   'opetuskieli',
   'koulutusala',

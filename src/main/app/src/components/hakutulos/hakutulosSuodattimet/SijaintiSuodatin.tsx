@@ -1,13 +1,9 @@
 import React, { useMemo } from 'react';
 
-import { CircularProgress, ListItem } from '@material-ui/core';
-import { SearchOutlined } from '@material-ui/icons';
 import _fp from 'lodash/fp';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import Select, { components } from 'react-select';
 
-import { colors } from '#/src/colors';
 import { FILTER_TYPES } from '#/src/constants';
 import {
   handleFilterOperations,
@@ -16,94 +12,11 @@ import {
 import { getFilterProps, getIsReady } from '#/src/store/reducers/hakutulosSliceSelector';
 import { localize } from '#/src/tools/localization';
 
-import { KonfoCheckbox } from './CustomizedMuiComponents';
 import { Filter } from './Filter';
 import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
 
 const maakuntaSelector = getFilterProps(FILTER_TYPES.MAAKUNTA);
 const kuntaSelector = getFilterProps(FILTER_TYPES.KUNTA);
-
-type Styles = React.ComponentProps<typeof Select>['styles'];
-const customStyles: Styles = {
-  control: (provided) => ({
-    ...provided,
-    minHeight: '34px',
-    borderRadius: '2px',
-    cursor: 'text',
-    marginBottom: '12px',
-  }),
-  indicatorSeparator: (provided) => ({
-    ...provided,
-    display: 'none',
-  }),
-  indicatorsContainer: (provided) => ({
-    ...provided,
-    padding: '6px',
-  }),
-};
-
-// Overridden react-select components
-const LoadingIndicator = () => <CircularProgress size={25} color="inherit" />;
-
-type RSDropdownIndicatorProps = React.ComponentProps<typeof components.DropdownIndicator>;
-const DropdownIndicator = (props: RSDropdownIndicatorProps) => (
-  <components.DropdownIndicator {...props}>
-    <SearchOutlined />
-  </components.DropdownIndicator>
-);
-
-type RSOptionProps = React.ComponentProps<typeof components.Option>;
-type OptionProps = {
-  data?: { label: string; checked: boolean };
-  innerProps: RSOptionProps['innerProps'];
-  isFocused: boolean;
-};
-
-const Option = ({ data, innerProps, isFocused }: OptionProps) => (
-  // innerProps contain interaction functions e.g. onClick
-  <ListItem dense button {...innerProps} selected={isFocused}>
-    <KonfoCheckbox
-      checked={data?.checked}
-      disableRipple
-      role="presentation"
-      style={{ pointerEvents: 'none' }}
-    />
-    {data?.label}
-  </ListItem>
-);
-
-const SijaintiSelect = ({
-  isLoading,
-  options,
-  handleCheck,
-}: Pick<
-  React.ComponentProps<typeof Select>,
-  'isLoading' | 'options' | 'handleCheck'
->) => {
-  const { t } = useTranslation();
-  return (
-    <Select
-      components={{ DropdownIndicator, LoadingIndicator, Option }}
-      styles={customStyles}
-      value=""
-      isLoading={isLoading}
-      name="district-search"
-      options={options}
-      className="basic-multi-select"
-      classNamePrefix="select"
-      placeholder={t('haku.etsi-paikkakunta-tai-alue')}
-      onChange={(e) => handleCheck(e)}
-      theme={(theme) => ({
-        ...theme,
-        colors: {
-          ...theme.colors,
-          primary25: colors.darkGrey,
-          primary: colors.brandGreen,
-        },
-      })}
-    />
-  );
-};
 
 const getSelectOption = (value: FilterValue, isMaakunta: boolean) => ({
   ...value,
@@ -120,13 +33,12 @@ export const SijaintiSuodatin = (props: SuodatinComponentProps) => {
   const { values: kuntaValues } = useSelector<any, FilterProps>(kuntaSelector);
   const { values: maakuntaValues } = useSelector<any, FilterProps>(maakuntaSelector);
 
-  const loading = !useSelector(getIsReady);
-
   const handleCheck = (item: FilterValue) => {
     dispatch(handleFilterOperations([{ item, operation: 'TOGGLE' }]));
     dispatch(newSearchAll());
   };
 
+  const optionsLoading = !useSelector(getIsReady);
   const groupedSijainnit = useMemo(
     () => [
       {
@@ -145,20 +57,21 @@ export const SijaintiSuodatin = (props: SuodatinComponentProps) => {
     [kuntaValues, maakuntaValues, t]
   );
 
+  const usedValues = useMemo(
+    () => maakuntaValues.concat(kuntaValues.map((v) => ({ ...v, hidden: true }))),
+    [maakuntaValues, kuntaValues]
+  );
+
   return (
     <Filter
       {...props}
+      options={groupedSijainnit}
+      optionsLoading={optionsLoading}
+      selectPlaceholder={t('haku.etsi-paikkakunta-tai-alue')}
       name={t('haku.sijainti')}
-      values={maakuntaValues}
+      values={usedValues}
       handleCheck={handleCheck}
       expandValues
-      additionalContent={
-        <SijaintiSelect
-          isLoading={loading}
-          handleCheck={handleCheck}
-          options={groupedSijainnit}
-        />
-      }
     />
   );
 };
