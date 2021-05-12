@@ -210,10 +210,7 @@ export const ToteutusPage = () => {
   const toteutus: Toteutus = useSelector(selectToteutus(oid), shallowEqual);
   const koulutusOid = toteutus?.koulutusOid;
   const koulutus = useSelector(selectKoulutus(koulutusOid), shallowEqual);
-  const { jatkuvatHaut, yhteisHaut, erillisHaut } = useSelector(
-    selectHakukohteet(oid),
-    shallowEqual
-  );
+  const haut = useSelector(selectHakukohteet(oid), shallowEqual);
 
   const toteutusLoading = useSelector(selectToteutusLoading);
   const [koulutusNotFetched, setKoulutusNotFetched] = useState(!koulutus);
@@ -262,7 +259,7 @@ export const ToteutusPage = () => {
   }, [isDraft, toteutus, dispatch, oid, koulutus, koulutusOid, koulutusNotFetched]);
 
   const opetus = toteutus?.metadata?.opetus;
-  const hasAnyHaku = jatkuvatHaut?.length + yhteisHaut?.length + erillisHaut?.length > 0;
+  const hasAnyHaku = _.some(haut, (v: any) => v.hakukohteet.length > 0);
   const hakuUrl = useSelector(getHakuUrl);
   const { hakuParamsStr } = useSelector(getHakuParams);
 
@@ -376,13 +373,7 @@ export const ToteutusPage = () => {
             }))}
           />
         )}
-        {hasAnyHaku && (
-          <ToteutusHakukohteet
-            jatkuvatHaut={jatkuvatHaut}
-            yhteisHaut={yhteisHaut}
-            erillisHaut={erillisHaut}
-          />
-        )}
+        {hasAnyHaku && <ToteutusHakukohteet haut={haut} />}
         {toteutus?.hasMuuHaku && <ToteutusHakuMuu oid={toteutus?.oid} />}
         {toteutus?.hasEiSahkoistaHaku && <ToteutusHakuEiSahkoista oid={toteutus?.oid} />}
         {combinedLisatiedot.length > 0 && (

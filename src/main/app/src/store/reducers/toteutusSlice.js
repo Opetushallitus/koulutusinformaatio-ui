@@ -1,16 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import _ from 'lodash';
+import _fp from 'lodash/fp';
 
 import { getToteutus } from '#/src/api/konfoApi';
 import { HAKULOMAKE_TYYPPI } from '#/src/constants';
-import { isHakuAuki, isHakuEndInFuture } from '#/src/tools/hakuaikaUtils';
+import { isHakuAuki, isHakuTimeRelevant } from '#/src/tools/hakuaikaUtils';
 
 const IDLE_STATUS = 'idle';
 const LOADING_STATUS = 'loading';
-
-const JATKUVAHAKU = 'Jatkuva haku';
-const ERILLISHAKU = 'Erillishaku';
-const YHTEISHAKU = 'Yhteishaku';
 
 export const initialState = {
   status: IDLE_STATUS,
@@ -61,13 +57,34 @@ export const fetchToteutus = (oid, isDraft) => async (dispatch) => {
   }
 };
 
-const getHakukohteetWithType = (toteutus, type) =>
-  toteutus.hakutiedot
-    ?.filter((hakutieto) => hakutieto.hakutapa.nimi.fi === type)
-    .map((hakutieto) => hakutieto.hakukohteet)
-    .flat()
-    .filter((hakukohde) => isHakuEndInFuture(hakukohde.hakuajat))
-    .map((hakukohde) => ({ ...hakukohde, isHakuAuki: isHakuAuki(hakukohde.hakuajat) }));
+const getWithoutVersion = (koodi) => koodi.slice(0, koodi.lastIndexOf('#'));
+
+const getHakukohteetWithTypes = (toteutus) => {
+  const hakutavat = _fp.flow(
+    _fp.map(_fp.prop('hakutapa')),
+    _fp.sortBy('koodiUri'),
+    _fp.uniqBy('koodiUri')
+  )(toteutus.hakutiedot);
+
+  // Konfossa halutaan näyttää hakukohteet hakutyypeittäin, ei per haku
+  return hakutavat.reduce(
+    (a, hakutapa) => ({
+      ...a,
+      [getWithoutVersion(hakutapa.koodiUri)]: {
+        nimi: hakutapa.nimi,
+        hakukohteet: toteutus.hakutiedot
+          .filter((hakutieto) => hakutieto.hakutapa.koodiUri === hakutapa.koodiUri)
+          .flatMap((hakutieto) => hakutieto.hakukohteet)
+          .filter((hakukohde) => isHakuTimeRelevant(hakukohde.hakuajat))
+          .map((hakukohde) => ({
+            ...hakukohde,
+            isHakuAuki: isHakuAuki(hakukohde.hakuajat),
+          })),
+      },
+    }),
+    {}
+  );
+};
 
 export const selectLoading = (state) => state.toteutus.status === LOADING_STATUS;
 export const selectHakukohteet = (oid) => (state) => {
@@ -76,11 +93,7 @@ export const selectHakukohteet = (oid) => (state) => {
     return {};
   }
 
-  return {
-    jatkuvatHaut: getHakukohteetWithType(toteutus, JATKUVAHAKU),
-    erillisHaut: getHakukohteetWithType(toteutus, ERILLISHAKU),
-    yhteisHaut: getHakukohteetWithType(toteutus, YHTEISHAKU),
-  };
+  return getHakukohteetWithTypes(toteutus);
 };
 
 export const selectMuuHaku = (oid) => (state) => {
@@ -89,14 +102,17 @@ export const selectMuuHaku = (oid) => (state) => {
 
   // TODO: SORA-kuvaus - atm. we only get an Id from the API but we cannot do anything with it
   return {
-    ..._.pick(toteutus.metadata, [
-      'aloituspaikat',
-      'hakuaika',
-      'hakulomakeLinkki',
-      'hakutermi',
-      'lisatietoaHakeutumisesta',
-      'lisatietoaValintaperusteista',
-    ]),
+    ..._fp.pick(
+      [
+        'aloituspaikat',
+        'hakuaika',
+        'hakulomakeLinkki',
+        'hakutermi',
+        'lisatietoaHakeutumisesta',
+        'lisatietoaValintaperusteista',
+      ],
+      toteutus.metadata
+    ),
     isHakuAuki: hakuAuki,
     nimi: toteutus.nimi,
     // TODO: we do not get osoite from the API atm. so just use all the tarjoajat to fetch oppilaitoksenOsat
@@ -108,7 +124,7 @@ export const selectMuuHaku = (oid) => (state) => {
 export const selectEiSahkoistaHaku = (oid) => (state) => {
   const toteutus = selectToteutus(oid)(state);
   return {
-    ..._.pick(toteutus.metadata, ['lisatietoaHakeutumisesta']),
+    ..._fp.pick(['lisatietoaHakeutumisesta'], toteutus.metadata),
   };
 };
 
