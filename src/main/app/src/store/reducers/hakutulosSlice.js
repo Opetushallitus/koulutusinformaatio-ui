@@ -18,20 +18,22 @@ export const initialState = {
   status: INITIAL,
   error: null,
   keyword: '',
-  // Koulutukset
+
+  // Koulutukset, sisältää lukumäärät ja käännökset mitä backend vastaa
   koulutusHits: [],
   koulutusFilters: {},
   koulutusTotal: null,
   koulutusOffset: 0,
   koulutusPage: 1,
-  // Oppilaitokset
+
+  // Oppilaitokset, sisältää lukumäärät ja käännökset mitä backend vastaa
   oppilaitosHits: [],
   oppilaitosFilters: {},
   oppilaitosTotal: null,
   oppilaitosOffset: 0,
   oppilaitosPage: 1,
 
-  // Persistoidut suodatinvalinnat, listoja id-arvoista
+  // Persistoidut suodatinvalinnat, listoja valituista koodiarvoista (+ yksi boolean rajain)
   koulutustyyppi: [],
   'koulutustyyppi-muu': [],
   koulutusala: [],
@@ -61,25 +63,18 @@ const hakutulosSlice = createSlice({
     setSelectedTab: (state, { payload }) => {
       state.selectedTab = payload.newSelectedTab;
     },
-    // NOTE: Tämä on uusi rajapinta eikä kaikki rajaimet vielä käytä tätä
     // payload [{itemId: FilterValue, operation: "SET" | "UNSET" | "TOGGLE"}]
     handleFilterOperations: (state, { payload: filterOperations = [] }) => {
       filterOperations.forEach(({ item, operation = 'TOGGLE' }) => {
         const id = item.filterId;
         // NOTE: hakukaynnissa on ainoa boolean-suodatin, käsitellään erikseen
         if (id === FILTER_TYPES.HAKUKAYNNISSA) {
+          // prettier-ignore
           switch (operation) {
-            case 'TOGGLE':
-              state.hakukaynnissa = !state.hakukaynnissa;
-              break;
-            case 'SET':
-              state.hakukaynnissa = true;
-              break;
-            case 'UNSET':
-              state.hakukaynnissa = false;
-              break;
-            default:
-              break;
+            case 'TOGGLE': state.hakukaynnissa = !state.hakukaynnissa; break;
+            case 'SET': state.hakukaynnissa = true; break;
+            case 'UNSET': state.hakukaynnissa = false; break;
+            default: break;
           }
           return;
         }

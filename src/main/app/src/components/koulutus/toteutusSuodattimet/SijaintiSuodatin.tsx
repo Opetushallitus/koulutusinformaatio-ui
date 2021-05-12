@@ -7,12 +7,14 @@ import {
   FilterValue,
   SuodatinComponentProps,
 } from '#/src/components/hakutulos/hakutulosSuodattimet/SuodatinTypes';
+import { FILTER_TYPES } from '#/src/constants';
 
 import { getOptionsForSelect } from './utils';
 
 type Props = {
   handleFilterChange: (newFilters: object) => void;
-  initialValues: Array<FilterValue>;
+  initialMaakunnat: Array<string>;
+  initialKunnat: Array<string>;
   sortedMaakunnat: Array<FilterValue>;
   sortedKunnat: Array<FilterValue>;
 } & SuodatinComponentProps;
@@ -21,47 +23,53 @@ export const SijaintiSuodatin = (props: Props) => {
   const { t } = useTranslation();
   const {
     handleFilterChange,
-    initialValues = [],
+    initialMaakunnat = [],
+    initialKunnat = [],
     sortedMaakunnat = [],
     sortedKunnat = [],
     ...rest
   } = props;
 
-  const [checkedValues, setCheckedValues] = useState(initialValues);
+  const [checkedMaakunnat, setCheckedMaakunnat] = useState(initialMaakunnat);
+  const [checkedKunnat, setCheckedKunnat] = useState(initialKunnat);
   useEffect(() => {
-    setCheckedValues(initialValues);
-  }, [initialValues]);
+    setCheckedMaakunnat(initialMaakunnat);
+    setCheckedKunnat(initialKunnat);
+  }, [initialMaakunnat, initialKunnat]);
 
   const handleCheck = useCallback(
     (value: FilterValue) => {
-      const wasChecked = checkedValues.some((v) => v.id === value.id);
+      const isMaakunta = value.filterId === FILTER_TYPES.MAAKUNTA;
+      const checkedValues = isMaakunta ? checkedMaakunnat : checkedKunnat;
+      const wasChecked = checkedValues.some((id) => id === value.id);
       const newCheckedValues = wasChecked
-        ? checkedValues.filter((v) => v.id !== value.id)
-        : [...checkedValues, value];
+        ? checkedValues.filter((id) => id !== value.id)
+        : [...checkedValues, value.id];
 
-      setCheckedValues(newCheckedValues);
-      handleFilterChange({ sijainti: newCheckedValues });
+      const usedSetter = isMaakunta ? setCheckedMaakunnat : setCheckedKunnat;
+      usedSetter(newCheckedValues);
+      handleFilterChange({ [value.filterId]: newCheckedValues });
     },
-    [checkedValues, handleFilterChange]
+    [checkedMaakunnat, checkedKunnat, handleFilterChange]
   );
 
   const groupedSijainnit = useMemo(
     () => [
       {
         label: t('haku.maakunnat'),
-        options: getOptionsForSelect(sortedMaakunnat, checkedValues),
+        options: getOptionsForSelect(sortedMaakunnat, checkedMaakunnat),
       },
       {
         label: t('haku.kaupungit-tai-kunnat'),
-        options: getOptionsForSelect(sortedKunnat, checkedValues),
+        options: getOptionsForSelect(sortedKunnat, checkedKunnat),
       },
     ],
-    [checkedValues, sortedMaakunnat, sortedKunnat, t]
+    [checkedMaakunnat, checkedKunnat, sortedMaakunnat, sortedKunnat, t]
   );
 
   const usedValues = sortedMaakunnat.map((v) => ({
     ...v,
-    checked: checkedValues.some((checked) => v.id === checked.id),
+    checked: checkedMaakunnat.some((id) => v.id === id),
   }));
 
   return (

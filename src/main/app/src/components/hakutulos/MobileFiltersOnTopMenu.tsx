@@ -18,13 +18,12 @@ import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { useQueryParams } from '#/src/hooks';
 import {
   searchAndMoveToHaku,
   clearSelectedFilters,
-  searchAll,
+  newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
-import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
+import { getAllSelectedFilters } from '#/src/store/reducers/hakutulosSliceSelector';
 
 import { HakutapaSuodatin } from './hakutulosSuodattimet/HakutapaSuodatin';
 import { KoulutusalaSuodatin } from './hakutulosSuodattimet/KoulutusalaSuodatin';
@@ -80,11 +79,7 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
     [selectedTab, koulutusTotal, oppilaitosTotal]
   );
 
-  const suodatinValinnatProps = useSelector(getSuodatinValinnatProps);
-  const chosenFilterCount = _.sumBy(_.values(suodatinValinnatProps), (arr) =>
-    _.size(arr)
-  );
-  const apiRequestParams = useQueryParams();
+  const selectedFilters = useSelector(getAllSelectedFilters);
 
   const [showFilters, setShowFilters] = useState(false);
   const toggleShowFilters = useCallback(() => setShowFilters(!showFilters), [
@@ -100,7 +95,7 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
 
   const handleClearFilters = () => {
     dispatch(clearSelectedFilters());
-    dispatch(searchAll(_.omit(apiRequestParams, _.keys(suodatinValinnatProps))));
+    dispatch(newSearchAll());
   };
 
   return (
@@ -108,7 +103,7 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
       {!showFilters && (
         <MobileToggleFiltersButton
           type={isFrontPage ? 'frontpage' : 'fixed'}
-          chosenFilterCount={chosenFilterCount}
+          chosenFilterCount={selectedFilters.length}
           showFilters={showFilters}
           handleFiltersShowToggle={toggleShowFilters}
         />
@@ -133,7 +128,7 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
                 </Typography>
               </Grid>
               <Grid item style={{ paddingRight: '10px' }}>
-                {_.some(suodatinValinnatProps, (arr) => _.size(arr) > 0) && (
+                {selectedFilters.length > 0 && (
                   <Button
                     color="inherit"
                     classes={{ label: classes.buttonLabel }}

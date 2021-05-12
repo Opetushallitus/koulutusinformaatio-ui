@@ -176,47 +176,6 @@ export const getMobileToggleOrderByButtonMenuProps = createSelector(
     isNameSortDesc: sort === 'name' && order !== 'asc',
   })
 );
-export const getSuodatinValinnatProps = createSelector(
-  [
-    getOpetuskieli,
-    getKoulutustyyppi,
-    getKoulutusala,
-    getKunta,
-    getMaakunta,
-    getOpetustapa,
-    getValintatapa,
-    getHakukaynnissa,
-    getHakutapa,
-    getYhteishaku,
-    getPohjakoulutusvaatimus,
-  ],
-  (
-    opetuskieli,
-    koulutustyyppi,
-    koulutusala,
-    kunta,
-    maakunta,
-    opetustapa,
-    valintatapa,
-    hakukaynnissa,
-    hakutapa,
-    yhteishaku,
-    pohjakoulutusvaatimus
-  ) => ({
-    opetuskieli,
-    koulutustyyppi,
-    koulutusala,
-    kunta,
-    maakunta,
-    opetustapa,
-    valintatapa,
-    // TODO: Refactor suodatinvalinnat to accept big list of ids
-    hakukaynnissa: hakukaynnissa ? [{ id: 'hakukaynnissa' }] : [],
-    hakutapa,
-    yhteishaku,
-    pohjakoulutusvaatimus,
-  })
-);
 
 export const getHakutulosPagination = createSelector(
   [
@@ -355,16 +314,15 @@ const findKoodiOrAlakoodi = (filter, id) => {
 };
 
 export const getAllSelectedFilters = createSelector(
-  [getKoulutusFilters, getOppilaitosFilters, getSelectedTab, getFilters],
-  (koulutusFilters, oppilaitosFilters, selectedTab, allCheckedValues) => {
-    const usedFilter = selectedTab === 'koulutus' ? koulutusFilters : oppilaitosFilters;
+  [getKoulutusFilters, getFilters],
+  (koulutusFilters, allCheckedValues) => {
     return Object.entries(allCheckedValues)
       .map(([filterId, checkedValues]) => {
         if (_.isBoolean(checkedValues)) {
           return checkedValues ? [{ filterId, id: filterId }] : [];
         }
-        // Etsitään id:tä vastaava arvo ja palautetaan rikastettuna
-        const filter = usedFilter[filterId];
+        // Etsitään id:tä vastaava arvo ja palautetaan rikastettuna, käytetään koulutuksen suodattimia
+        const filter = koulutusFilters[filterId];
         return (
           checkedValues?.map((id) => ({
             id,
