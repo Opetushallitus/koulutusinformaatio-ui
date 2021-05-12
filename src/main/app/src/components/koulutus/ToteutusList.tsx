@@ -59,8 +59,14 @@ type JarjestajaData = {
   sortedFilters: Record<string, Array<FilterValue>>;
 };
 
-const getQueryStr = (values: Array<{ id: string }>) =>
-  values.map(({ id }) => id).join(',');
+const getQueryStr = (values: Record<string, Array<string>>) => {
+  // TODO: konfo-backend haluaa sijainti -rajaimen maakunta ja kunta sijaan, pitäisi refaktoroida sieltä pois
+  const valuesWithSijainti = _fp.omit(['kunta', 'maakunta'], {
+    ...values,
+    sijainti: [...values.maakunta, ...values.kunta],
+  });
+  return _fp.mapValues((v) => v!.join(','), valuesWithSijainti);
+};
 
 export const ToteutusList = ({ oid }: Props) => {
   const { t } = useTranslation();
@@ -68,10 +74,11 @@ export const ToteutusList = ({ oid }: Props) => {
   const dispatch = useDispatch();
 
   // NOTE: Tämä haetaan vain kerran alkuarvoja varten
-  const initialCheckedFilters = useSelector<any, Record<string, Array<FilterValue>>>(
+  const initialCheckedFilters = useSelector<any, Record<string, Array<string>>>(
     getCheckedToteutusFilters
   );
-  const [chosenFilters, setChosenFilters] = useState(initialCheckedFilters);
+  const [initialValues] = useState(initialCheckedFilters); // Estetään uudelleenluonti
+  const [chosenFilters, setChosenFilters] = useState(initialValues);
 
   const { jarjestajat, loading, sortedFilters }: JarjestajaData = useSelector(
     selectJarjestajat
@@ -85,7 +92,7 @@ export const ToteutusList = ({ oid }: Props) => {
     (newChosenFilters: object) => {
       const usedFilters = { ...chosenFilters, ...newChosenFilters };
       setChosenFilters(usedFilters);
-      const queryStrings = _fp.mapValues(getQueryStr, usedFilters);
+      const queryStrings = getQueryStr(usedFilters);
       dispatch(fetchKoulutusJarjestajat(oid, queryStrings));
     },
     [dispatch, oid, chosenFilters]
@@ -94,15 +101,15 @@ export const ToteutusList = ({ oid }: Props) => {
   const handleFiltersClear = useCallback(() => {
     const usedFilters = _fp.mapValues((_) => [], chosenFilters);
     setChosenFilters(usedFilters);
-    const queryStrings = _fp.mapValues(getQueryStr, usedFilters);
+    const queryStrings = getQueryStr(usedFilters);
     dispatch(fetchKoulutusJarjestajat(oid, queryStrings));
   }, [dispatch, oid, chosenFilters]);
 
   // Initial fetch with params from Haku
   useEffect(() => {
-    const queryStrings = _fp.mapValues(getQueryStr, initialCheckedFilters);
+    const queryStrings = getQueryStr(initialValues);
     dispatch(fetchKoulutusJarjestajat(oid, queryStrings));
-  }, [dispatch, oid, initialCheckedFilters]);
+  }, [dispatch, oid, initialValues]);
 
   const someSelected = useMemo(
     () => Object.values(chosenFilters).some((v) => v.length > 0),
@@ -130,9 +137,8 @@ export const ToteutusList = ({ oid }: Props) => {
           <Grid item className={classes.filter}>
             <SijaintiSuodatin
               handleFilterChange={handleFilterChange}
-              initialValues={initialCheckedFilters.maakunta.concat(
-                initialCheckedFilters.kunta
-              )}
+              initialMaakunnat={initialCheckedFilters.maakunta}
+              initialKunnat={initialCheckedFilters.kunta}
               sortedMaakunnat={sortedFilters.maakunta}
               sortedKunnat={sortedFilters.kunta}
             />

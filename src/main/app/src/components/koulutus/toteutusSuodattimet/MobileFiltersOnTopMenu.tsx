@@ -114,7 +114,8 @@ export const MobileFiltersOnTopMenu = ({
             handleFilterChange={handleFilterChange}
             expanded={false}
             elevation={0}
-            initialValues={chosenFilters.sijainti}
+            initialMaakunnat={chosenFilters.maakunta}
+            initialKunnat={chosenFilters.kunta}
             sortedMaakunnat={sortedValues.maakunta}
             sortedKunnat={sortedValues.kunta}
           />

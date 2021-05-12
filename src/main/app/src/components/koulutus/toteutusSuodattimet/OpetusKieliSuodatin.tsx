@@ -10,7 +10,7 @@ import {
 
 type Props = {
   handleFilterChange: (newFilters: object) => void;
-  initialValues: Array<FilterValue>;
+  initialValues: Array<string>;
   sortedValues: Array<FilterValue>;
 } & SuodatinComponentProps;
 
@@ -23,13 +23,14 @@ export const OpetuskieliSuodatin = (props: Props) => {
     setCheckedValues(initialValues);
   }, [initialValues]);
 
+  // TODO: Move this to Toteutuslist
   const handleCheck = useCallback(
     (value: FilterValue) => {
       const { id } = value;
-      const wasChecked = checkedValues.some((v) => v.id === id);
+      const wasChecked = checkedValues.some((v) => v === id);
       const newCheckedValues = wasChecked
-        ? checkedValues.filter((v) => v.id !== id)
-        : [...checkedValues, value];
+        ? checkedValues.filter((v) => v !== id)
+        : [...checkedValues, value.id];
 
       setCheckedValues(newCheckedValues);
       handleFilterChange({ opetuskieli: newCheckedValues });
@@ -39,7 +40,7 @@ export const OpetuskieliSuodatin = (props: Props) => {
 
   const usedValues = sortedValues.map((v) => ({
     ...v,
-    checked: checkedValues.some((checked) => v.id === checked.id),
+    checked: checkedValues.some((id) => v.id === id),
   }));
 
   return (

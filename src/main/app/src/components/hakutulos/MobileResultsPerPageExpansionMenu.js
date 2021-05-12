@@ -6,15 +6,13 @@ import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { pageSizeArray } from '#/src/constants';
-import { useQueryParams } from '#/src/hooks';
-import { clearPaging, searchAll, setSize } from '#/src/store/reducers/hakutulosSlice';
+import { clearPaging, newSearchAll, setSize } from '#/src/store/reducers/hakutulosSlice';
 
 import { SuodatinMobileSlider } from './hakutulosSuodattimet/CustomizedMuiComponents';
 
 export const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const apiRequestPaparms = useQueryParams();
   const { size } = useSelector(
     (state) => ({
       size: state.hakutulos.size,
@@ -31,7 +29,7 @@ export const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
   const handleSliderValueChange = (e, newSize) => {
     dispatch(clearPaging());
     dispatch(setSize({ newSize }));
-    dispatch(searchAll({ ...apiRequestPaparms, size: newSize }));
+    dispatch(newSearchAll());
   };
 
   return (
