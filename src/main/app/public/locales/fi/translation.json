@@ -119,6 +119,7 @@
     "palaa": "Palaa Opintopolkuun"
   },
   "haku": {
+    "amk": "AMK (korkeakoulutus)",
     "amk-alempi": "AMK - tutkinto",
     "amk-ylempi": "Ylempi AMK",
     "amm": "Ammatillinen koulutus",
@@ -167,6 +168,7 @@
     "koulutustyypillä_plural": "koulutustyypeillä",
     "lisaa-vertailuun": "Lisää vertailuun",
     "lisää-hakusana-tai-rajain": "Lisää hakusana tai hakurajain",
+    "lk": "Lukiokoulutus",
     "lukio": "Lukio",
     "maakunnat": "Maakunnat",
     "maisteri": "Maisteritutkinto",
@@ -215,7 +217,8 @@
     "valintatapa": "Valintatapa",
     "tutkintoon-johtavaa-koulutusta": "tutkintoon johtavaa koulutusta",
     "valitse": "Valitse",
-    "vertaile": "Vertaile"
+    "vertaile": "Vertaile",
+    "yo": "Yliopisto (korkeakoulutus)"
   },
   "navigaatio": {
     "edellinen": "Edellinen",
