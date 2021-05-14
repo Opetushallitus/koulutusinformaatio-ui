@@ -307,32 +307,29 @@ const findKoodiOrAlakoodi = (filter, id) => {
     return filter[id];
   }
 
-  const alakoodiPairs = Object.values(filter)
-    .map((v) => Object.entries(v.alakoodit))
-    .flat();
-  return alakoodiPairs.find(([key]) => key === id)[1];
+  const valueWithCorrectAlakoodi = _.values(filter)
+    .filter((v) => v.alakoodit)
+    .find((v) => v.alakoodit[id]);
+  return valueWithCorrectAlakoodi.alakoodit[id];
 };
 
 export const getAllSelectedFilters = createSelector(
   [getKoulutusFilters, getFilters],
-  (koulutusFilters, allCheckedValues) => {
-    return Object.entries(allCheckedValues)
-      .map(([filterId, checkedValues]) => {
-        if (_.isBoolean(checkedValues)) {
-          return checkedValues ? [{ filterId, id: filterId }] : [];
-        }
-        // Etsitään id:tä vastaava arvo ja palautetaan rikastettuna, käytetään koulutuksen suodattimia
-        const filter = koulutusFilters[filterId];
-        return (
-          checkedValues?.map((id) => ({
-            id,
-            filterId,
-            ...findKoodiOrAlakoodi(filter, id),
-          })) ?? []
-        );
-      })
-      .flat();
-  }
+  (koulutusFilters, allCheckedValues) =>
+    _.map(allCheckedValues, (checkedValues, filterId) => {
+      if (_.isBoolean(checkedValues)) {
+        return checkedValues ? [{ filterId, id: filterId }] : [];
+      }
+      // Etsitään id:tä vastaava arvo ja palautetaan rikastettuna, käytetään koulutuksen suodattimia
+      const filter = koulutusFilters[filterId];
+      return (
+        checkedValues?.map((id) => ({
+          id,
+          filterId,
+          ...findKoodiOrAlakoodi(filter, id),
+        })) ?? []
+      );
+    }).flat()
 );
 
 export const getCheckedToteutusFilters = createSelector([getFilters], (checkedValues) =>
