@@ -5,13 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { FILTER_TYPES } from '#/src/constants';
 import {
-  handleFilterOperations,
+  setFilterSelectedValues,
   newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
 
 import { Filter } from './Filter';
 import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
+import { getFilterStateChanges } from './utils';
 
 const filterSelector = getFilterProps(FILTER_TYPES.POHJAKOULUTUSVAATIMUS);
 
@@ -19,10 +20,11 @@ const filterSelector = getFilterProps(FILTER_TYPES.POHJAKOULUTUSVAATIMUS);
 export const PohjakoulutusvaatimusSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { values } = useSelector<any, FilterProps>(filterSelector);
+  const values = useSelector<any, FilterProps>(filterSelector);
 
   const handleCheck = (item: FilterValue) => {
-    dispatch(handleFilterOperations([{ item, operation: 'TOGGLE' }]));
+    const changes = getFilterStateChanges(values)(item);
+    dispatch(setFilterSelectedValues(changes));
     dispatch(newSearchAll());
   };
 

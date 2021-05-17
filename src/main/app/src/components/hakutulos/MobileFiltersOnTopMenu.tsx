@@ -73,12 +73,12 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
     shallowEqual
   );
 
-  const count = useMemo(
+  const hitCount = useMemo(
     () => (selectedTab === 'koulutus' ? koulutusTotal : oppilaitosTotal),
     [selectedTab, koulutusTotal, oppilaitosTotal]
   );
 
-  const selectedFilters = useSelector(getAllSelectedFilters);
+  const { count } = useSelector(getAllSelectedFilters);
 
   const [showFilters, setShowFilters] = useState(false);
   const toggleShowFilters = useCallback(() => setShowFilters(!showFilters), [
@@ -102,7 +102,7 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
       {!showFilters && (
         <MobileToggleFiltersButton
           type={isFrontPage ? 'frontpage' : 'fixed'}
-          chosenFilterCount={selectedFilters.length}
+          chosenFilterCount={count}
           showFilters={showFilters}
           handleFiltersShowToggle={toggleShowFilters}
         />
@@ -127,7 +127,7 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
                 </Typography>
               </Grid>
               <Grid item style={{ paddingRight: '10px' }}>
-                {selectedFilters.length > 0 && (
+                {count > 0 && (
                   <Button
                     color="inherit"
                     classes={{ label: classes.buttonLabel }}
@@ -159,7 +159,7 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
         </Container>
         <MobileToggleFiltersButton
           type="fixed"
-          hitCount={count}
+          hitCount={hitCount}
           showFilters={showFilters}
           handleFiltersShowToggle={handleFiltersShowToggle}
         />

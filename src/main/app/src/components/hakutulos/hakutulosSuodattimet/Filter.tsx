@@ -109,6 +109,7 @@ const FilterCheckbox = ({
   value,
   expandButton,
 }: CheckboxProps) => {
+  const { t } = useTranslation();
   const { count, id, nimi, checked } = value;
   const labelId = `filter-list-label-${id}`;
   const classes = withStyles();
@@ -133,9 +134,8 @@ const FilterCheckbox = ({
       <SuodatinListItemText
         id={labelId}
         primary={
-          <>
-            <Grid item>{_.isString(nimi) ? nimi : localize(nimi)}</Grid>
-          </>
+          // Kaikille suodattimille ei tule backendista käännöksiä
+          <Grid item>{localize(nimi) || t(`haku.${id}`)}</Grid>
         }
       />
       {expandButton && <ListItemIcon>{expandButton}</ListItemIcon>}

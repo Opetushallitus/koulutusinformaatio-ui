@@ -6,6 +6,8 @@ export const MUI_BREAKPOINTS = {
   MIN_XS_400: '(min-width:400px)',
 } as const;
 
+export const YHTEISHAKU_KOODI_URI = 'hakutapa_01';
+
 export const FILTER_TYPES = {
   KOULUTUSALA: 'koulutusala',
   KOULUTUSTYYPPI: 'koulutustyyppi',

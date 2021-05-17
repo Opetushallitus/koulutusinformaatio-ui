@@ -63,31 +63,8 @@ const hakutulosSlice = createSlice({
     setSelectedTab: (state, { payload }) => {
       state.selectedTab = payload.newSelectedTab;
     },
-    // payload [{itemId: FilterValue, operation: "SET" | "UNSET" | "TOGGLE"}]
-    handleFilterOperations: (state, { payload: filterOperations = [] }) => {
-      filterOperations.forEach(({ item, operation = 'TOGGLE' }) => {
-        const id = item.filterId;
-        // NOTE: hakukaynnissa on ainoa boolean-suodatin, käsitellään erikseen
-        if (id === FILTER_TYPES.HAKUKAYNNISSA) {
-          // prettier-ignore
-          switch (operation) {
-            case 'TOGGLE': state.hakukaynnissa = !state.hakukaynnissa; break;
-            case 'SET': state.hakukaynnissa = true; break;
-            case 'UNSET': state.hakukaynnissa = false; break;
-            default: break;
-          }
-          return;
-        }
-
-        const exists = state[id].some((itemId) => item.id === itemId);
-        const shouldAdd = (operation === 'SET' || operation === 'TOGGLE') && !exists;
-        const shouldRemove = (operation === 'UNSET' || operation === 'TOGGLE') && exists;
-        if (shouldAdd) {
-          state[id] = state[id].concat(item.id);
-        } else if (shouldRemove) {
-          state[id] = state[id].filter((itemId) => item.id !== itemId);
-        }
-      });
+    setFilterSelectedValues: (state, { payload: newValues = [] }) => {
+      _.forEach(newValues, (values, filterId) => (state[filterId] = values));
     },
     clearPaging: (state) => {
       state.koulutusPage = 1;
@@ -209,7 +186,7 @@ export const {
   setSelectedTab,
   searchAPICallStart,
   searchAPICallError,
-  handleFilterOperations,
+  setFilterSelectedValues,
   clearPaging,
   clearSelectedFilters,
   setOrder,

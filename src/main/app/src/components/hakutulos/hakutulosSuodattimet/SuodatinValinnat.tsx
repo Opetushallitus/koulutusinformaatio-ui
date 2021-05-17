@@ -8,13 +8,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { colors } from '#/src/colors';
 import {
   clearSelectedFilters,
-  handleFilterOperations,
+  setFilterSelectedValues,
   newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getAllSelectedFilters } from '#/src/store/reducers/hakutulosSliceSelector';
 import { localize } from '#/src/tools/localization';
 
 import { FilterValue } from './SuodatinTypes';
+import { getFilterStateChanges } from './utils';
 
 const useStyles = makeStyles(() => ({
   chipRoot: {
@@ -93,10 +94,13 @@ const ChipList = ({
 
 export const SuodatinValinnat = () => {
   const dispatch = useDispatch();
-  const filters = useSelector(getAllSelectedFilters);
+  const { selectedFiltersFlatList, selectedFiltersTree } = useSelector(
+    getAllSelectedFilters
+  );
 
   const getHandleDelete = (item: FilterValue) => () => {
-    dispatch(handleFilterOperations([{ item, operation: 'UNSET' }]));
+    const changes = getFilterStateChanges(selectedFiltersTree)(item);
+    dispatch(setFilterSelectedValues(changes));
     dispatch(newSearchAll());
   };
 
@@ -107,7 +111,7 @@ export const SuodatinValinnat = () => {
 
   return (
     <ChipList
-      filters={filters}
+      filters={selectedFiltersFlatList}
       getHandleDelete={getHandleDelete}
       handleClearFilters={handleClearFilters}
     />
