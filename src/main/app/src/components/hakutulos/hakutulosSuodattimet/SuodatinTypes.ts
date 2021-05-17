@@ -11,13 +11,11 @@ export type SuodatinComponentProps = {
 export type FilterValue = {
   id: string;
   filterId: string;
-  nimi: Translateable | string; // Koodistoille tulee nimi, muuten käännetään käsin suoraan
   checked: boolean;
   count: number;
-  alakoodit?: Array<FilterValue>;
+  nimi?: Translateable;
+  alakoodit?: Array<Omit<FilterValue, 'alakoodit'>>;
   hidden?: boolean; // Jotkut rajaimet eivät näytä kaikkia arvoja kerralla (koulutustyyppi), mutta kaikki arvot tarvitaan
 };
 
-export type FilterProps = {
-  values: Array<FilterValue>;
-};
+export type FilterProps = Array<FilterValue>;

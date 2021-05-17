@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { FILTER_TYPES } from '#/src/constants';
 import {
-  handleFilterOperations,
+  setFilterSelectedValues,
   newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getFilterProps, getIsReady } from '#/src/store/reducers/hakutulosSliceSelector';
@@ -14,6 +14,7 @@ import { localize } from '#/src/tools/localization';
 
 import { Filter } from './Filter';
 import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
+import { getFilterStateChanges } from './utils';
 
 const maakuntaSelector = getFilterProps(FILTER_TYPES.MAAKUNTA);
 const kuntaSelector = getFilterProps(FILTER_TYPES.KUNTA);
@@ -30,11 +31,12 @@ export const SijaintiSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const { values: kuntaValues } = useSelector<any, FilterProps>(kuntaSelector);
-  const { values: maakuntaValues } = useSelector<any, FilterProps>(maakuntaSelector);
+  const kuntaValues = useSelector<any, FilterProps>(kuntaSelector);
+  const maakuntaValues = useSelector<any, FilterProps>(maakuntaSelector);
 
   const handleCheck = (item: FilterValue) => {
-    dispatch(handleFilterOperations([{ item, operation: 'TOGGLE' }]));
+    const changes = getFilterStateChanges(kuntaValues.concat(maakuntaValues))(item);
+    dispatch(setFilterSelectedValues(changes));
     dispatch(newSearchAll());
   };
 

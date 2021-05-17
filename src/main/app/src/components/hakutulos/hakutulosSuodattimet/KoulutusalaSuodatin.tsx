@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { FILTER_TYPES } from '#/src/constants';
 import {
-  handleFilterOperations,
+  setFilterSelectedValues,
   newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
@@ -20,12 +20,12 @@ export const KoulutusalaSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const { values } = useSelector<any, FilterProps>(koulutusalaSelector);
+  const values = useSelector<any, FilterProps>(koulutusalaSelector);
 
-  const getOperations = getFilterStateChanges(values);
+  const getChanges = getFilterStateChanges(values);
   const handleCheck = (item: FilterValue) => {
-    const operations = getOperations(item);
-    dispatch(handleFilterOperations(operations));
+    const changes = getChanges(item);
+    dispatch(setFilterSelectedValues(changes));
     dispatch(newSearchAll());
   };
 

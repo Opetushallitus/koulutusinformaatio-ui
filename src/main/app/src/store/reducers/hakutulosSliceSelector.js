@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import qs from 'query-string';
 
-import { FILTER_TYPES_ARR } from '#/src/constants';
+import { FILTER_TYPES, FILTER_TYPES_ARR, YHTEISHAKU_KOODI_URI } from '#/src/constants';
 import { getLanguage } from '#/src/tools/localization';
 import { Common as C } from '#/src/tools/Utils';
 
@@ -62,7 +62,6 @@ const getHakutapa = (state) => state.hakutulos.hakutapa;
 const getYhteishaku = (state) => state.hakutulos.yhteishaku;
 const getPohjakoulutusvaatimus = (state) => state.hakutulos.pohjakoulutusvaatimus;
 
-const getFilter = (id) => (state) => state.hakutulos[id];
 const getFilters = (state) => _.pick(state.hakutulos, FILTER_TYPES_ARR);
 
 function getSelectedTab(state) {
@@ -282,72 +281,82 @@ const sortValues = (filterObj) =>
 
 export const getFilterProps = (id) =>
   createSelector(
-    [getKoulutusFilters, getOppilaitosFilters, getSelectedTab, getFilter(id)],
-    (koulutusFilters, oppilaitosFilters, selectedTab, checkedValues) => {
-      const usedFilter =
-        selectedTab === 'koulutus' ? koulutusFilters[id] : oppilaitosFilters[id];
+    [getKoulutusFilters, getOppilaitosFilters, getSelectedTab, getFilters],
+    (koulutusFilters, oppilaitosFilters, selectedTab, allCheckedValues) => {
+      const usedFilters =
+        selectedTab === 'koulutus' ? koulutusFilters : oppilaitosFilters;
 
-      return {
-        values: sortValues(usedFilter).map((v) => ({
-          ...v,
-          filterId: id,
-          checked: checkedValues.some((checkedId) => checkedId === v.id),
-          alakoodit: sortValues(v.alakoodit)?.map((alakoodi) => ({
-            ...alakoodi,
-            filterId: id,
-            checked: checkedValues.some((checkedId) => checkedId === alakoodi.id),
-          })),
-        })),
-      };
+      return sortValues(getFilterWithChecked(usedFilters, allCheckedValues, id));
     }
   );
 
-const findKoodiOrAlakoodi = (filter, id) => {
-  if (filter[id]) {
-    return filter[id];
+// NOTE: Tämä funktio hoitaa kovakoodatut rakenteet erikoisemmille suodattimille e.g. hakukaynnissa / hakutapa + yhteishaku
+const getFilterWithChecked = (filters, allCheckedValues, filterId) => {
+  const filter = filters[filterId];
+
+  if (!filter) {
+    return {};
   }
 
-  const valueWithCorrectAlakoodi = _.values(filter)
-    .filter((v) => v.alakoodit)
-    .find((v) => v.alakoodit[id]);
-  return valueWithCorrectAlakoodi.alakoodit[id];
+  if (filterId === FILTER_TYPES.HAKUKAYNNISSA) {
+    return {
+      [FILTER_TYPES.HAKUKAYNNISSA]: {
+        id: FILTER_TYPES.HAKUKAYNNISSA,
+        filterId: FILTER_TYPES.HAKUKAYNNISSA,
+        count: filter.count,
+        checked: !!allCheckedValues[FILTER_TYPES.HAKUKAYNNISSA],
+      },
+    };
+  }
+
+  return _.mapValues(filter, (v, id) => ({
+    ...v,
+    id,
+    filterId,
+    checked: _.some(allCheckedValues[filterId], (checkedId) => checkedId === id),
+    alakoodit:
+      id === YHTEISHAKU_KOODI_URI
+        ? sortValues(filters[FILTER_TYPES.YHTEISHAKU])?.map((alakoodi) => ({
+            ...alakoodi,
+            filterId: FILTER_TYPES.YHTEISHAKU,
+            checked: _.some(
+              allCheckedValues[FILTER_TYPES.YHTEISHAKU],
+              (checkedId) => checkedId === alakoodi.id
+            ),
+          }))
+        : sortValues(v.alakoodit)?.map((alakoodi) => ({
+            ...alakoodi,
+            filterId,
+            checked: _.some(
+              allCheckedValues[filterId],
+              (checkedId) => checkedId === alakoodi.id
+            ),
+          })),
+  }));
 };
 
 export const getAllSelectedFilters = createSelector(
   [getKoulutusFilters, getFilters],
-  (koulutusFilters, allCheckedValues) =>
-    _.map(allCheckedValues, (checkedValues, filterId) => {
-      if (_.isBoolean(checkedValues)) {
-        return checkedValues ? [{ filterId, id: filterId }] : [];
-      }
-      // Etsitään id:tä vastaava arvo ja palautetaan rikastettuna, käytetään koulutuksen suodattimia
-      const filter = koulutusFilters[filterId];
-      return (
-        checkedValues?.map((id) => ({
-          id,
-          filterId,
-          ...findKoodiOrAlakoodi(filter, id),
-        })) ?? []
-      );
-    }).flat()
+  (koulutusFilters, allCheckedValues) => {
+    const selectedFiltersTree = _.map(
+      _.pickBy(allCheckedValues, (v) => (_.isArray(v) ? v.length > 0 : v)),
+      (ignored, filterId) =>
+        _.values(getFilterWithChecked(koulutusFilters, allCheckedValues, filterId))
+    ).flat();
+
+    const selectedFiltersFlatList = selectedFiltersTree
+      .map((v) => [v, ...(v.alakoodit || [])])
+      .flat()
+      .filter((v) => v.checked);
+
+    return {
+      count: selectedFiltersFlatList.length,
+      selectedFiltersFlatList,
+      selectedFiltersTree,
+    };
+  }
 );
 
 export const getCheckedToteutusFilters = createSelector([getFilters], (checkedValues) =>
   _.pick(checkedValues, ['opetuskieli', 'maakunta', 'kunta', 'opetustapa'])
 );
-
-export const hakukaynnissaSelector = () =>
-  createSelector(
-    [getKoulutusFilters, getOppilaitosFilters, getSelectedTab, getHakukaynnissa],
-    (koulutusFilters, oppilaitosFilters, selectedTab, hakukaynnissa) => {
-      const hakukaynnissaData =
-        selectedTab === 'koulutus'
-          ? koulutusFilters.hakukaynnissa
-          : oppilaitosFilters.hakukaynnissa;
-
-      return {
-        hakukaynnissa,
-        hakukaynnissaData,
-      };
-    }
-  );

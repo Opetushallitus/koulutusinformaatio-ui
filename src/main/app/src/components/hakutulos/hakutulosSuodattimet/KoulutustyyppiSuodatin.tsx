@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { colors } from '#/src/colors';
 import { FILTER_TYPES } from '#/src/constants';
 import {
-  handleFilterOperations,
+  setFilterSelectedValues,
   newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
@@ -47,29 +47,21 @@ export const KoulutustyyppiSuodatin = (props: SuodatinComponentProps) => {
   const dispatch = useDispatch();
 
   const [isMuuSelected, setIsMuuSelected] = useState(false);
-  const { values } = useSelector<any, FilterProps>(koulutusSelector);
-  const { values: muuValues } = useSelector<any, FilterProps>(koulutusMuuSelector);
+  const values = useSelector<any, FilterProps>(koulutusSelector);
+  const muuValues = useSelector<any, FilterProps>(koulutusMuuSelector);
 
   const filterValues = useMemo(
-    () =>
-      [
-        ...values.map((v) => ({ ...v, hidden: isMuuSelected })),
-        ...muuValues.map((v) => ({ ...v, hidden: !isMuuSelected })),
-      ].map((v) => ({
-        ...v,
-        nimi: v.nimi || t(`haku.${v.id}`), // Kaikille koulutustyypeille ei tule backendista käännöksiä
-        alakoodit: v.alakoodit?.map((alakoodi) => ({
-          ...alakoodi,
-          nimi: alakoodi.nimi || t(`haku.${alakoodi.id}`),
-        })),
-      })),
-    [isMuuSelected, muuValues, values, t]
+    () => [
+      ...values.map((v) => ({ ...v, hidden: isMuuSelected })),
+      ...muuValues.map((v) => ({ ...v, hidden: !isMuuSelected })),
+    ],
+    [isMuuSelected, muuValues, values]
   );
 
-  const getOperations = getFilterStateChanges(isMuuSelected ? muuValues : values);
+  const getChanges = getFilterStateChanges(isMuuSelected ? muuValues : values);
   const handleCheck = (item: FilterValue) => {
-    const operations = getOperations(item);
-    dispatch(handleFilterOperations(operations));
+    const changes = getChanges(item);
+    dispatch(setFilterSelectedValues(changes));
     dispatch(newSearchAll());
   };
 
