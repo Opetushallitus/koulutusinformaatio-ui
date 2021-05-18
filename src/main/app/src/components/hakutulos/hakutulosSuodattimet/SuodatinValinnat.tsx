@@ -13,8 +13,8 @@ import {
 } from '#/src/store/reducers/hakutulosSlice';
 import { getAllSelectedFilters } from '#/src/store/reducers/hakutulosSliceSelector';
 import { localize } from '#/src/tools/localization';
+import { FilterValue } from '#/src/types/SuodatinTypes';
 
-import { FilterValue } from './SuodatinTypes';
 import { getFilterStateChanges } from './utils';
 
 const useStyles = makeStyles(() => ({
@@ -94,12 +94,12 @@ const ChipList = ({
 
 export const SuodatinValinnat = () => {
   const dispatch = useDispatch();
-  const { selectedFiltersFlatList, selectedFiltersTree } = useSelector(
+  const { selectedFiltersFlatList, selectedFiltersWithAlakoodit } = useSelector(
     getAllSelectedFilters
   );
 
   const getHandleDelete = (item: FilterValue) => () => {
-    const changes = getFilterStateChanges(selectedFiltersTree)(item);
+    const changes = getFilterStateChanges(selectedFiltersWithAlakoodit)(item);
     dispatch(setFilterSelectedValues(changes));
     dispatch(newSearchAll());
   };

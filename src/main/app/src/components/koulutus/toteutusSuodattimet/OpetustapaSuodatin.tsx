@@ -2,11 +2,8 @@ import React from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { Filter } from '#/src/components/hakutulos/hakutulosSuodattimet/Filter';
-import {
-  FilterValue,
-  SuodatinComponentProps,
-} from '#/src/components/hakutulos/hakutulosSuodattimet/SuodatinTypes';
+import { Filter } from '#/src/components/common/Filter';
+import { FilterValue, SuodatinComponentProps } from '#/src/types/SuodatinTypes';
 
 type Props = {
   handleFilterChange: (value: FilterValue) => void;

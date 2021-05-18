@@ -1,4 +1,4 @@
-import { FilterValue } from './SuodatinTypes';
+import { FilterValue } from '#/src/types/SuodatinTypes';
 
 const addIfNotExists = (
   retVal: Record<string, Array<string>>,

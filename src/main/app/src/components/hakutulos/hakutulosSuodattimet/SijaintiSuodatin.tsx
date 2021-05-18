@@ -4,6 +4,7 @@ import _fp from 'lodash/fp';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Filter } from '#/src/components/common/Filter';
 import { FILTER_TYPES } from '#/src/constants';
 import {
   setFilterSelectedValues,
@@ -11,9 +12,12 @@ import {
 } from '#/src/store/reducers/hakutulosSlice';
 import { getFilterProps, getIsReady } from '#/src/store/reducers/hakutulosSliceSelector';
 import { localize } from '#/src/tools/localization';
+import {
+  FilterProps,
+  FilterValue,
+  SuodatinComponentProps,
+} from '#/src/types/SuodatinTypes';
 
-import { Filter } from './Filter';
-import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
 import { getFilterStateChanges } from './utils';
 
 const maakuntaSelector = getFilterProps(FILTER_TYPES.MAAKUNTA);

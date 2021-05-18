@@ -29,6 +29,7 @@ export const FILTER_TYPES_ARR = [
   'opetuskieli',
   'koulutusala',
   'koulutustyyppi',
+  'koulutustyyppi-muu',
   'kunta',
   'maakunta',
   'opetustapa',

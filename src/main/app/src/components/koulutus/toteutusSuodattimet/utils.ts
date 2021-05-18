@@ -1,6 +1,5 @@
 import { localize } from '#/src/tools/localization';
-
-import { FilterValue } from '../../hakutulos/hakutulosSuodattimet/SuodatinTypes';
+import { FilterValue } from '#/src/types/SuodatinTypes';
 
 export const getShownStr = (values: Array<any>) =>
   values.map((v) => localize(v)).join(',');

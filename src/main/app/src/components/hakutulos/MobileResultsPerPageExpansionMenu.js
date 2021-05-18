@@ -5,10 +5,9 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
+import { SuodatinMobileSlider } from '#/src/components/common/Filter/CustomizedMuiComponents';
 import { pageSizeArray } from '#/src/constants';
 import { clearPaging, newSearchAll, setSize } from '#/src/store/reducers/hakutulosSlice';
-
-import { SuodatinMobileSlider } from './hakutulosSuodattimet/CustomizedMuiComponents';
 
 export const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
   const { t } = useTranslation();

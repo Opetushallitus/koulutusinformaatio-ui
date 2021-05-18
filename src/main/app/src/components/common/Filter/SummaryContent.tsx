@@ -5,9 +5,9 @@ import { TFunction } from 'i18next';
 import _fp from 'lodash/fp';
 
 import { localize } from '#/src/tools/localization';
+import { FilterValue } from '#/src/types/SuodatinTypes';
 
 import { SuodatinMobileChip } from './CustomizedMuiComponents';
-import { FilterValue } from './SuodatinTypes';
 
 const MAX_CHARS_BEFORE_CHIP_TO_NUMBER = 24;
 
@@ -17,7 +17,7 @@ type Props = {
   displaySelected?: boolean;
 };
 
-const showNumberInstead = (name: string) =>
+const stringTooLongForChip = (name: string) =>
   !_fp.inRange(0, MAX_CHARS_BEFORE_CHIP_TO_NUMBER, _fp.size(name));
 
 export const SummaryContent = ({ values, filterName, displaySelected }: Props) => {
@@ -37,7 +37,7 @@ export const SummaryContent = ({ values, filterName, displaySelected }: Props) =
       </Grid>
       {displaySelected && (
         <Grid item>
-          {showNumberInstead(selectedFiltersStr) ? (
+          {stringTooLongForChip(selectedFiltersStr) ? (
             <SuodatinMobileChip label={selectedValues.length} />
           ) : (
             selectedFiltersStr
