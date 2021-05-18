@@ -78,7 +78,7 @@ export const KoulutustyyppiSuodatin = (props: SuodatinComponentProps) => {
       values={filterValues}
       handleCheck={handleCheck}
       additionalContent={
-        <Grid item xs={12} style={{ padding: '20px 0' }}>
+        <Grid item style={{ padding: '20px 0' }}>
           {/* TODO erillinen common component tästä */}
           <ButtonGroup fullWidth>
             <Button
