@@ -16,8 +16,8 @@ import { Close } from '@material-ui/icons';
 import _fp from 'lodash/fp';
 import { useTranslation } from 'react-i18next';
 
-import { FilterValue } from '#/src/components/hakutulos/hakutulosSuodattimet/SuodatinTypes';
 import { MobileToggleFiltersButton } from '#/src/components/hakutulos/MobileToggleFiltersButton';
+import { FilterValue } from '#/src/types/SuodatinTypes';
 
 import { OpetuskieliSuodatin } from './OpetusKieliSuodatin';
 import { OpetustapaSuodatin } from './OpetustapaSuodatin';
@@ -71,12 +71,11 @@ export const MobileFiltersOnTopMenu = ({
   const chosenFilterCount = useMemo(
     () =>
       _fp.flow(
-        _fp.values,
         _fp.map(
-          (v) => v.filter((filterValue: FilterValue) => filterValue.checked).length
+          (v: Array<FilterValue>) => v.filter((filterValue) => filterValue.checked).length
         ),
         _fp.sum
-      )(values),
+      )(values as any), // TS ei osaa päätellä tätä oikein
     [values]
   );
 

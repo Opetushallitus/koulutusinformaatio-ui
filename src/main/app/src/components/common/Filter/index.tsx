@@ -23,16 +23,16 @@ import Select, { components } from 'react-select';
 
 import { colors } from '#/src/colors';
 import { localize, localizeIfNimiObject } from '#/src/tools/localization';
+import { FilterValue } from '#/src/types/SuodatinTypes';
 
+import { KonfoCheckbox } from '../Checkbox';
 import {
   SuodatinAccordion,
   SuodatinAccordionDetails,
   SuodatinAccordionSummary,
-  KonfoCheckbox,
   SuodatinListItemText,
 } from './CustomizedMuiComponents';
 import { SummaryContent } from './SummaryContent';
-import { FilterValue } from './SuodatinTypes';
 
 const HIDE_NOT_EXPANDED_AMOUNT = 5;
 
@@ -91,7 +91,7 @@ const withStyles = makeStyles((theme) => ({
   noBoxShadow: {
     boxShadow: 'none',
   },
-  intendedCheckbox: {
+  indentedCheckbox: {
     paddingLeft: theme.spacing(2.2),
   },
 }));
@@ -99,13 +99,13 @@ const withStyles = makeStyles((theme) => ({
 type CheckboxProps = {
   value: FilterValue;
   handleCheck: (v: FilterValue) => void;
-  intended?: boolean;
+  indented?: boolean;
   expandButton?: JSX.Element;
 };
 
 const FilterCheckbox = ({
   handleCheck,
-  intended,
+  indented,
   value,
   expandButton,
 }: CheckboxProps) => {
@@ -119,7 +119,7 @@ const FilterCheckbox = ({
       dense
       button
       onClick={() => handleCheck(value)}
-      className={intended ? classes.intendedCheckbox : ''}>
+      className={indented ? classes.indentedCheckbox : ''}>
       <ListItemIcon>
         <KonfoCheckbox
           edge="start"
@@ -178,7 +178,7 @@ const FilterCheckboxGroup = ({
       />
       {isOpen &&
         value.alakoodit?.map((v) => (
-          <FilterCheckbox key={v.id} value={v} handleCheck={handleCheck} intended />
+          <FilterCheckbox key={v.id} value={v} handleCheck={handleCheck} indented />
         ))}
     </>
   );

@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import _ from 'lodash';
+import _fp from 'lodash/fp';
 import qs from 'query-string';
 
 import { FILTER_TYPES, FILTER_TYPES_ARR, YHTEISHAKU_KOODI_URI } from '#/src/constants';
@@ -291,7 +292,12 @@ export const getFilterProps = (id) =>
   );
 
 // NOTE: Tämä funktio hoitaa kovakoodatut rakenteet erikoisemmille suodattimille e.g. hakukaynnissa / hakutapa + yhteishaku
-const getFilterWithChecked = (filters, allCheckedValues, filterId) => {
+const getFilterWithChecked = (filters, allCheckedValues, originalFilterId) => {
+  // Yhteishaku -suodatin käsitellään osana hakutapa-suodatinta
+  const filterId =
+    originalFilterId === FILTER_TYPES.YHTEISHAKU
+      ? FILTER_TYPES.HAKUTAPA
+      : originalFilterId;
   const filter = filters[filterId];
 
   if (!filter) {
@@ -338,21 +344,25 @@ const getFilterWithChecked = (filters, allCheckedValues, filterId) => {
 export const getAllSelectedFilters = createSelector(
   [getKoulutusFilters, getFilters],
   (koulutusFilters, allCheckedValues) => {
-    const selectedFiltersTree = _.map(
-      _.pickBy(allCheckedValues, (v) => (_.isArray(v) ? v.length > 0 : v)),
-      (ignored, filterId) =>
-        _.values(getFilterWithChecked(koulutusFilters, allCheckedValues, filterId))
-    ).flat();
+    const selectedFiltersWithAlakoodit = _fp.flow(
+      _fp.pickBy((v) => (_.isArray(v) ? v.length > 0 : v)),
+      _fp.keys,
+      _fp.map((filterId) =>
+        _fp.values(getFilterWithChecked(koulutusFilters, allCheckedValues, filterId))
+      ),
+      _fp.flatten,
+      _fp.uniqBy('id')
+    )(allCheckedValues);
 
-    const selectedFiltersFlatList = selectedFiltersTree
+    const selectedFiltersFlatList = selectedFiltersWithAlakoodit
       .map((v) => [v, ...(v.alakoodit || [])])
       .flat()
-      .filter((v) => v.checked);
+      .filter((v) => v.checked); // Alakoodilistoissa voi olla valitsemattomia koodeja
 
     return {
       count: selectedFiltersFlatList.length,
       selectedFiltersFlatList,
-      selectedFiltersTree,
+      selectedFiltersWithAlakoodit,
     };
   }
 );

@@ -17,9 +17,9 @@ import {
 } from '#/src/store/reducers/koulutusSlice';
 import { localize, getLocalizedMaksullisuus } from '#/src/tools/localization';
 import { Translateable } from '#/src/types/common';
+import { FilterValue } from '#/src/types/SuodatinTypes';
 import { Jarjestaja } from '#/src/types/ToteutusTypes';
 
-import { FilterValue } from '../hakutulos/hakutulosSuodattimet/SuodatinTypes';
 import { MobileFiltersOnTopMenu } from './toteutusSuodattimet/MobileFiltersOnTopMenu';
 import { OpetuskieliSuodatin } from './toteutusSuodattimet/OpetusKieliSuodatin';
 import { OpetustapaSuodatin } from './toteutusSuodattimet/OpetustapaSuodatin';

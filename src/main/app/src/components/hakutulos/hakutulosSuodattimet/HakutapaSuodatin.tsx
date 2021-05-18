@@ -3,15 +3,19 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Filter } from '#/src/components/common/Filter';
 import { FILTER_TYPES } from '#/src/constants';
 import {
   setFilterSelectedValues,
   newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
+import {
+  FilterProps,
+  FilterValue,
+  SuodatinComponentProps,
+} from '#/src/types/SuodatinTypes';
 
-import { Filter } from './Filter';
-import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
 import { getFilterStateChanges } from './utils';
 
 const hakukaynnissaSelector = getFilterProps(FILTER_TYPES.HAKUKAYNNISSA);
@@ -37,7 +41,7 @@ export const HakutapaSuodatin = (props: SuodatinComponentProps) => {
     if (item.filterId === FILTER_TYPES.HAKUKAYNNISSA) {
       dispatch(setFilterSelectedValues({ hakukaynnissa: !item.checked }));
     } else {
-      const changes = getFilterStateChanges(hakukaynnissaValues)(item);
+      const changes = getFilterStateChanges(hakutapaValues)(item);
       dispatch(setFilterSelectedValues(changes));
     }
     dispatch(newSearchAll());

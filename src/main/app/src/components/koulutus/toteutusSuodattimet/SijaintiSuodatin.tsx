@@ -3,11 +3,8 @@ import React, { useMemo } from 'react';
 import _fp from 'lodash/fp';
 import { useTranslation } from 'react-i18next';
 
-import { Filter } from '#/src/components/hakutulos/hakutulosSuodattimet/Filter';
-import {
-  FilterValue,
-  SuodatinComponentProps,
-} from '#/src/components/hakutulos/hakutulosSuodattimet/SuodatinTypes';
+import { Filter } from '#/src/components/common/Filter';
+import { FilterValue, SuodatinComponentProps } from '#/src/types/SuodatinTypes';
 
 import { getSelectOption } from './utils';
 

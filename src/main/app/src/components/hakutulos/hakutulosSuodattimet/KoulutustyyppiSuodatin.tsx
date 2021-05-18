@@ -5,15 +5,19 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { colors } from '#/src/colors';
+import { Filter } from '#/src/components/common/Filter';
 import { FILTER_TYPES } from '#/src/constants';
 import {
   setFilterSelectedValues,
   newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
+import {
+  FilterProps,
+  FilterValue,
+  SuodatinComponentProps,
+} from '#/src/types/SuodatinTypes';
 
-import { Filter } from './Filter';
-import { FilterProps, FilterValue, SuodatinComponentProps } from './SuodatinTypes';
 import { getFilterStateChanges } from './utils';
 
 const withStyles = makeStyles(() => ({
@@ -75,6 +79,7 @@ export const KoulutustyyppiSuodatin = (props: SuodatinComponentProps) => {
       handleCheck={handleCheck}
       additionalContent={
         <Grid item xs={12} style={{ padding: '20px 0' }}>
+          {/* TODO erillinen common component tästä */}
           <ButtonGroup fullWidth>
             <Button
               style={{ minWidth: '155px' }}

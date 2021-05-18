@@ -265,8 +265,7 @@ export const selectJarjestajat = (state) => {
     state.koulutus.jarjestajatFilters || {},
     (filter, filterId) =>
       _fp.flow(
-        (asdf) =>
-          _.mapValues(asdf, (filterValue, id) => ({ id, filterId, ...filterValue })),
+        (v) => _.mapValues(v, (filterValue, id) => ({ id, filterId, ...filterValue })),
         _fp.filter((v) => v.count > 0)
       )(filter)
   );
