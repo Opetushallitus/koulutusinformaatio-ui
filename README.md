@@ -1,6 +1,6 @@
 # Konfo-UI
 
-Konfo-UI on luotu create-react-app:lla. Backend, jonka ainoa tehtävä on jakaa käyttöliittymä, on Spring Boot 2.0 -sovellus.
+Konfo-UI on luotu create-react-app:lla (`src/main/app`). Juuressa oleva Spring Boot 2.0 -sovellus hoitaa lähinnä sovelluksen jakamisen ympäristöihin deplattaessa.
 
 [![Build status](https://travis-ci.org/Opetushallitus/konfo-ui.svg?branch=master)](https://travis-ci.org/Opetushallitus/konfo-ui)
 
@@ -12,15 +12,13 @@ TL;DR
     npm i
     npm start
 
-Kehityksen aikana käyttöliittymää kannattaa ajaa pelkästään nodella, jolloin muutokset näkyvät suoraan selaimessa. TL;DR ohjeilla käyttöliittymä aukeaa osoitteeseen:
+Käyttöliittymä aukeaa osoitteeseen:
 
-http://localhost:3000/
+http://localhost:3005/
 
-Portteja voi vaihtaa ajamalla:
+## Käyttöliittymän kehittäminen tietyn ympäristön datalla
 
-`PORT=5555 npm start`
-
-Tai esim. kirjaamalla .env.local -tiedostoon `PORT=5555`
+`src/main/app/package.json` -tiedoston rivi `proxy: <ympäristö>` määrittää minkä ympäristön dataa lokaalisti käynnistyvä konfo-ui käyttää (proxyttämällä). Riviä muokkaamalla pystyy helposti käynnistämään lokaalin konfo-ui:n jonkun tietyn ympäristön datalla e.g. lokaali konfo-backend.
 
 ## Testit
 
@@ -37,13 +35,15 @@ KTO-projektissa on toteutettu omat työkalut API-kutsujen mockauksen helpottamis
 
 `npm test`
 
-Yksikkötestit nimetään päätteellä `.test.js` ja ne luodaan niihin kansioihin missä niiden testaama koodi sijaitsee.
+Yksikkötestit nimetään päätteellä `.test.js` ja ne luodaan niihin kansioihin missä niiden testaama koodi sijaitsee. Yksikkötestit kannattaa kirjoittaa lähinnä monimutkaisille apufunktioille ja suurin osa testausta pitäisi tehdä cypress-testeinä.
 
 ### Lint
 
 Lintin voi ajaa komennolla `npm run lint`, tai automaattisen fiksauksen kanssa `npm run lint:fix`. Lint ajetaan myös huskyn pre-commit hookkina.
 
-## Buildaus ja käynnistys
+## Spring boot (erikoistapaukset)
+
+**Huom** lokaalidevauksessa ei todennäköisesti tarvitse koskaan käynnistää spring boottia, mutta tässä on ohjeet siihen mikäli tällainen tarve tulee.
 
 Projektin saa buildattua komennolla:
 
