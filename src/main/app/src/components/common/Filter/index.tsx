@@ -245,7 +245,7 @@ export const Filter = ({
         </SuodatinAccordionSummary>
       )}
       <SuodatinAccordionDetails {...(summaryHidden && { style: { padding: 0 } })}>
-        <Grid container direction="column">
+        <Grid container direction="column" wrap="nowrap">
           {additionalContent}
           {options && (
             <Grid item style={{ padding: '20px 0' }}>
