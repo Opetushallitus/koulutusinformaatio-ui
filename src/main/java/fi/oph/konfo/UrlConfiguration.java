@@ -12,14 +12,18 @@ public class UrlConfiguration extends OphProperties {
     public UrlConfiguration(Environment environment) {
         addFiles("/konfo-ui-oph.properties");
         this.addOverride("host-oppija", environment.getRequiredProperty("host.host-oppija"));
-        this.addOverride("host-old-oppija", environment.getRequiredProperty("host.host-old-oppija"));
+        this.addOverride("host-old-oppija-fi", environment.getRequiredProperty("host.old-oppija-base-url-fi"));
+        this.addOverride("host-old-oppija-sv", environment.getRequiredProperty("host.old-oppija-base-url-sv"));
+        this.addOverride("host-old-oppija-en", environment.getRequiredProperty("host.old-oppija-base-url-en"));
         this.addOverride("kartta.host", environment.getRequiredProperty("kartta.host"));
         this.addOverride("kartta.pid", environment.getRequiredProperty("kartta.pid"));
         this.addOverride("konfo-bucket", environment.getRequiredProperty("bucket.url"));
         this.addOverride("eperusteet-service.base-url", environment.getRequiredProperty("host.host-eperusteet-service"));
 
         this.frontProperties.setProperty("konfo-backend.base-url", this.require("konfo-backend.base-url"));
-        this.frontProperties.setProperty("konfo-backend.old-oppija", this.require("konfo-backend.old-oppija"));
+        this.frontProperties.setProperty("konfo-backend.old-oppija-fi", this.require("konfo-backend.old-oppija-fi"));
+        this.frontProperties.setProperty("konfo-backend.old-oppija-sv", this.require("konfo-backend.old-oppija-sv"));
+        this.frontProperties.setProperty("konfo-backend.old-oppija-en", this.require("konfo-backend.old-oppija-en"));
         this.frontProperties.setProperty("konfo-backend.search.koulutukset", this.require("konfo-backend.search.koulutukset"));
         this.frontProperties.setProperty("konfo-backend.search.oppilaitokset", this.require("konfo-backend.search.oppilaitokset"));
         this.frontProperties.setProperty("konfo-backend.koulutus", this.require("konfo-backend.koulutus"));

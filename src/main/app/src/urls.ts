@@ -4,7 +4,9 @@ const CALLER_ID = '1.2.246.562.10.00000000001.konfoui';
 
 const development = {
   'konfo-backend.base-url': '/',
-  'konfo-backend.old-oppija': '/',
+  'konfo-backend.old-oppija-fi': '/',
+  'konfo-backend.old-oppija-sv': '/sv/',
+  'konfo-backend.old-oppija-en': '/en/',
   'konfo-backend.search.koulutukset': '/konfo-backend/search/koulutukset',
   'konfo-backend.search.oppilaitokset': '/konfo-backend/search/oppilaitokset',
   'konfo-backend.koulutus': '/konfo-backend/koulutus/$1',
