@@ -37,6 +37,7 @@ public class UrlConfiguration extends OphProperties {
         this.frontProperties.setProperty("konfo-backend.hakukohde", this.require("konfo-backend.hakukohde"));
         this.frontProperties.setProperty("konfo-backend.haku", this.require("konfo-backend.haku"));
         this.frontProperties.setProperty("konfo-backend.koulutus.kuvaus", this.require("konfo-backend.koulutus.kuvaus"));
+        this.frontProperties.setProperty("konfo-backend.eperuste.kuvaus", this.require("konfo-backend.eperuste.kuvaus"));
 
         this.frontProperties.setProperty("konfo-backend.content", this.require("konfo-backend.content"));
         this.frontProperties.setProperty("kartta.base-url", this.require("kartta.base-url"));
