@@ -27,7 +27,12 @@ const withStyles = makeStyles(() => ({
   buttonRoot: {
     fontSize: 14,
     fontWeight: 600,
-    whiteSpace: 'nowrap',
+    padding: '5px',
+  },
+  buttonLabelTruncated: {
+    overflow: 'hidden',
+    display: 'block',
+    textOverflow: 'ellipsis',
   },
   buttonActive: {
     backgroundColor: colors.brandGreen,
@@ -84,14 +89,14 @@ export const KoulutustyyppiSuodatin = (props: SuodatinComponentProps) => {
             <Button
               style={{ minWidth: '155px' }}
               className={!isMuuSelected ? classes.buttonActive : classes.buttonInactive}
-              classes={{ root: classes.buttonRoot }}
+              classes={{ root: classes.buttonRoot, label: classes.buttonLabelTruncated }}
               aria-selected={!isMuuSelected}
               onClick={() => setIsMuuSelected(false)}>
               {t('haku.tutkintoon-johtavat')}
             </Button>
             <Button
               className={isMuuSelected ? classes.buttonActive : classes.buttonInactive}
-              classes={{ root: classes.buttonRoot }}
+              classes={{ root: classes.buttonRoot, label: classes.buttonLabelTruncated }}
               aria-selected={isMuuSelected}
               onClick={() => setIsMuuSelected(true)}>
               {t('haku.muut')}
