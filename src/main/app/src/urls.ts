@@ -27,6 +27,8 @@ const development = {
   'kartta.base-url': 'https://hkp.maanmittauslaitos.fi',
   'kartta.publish-url':
     'https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0',
+  'eperusteet-service.eperuste.kuvaus':
+    'https://eperusteet.opintopolku.fi/#/$1/esitys/$2/reformi/tutkinnonosat/$3',
 };
 
 export const configureUrls = async () => {
