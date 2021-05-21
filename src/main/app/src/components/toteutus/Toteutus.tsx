@@ -16,7 +16,6 @@ import { Accordion } from '#/src/components/common/Accordion';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
-import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Murupolku from '#/src/components/common/Murupolku';
 import Spacer from '#/src/components/common/Spacer';
 import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
@@ -360,13 +359,13 @@ export const ToteutusPage = () => {
                 <>
                   {sanitizedHTMLParser(osaamisala?.kuvaus)}
                   {!_.isEmpty(osaamisala?.linkki) && !_.isEmpty(osaamisala?.otsikko) && (
-                    <LocalizedLink
+                    <Link
                       target="_blank"
                       rel="noopener"
-                      to={localize(osaamisala?.linkki)}>
+                      href={localize(osaamisala?.linkki)}>
                       {localize(osaamisala?.otsikko)}
                       <OpenInNewIcon fontSize="small" />
-                    </LocalizedLink>
+                    </Link>
                   )}
                 </>
               ),
