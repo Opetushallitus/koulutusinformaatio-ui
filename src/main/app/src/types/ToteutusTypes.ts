@@ -145,6 +145,11 @@ export type Hakukohde = {
   };
   hakuajat: Array<{ alkaa: string; paattyy: string }>;
   hakukohdeOid: string;
+  hakukohteenLinja?: {
+    alinHyvaksyttyKeskiarvo: number;
+    linja?: Koodi;
+    lisatietoa: Translateable;
+  };
   hakulomakeAtaruId: string;
   hakulomakeKuvaus: Translateable;
   hakulomakeLinkki: Translateable;
