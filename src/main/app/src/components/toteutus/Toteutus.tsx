@@ -360,13 +360,13 @@ export const ToteutusPage = () => {
                 <>
                   {sanitizedHTMLParser(osaamisala?.kuvaus)}
                   {!_.isEmpty(osaamisala?.linkki) && !_.isEmpty(osaamisala?.otsikko) && (
-                    <LocalizedLink
+                    <Link
                       target="_blank"
                       rel="noopener"
-                      to={localize(osaamisala?.linkki)}>
+                      href={localize(osaamisala?.linkki)}>
                       {localize(osaamisala?.otsikko)}
                       <OpenInNewIcon fontSize="small" />
-                    </LocalizedLink>
+                    </Link>
                   )}
                 </>
               ),
