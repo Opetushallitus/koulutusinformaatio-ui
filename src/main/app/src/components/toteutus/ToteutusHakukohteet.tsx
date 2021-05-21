@@ -26,6 +26,7 @@ import Spacer from '#/src/components/common/Spacer';
 import { HAKULOMAKE_TYYPPI } from '#/src/constants';
 import { localize } from '#/src/tools/localization';
 import { useOppilaitosOsoite } from '#/src/tools/UseOppilaitosOsoiteHook';
+import { formatDouble } from '#/src/tools/Utils';
 import { Translateable } from '#/src/types/common';
 import { Hakukohde } from '#/src/types/ToteutusTypes';
 
@@ -172,6 +173,16 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                               size: 6,
                               heading: t('toteutus.koulutus-paattyy:'),
                               content: [paattyyText],
+                            },
+                            haku.hakukohteenLinja && {
+                              size: 12,
+                              heading: t('toteutus.alin-hyvaksytty-keskiarvo'),
+                              content: [
+                                formatDouble(
+                                  haku.hakukohteenLinja.alinHyvaksyttyKeskiarvo
+                                ),
+                              ],
+                              modalText: haku.hakukohteenLinja.lisatietoa,
                             },
                             {
                               size: 6,
