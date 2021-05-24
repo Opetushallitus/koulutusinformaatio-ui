@@ -171,6 +171,9 @@ const FilterCheckboxGroup = ({
             size="small"
             aria-label={`${localizeIfNimiObject(value)} ${t('haku.nayta-lisarajaimet')}`}
             onClick={handleToggle}
+            onFocus={(e) => {
+              e.stopPropagation();
+            }}
             data-cy={`show-more-${value.id}`}>
             {isOpen ? <ExpandLess /> : <ExpandMore />}
           </IconButton>
