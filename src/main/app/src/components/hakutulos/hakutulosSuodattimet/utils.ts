@@ -31,11 +31,11 @@ export const getFilterStateChanges = (values: Array<FilterValue>) => (
   item: FilterValue
 ) => {
   const retVal = getCheckedValues(values);
-  const isYlakoodi = values.some((v) => v.id === item.id);
   const koodiFn = item.checked ? removeIfExists : addIfNotExists;
 
   koodiFn(retVal, item);
 
+  const isYlakoodi = values.some((v) => v.id === item.id);
   if (isYlakoodi) {
     // Jos koodilla oli alakoodeja, täytyy ne myös poistaa / lisätä
     item.alakoodit?.forEach((alakoodi) => koodiFn(retVal, alakoodi));
