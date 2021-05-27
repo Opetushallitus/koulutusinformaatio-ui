@@ -2,10 +2,12 @@ import React from 'react';
 
 import { Button, Chip, Grid, makeStyles } from '@material-ui/core';
 import { Clear } from '@material-ui/icons';
+import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { colors } from '#/src/colors';
+import { FILTER_TYPES } from '#/src/constants';
 import {
   clearSelectedFilters,
   setFilterSelectedValues,
@@ -100,7 +102,13 @@ export const SuodatinValinnat = () => {
 
   const getHandleDelete = (item: FilterValue) => () => {
     const changes = getFilterStateChanges(selectedFiltersWithAlakoodit)(item);
-    dispatch(setFilterSelectedValues(changes));
+
+    if (item.filterId === FILTER_TYPES.HAKUKAYNNISSA) {
+      dispatch(setFilterSelectedValues({ hakukaynnissa: !item.checked }));
+    } else {
+      dispatch(setFilterSelectedValues(_.omit(changes, 'hakukaynnissa')));
+    }
+
     dispatch(newSearchAll());
   };
 
