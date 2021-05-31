@@ -1,75 +1,59 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
+import _fp from 'lodash/fp';
 import { useTranslation } from 'react-i18next';
 
-import { Filter } from '#/src/components/hakutulos/hakutulosSuodattimet/Filter';
-import {
-  FilterType,
-  SuodatinComponentProps,
-} from '#/src/components/hakutulos/hakutulosSuodattimet/SuodatinTypes';
+import { Filter } from '#/src/components/common/Filter';
+import { FilterValue, SuodatinComponentProps } from '#/src/types/SuodatinTypes';
 
-import { getOptionsForSelect, getShownStr } from './utils';
+import { getSelectOption } from './utils';
 
 type Props = {
-  handleFilterChange: (newFilters: object) => void;
-  initialValues: Array<FilterType>;
-  sortedMaakunnat: Array<FilterType>;
-  sortedKunnat: Array<FilterType>;
+  handleFilterChange: (value: FilterValue) => void;
+  maakuntaValues: Array<FilterValue>;
+  kuntaValues: Array<FilterValue>;
+  loading: boolean;
 } & SuodatinComponentProps;
 
 export const SijaintiSuodatin = (props: Props) => {
   const { t } = useTranslation();
   const {
     handleFilterChange,
-    initialValues = [],
-    sortedMaakunnat = [],
-    sortedKunnat = [],
+    loading,
+    maakuntaValues = [],
+    kuntaValues = [],
     ...rest
   } = props;
-
-  const [checkedValues, setCheckedValues] = useState(initialValues);
-  useEffect(() => {
-    setCheckedValues(initialValues);
-  }, [initialValues]);
-
-  const checkedStr = useMemo(() => getShownStr(checkedValues), [checkedValues]);
-
-  const handleCheck = useCallback(
-    (value: FilterType) => {
-      const wasChecked = checkedValues.some((v) => v.id === value.id);
-      const newCheckedValues = wasChecked
-        ? checkedValues.filter((v) => v.id !== value.id)
-        : [...checkedValues, value];
-
-      setCheckedValues(newCheckedValues);
-      handleFilterChange({ sijainti: newCheckedValues });
-    },
-    [checkedValues, handleFilterChange]
-  );
 
   const groupedSijainnit = useMemo(
     () => [
       {
         label: t('haku.maakunnat'),
-        options: getOptionsForSelect(sortedMaakunnat, checkedValues),
+        options: _fp.sortBy('label')(
+          maakuntaValues.map((v) => getSelectOption(v, false))
+        ),
       },
       {
         label: t('haku.kaupungit-tai-kunnat'),
-        options: getOptionsForSelect(sortedKunnat, checkedValues),
+        options: _fp.sortBy('label')(kuntaValues.map((v) => getSelectOption(v, false))),
       },
     ],
-    [checkedValues, sortedMaakunnat, sortedKunnat, t]
+    [kuntaValues, maakuntaValues, t]
+  );
+
+  const usedValues = useMemo(
+    () => maakuntaValues.concat(kuntaValues.map((v) => ({ ...v, hidden: true }))),
+    [maakuntaValues, kuntaValues]
   );
 
   return (
     <Filter
       options={groupedSijainnit}
-      selectPlaceholder={t('haku.etsi')}
+      optionsLoading={loading}
+      selectPlaceholder={t('haku.etsi-paikkakunta-tai-alue')}
       name={t('haku.sijainti')}
-      sortedFilterValues={sortedMaakunnat}
-      handleCheck={handleCheck}
-      checkedStr={checkedStr}
-      checkedValues={checkedValues}
+      values={usedValues}
+      handleCheck={handleFilterChange}
       displaySelected
       {...rest}
     />

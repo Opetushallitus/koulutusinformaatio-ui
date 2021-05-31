@@ -18,16 +18,17 @@ import {
 
 import { getFilterStateChanges } from './utils';
 
-const filterSelector = getFilterProps(FILTER_TYPES.VALINTATAPA);
+const koulutusalaSelector = getFilterProps(FILTER_TYPES.KOULUTUSALA);
 
-// TODO: Do not use this component until backend supports filtering no-haku-kaynnissa for valintatavat
-export const ValintatapaSuodatin = (props: SuodatinComponentProps) => {
+export const KoulutusalaSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const values = useSelector<any, FilterProps>(filterSelector);
 
+  const values = useSelector<any, FilterProps>(koulutusalaSelector);
+
+  const getChanges = getFilterStateChanges(values);
   const handleCheck = (item: FilterValue) => {
-    const changes = getFilterStateChanges(values)(item);
+    const changes = getChanges(item);
     dispatch(setFilterSelectedValues(changes));
     dispatch(newSearchAll());
   };
@@ -35,8 +36,8 @@ export const ValintatapaSuodatin = (props: SuodatinComponentProps) => {
   return (
     <Filter
       {...props}
-      testId="valintatapa-filter"
-      name={t('haku.valintatapa')}
+      testId="koulutusalat-filter"
+      name={t('haku.koulutusalat')}
       values={values}
       handleCheck={handleCheck}
     />

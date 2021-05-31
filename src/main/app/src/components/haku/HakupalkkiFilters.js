@@ -4,8 +4,8 @@ import { Box, Divider, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
 import Suodatin from '#/src/components/haku/Suodatin';
-import KoulutusalaSuodatin from '#/src/components/hakutulos/hakutulosSuodattimet/KoulutusalaSuodatin';
-import KoulutustyyppiSuodatin from '#/src/components/hakutulos/hakutulosSuodattimet/KoulutusTyyppiSuodatin';
+import { KoulutusalaSuodatin } from '#/src/components/hakutulos/hakutulosSuodattimet/KoulutusalaSuodatin';
+import { KoulutustyyppiSuodatin } from '#/src/components/hakutulos/hakutulosSuodattimet/KoulutustyyppiSuodatin';
 import { OpetuskieliSuodatin } from '#/src/components/hakutulos/hakutulosSuodattimet/OpetusKieliSuodatin';
 import { SijaintiSuodatin } from '#/src/components/hakutulos/hakutulosSuodattimet/SijaintiSuodatin';
 

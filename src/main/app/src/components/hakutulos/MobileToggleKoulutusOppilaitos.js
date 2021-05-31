@@ -6,14 +6,13 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { colors } from '#/src/colors';
-import { setSelectedTab } from '#/src/store/reducers/hakutulosSlice';
-import { getHakutulosToggleProps } from '#/src/store/reducers/hakutulosSliceSelector';
-
 import {
   SuodatinAccordion,
   SuodatinAccordionDetails,
   SuodatinAccordionSummary,
-} from './hakutulosSuodattimet/CustomizedMuiComponents';
+} from '#/src/components/common/Filter/CustomizedMuiComponents';
+import { setSelectedTab } from '#/src/store/reducers/hakutulosSlice';
+import { getHakutulosToggleProps } from '#/src/store/reducers/hakutulosSliceSelector';
 
 const useStyles = makeStyles((theme) => ({
   buttonActive: {

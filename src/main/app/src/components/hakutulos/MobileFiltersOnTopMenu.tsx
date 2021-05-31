@@ -13,24 +13,22 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
-import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { useQueryParams } from '#/src/hooks';
 import {
   searchAndMoveToHaku,
   clearSelectedFilters,
-  searchAll,
+  newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
-import { getSuodatinValinnatProps } from '#/src/store/reducers/hakutulosSliceSelector';
+import { getAllSelectedFilters } from '#/src/store/reducers/hakutulosSliceSelector';
 
 import { HakutapaSuodatin } from './hakutulosSuodattimet/HakutapaSuodatin';
-import KoulutusalaSuodatin from './hakutulosSuodattimet/KoulutusalaSuodatin';
-import KoulutusTyyppiSuodatin from './hakutulosSuodattimet/KoulutusTyyppiSuodatin';
+import { KoulutusalaSuodatin } from './hakutulosSuodattimet/KoulutusalaSuodatin';
+import { KoulutustyyppiSuodatin } from './hakutulosSuodattimet/KoulutustyyppiSuodatin';
 import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin';
-import OpetustapaSuodatin from './hakutulosSuodattimet/OpetustapaSuodatin';
+import { OpetustapaSuodatin } from './hakutulosSuodattimet/OpetustapaSuodatin';
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
 import { MobileResultsPerPageExpansionMenu } from './MobileResultsPerPageExpansionMenu';
 import { MobileToggleFiltersButton } from './MobileToggleFiltersButton';
@@ -75,16 +73,12 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
     shallowEqual
   );
 
-  const count = useMemo(
+  const hitCount = useMemo(
     () => (selectedTab === 'koulutus' ? koulutusTotal : oppilaitosTotal),
     [selectedTab, koulutusTotal, oppilaitosTotal]
   );
 
-  const suodatinValinnatProps = useSelector(getSuodatinValinnatProps);
-  const chosenFilterCount = _.sumBy(_.values(suodatinValinnatProps), (arr) =>
-    _.size(arr)
-  );
-  const apiRequestParams = useQueryParams();
+  const { count } = useSelector(getAllSelectedFilters);
 
   const [showFilters, setShowFilters] = useState(false);
   const toggleShowFilters = useCallback(() => setShowFilters(!showFilters), [
@@ -100,7 +94,7 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
 
   const handleClearFilters = () => {
     dispatch(clearSelectedFilters());
-    dispatch(searchAll(_.omit(apiRequestParams, _.keys(suodatinValinnatProps))));
+    dispatch(newSearchAll());
   };
 
   return (
@@ -108,7 +102,7 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
       {!showFilters && (
         <MobileToggleFiltersButton
           type={isFrontPage ? 'frontpage' : 'fixed'}
-          chosenFilterCount={chosenFilterCount}
+          chosenFilterCount={count}
           showFilters={showFilters}
           handleFiltersShowToggle={toggleShowFilters}
         />
@@ -133,7 +127,7 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
                 </Typography>
               </Grid>
               <Grid item style={{ paddingRight: '10px' }}>
-                {_.some(suodatinValinnatProps, (arr) => _.size(arr) > 0) && (
+                {count > 0 && (
                   <Button
                     color="inherit"
                     classes={{ label: classes.buttonLabel }}
@@ -148,7 +142,7 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
         <Container classes={{ root: classes.containerRoot }}>
           {isFrontPage && <MobileToggleKoulutusOppilaitos />}
           {isFrontPage && <Divider className={classes.divider} />}
-          <KoulutusTyyppiSuodatin expanded={false} elevation={0} displaySelected />
+          <KoulutustyyppiSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
           <OpetuskieliSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
@@ -165,7 +159,7 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
         </Container>
         <MobileToggleFiltersButton
           type="fixed"
-          hitCount={count}
+          hitCount={hitCount}
           showFilters={showFilters}
           handleFiltersShowToggle={handleFiltersShowToggle}
         />
