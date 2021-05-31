@@ -3,68 +3,46 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Filter } from '#/src/components/common/Filter';
+import { FILTER_TYPES } from '#/src/constants';
 import {
-  handleFilterToggle,
-  toggleHakukaynnissa,
+  setFilterSelectedValues,
   newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
+import { getFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
-  getFilterProps,
-  hakukaynnissaSelector,
-} from '#/src/store/reducers/hakutulosSliceSelector';
+  FilterProps,
+  FilterValue,
+  SuodatinComponentProps,
+} from '#/src/types/SuodatinTypes';
 
-import { Filter } from './Filter';
-import { FilterProps, FilterType, SuodatinComponentProps } from './SuodatinTypes';
+import { getFilterStateChanges } from './utils';
 
-const FILTER_ID = 'hakutapa';
-const HAKUKAYNNISSA_ID = 'hakukaynnissa';
-const filterSelector = getFilterProps(FILTER_ID);
+const hakukaynnissaSelector = getFilterProps(FILTER_TYPES.HAKUKAYNNISSA);
+const hakutapaFilterSelector = getFilterProps(FILTER_TYPES.HAKUTAPA);
 
-// NOTE: Hakutapa includes hakukaynnissa filter so this component handles mishmashing the logics together
-// TODO: Do not use this component until backend is fixed with showing correct numbers for haku kaynnissa
+// NOTE: Hakutapa sisältää hakukaynnissa ja yhteishaku suodattimet -> tämä komponentti hoitaa yhdistelylogiikan
 export const HakutapaSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { sortedValues, checkedValues, localizedCheckedValues } = useSelector<
-    any,
-    FilterProps
-  >(filterSelector);
 
-  const { hakukaynnissaData, hakukaynnissa } = useSelector(hakukaynnissaSelector());
+  const hakukaynnissaValues = useSelector<any, FilterProps>(hakukaynnissaSelector);
+  const hakutapaValues = useSelector<any, FilterProps>(hakutapaFilterSelector);
 
-  const sortedValuesWithHakukaynnissa = useMemo(
-    () =>
-      sortedValues?.length > 0 // Do not show hakukaynnissa if no other haku values are found (loading)
-        ? [
-            {
-              id: HAKUKAYNNISSA_ID,
-              nimi: t('haku.hakukaynnissa'),
-              count: hakukaynnissaData?.count,
-            },
-            ...sortedValues,
-          ]
-        : [],
-    [sortedValues, t, hakukaynnissaData]
-  );
+  const filterValues = useMemo(() => {
+    if (hakutapaValues?.length === 0) {
+      return []; // Piilota hakukaynnissa -rajain jos muita arvoja ei ole löytynyt
+    }
 
-  const checkedValuesWithHakukaynnissa = useMemo(
-    () => (hakukaynnissa ? [{ id: HAKUKAYNNISSA_ID }, ...checkedValues] : checkedValues),
-    [checkedValues, hakukaynnissa]
-  );
+    return [...hakukaynnissaValues, ...hakutapaValues];
+  }, [hakukaynnissaValues, hakutapaValues]);
 
-  const localizedCheckedValuesWithHakukaynnissa = useMemo(
-    () =>
-      hakukaynnissa
-        ? [t('haku.hakukaynnissa'), localizedCheckedValues].filter(Boolean).join(', ')
-        : localizedCheckedValues,
-    [localizedCheckedValues, hakukaynnissa, t]
-  );
-
-  const handleCheck = (item: FilterType) => {
-    if (item.id === HAKUKAYNNISSA_ID) {
-      dispatch(toggleHakukaynnissa());
+  const handleCheck = (item: FilterValue) => {
+    if (item.filterId === FILTER_TYPES.HAKUKAYNNISSA) {
+      dispatch(setFilterSelectedValues({ hakukaynnissa: !item.checked }));
     } else {
-      dispatch(handleFilterToggle({ filter: FILTER_ID, item }));
+      const changes = getFilterStateChanges(hakutapaValues)(item);
+      dispatch(setFilterSelectedValues(changes));
     }
     dispatch(newSearchAll());
   };
@@ -74,10 +52,8 @@ export const HakutapaSuodatin = (props: SuodatinComponentProps) => {
       {...props}
       testId="hakutapa-filter"
       name={t('haku.hakutapa')}
-      sortedFilterValues={sortedValuesWithHakukaynnissa}
+      values={filterValues}
       handleCheck={handleCheck}
-      checkedStr={localizedCheckedValuesWithHakukaynnissa}
-      checkedValues={checkedValuesWithHakukaynnissa}
     />
   );
 };

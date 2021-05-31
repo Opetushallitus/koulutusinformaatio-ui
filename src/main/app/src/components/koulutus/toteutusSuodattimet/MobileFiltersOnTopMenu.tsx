@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import {
   AppBar,
@@ -13,9 +13,11 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
+import _fp from 'lodash/fp';
 import { useTranslation } from 'react-i18next';
 
 import { MobileToggleFiltersButton } from '#/src/components/hakutulos/MobileToggleFiltersButton';
+import { FilterValue } from '#/src/types/SuodatinTypes';
 
 import { OpetuskieliSuodatin } from './OpetusKieliSuodatin';
 import { OpetustapaSuodatin } from './OpetustapaSuodatin';
@@ -43,14 +45,21 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+type Props = {
+  values: Record<string, Array<FilterValue>>;
+  hitCount: number;
+  loading: boolean;
+  handleFilterChange: (value: FilterValue) => void;
+  clearChosenFilters: VoidFunction;
+};
+
 export const MobileFiltersOnTopMenu = ({
-  chosenFilters,
-  sortedValues,
+  values,
   hitCount,
-  chosenFilterCount,
+  loading,
   handleFilterChange,
   clearChosenFilters,
-}: any) => {
+}: Props) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -58,6 +67,17 @@ export const MobileFiltersOnTopMenu = ({
   const toggleShowFilters = useCallback(() => setShowFilters(!showFilters), [
     showFilters,
   ]);
+
+  const chosenFilterCount = useMemo(
+    () =>
+      _fp.flow(
+        _fp.map(
+          (v: Array<FilterValue>) => v.filter((filterValue) => filterValue.checked).length
+        ),
+        _fp.sum
+      )(values as any), // TS ei osaa päätellä tätä oikein
+    [values]
+  );
 
   return (
     <>
@@ -106,25 +126,23 @@ export const MobileFiltersOnTopMenu = ({
             handleFilterChange={handleFilterChange}
             expanded={false}
             elevation={0}
-            initialValues={chosenFilters.opetuskieli}
-            sortedValues={sortedValues.opetuskieli}
+            values={values.opetuskieli}
           />
           <Divider className={classes.divider} />
           <SijaintiSuodatin
             handleFilterChange={handleFilterChange}
             expanded={false}
             elevation={0}
-            initialValues={chosenFilters.sijainti}
-            sortedMaakunnat={sortedValues.maakunta}
-            sortedKunnat={sortedValues.kunta}
+            maakuntaValues={values.maakunta}
+            kuntaValues={values.kunta}
+            loading={loading}
           />
           <Divider className={classes.divider} />
           <OpetustapaSuodatin
             handleFilterChange={handleFilterChange}
             expanded={false}
             elevation={0}
-            initialValues={chosenFilters.opetustapa}
-            sortedValues={sortedValues.opetustapa}
+            values={values.opetustapa}
           />
           <Divider className={classes.divider} />
         </Container>

@@ -15,7 +15,7 @@ import Markdown from 'markdown-to-jsx';
 import { useTranslation } from 'react-i18next';
 
 import { colors } from '#/src/colors';
-import { KonfoCheckbox } from '#/src/components/hakutulos/hakutulosSuodattimet/CustomizedMuiComponents';
+import { KonfoCheckbox } from '#/src/components/common/Checkbox';
 import { useContentful } from '#/src/hooks';
 
 const useStyles = makeStyles({
