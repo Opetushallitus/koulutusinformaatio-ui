@@ -115,15 +115,18 @@ export const Yhteystiedot = ({
         </>
       )}
       {localizedYhteystiedot.map(
-        ({
-          nimi,
-          kayntiosoite,
-          oskariOsoite,
-          oskariPostitoimipaikka,
-          postiosoite,
-          puhelinnumero,
-          sahkoposti,
-        }) => (
+        (
+          {
+            nimi,
+            kayntiosoite,
+            oskariOsoite,
+            oskariPostitoimipaikka,
+            postiosoite,
+            puhelinnumero,
+            sahkoposti,
+          },
+          i
+        ) => (
           <Grid
             key={nimi}
             className={classes.container}
@@ -163,7 +166,7 @@ export const Yhteystiedot = ({
               <Grid item container justify="center" md={6} sm={12}>
                 <Box component="div" className={classes.oskariMap}>
                   <OskariKartta
-                    id={nimi || id}
+                    id={`${i}-${nimi || id}`}
                     osoite={oskariOsoite}
                     postitoimipaikka={oskariPostitoimipaikka}
                   />
