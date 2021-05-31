@@ -2,10 +2,11 @@ import { urls } from 'oph-urls-js';
 
 const CALLER_ID = '1.2.246.562.10.00000000001.konfoui';
 
-// TODO: Add all missing urls to spring boot wrapper and remove production url overrides from here
-const production = {
+const development = {
   'konfo-backend.base-url': '/',
-  'konfo-backend.old-oppija': '/',
+  'konfo-backend.old-oppija-fi': '/',
+  'konfo-backend.old-oppija-sv': '/sv/',
+  'konfo-backend.old-oppija-en': '/en/',
   'konfo-backend.search.koulutukset': '/konfo-backend/search/koulutukset',
   'konfo-backend.search.oppilaitokset': '/konfo-backend/search/oppilaitokset',
   'konfo-backend.koulutus': '/konfo-backend/koulutus/$1',
@@ -24,19 +25,12 @@ const production = {
   'konfo-backend.haku': '/konfo-backend/haku/$1',
   'konfo-backend.koulutus.kuvaus': '/konfo-backend/kuvaus/$1',
   'konfo-backend.eperuste.kuvaus': '/konfo-backend/eperuste/$1',
-};
-
-const development = {
-  ...production,
   'konfo-backend.content': 'https://konfo-content.untuvaopintopolku.fi/$1',
-  'konfo-backend.suosittelu': 'https://beta.testiopintopolku.fi/konfo-backend/suosittelu',
-  'konfo-backend.kuvaus.osaamisalat':
-    'https://beta.hahtuvaopintopolku.fi/konfo-backend/kuvaus/$1/osaamisalat',
-  'eperusteet-service.eperuste.kuvaus':
-    'https://eperusteet.hahtuvaopintopolku.fi/#/$1/esitys/$2/reformi/tutkinnonosat/$3',
   'kartta.base-url': 'https://hkp.maanmittauslaitos.fi',
   'kartta.publish-url':
     'https://hkp.maanmittauslaitos.fi/hkp/published/$1/277da693-ae10-4508-bc5a-d6ced2056fd0',
+  'eperusteet-service.eperuste.kuvaus':
+    'https://eperusteet.opintopolku.fi/#/$1/esitys/$2/reformi/tutkinnonosat/$3',
 };
 
 export const configureUrls = async () => {
@@ -46,6 +40,5 @@ export const configureUrls = async () => {
     urls.addProperties(development);
   } else {
     await urls.load('/konfo/rest/config/frontProperties');
-    urls.addOverrides(production);
   }
 };

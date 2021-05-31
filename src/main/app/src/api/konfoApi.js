@@ -120,6 +120,12 @@ function reduceToKeyValue(values = []) {
 export const getContentfulData = (manifest, lang) => {
   return Promise.all(
     _.map(manifest?.data, (v, key) => {
+      if (v[lang] === undefined) {
+        console.log(
+          'Sisältöä valitulle kielelle ei löydy! ' + JSON.stringify(v) + ', key ' + key
+        );
+        return null;
+      }
       const url = urls.url('konfo-backend.content', '') + v[lang];
       return axios.get(url).then((res) => {
         return { [key]: reduceToKeyValue(res?.data) };

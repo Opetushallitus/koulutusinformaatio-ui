@@ -41,7 +41,8 @@ const Title = () => {
 
 const LinkToOldOpintopolku = () => {
   const classes = useStyles();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
   return (
     <Button
       variant="contained"
@@ -49,7 +50,7 @@ const LinkToOldOpintopolku = () => {
       size="small"
       className={classes.linkToOldButton}
       aria-label={t('beta-banner.siirry')}
-      href={urls.url('konfo-backend.old-oppija')}
+      href={urls.url(`konfo-backend.old-oppija-${i18n.language}`)}
       color="primary">
       {t('beta-banner.siirry')}
       <ArrowRightAltIcon />
