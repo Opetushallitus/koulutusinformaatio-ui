@@ -37,6 +37,7 @@ import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin'
 import { OpetustapaSuodatin } from './hakutulosSuodattimet/OpetustapaSuodatin';
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
 import { SuodatinValinnat } from './hakutulosSuodattimet/SuodatinValinnat';
+import { ValintatapaSuodatin } from './hakutulosSuodattimet/ValintatapaSuodatin';
 import HakutulosToggle from './HakutulosToggle';
 import { MobileFiltersOnTopMenu } from './MobileFiltersOnTopMenu';
 import Pagination from './Pagination';
@@ -241,6 +242,7 @@ export const Hakutulos = () => {
               <KoulutusalaSuodatin expanded elevation={2} />
               <HakutapaSuodatin expanded elevation={2} />
               <OpetustapaSuodatin expanded={false} elevation={2} />
+              <ValintatapaSuodatin expanded={false} elevation={2} />
             </Hidden>
           </Grid>
           <Grid item container direction="column" xs>
