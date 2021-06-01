@@ -149,13 +149,13 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
           <Divider className={classes.divider} />
           <SijaintiSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
+          <ValintatapaSuodatin expanded={false} elevation={0} displaySelected />
+          <Divider className={classes.divider} />
           <KoulutusalaSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
           <HakutapaSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
           <OpetustapaSuodatin expanded={false} elevation={0} displaySelected />
-          <Divider className={classes.divider} />
-          <ValintatapaSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
           {!isFrontPage && <MobileToggleOrderByButtonMenu elevation={0} />}
           {!isFrontPage && <MobileResultsPerPageExpansionMenu elevation={0} />}
