@@ -307,6 +307,7 @@ export const ToteutusHakukohteet = ({ haut }: Props) => {
               tyyppiOtsikko={localize(haku)}
               haut={haku.hakukohteet}
               icon={<IconComponent />}
+              key={key}
             />
           );
         })}
