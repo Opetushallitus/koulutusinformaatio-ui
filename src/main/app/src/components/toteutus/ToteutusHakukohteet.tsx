@@ -102,6 +102,14 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                 .filter(Boolean)
                 .join(' · ');
 
+            const aloituspaikatText =
+              haku.aloituspaikat?.lukumaara +
+              (haku.aloituspaikat?.ensikertalaisille
+                ? `, ${t('toteutus.ensikertalaisille')} ${
+                    haku.aloituspaikat?.ensikertalaisille
+                  }`
+                : '');
+
             return (
               <Grid
                 key={haku.hakukohdeOid}
@@ -171,10 +179,10 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                               ),
                               modalText: haku.pohjakoulutusvaatimusTarkenne,
                             },
-                            haku.aloituspaikat?.lukumaara && {
+                            aloituspaikatText && {
                               size: 6,
                               heading: t('toteutus.opiskelupaikkoja:'),
-                              content: [haku.aloituspaikat.lukumaara],
+                              content: [aloituspaikatText],
                             },
                           ]
                             .filter(Boolean)
