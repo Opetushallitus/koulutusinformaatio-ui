@@ -33,18 +33,6 @@ const useStyles = makeStyles({
     paddingBottom: '28px',
     fontWeight: 700,
   },
-  oikopolut: {
-    backgroundColor: colors.white,
-    paddingBottom: '100px',
-  },
-  uutiset: {
-    backgroundColor: colors.grey,
-    paddingBottom: '100px',
-  },
-  palvelut: {
-    backgroundColor: colors.white,
-    paddingBottom: '100px',
-  },
   showMore: {
     marginTop: '55px',
     fontWeight: 600,
