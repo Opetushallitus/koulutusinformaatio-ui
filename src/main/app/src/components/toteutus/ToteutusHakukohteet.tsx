@@ -183,6 +183,7 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                               size: 6,
                               heading: t('toteutus.opiskelupaikkoja:'),
                               content: [aloituspaikatText],
+                              modalText: haku.aloituspaikat?.kuvaus,
                             },
                           ]
                             .filter(Boolean)
