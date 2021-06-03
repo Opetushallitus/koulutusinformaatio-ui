@@ -23,22 +23,15 @@ import { useContentful } from '#/src/hooks';
 import { getHeaderHeight } from '#/src/theme';
 
 const useStyles = makeStyles((theme) => ({
-  drawer: {
-    width: DRAWER_WIDTH,
+  drawer: ({ isSmall }) => ({
+    width: isSmall ? '100%' : DRAWER_WIDTH,
     flexShrink: 0,
-  },
-  drawerPaper: {
+  }),
+  drawerPaper: ({ betaBannerVisible, isSmall }) => ({
     marginTop: getHeaderHeight(theme),
-    width: DRAWER_WIDTH,
-  },
-  smDrawer: {
-    width: '100%',
-    flexShrink: 0,
-  },
-  smDrawerPaper: {
-    marginTop: getHeaderHeight(theme),
-    width: '100%',
-  },
+    height: `calc(100% - ${getHeaderHeight(theme)({ betaBannerVisible, isSmall })}px)`,
+    width: isSmall ? '100%' : DRAWER_WIDTH,
+  }),
   inputBackground: {
     backgroundColor: colors.white,
     paddingLeft: '20px',
@@ -83,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const SideMenu = (props) => {
-  const { isSmall, menuVisible, closeMenu } = props;
+  const { menuVisible, closeMenu } = props;
   const { t, i18n } = useTranslation();
   const history = useHistory();
   const classes = useStyles(props);
@@ -106,8 +99,15 @@ export const SideMenu = (props) => {
     event.preventDefault();
   };
 
-  const innards = (
-    <React.Fragment>
+  return (
+    <Drawer
+      open={menuVisible}
+      className={classes.drawer}
+      variant="persistent"
+      anchor="left"
+      classes={{
+        paper: classes.drawerPaper,
+      }}>
       <div className={classes.inputBackground}>
         <Hidden smUp>
           <Box mb={2}>
@@ -165,33 +165,6 @@ export const SideMenu = (props) => {
           );
         })
       )}
-    </React.Fragment>
-  );
-  return (
-    <React.Fragment>
-      {isSmall ? (
-        <Drawer
-          open={menuVisible}
-          className={classes.smDrawer}
-          variant="persistent"
-          anchor="left"
-          classes={{
-            paper: classes.smDrawerPaper,
-          }}>
-          {innards}
-        </Drawer>
-      ) : (
-        <Drawer
-          open={menuVisible}
-          className={classes.drawer}
-          variant="persistent"
-          anchor="left"
-          classes={{
-            paper: classes.drawerPaper,
-          }}>
-          {innards}
-        </Drawer>
-      )}
-    </React.Fragment>
+    </Drawer>
   );
 };
