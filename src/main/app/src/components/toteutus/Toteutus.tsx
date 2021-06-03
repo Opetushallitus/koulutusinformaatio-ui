@@ -186,7 +186,6 @@ const ToteutuksenYhteystiedot = ({ oids }: { oids: Array<string> }) => {
               )}
               <Yhteystiedot
                 id={localize(oppilaitos)}
-                key={oppilaitos.oid}
                 {...oppilaitos.metadata}
               />
             </React.Fragment>
