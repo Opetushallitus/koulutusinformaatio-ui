@@ -184,10 +184,7 @@ const ToteutuksenYhteystiedot = ({ oids }: { oids: Array<string> }) => {
                   <OpenInNewIcon fontSize="small" />
                 </Button>
               )}
-              <Yhteystiedot
-                id={localize(oppilaitos)}
-                {...oppilaitos.metadata}
-              />
+              <Yhteystiedot id={localize(oppilaitos)} {...oppilaitos.metadata} />
             </React.Fragment>
           ))}
         </Box>
