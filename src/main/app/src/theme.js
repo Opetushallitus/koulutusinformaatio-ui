@@ -5,7 +5,14 @@ import { colors } from './colors';
 // Material UI theme customization
 // Learn more: https://material-ui.com/customization/themes/
 
+export const getHeaderHeight = (theme) => ({ betaBannerVisible, isSmall = false }) =>
+  (isSmall ? theme.smHeaderHeight : theme.headerHeight) +
+  (betaBannerVisible ? theme.betaBannerHeight : 0);
+
 export const theme = createMuiTheme({
+  betaBannerHeight: 40,
+  headerHeight: 64,
+  smHeaderHeight: 54,
   palette: {
     primary: {
       main: colors.brandGreen,

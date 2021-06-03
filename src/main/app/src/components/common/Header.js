@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
   AppBar,
@@ -51,10 +51,9 @@ const useStyles = makeStyles((theme) => ({
     background: 'white',
   },
   appBar: {
+    position: 'fixed',
+    height: 'auto',
     zIndex: theme.zIndex.drawer + 1,
-  },
-  betaBanner: {
-    height: '90px',
   },
   iconButton: {
     padding: 10,
@@ -68,11 +67,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = (props) => {
+export const Header = (props) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { toggleMenu, isOpen } = props;
-  const [betaBanner, setBetaBanner] = useState(true);
+  const { toggleMenu, isOpen, betaBanner, setBetaBanner } = props;
 
   const OpintopolkuHeaderLogo = () => {
     switch (getLanguage()) {
@@ -90,9 +88,7 @@ const Header = (props) => {
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx([classes.appBar, betaBanner ? classes.betaBanner : null])}>
+      <AppBar className={clsx([classes.appBar, betaBanner ? classes.betaBanner : null])}>
         {betaBanner ? <BetaBanner onClose={() => setBetaBanner(false)} /> : null}
         <Toolbar>
           <IconButton
@@ -124,5 +120,3 @@ const Header = (props) => {
     </React.Fragment>
   );
 };
-
-export default Header;

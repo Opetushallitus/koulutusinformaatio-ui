@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { MuiThemeProvider, makeStyles, useMediaQuery } from '@material-ui/core';
+import { MuiThemeProvider, makeStyles, useMediaQuery, Box } from '@material-ui/core';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -11,8 +11,8 @@ import { supportedLanguages } from '#/src/tools/i18n';
 
 import { Draft } from './components/common/Draft';
 import Footer from './components/common/Footer';
-import Header from './components/common/Header';
-import SideMenu from './components/common/SideMenu';
+import { Header } from './components/common/Header';
+import { SideMenu } from './components/common/SideMenu';
 import { Etusivu } from './components/Etusivu';
 import { Haku } from './components/haku/Haku';
 import { Hakupalkki } from './components/haku/Hakupalkki';
@@ -29,13 +29,11 @@ import {
   ValintaperustePreviewPage,
 } from './components/valintaperusteet/ValintaperustePage';
 import { DRAWER_WIDTH } from './constants';
-import { theme } from './theme';
+import { getHeaderHeight, theme } from './theme';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
   content: {
+    marginTop: getHeaderHeight(theme),
     minWidth: 0,
     flexGrow: 1,
     padding: 0,
@@ -53,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
   },
   smContent: {
+    marginTop: getHeaderHeight(theme),
     minWidth: 0,
     flexGrow: 1,
     padding: 0,
@@ -72,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const KoulutusHakuBar = () => (
-  <div style={{ margin: 'auto', paddingTop: '50px', maxWidth: '1600px' }}>
+  <div style={{ margin: 'auto', maxWidth: '1600px' }}>
     <ReactiveBorder>
       <Hakupalkki />
     </ReactiveBorder>
@@ -144,9 +143,9 @@ const TranslatedRoutes = ({ match, location }) => {
 };
 
 const App = () => {
-  const classes = useStyles();
-
-  const matches = useMediaQuery('(max-width: 600px)');
+  const isSmall = useMediaQuery(theme.breakpoints.down('xs'));
+  const [betaBanner, setBetaBanner] = useState(true);
+  const classes = useStyles({ betaBannerVisible: betaBanner, isSmall });
 
   const [menuVisible, setMenuVisible] = useState(false);
   const toggleMenu = () => {
@@ -159,21 +158,31 @@ const App = () => {
   return (
     <MuiThemeProvider theme={theme}>
       <React.Fragment>
-        <div className={classes.root}>
-          <Draft />
-          <Header toggleMenu={toggleMenu} isOpen={menuVisible} />
-          <SideMenu small={matches} menuVisible={menuVisible} closeMenu={closeMenu} />
-          <CookieModal />
+        <Draft />
+        <CookieModal />
+        <Box display="flex">
+          <Header
+            toggleMenu={toggleMenu}
+            isOpen={menuVisible}
+            betaBanner={betaBanner}
+            setBetaBanner={setBetaBanner}
+          />
+          <SideMenu
+            isSmall={isSmall}
+            menuVisible={menuVisible}
+            closeMenu={closeMenu}
+            betaBannerVisible={betaBanner}
+          />
           <main
             id="app-main-content"
-            className={clsx(matches ? classes.smContent : classes.content, {
-              [matches ? classes.smContentShift : classes.contentShift]: menuVisible,
+            className={clsx(isSmall ? classes.smContent : classes.content, {
+              [isSmall ? classes.smContentShift : classes.contentShift]: menuVisible,
             })}>
             <Route path="/:lng?" component={TranslatedRoutes} />
             <Palvelut />
             <Footer />
           </main>
-        </div>
+        </Box>
         <PalautePopup />
       </React.Fragment>
     </MuiThemeProvider>

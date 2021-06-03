@@ -20,6 +20,7 @@ import Murupolku from '#/src/components/common/Murupolku';
 import SidebarValikko from '#/src/components/common/SidebarValikko';
 import { DRAWER_WIDTH } from '#/src/constants';
 import { useContentful } from '#/src/hooks';
+import { getHeaderHeight } from '#/src/theme';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
   },
   drawerPaper: {
+    marginTop: getHeaderHeight(theme),
     width: DRAWER_WIDTH,
   },
   smDrawer: {
@@ -34,12 +36,13 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
   },
   smDrawerPaper: {
+    marginTop: getHeaderHeight(theme),
     width: '100%',
   },
   inputBackground: {
     backgroundColor: colors.white,
     paddingLeft: '20px',
-    paddingTop: '91px',
+    paddingTop: '20px',
     paddingBottom: '20px',
   },
   murupolku: {
@@ -79,11 +82,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SideMenu = (props) => {
-  const { small, menuVisible, closeMenu } = props;
+export const SideMenu = (props) => {
+  const { isSmall, menuVisible, closeMenu } = props;
   const { t, i18n } = useTranslation();
   const history = useHistory();
-  const classes = useStyles();
+  const classes = useStyles(props);
   const { data } = useContentful();
   const [selected, setSelected] = useState([]);
   const [search, setSearch] = useState('');
@@ -107,7 +110,7 @@ const SideMenu = (props) => {
     <React.Fragment>
       <div className={classes.inputBackground}>
         <Hidden smUp>
-          <Box mt={3} mb={4}>
+          <Box mb={2}>
             <LanguageTab />
           </Box>
         </Hidden>
@@ -166,7 +169,7 @@ const SideMenu = (props) => {
   );
   return (
     <React.Fragment>
-      {small ? (
+      {isSmall ? (
         <Drawer
           open={menuVisible}
           className={classes.smDrawer}
@@ -192,5 +195,3 @@ const SideMenu = (props) => {
     </React.Fragment>
   );
 };
-
-export default SideMenu;
