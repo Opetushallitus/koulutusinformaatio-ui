@@ -1,11 +1,3 @@
-export const MUI_BREAKPOINTS = {
-  MIN_XL: '(min-width:1920px)',
-  MIN_LG: '(min-width:1280px)',
-  MIN_MD: '(min-width:960px)',
-  MIN_SM: '(min-width:600px)',
-  MIN_XS_400: '(min-width:400px)',
-} as const;
-
 export const YHTEISHAKU_KOODI_URI = 'hakutapa_01';
 
 export const FILTER_TYPES = {
@@ -73,8 +65,6 @@ export const HAKULOMAKE_TYYPPI = {
   EI_SAHKOISTA: 'ei sähköistä',
   MUU: 'muu',
 } as const;
-
-export const TOP_BAR_HEIGHT = 90;
 
 // Search related
 export const pageSizeArray = [5, 10, 20, 30, 50];
