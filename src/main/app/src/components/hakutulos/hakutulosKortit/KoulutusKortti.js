@@ -18,7 +18,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import koulutusPlaceholderImg from '#/src/assets/images/Opolkuhts.png';
 import { educationTypeColorCode } from '#/src/colors';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
-import { MUI_BREAKPOINTS } from '#/src/constants';
 import { localize } from '#/src/tools/localization';
 import { getLocalizedOpintojenLaajuus } from '#/src/tools/Utils';
 
@@ -61,7 +60,7 @@ const KoulutusKortti = ({ koulutus }) => {
   const { t } = useTranslation();
   const theme = useTheme();
   const classes = useStyles();
-  const muiScreenSizeMinSm = useMediaQuery(MUI_BREAKPOINTS.MIN_SM);
+  const muiScreenSizeMinSm = useMediaQuery(theme.breakpoints.up('sm'));
 
   const kuvaus =
     _.truncate(

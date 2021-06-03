@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import clsx from 'clsx';
 import _ from 'lodash';
@@ -40,7 +40,8 @@ const useStyles = makeStyles({
 const Palvelut = () => {
   const { t } = useTranslation();
   const { data } = useContentful();
-  const matches = useMediaQuery('(min-width: 979px)');
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('md'));
   const { ohjeetJaTuki, palvelut } = data || {};
   const classes = useStyles();
 
