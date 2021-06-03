@@ -13,6 +13,12 @@ export const theme = createMuiTheme({
   betaBannerHeight: 40,
   headerHeight: 64,
   smHeaderHeight: 54,
+  breakpoints: {
+    // Tämä toimii oletuksena material-ui:ssa todella hämmentävästi: esim. down('sm') palauttaa 'md'-breakpointista alaspäin.
+    get down() {
+      return (key) => `@media (max-width:${this.values[key] - 0.5}px)`;
+    },
+  },
   palette: {
     primary: {
       main: colors.brandGreen,
