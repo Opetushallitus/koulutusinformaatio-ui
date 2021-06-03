@@ -177,7 +177,7 @@ export const CookieModal = () => {
           id="statisticCookies"
           className={classes.settingsCheckbox}
           checked={statisticCookiesAccepted}
-          disableripple
+          disableRipple
           onClick={() => setStatisticCookiesAccepted(!statisticCookiesAccepted)}
         />
         <label htmlFor="statisticCookies">{fields.settingsAcceptStatisticText}</label>
@@ -187,7 +187,7 @@ export const CookieModal = () => {
           id="marketingCookies"
           className={classes.settingsCheckbox}
           checked={marketingCookiesAccepted}
-          disableripple
+          disableRipple
           onClick={() => setMarketingCookiesAccepted(!marketingCookiesAccepted)}
         />
         <label htmlFor="marketingCookies">{fields.settingsAcceptMarketingText}</label>
