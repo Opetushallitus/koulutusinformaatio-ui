@@ -102,13 +102,15 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                 .filter(Boolean)
                 .join(' · ');
 
-            const aloituspaikatText =
-              haku.aloituspaikat?.lukumaara +
-              (haku.aloituspaikat?.ensikertalaisille
-                ? `, ${t('toteutus.ensikertalaisille', {
-                    ensikertalaisille: haku.aloituspaikat?.ensikertalaisille,
-                  })} ${haku.aloituspaikat?.ensikertalaisille}`
-                : '');
+            const ensikertalaisilleText = haku.aloituspaikat?.ensikertalaisille
+              ? `, ${t('toteutus.ensikertalaisille', {
+                  ensikertalaisille: haku.aloituspaikat?.ensikertalaisille,
+                })} ${haku.aloituspaikat?.ensikertalaisille}`
+              : '';
+
+            const aloituspaikatText = haku.aloituspaikat?.lukumaara
+              ? haku.aloituspaikat?.lukumaara + ensikertalaisilleText
+              : '';
 
             return (
               <Grid
