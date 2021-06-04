@@ -105,7 +105,7 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
             const ensikertalaisilleText = haku.aloituspaikat?.ensikertalaisille
               ? `, ${t('toteutus.ensikertalaisille', {
                   ensikertalaisille: haku.aloituspaikat?.ensikertalaisille,
-                })} ${haku.aloituspaikat?.ensikertalaisille}`
+                })}`
               : '';
 
             const aloituspaikatText = haku.aloituspaikat?.lukumaara
