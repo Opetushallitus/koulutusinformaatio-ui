@@ -456,7 +456,7 @@
     "haku-paattyy:": "Haku päättyy:",
     "opiskelupaikkoja:": "Opiskelupaikkoja:",
     "pohjakoulutus:": "Pohjakoulutus:",
-    "ensikertalaisille": "joista ensikertalaisille",
+    "ensikertalaisille": "joista ensikertalaisille {{ensikertalaisille}}",
     "koulutus-alkaa": "Koulutus alkaa",
     "koulutus-alkaa:": "Koulutus alkaa:",
     "koulutus-alkaa-henkilokohtainen": "Henkilökohtaisen suunnitelman mukaisesti",
