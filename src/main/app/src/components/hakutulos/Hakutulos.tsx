@@ -137,7 +137,6 @@ export const Hakutulos = () => {
   };
   const handlePageSizeChange = (e: any) => {
     const newSize = e.target.value;
-    console.log('newSize', newSize);
 
     setPageSize(newSize);
     dispatch(clearPaging());
