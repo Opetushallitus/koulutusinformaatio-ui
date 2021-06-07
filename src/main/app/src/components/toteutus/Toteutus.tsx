@@ -143,7 +143,7 @@ const ToteutuksenYhteystiedot = ({ oids }: { oids: Array<string> }) => {
           flexDirection="column"
           alignItems="center">
           {filtered.map((oppilaitos: any) => (
-            <>
+            <React.Fragment key={oppilaitos.oid}>
               <Typography variant="h2">
                 {t('oppilaitos.tietoa-oppilaitoksesta')}
               </Typography>
@@ -184,12 +184,8 @@ const ToteutuksenYhteystiedot = ({ oids }: { oids: Array<string> }) => {
                   <OpenInNewIcon fontSize="small" />
                 </Button>
               )}
-              <Yhteystiedot
-                id={localize(oppilaitos)}
-                key={oppilaitos.oid}
-                {...oppilaitos.metadata}
-              />
-            </>
+              <Yhteystiedot id={localize(oppilaitos)} {...oppilaitos.metadata} />
+            </React.Fragment>
           ))}
         </Box>
       )}

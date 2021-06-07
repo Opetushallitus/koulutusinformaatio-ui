@@ -21,7 +21,6 @@
     "tayta-lomake": "Täytä hakulomake",
     "palaa-esittelyyn": "Palaa esittelyyn",
     "klo": "klo",
-    "ensikertalaisille": "(joista {{ensikertalaisille}} ensikertalaisille)",
     "valintaperusteet": "Valintaperusteet"
   },
   "valintaperuste": {
@@ -457,6 +456,7 @@
     "haku-paattyy:": "Haku päättyy:",
     "opiskelupaikkoja:": "Opiskelupaikkoja:",
     "pohjakoulutus:": "Pohjakoulutus:",
+    "ensikertalaisille": "joista ensikertalaisille {{ensikertalaisille}}",
     "koulutus-alkaa": "Koulutus alkaa",
     "koulutus-alkaa:": "Koulutus alkaa:",
     "koulutus-alkaa-henkilokohtainen": "Henkilökohtaisen suunnitelman mukaisesti",

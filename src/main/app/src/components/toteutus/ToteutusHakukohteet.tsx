@@ -102,6 +102,16 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                 .filter(Boolean)
                 .join(' · ');
 
+            const ensikertalaisilleText = haku.aloituspaikat?.ensikertalaisille
+              ? `, ${t('toteutus.ensikertalaisille', {
+                  ensikertalaisille: haku.aloituspaikat?.ensikertalaisille,
+                })}`
+              : '';
+
+            const aloituspaikatText = haku.aloituspaikat?.lukumaara
+              ? haku.aloituspaikat?.lukumaara + ensikertalaisilleText
+              : '';
+
             return (
               <Grid
                 key={haku.hakukohdeOid}
@@ -171,10 +181,11 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                               ),
                               modalText: haku.pohjakoulutusvaatimusTarkenne,
                             },
-                            haku.aloituspaikat?.lukumaara && {
+                            aloituspaikatText && {
                               size: 6,
                               heading: t('toteutus.opiskelupaikkoja:'),
-                              content: [haku.aloituspaikat.lukumaara],
+                              content: [aloituspaikatText],
+                              modalText: haku.aloituspaikat?.kuvaus,
                             },
                           ]
                             .filter(Boolean)
@@ -298,6 +309,7 @@ export const ToteutusHakukohteet = ({ haut }: Props) => {
               tyyppiOtsikko={localize(haku)}
               haut={haku.hakukohteet}
               icon={<IconComponent />}
+              key={key}
             />
           );
         })}
