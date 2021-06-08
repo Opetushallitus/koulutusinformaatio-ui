@@ -59,23 +59,17 @@ export const Pagination = ({ size }: { size: number }) => {
 
   const handleClick = (e: any, offset: number, page: number) => {
     setOffset(offset);
-    if (paginationProps.selectedTab === 'koulutus') {
-      dispatch(
-        searchKoulutukset({
-          requestParams: { ...apiRequestParams, page, size },
-          koulutusOffset: offset,
-          koulutusPage: page,
-        })
-      );
-    } else {
-      dispatch(
-        searchOppilaitokset({
-          requestParams: { ...apiRequestParams, page, size },
-          oppilaitosOffset: offset,
-          oppilaitosPage: page,
-        })
-      );
-    }
+    const searchAction =
+      paginationProps.selectedTab === 'koulutus'
+        ? searchKoulutukset
+        : searchOppilaitokset;
+    dispatch(
+      searchAction({
+        requestParams: { ...apiRequestParams, page, size },
+        offset,
+        page,
+      })
+    );
   };
 
   return total > size ? (
@@ -85,7 +79,7 @@ export const Pagination = ({ size }: { size: number }) => {
         limit={size}
         offset={offset}
         total={total}
-        onClick={(e, offset, page) => handleClick(e, offset, page)}
+        onClick={handleClick}
         classes={{
           rootCurrent: classes.rootCurrent,
           text: classes.text,
