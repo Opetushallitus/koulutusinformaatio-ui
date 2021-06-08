@@ -141,11 +141,10 @@ const hakutulosSlice = createSlice({
               // TODO: Olisi parempi jos backend lähettäisi ja vastaanottaisi nämä yhtenäisesti,
               // Nyt on lähtiessä koulutustyyppi vs. paluupostina tulee koulutustyyppi JA koulutustyyppi-muu
               case FILTER_TYPES.KOULUTUSTYYPPI:
-                state.koulutustyyppi = values.filter(
-                  (v) => KOULUTUS_TYYPPI_MUU_ARR.indexOf(v) === -1
-                );
-                state['koulutustyyppi-muu'] = values.filter(
-                  (v) => KOULUTUS_TYYPPI_MUU_ARR.indexOf(v) !== -1
+                state.koulutustyyppi = _.without(values, ...KOULUTUS_TYYPPI_MUU_ARR);
+                state['koulutustyyppi-muu'] = _.intersection(
+                  values,
+                  KOULUTUS_TYYPPI_MUU_ARR
                 );
                 break;
               case FILTER_TYPES.SIJAINTI:
