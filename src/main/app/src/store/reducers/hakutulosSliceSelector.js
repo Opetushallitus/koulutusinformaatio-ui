@@ -43,6 +43,9 @@ function getOpetuskieli(state) {
 function getKoulutustyyppi(state) {
   return state.hakutulos.koulutustyyppi;
 }
+function getKoulutustyyppiMuu(state) {
+  return state.hakutulos['koulutustyyppi-muu'];
+}
 function getKoulutusala(state) {
   return state.hakutulos.koulutusala;
 }
@@ -101,6 +104,7 @@ export const getHakutulosProps = createSelector(
     getSize,
     getOpetuskieli,
     getKoulutustyyppi,
+    getKoulutustyyppiMuu,
     getKoulutusala,
     getKunta,
     getMaakunta,
@@ -119,6 +123,7 @@ export const getHakutulosProps = createSelector(
     size,
     opetuskieli,
     koulutustyyppi,
+    koulutustyyppiMuu,
     koulutusala,
     kunta,
     maakunta,
@@ -141,6 +146,7 @@ export const getHakutulosProps = createSelector(
           [
             opetuskieli,
             koulutustyyppi,
+            koulutustyyppiMuu,
             koulutusala,
             kunta,
             maakunta,
@@ -205,6 +211,7 @@ export const getAPIRequestParams = createSelector(
     getSize,
     getOpetuskieli,
     getKoulutustyyppi,
+    getKoulutustyyppiMuu,
     getKoulutusala,
     getKunta,
     getMaakunta,
@@ -222,6 +229,7 @@ export const getAPIRequestParams = createSelector(
     size,
     opetuskieli,
     koulutustyyppi,
+    koulutustyyppiMuu,
     koulutusala,
     kunta,
     maakunta,
@@ -237,7 +245,7 @@ export const getAPIRequestParams = createSelector(
     sort,
     size,
     opetuskieli: getCheckedFiltersIdsStr(opetuskieli),
-    koulutustyyppi: getCheckedFiltersIdsStr(koulutustyyppi),
+    koulutustyyppi: getCheckedFiltersIdsStr(_.concat(koulutustyyppi, koulutustyyppiMuu)),
     koulutusala: getCheckedFiltersIdsStr(koulutusala),
     sijainti: getCheckedFiltersIdsStr(_.concat(kunta, maakunta)),
     opetustapa: getCheckedFiltersIdsStr(opetustapa),
