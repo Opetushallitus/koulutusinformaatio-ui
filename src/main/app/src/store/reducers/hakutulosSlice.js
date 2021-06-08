@@ -2,7 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
 
 import { searchAPI } from '#/src/api/konfoApi';
-import { FILTER_TYPES, FILTER_TYPES_ARR_FOR_KONFO_BACKEND } from '#/src/constants';
+import {
+  FILTER_TYPES,
+  FILTER_TYPES_ARR_FOR_KONFO_BACKEND,
+  KOULUTUS_TYYPPI_MUU_ARR,
+} from '#/src/constants';
 import { getLanguage } from '#/src/tools/localization';
 import { Common as C } from '#/src/tools/Utils';
 
@@ -132,9 +136,19 @@ const hakutulosSlice = createSlice({
             state[key] = val;
           });
           _.forEach(filters, (filterValues, key) => {
+            const values = filterValues.split(',');
             switch (key) {
+              // TODO: Olisi parempi jos backend lähettäisi ja vastaanottaisi nämä yhtenäisesti,
+              // Nyt on lähtiessä koulutustyyppi vs. paluupostina tulee koulutustyyppi JA koulutustyyppi-muu
+              case FILTER_TYPES.KOULUTUSTYYPPI:
+                state.koulutustyyppi = values.filter(
+                  (v) => KOULUTUS_TYYPPI_MUU_ARR.indexOf(v) === -1
+                );
+                state['koulutustyyppi-muu'] = values.filter(
+                  (v) => KOULUTUS_TYYPPI_MUU_ARR.indexOf(v) !== -1
+                );
+                break;
               case FILTER_TYPES.SIJAINTI:
-                const values = filterValues.split(',');
                 state.maakunta = values.filter((v) => v.startsWith('maakunta'));
                 state.kunta = values.filter((v) => v.startsWith('kunta'));
                 break;
@@ -142,7 +156,7 @@ const hakutulosSlice = createSlice({
                 state.hakukaynnissa = filterValues === 'true';
                 break;
               default:
-                state[key] = filterValues.split(',');
+                state[key] = values;
                 break;
             }
           });
@@ -307,16 +321,7 @@ export const searchAndMoveToHaku = ({ history }) => (dispatch, getState) => {
     _.pick(C.cleanRequestParams(apiRequestParams), [
       'order',
       'size',
-      'opetuskieli',
-      'valintatapa',
-      'hakukaynnissa',
-      'hakutapa',
-      'yhteishaku',
-      'koulutustyyppi',
-      'koulutusala',
-      'sijainti',
-      'opetustapa',
-      'pohjakoulutusvaatimus',
+      ...FILTER_TYPES_ARR_FOR_KONFO_BACKEND,
     ])
   ).toString();
   history.push(`/${lng}/haku/${hakutulos.keyword}?${restParams}`);
