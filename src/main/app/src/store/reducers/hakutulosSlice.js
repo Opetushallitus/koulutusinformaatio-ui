@@ -167,20 +167,20 @@ const hakutulosSlice = createSlice({
     },
     searchKoulutuksetSuccess(state, { payload }) {
       if (state.status === LOADING_STATUS) {
-        const { koulutusData, koulutusOffset, koulutusPage } = payload;
+        const { koulutusData, offset, page } = payload;
         state.koulutusHits = koulutusData.hits;
-        state.koulutusOffset = koulutusOffset;
-        state.koulutusPage = koulutusPage;
+        state.koulutusOffset = offset;
+        state.koulutusPage = page;
         state.error = null;
         state.status = IDLE_STATUS;
       }
     },
     searchOppilaitoksetSuccess(state, { payload }) {
       if (state.status === LOADING_STATUS) {
-        const { oppilaitosData, oppilaitosOffset, oppilaitosPage } = payload;
+        const { oppilaitosData, offset, page } = payload;
         state.oppilaitosHits = oppilaitosData.hits;
-        state.oppilaitosOffset = oppilaitosOffset;
-        state.oppilaitosPage = oppilaitosPage;
+        state.oppilaitosOffset = offset;
+        state.oppilaitosPage = page;
         state.error = null;
         state.status = IDLE_STATUS;
       }
@@ -264,31 +264,27 @@ export const searchAll = (
   }
 };
 
-export const searchKoulutukset = ({
-  requestParams,
-  koulutusOffset,
-  koulutusPage,
-}) => async (dispatch) => {
+// TODO: yhdistä tämä osaksi newSearchAll
+export const searchKoulutukset = ({ requestParams, offset, page }) => async (
+  dispatch
+) => {
   try {
     dispatch(searchAPICallStart());
     const koulutusData = await searchAPI.getKoulutukset(requestParams);
-    dispatch(searchKoulutuksetSuccess({ koulutusData, koulutusOffset, koulutusPage }));
+    dispatch(searchKoulutuksetSuccess({ koulutusData, offset, page }));
   } catch (err) {
     dispatch(searchAPICallError(err.toString()));
   }
 };
 
-export const searchOppilaitokset = ({
-  requestParams,
-  oppilaitosOffset,
-  oppilaitosPage,
-}) => async (dispatch) => {
+// TODO: yhdistä tämä osaksi newSearchAll
+export const searchOppilaitokset = ({ requestParams, offset, page }) => async (
+  dispatch
+) => {
   try {
     dispatch(searchAPICallStart());
     const oppilaitosData = await searchAPI.getOppilaitokset(requestParams);
-    dispatch(
-      searchOppilaitoksetSuccess({ oppilaitosData, oppilaitosOffset, oppilaitosPage })
-    );
+    dispatch(searchOppilaitoksetSuccess({ oppilaitosData, offset, page }));
   } catch (err) {
     dispatch(searchAPICallError(err.toString()));
   }

@@ -12,7 +12,7 @@ import {
 } from '#/src/store/reducers/hakutulosSlice';
 import { getHakutulosPagination } from '#/src/store/reducers/hakutulosSliceSelector';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   sizeSmall: {
     padding: '1px 6px',
     margin: '0 4px',
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Pagination = ({ size }) => {
+export const Pagination = ({ size }: { size: number }) => {
   const classes = useStyles();
 
   const paginationProps = useSelector(getHakutulosPagination);
@@ -57,54 +57,42 @@ const Pagination = ({ size }) => {
     );
   }, [paginationProps]);
 
-  const handleClick = (e, offset, page) => {
+  const handleClick = (e: any, offset: number, page: number) => {
     setOffset(offset);
-    if (paginationProps.selectedTab === 'koulutus') {
-      dispatch(
-        searchKoulutukset({
-          requestParams: { ...apiRequestParams, page, size },
-          koulutusOffset: offset,
-          koulutusPage: page,
-        })
-      );
-    } else {
-      dispatch(
-        searchOppilaitokset({
-          requestParams: { ...apiRequestParams, page, size },
-          oppilaitosOffset: offset,
-          oppilaitosPage: page,
-        })
-      );
-    }
+    const searchAction =
+      paginationProps.selectedTab === 'koulutus'
+        ? searchKoulutukset
+        : searchOppilaitokset;
+    dispatch(
+      searchAction({
+        requestParams: { ...apiRequestParams, page, size },
+        offset,
+        page,
+      })
+    );
   };
 
-  return (
-    total > size && (
-      <div style={{ textAlign: 'center' }}>
-        <CssBaseline />
-        <MuiFlatPagination
-          limit={size}
-          offset={offset}
-          total={total}
-          onClick={(e, offset, page) => handleClick(e, offset, page)}
-          classes={{
-            root: classes.root,
-            rootCurrent: classes.rootCurrent,
-            text: classes.text,
-            textPrimary: classes.textPrimary,
-            textSecondary: classes.textSecondary,
-            sizeSmall: classes.sizeSmall,
-            label: classes.label,
-          }}
-          otherPageColor="secondary"
-          currentPageColor="primary"
-          size="small"
-          previousPageLabel={<ChevronLeftOutlined />}
-          nextPageLabel={<ChevronRightOutlined />}
-        />
-      </div>
-    )
-  );
+  return total > size ? (
+    <div style={{ textAlign: 'center' }}>
+      <CssBaseline />
+      <MuiFlatPagination
+        limit={size}
+        offset={offset}
+        total={total}
+        onClick={handleClick}
+        classes={{
+          rootCurrent: classes.rootCurrent,
+          text: classes.text,
+          textPrimary: classes.textPrimary,
+          textSecondary: classes.textSecondary,
+          sizeSmall: classes.sizeSmall,
+        }}
+        otherPageColor="secondary"
+        currentPageColor="primary"
+        size="small"
+        previousPageLabel={<ChevronLeftOutlined />}
+        nextPageLabel={<ChevronRightOutlined />}
+      />
+    </div>
+  ) : null;
 };
-
-export default Pagination;

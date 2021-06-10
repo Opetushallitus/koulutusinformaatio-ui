@@ -14,11 +14,7 @@ export const useUrlParams = () => {
 
   const updateUrlSearchParams = useCallback(
     (updatedProps: object) => {
-      const newSearch = {
-        ...updatedProps,
-        ...{ kpage: 1, opage: 1 },
-      };
-      history.replace({ search: qs.stringify(C.cleanRequestParams(newSearch)) });
+      history.replace({ search: qs.stringify(C.cleanRequestParams(updatedProps)) });
     },
     [history]
   );
