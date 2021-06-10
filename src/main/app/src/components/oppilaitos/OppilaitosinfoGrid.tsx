@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 import { InfoGrid } from '#/src/components/common/InfoGrid';
 import { getLanguage, localizeSortedArrayToString } from '#/src/tools/localization';
-import { condArray } from '#/src/tools/Utils';
+import { condArray } from '#/src/tools/utils';
 import { Koodi } from '#/src/types/common';
 
 const useStyles = makeStyles((theme) => ({

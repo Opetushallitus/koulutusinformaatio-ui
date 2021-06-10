@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { HashLink as Link } from 'react-router-hash-link';
 
 import { colors } from '#/src/colors';
-import { scrollIntoView, toId } from '#/src/tools/Utils';
+import { scrollIntoView, toId } from '#/src/tools/utils';
 
 const useStyles = makeStyles({
   toc: {

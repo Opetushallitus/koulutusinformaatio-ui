@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import { TFunction } from 'i18next';
 
 import { localize } from '#/src/tools/localization';
-import { Alkamiskausi, Alkamiskausityyppi } from '#/src/types/ToteutusTypes';
+import { Alkamiskausi, Alkamiskausityyppi } from '#/src/types/common';
 
 export const formatAloitus = (
   {

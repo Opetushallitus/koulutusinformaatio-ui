@@ -3,7 +3,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core';
 
 import { localize } from '#/src/tools/localization';
-import { sanitizedHTMLParser } from '#/src/tools/Utils';
+import { sanitizedHTMLParser } from '#/src/tools/utils';
 
 type StylesProps = Pick<Props, 'noMargin'>;
 

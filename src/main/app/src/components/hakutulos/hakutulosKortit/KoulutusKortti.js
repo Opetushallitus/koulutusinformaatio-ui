@@ -20,7 +20,7 @@ import { educationTypeColorCode } from '#/src/colors';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import { MUI_BREAKPOINTS } from '#/src/constants';
 import { localize } from '#/src/tools/localization';
-import { getLocalizedOpintojenLaajuus } from '#/src/tools/Utils';
+import { getLocalizedOpintojenLaajuus } from '#/src/tools/utils';
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {

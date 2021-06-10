@@ -25,10 +25,10 @@ import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Spacer from '#/src/components/common/Spacer';
 import { HAKULOMAKE_TYYPPI } from '#/src/constants';
 import { localize } from '#/src/tools/localization';
-import { useOppilaitosOsoite } from '#/src/tools/UseOppilaitosOsoiteHook';
-import { formatDouble } from '#/src/tools/Utils';
+import { useOsoitteet } from '#/src/tools/useOppilaitosOsoite';
+import { formatDouble } from '#/src/tools/utils';
 import { Translateable } from '#/src/types/common';
-import { Hakukohde } from '#/src/types/ToteutusTypes';
+import { Hakukohde } from '#/src/types/HakukohdeTypes';
 
 import { formatAloitus } from './utils';
 
@@ -74,7 +74,7 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
   const oppilaitosOids = useMemo(() => haut.map((haku) => haku.jarjestyspaikka?.oid), [
     haut,
   ]);
-  const osoitteet = useOppilaitosOsoite(oppilaitosOids);
+  const osoitteet = useOsoitteet(oppilaitosOids, true);
 
   return (
     <Grid item>
