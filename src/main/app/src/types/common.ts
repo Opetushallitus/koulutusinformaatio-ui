@@ -1,3 +1,5 @@
+import { Alkamiskausityyppi } from '#/src/constants';
+
 export type Translateable = { fi?: string; sv?: string; en?: string };
 export type Koodi = { koodiUri: string; nimi: Translateable };
 
@@ -12,6 +14,15 @@ export type Yhteystiedot = {
   kayntiosoite?: Osoite;
   sahkoposti?: Translateable;
   puhelinnumero?: Translateable;
+};
+
+export type Alkamiskausi = {
+  alkamiskausityyppi?: Alkamiskausityyppi;
+  henkilokohtaisenSuunnitelmanLisatiedot: Translateable;
+  koulutuksenAlkamiskausi: Koodi;
+  koulutuksenAlkamisvuosi: string;
+  koulutuksenAlkamispaivamaara: string;
+  koulutuksenPaattymispaivamaara: string;
 };
 
 // Utils

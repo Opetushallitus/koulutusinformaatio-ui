@@ -25,9 +25,10 @@ import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Spacer from '#/src/components/common/Spacer';
 import { HAKULOMAKE_TYYPPI } from '#/src/constants';
 import { localize } from '#/src/tools/localization';
-import { useOppilaitosOsoite } from '#/src/tools/UseOppilaitosOsoiteHook';
+import { useOsoitteet } from '#/src/tools/useOppilaitosOsoite';
+import { formatDouble } from '#/src/tools/utils';
 import { Translateable } from '#/src/types/common';
-import { Hakukohde } from '#/src/types/ToteutusTypes';
+import { Hakukohde } from '#/src/types/HakukohdeTypes';
 
 import { formatAloitus } from './utils';
 
@@ -73,7 +74,7 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
   const oppilaitosOids = useMemo(() => haut.map((haku) => haku.jarjestyspaikka?.oid), [
     haut,
   ]);
-  const osoitteet = useOppilaitosOsoite(oppilaitosOids);
+  const osoitteet = useOsoitteet(oppilaitosOids, true);
 
   return (
     <Grid item>
@@ -172,6 +173,16 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                               size: 6,
                               heading: t('toteutus.koulutus-paattyy:'),
                               content: [paattyyText],
+                            },
+                            haku.hakukohteenLinja && {
+                              size: 12,
+                              heading: t('toteutus.alin-hyvaksytty-keskiarvo'),
+                              content: [
+                                formatDouble(
+                                  haku.hakukohteenLinja.alinHyvaksyttyKeskiarvo
+                                ),
+                              ],
+                              modalText: haku.hakukohteenLinja.lisatietoa,
                             },
                             {
                               size: 6,

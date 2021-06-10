@@ -10,7 +10,7 @@ import { IconBackground } from '#/src/components/common/IconBackground';
 import Spacer from '#/src/components/common/Spacer';
 import { selectEiSahkoistaHaku } from '#/src/store/reducers/toteutusSlice';
 import { localize } from '#/src/tools/localization';
-import { sanitizedHTMLParser } from '#/src/tools/Utils';
+import { sanitizedHTMLParser } from '#/src/tools/utils';
 
 const useStyles = makeStyles((theme) => ({
   hakuName: {

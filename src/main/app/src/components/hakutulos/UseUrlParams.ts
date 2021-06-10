@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react';
 import qs from 'query-string';
 import { useHistory } from 'react-router-dom';
 
-import { Common as C } from '#/src/tools/Utils';
+import { Common as C } from '#/src/tools/utils';
 
 export const useUrlParams = () => {
   const history = useHistory();
@@ -14,11 +14,7 @@ export const useUrlParams = () => {
 
   const updateUrlSearchParams = useCallback(
     (updatedProps: object) => {
-      const newSearch = {
-        ...updatedProps,
-        ...{ kpage: 1, opage: 1 },
-      };
-      history.replace({ search: qs.stringify(C.cleanRequestParams(newSearch)) });
+      history.replace({ search: qs.stringify(C.cleanRequestParams(updatedProps)) });
     },
     [history]
   );

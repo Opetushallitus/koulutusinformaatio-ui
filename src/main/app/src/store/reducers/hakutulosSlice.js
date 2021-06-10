@@ -2,9 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
 
 import { searchAPI } from '#/src/api/konfoApi';
-import { FILTER_TYPES, FILTER_TYPES_ARR_FOR_KONFO_BACKEND } from '#/src/constants';
+import {
+  FILTER_TYPES,
+  FILTER_TYPES_ARR_FOR_KONFO_BACKEND,
+  KOULUTUS_TYYPPI_MUU_ARR,
+} from '#/src/constants';
 import { getLanguage } from '#/src/tools/localization';
-import { Common as C } from '#/src/tools/Utils';
+import { Common as C } from '#/src/tools/utils';
 
 import { getAPIRequestParams } from './hakutulosSliceSelector';
 
@@ -132,9 +136,18 @@ const hakutulosSlice = createSlice({
             state[key] = val;
           });
           _.forEach(filters, (filterValues, key) => {
+            const values = filterValues.split(',');
             switch (key) {
+              // TODO: Olisi parempi jos backend lähettäisi ja vastaanottaisi nämä yhtenäisesti,
+              // Nyt on lähtiessä koulutustyyppi vs. paluupostina tulee koulutustyyppi JA koulutustyyppi-muu
+              case FILTER_TYPES.KOULUTUSTYYPPI:
+                state.koulutustyyppi = _.without(values, ...KOULUTUS_TYYPPI_MUU_ARR);
+                state['koulutustyyppi-muu'] = _.intersection(
+                  values,
+                  KOULUTUS_TYYPPI_MUU_ARR
+                );
+                break;
               case FILTER_TYPES.SIJAINTI:
-                const values = filterValues.split(',');
                 state.maakunta = values.filter((v) => v.startsWith('maakunta'));
                 state.kunta = values.filter((v) => v.startsWith('kunta'));
                 break;
@@ -142,7 +155,7 @@ const hakutulosSlice = createSlice({
                 state.hakukaynnissa = filterValues === 'true';
                 break;
               default:
-                state[key] = filterValues.split(',');
+                state[key] = values;
                 break;
             }
           });
@@ -154,20 +167,20 @@ const hakutulosSlice = createSlice({
     },
     searchKoulutuksetSuccess(state, { payload }) {
       if (state.status === LOADING_STATUS) {
-        const { koulutusData, koulutusOffset, koulutusPage } = payload;
+        const { koulutusData, offset, page } = payload;
         state.koulutusHits = koulutusData.hits;
-        state.koulutusOffset = koulutusOffset;
-        state.koulutusPage = koulutusPage;
+        state.koulutusOffset = offset;
+        state.koulutusPage = page;
         state.error = null;
         state.status = IDLE_STATUS;
       }
     },
     searchOppilaitoksetSuccess(state, { payload }) {
       if (state.status === LOADING_STATUS) {
-        const { oppilaitosData, oppilaitosOffset, oppilaitosPage } = payload;
+        const { oppilaitosData, offset, page } = payload;
         state.oppilaitosHits = oppilaitosData.hits;
-        state.oppilaitosOffset = oppilaitosOffset;
-        state.oppilaitosPage = oppilaitosPage;
+        state.oppilaitosOffset = offset;
+        state.oppilaitosPage = page;
         state.error = null;
         state.status = IDLE_STATUS;
       }
@@ -251,31 +264,27 @@ export const searchAll = (
   }
 };
 
-export const searchKoulutukset = ({
-  requestParams,
-  koulutusOffset,
-  koulutusPage,
-}) => async (dispatch) => {
+// TODO: yhdistä tämä osaksi newSearchAll
+export const searchKoulutukset = ({ requestParams, offset, page }) => async (
+  dispatch
+) => {
   try {
     dispatch(searchAPICallStart());
     const koulutusData = await searchAPI.getKoulutukset(requestParams);
-    dispatch(searchKoulutuksetSuccess({ koulutusData, koulutusOffset, koulutusPage }));
+    dispatch(searchKoulutuksetSuccess({ koulutusData, offset, page }));
   } catch (err) {
     dispatch(searchAPICallError(err.toString()));
   }
 };
 
-export const searchOppilaitokset = ({
-  requestParams,
-  oppilaitosOffset,
-  oppilaitosPage,
-}) => async (dispatch) => {
+// TODO: yhdistä tämä osaksi newSearchAll
+export const searchOppilaitokset = ({ requestParams, offset, page }) => async (
+  dispatch
+) => {
   try {
     dispatch(searchAPICallStart());
     const oppilaitosData = await searchAPI.getOppilaitokset(requestParams);
-    dispatch(
-      searchOppilaitoksetSuccess({ oppilaitosData, oppilaitosOffset, oppilaitosPage })
-    );
+    dispatch(searchOppilaitoksetSuccess({ oppilaitosData, offset, page }));
   } catch (err) {
     dispatch(searchAPICallError(err.toString()));
   }
@@ -307,16 +316,7 @@ export const searchAndMoveToHaku = ({ history }) => (dispatch, getState) => {
     _.pick(C.cleanRequestParams(apiRequestParams), [
       'order',
       'size',
-      'opetuskieli',
-      'valintatapa',
-      'hakukaynnissa',
-      'hakutapa',
-      'yhteishaku',
-      'koulutustyyppi',
-      'koulutusala',
-      'sijainti',
-      'opetustapa',
-      'pohjakoulutusvaatimus',
+      ...FILTER_TYPES_ARR_FOR_KONFO_BACKEND,
     ])
   ).toString();
   history.push(`/${lng}/haku/${hakutulos.keyword}?${restParams}`);

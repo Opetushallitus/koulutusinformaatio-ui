@@ -15,42 +15,43 @@ export const koodiUriToPostinumero = (str = '') => {
   return str.match(/^posti_(\d+)/)?.[1] ?? '';
 };
 
-export const OsoiteParser = {
-  parseOsoiteData(osoiteData) {
-    const osoite = localize(osoiteData.osoite);
-    const postinumero = koodiUriToPostinumero(osoiteData.postinumero.koodiUri);
-    const postitoimipaikka = _fp.capitalize(localize(osoiteData.postinumero.nimi));
-    const yhteystiedot =
-      osoite && postinumero && postitoimipaikka
-        ? _fp.trim(`${osoite}, ${postinumero} ${postitoimipaikka}`, ', ')
-        : getTranslationForKey('oppilaitos.ei-yhteystietoja');
+export const parseOsoiteData = (osoiteData) => {
+  const postiosoite = osoiteData?.postiosoite ?? {};
+  const osoite = localize(postiosoite.osoite);
+  const postinumero = koodiUriToPostinumero(postiosoite.postinumero?.koodiUri);
+  const postitoimipaikka = _fp.capitalize(localize(postiosoite.postinumero?.nimi));
+  const yhteystiedot =
+    osoite && postinumero && postitoimipaikka
+      ? _fp.trim(`${osoite}, ${postinumero} ${postitoimipaikka}`, ', ')
+      : getTranslationForKey('oppilaitos.ei-yhteystietoja');
+  const sahkoposti = osoiteData.sahkoposti;
+  const nimi = osoiteData.nimi;
 
-    return { osoite, postinumero, postitoimipaikka, yhteystiedot };
-  },
+  return { nimi, osoite, postinumero, postitoimipaikka, sahkoposti, yhteystiedot };
+};
 
-  getSearchAddress(postitoimipaikka = '', osoite = '') {
-    // 'PL 123, osoite 123' <- we need to remove any PL (postilokero) parts for map searches
-    const usedOsoite = osoite
-      .split(',')
-      .filter((s) => !s.includes('PL'))
-      .map((s) => s.trim())
-      .join(', ');
-    const fullAddress = [postitoimipaikka, usedOsoite].filter(Boolean).join(' ');
-    const withoutNumbers = fullAddress.split(' ').filter(isNaN).join(' ');
+export const getSearchAddress = (postitoimipaikka = '', osoite = '') => {
+  // 'PL 123, osoite 123' <- we need to remove any PL (postilokero) parts for map searches
+  const usedOsoite = osoite
+    .split(',')
+    .filter((s) => !s.includes('PL'))
+    .map((s) => s.trim())
+    .join(', ');
+  const fullAddress = [postitoimipaikka, usedOsoite].filter(Boolean).join(' ');
+  const withoutNumbers = fullAddress.split(' ').filter(isNaN).join(' ');
 
-    // This cuts the string after any words + single number e.g. 'Paikkakunta Osoite 123 this is cut'
-    // TODO: Is this really necessary
-    const regexp = /^.+? \d+/;
-    const coreAddress = fullAddress.match(regexp)?.[0];
+  // This cuts the string after any words + single number e.g. 'Paikkakunta Osoite 123 this is cut'
+  // TODO: Is this really necessary
+  const regexp = /^.+? \d+/;
+  const coreAddress = fullAddress.match(regexp)?.[0];
 
-    if (!coreAddress) {
-      consoleWarning('Warning: returning null for core address, input: ' + fullAddress);
-    }
-    return {
-      address: coreAddress || postitoimipaikka,
-      addressNoNumbers: withoutNumbers, // NOTE: This is used when given street number is not found in Oskari map
-    };
-  },
+  if (!coreAddress) {
+    consoleWarning('Warning: returning null for core address, input: ' + fullAddress);
+  }
+  return {
+    address: coreAddress || postitoimipaikka,
+    addressNoNumbers: withoutNumbers, // NOTE: This is used when given street number is not found in Oskari map
+  };
 };
 
 export function formatDateString(dateString, dateFormat = 'd.M.y HH:mm') {
@@ -147,3 +148,5 @@ export function getLocalizedOpintojenLaajuus(koulutus) {
 }
 
 export const condArray = (cond, item) => (cond ? [item] : []);
+
+export const formatDouble = (number) => number?.toString().replace('.', ',');

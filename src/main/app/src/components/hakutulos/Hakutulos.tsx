@@ -37,9 +37,10 @@ import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin'
 import { OpetustapaSuodatin } from './hakutulosSuodattimet/OpetustapaSuodatin';
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
 import { SuodatinValinnat } from './hakutulosSuodattimet/SuodatinValinnat';
+import { ValintatapaSuodatin } from './hakutulosSuodattimet/ValintatapaSuodatin';
 import HakutulosToggle from './HakutulosToggle';
 import { MobileFiltersOnTopMenu } from './MobileFiltersOnTopMenu';
-import Pagination from './Pagination';
+import { Pagination } from './Pagination';
 
 const useStyles = makeStyles((theme) => ({
   hakutulosSisalto: {
@@ -93,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const getPageSortTranslationKey = (sort) => {
+const getPageSortTranslationKey = (sort: string) => {
   switch (sort) {
     case 'score_desc':
       return 'haku.jarjesta_osuvin';
@@ -113,8 +114,8 @@ export const Hakutulos = () => {
 
   const hakutulosProps = useSelector(getHakutulosProps);
   const apiRequestParams = useQueryParams();
-  const error = useSelector((state) => state.hakutulos.error);
-  const status = useSelector((state) => state.hakutulos.status);
+  const error = useSelector((state: any) => state.hakutulos.error);
+  const status = useSelector((state: any) => state.hakutulos.status);
   const dispatch = useDispatch();
 
   const [pageSize, setPageSize] = useState(0);
@@ -124,7 +125,7 @@ export const Hakutulos = () => {
     setPageSize(hakutulosProps.size);
   }, [hakutulosProps.size]);
 
-  const handlePageSortChange = (e) => {
+  const handlePageSortChange = (e: any) => {
     const newPageSort = e.target.value;
     const newOrder = newPageSort === 'name_asc' ? 'asc' : 'desc';
     const newSort = newPageSort === 'score_desc' ? 'score' : 'name';
@@ -134,7 +135,7 @@ export const Hakutulos = () => {
     dispatch(setOrder({ newOrder }));
     dispatch(searchAll({ ...apiRequestParams, order: newOrder, sort: newSort }));
   };
-  const handlePageSizeChange = (e) => {
+  const handlePageSizeChange = (e: any) => {
     const newSize = e.target.value;
 
     setPageSize(newSize);
@@ -181,7 +182,8 @@ export const Hakutulos = () => {
                 justify="flex-end"
                 style={{ paddingTop: 6 }}
                 alignItems="baseline">
-                <Box component="span" classes={{ root: classes.boxRoot }}>
+                {/* NOTE Jostain syystä classes ei ole tyypitetty propsiksi mutta on kuitenkin oikeasti propsi */}
+                <Box component="span" {...{ classes: { root: classes.boxRoot } }}>
                   {t('haku.tulokset-per-sivu')}
                 </Box>
                 <Select
@@ -203,7 +205,8 @@ export const Hakutulos = () => {
                     </MenuItem>
                   ))}
                 </Select>
-                <Box component="span" classes={{ root: classes.boxRoot }}>
+                {/* NOTE Jostain syystä classes ei ole tyypitetty propsiksi mutta on kuitenkin oikeasti propsi */}
+                <Box component="span" {...{ classes: { root: classes.boxRoot } }}>
                   {t('haku.jarjesta')}
                 </Box>
                 <Select
@@ -238,6 +241,7 @@ export const Hakutulos = () => {
               <KoulutustyyppiSuodatin expanded elevation={2} />
               <OpetuskieliSuodatin expanded elevation={2} />
               <SijaintiSuodatin expanded elevation={2} />
+              <ValintatapaSuodatin expanded elevation={2} />
               <KoulutusalaSuodatin expanded elevation={2} />
               <HakutapaSuodatin expanded elevation={2} />
               <OpetustapaSuodatin expanded={false} elevation={2} />

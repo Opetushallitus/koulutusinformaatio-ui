@@ -1,4 +1,4 @@
-import { Alkamiskausityyppi } from '#/src/types/ToteutusTypes';
+import { Alkamiskausityyppi } from '#/src/constants';
 
 import { formatAloitus } from './utils';
 

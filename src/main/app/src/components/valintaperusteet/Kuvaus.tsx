@@ -5,7 +5,7 @@ import _fp from 'lodash/fp';
 import { useTranslation } from 'react-i18next';
 
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
-import { toId } from '#/src/tools/Utils';
+import { toId } from '#/src/tools/utils';
 import { Translateable } from '#/src/types/common';
 
 import { SisaltoComponent, tagHeaders } from './Sisalto';

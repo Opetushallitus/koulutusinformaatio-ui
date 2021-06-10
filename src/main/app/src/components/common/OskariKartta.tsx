@@ -5,7 +5,7 @@ import { urls } from 'oph-urls-js';
 import OskariRPC from 'oskari-rpc';
 
 import { getLanguage } from '#/src/tools/localization';
-import { OsoiteParser as op } from '#/src/tools/Utils';
+import { getSearchAddress } from '#/src/tools/utils';
 
 const MARKER_ID = 'OPPILAITOS';
 const ZOOM_LEVEL = 9;
@@ -67,7 +67,7 @@ export const OskariKartta = ({ id, osoite, postitoimipaikka }: Props) => {
         channel.postRequest('MapModulePlugin.AddMarkerRequest', [requestData, MARKER_ID]);
       } else {
         if (!noHouseNumberSearchDone) {
-          const { addressNoNumbers } = op.getSearchAddress(postitoimipaikka, osoite);
+          const { addressNoNumbers } = getSearchAddress(postitoimipaikka, osoite);
           channel.postRequest('SearchRequest', [addressNoNumbers]);
           noHouseNumberSearchDone = true;
         }
@@ -90,7 +90,7 @@ export const OskariKartta = ({ id, osoite, postitoimipaikka }: Props) => {
       }
 
       if (channel) {
-        const { address } = op.getSearchAddress(postitoimipaikka, osoite);
+        const { address } = getSearchAddress(postitoimipaikka, osoite);
         channel.postRequest('SearchRequest', [address]);
       } else {
         console.error(
