@@ -4,7 +4,7 @@ import _fp from 'lodash/fp';
 import qs from 'query-string';
 
 import { FILTER_TYPES, FILTER_TYPES_ARR, YHTEISHAKU_KOODI_URI } from '#/src/constants';
-import { getLanguage, getTranslationForKey, localize } from '#/src/tools/localization';
+import { getLanguage } from '#/src/tools/localization';
 import { Common as C } from '#/src/tools/utils';
 
 // State data getters
