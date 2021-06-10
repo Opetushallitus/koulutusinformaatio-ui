@@ -1,3 +1,5 @@
+import { Alkamiskausityyppi } from '#/src/constants';
+
 export type Translateable = { fi?: string; sv?: string; en?: string };
 export type Koodi = { koodiUri: string; nimi: Translateable };
 
@@ -13,12 +15,6 @@ export type Yhteystiedot = {
   sahkoposti?: Translateable;
   puhelinnumero?: Translateable;
 };
-
-export enum Alkamiskausityyppi {
-  TARKKA_ALKAMISAJANKOHTA = 'tarkka alkamisajankohta',
-  ALKAMISKAUSI_JA_VUOSI = 'alkamiskausi ja -vuosi',
-  HENKILOKOHTAINEN_SUUNNITELMA = 'henkilokohtainen suunnitelma',
-}
 
 export type Alkamiskausi = {
   alkamiskausityyppi?: Alkamiskausityyppi;

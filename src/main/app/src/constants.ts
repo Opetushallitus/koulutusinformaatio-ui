@@ -65,3 +65,9 @@ export const HAKULOMAKE_TYYPPI = {
 // Search related
 export const pageSizeArray = [5, 10, 20, 30, 50];
 export const pageSortArray = ['score_desc', 'name_asc', 'name_desc'];
+
+export enum Alkamiskausityyppi {
+  TARKKA_ALKAMISAJANKOHTA = 'tarkka alkamisajankohta',
+  ALKAMISKAUSI_JA_VUOSI = 'alkamiskausi ja -vuosi',
+  HENKILOKOHTAINEN_SUUNNITELMA = 'henkilokohtainen suunnitelma',
+}
