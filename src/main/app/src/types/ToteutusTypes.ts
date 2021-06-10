@@ -1,6 +1,7 @@
 import { KOULUTUS_TYYPPI } from '#/src/constants';
 
-import { Koodi, Translateable, TODOType, ValueOf } from './common';
+import { Koodi, Translateable, TODOType, ValueOf, Alkamiskausi } from './common';
+import { Hakukohde } from './HakukohdeTypes';
 
 type KoulutusTyyppi = ValueOf<typeof KOULUTUS_TYYPPI>;
 
@@ -122,45 +123,4 @@ export type Jarjestaja = {
   toteutusNimi: string;
   tutkintonimikkeet: TODOType;
   hakukaynnissa: boolean;
-};
-
-export enum Alkamiskausityyppi {
-  TARKKA_ALKAMISAJANKOHTA = 'tarkka alkamisajankohta',
-  ALKAMISKAUSI_JA_VUOSI = 'alkamiskausi ja -vuosi',
-  HENKILOKOHTAINEN_SUUNNITELMA = 'henkilokohtainen suunnitelma',
-}
-
-export type Alkamiskausi = {
-  alkamiskausityyppi?: Alkamiskausityyppi;
-  henkilokohtaisenSuunnitelmanLisatiedot: Translateable;
-  koulutuksenAlkamiskausi: Koodi;
-  koulutuksenAlkamisvuosi: string;
-  koulutuksenAlkamispaivamaara: string;
-  koulutuksenPaattymispaivamaara: string;
-};
-
-export type Hakukohde = {
-  aloituspaikat: {
-    lukumaara?: number;
-    ensikertalaisille?: number;
-    kuvaus?: Translateable;
-  };
-  hakuajat: Array<{ alkaa: string; paattyy: string }>;
-  hakukohdeOid: string;
-  hakukohteenLinja?: {
-    alinHyvaksyttyKeskiarvo: number;
-    linja?: Koodi;
-    lisatietoa: Translateable;
-  };
-  hakulomakeAtaruId: string;
-  hakulomakeKuvaus: Translateable;
-  hakulomakeLinkki: Translateable;
-  hakulomaketyyppi: string;
-  isHakuAuki: boolean;
-  jarjestyspaikka: { nimi: Translateable; oid: string; paikkakunta: Koodi };
-  koulutuksenAlkamiskausi: Alkamiskausi;
-  nimi: Translateable;
-  pohjakoulutusvaatimus: Array<Koodi>;
-  pohjakoulutusvaatimusTarkenne: Translateable;
-  valintaperusteId?: string;
 };

@@ -4,8 +4,8 @@ import _fp from 'lodash/fp';
 import qs from 'query-string';
 
 import { FILTER_TYPES, FILTER_TYPES_ARR, YHTEISHAKU_KOODI_URI } from '#/src/constants';
-import { getLanguage } from '#/src/tools/localization';
-import { Common as C } from '#/src/tools/Utils';
+import { getLanguage, getTranslationForKey, localize } from '#/src/tools/localization';
+import { Common as C } from '#/src/tools/utils';
 
 // State data getters
 export const getIsReady = (state) => state.hakutulos.status === 'idle';

@@ -4,7 +4,7 @@ import { Koodi } from '#/src/types/common';
 import { Maksullisuustyyppi } from '#/src/types/ToteutusTypes';
 
 import i18n from './i18n';
-import { koodiUriToPostinumero } from './Utils';
+import { koodiUriToPostinumero } from './utils';
 
 const lng = (nimi: any, lng: 'fi' | 'en' | 'sv') =>
   nimi?.['kieli_' + lng] || nimi?.[lng] || false;

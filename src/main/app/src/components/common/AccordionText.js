@@ -5,7 +5,7 @@ import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 
 import { colors } from '#/src/colors';
-import { sanitizedHTMLParser } from '#/src/tools/Utils';
+import { sanitizedHTMLParser } from '#/src/tools/utils';
 
 const useStyles = makeStyles(() => ({
   heading: {

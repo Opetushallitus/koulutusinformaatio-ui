@@ -8,7 +8,7 @@ import {
   KOULUTUS_TYYPPI_MUU_ARR,
 } from '#/src/constants';
 import { getLanguage } from '#/src/tools/localization';
-import { Common as C } from '#/src/tools/Utils';
+import { Common as C } from '#/src/tools/utils';
 
 import { getAPIRequestParams } from './hakutulosSliceSelector';
 

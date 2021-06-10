@@ -50,7 +50,9 @@
     "enimmaispisteet": "Enimmäispistemäärä",
     "vahimmaispisteet": "Vähimmäispistemäärä",
     "kynnysehto": "Kynnysehto",
-    "hakukohteenKynnysehto": "Hakukohteen kynnysehto"
+    "hakukohteenKynnysehto": "Hakukohteen kynnysehto",
+    "liite-toimitustapa-lomake": "Toimitetaan lomakkeen lähettämisen yhteydessä",
+    "hakijapalveluiden-yhteystiedot-puuttuvat": "Oppilaitoksen hakijapalvelut (tiedot puuttuvat)"
   },
   "palvelut": {
     "otsikko-muut-palvelut": "Muut palvelut",
