@@ -1,8 +1,9 @@
 import { format } from 'date-fns';
 import { TFunction } from 'i18next';
 
+import { Alkamiskausityyppi } from '#/src/constants';
 import { localize } from '#/src/tools/localization';
-import { Alkamiskausi, Alkamiskausityyppi } from '#/src/types/common';
+import { Alkamiskausi } from '#/src/types/common';
 
 export const formatAloitus = (
   {
