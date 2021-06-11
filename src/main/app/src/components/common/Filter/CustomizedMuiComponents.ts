@@ -17,7 +17,7 @@ export const KonfoCheckbox = withStyles({
   },
 })(Checkbox);
 
-export const SuodatinAccordion = withStyles({
+export const SuodatinAccordion = withStyles((theme) => ({
   root: {
     backgroundColor: colors.white,
     borderRadius: '0 !important',
@@ -27,40 +27,40 @@ export const SuodatinAccordion = withStyles({
     expandIcon: {
       color: 'white',
     },
-    '@media (min-width:960px)': {
+    [theme.breakpoints.up('md')]: {
       marginBottom: '16px',
       boxShadow: '0 2px 8px 0 rgba(0,0,0,0.2)',
     },
   },
   expanded: {
-    '@media (max-width:959px)': {
+    [theme.breakpoints.down('md')]: {
       margin: '0 !important',
     },
   },
-})(Accordion);
+}))(Accordion);
 
-export const SuodatinAccordionSummary = withStyles({
+export const SuodatinAccordionSummary = withStyles((theme) => ({
   root: {
     minHeight: '32px !important',
-    '@media (max-width:959px)': {
+    [theme.breakpoints.down('md')]: {
       padding: '0 !important',
     },
   },
   content: {
     margin: '0 !important',
   },
-})(AccordionSummary);
+}))(AccordionSummary);
 
-export const SuodatinAccordionDetails = withStyles({
+export const SuodatinAccordionDetails = withStyles((theme) => ({
   root: {
-    '@media (min-width:960px)': {
+    [theme.breakpoints.up('md')]: {
       padding: '0 24px 16px 24px',
     },
-    '@media (max-width:959px)': {
+    [theme.breakpoints.down('md')]: {
       padding: '0 !important',
     },
   },
-})(AccordionDetails);
+}))(AccordionDetails);
 
 export const SuodatinListItemText = withStyles({
   primary: {

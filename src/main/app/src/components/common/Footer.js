@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Link, makeStyles } from '@material-ui/core';
+import { Link, makeStyles, useTheme } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
@@ -68,7 +68,8 @@ const useStyles = makeStyles({
 const Footer = () => {
   const { t } = useTranslation();
   const { data } = useContentful();
-  const matches = useMediaQuery('(min-width: 979px)');
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('md'));
   const classes = useStyles();
   const single = (entry) => Object.values(entry || {})[0] || {};
   const { content, contentRight, contentCenter, lopputekstit } = single(data.footer);

@@ -203,7 +203,17 @@ export const ToteutusPage = () => {
 
   // TODO: There is absolutely no error handling atm.
   const toteutus: Toteutus = useSelector(selectToteutus(oid), shallowEqual);
+
   const koulutusOid = toteutus?.koulutusOid;
+  const {
+    kuvaus,
+    painotukset,
+    erityisetKoulutustehtavat,
+    opetus,
+    ammattinimikkeet,
+    osaamisalat,
+    yhteyshenkilot,
+  } = toteutus?.metadata ?? {};
   const koulutus = useSelector(selectKoulutus(koulutusOid), shallowEqual);
   const haut = useSelector(selectHakukohteet(oid), shallowEqual);
 
@@ -214,7 +224,7 @@ export const ToteutusPage = () => {
 
   // NOTE: These ammattinimikkeet should be the freely written virkailija asiasana-ammattinimikkeet,
   // not the formal tutkintonimikkeet
-  const asiasanat: Array<string> = (toteutus?.metadata?.ammattinimikkeet || [])
+  const asiasanat: Array<string> = (ammattinimikkeet || [])
     .concat(toteutus?.metadata?.asiasanat || [])
     .filter((asiasana: any) => asiasana.kieli === currentLanguage)
     .map((asiasana: any) => asiasana.arvo);
@@ -222,14 +232,12 @@ export const ToteutusPage = () => {
   const { data: osaamisalaData = {} as any, isFetching } = useOsaamisalatPageData({
     ePerusteId: koulutus?.ePerusteId?.toString(),
     requestParams: {
-      'koodi-urit': toteutus?.metadata?.osaamisalat
-        ?.map((oa: any) => oa?.koodi?.koodiUri)
-        ?.join(','),
+      'koodi-urit': osaamisalat?.map((oa: any) => oa?.koodi?.koodiUri)?.join(','),
     },
   });
 
   // NOTE: This must *not* handle alemmanKorkeakoulututkinnonOsaamisalat or ylemmanKorkeakoulututkinnonOsaamisalat
-  const osaamisalatCombined = toteutus?.metadata?.osaamisalat?.map((toa: any) => {
+  const osaamisalatCombined = osaamisalat?.map((toa: any) => {
     const extendedData =
       osaamisalaData?.osaamisalat?.find(
         (koa: any) => toa?.koodi?.koodiUri === koa?.osaamisalakoodiUri
@@ -253,7 +261,6 @@ export const ToteutusPage = () => {
     }
   }, [isDraft, toteutus, dispatch, oid, koulutus, koulutusOid, koulutusNotFetched]);
 
-  const opetus = toteutus?.metadata?.opetus;
   const hasAnyHaku = _.some(haut, (v: any) => v.hakukohteet.length > 0);
   const hakuUrl = useSelector(getHakuUrl);
   const { hakuParamsStr } = useSelector(getHakuParams);
@@ -339,11 +346,29 @@ export const ToteutusPage = () => {
             }
           />
         )}
-        {toteutus?.metadata?.kuvaus && (
+        {kuvaus && (
           <HtmlTextBox
             heading={t('koulutus.kuvaus')}
             html={localize(toteutus.metadata.kuvaus)}
             className={classes.root}
+          />
+        )}
+        {!_.isEmpty(painotukset) && (
+          <AccordionWithTitle
+            titleTranslationKey="toteutus.painotukset"
+            data={painotukset.map((painotus: any) => ({
+              title: localize(painotus.koodi),
+              content: <LocalizedHTML data={painotus?.kuvaus} />,
+            }))}
+          />
+        )}
+        {!_.isEmpty(erityisetKoulutustehtavat) && (
+          <AccordionWithTitle
+            titleTranslationKey="toteutus.erityiset-koulutustehtavat"
+            data={erityisetKoulutustehtavat.map((koulutustehtava: any) => ({
+              title: localize(koulutustehtava?.koodi),
+              content: <LocalizedHTML data={koulutustehtava?.kuvaus} />,
+            }))}
           />
         )}
         {!_.isEmpty(osaamisalatCombined) && (
@@ -380,68 +405,66 @@ export const ToteutusPage = () => {
             }))}
           />
         )}
-        {toteutus?.metadata?.yhteyshenkilot.length > 0 && (
+        {yhteyshenkilot?.length > 0 && (
           <Box mt={12} display="flex" flexDirection="column" alignItems="center">
             <Typography variant="h2">{t('toteutus.yhteyshenkilot')}</Typography>
             <Spacer />
             <Box mt={5}>
               <Grid container alignItems="center">
-                {toteutus.metadata.yhteyshenkilot.map(
-                  (yhteyshenkilo: any, i: number, a: any) => (
-                    <React.Fragment key={i}>
-                      <Grid item>
-                        <Grid container direction="column">
-                          <Grid item>
-                            <Typography variant="h5">
-                              {localize(yhteyshenkilo.nimi)}
-                            </Typography>
-                          </Grid>
-                          <Grid item>
-                            <Typography variant="body1">
-                              {localize(yhteyshenkilo.titteli)}
-                            </Typography>
-                          </Grid>
-                          <Grid item>
-                            <Typography variant="body1">
-                              {localize(yhteyshenkilo.sahkoposti)}
-                            </Typography>
-                          </Grid>
-                          <Grid item>
-                            <Typography variant="body1">
-                              {localize(yhteyshenkilo.puhelinnumero)}
-                            </Typography>
-                          </Grid>
-                          {!_.isEmpty(yhteyshenkilo.wwwSivu) && (
-                            <Grid item>
-                              <Link
-                                target="_blank"
-                                rel="noopener"
-                                href={localize(yhteyshenkilo.wwwSivu)}
-                                variant="body1">
-                                <Grid container direction="row" alignItems="center">
-                                  {localize(yhteyshenkilo.wwwSivu)}
-                                  <OpenInNewIcon
-                                    fontSize="small"
-                                    style={{ marginLeft: '5px' }}
-                                  />
-                                </Grid>
-                              </Link>
-                            </Grid>
-                          )}
-                        </Grid>
-                      </Grid>
-                      {i + 1 !== a.length && (
+                {yhteyshenkilot?.map((yhteyshenkilo: any, i: number, a: any) => (
+                  <React.Fragment key={i}>
+                    <Grid item>
+                      <Grid container direction="column">
                         <Grid item>
-                          <Box
-                            mx={9}
-                            style={{ height: '104px' }}
-                            borderRight={`1px solid ${colors.lightGrey}`}
-                          />
+                          <Typography variant="h5">
+                            {localize(yhteyshenkilo.nimi)}
+                          </Typography>
                         </Grid>
-                      )}
-                    </React.Fragment>
-                  )
-                )}
+                        <Grid item>
+                          <Typography variant="body1">
+                            {localize(yhteyshenkilo.titteli)}
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="body1">
+                            {localize(yhteyshenkilo.sahkoposti)}
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="body1">
+                            {localize(yhteyshenkilo.puhelinnumero)}
+                          </Typography>
+                        </Grid>
+                        {!_.isEmpty(yhteyshenkilo.wwwSivu) && (
+                          <Grid item>
+                            <Link
+                              target="_blank"
+                              rel="noopener"
+                              href={localize(yhteyshenkilo.wwwSivu)}
+                              variant="body1">
+                              <Grid container direction="row" alignItems="center">
+                                {localize(yhteyshenkilo.wwwSivu)}
+                                <OpenInNewIcon
+                                  fontSize="small"
+                                  style={{ marginLeft: '5px' }}
+                                />
+                              </Grid>
+                            </Link>
+                          </Grid>
+                        )}
+                      </Grid>
+                    </Grid>
+                    {i + 1 !== a.length && (
+                      <Grid item>
+                        <Box
+                          mx={9}
+                          style={{ height: '104px' }}
+                          borderRight={`1px solid ${colors.lightGrey}`}
+                        />
+                      </Grid>
+                    )}
+                  </React.Fragment>
+                ))}
               </Grid>
             </Box>
           </Box>

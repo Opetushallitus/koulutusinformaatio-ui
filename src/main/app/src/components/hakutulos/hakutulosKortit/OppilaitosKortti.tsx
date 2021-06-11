@@ -18,7 +18,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import oppilaitos_img from '#/src/assets/images/logo-oppilaitos.png';
 import { educationTypeColorCode } from '#/src/colors';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
-import { MUI_BREAKPOINTS } from '#/src/constants';
 import { localize } from '#/src/tools/localization';
 import { Koodi, Translateable } from '#/src/types/common';
 
@@ -64,8 +63,8 @@ export const OppilaitosKortti = ({ oppilaitos }: Props) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const theme = useTheme();
-  const muiScreenSizeMinLg = useMediaQuery(MUI_BREAKPOINTS.MIN_LG);
-  const screenSizeMinCustomXs = useMediaQuery(MUI_BREAKPOINTS.MIN_XS_400);
+  const muiScreenSizeMinLg = useMediaQuery(theme.breakpoints.up('lg'));
+  const screenSizeMinCustomXs = useMediaQuery(theme.breakpoints.up(400));
 
   const paikkakunnatStr = (oppilaitos?.paikkakunnat || []).map(localize).join(', ');
 

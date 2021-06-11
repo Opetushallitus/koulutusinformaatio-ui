@@ -13,9 +13,6 @@ import { colors } from '../../colors';
 const useStyles = makeStyles({
   banner: {
     height: '40px',
-    marginTop: '-5px',
-    paddingTop: '1px',
-    marginBottom: '-10px',
   },
   bannerText: {
     overflow: 'hidden',

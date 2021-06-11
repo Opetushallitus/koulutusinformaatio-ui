@@ -18,7 +18,7 @@ import { colors } from '#/src/colors';
 import { KonfoCheckbox } from '#/src/components/common/Checkbox';
 import { useContentful } from '#/src/hooks';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   modalBackdrop: {
     'overflow-y': 'auto',
   },
@@ -53,7 +53,7 @@ const useStyles = makeStyles({
     width: '60%',
     left: '20%',
     top: '5%',
-    '@media (max-width:960px)': {
+    [theme.breakpoints.down('md')]: {
       width: '90%',
       left: '5%',
     },
@@ -93,7 +93,7 @@ const useStyles = makeStyles({
     'padding-bottom': '10px',
     'font-size': '1.5em',
   },
-});
+}));
 
 const mandatoryCookieName = 'oph-mandatory-cookies-accepted';
 
@@ -177,7 +177,7 @@ export const CookieModal = () => {
           id="statisticCookies"
           className={classes.settingsCheckbox}
           checked={statisticCookiesAccepted}
-          disableripple
+          disableRipple
           onClick={() => setStatisticCookiesAccepted(!statisticCookiesAccepted)}
         />
         <label htmlFor="statisticCookies">{fields.settingsAcceptStatisticText}</label>
@@ -187,7 +187,7 @@ export const CookieModal = () => {
           id="marketingCookies"
           className={classes.settingsCheckbox}
           checked={marketingCookiesAccepted}
-          disableripple
+          disableRipple
           onClick={() => setMarketingCookiesAccepted(!marketingCookiesAccepted)}
         />
         <label htmlFor="marketingCookies">{fields.settingsAcceptMarketingText}</label>

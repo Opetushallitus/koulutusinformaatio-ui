@@ -3,7 +3,6 @@ import _fp from 'lodash/fp';
 import ReactHtmlParser from 'react-html-parser';
 import stripTags from 'striptags';
 
-import { TOP_BAR_HEIGHT } from '../constants';
 import i18n from './i18n';
 import { getTranslationForKey, localize } from './localization';
 
@@ -108,12 +107,9 @@ export const sanitizedHTMLParser = (html, ...rest) =>
 export const toId = _fp.kebabCase;
 
 export const scrollIntoView = (element) => {
-  var elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-  var offsetPosition = elementPosition - TOP_BAR_HEIGHT;
-
-  window.scrollTo({
-    top: offsetPosition,
+  element.scrollIntoView({
     behavior: 'smooth',
+    block: 'start',
   });
 };
 

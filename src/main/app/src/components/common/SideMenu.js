@@ -20,26 +20,22 @@ import Murupolku from '#/src/components/common/Murupolku';
 import SidebarValikko from '#/src/components/common/SidebarValikko';
 import { DRAWER_WIDTH } from '#/src/constants';
 import { useContentful } from '#/src/hooks';
+import { getHeaderHeight } from '#/src/theme';
 
 const useStyles = makeStyles((theme) => ({
-  drawer: {
-    width: DRAWER_WIDTH,
+  drawer: ({ isSmall }) => ({
+    width: isSmall ? '100%' : DRAWER_WIDTH,
     flexShrink: 0,
-  },
-  drawerPaper: {
-    width: DRAWER_WIDTH,
-  },
-  smDrawer: {
-    width: '100%',
-    flexShrink: 0,
-  },
-  smDrawerPaper: {
-    width: '100%',
-  },
+  }),
+  drawerPaper: ({ betaBannerVisible, isSmall }) => ({
+    marginTop: getHeaderHeight(theme)({ betaBannerVisible, isSmall }),
+    height: `calc(100% - ${getHeaderHeight(theme)({ betaBannerVisible, isSmall })}px)`,
+    width: isSmall ? '100%' : DRAWER_WIDTH,
+  }),
   inputBackground: {
     backgroundColor: colors.white,
     paddingLeft: '20px',
-    paddingTop: '91px',
+    paddingTop: '20px',
     paddingBottom: '20px',
   },
   murupolku: {
@@ -79,11 +75,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SideMenu = (props) => {
-  const { small, menuVisible, closeMenu } = props;
+export const SideMenu = (props) => {
+  const { menuVisible, closeMenu } = props;
   const { t, i18n } = useTranslation();
   const history = useHistory();
-  const classes = useStyles();
+  const classes = useStyles(props);
   const { data } = useContentful();
   const [selected, setSelected] = useState([]);
   const [search, setSearch] = useState('');
@@ -103,11 +99,18 @@ const SideMenu = (props) => {
     event.preventDefault();
   };
 
-  const innards = (
-    <React.Fragment>
+  return (
+    <Drawer
+      open={menuVisible}
+      className={classes.drawer}
+      variant="persistent"
+      anchor="left"
+      classes={{
+        paper: classes.drawerPaper,
+      }}>
       <div className={classes.inputBackground}>
         <Hidden smUp>
-          <Box mt={3} mb={4}>
+          <Box mb={2}>
             <LanguageTab />
           </Box>
         </Hidden>
@@ -162,35 +165,6 @@ const SideMenu = (props) => {
           );
         })
       )}
-    </React.Fragment>
-  );
-  return (
-    <React.Fragment>
-      {small ? (
-        <Drawer
-          open={menuVisible}
-          className={classes.smDrawer}
-          variant="persistent"
-          anchor="left"
-          classes={{
-            paper: classes.smDrawerPaper,
-          }}>
-          {innards}
-        </Drawer>
-      ) : (
-        <Drawer
-          open={menuVisible}
-          className={classes.drawer}
-          variant="persistent"
-          anchor="left"
-          classes={{
-            paper: classes.drawerPaper,
-          }}>
-          {innards}
-        </Drawer>
-      )}
-    </React.Fragment>
+    </Drawer>
   );
 };
-
-export default SideMenu;
