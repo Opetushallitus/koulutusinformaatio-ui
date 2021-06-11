@@ -23,7 +23,7 @@ import Palvelut from './components/palvelu/Palvelut';
 import { ReactiveBorder } from './components/ReactiveBorder';
 import Sisaltohaku from './components/Sisaltohaku';
 import SivuRouter from './components/sivu/SivuRouter';
-import { ToteutusPage } from './components/toteutus/Toteutus';
+import { ToteutusPage } from './components/toteutus/ToteutusPage';
 import {
   ValintaperustePage,
   ValintaperustePreviewPage,

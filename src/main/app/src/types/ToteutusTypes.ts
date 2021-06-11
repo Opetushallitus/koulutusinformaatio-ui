@@ -60,6 +60,8 @@ export type ToteutusMetadata = {
   osaamisalat: Array<Osaamisala>;
   tyyppi: string;
   yhteyshenkilot: Array<Yhteyshenkilo>;
+  painotukset: Array<{ koodi: Koodi; kuvaus: Translateable }>;
+  erityisetKoulutustehtavat: Array<{ koodi: Koodi; kuvaus: Translateable }>;
 };
 
 export type Organisaatio = {
