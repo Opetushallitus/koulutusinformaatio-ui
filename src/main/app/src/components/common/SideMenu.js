@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
   }),
   drawerPaper: ({ betaBannerVisible, isSmall }) => ({
-    marginTop: getHeaderHeight(theme),
+    marginTop: getHeaderHeight(theme)({ betaBannerVisible, isSmall }),
     height: `calc(100% - ${getHeaderHeight(theme)({ betaBannerVisible, isSmall })}px)`,
     width: isSmall ? '100%' : DRAWER_WIDTH,
   }),

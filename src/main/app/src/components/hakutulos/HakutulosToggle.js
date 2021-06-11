@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Tabs, Tab, makeStyles, useMediaQuery } from '@material-ui/core';
+import { Tabs, Tab, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import { SchoolOutlined, HomeWorkOutlined } from '@material-ui/icons';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
@@ -8,8 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { setSelectedTab } from '#/src/store/reducers/hakutulosSlice';
 import { getHakutulosToggleProps } from '#/src/store/reducers/hakutulosSliceSelector';
-
-import { MUI_BREAKPOINTS } from '../../constants';
 
 const useStyles = makeStyles((theme) => ({
   tabIconMargin: {
@@ -46,7 +44,8 @@ const HakutulosToggle = () => {
   );
   const dispatch = useDispatch();
   const classes = useStyles();
-  const muiScreenSizeMinMd = useMediaQuery(MUI_BREAKPOINTS.MIN_MD);
+  const theme = useTheme();
+  const muiScreenSizeMinMd = useMediaQuery(theme.breakpoints.up('md'));
 
   const handleSelectedTab = (e, newSelectedTab) => {
     dispatch(setSelectedTab({ newSelectedTab }));

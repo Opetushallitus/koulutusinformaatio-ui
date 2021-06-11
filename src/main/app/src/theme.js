@@ -1,9 +1,18 @@
 import { createMuiTheme } from '@material-ui/core/styles';
+import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
 
 import { colors } from './colors';
 
 // Material UI theme customization
 // Learn more: https://material-ui.com/customization/themes/
+
+const breakpoints = {
+  ...createBreakpoints({}),
+  // Tämä toimii oletuksena material-ui:ssa todella hämmentävästi: esim. down('sm') palauttaa 'md'-breakpointista alaspäin.
+  get down() {
+    return (key) => `@media (max-width:${this.values[key] - 0.5}px)`;
+  },
+};
 
 export const getHeaderHeight = (theme) => ({ betaBannerVisible, isSmall = false }) =>
   (isSmall ? theme.smHeaderHeight : theme.headerHeight) +
@@ -13,12 +22,7 @@ export const theme = createMuiTheme({
   betaBannerHeight: 40,
   headerHeight: 64,
   smHeaderHeight: 54,
-  breakpoints: {
-    // Tämä toimii oletuksena material-ui:ssa todella hämmentävästi: esim. down('sm') palauttaa 'md'-breakpointista alaspäin.
-    get down() {
-      return (key) => `@media (max-width:${this.values[key] - 0.5}px)`;
-    },
-  },
+  breakpoints,
   palette: {
     primary: {
       main: colors.brandGreen,
@@ -42,7 +46,7 @@ export const theme = createMuiTheme({
       fontWeight: 700,
       color: colors.black,
       lineHeight: '3rem',
-      '@media (max-width:600px)': {
+      [breakpoints.down('sm')]: {
         fontSize: '2rem',
         letterSpacing: '-0.075rem',
         lineHeight: '2.375rem',
@@ -53,7 +57,7 @@ export const theme = createMuiTheme({
       fontWeight: 700,
       color: colors.black,
       lineHeight: '2.25rem',
-      '@media (max-width:600px)': {
+      [breakpoints.down('sm')]: {
         fontSize: '1.75rem',
         lineHeight: '2rem',
       },
@@ -63,7 +67,7 @@ export const theme = createMuiTheme({
       fontWeight: 700,
       lineHeight: '2rem',
       color: colors.black,
-      '@media (max-width:600px)': {
+      [breakpoints.down('sm')]: {
         fontSize: '1.5rem',
         lineHeight: '1.875rem',
       },
@@ -73,7 +77,7 @@ export const theme = createMuiTheme({
       fontSize: '1.5rem',
       fontWeight: '700',
       lineHeight: '1.75rem',
-      '@media (max-width:600px)': {
+      [breakpoints.down('sm')]: {
         fontSize: '1.25rem',
         lineHeight: '1.5rem',
       },
@@ -83,7 +87,7 @@ export const theme = createMuiTheme({
       fontSize: '1.0rem',
       fontWeight: '700',
       lineHeight: '1.75rem',
-      '@media (max-width:600px)': {
+      [breakpoints.down('sm')]: {
         lineHeight: '1.5rem',
       },
     },
@@ -97,7 +101,7 @@ export const theme = createMuiTheme({
       fontWeight: 400,
       lineHeight: '1.6875rem',
       color: colors.darkGrey,
-      '@media (max-width:600px)': {
+      [breakpoints.down('sm')]: {
         lineHeight: '1.6875rem',
       },
     },
