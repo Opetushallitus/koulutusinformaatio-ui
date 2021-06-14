@@ -156,12 +156,11 @@ describe('Haku', () => {
       });
   });
 
-  // TODO: Skipped until component is used
-  it.skip('Valintatapa filter checkboxes', () => {
+  it('Valintatapa filter checkboxes', () => {
     cy.visit('/fi/haku/auto');
     const koepisteetChk = () => cy.findByRole('checkbox', { name: /Koepisteet/i });
     const yhteispisteetChk = () => cy.findByRole('checkbox', { name: /Yhteispisteet/i });
-    cy.findByText('Valintatapa').should('exist').click();
+    cy.findByText('Valintatapa').should('exist');
     cy.findByTestId('valintatapa-filter')
       .should('exist')
       .within(() => {
@@ -205,8 +204,7 @@ describe('Haku', () => {
       });
   });
 
-  // TODO: Skipped until component is used
-  it.skip('Pohjakoulutusvaatimus filter checkboxes', () => {
+  it('Pohjakoulutusvaatimus filter checkboxes', () => {
     cy.visit('/fi/haku/auto');
     const ammatillinnePerustutkintoChk = () =>
       cy.findByRole('checkbox', { name: /Ammatillinen perustutkinto/i });
