@@ -3,9 +3,9 @@ import _ from 'lodash';
 import _fp from 'lodash/fp';
 import qs from 'query-string';
 
-import { FILTER_TYPES, FILTER_TYPES_ARR, YHTEISHAKU_KOODI_URI } from '#/src/constants';
-import { getLanguage } from '#/src/tools/localization';
-import { Common as C } from '#/src/tools/utils';
+import { FILTER_TYPES_ARR } from '#/src/constants';
+import { getFilterWithChecked, sortValues } from '#/src/tools/filters';
+import { Common as C } from '#/src/tools/Utils';
 
 // State data getters
 export const getIsReady = (state) => state.hakutulos.status === 'idle';
@@ -281,13 +281,6 @@ export const getHakuUrl = createSelector(
   }
 );
 
-const sortValues = (filterObj) =>
-  _.orderBy(
-    _.toPairs(filterObj).map(([id, values]) => ({ id, ...values })),
-    ['count', `nimi.[${getLanguage()}]`],
-    ['desc', 'asc']
-  );
-
 export const getFilterProps = (id) =>
   createSelector(
     [getKoulutusFilters, getOppilaitosFilters, getSelectedTab, getFilters],
@@ -298,56 +291,6 @@ export const getFilterProps = (id) =>
       return sortValues(getFilterWithChecked(usedFilters, allCheckedValues, id));
     }
   );
-
-// NOTE: Tämä funktio hoitaa kovakoodatut rakenteet erikoisemmille suodattimille e.g. hakukaynnissa / hakutapa + yhteishaku
-const getFilterWithChecked = (filters, allCheckedValues, originalFilterId) => {
-  // Yhteishaku -suodatin käsitellään osana hakutapa-suodatinta
-  const filterId =
-    originalFilterId === FILTER_TYPES.YHTEISHAKU
-      ? FILTER_TYPES.HAKUTAPA
-      : originalFilterId;
-  const filter = filters[filterId];
-
-  if (!filter) {
-    return {};
-  }
-
-  if (filterId === FILTER_TYPES.HAKUKAYNNISSA) {
-    return {
-      [FILTER_TYPES.HAKUKAYNNISSA]: {
-        id: FILTER_TYPES.HAKUKAYNNISSA,
-        filterId: FILTER_TYPES.HAKUKAYNNISSA,
-        count: filter.count,
-        checked: !!allCheckedValues[FILTER_TYPES.HAKUKAYNNISSA],
-      },
-    };
-  }
-
-  return _.mapValues(filter, (v, id) => ({
-    ...v,
-    id,
-    filterId,
-    checked: _.some(allCheckedValues[filterId], (checkedId) => checkedId === id),
-    alakoodit:
-      id === YHTEISHAKU_KOODI_URI
-        ? sortValues(filters[FILTER_TYPES.YHTEISHAKU])?.map((alakoodi) => ({
-            ...alakoodi,
-            filterId: FILTER_TYPES.YHTEISHAKU,
-            checked: _.some(
-              allCheckedValues[FILTER_TYPES.YHTEISHAKU],
-              (checkedId) => checkedId === alakoodi.id
-            ),
-          }))
-        : sortValues(v.alakoodit)?.map((alakoodi) => ({
-            ...alakoodi,
-            filterId,
-            checked: _.some(
-              allCheckedValues[filterId],
-              (checkedId) => checkedId === alakoodi.id
-            ),
-          })),
-  }));
-};
 
 export const getAllSelectedFilters = createSelector(
   [getKoulutusFilters, getFilters],
@@ -375,6 +318,19 @@ export const getAllSelectedFilters = createSelector(
   }
 );
 
-export const getCheckedToteutusFilters = createSelector([getFilters], (checkedValues) =>
-  _.pick(checkedValues, ['opetuskieli', 'maakunta', 'kunta', 'opetustapa'])
+export const getInitialCheckedToteutusFilters = createSelector(
+  [getFilters],
+  (checkedValues) =>
+    _.pick(checkedValues, [
+      'opetuskieli',
+      'maakunta',
+      'kunta',
+      'opetustapa',
+
+      'hakukaynnissa',
+      'hakutapa',
+      'yhteishaku',
+      'pohjakoulutusvaatimus',
+      'valintatapa',
+    ])
 );

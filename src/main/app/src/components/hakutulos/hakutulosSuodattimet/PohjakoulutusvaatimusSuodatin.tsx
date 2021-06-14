@@ -10,17 +10,15 @@ import {
   newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
+import { getFilterStateChanges } from '#/src/tools/filters';
 import {
   FilterProps,
   FilterValue,
   SuodatinComponentProps,
 } from '#/src/types/SuodatinTypes';
 
-import { getFilterStateChanges } from './utils';
-
 const filterSelector = getFilterProps(FILTER_TYPES.POHJAKOULUTUSVAATIMUS);
 
-// TODO: Do not use this component until backend supports filtering pohjakoulutusvaatimus with KOMO järjestäjät
 export const PohjakoulutusvaatimusSuodatin = (props: SuodatinComponentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();

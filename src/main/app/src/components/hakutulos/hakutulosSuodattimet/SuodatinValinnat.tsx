@@ -14,10 +14,9 @@ import {
   newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getAllSelectedFilters } from '#/src/store/reducers/hakutulosSliceSelector';
+import { getFilterStateChanges } from '#/src/tools/filters';
 import { localize } from '#/src/tools/localization';
 import { FilterValue } from '#/src/types/SuodatinTypes';
-
-import { getFilterStateChanges } from './utils';
 
 const useStyles = makeStyles(() => ({
   chipRoot: {

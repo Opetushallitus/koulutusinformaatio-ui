@@ -1,6 +1,6 @@
 import _fp from 'lodash/fp';
 
-import { getFilterStateChanges } from './utils';
+import { getFilterStateChanges } from './filters';
 
 // prettier-ignore
 const baseValues = [
