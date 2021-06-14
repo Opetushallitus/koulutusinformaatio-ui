@@ -38,7 +38,7 @@ import { theme } from '#/src/theme';
 
 import { MobileFiltersOnTopMenu } from '../hakutulos/MobileFiltersOnTopMenu';
 import { useUrlParams } from '../hakutulos/UseUrlParams';
-import HakupalkkiFilters from './HakupalkkiFilters';
+import { HakupalkkiFilters } from './HakupalkkiFilters';
 
 const useStyles = makeStyles((theme) => ({
   box: {

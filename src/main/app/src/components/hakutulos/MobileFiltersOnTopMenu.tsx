@@ -29,6 +29,7 @@ import { KoulutusalaSuodatin } from './hakutulosSuodattimet/KoulutusalaSuodatin'
 import { KoulutustyyppiSuodatin } from './hakutulosSuodattimet/KoulutustyyppiSuodatin';
 import { OpetuskieliSuodatin } from './hakutulosSuodattimet/OpetusKieliSuodatin';
 import { OpetustapaSuodatin } from './hakutulosSuodattimet/OpetustapaSuodatin';
+import { PohjakoulutusvaatimusSuodatin } from './hakutulosSuodattimet/PohjakoulutusvaatimusSuodatin';
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
 import { ValintatapaSuodatin } from './hakutulosSuodattimet/ValintatapaSuodatin';
 import { MobileResultsPerPageExpansionMenu } from './MobileResultsPerPageExpansionMenu';
@@ -149,11 +150,13 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
           <Divider className={classes.divider} />
           <SijaintiSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
+          <PohjakoulutusvaatimusSuodatin expanded={false} elevation={0} displaySelected />
+          <Divider className={classes.divider} />
+          <HakutapaSuodatin expanded={false} elevation={0} displaySelected />
+          <Divider className={classes.divider} />
           <ValintatapaSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
           <KoulutusalaSuodatin expanded={false} elevation={0} displaySelected />
-          <Divider className={classes.divider} />
-          <HakutapaSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />
           <OpetustapaSuodatin expanded={false} elevation={0} displaySelected />
           <Divider className={classes.divider} />

@@ -6,9 +6,17 @@ import { useTranslation } from 'react-i18next';
 
 import PopoverWithArrow from '#/src/components/common/PopoverWithArrow';
 
-const useStyles = makeStyles(() => ({
+// NOTE: Tämä koko komponentti saattaa jäädä turhaksi jos etusivun rajaimet refaktoroidaan ulkoasultaan
+const useStyles = makeStyles((theme) => ({
   item: {
     padding: '10px 25px 5px 25px',
+    // 22% ja 7% koska divider syö tilaa, muuten olisi 25% / 10%
+    [theme.breakpoints.up('md')]: {
+      flexBasis: '22%',
+    },
+    [theme.breakpoints.up('lg')]: {
+      flexBasis: '7%',
+    },
   },
   header: {
     paddingLeft: '8px',
@@ -17,13 +25,19 @@ const useStyles = makeStyles(() => ({
     height: '40px',
     fontFamily: 'Open Sans',
     fontSize: '16px',
-    fontWeight: '600',
+    fontWeight: 600,
     lineHeight: '16px',
     textAlign: 'center',
   },
 }));
 
-const Suodatin = ({ id: propsId, SuodatinComponent, header }) => {
+type Props = {
+  id: string;
+  SuodatinComponent: (...props: any) => JSX.Element;
+  header: string;
+};
+
+export const Suodatin = ({ id: propsId, SuodatinComponent, header }: Props) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -58,4 +72,3 @@ const Suodatin = ({ id: propsId, SuodatinComponent, header }) => {
     </Box>
   );
 };
-export default Suodatin;
