@@ -19,9 +19,12 @@ import { useTranslation } from 'react-i18next';
 import { MobileToggleFiltersButton } from '#/src/components/hakutulos/MobileToggleFiltersButton';
 import { FilterValue } from '#/src/types/SuodatinTypes';
 
+import { HakutapaSuodatin } from './HakutapaSuodatin';
 import { OpetuskieliSuodatin } from './OpetusKieliSuodatin';
 import { OpetustapaSuodatin } from './OpetustapaSuodatin';
+import { PohjakoulutusvaatimusSuodatin } from './PohjakoulutusvaatimusSuodatin';
 import { SijaintiSuodatin } from './SijaintiSuodatin';
+import { ValintatapaSuodatin } from './ValintatapaSuodatin';
 
 const useStyles = makeStyles(() => ({
   paperAnchorBottom: {
@@ -136,6 +139,29 @@ export const MobileFiltersOnTopMenu = ({
             maakuntaValues={values.maakunta}
             kuntaValues={values.kunta}
             loading={loading}
+          />
+          <Divider className={classes.divider} />
+          <PohjakoulutusvaatimusSuodatin
+            handleFilterChange={handleFilterChange}
+            expanded={false}
+            elevation={0}
+            values={values.pohjakoulutusvaatimus}
+          />
+          <Divider className={classes.divider} />
+          {values.hakukaynnissa && values.hakutapa && (
+            <HakutapaSuodatin
+              handleFilterChange={handleFilterChange}
+              expanded={false}
+              elevation={0}
+              values={[...values.hakukaynnissa, ...values.hakutapa]}
+            />
+          )}
+          <Divider className={classes.divider} />
+          <ValintatapaSuodatin
+            handleFilterChange={handleFilterChange}
+            expanded={false}
+            elevation={0}
+            values={values.valintatapa}
           />
           <Divider className={classes.divider} />
           <OpetustapaSuodatin
