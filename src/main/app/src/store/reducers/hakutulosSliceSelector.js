@@ -5,7 +5,7 @@ import qs from 'query-string';
 
 import { FILTER_TYPES_ARR } from '#/src/constants';
 import { getFilterWithChecked, sortValues } from '#/src/tools/filters';
-import { Common as C } from '#/src/tools/Utils';
+import { Common as C } from '#/src/tools/utils';
 
 // State data getters
 export const getIsReady = (state) => state.hakutulos.status === 'idle';
