@@ -1,6 +1,14 @@
 import React, { useMemo } from 'react';
 
-import { Box, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
+import {
+  Box,
+  Grid,
+  makeStyles,
+  Paper,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@material-ui/core';
 import { TFunction } from 'i18next';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
@@ -21,11 +29,6 @@ const useStyles = makeStyles((theme) => ({
   },
   info: {
     width: 230,
-  },
-  oskariMap: {
-    height: 350,
-    width: '100%',
-    maxWidth: 625,
   },
   text: {
     color: colors.black,
@@ -96,6 +99,8 @@ export const Yhteystiedot = ({
 }: Props) => {
   const classes = useStyles();
   const { t } = useTranslation();
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
 
   const localizedYhteystiedot = useMemo(
     () =>
@@ -107,7 +112,12 @@ export const Yhteystiedot = ({
   );
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" width="100%">
+    <Box
+      mt={isSm ? 6 : 12}
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      width="100%">
       {heading && (
         <>
           <Typography variant="h2">{heading}</Typography>
@@ -163,15 +173,11 @@ export const Yhteystiedot = ({
               </Paper>
             </Grid>
             {oskariOsoite && oskariPostitoimipaikka && (
-              <Grid item container justify="center" md={6} sm={12}>
-                <Box component="div" className={classes.oskariMap}>
-                  <OskariKartta
-                    id={`${i}-${nimi || id}`}
-                    osoite={oskariOsoite}
-                    postitoimipaikka={oskariPostitoimipaikka}
-                  />
-                </Box>
-              </Grid>
+              <OskariKartta
+                id={`${i}-${nimi || id}`}
+                osoite={oskariOsoite}
+                postitoimipaikka={oskariPostitoimipaikka}
+              />
             )}
           </Grid>
         )

@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { Grid } from '@material-ui/core';
 import { urls } from 'oph-urls-js';
 // @ts-ignore no types
 import OskariRPC from 'oskari-rpc';
@@ -40,12 +41,17 @@ type SearchData = {
 };
 
 export const OskariKartta = ({ id, osoite, postitoimipaikka }: Props) => {
+  const [error, setError] = useState(false);
+
   useEffect(() => {
     const channel = createChannel(id);
     let noHouseNumberSearchDone = false;
 
     channel.handleEvent('SearchResultEvent', (data: SearchData) => {
-      if (!data?.success) return;
+      if (!data?.success) {
+        setError(true);
+        return;
+      }
       if (data?.result?.locations?.length > 0) {
         const { lon, lat, name } =
           data?.result?.locations?.find((loc) =>
@@ -65,12 +71,12 @@ export const OskariKartta = ({ id, osoite, postitoimipaikka }: Props) => {
           size: 4,
         };
         channel.postRequest('MapModulePlugin.AddMarkerRequest', [requestData, MARKER_ID]);
+      } else if (!noHouseNumberSearchDone) {
+        const { addressNoNumbers } = getSearchAddress(postitoimipaikka, osoite);
+        channel.postRequest('SearchRequest', [addressNoNumbers]);
+        noHouseNumberSearchDone = true;
       } else {
-        if (!noHouseNumberSearchDone) {
-          const { addressNoNumbers } = getSearchAddress(postitoimipaikka, osoite);
-          channel.postRequest('SearchRequest', [addressNoNumbers]);
-          noHouseNumberSearchDone = true;
-        }
+        setError(true);
       }
     });
 
@@ -106,11 +112,20 @@ export const OskariKartta = ({ id, osoite, postitoimipaikka }: Props) => {
   }, [id, postitoimipaikka, osoite]);
 
   return (
-    <iframe
-      title="kartta"
-      id={id}
-      style={{ border: 'none', width: '100%', height: '100%' }}
-      src={urls.url('kartta.publish-url', getLanguage())}
-    />
+    <Grid
+      item
+      container
+      justify="center"
+      md={6}
+      sm={12}
+      // Ei poisteta domista vaan piilotetaan koska channel eventit räjähtää mikäli dom-elementti puuttuu
+      style={{ ...(error && { flexBasis: 0, height: 0, visibility: 'hidden' }) }}>
+      <iframe
+        title="kartta"
+        id={id}
+        style={{ border: 'none', width: '100%', minHeight: 320 }}
+        src={urls.url('kartta.publish-url', getLanguage())}
+      />
+    </Grid>
   );
 };
