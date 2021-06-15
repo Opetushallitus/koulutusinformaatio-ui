@@ -4,7 +4,7 @@ import { urls } from 'oph-urls-js';
 import qs from 'query-string';
 
 import { getLanguage } from '#/src/tools/localization';
-import { Common as C } from '#/src/tools/Utils';
+import { Common as C } from '#/src/tools/utils';
 
 const client = axios.create({
   headers: { 'Caller-Id': '1.2.246.562.10.00000000001.konfoui' },

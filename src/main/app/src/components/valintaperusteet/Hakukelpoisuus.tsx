@@ -4,7 +4,7 @@ import { Box, Divider, Grid, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
-import { toId } from '#/src/tools/Utils';
+import { toId } from '#/src/tools/utils';
 import { Translateable } from '#/src/types/common';
 
 type Props = {

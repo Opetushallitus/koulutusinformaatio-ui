@@ -15,7 +15,7 @@ import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
 import { NotFound } from '#/src/NotFound';
 import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import { localize } from '#/src/tools/localization';
-import { condArray } from '#/src/tools/Utils';
+import { condArray } from '#/src/tools/utils';
 
 import { useUrlParams } from '../hakutulos/UseUrlParams';
 import { useOppilaitos } from './hooks';

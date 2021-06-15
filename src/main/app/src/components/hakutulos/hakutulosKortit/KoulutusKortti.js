@@ -19,7 +19,7 @@ import koulutusPlaceholderImg from '#/src/assets/images/Opolkuhts.png';
 import { educationTypeColorCode } from '#/src/colors';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import { localize } from '#/src/tools/localization';
-import { getLocalizedOpintojenLaajuus } from '#/src/tools/Utils';
+import { getLocalizedOpintojenLaajuus } from '#/src/tools/utils';
 
 const useStyles = makeStyles((theme) => ({
   paperRoot: {

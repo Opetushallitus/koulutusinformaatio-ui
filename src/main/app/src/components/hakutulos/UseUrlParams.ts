@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react';
 import qs from 'query-string';
 import { useHistory } from 'react-router-dom';
 
-import { Common as C } from '#/src/tools/Utils';
+import { Common as C } from '#/src/tools/utils';
 
 export const useUrlParams = () => {
   const history = useHistory();

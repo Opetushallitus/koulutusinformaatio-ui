@@ -47,6 +47,7 @@ const Row: React.FC = ({ children }) => {
 
 type ContentProps = {
   hakukohde?: any;
+  toteutus?: any;
   valintakokeet: any;
   valintaperuste: any;
   valintatavat: any;
@@ -55,6 +56,7 @@ type ContentProps = {
 
 const ValintaperusteContent = ({
   hakukohde,
+  toteutus,
   valintakokeet,
   valintaperuste,
   valintatavat,
@@ -95,7 +97,13 @@ const ValintaperusteContent = ({
           <Valintakokeet yleiskuvaukset={yleiskuvaukset} valintakokeet={valintakokeet} />
         )}
         {lisatiedotVisible && <Lisatiedot lisatiedot={lisatiedot} />}
-        {liitteetVisible && <Liitteet liitteet={hakukohde?.liitteet} />}
+        {liitteetVisible && (
+          <Liitteet
+            liitteet={hakukohde?.liitteet}
+            hakukohde={hakukohde}
+            organisaatioOid={toteutus?.organisaatio?.oid}
+          />
+        )}
       </Grid>
     </>
   );
@@ -225,6 +233,7 @@ export const ValintaperustePage = () => {
         <ValintaperusteContent
           {...{
             hakukohde,
+            toteutus,
             valintaperuste,
             valintakokeet,
             valintatavat,

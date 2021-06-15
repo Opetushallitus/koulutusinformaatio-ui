@@ -1,4 +1,4 @@
-import { OsoiteParser } from './Utils';
+import { getSearchAddress } from './utils';
 
 describe('Utils/OsoiteParser', () => {
   test.each([
@@ -7,17 +7,15 @@ describe('Utils/OsoiteParser', () => {
     ['Tie 123, Loppuosa', 'Pömpele', 'Pömpele Tie 123'],
     ['PL 123, Tie 123, Loppuosa', 'Pömpele', 'Pömpele Tie 123'],
   ])('getSearchAddress.address', (osoite, postinumeroJaPaikka, expected) => {
-    expect(OsoiteParser.getSearchAddress(postinumeroJaPaikka, osoite).address).toEqual(
-      expected
-    );
+    expect(getSearchAddress(postinumeroJaPaikka, osoite).address).toEqual(expected);
   });
 
   test.each([
     ['Tie 123', 'Pömpele', 'Pömpele Tie'],
     ['Tie', 'Pömpele', 'Pömpele Tie'],
   ])('getSearchAddress.addressNoNumbers', (osoite, postinumeroJaPaikka, expected) => {
-    expect(
-      OsoiteParser.getSearchAddress(postinumeroJaPaikka, osoite).addressNoNumbers
-    ).toEqual(expected);
+    expect(getSearchAddress(postinumeroJaPaikka, osoite).addressNoNumbers).toEqual(
+      expected
+    );
   });
 });

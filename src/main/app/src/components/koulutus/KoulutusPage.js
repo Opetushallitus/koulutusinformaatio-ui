@@ -25,7 +25,7 @@ import {
   selectTulevatJarjestajat,
 } from '#/src/store/reducers/koulutusSlice';
 import { getLanguage, localize } from '#/src/tools/localization';
-import { getLocalizedOpintojenLaajuus, sanitizedHTMLParser } from '#/src/tools/Utils';
+import { getLocalizedOpintojenLaajuus, sanitizedHTMLParser } from '#/src/tools/utils';
 
 import { useUrlParams } from '../hakutulos/UseUrlParams';
 import { KoulutusInfoGrid } from './KoulutusInfoGrid';

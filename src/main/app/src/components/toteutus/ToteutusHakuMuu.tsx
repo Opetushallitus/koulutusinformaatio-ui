@@ -11,8 +11,8 @@ import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import Spacer from '#/src/components/common/Spacer';
 import { selectMuuHaku } from '#/src/store/reducers/toteutusSlice';
 import { localize } from '#/src/tools/localization';
-import { useOppilaitosOsoite } from '#/src/tools/UseOppilaitosOsoiteHook';
-import { formatDateRange, formatDateString } from '#/src/tools/Utils';
+import { useOsoitteet } from '#/src/tools/useOppilaitosOsoite';
+import { formatDateRange, formatDateString } from '#/src/tools/utils';
 import { Translateable } from '#/src/types/common';
 
 const useStyles = makeStyles((theme) => ({
@@ -47,7 +47,7 @@ export const ToteutusHakuMuu = ({ oid }: Props) => {
   const oppilaitosOids = muuHaku.tarjoajat.map(
     (tarjoaja: { oid: string }) => tarjoaja.oid
   );
-  const osoitteet = useOppilaitosOsoite(oppilaitosOids);
+  const osoitteet = useOsoitteet(oppilaitosOids, true);
   const yhteystiedot = getTarjoajaYhteystiedot(osoitteet, muuHaku.tarjoajat);
 
   return (

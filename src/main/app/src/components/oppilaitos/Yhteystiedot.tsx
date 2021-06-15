@@ -9,7 +9,7 @@ import { colors } from '#/src/colors';
 import { OskariKartta } from '#/src/components/common/OskariKartta';
 import Spacer from '#/src/components/common/Spacer';
 import { localize } from '#/src/tools/localization';
-import { koodiUriToPostinumero } from '#/src/tools/Utils';
+import { koodiUriToPostinumero } from '#/src/tools/utils';
 import { Osoite, Yhteystiedot as YhteystiedotType } from '#/src/types/common';
 
 const useStyles = makeStyles((theme) => ({

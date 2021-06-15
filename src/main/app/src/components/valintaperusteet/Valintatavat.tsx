@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 import { localize } from '#/src/tools/localization';
-import { toId } from '#/src/tools/Utils';
+import { toId } from '#/src/tools/utils';
 import { Translateable } from '#/src/types/common';
 
 import { SisaltoComponent } from './Sisalto';

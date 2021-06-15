@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import Spacer from '#/src/components/common/Spacer';
 import { localize } from '#/src/tools/localization';
-import { sanitizedHTMLParser } from '#/src/tools/Utils';
+import { sanitizedHTMLParser } from '#/src/tools/utils';
 import { Translateable } from '#/src/types/common';
 
 import { Accordion } from '../common/Accordion';

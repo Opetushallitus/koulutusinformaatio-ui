@@ -16,7 +16,7 @@ import { colors } from '#/src/colors';
 import { Accordion } from '#/src/components/common/Accordion';
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 import { localize, localizeOsoite } from '#/src/tools/localization';
-import { formatDateString, toId } from '#/src/tools/Utils';
+import { formatDateString, toId } from '#/src/tools/utils';
 import { Koodi, Translateable } from '#/src/types/common';
 
 const useStyles = makeStyles(() => ({

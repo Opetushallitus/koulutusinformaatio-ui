@@ -33,7 +33,7 @@ import {
   selectToteutus,
 } from '#/src/store/reducers/toteutusSlice';
 import { getLanguage, localize } from '#/src/tools/localization';
-import { getLocalizedOpintojenLaajuus, sanitizedHTMLParser } from '#/src/tools/Utils';
+import { getLocalizedOpintojenLaajuus, sanitizedHTMLParser } from '#/src/tools/utils';
 import { Toteutus } from '#/src/types/ToteutusTypes';
 
 import ContentWrapper from '../common/ContentWrapper';
