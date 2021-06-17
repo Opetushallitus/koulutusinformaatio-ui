@@ -88,9 +88,6 @@ const withStyles = makeStyles((theme) => ({
   buttonLabel: {
     fontSize: 14,
   },
-  noBoxShadow: {
-    boxShadow: 'none',
-  },
   indentedCheckbox: {
     paddingLeft: theme.spacing(2.2),
   },
@@ -196,6 +193,7 @@ type Props = {
   summaryHidden?: boolean;
   expandValues?: boolean;
   defaultExpandAlakoodit?: boolean;
+  shadow?: boolean;
 
   values: Array<FilterValue>;
   handleCheck: (value: FilterValue) => void;
@@ -227,21 +225,25 @@ export const Filter = ({
   additionalContent,
   expandValues = false,
   defaultExpandAlakoodit = false,
+  shadow = false,
 }: Props) => {
   const { t } = useTranslation();
   const classes = withStyles();
   const [hideRest, setHideRest] = useState(expandValues);
+  const usedName = [name, values?.length === 0 && '(0)'].filter(Boolean).join(' ');
 
   return (
     <SuodatinAccordion
-      {...(summaryHidden && { className: classes.noBoxShadow })}
+      disabled={values?.length === 0}
       data-cy={testId}
       elevation={elevation}
-      defaultExpanded={expanded}>
+      defaultExpanded={expanded}
+      square
+      shadow={shadow}>
       {!summaryHidden && (
         <SuodatinAccordionSummary expandIcon={<ExpandMore />}>
           <SummaryContent
-            filterName={name}
+            filterName={usedName}
             values={values}
             displaySelected={displaySelected}
           />
@@ -276,30 +278,28 @@ export const Filter = ({
           )}
           <Grid item>
             <List style={{ width: '100%' }}>
-              {values.length > 0
-                ? values
-                    .filter((v) => !v.hidden)
-                    .map((value, i) => {
-                      if (expandValues && hideRest && i >= HIDE_NOT_EXPANDED_AMOUNT) {
-                        return null;
-                      }
+              {values
+                .filter((v) => !v.hidden)
+                .map((value, i) => {
+                  if (expandValues && hideRest && i >= HIDE_NOT_EXPANDED_AMOUNT) {
+                    return null;
+                  }
 
-                      return _.isEmpty(value.alakoodit) ? (
-                        <FilterCheckbox
-                          key={value.id}
-                          value={value}
-                          handleCheck={handleCheck}
-                        />
-                      ) : (
-                        <FilterCheckboxGroup
-                          key={value.id}
-                          defaultExpandAlakoodit={defaultExpandAlakoodit}
-                          value={value}
-                          handleCheck={handleCheck}
-                        />
-                      );
-                    })
-                : t('haku.ei-valittavia-suodattimia')}
+                  return _.isEmpty(value.alakoodit) ? (
+                    <FilterCheckbox
+                      key={value.id}
+                      value={value}
+                      handleCheck={handleCheck}
+                    />
+                  ) : (
+                    <FilterCheckboxGroup
+                      key={value.id}
+                      defaultExpandAlakoodit={defaultExpandAlakoodit}
+                      value={value}
+                      handleCheck={handleCheck}
+                    />
+                  );
+                })}
             </List>
           </Grid>
           {expandValues && (

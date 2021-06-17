@@ -6,6 +6,7 @@ export type SuodatinComponentProps = {
   displaySelected?: boolean;
   summaryHidden?: boolean;
   defaultExpandAlakoodit?: boolean;
+  shadow?: boolean;
 };
 
 export type FilterValue = {

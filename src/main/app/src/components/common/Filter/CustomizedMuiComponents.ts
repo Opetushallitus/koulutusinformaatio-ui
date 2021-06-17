@@ -18,23 +18,21 @@ export const KonfoCheckbox = withStyles({
 })(Checkbox);
 
 export const SuodatinAccordion = withStyles((theme) => ({
-  root: {
-    backgroundColor: colors.white,
-    borderRadius: '0 !important',
+  root: ({ shadow }: { shadow?: boolean }) => ({
+    ...(shadow && { boxShadow: '0 2px 8px 0 rgba(0,0,0,0.2)' }),
+    // Piilotetaan default väliviiva (koska sitä ei saa pysymään näkyvissä -> korvattu Dividerilla)
     '&:before': {
-      backgroundColor: colors.white,
+      visibility: 'hidden',
     },
-    expandIcon: {
-      color: 'white',
-    },
-    [theme.breakpoints.up('md')]: {
-      marginBottom: '16px',
-      boxShadow: '0 2px 8px 0 rgba(0,0,0,0.2)',
-    },
+  }),
+  disabled: {
+    // NOTE: Jostain syystä root.disabled yliajaa tämän tärkeysjärjestyksessä -> important
+    backgroundColor: colors.white + ' !important',
   },
+  // Mobiilirajainlistoissa ei haluta käyttää default marginia
   expanded: {
     [theme.breakpoints.down('md')]: {
-      margin: '0 !important',
+      margin: '0 0 16px 0 !important',
     },
   },
 }))(Accordion);

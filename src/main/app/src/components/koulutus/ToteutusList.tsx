@@ -167,14 +167,17 @@ export const ToteutusList = ({ oid }: Props) => {
           spacing={2}
           className={classes.filtersContainer}
           sm={10}>
+          {/* shadow annetaan täällä (eikä komponenteissa) koska mobiilirajaimissa sitä ei haluta */}
           <Grid item className={classes.filter} sm={4}>
             <OpetuskieliSuodatin
+              shadow
               handleFilterChange={handleFilterChange}
               values={usedValues.opetuskieli}
             />
           </Grid>
           <Grid item className={classes.filter} sm={4}>
             <SijaintiSuodatin
+              shadow
               loading={loading}
               handleFilterChange={handleFilterChange}
               maakuntaValues={usedValues.maakunta}
@@ -183,6 +186,7 @@ export const ToteutusList = ({ oid }: Props) => {
           </Grid>
           <Grid item className={classes.filter} sm={4}>
             <PohjakoulutusvaatimusSuodatin
+              shadow
               handleFilterChange={handleFilterChange}
               values={usedValues.pohjakoulutusvaatimus}
             />
@@ -190,6 +194,7 @@ export const ToteutusList = ({ oid }: Props) => {
           {usedValues.hakukaynnissa && usedValues.hakutapa && (
             <Grid item className={classes.filter} sm={4}>
               <HakutapaSuodatin
+                shadow
                 handleFilterChange={handleFilterChange}
                 values={[...usedValues.hakukaynnissa, ...usedValues.hakutapa]}
               />
@@ -197,12 +202,14 @@ export const ToteutusList = ({ oid }: Props) => {
           )}
           <Grid item className={classes.filter} sm={4}>
             <ValintatapaSuodatin
+              shadow
               handleFilterChange={handleFilterChange}
               values={usedValues.valintatapa}
             />
           </Grid>
           <Grid item className={classes.filter} sm={4}>
             <OpetustapaSuodatin
+              shadow
               handleFilterChange={handleFilterChange}
               values={usedValues.opetustapa}
             />
