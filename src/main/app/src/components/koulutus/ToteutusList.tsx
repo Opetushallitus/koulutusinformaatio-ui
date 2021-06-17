@@ -1,15 +1,18 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Container, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
+import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
+import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
+import PublicIcon from '@material-ui/icons/Public';
 import _fp from 'lodash/fp';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
 
+import { EntiteettiKortti } from '#/src/components/common/EntiteettiKortti';
+import { OppilaitosKorttiLogo } from '#/src/components/common/KorttiLogo';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
-import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Spacer from '#/src/components/common/Spacer';
-import { ToteutusCard } from '#/src/components/common/ToteutusCard';
+import { TextWithBackground } from '#/src/components/common/TextWithBackground';
 import { FILTER_TYPES } from '#/src/constants';
 import { getInitialCheckedToteutusFilters } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
@@ -191,7 +194,6 @@ export const ToteutusList = ({ oid }: Props) => {
                   values={usedValues.pohjakoulutusvaatimus}
                 />
               </Grid>
-
               <Grid item className={classes.filter} sm={4}>
                 <HakutapaSuodatin
                   elevation={2}
@@ -203,7 +205,6 @@ export const ToteutusList = ({ oid }: Props) => {
                   }
                 />
               </Grid>
-
               <Grid item className={classes.filter} sm={4}>
                 <ValintatapaSuodatin
                   elevation={2}
@@ -244,25 +245,35 @@ export const ToteutusList = ({ oid }: Props) => {
           spacing={1}>
           {jarjestajat.map((toteutus, i) => (
             <Grid item key={i}>
-              <LocalizedLink
-                underline="none"
-                component={RouterLink}
-                to={`/toteutus/${toteutus.toteutusOid}`}>
-                <ToteutusCard
-                  organizer={localize(toteutus)}
-                  heading={localize(toteutus.toteutusNimi)}
-                  description={localize(toteutus.kuvaus)}
-                  locations={localizeArrayToString(toteutus.kunnat)}
-                  opetustapa={localizeArrayToString(toteutus.opetusajat)}
-                  price={getLocalizedMaksullisuus(
-                    toteutus.maksullisuustyyppi,
-                    toteutus.maksunMaara
-                  )}
-                  tyyppi={toteutus.koulutustyyppi}
+              <EntiteettiKortti
+                koulutustyyppi={toteutus.koulutustyyppi}
+                to={`/toteutus/${toteutus.toteutusOid}`}
+                preHeader={localize(toteutus)}
+                header={localize(toteutus.toteutusNimi)}
+                kuvaus={localize(toteutus.kuvaus)}
+                wrapDirection="column-reverse"
+                iconTexts={[
+                  [localizeArrayToString(toteutus.kunnat), PublicIcon],
+                  [localizeArrayToString(toteutus.opetusajat), HourglassEmptyIcon],
+                  [
+                    getLocalizedMaksullisuus(
+                      toteutus.maksullisuustyyppi,
+                      toteutus.maksunMaara
+                    ),
+                    EuroSymbolIcon,
+                  ],
+                  [
+                    <TextWithBackground>{t('haku.hakukaynnissa')}</TextWithBackground>,
+                    undefined,
+                  ],
+                ]}>
+                <OppilaitosKorttiLogo
                   image={toteutus.kuva}
-                  hakukaynnissa={toteutus.hakukaynnissa}
+                  alt={`${localize(toteutus.toteutusNimi)} ${t(
+                    'koulutus.koulutuksen-teemakuva'
+                  )}`}
                 />
-              </LocalizedLink>
+              </EntiteettiKortti>
             </Grid>
           ))}
         </Grid>

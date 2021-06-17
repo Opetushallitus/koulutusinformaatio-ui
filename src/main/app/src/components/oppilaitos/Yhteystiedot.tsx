@@ -24,9 +24,6 @@ const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: 20,
   },
-  koulutusInfoGridIcon: {
-    color: theme.palette.primary.main,
-  },
   info: {
     width: 230,
   },
