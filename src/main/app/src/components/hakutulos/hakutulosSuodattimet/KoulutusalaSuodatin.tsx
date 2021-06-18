@@ -10,13 +10,12 @@ import {
   newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getFilterProps } from '#/src/store/reducers/hakutulosSliceSelector';
+import { getFilterStateChanges } from '#/src/tools/filters';
 import {
   FilterProps,
   FilterValue,
   SuodatinComponentProps,
 } from '#/src/types/SuodatinTypes';
-
-import { getFilterStateChanges } from './utils';
 
 const koulutusalaSelector = getFilterProps(FILTER_TYPES.KOULUTUSALA);
 

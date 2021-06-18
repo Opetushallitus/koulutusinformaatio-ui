@@ -261,14 +261,10 @@ export const selectTulevatJarjestajat = (state, oid) =>
   state.koulutus.tulevatJarjestajat[oid]?.hits;
 
 export const selectJarjestajat = (state) => {
-  // NOTE: _fp.mapValues ei anna object keytä iterateelle -> käytetään _.mapValues
+  // Ei näytetä järjestäjälistassa sellaisia suodattimia joiden lukumäärä on 0 (niitä on paljon)
   const sortedFilters = _.mapValues(
     state.koulutus.jarjestajatFilters || {},
-    (filter, filterId) =>
-      _fp.flow(
-        (v) => _.mapValues(v, (filterValue, id) => ({ id, filterId, ...filterValue })),
-        _fp.filter((v) => v.count > 0)
-      )(filter)
+    _fp.pickBy((v) => !_fp.isObject(v) || v.count > 0)
   );
 
   return {

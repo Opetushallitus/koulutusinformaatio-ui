@@ -88,9 +88,6 @@ const withStyles = makeStyles((theme) => ({
   buttonLabel: {
     fontSize: 14,
   },
-  noBoxShadow: {
-    boxShadow: 'none',
-  },
   indentedCheckbox: {
     paddingLeft: theme.spacing(2.2),
   },
@@ -196,6 +193,7 @@ type Props = {
   summaryHidden?: boolean;
   expandValues?: boolean;
   defaultExpandAlakoodit?: boolean;
+  shadow?: boolean;
 
   values: Array<FilterValue>;
   handleCheck: (value: FilterValue) => void;
@@ -213,7 +211,7 @@ export const Filter = ({
   name,
   testId,
   expanded,
-  elevation,
+  elevation = 0,
   // display selected kertoo että näytetään infoa valituista,
   // summaryHidden kertoo että näytetään mutta ei haluta näyttää tekstiä
   // TODO: Liikaa boolean propseja, tekee huonon komponenttirajapinnan
@@ -231,17 +229,19 @@ export const Filter = ({
   const { t } = useTranslation();
   const classes = withStyles();
   const [hideRest, setHideRest] = useState(expandValues);
+  const usedName = [name, values?.length === 0 && '(0)'].filter(Boolean).join(' ');
 
   return (
     <SuodatinAccordion
-      {...(summaryHidden && { className: classes.noBoxShadow })}
+      disabled={values?.length === 0}
       data-cy={testId}
       elevation={elevation}
-      defaultExpanded={expanded}>
+      defaultExpanded={expanded}
+      square>
       {!summaryHidden && (
         <SuodatinAccordionSummary expandIcon={<ExpandMore />}>
           <SummaryContent
-            filterName={name}
+            filterName={usedName}
             values={values}
             displaySelected={displaySelected}
           />

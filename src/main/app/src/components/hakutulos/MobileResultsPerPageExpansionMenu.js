@@ -9,7 +9,7 @@ import { SuodatinMobileSlider } from '#/src/components/common/Filter/CustomizedM
 import { pageSizeArray } from '#/src/constants';
 import { clearPaging, newSearchAll, setSize } from '#/src/store/reducers/hakutulosSlice';
 
-export const MobileResultsPerPageExpansionMenu = ({ elevation }) => {
+export const MobileResultsPerPageExpansionMenu = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { size } = useSelector(

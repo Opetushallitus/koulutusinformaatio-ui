@@ -11,14 +11,13 @@ import {
   newSearchAll,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getFilterProps, getIsReady } from '#/src/store/reducers/hakutulosSliceSelector';
+import { getFilterStateChanges } from '#/src/tools/filters';
 import { localize } from '#/src/tools/localization';
 import {
   FilterProps,
   FilterValue,
   SuodatinComponentProps,
 } from '#/src/types/SuodatinTypes';
-
-import { getFilterStateChanges } from './utils';
 
 const maakuntaSelector = getFilterProps(FILTER_TYPES.MAAKUNTA);
 const kuntaSelector = getFilterProps(FILTER_TYPES.KUNTA);
