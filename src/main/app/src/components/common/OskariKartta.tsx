@@ -40,6 +40,19 @@ type SearchData = {
   success: boolean;
 };
 
+// Kaupungin / kunnan pitää mätsätä postitoimipaikkaa JA osoitteen alkuosan täytyy mätsätä (pelkkä alkuosa koska etsitään myös ilman katunumeroa)
+const findOsoiteFromResults = (
+  results: SearchData['result']['locations'] = [],
+  osoite: string,
+  postitoimipaikka: string
+) =>
+  results.find(
+    (loc) =>
+      [loc.region?.toLowerCase(), loc.village?.toLowerCase()].includes(
+        postitoimipaikka.toLowerCase()
+      ) && loc.name?.includes(osoite.split(' ')[0])
+  );
+
 export const OskariKartta = ({ id, osoite, postitoimipaikka }: Props) => {
   const [error, setError] = useState(false);
 
@@ -52,14 +65,14 @@ export const OskariKartta = ({ id, osoite, postitoimipaikka }: Props) => {
         setError(true);
         return;
       }
-      if (data?.result?.locations?.length > 0) {
-        const { lon, lat, name } =
-          data?.result?.locations?.find((loc) =>
-            [loc?.region?.toLowerCase(), loc?.village?.toLowerCase()].includes(
-              postitoimipaikka.toLowerCase()
-            )
-          ) ?? data.result.locations[0];
 
+      const result = findOsoiteFromResults(
+        data?.result?.locations,
+        osoite,
+        postitoimipaikka
+      );
+      if (result) {
+        const { lon, lat, name } = result;
         channel.postRequest('MapMoveRequest', [lon, lat, ZOOM_LEVEL]);
 
         const requestData = {
@@ -72,10 +85,12 @@ export const OskariKartta = ({ id, osoite, postitoimipaikka }: Props) => {
         };
         channel.postRequest('MapModulePlugin.AddMarkerRequest', [requestData, MARKER_ID]);
       } else if (!noHouseNumberSearchDone) {
+        // Jos osoitetta ei löydy, etsitään vielä ilman katunumeroa
         const { addressNoNumbers } = getSearchAddress(postitoimipaikka, osoite);
         channel.postRequest('SearchRequest', [addressNoNumbers]);
         noHouseNumberSearchDone = true;
       } else {
+        console.warn('Address not found:', osoite, postitoimipaikka);
         setError(true);
       }
     });
