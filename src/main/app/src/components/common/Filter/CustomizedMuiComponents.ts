@@ -18,8 +18,7 @@ export const KonfoCheckbox = withStyles({
 })(Checkbox);
 
 export const SuodatinAccordion = withStyles((theme) => ({
-  root: ({ shadow }: { shadow?: boolean }) => ({
-    ...(shadow && { boxShadow: '0 2px 8px 0 rgba(0,0,0,0.2)' }),
+  root: () => ({
     // Piilotetaan default väliviiva (koska sitä ei saa pysymään näkyvissä -> korvattu Dividerilla)
     '&:before': {
       visibility: 'hidden',

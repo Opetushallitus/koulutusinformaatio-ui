@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const MobileToggleOrderByButtonMenu = ({ elevation }) => {
+const MobileToggleOrderByButtonMenu = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();

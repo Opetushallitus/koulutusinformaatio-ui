@@ -22,6 +22,7 @@ import {
   sortValues,
 } from '#/src/tools/filters';
 import { localize, getLocalizedMaksullisuus } from '#/src/tools/localization';
+import { mapValues } from '#/src/tools/lodashFpUncapped';
 import { Translateable } from '#/src/types/common';
 import { FilterValue } from '#/src/types/SuodatinTypes';
 import { Jarjestaja } from '#/src/types/ToteutusTypes';
@@ -82,7 +83,7 @@ const getQueryStr = (values: Record<string, Array<string> | boolean>) => {
   );
 
   return _fp.mapValues(
-    (v) => (Array.isArray(v) ? v!.join(',') : v!.toString()),
+    (v) => (_fp.isArray(v) ? v!.join(',') : v!.toString()),
     valuesWithSijainti
   );
 };
@@ -111,16 +112,12 @@ export const ToteutusList = ({ oid }: Props) => {
 
   const usedValues = useMemo(
     () =>
-      _fp.flow(
-        _fp.keys,
-        _fp.map((key) => [
-          key,
-          sortValues(getFilterWithChecked(sortedFilters, checkedValues, key)),
-        ]),
-        _fp.fromPairs
+      mapValues((ignored: any, key: string) =>
+        sortValues(getFilterWithChecked(sortedFilters, checkedValues, key))
       )(sortedFilters),
     [sortedFilters, checkedValues]
   );
+
   const someSelected = _fp.some(
     (v) => (_fp.isArray(v) ? v.length > 0 : v),
     checkedValues
@@ -158,107 +155,113 @@ export const ToteutusList = ({ oid }: Props) => {
     <Container maxWidth="lg" className={classes.container}>
       <Typography variant="h2">{t('koulutus.tarjonta')}</Typography>
       <Spacer />
-      <Hidden smDown>
-        <Grid
-          container
-          item
-          direction="row"
-          justify="center"
-          spacing={2}
-          className={classes.filtersContainer}
-          sm={10}>
-          {/* shadow annetaan täällä (eikä komponenteissa) koska mobiilirajaimissa sitä ei haluta */}
-          <Grid item className={classes.filter} sm={4}>
-            <OpetuskieliSuodatin
-              shadow
-              handleFilterChange={handleFilterChange}
-              values={usedValues.opetuskieli}
-            />
-          </Grid>
-          <Grid item className={classes.filter} sm={4}>
-            <SijaintiSuodatin
-              shadow
-              loading={loading}
-              handleFilterChange={handleFilterChange}
-              maakuntaValues={usedValues.maakunta}
-              kuntaValues={usedValues.kunta}
-            />
-          </Grid>
-          <Grid item className={classes.filter} sm={4}>
-            <PohjakoulutusvaatimusSuodatin
-              shadow
-              handleFilterChange={handleFilterChange}
-              values={usedValues.pohjakoulutusvaatimus}
-            />
-          </Grid>
-          {usedValues.hakukaynnissa && usedValues.hakutapa && (
-            <Grid item className={classes.filter} sm={4}>
-              <HakutapaSuodatin
-                shadow
-                handleFilterChange={handleFilterChange}
-                values={[...usedValues.hakukaynnissa, ...usedValues.hakutapa]}
-              />
-            </Grid>
-          )}
-          <Grid item className={classes.filter} sm={4}>
-            <ValintatapaSuodatin
-              shadow
-              handleFilterChange={handleFilterChange}
-              values={usedValues.valintatapa}
-            />
-          </Grid>
-          <Grid item className={classes.filter} sm={4}>
-            <OpetustapaSuodatin
-              shadow
-              handleFilterChange={handleFilterChange}
-              values={usedValues.opetustapa}
-            />
-          </Grid>
-        </Grid>
-      </Hidden>
-      <Hidden mdUp>
-        <MobileFiltersOnTopMenu
-          values={usedValues}
-          loading={loading}
-          hitCount={jarjestajat?.length}
-          handleFilterChange={handleFilterChange}
-          clearChosenFilters={handleFiltersClear}
-        />
-      </Hidden>
       {loading ? (
         <LoadingCircle />
       ) : jarjestajat?.length > 0 ? (
-        <Grid
-          container
-          direction="column"
-          justify="center"
-          className={classes.grid}
-          alignItems="stretch"
-          spacing={1}>
-          {jarjestajat.map((toteutus, i) => (
-            <Grid item key={i}>
-              <LocalizedLink
-                underline="none"
-                component={RouterLink}
-                to={`/toteutus/${toteutus.toteutusOid}`}>
-                <ToteutusCard
-                  organizer={localize(toteutus)}
-                  heading={localize(toteutus.toteutusNimi)}
-                  description={localize(toteutus.kuvaus)}
-                  locations={localizeArrayToString(toteutus.kunnat)}
-                  opetustapa={localizeArrayToString(toteutus.opetusajat)}
-                  price={getLocalizedMaksullisuus(
-                    toteutus.maksullisuustyyppi,
-                    toteutus.maksunMaara
-                  )}
-                  tyyppi={toteutus.koulutustyyppi}
-                  image={toteutus.kuva}
-                  hakukaynnissa={toteutus.hakukaynnissa}
+        <>
+          <Hidden smDown>
+            <Grid
+              container
+              item
+              direction="row"
+              justify="center"
+              spacing={2}
+              className={classes.filtersContainer}
+              sm={10}>
+              <Grid item className={classes.filter} sm={4}>
+                <OpetuskieliSuodatin
+                  elevation={2}
+                  handleFilterChange={handleFilterChange}
+                  values={usedValues.opetuskieli}
                 />
-              </LocalizedLink>
+              </Grid>
+              <Grid item className={classes.filter} sm={4}>
+                <SijaintiSuodatin
+                  elevation={2}
+                  loading={loading}
+                  handleFilterChange={handleFilterChange}
+                  maakuntaValues={usedValues.maakunta}
+                  kuntaValues={usedValues.kunta}
+                />
+              </Grid>
+              <Grid item className={classes.filter} sm={4}>
+                <PohjakoulutusvaatimusSuodatin
+                  elevation={2}
+                  handleFilterChange={handleFilterChange}
+                  values={usedValues.pohjakoulutusvaatimus}
+                />
+              </Grid>
+
+              <Grid item className={classes.filter} sm={4}>
+                <HakutapaSuodatin
+                  elevation={2}
+                  handleFilterChange={handleFilterChange}
+                  values={
+                    usedValues.hakukaynnissa && usedValues.hakutapa
+                      ? [...usedValues.hakukaynnissa, ...usedValues.hakutapa]
+                      : []
+                  }
+                />
+              </Grid>
+
+              <Grid item className={classes.filter} sm={4}>
+                <ValintatapaSuodatin
+                  elevation={2}
+                  handleFilterChange={handleFilterChange}
+                  values={usedValues.valintatapa}
+                />
+              </Grid>
+              <Grid item className={classes.filter} sm={4}>
+                <OpetustapaSuodatin
+                  elevation={2}
+                  handleFilterChange={handleFilterChange}
+                  values={usedValues.opetustapa}
+                />
+              </Grid>
             </Grid>
-          ))}
-        </Grid>
+          </Hidden>
+          <Hidden mdUp>
+            <MobileFiltersOnTopMenu
+              values={usedValues}
+              loading={loading}
+              hitCount={jarjestajat?.length}
+              handleFilterChange={handleFilterChange}
+              clearChosenFilters={handleFiltersClear}
+            />
+          </Hidden>
+
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            className={classes.grid}
+            alignItems="stretch"
+            spacing={1}>
+            {jarjestajat.map((toteutus, i) => (
+              <Grid item key={i}>
+                <LocalizedLink
+                  underline="none"
+                  component={RouterLink}
+                  to={`/toteutus/${toteutus.toteutusOid}`}>
+                  <ToteutusCard
+                    organizer={localize(toteutus)}
+                    heading={localize(toteutus.toteutusNimi)}
+                    description={localize(toteutus.kuvaus)}
+                    locations={localizeArrayToString(toteutus.kunnat)}
+                    opetustapa={localizeArrayToString(toteutus.opetusajat)}
+                    price={getLocalizedMaksullisuus(
+                      toteutus.maksullisuustyyppi,
+                      toteutus.maksunMaara
+                    )}
+                    tyyppi={toteutus.koulutustyyppi}
+                    image={toteutus.kuva}
+                    hakukaynnissa={toteutus.hakukaynnissa}
+                  />
+                </LocalizedLink>
+              </Grid>
+            ))}
+          </Grid>
+        </>
       ) : (
         <Typography variant="body1" paragraph>
           {t(

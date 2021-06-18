@@ -128,14 +128,12 @@ export const MobileFiltersOnTopMenu = ({
           <OpetuskieliSuodatin
             handleFilterChange={handleFilterChange}
             expanded={false}
-            elevation={0}
             values={values.opetuskieli}
           />
           <Divider className={classes.divider} />
           <SijaintiSuodatin
             handleFilterChange={handleFilterChange}
             expanded={false}
-            elevation={0}
             maakuntaValues={values.maakunta}
             kuntaValues={values.kunta}
             loading={loading}
@@ -144,7 +142,6 @@ export const MobileFiltersOnTopMenu = ({
           <PohjakoulutusvaatimusSuodatin
             handleFilterChange={handleFilterChange}
             expanded={false}
-            elevation={0}
             values={values.pohjakoulutusvaatimus}
           />
           <Divider className={classes.divider} />
@@ -152,7 +149,6 @@ export const MobileFiltersOnTopMenu = ({
             <HakutapaSuodatin
               handleFilterChange={handleFilterChange}
               expanded={false}
-              elevation={0}
               values={[...values.hakukaynnissa, ...values.hakutapa]}
             />
           )}
@@ -160,14 +156,12 @@ export const MobileFiltersOnTopMenu = ({
           <ValintatapaSuodatin
             handleFilterChange={handleFilterChange}
             expanded={false}
-            elevation={0}
             values={values.valintatapa}
           />
           <Divider className={classes.divider} />
           <OpetustapaSuodatin
             handleFilterChange={handleFilterChange}
             expanded={false}
-            elevation={0}
             values={values.opetustapa}
           />
           <Divider className={classes.divider} />

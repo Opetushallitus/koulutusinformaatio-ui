@@ -211,7 +211,7 @@ export const Filter = ({
   name,
   testId,
   expanded,
-  elevation,
+  elevation = 0,
   // display selected kertoo että näytetään infoa valituista,
   // summaryHidden kertoo että näytetään mutta ei haluta näyttää tekstiä
   // TODO: Liikaa boolean propseja, tekee huonon komponenttirajapinnan
@@ -225,7 +225,6 @@ export const Filter = ({
   additionalContent,
   expandValues = false,
   defaultExpandAlakoodit = false,
-  shadow = false,
 }: Props) => {
   const { t } = useTranslation();
   const classes = withStyles();
@@ -238,8 +237,7 @@ export const Filter = ({
       data-cy={testId}
       elevation={elevation}
       defaultExpanded={expanded}
-      square
-      shadow={shadow}>
+      square>
       {!summaryHidden && (
         <SuodatinAccordionSummary expandIcon={<ExpandMore />}>
           <SummaryContent

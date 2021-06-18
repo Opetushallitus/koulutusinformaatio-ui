@@ -144,24 +144,24 @@ export const MobileFiltersOnTopMenu = ({ isFrontPage = false }) => {
         <Container classes={{ root: classes.containerRoot }}>
           {isFrontPage && <MobileToggleKoulutusOppilaitos />}
           {isFrontPage && <Divider className={classes.divider} />}
-          <KoulutustyyppiSuodatin expanded={false} elevation={0} displaySelected />
+          <KoulutustyyppiSuodatin expanded={false} displaySelected />
           <Divider className={classes.divider} />
-          <OpetuskieliSuodatin expanded={false} elevation={0} displaySelected />
+          <OpetuskieliSuodatin expanded={false} displaySelected />
           <Divider className={classes.divider} />
-          <SijaintiSuodatin expanded={false} elevation={0} displaySelected />
+          <SijaintiSuodatin expanded={false} displaySelected />
           <Divider className={classes.divider} />
-          <PohjakoulutusvaatimusSuodatin expanded={false} elevation={0} displaySelected />
+          <PohjakoulutusvaatimusSuodatin expanded={false} displaySelected />
           <Divider className={classes.divider} />
-          <HakutapaSuodatin expanded={false} elevation={0} displaySelected />
+          <HakutapaSuodatin expanded={false} displaySelected />
           <Divider className={classes.divider} />
-          <ValintatapaSuodatin expanded={false} elevation={0} displaySelected />
+          <ValintatapaSuodatin expanded={false} displaySelected />
           <Divider className={classes.divider} />
-          <KoulutusalaSuodatin expanded={false} elevation={0} displaySelected />
+          <KoulutusalaSuodatin expanded={false} displaySelected />
           <Divider className={classes.divider} />
-          <OpetustapaSuodatin expanded={false} elevation={0} displaySelected />
+          <OpetustapaSuodatin expanded={false} displaySelected />
           <Divider className={classes.divider} />
-          {!isFrontPage && <MobileToggleOrderByButtonMenu elevation={0} />}
-          {!isFrontPage && <MobileResultsPerPageExpansionMenu elevation={0} />}
+          {!isFrontPage && <MobileToggleOrderByButtonMenu />}
+          {!isFrontPage && <MobileResultsPerPageExpansionMenu />}
         </Container>
         <MobileToggleFiltersButton
           type="fixed"

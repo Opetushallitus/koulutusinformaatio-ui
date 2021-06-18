@@ -63,7 +63,7 @@ export const Suodatin = ({ id: propsId, SuodatinComponent, header }: Props) => {
       </Button>
       <PopoverWithArrow
         anchorEl={anchorRef.current}
-        content={<SuodatinComponent expanded elevation={2} summaryHidden />}
+        content={<SuodatinComponent expanded summaryHidden />}
         id={id}
         marginTop={7}
         onClose={() => setIsOpen(false)}
