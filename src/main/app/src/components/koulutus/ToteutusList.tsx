@@ -151,13 +151,13 @@ export const ToteutusList = ({ oid }: Props) => {
     dispatch(fetchKoulutusJarjestajat(oid, queryStrings));
   }, [dispatch, oid, checkedValues]);
 
+  const someValuesToShow = loading || jarjestajat?.length > 0;
+
   return (
     <Container maxWidth="lg" className={classes.container}>
       <Typography variant="h2">{t('koulutus.tarjonta')}</Typography>
       <Spacer />
-      {loading ? (
-        <LoadingCircle />
-      ) : jarjestajat?.length > 0 ? (
+      {someValuesToShow && (
         <>
           <Hidden smDown>
             <Grid
@@ -229,39 +229,43 @@ export const ToteutusList = ({ oid }: Props) => {
               clearChosenFilters={handleFiltersClear}
             />
           </Hidden>
-
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            className={classes.grid}
-            alignItems="stretch"
-            spacing={1}>
-            {jarjestajat.map((toteutus, i) => (
-              <Grid item key={i}>
-                <LocalizedLink
-                  underline="none"
-                  component={RouterLink}
-                  to={`/toteutus/${toteutus.toteutusOid}`}>
-                  <ToteutusCard
-                    organizer={localize(toteutus)}
-                    heading={localize(toteutus.toteutusNimi)}
-                    description={localize(toteutus.kuvaus)}
-                    locations={localizeArrayToString(toteutus.kunnat)}
-                    opetustapa={localizeArrayToString(toteutus.opetusajat)}
-                    price={getLocalizedMaksullisuus(
-                      toteutus.maksullisuustyyppi,
-                      toteutus.maksunMaara
-                    )}
-                    tyyppi={toteutus.koulutustyyppi}
-                    image={toteutus.kuva}
-                    hakukaynnissa={toteutus.hakukaynnissa}
-                  />
-                </LocalizedLink>
-              </Grid>
-            ))}
-          </Grid>
         </>
+      )}
+
+      {loading ? (
+        <LoadingCircle />
+      ) : someValuesToShow ? (
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          className={classes.grid}
+          alignItems="stretch"
+          spacing={1}>
+          {jarjestajat.map((toteutus, i) => (
+            <Grid item key={i}>
+              <LocalizedLink
+                underline="none"
+                component={RouterLink}
+                to={`/toteutus/${toteutus.toteutusOid}`}>
+                <ToteutusCard
+                  organizer={localize(toteutus)}
+                  heading={localize(toteutus.toteutusNimi)}
+                  description={localize(toteutus.kuvaus)}
+                  locations={localizeArrayToString(toteutus.kunnat)}
+                  opetustapa={localizeArrayToString(toteutus.opetusajat)}
+                  price={getLocalizedMaksullisuus(
+                    toteutus.maksullisuustyyppi,
+                    toteutus.maksunMaara
+                  )}
+                  tyyppi={toteutus.koulutustyyppi}
+                  image={toteutus.kuva}
+                  hakukaynnissa={toteutus.hakukaynnissa}
+                />
+              </LocalizedLink>
+            </Grid>
+          ))}
+        </Grid>
       ) : (
         <Typography variant="body1" paragraph>
           {t(
