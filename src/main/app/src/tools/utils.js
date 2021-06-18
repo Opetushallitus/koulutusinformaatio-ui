@@ -149,4 +149,5 @@ export function getLocalizedOpintojenLaajuus(koulutus) {
 
 export const condArray = (cond, item) => (cond ? [item] : []);
 
-export const formatDouble = (number) => number?.toString().replace('.', ',');
+export const formatDouble = (number, fixed) =>
+  (fixed !== undefined ? number?.toFixed(fixed) : number)?.toString().replace('.', ',');

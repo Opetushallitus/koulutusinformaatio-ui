@@ -179,7 +179,8 @@ const HakuCardGrid = ({ tyyppiOtsikko, haut, icon }: GridProps) => {
                               heading: t('toteutus.alin-hyvaksytty-keskiarvo'),
                               content: [
                                 formatDouble(
-                                  haku.hakukohteenLinja.alinHyvaksyttyKeskiarvo
+                                  haku.hakukohteenLinja.alinHyvaksyttyKeskiarvo,
+                                  1
                                 ),
                               ],
                               modalText: haku.hakukohteenLinja.lisatietoa,
