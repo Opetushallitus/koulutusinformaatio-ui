@@ -8,14 +8,14 @@ import _ from 'lodash';
 import Markdown from 'markdown-to-jsx';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { colors } from '#/src/colors';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import { useContentful } from '#/src/hooks';
 
 import { clearSelectedFilters } from '../store/reducers/hakutulosSlice';
-import Jumpotron from './Jumpotron';
+import { Jumpotron } from './Jumpotron';
 import Kortti from './kortti/Kortti';
 import { ReactiveBorder } from './ReactiveBorder';
 import { Uutiset } from './uutinen/Uutiset';
@@ -81,10 +81,11 @@ type UutisetType = Record<
 
 const getFirst = (entry: Kortit) => Object.values(entry || {})[0] || {};
 
-export const Etusivu = withRouter(({ history }) => {
+export const Etusivu = () => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { i18n } = useTranslation();
+  const history = useHistory();
   const dispatch = useDispatch();
   const { data, isLoading, forwardTo } = useContentful();
   const {
@@ -166,4 +167,4 @@ export const Etusivu = withRouter(({ history }) => {
       )}
     </React.Fragment>
   );
-});
+};

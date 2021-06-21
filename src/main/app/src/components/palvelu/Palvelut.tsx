@@ -6,19 +6,18 @@ import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import clsx from 'clsx';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router-dom';
 
+import { colors } from '#/src/colors';
 import { useContentful } from '#/src/hooks';
 
-import { colors } from '../../colors';
-import Palvelu from './Palvelu';
+import { Palvelu } from './Palvelu';
 
 const useStyles = makeStyles({
   header: {
     fontSize: '28px',
     paddingTop: '60px',
     paddingBottom: '28px',
-    fontWeight: '700',
+    fontWeight: 700,
   },
   spaceOnBorders: {
     paddingLeft: 90,
@@ -37,33 +36,40 @@ const useStyles = makeStyles({
   },
 });
 
-const Palvelut = () => {
-  const { t } = useTranslation();
-  const { data } = useContentful();
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up('md'));
-  const { ohjeetJaTuki, palvelut } = data || {};
+type RiviProps = { otsikko: string; rivit: Array<Array<{ id: string }>> };
+
+const Rivi = ({ otsikko, rivit }: RiviProps) => {
   const classes = useStyles();
 
-  const single = (entry) => Object.values(entry || [])[0] || {};
-
-  const palvelurivit = _.chunk(single(palvelut).linkit, 3);
-  const ohjerivit = _.chunk(single(ohjeetJaTuki).linkit, 3);
-
-  const Rivi = (props) => {
-    return props.rivit.map((rivi) => {
-      return (
+  return (
+    <>
+      {rivit.map((rivi) => (
         <Grid container className={classes.rivi} key={rivi.map((u) => u.id).join()}>
-          <h1 className={classes.header}>{props.otsikko}</h1>
+          <h1 className={classes.header}>{otsikko}</h1>
           <Grid container spacing={3}>
             {rivi.map((p) => (
               <Palvelu id={p.id} key={p.id} />
             ))}
           </Grid>
         </Grid>
-      );
-    });
-  };
+      ))}
+    </>
+  );
+};
+
+const first = (entry: object) => Object.values(entry || [])[0] || {};
+
+export const Palvelut = () => {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('md'));
+
+  const { data } = useContentful();
+  const { ohjeetJaTuki, palvelut } = data || {};
+
+  const palvelurivit: Array<Array<any>> = _.chunk(first(palvelut).linkit, 3);
+  const ohjerivit: Array<Array<any>> = _.chunk(first(ohjeetJaTuki).linkit, 3);
 
   return (
     <div
@@ -78,5 +84,3 @@ const Palvelut = () => {
     </div>
   );
 };
-
-export default withRouter(Palvelut);

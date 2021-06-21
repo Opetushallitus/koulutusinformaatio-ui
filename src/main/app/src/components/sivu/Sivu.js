@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 
-import { makeStyles } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import { withRouter } from 'react-router-dom';
+import { Grid, makeStyles } from '@material-ui/core';
 
+import { colors } from '#/src/colors';
 import { useContentful } from '#/src/hooks';
 
-import { colors } from '../../colors';
 import Murupolku from '../common/Murupolku';
 import Sisalto from './Sisalto';
 import TableOfContents from './TableOfContents';
@@ -39,7 +37,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Sivu = ({ id }) => {
+export const Sivu = ({ id }) => {
   const classes = useStyles();
   const { data, murupolku } = useContentful();
 
@@ -60,32 +58,28 @@ const Sivu = ({ id }) => {
   const tableOfContents = page.tableOfContents === 'true';
 
   return (
-    <React.Fragment>
-      <div className={classes.component}>
-        <Grid container direction="row" justify="center" spacing={2} alignItems="center">
-          <Grid item xs={12} sm={12} md={tableOfContents ? 10 : 6}>
-            <Murupolku path={murupolku(pageId)} />
-            <h1 className={classes.header1}>{name}</h1>
-            <p>{description}</p>
-          </Grid>
+    <div className={classes.component}>
+      <Grid container direction="row" justify="center" spacing={2} alignItems="center">
+        <Grid item xs={12} sm={12} md={tableOfContents ? 10 : 6}>
+          <Murupolku path={murupolku(pageId)} />
+          <h1 className={classes.header1}>{name}</h1>
+          <p>{description}</p>
         </Grid>
-        <Grid container direction="row" spacing={2} justify="center">
-          {tableOfContents ? (
-            <Grid item xs={12} sm={12} md={3}>
-              <TableOfContents content={content} />
-            </Grid>
-          ) : null}
-          <Grid item xs={12} sm={12} md={tableOfContents ? 7 : 6}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12} md={12}>
-                <Sisalto content={content} />
-              </Grid>
+      </Grid>
+      <Grid container direction="row" spacing={2} justify="center">
+        {tableOfContents ? (
+          <Grid item xs={12} sm={12} md={3}>
+            <TableOfContents content={content} />
+          </Grid>
+        ) : null}
+        <Grid item xs={12} sm={12} md={tableOfContents ? 7 : 6}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={12}>
+              <Sisalto content={content} />
             </Grid>
           </Grid>
         </Grid>
-      </div>
-    </React.Fragment>
+      </Grid>
+    </div>
   );
 };
-
-export default withRouter(Sivu);

@@ -6,7 +6,6 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import SentimentSatisfied from '@material-ui/icons/SentimentSatisfied';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router-dom';
 
 import { colors } from '../../colors';
 import Palaute from '../common/Palaute';
@@ -46,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PalautePopup = () => {
+export const PalautePopup = () => {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -84,5 +83,3 @@ const PalautePopup = () => {
     </React.Fragment>
   );
 };
-
-export default withRouter(PalautePopup);

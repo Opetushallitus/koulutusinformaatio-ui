@@ -17,7 +17,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import _ from 'lodash';
 import MuiFlatPagination from 'material-ui-flat-pagination';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import parse from 'url-parse';
 
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
@@ -113,14 +113,17 @@ const Result = withStyles({
   );
 });
 
-const Sisaltohaku = (props) => {
-  const pageSize = 50;
-  const asKeywords = (s) => s.toLowerCase().split(/[ ,]+/);
+const PAGESIZE = 50;
+const asKeywords = (s) => s.toLowerCase().split(/[ ,]+/);
+
+export const Sisaltohaku = () => {
   const { data, forwardTo, assetUrl } = useContentful();
-  const { sivu, uutinen } = data;
   const { t, i18n } = useTranslation();
   const classes = useStyles();
+  const history = useHistory();
+  const location = useLocation();
 
+  const { sivu, uutinen } = data;
   const index = Object.entries(sivu)
     .filter(([key, { id }]) => key === id)
     .map(([, { id, sideContent, content }]) => {
@@ -132,21 +135,19 @@ const Sisaltohaku = (props) => {
   const fetchResults = (search) => {
     const keywords = asKeywords(search);
     if (!_.isEmpty(keywords)) {
-      return index.filter(({ content }) => {
-        return keywords.find((kw) => content.includes(kw));
-      });
+      return index.filter(({ content }) => keywords.find((kw) => content.includes(kw)));
     } else {
       return [];
     }
   };
-  const hakusana = _.trim((parse(props.location.search, true).query || {}).hakusana);
+  const hakusana = _.trim((parse(location.search, true).query || {}).hakusana);
   const [state, setState] = useState({
     currentOffset: undefined,
     search: hakusana,
     results: fetchResults(hakusana),
   });
   const doSearch = (event) => {
-    props.history.push(`/${i18n.language}/sisaltohaku/?hakusana=${_.trim(state.search)}`);
+    history.push(`/${i18n.language}/sisaltohaku/?hakusana=${_.trim(state.search)}`);
     event && event.preventDefault();
     setState({
       ...state,
@@ -159,10 +160,10 @@ const Sisaltohaku = (props) => {
     doSearch(null);
   }, [data.loading]); /* eslint-disable-line */
 
-  const pagination = (state.results || []).length > pageSize;
+  const pagination = (state.results || []).length > PAGESIZE;
   const paginate = () => {
     const offset = state.currentOffset || 0;
-    return pagination ? state.results.slice(offset, pageSize + offset) : state.results;
+    return pagination ? state.results.slice(offset, PAGESIZE + offset) : state.results;
   };
   return (
     <ReactiveBorder>
@@ -235,7 +236,7 @@ const Sisaltohaku = (props) => {
             })}
             {pagination ? (
               <MuiFlatPagination
-                limit={pageSize}
+                limit={PAGESIZE}
                 offset={state.currentOffset}
                 total={state.results.length}
                 onClick={(e, offset, page) =>
@@ -249,5 +250,3 @@ const Sisaltohaku = (props) => {
     </ReactiveBorder>
   );
 };
-
-export default withRouter(Sisaltohaku);

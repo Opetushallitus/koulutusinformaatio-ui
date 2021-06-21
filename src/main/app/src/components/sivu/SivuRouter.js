@@ -11,8 +11,8 @@ import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import { useContentful } from '#/src/hooks';
 
-import Sivu from './Sivu';
-import SivuKooste from './SivuKooste';
+import { Sivu } from './Sivu';
+import { SivuKooste } from './SivuKooste';
 
 const useStyles = makeStyles({
   notFound: {
@@ -62,13 +62,15 @@ const NotFound = ({ loading }) => {
   );
 };
 
-const SivuRouter = () => {
+export const SivuRouter = () => {
   const { id: slug, lng: lngParam } = useParams();
   const { data, slugsToIds, isLoading } = useContentful();
   const { sivu, sivuKooste } = data;
   const idInfo = slugsToIds?.[slug];
 
-  if (isLoading) return <LoadingCircle />;
+  if (isLoading) {
+    return <LoadingCircle />;
+  }
   if (idInfo?.language === lngParam) {
     if (sivu[slug]) {
       return <Sivu id={slug} />;
@@ -89,5 +91,3 @@ const SivuRouter = () => {
     }
   }
 };
-
-export default SivuRouter;
