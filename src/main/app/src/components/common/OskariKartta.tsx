@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { Grid } from '@material-ui/core';
 import { urls } from 'oph-urls-js';
 // @ts-ignore no types
 import OskariRPC from 'oskari-rpc';
@@ -39,21 +40,39 @@ type SearchData = {
   success: boolean;
 };
 
+// Kaupungin / kunnan pitää mätsätä postitoimipaikkaa JA osoitteen alkuosan täytyy mätsätä (pelkkä alkuosa koska etsitään myös ilman katunumeroa)
+const findOsoiteFromResults = (
+  results: SearchData['result']['locations'] = [],
+  osoite: string,
+  postitoimipaikka: string
+) =>
+  results.find(
+    (loc) =>
+      [loc.region?.toLowerCase(), loc.village?.toLowerCase()].includes(
+        postitoimipaikka.toLowerCase()
+      ) && loc.name?.includes(osoite.split(' ')[0])
+  );
+
 export const OskariKartta = ({ id, osoite, postitoimipaikka }: Props) => {
+  const [error, setError] = useState(false);
+
   useEffect(() => {
     const channel = createChannel(id);
     let noHouseNumberSearchDone = false;
 
     channel.handleEvent('SearchResultEvent', (data: SearchData) => {
-      if (!data?.success) return;
-      if (data?.result?.locations?.length > 0) {
-        const { lon, lat, name } =
-          data?.result?.locations?.find((loc) =>
-            [loc?.region?.toLowerCase(), loc?.village?.toLowerCase()].includes(
-              postitoimipaikka.toLowerCase()
-            )
-          ) ?? data.result.locations[0];
+      if (!data?.success) {
+        setError(true);
+        return;
+      }
 
+      const result = findOsoiteFromResults(
+        data?.result?.locations,
+        osoite,
+        postitoimipaikka
+      );
+      if (result) {
+        const { lon, lat, name } = result;
         channel.postRequest('MapMoveRequest', [lon, lat, ZOOM_LEVEL]);
 
         const requestData = {
@@ -65,12 +84,14 @@ export const OskariKartta = ({ id, osoite, postitoimipaikka }: Props) => {
           size: 4,
         };
         channel.postRequest('MapModulePlugin.AddMarkerRequest', [requestData, MARKER_ID]);
+      } else if (!noHouseNumberSearchDone) {
+        // Jos osoitetta ei löydy, etsitään vielä ilman katunumeroa
+        const { addressNoNumbers } = getSearchAddress(postitoimipaikka, osoite);
+        channel.postRequest('SearchRequest', [addressNoNumbers]);
+        noHouseNumberSearchDone = true;
       } else {
-        if (!noHouseNumberSearchDone) {
-          const { addressNoNumbers } = getSearchAddress(postitoimipaikka, osoite);
-          channel.postRequest('SearchRequest', [addressNoNumbers]);
-          noHouseNumberSearchDone = true;
-        }
+        console.warn('Address not found:', osoite, postitoimipaikka);
+        setError(true);
       }
     });
 
@@ -106,11 +127,20 @@ export const OskariKartta = ({ id, osoite, postitoimipaikka }: Props) => {
   }, [id, postitoimipaikka, osoite]);
 
   return (
-    <iframe
-      title="kartta"
-      id={id}
-      style={{ border: 'none', width: '100%', height: '100%' }}
-      src={urls.url('kartta.publish-url', getLanguage())}
-    />
+    <Grid
+      item
+      container
+      justify="center"
+      md={6}
+      sm={12}
+      // Ei poisteta domista vaan piilotetaan koska channel eventit räjähtää mikäli dom-elementti puuttuu
+      style={{ ...(error && { flexBasis: 0, height: 0, visibility: 'hidden' }) }}>
+      <iframe
+        title="kartta"
+        id={id}
+        style={{ border: 'none', width: '100%', minHeight: 320 }}
+        src={urls.url('kartta.publish-url', getLanguage())}
+      />
+    </Grid>
   );
 };
