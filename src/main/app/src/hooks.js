@@ -14,7 +14,7 @@ export const useLanguageState = () => {
   const location = useLocation();
   const history = useHistory();
   const lng = location.pathname.match(/^\/(.*?)(\/|$)/)?.[1];
-
+  document.documentElement.setAttribute('lang', lng || 'fi');
   const setLanguage = useCallback(
     (newLang) => {
       document.documentElement.setAttribute('lang', newLang || 'fi');
