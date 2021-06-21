@@ -2,10 +2,10 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core';
 import Markdown from 'markdown-to-jsx';
+import { useTranslation } from 'react-i18next';
 import { HashLink as Link } from 'react-router-hash-link';
 
 import { colors } from '../../colors';
-
 const useStyles = makeStyles({
   link: {
     overflow: 'hidden',
@@ -25,13 +25,14 @@ const useStyles = makeStyles({
 const TableOfContents = (props) => {
   const classes = useStyles();
   const { content } = props;
+  const { t } = useTranslation();
   const HeadingLevelToComponent = (props) => {
     const value = props.children;
     const anchor = props.id;
     return (
       <Link
         className={classes.link}
-        aria-label="anchor"
+        aria-label={t('ankkurilinkki') + value}
         to={`#${anchor}`}
         scroll={(el) => el.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
         {value}
