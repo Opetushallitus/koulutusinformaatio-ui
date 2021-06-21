@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Tabs, Tab, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import { SchoolOutlined, HomeWorkOutlined } from '@material-ui/icons';
-import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -37,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HakutulosToggle = () => {
+export const HakutulosToggle = () => {
   const { t } = useTranslation();
   const { selectedTab, koulutusTotal, oppilaitosTotal } = useSelector(
     getHakutulosToggleProps
@@ -47,7 +46,7 @@ const HakutulosToggle = () => {
   const theme = useTheme();
   const muiScreenSizeMinMd = useMediaQuery(theme.breakpoints.up('md'));
 
-  const handleSelectedTab = (e, newSelectedTab) => {
+  const handleSelectedTab = (ignored: any, newSelectedTab: string) => {
     dispatch(setSelectedTab({ newSelectedTab }));
   };
 
@@ -66,9 +65,7 @@ const HakutulosToggle = () => {
           labelIcon: classes.tabLabelIcon,
           root: classes.tabRoot,
         }}
-        label={`${t('haku.koulutukset')} (${
-          _.isNil(koulutusTotal) ? 0 : koulutusTotal
-        })`}></Tab>
+        label={`${t('haku.koulutukset')} (${koulutusTotal ?? 0})`}></Tab>
       <Tab
         value="oppilaitos"
         icon={<HomeWorkOutlined className={classes.tabIconMargin} />}
@@ -77,11 +74,7 @@ const HakutulosToggle = () => {
           labelIcon: classes.tabLabelIcon,
           root: classes.tabRoot,
         }}
-        label={`${t('haku.oppilaitokset')} (${
-          _.isNil(oppilaitosTotal) ? 0 : oppilaitosTotal
-        })`}></Tab>
+        label={`${t('haku.oppilaitokset')} (${oppilaitosTotal ?? 0})`}></Tab>
     </Tabs>
   );
 };
-
-export default HakutulosToggle;

@@ -3,7 +3,7 @@ import React from 'react';
 import { Avatar, Button, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import { ErrorOutline } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
-import { withRouter, Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 
@@ -35,13 +35,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BackendErrorMessage = (props) => {
+const refreshPage = () => {
+  window.location.reload();
+};
+
+export const BackendErrorMessage = () => {
   const { t } = useTranslation();
   const classes = useStyles();
-
-  const refreshPage = () => {
-    window.location.reload();
-  };
 
   return (
     <Grid
@@ -89,5 +89,3 @@ const BackendErrorMessage = (props) => {
     </Grid>
   );
 };
-
-export default withRouter(BackendErrorMessage);

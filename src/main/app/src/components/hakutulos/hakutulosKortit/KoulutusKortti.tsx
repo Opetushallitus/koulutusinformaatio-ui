@@ -4,7 +4,6 @@ import { SchoolOutlined, ExtensionOutlined, TimelapseOutlined } from '@material-
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
-import { educationTypeColorCode } from '#/src/colors';
 import { EntiteettiKortti } from '#/src/components/common/EntiteettiKortti';
 import { KoulutusKorttiLogo } from '#/src/components/common/KorttiLogo';
 import { localize } from '#/src/tools/localization';
@@ -15,7 +14,7 @@ type Props = {
   koulutus: {
     oid: string;
     kuvaus: Translateable;
-    koulutustyyppi: keyof typeof educationTypeColorCode;
+    koulutustyyppi: string;
     tutkintonimikkeet: Array<Translateable>;
     teemakuva?: string;
   };

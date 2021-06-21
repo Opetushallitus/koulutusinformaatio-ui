@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 type IconText = [JSX.Element | string, ((...props: any) => JSX.Element) | undefined];
 
 type Props = {
-  koulutustyyppi?: keyof typeof educationTypeColorCode;
+  koulutustyyppi?: string;
   to: string;
   preHeader?: string;
   header: string;
@@ -92,7 +92,7 @@ export const EntiteettiKortti = ({
             spacing={isSmallOrBigger ? 3 : 0}
             direction="column"
             xs={12}
-            sm={9}>
+            sm>
             <Grid
               item
               container
@@ -123,18 +123,15 @@ export const EntiteettiKortti = ({
               </Grid>
             </Hidden>
 
-            {/* TODO: flex-flow row */}
             <Grid item container direction="row" style={{ marginTop: 12 }}>
               {iconTexts.map(([content, IconComponent], i) => (
                 <Grid item container sm xs={12} key={`header-icon-text-${i}`}>
-                  <Typography
-                    style={{ display: 'flex', whiteSpace: 'nowrap', marginRight: '8px' }}>
+                  <Typography style={{ display: 'flex', marginRight: '8px' }}>
                     {IconComponent && <IconComponent style={{ marginRight: '8px' }} />}
                     {content}
                   </Typography>
                 </Grid>
               ))}
-              {}
             </Grid>
           </Grid>
 
