@@ -68,6 +68,7 @@ const SuositusKoulutusCard = (props) => {
           height="170"
           image={teemakuva || defaultTeemakuva}
           title={koulutusName}
+          role="img"
         />
         <CardContent>
           <Typography className={classes.h4} variant="h4" gutterBottom>

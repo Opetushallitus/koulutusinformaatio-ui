@@ -105,6 +105,7 @@ const Result = withStyles({
             image={assetUrl || koulutusPlaceholderImg}
             title={image.description || image.name || t('sisaltohaku.paikanpitäjä')}
             aria-label={image.description || image.name || t('sisaltohaku.paikanpitäjä')}
+            role="img"
           />
         </ButtonBase>
       </TulosPanel>

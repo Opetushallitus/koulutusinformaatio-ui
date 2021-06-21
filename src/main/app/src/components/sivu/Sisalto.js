@@ -58,6 +58,7 @@ const Sisalto = ({ content, alwaysFullWidth, excludeMedia }) => {
             <CardMedia
               className={classes.media}
               image={assetUrl(url)}
+              role="img"
               title={a ? a.name : alt}
               aria-label={a ? a.description : alt}
             />
