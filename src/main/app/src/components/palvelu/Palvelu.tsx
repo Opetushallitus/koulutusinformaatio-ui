@@ -1,12 +1,14 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core';
-import Avatar from '@material-ui/core/Avatar';
-import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import Grid from '@material-ui/core/Grid';
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  Grid,
+  makeStyles,
+} from '@material-ui/core';
 import clsx from 'clsx';
 import Markdown from 'markdown-to-jsx';
 import { useTranslation } from 'react-i18next';

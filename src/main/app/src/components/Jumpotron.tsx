@@ -16,7 +16,7 @@ import { theme } from '../theme';
 import { Hakupalkki } from './haku/Hakupalkki';
 import { ReactiveBorder } from './ReactiveBorder';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   callToAction: {
     backgroundImage: `url(${Image})`,
     backgroundRepeat: 'no-repeat',

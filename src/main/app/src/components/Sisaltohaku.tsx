@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import {
   Button,
@@ -18,6 +18,7 @@ import _ from 'lodash';
 import MuiFlatPagination from 'material-ui-flat-pagination';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
+// @ts-ignore no types
 import parse from 'url-parse';
 
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
@@ -26,7 +27,7 @@ import { useContentful } from '#/src/hooks';
 import koulutusPlaceholderImg from '../assets/images/Opolkuhts.png';
 import { colors } from '../colors';
 import Murupolku from './common/Murupolku';
-import Preview from './Preview';
+import { Preview } from './Preview';
 import { ReactiveBorder } from './ReactiveBorder';
 
 const useStyles = makeStyles({
@@ -66,6 +67,15 @@ const TulosPanel = withStyles({
   },
 })(Card);
 
+type ResultProps = {
+  id: string;
+  url: string;
+  image: { name: string; description: string };
+  sivu: { name: string; description: string; content: string; sideContent: string };
+  assetUrl: string;
+  classes: Record<string, string>;
+};
+
 const Result = withStyles({
   root: {
     padding: '15px',
@@ -84,7 +94,7 @@ const Result = withStyles({
     flex: '0 1 auto',
     alignSelf: 'flex-start',
   },
-})(({ id, url, image, sivu, classes, assetUrl }) => {
+})(({ id, url, image, sivu, classes, assetUrl }: ResultProps) => {
   const { t } = useTranslation();
 
   return (
@@ -113,8 +123,8 @@ const Result = withStyles({
   );
 });
 
-const PAGESIZE = 50;
-const asKeywords = (s) => s.toLowerCase().split(/[ ,]+/);
+const PAGESIZE = 10;
+const asKeywords = (s: string) => s.toLowerCase().split(/[ ,]+/);
 
 export const Sisaltohaku = () => {
   const { data, forwardTo, assetUrl } = useContentful();
@@ -125,46 +135,45 @@ export const Sisaltohaku = () => {
 
   const { sivu, uutinen } = data;
   const index = Object.entries(sivu)
-    .filter(([key, { id }]) => key === id)
-    .map(([, { id, sideContent, content }]) => {
+    .filter(([key, { id }]: any) => key === id)
+    .map(([ignored, { id, sideContent, content }]: any) => {
       return {
         id: id,
         content: (content + (sideContent || '')).toLowerCase(),
       };
     });
-  const fetchResults = (search) => {
-    const keywords = asKeywords(search);
-    if (!_.isEmpty(keywords)) {
-      return index.filter(({ content }) => keywords.find((kw) => content.includes(kw)));
-    } else {
-      return [];
-    }
-  };
+  const fetchResults = useCallback(
+    (input) => {
+      const keywords = asKeywords(input);
+      if (!_.isEmpty(keywords)) {
+        return index.filter(({ content }) => keywords.find((kw) => content.includes(kw)));
+      } else {
+        return [];
+      }
+    },
+    [index]
+  );
   const hakusana = _.trim((parse(location.search, true).query || {}).hakusana);
-  const [state, setState] = useState({
-    currentOffset: undefined,
-    search: hakusana,
-    results: fetchResults(hakusana),
-  });
-  const doSearch = (event) => {
-    history.push(`/${i18n.language}/sisaltohaku/?hakusana=${_.trim(state.search)}`);
-    event && event.preventDefault();
-    setState({
-      ...state,
-      results: fetchResults(state.search),
-      currentOffset: undefined,
-    });
-  };
-  const activeSearch = hakusana !== '';
-  useEffect(() => {
-    doSearch(null);
-  }, [data.loading]); /* eslint-disable-line */
 
-  const pagination = (state.results || []).length > PAGESIZE;
-  const paginate = () => {
-    const offset = state.currentOffset || 0;
-    return pagination ? state.results.slice(offset, PAGESIZE + offset) : state.results;
-  };
+  const [offset, setOffset] = useState(0);
+  const [search, setSearch] = useState(hakusana);
+  const [results, setResults] = useState(fetchResults(hakusana));
+
+  const doSearch = useCallback(
+    (event) => {
+      event?.preventDefault();
+      history.push(`/${i18n.language}/sisaltohaku/?hakusana=${_.trim(search)}`);
+      setOffset(0);
+      setResults(fetchResults(search));
+    },
+    [fetchResults, i18n, history, search]
+  );
+
+  const activeSearch = hakusana !== '';
+  const pagination = (results || []).length > PAGESIZE;
+  const paginate = () =>
+    pagination ? results.slice(offset, PAGESIZE + offset) : results;
+
   return (
     <ReactiveBorder>
       <Grid
@@ -185,9 +194,9 @@ export const Sisaltohaku = () => {
             className={classes.paper}>
             <InputBase
               className={classes.input}
-              defaultValue={state.search}
+              defaultValue={search}
               onKeyPress={(event) => event.key === 'Enter' && doSearch(event)}
-              onChange={({ target }) => setState({ ...state, search: target.value })}
+              onChange={({ target }) => setSearch(target.value)}
               placeholder={t('sidebar.etsi-tietoa-opintopolusta')}
               inputProps={{
                 'aria-label': t('sidebar.etsi-tietoa-opintopolusta'),
@@ -203,7 +212,7 @@ export const Sisaltohaku = () => {
             </Button>
           </Paper>
         </Grid>
-        {activeSearch && _.isEmpty(state.results) ? (
+        {activeSearch && _.isEmpty(results) ? (
           data.loading ? null : (
             <React.Fragment>
               <Grid item xs={12}>
@@ -227,23 +236,21 @@ export const Sisaltohaku = () => {
                 <Result
                   id={id}
                   key={id}
-                  url={forwardTo(s.id)}
+                  url={forwardTo(s.id)!}
                   sivu={s}
                   assetUrl={assetUrl(image.url)}
                   image={image}
                 />
               );
             })}
-            {pagination ? (
+            {pagination && (
               <MuiFlatPagination
                 limit={PAGESIZE}
-                offset={state.currentOffset}
-                total={state.results.length}
-                onClick={(e, offset, page) =>
-                  setState({ ...state, currentOffset: offset })
-                }
+                offset={offset}
+                total={results.length}
+                onClick={(e, newOffset) => setOffset(newOffset)}
               />
-            ) : null}
+            )}
           </>
         )}
       </Grid>
