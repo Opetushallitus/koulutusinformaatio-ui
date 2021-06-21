@@ -22,6 +22,7 @@ const TeemakuvaImage = ({ imgUrl, altText }) => {
         component="img"
         className={classes.media}
         image={imgUrl || DefaultHeroImage}
+        role="img"
         title={altText}
         alt={altText}
       />

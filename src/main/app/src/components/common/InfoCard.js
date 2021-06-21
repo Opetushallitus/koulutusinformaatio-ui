@@ -36,7 +36,12 @@ const InfoCard = (props) => {
   return (
     <Card className={classes.card}>
       {image ? (
-        <CardMedia className={classes.media} image={image.url} title={image.title} />
+        <CardMedia
+          role="img"
+          className={classes.media}
+          image={image.url}
+          title={image.title}
+        />
       ) : null}
       <CardContent className={classes.content}>
         {title ? (

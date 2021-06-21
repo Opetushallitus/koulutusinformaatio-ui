@@ -73,6 +73,7 @@ const Uutinen = ({ id, history }) => {
         <CardMedia
           className={classes.media}
           image={imgUrl(uutinen)}
+          role="img"
           title={uutinen.name}
         />
         <CardContent>

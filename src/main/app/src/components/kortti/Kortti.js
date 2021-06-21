@@ -70,6 +70,7 @@ const Kortti = ({ id }) => {
         <CardMedia
           className={classes.media}
           image={getImgUrl(kortti)}
+          role="img"
           title={kortti.name}
         />
         <CardContent>
