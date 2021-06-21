@@ -74,6 +74,7 @@ export const EntiteettiKortti = ({
   return (
     <LocalizedLink underline="none" component={RouterLink} to={to}>
       <Paper
+        data-cy={header}
         classes={{ root: classes.paperRoot }}
         style={{
           borderTop: `5px solid ${educationTypeColorCode[koulutustyyppi]}`,
