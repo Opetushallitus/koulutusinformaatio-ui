@@ -17,6 +17,7 @@ export const useLanguageState = () => {
 
   const setLanguage = useCallback(
     (newLang) => {
+      document.documentElement.setAttribute('lang', newLang || 'fi');
       if (lng && newLang !== lng) {
         const newPath = location.pathname.replace(new RegExp(`^/${lng}`), `/${newLang}`);
         history.push({
