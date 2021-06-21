@@ -32,7 +32,7 @@ const TableOfContents = (props) => {
     return (
       <Link
         className={classes.link}
-        aria-label={t('ankkurilinkki') + value}
+        aria-label={t('ankkurilinkki') + ' ' + value}
         to={`#${anchor}`}
         scroll={(el) => el.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
         {value}
