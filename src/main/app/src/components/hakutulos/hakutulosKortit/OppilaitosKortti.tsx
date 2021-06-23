@@ -38,14 +38,14 @@ export const OppilaitosKortti = ({ oppilaitos }: Props) => {
   return (
     <EntiteettiKortti
       to={`/oppilaitos/${oppilaitos?.oid}`}
+      logoElement={<OppilaitosKorttiLogo image={oppilaitos?.logo} alt={logoAltText} />}
       header={localize(oppilaitos)}
       kuvaus={kuvaus}
       wrapDirection="column-reverse"
       iconTexts={[
         [koulutusOhjelmatStr, SchoolOutlined],
         [paikkakunnatStr, PublicOutlined],
-      ]}>
-      <OppilaitosKorttiLogo image={oppilaitos?.logo} alt={logoAltText} />
-    </EntiteettiKortti>
+      ]}
+    />
   );
 };

@@ -11,6 +11,7 @@ import { useHistory } from 'react-router-dom';
 
 import { colors } from '#/src/colors';
 import { useContentful } from '#/src/hooks';
+import { formatDateString } from '#/src/tools/utils';
 
 const useStyles = makeStyles({
   card: {
@@ -43,8 +44,6 @@ const useStyles = makeStyles({
   },
 });
 
-const leadingZero = (d) => ('0' + d).slice(-2);
-
 export const Uutinen = ({ id }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
@@ -68,7 +67,6 @@ export const Uutinen = ({ id }) => {
     history.push(`/${i18n.language}${forwardTo(id)}`);
   };
   const timestamp = uutinen.updated || uutinen.created;
-  const date = timestamp ? new Date(Date.parse(timestamp)) : null;
 
   return (
     <Grid item xs={12} sm={6} md={4} onClick={() => link && forwardToPage(link)}>
@@ -85,11 +83,7 @@ export const Uutinen = ({ id }) => {
               {t('uutinen.kategoria')}
             </Grid>
             <Grid item xs={6} className={classes.pvm}>
-              {date
-                ? `${leadingZero(date.getDate())}.${leadingZero(
-                    date.getMonth() + 1
-                  )}.${date.getFullYear()}`
-                : null}
+              {timestamp && formatDateString(timestamp)}
             </Grid>
           </Grid>
           <div className={classes.content}>

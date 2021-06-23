@@ -64,6 +64,14 @@ export const TarjontaList = ({ oid, isOppilaitosOsa }: Props) => {
                   <EntiteettiKortti
                     koulutustyyppi={toteutus?.tyyppi}
                     to={`/toteutus/${toteutus?.toteutusOid}`}
+                    logoElement={
+                      <OppilaitosKorttiLogo
+                        image={toteutus?.kuva}
+                        alt={`${toteutus?.toteutusName} ${t(
+                          'koulutus.koulutuksen-teemakuva'
+                        )}`}
+                      />
+                    }
                     header={toteutus?.toteutusName}
                     kuvaus={toteutus?.description}
                     wrapDirection="column-reverse"
@@ -71,14 +79,8 @@ export const TarjontaList = ({ oid, isOppilaitosOsa }: Props) => {
                       [toteutus?.locations, PublicIcon],
                       [toteutus?.opetustapa, HourglassEmptyIcon],
                       [toteutus?.price, EuroSymbolIcon],
-                    ]}>
-                    <OppilaitosKorttiLogo
-                      image={toteutus?.kuva}
-                      alt={`${toteutus?.toteutusName} ${t(
-                        'koulutus.koulutuksen-teemakuva'
-                      )}`}
-                    />
-                  </EntiteettiKortti>
+                    ]}
+                  />
                 </Grid>
               ))}
             </Grid>

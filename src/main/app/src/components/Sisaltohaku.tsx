@@ -7,7 +7,6 @@ import {
   CardContent,
   makeStyles,
   Paper,
-  ButtonBase,
   CardMedia,
   InputBase,
   Typography,
@@ -17,9 +16,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import _ from 'lodash';
 import MuiFlatPagination from 'material-ui-flat-pagination';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
-// @ts-ignore no types
-import parse from 'url-parse';
+import { useHistory } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import { useContentful } from '#/src/hooks';
@@ -27,6 +25,7 @@ import { useContentful } from '#/src/hooks';
 import koulutusPlaceholderImg from '../assets/images/Opolkuhts.png';
 import { colors } from '../colors';
 import Murupolku from './common/Murupolku';
+import { useUrlParams } from './hakutulos/UseUrlParams';
 import { Preview } from './Preview';
 import { ReactiveBorder } from './ReactiveBorder';
 
@@ -80,8 +79,7 @@ const Result = withStyles({
   root: {
     padding: '15px',
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   image: {
     flex: '0 0 auto',
@@ -99,8 +97,8 @@ const Result = withStyles({
 
   return (
     <Grid item xs={12} key={id}>
-      <TulosPanel>
-        <ButtonBase component={LocalizedLink} className={classes.root} to={url}>
+      <LocalizedLink underline="none" component={RouterLink} to={url}>
+        <TulosPanel className={classes.root}>
           <CardContent className={classes.content}>
             <Typography component="h4" variant="h4">
               {sivu.name}
@@ -117,8 +115,8 @@ const Result = withStyles({
             aria-label={image.description || image.name || t('sisaltohaku.paikanpitäjä')}
             role="img"
           />
-        </ButtonBase>
-      </TulosPanel>
+        </TulosPanel>
+      </LocalizedLink>
     </Grid>
   );
 });
@@ -131,7 +129,6 @@ export const Sisaltohaku = () => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
   const history = useHistory();
-  const location = useLocation();
 
   const { sivu, uutinen } = data;
   const index = Object.entries(sivu)
@@ -153,7 +150,8 @@ export const Sisaltohaku = () => {
     },
     [index]
   );
-  const hakusana = _.trim((parse(location.search, true).query || {}).hakusana);
+  const { search: urlSearch } = useUrlParams();
+  const hakusana = _.trim(urlSearch.hakusana as string);
 
   const [offset, setOffset] = useState(0);
   const [search, setSearch] = useState(hakusana);
@@ -162,7 +160,7 @@ export const Sisaltohaku = () => {
   const doSearch = useCallback(
     (event) => {
       event?.preventDefault();
-      history.push(`/${i18n.language}/sisaltohaku/?hakusana=${_.trim(search)}`);
+      history.push(`/${i18n.language}/sisaltohaku/?hakusana=${search}`);
       setOffset(0);
       setResults(fetchResults(search));
     },
@@ -196,7 +194,7 @@ export const Sisaltohaku = () => {
               className={classes.input}
               defaultValue={search}
               onKeyPress={(event) => event.key === 'Enter' && doSearch(event)}
-              onChange={({ target }) => setSearch(target.value)}
+              onChange={({ target }) => setSearch(_.trim(target.value))}
               placeholder={t('sidebar.etsi-tietoa-opintopolusta')}
               inputProps={{
                 'aria-label': t('sidebar.etsi-tietoa-opintopolusta'),

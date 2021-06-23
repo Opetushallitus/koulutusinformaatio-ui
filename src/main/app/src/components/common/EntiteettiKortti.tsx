@@ -50,7 +50,7 @@ type Props = {
   header: string;
   kuvaus: string;
   iconTexts: Array<IconText>;
-  children?: React.ReactNode;
+  logoElement?: React.ReactNode;
   wrapDirection?: GridDirection;
 };
 
@@ -61,7 +61,7 @@ export const EntiteettiKortti = ({
   kuvaus: kuvausProp,
   iconTexts,
   to,
-  children,
+  logoElement,
   wrapDirection = 'column',
 }: Props) => {
   const { t } = useTranslation();
@@ -141,7 +141,7 @@ export const EntiteettiKortti = ({
             xs={12}
             sm={3}
             justify={isSmallOrBigger ? 'flex-end' : 'flex-start'}>
-            {children}
+            {logoElement}
           </Grid>
         </Grid>
       </Paper>

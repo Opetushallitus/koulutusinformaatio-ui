@@ -248,6 +248,14 @@ export const ToteutusList = ({ oid }: Props) => {
               <EntiteettiKortti
                 koulutustyyppi={toteutus.koulutustyyppi}
                 to={`/toteutus/${toteutus.toteutusOid}`}
+                logoElement={
+                  <OppilaitosKorttiLogo
+                    image={toteutus.kuva}
+                    alt={`${localize(toteutus.toteutusNimi)} ${t(
+                      'koulutus.koulutuksen-teemakuva'
+                    )}`}
+                  />
+                }
                 preHeader={localize(toteutus)}
                 header={localize(toteutus.toteutusNimi)}
                 kuvaus={localize(toteutus.kuvaus)}
@@ -266,14 +274,8 @@ export const ToteutusList = ({ oid }: Props) => {
                     <TextWithBackground>{t('haku.hakukaynnissa')}</TextWithBackground>,
                     undefined,
                   ],
-                ]}>
-                <OppilaitosKorttiLogo
-                  image={toteutus.kuva}
-                  alt={`${localize(toteutus.toteutusNimi)} ${t(
-                    'koulutus.koulutuksen-teemakuva'
-                  )}`}
-                />
-              </EntiteettiKortti>
+                ]}
+              />
             </Grid>
           ))}
         </Grid>

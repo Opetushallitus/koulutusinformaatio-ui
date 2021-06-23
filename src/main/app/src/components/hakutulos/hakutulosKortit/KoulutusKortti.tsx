@@ -45,6 +45,7 @@ export const KoulutusKortti = ({ koulutus }: Props) => {
     <EntiteettiKortti
       koulutustyyppi={koulutus?.koulutustyyppi}
       to={`/koulutus/${koulutus?.oid}`}
+      logoElement={<KoulutusKorttiLogo image={koulutus?.teemakuva} alt={logoAltText} />}
       header={localize(koulutus)}
       kuvaus={kuvaus}
       iconTexts={[
@@ -53,8 +54,7 @@ export const KoulutusKortti = ({ koulutus }: Props) => {
           isOsaamisalaOrTutkinnonOsa ? ExtensionOutlined : SchoolOutlined,
         ],
         [getLocalizedOpintojenLaajuus(koulutus), TimelapseOutlined],
-      ]}>
-      <KoulutusKorttiLogo image={koulutus?.teemakuva} alt={logoAltText} />
-    </EntiteettiKortti>
+      ]}
+    />
   );
 };
