@@ -188,9 +188,7 @@ export const Liitteet = ({ liitteet, hakukohde, organisaatioOid }: Props) => {
                     t
                   )!
                 }
-                toimitusaika={
-                  yhteinenToimitusaika || formatDateString(liite.toimitusaika)
-                }
+                toimitusaika={yhteinenToimitusaika || liite.toimitusaika}
               />
             ))
           )}
