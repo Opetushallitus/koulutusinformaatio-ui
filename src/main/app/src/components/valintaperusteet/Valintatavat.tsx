@@ -14,7 +14,7 @@ import { Valintatapa } from './ValintaperusteTypes';
 
 type Props = { hakukohteenKynnysehto: Translateable; valintatavat: Array<Valintatapa> };
 
-export const Valintatavat = ({ hakukohteenKynnysehto, valintatavat }: Props) => {
+export const Valintatavat = ({ hakukohteenKynnysehto, valintatavat = [] }: Props) => {
   const { t } = useTranslation();
 
   return (
