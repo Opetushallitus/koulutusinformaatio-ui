@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => {
   };
 
   return {
-    korttiLogo: {
+    oppilaitosKorttiLogo: {
       [theme.breakpoints.up('xs')]: {
         maxWidth: theme.spacing(7),
         maxHeight: theme.spacing(7),
@@ -57,5 +57,11 @@ export const KoulutusKorttiLogo = ({ alt, image }: Props) => {
 
 export const OppilaitosKorttiLogo = ({ alt, image }: Props) => {
   const classes = useStyles();
-  return <img className={classes.korttiLogo} alt={alt} src={image || oppilaitos_img} />;
+  return (
+    <img
+      className={classes.oppilaitosKorttiLogo}
+      alt={alt}
+      src={image || oppilaitos_img}
+    />
+  );
 };

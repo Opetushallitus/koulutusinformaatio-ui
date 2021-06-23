@@ -8,6 +8,7 @@ import { colors } from '#/src/colors';
 const useStyles = makeStyles({
   textWithBackgroundBox: {
     backgroundColor: colors.lightGreenBg,
+    height: 'fit-content',
   },
   textWithBackgroundText: {
     textAlign: 'center',

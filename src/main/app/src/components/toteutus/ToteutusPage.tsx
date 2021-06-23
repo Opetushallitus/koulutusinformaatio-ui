@@ -13,12 +13,15 @@ import { HashLink } from 'react-router-hash-link';
 import { getToteutusOsaamisalaKuvaus } from '#/src/api/konfoApi';
 import { colors } from '#/src/colors';
 import { Accordion } from '#/src/components/common/Accordion';
+import ContentWrapper from '#/src/components/common/ContentWrapper';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
+import { OppilaitosKorttiLogo } from '#/src/components/common/KorttiLogo';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 import Murupolku from '#/src/components/common/Murupolku';
 import Spacer from '#/src/components/common/Spacer';
 import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
+import { TextWithBackground } from '#/src/components/common/TextWithBackground';
 import { useUrlParams } from '#/src/components/hakutulos/UseUrlParams';
 import { getHakuParams, getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
@@ -36,8 +39,6 @@ import { getLanguage, localize } from '#/src/tools/localization';
 import { getLocalizedOpintojenLaajuus, sanitizedHTMLParser } from '#/src/tools/utils';
 import { Toteutus } from '#/src/types/ToteutusTypes';
 
-import ContentWrapper from '../common/ContentWrapper';
-import { TextWithBackground } from '../common/TextWithBackground';
 import { useOppilaitokset } from '../oppilaitos/hooks';
 import { hasYhteystiedot, Yhteystiedot } from '../oppilaitos/Yhteystiedot';
 import { HakuKaynnissaCard } from './HakuKaynnissaCard';
@@ -54,10 +55,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   root: { marginTop: '100px' },
-  img: {
-    maxWidth: '150px',
-    maxHeight: '120px',
-  },
 }));
 
 type AccordionProps = {
@@ -115,7 +112,6 @@ const useOsaamisalatPageData = ({ ePerusteId, requestParams }: OsaamisalatProps)
 // NOTE: In most cases there is only one oppilaitos per KOMOTO but there is no limit in data model
 const ToteutuksenYhteystiedot = ({ oids }: { oids: Array<string> }) => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const oppilaitokset = useOppilaitokset({
     isOppilaitosOsa: false,
     oids,
@@ -157,10 +153,9 @@ const ToteutuksenYhteystiedot = ({ oids }: { oids: Array<string> }) => {
                   direction="column"
                   alignItems="center">
                   {oppilaitos.logo && (
-                    <img
-                      className={classes.img}
-                      src={oppilaitos.logo}
+                    <OppilaitosKorttiLogo
                       alt={t('oppilaitos.oppilaitoksen-logo')}
+                      image={oppilaitos.logo}
                     />
                   )}
                   <LocalizedHTML data={oppilaitos.metadata.esittely} noMargin />

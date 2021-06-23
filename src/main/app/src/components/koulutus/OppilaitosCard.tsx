@@ -5,8 +5,8 @@ import PublicIcon from '@material-ui/icons/Public';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 
-import OppilaitosLogo from '#/src/assets/images/Opolkuhts.png';
 import { educationTypeColorCode } from '#/src/colors';
+import { OppilaitosKorttiLogo } from '#/src/components/common/KorttiLogo';
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 
 type StylesProps = Pick<Props, 'tyyppi'>;
@@ -27,11 +27,6 @@ const useStyles = makeStyles(() => ({
   iconContainer: {
     display: 'flex',
     alignItems: 'center',
-  },
-  img: {
-    width: '100%',
-    height: '130px',
-    objectFit: 'contain',
   },
   heading: {
     fontWeight: 600,
@@ -71,10 +66,9 @@ export const OppilaitosCard = ({
             spacing={3}
             className={classes.content}>
             <Grid item>
-              <img
-                className={classes.img}
+              <OppilaitosKorttiLogo
                 alt={t('oppilaitos.oppilaitoksen-logo')}
-                src={image || OppilaitosLogo}
+                image={image}
               />
             </Grid>
             <Grid item className={classes.heading}>
