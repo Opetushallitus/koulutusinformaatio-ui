@@ -1,13 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import {
-  Box,
-  Grid,
-  Link,
-  LinkBaseProps,
-  makeStyles,
-  Typography,
-} from '@material-ui/core';
+import { Box, Grid, Link, makeStyles, Typography } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
@@ -40,9 +33,9 @@ import {
 } from '#/src/store/reducers/toteutusSlice';
 import { getLanguage, localize } from '#/src/tools/localization';
 import { getLocalizedOpintojenLaajuus, sanitizedHTMLParser } from '#/src/tools/utils';
-import { Translateable } from '#/src/types/common';
-import { Lukiodiplomi, Toteutus } from '#/src/types/ToteutusTypes';
+import { Toteutus } from '#/src/types/ToteutusTypes';
 
+import { Diplomit } from './Diplomit';
 import { HakuKaynnissaCard } from './HakuKaynnissaCard';
 import { Osaamisalat } from './Osaamisalat';
 import { ToteutuksenYhteystiedot } from './ToteutuksenYhteystiedot';
@@ -53,71 +46,7 @@ import { ToteutusInfoGrid } from './ToteutusInfoGrid';
 
 const useStyles = makeStyles({
   root: { marginTop: '100px' },
-  contentHeader: { marginBottom: '16px' },
-  externalLinkIcon: { verticalAlign: 'middle', marginRight: '8px' },
 });
-
-const ListContent = ({
-  leadParagraph,
-  items,
-}: {
-  leadParagraph?: Translateable;
-  items: Array<Translateable>;
-}) => {
-  return items?.length > 0 ? (
-    <>
-      {leadParagraph && <Typography>{localize(leadParagraph)}</Typography>}
-      <ul>
-        {_.map(items, (item, i) => (
-          <li key={i}>{localize(item)}</li>
-        ))}
-      </ul>
-    </>
-  ) : null;
-};
-
-const ExternalLink = ({ children, ...props }: LinkBaseProps) => {
-  const classes = useStyles();
-  return (
-    <Link {...props}>
-      <OpenInNewIcon className={classes.externalLinkIcon} />
-      {children}
-    </Link>
-  );
-};
-
-const DiplomiContent = ({ diplomi }: { diplomi: Lukiodiplomi }) => {
-  const { t } = useTranslation();
-  const classes = useStyles();
-  const linkki = localize(diplomi?.linkki);
-  const altTeksti = localize(diplomi?.linkinAltTeksti);
-  return (
-    <>
-      <Typography variant="h4" className={classes.contentHeader}>
-        {t('toteutus.yleiset-tavoitteet')}
-      </Typography>
-      <ListContent leadParagraph={diplomi?.tavoitteetKohde} items={diplomi.tavoitteet} />
-      <Typography variant="h4">{t('toteutus.keskeiset-sisällöt')}</Typography>
-      <ListContent items={diplomi?.sisallot} />
-      {!_.isEmpty(linkki) && (
-        <ExternalLink target="_blank" rel="noopener" href={linkki}>
-          {_.isEmpty(altTeksti) ? t('toteutus.lisätietoa') : altTeksti}
-        </ExternalLink>
-      )}
-    </>
-  );
-};
-
-const Diplomit = ({ diplomit }: { diplomit: Array<Lukiodiplomi> }) =>
-  diplomit?.length > 0 ? (
-    <AccordionWithTitle
-      titleTranslationKey="toteutus.lukiodiplomit"
-      data={diplomit.map((diplomi: any) => ({
-        title: localize(diplomi?.koodi),
-        content: <DiplomiContent diplomi={diplomi} />,
-      }))}
-    />
-  ) : null;
 
 export const ToteutusPage = () => {
   const classes = useStyles();
