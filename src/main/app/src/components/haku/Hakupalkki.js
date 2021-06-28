@@ -8,7 +8,6 @@ import {
   makeStyles,
   Paper,
   Popover,
-  ThemeProvider,
   Tooltip,
   IconButton,
 } from '@material-ui/core';
@@ -34,7 +33,6 @@ import {
   searchAndMoveToHaku,
 } from '#/src/store/reducers/hakutulosSlice';
 import { getHakupalkkiProps } from '#/src/store/reducers/hakutulosSliceSelector';
-import { theme } from '#/src/theme';
 
 import { MobileFiltersOnTopMenu } from '../hakutulos/MobileFiltersOnTopMenu';
 import { useUrlParams } from '../hakutulos/UseUrlParams';
@@ -195,120 +193,118 @@ export const Hakupalkki = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box display="flex" flexDirection="column" alignItems="flex-end" flexGrow={1}>
-        <Paper
-          component="form"
-          onSubmit={doSearch}
-          className={classes.inputRoot}
-          elevation={4}>
-          <Tooltip
-            placement="bottom-start"
-            open={!isKeywordValid}
-            title={t('haku.syota-ainakin-kolme-merkkia')}>
-            <InputBase
-              defaultValue={isAtEtusivu ? '' : writtenKeyword}
-              className={classes.input}
-              onKeyPress={(event) => {
-                if (event.key === 'Enter' && isKeywordValid) {
-                  doSearch(event);
-                }
-              }}
-              onChange={(event) => {
-                setWrittenKeyword(event.target.value);
-              }}
-              type="search"
-              placeholder={t('haku.kehoite')}
-              inputProps={{
-                'aria-label': t('haku.kehoite'),
-              }}
-            />
-          </Tooltip>
-          {isAtEtusivu && (
-            <Hidden smDown>
-              <Box component="div" className={classes.box}>
-                <Divider orientation="vertical" />
-                <Button
-                  aria-describedby={id}
-                  endIcon={
-                    !isPopoverOpen || !_.isEmpty(koulutusFilters) ? (
-                      <ExpandIcon />
-                    ) : (
-                      <CircularProgress size={25} color="inherit" />
-                    )
-                  }
-                  onClick={handleDesktopBtnClick}
-                  className={classes.expandButton}
-                  aria-label={t('haku.rajaa')}>
-                  {t('haku.rajaa')}
-                </Button>
-              </Box>
-            </Hidden>
-          )}
-          <Hidden smDown>
-            <Button
-              startIcon={<SearchOutlined />}
-              disabled={!isKeywordValid}
-              type="submit"
-              variant="contained"
-              color="secondary"
-              className={classes.searchButton}
-              aria-label={t('haku.etsi')}>
-              {t('haku.etsi')}
-            </Button>
-          </Hidden>
-          <Hidden mdUp>
-            <IconButton
-              disabled={!isKeywordValid}
-              type="submit"
-              className={classes.mobileIconButton}
-              aria-label={t('haku.etsi')}>
-              <SearchOutlined />
-            </IconButton>
-          </Hidden>
-        </Paper>
-        {!_.isEmpty(koulutusFilters) && (
-          <>
-            <Hidden smDown>
-              <Popover
-                classes={{ paper: classes.popoverPaper, root: classes.popoverRoot }}
-                id={id}
-                open={isPopoverOpen}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                PaperProps={{
-                  elevation: 0,
-                }}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'center',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'center',
-                }}>
-                <Box component="div" className={classes.arrowBox}>
-                  <HakupalkkiFilters />
-                </Box>
-              </Popover>
-            </Hidden>
-          </>
-        )}
+    <Box display="flex" flexDirection="column" alignItems="flex-end" flexGrow={1}>
+      <Paper
+        component="form"
+        onSubmit={doSearch}
+        className={classes.inputRoot}
+        elevation={4}>
+        <Tooltip
+          placement="bottom-start"
+          open={!isKeywordValid}
+          title={t('haku.syota-ainakin-kolme-merkkia')}>
+          <InputBase
+            defaultValue={isAtEtusivu ? '' : writtenKeyword}
+            className={classes.input}
+            onKeyPress={(event) => {
+              if (event.key === 'Enter' && isKeywordValid) {
+                doSearch(event);
+              }
+            }}
+            onChange={(event) => {
+              setWrittenKeyword(event.target.value);
+            }}
+            type="search"
+            placeholder={t('haku.kehoite')}
+            inputProps={{
+              'aria-label': t('haku.kehoite'),
+            }}
+          />
+        </Tooltip>
         {isAtEtusivu && (
-          <Box
-            display="flex"
-            flexDirection="row-reverse"
-            width="100%"
-            justifyContent="space-between">
-            <LocalizedLink component={RouterLink} to={`/haku/`} className={classes.link}>
-              {t('jumpotron.naytakaikki')}
-            </LocalizedLink>
-            <Hidden mdUp>
-              <MobileFiltersOnTopMenu isFrontPage />
-            </Hidden>
-          </Box>
+          <Hidden smDown>
+            <Box component="div" className={classes.box}>
+              <Divider orientation="vertical" />
+              <Button
+                aria-describedby={id}
+                endIcon={
+                  !isPopoverOpen || !_.isEmpty(koulutusFilters) ? (
+                    <ExpandIcon />
+                  ) : (
+                    <CircularProgress size={25} color="inherit" />
+                  )
+                }
+                onClick={handleDesktopBtnClick}
+                className={classes.expandButton}
+                aria-label={t('haku.rajaa')}>
+                {t('haku.rajaa')}
+              </Button>
+            </Box>
+          </Hidden>
         )}
-      </Box>
-    </ThemeProvider>
+        <Hidden smDown>
+          <Button
+            startIcon={<SearchOutlined />}
+            disabled={!isKeywordValid}
+            type="submit"
+            variant="contained"
+            color="secondary"
+            className={classes.searchButton}
+            aria-label={t('haku.etsi')}>
+            {t('haku.etsi')}
+          </Button>
+        </Hidden>
+        <Hidden mdUp>
+          <IconButton
+            disabled={!isKeywordValid}
+            type="submit"
+            className={classes.mobileIconButton}
+            aria-label={t('haku.etsi')}>
+            <SearchOutlined />
+          </IconButton>
+        </Hidden>
+      </Paper>
+      {!_.isEmpty(koulutusFilters) && (
+        <>
+          <Hidden smDown>
+            <Popover
+              classes={{ paper: classes.popoverPaper, root: classes.popoverRoot }}
+              id={id}
+              open={isPopoverOpen}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              PaperProps={{
+                elevation: 0,
+              }}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}>
+              <Box component="div" className={classes.arrowBox}>
+                <HakupalkkiFilters />
+              </Box>
+            </Popover>
+          </Hidden>
+        </>
+      )}
+      {isAtEtusivu && (
+        <Box
+          display="flex"
+          flexDirection="row-reverse"
+          width="100%"
+          justifyContent="space-between">
+          <LocalizedLink component={RouterLink} to={`/haku/`} className={classes.link}>
+            {t('jumpotron.naytakaikki')}
+          </LocalizedLink>
+          <Hidden mdUp>
+            <MobileFiltersOnTopMenu isFrontPage />
+          </Hidden>
+        </Box>
+      )}
+    </Box>
   );
 };

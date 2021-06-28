@@ -1,18 +1,10 @@
 import React from 'react';
 
-import {
-  Grid,
-  Card,
-  CardHeader,
-  CardContent,
-  makeStyles,
-  ThemeProvider,
-} from '@material-ui/core';
+import { Grid, Card, CardHeader, CardContent, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
 import Image from '../assets/images/o-EDUCATION-facebook.jpg';
 import { colors } from '../colors';
-import { theme } from '../theme';
 import { Hakupalkki } from './haku/Hakupalkki';
 import { ReactiveBorder } from './ReactiveBorder';
 
@@ -53,29 +45,27 @@ export const Jumpotron = () => {
   const classes = useStyles();
 
   return (
-    <ThemeProvider theme={theme}>
-      <div className={classes.callToAction}>
-        <Grid container direction="row" justify="flex-start" alignItems="center">
-          <Grid item xs={12} sm={12} md={10} lg={8}>
-            <ReactiveBorder>
-              <Card className={classes.jumpotron}>
-                <ReactiveBorder>
-                  <CardHeader
-                    disableTypography={true}
-                    title={<h1 className={classes.title}>{t('jumpotron.otsikko')}</h1>}
-                    subheader={
-                      <p className={classes.subheader}>{t('jumpotron.esittely')}</p>
-                    }
-                  />
-                  <CardContent className={classes.content}>
-                    <Hakupalkki />
-                  </CardContent>
-                </ReactiveBorder>
-              </Card>
-            </ReactiveBorder>
-          </Grid>
+    <div className={classes.callToAction}>
+      <Grid container direction="row" justify="flex-start" alignItems="center">
+        <Grid item xs={12} sm={12} md={10} lg={8}>
+          <ReactiveBorder>
+            <Card className={classes.jumpotron}>
+              <ReactiveBorder>
+                <CardHeader
+                  disableTypography={true}
+                  title={<h1 className={classes.title}>{t('jumpotron.otsikko')}</h1>}
+                  subheader={
+                    <p className={classes.subheader}>{t('jumpotron.esittely')}</p>
+                  }
+                />
+                <CardContent className={classes.content}>
+                  <Hakupalkki />
+                </CardContent>
+              </ReactiveBorder>
+            </Card>
+          </ReactiveBorder>
         </Grid>
-      </div>
-    </ThemeProvider>
+      </Grid>
+    </div>
   );
 };

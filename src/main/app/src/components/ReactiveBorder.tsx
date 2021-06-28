@@ -1,8 +1,6 @@
 import React from 'react';
 
-import { makeStyles, ThemeProvider } from '@material-ui/core';
-
-import { theme } from '#/src/theme';
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   spaceOnBorders: {
@@ -30,9 +28,5 @@ const useStyles = makeStyles((theme) => ({
 
 export const ReactiveBorder = ({ children }: { children: React.ReactNode }) => {
   const classes = useStyles();
-  return (
-    <ThemeProvider theme={theme}>
-      <div className={classes.spaceOnBorders}>{children}</div>
-    </ThemeProvider>
-  );
+  return <div className={classes.spaceOnBorders}>{children}</div>;
 };
