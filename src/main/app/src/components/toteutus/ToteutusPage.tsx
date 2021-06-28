@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 
 import { Box, Button, Grid, Link, makeStyles, Typography } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import clsx from 'clsx';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
@@ -12,7 +11,7 @@ import { HashLink } from 'react-router-hash-link';
 
 import { getToteutusOsaamisalaKuvaus } from '#/src/api/konfoApi';
 import { colors } from '#/src/colors';
-import { Accordion } from '#/src/components/common/Accordion';
+import { AccordionWithTitle } from '#/src/components/common/AccordionWithTitle';
 import ContentWrapper from '#/src/components/common/ContentWrapper';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import { OppilaitosKorttiLogo } from '#/src/components/common/KorttiLogo';
@@ -46,42 +45,9 @@ import { ToteutusHakuEiSahkoista } from './ToteutusHakuEiSahkoista';
 import { ToteutusHakukohteet } from './ToteutusHakukohteet';
 import { ToteutusHakuMuu } from './ToteutusHakuMuu';
 import { ToteutusInfoGrid } from './ToteutusInfoGrid';
-
 const useStyles = makeStyles((theme) => ({
-  accordion: {
-    width: '50%',
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
-    },
-  },
   root: { marginTop: '100px' },
 }));
-
-type AccordionProps = {
-  titleTranslationKey: string;
-  data: React.ComponentProps<typeof Accordion>['items'];
-};
-
-const AccordionWithTitle = ({ titleTranslationKey, data }: AccordionProps) => {
-  const classes = useStyles();
-  const { t } = useTranslation();
-  return (
-    <Box
-      className={clsx([classes.accordion, classes.root])}
-      display="flex"
-      flexDirection="column"
-      alignItems="center">
-      <Typography variant="h2">{t(titleTranslationKey)}</Typography>
-      <Spacer />
-      <Accordion
-        items={data}
-        ContentWrapper={({ children }) => (
-          <Typography component="div">{children}</Typography>
-        )}
-      />
-    </Box>
-  );
-};
 
 type OsaamisalatProps = {
   ePerusteId: string;
