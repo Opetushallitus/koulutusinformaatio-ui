@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { Box, Grid, Link, makeStyles, Typography } from '@material-ui/core';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -35,6 +34,7 @@ import { getLanguage, localize } from '#/src/tools/localization';
 import { getLocalizedOpintojenLaajuus, sanitizedHTMLParser } from '#/src/tools/utils';
 import { Toteutus } from '#/src/types/ToteutusTypes';
 
+import { ExternalLink } from '../common/ExternalLink';
 import { Diplomit } from './Diplomit';
 import { HakuKaynnissaCard } from './HakuKaynnissaCard';
 import { Osaamisalat } from './Osaamisalat';
@@ -253,19 +253,9 @@ export const ToteutusPage = () => {
                         </Grid>
                         {!_.isEmpty(yhteyshenkilo.wwwSivu) && (
                           <Grid item>
-                            <Link
-                              target="_blank"
-                              rel="noopener"
-                              href={localize(yhteyshenkilo.wwwSivu)}
-                              variant="body1">
-                              <Grid container direction="row" alignItems="center">
-                                {localize(yhteyshenkilo.wwwSivu)}
-                                <OpenInNewIcon
-                                  fontSize="small"
-                                  style={{ marginLeft: '5px' }}
-                                />
-                              </Grid>
-                            </Link>
+                            <ExternalLink href={localize(yhteyshenkilo.wwwSivu)}>
+                              {localize(yhteyshenkilo.wwwSivu)}
+                            </ExternalLink>
                           </Grid>
                         )}
                       </Grid>
