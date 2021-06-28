@@ -130,18 +130,15 @@ export const ToteutusPage = () => {
         <Typography style={{ marginTop: '20px' }} variant="h1">
           {localize(toteutus?.nimi)}
         </Typography>
-        <Grid
-          className={classes.root}
-          alignItems="center"
-          justify="center"
-          container
-          spacing={1}>
-          {asiasanat.map((asiasana, i) => (
-            <Grid item key={i}>
-              <TextWithBackground>{asiasana}</TextWithBackground>
-            </Grid>
-          ))}
-        </Grid>
+        {!_.isEmpty(asiasanat) && (
+          <Grid alignItems="center" justify="center" container spacing={1}>
+            {asiasanat.map((asiasana, i) => (
+              <Grid item key={i}>
+                <TextWithBackground>{asiasana}</TextWithBackground>
+              </Grid>
+            ))}
+          </Grid>
+        )}
         <Box mt={7}>
           <TeemakuvaImage
             imgUrl={toteutus?.teemakuva}
