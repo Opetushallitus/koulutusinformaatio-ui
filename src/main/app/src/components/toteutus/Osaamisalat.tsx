@@ -42,7 +42,10 @@ export const Osaamisalat = ({
 
   const osaamisalat = toteutus?.metadata?.osaamisalat;
 
-  const { data: osaamisalaKuvaukset = {} as any, isLoading } = useOsaamisalaKuvaukset({
+  const {
+    data: osaamisalaKuvaukset = [] as Array<any>,
+    isLoading,
+  } = useOsaamisalaKuvaukset({
     ePerusteId: koulutus?.ePerusteId,
     requestParams: {
       'koodi-urit': osaamisalat?.map((oa: any) => oa?.koodi?.koodiUri)?.join(','),
