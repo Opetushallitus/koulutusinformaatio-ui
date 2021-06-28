@@ -11,7 +11,7 @@ import { Translateable } from '#/src/types/common';
 import { Lukiodiplomi } from '#/src/types/ToteutusTypes';
 
 export const useStyles = makeStyles({
-  contentHeader: { marginBottom: '16px' },
+  contentHeader: { marginTop: '16px', marginBottom: '16px' },
 });
 
 const ListContent = ({
