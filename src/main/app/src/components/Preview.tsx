@@ -1,14 +1,16 @@
 import React from 'react';
 
+// @ts-ignore no types
 import removeMd from 'remove-markdown';
 
-const Preview = ({ markdown }) => {
+const AT_LEAST_AMOUNT = 200;
+
+export const Preview = ({ markdown }: { markdown: string }) => {
   const textAsSentences = removeMd(markdown).match(/[^.!?]+[.!?]+/g);
-  const atLeastLetters = 200;
   return (
     <p>
-      {textAsSentences.reduce((paragraph, sentence) => {
-        return paragraph.length < atLeastLetters &&
+      {textAsSentences.reduce((paragraph: string, sentence: string) => {
+        return paragraph.length < AT_LEAST_AMOUNT &&
           sentence[0].toUpperCase() === sentence[0]
           ? paragraph + sentence
           : paragraph;
@@ -16,5 +18,3 @@ const Preview = ({ markdown }) => {
     </p>
   );
 };
-
-export default Preview;

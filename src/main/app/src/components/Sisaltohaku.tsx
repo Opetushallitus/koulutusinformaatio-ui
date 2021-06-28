@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import {
   Button,
@@ -7,7 +7,6 @@ import {
   CardContent,
   makeStyles,
   Paper,
-  ButtonBase,
   CardMedia,
   InputBase,
   Typography,
@@ -17,8 +16,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import _ from 'lodash';
 import MuiFlatPagination from 'material-ui-flat-pagination';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router-dom';
-import parse from 'url-parse';
+import { useHistory } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import { useContentful } from '#/src/hooks';
@@ -26,7 +25,8 @@ import { useContentful } from '#/src/hooks';
 import koulutusPlaceholderImg from '../assets/images/Opolkuhts.png';
 import { colors } from '../colors';
 import Murupolku from './common/Murupolku';
-import Preview from './Preview';
+import { useUrlParams } from './hakutulos/UseUrlParams';
+import { Preview } from './Preview';
 import { ReactiveBorder } from './ReactiveBorder';
 
 const useStyles = makeStyles({
@@ -66,12 +66,20 @@ const TulosPanel = withStyles({
   },
 })(Card);
 
+type ResultProps = {
+  id: string;
+  url: string;
+  image: { name: string; description: string };
+  sivu: { name: string; description: string; content: string; sideContent: string };
+  assetUrl: string;
+  classes: Record<string, string>;
+};
+
 const Result = withStyles({
   root: {
     padding: '15px',
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   image: {
     flex: '0 0 auto',
@@ -84,13 +92,13 @@ const Result = withStyles({
     flex: '0 1 auto',
     alignSelf: 'flex-start',
   },
-})(({ id, url, image, sivu, classes, assetUrl }) => {
+})(({ id, url, image, sivu, classes, assetUrl }: ResultProps) => {
   const { t } = useTranslation();
 
   return (
     <Grid item xs={12} key={id}>
-      <TulosPanel>
-        <ButtonBase component={LocalizedLink} className={classes.root} to={url}>
+      <LocalizedLink underline="none" component={RouterLink} to={url}>
+        <TulosPanel className={classes.root}>
           <CardContent className={classes.content}>
             <Typography component="h4" variant="h4">
               {sivu.name}
@@ -107,63 +115,63 @@ const Result = withStyles({
             aria-label={image.description || image.name || t('sisaltohaku.paikanpitäjä')}
             role="img"
           />
-        </ButtonBase>
-      </TulosPanel>
+        </TulosPanel>
+      </LocalizedLink>
     </Grid>
   );
 });
 
-const Sisaltohaku = (props) => {
-  const pageSize = 50;
-  const asKeywords = (s) => s.toLowerCase().split(/[ ,]+/);
+const PAGESIZE = 10;
+const asKeywords = (s: string) => s.toLowerCase().split(/[ ,]+/);
+
+export const Sisaltohaku = () => {
   const { data, forwardTo, assetUrl } = useContentful();
-  const { sivu, uutinen } = data;
   const { t, i18n } = useTranslation();
   const classes = useStyles();
+  const history = useHistory();
 
+  const { sivu, uutinen } = data;
   const index = Object.entries(sivu)
-    .filter(([key, { id }]) => key === id)
-    .map(([, { id, sideContent, content }]) => {
+    .filter(([key, { id }]: any) => key === id)
+    .map(([ignored, { id, sideContent, content }]: any) => {
       return {
         id: id,
         content: (content + (sideContent || '')).toLowerCase(),
       };
     });
-  const fetchResults = (search) => {
-    const keywords = asKeywords(search);
-    if (!_.isEmpty(keywords)) {
-      return index.filter(({ content }) => {
-        return keywords.find((kw) => content.includes(kw));
-      });
-    } else {
-      return [];
-    }
-  };
-  const hakusana = _.trim((parse(props.location.search, true).query || {}).hakusana);
-  const [state, setState] = useState({
-    currentOffset: undefined,
-    search: hakusana,
-    results: fetchResults(hakusana),
-  });
-  const doSearch = (event) => {
-    props.history.push(`/${i18n.language}/sisaltohaku/?hakusana=${_.trim(state.search)}`);
-    event && event.preventDefault();
-    setState({
-      ...state,
-      results: fetchResults(state.search),
-      currentOffset: undefined,
-    });
-  };
-  const activeSearch = hakusana !== '';
-  useEffect(() => {
-    doSearch(null);
-  }, [data.loading]); /* eslint-disable-line */
+  const fetchResults = useCallback(
+    (input) => {
+      const keywords = asKeywords(input);
+      if (!_.isEmpty(keywords)) {
+        return index.filter(({ content }) => keywords.find((kw) => content.includes(kw)));
+      } else {
+        return [];
+      }
+    },
+    [index]
+  );
+  const { search: urlSearch } = useUrlParams();
+  const hakusana = _.trim(urlSearch.hakusana as string);
 
-  const pagination = (state.results || []).length > pageSize;
-  const paginate = () => {
-    const offset = state.currentOffset || 0;
-    return pagination ? state.results.slice(offset, pageSize + offset) : state.results;
-  };
+  const [offset, setOffset] = useState(0);
+  const [search, setSearch] = useState(hakusana);
+  const [results, setResults] = useState(fetchResults(hakusana));
+
+  const doSearch = useCallback(
+    (event) => {
+      event?.preventDefault();
+      history.push(`/${i18n.language}/sisaltohaku/?hakusana=${search}`);
+      setOffset(0);
+      setResults(fetchResults(search));
+    },
+    [fetchResults, i18n, history, search]
+  );
+
+  const activeSearch = hakusana !== '';
+  const pagination = (results || []).length > PAGESIZE;
+  const paginate = () =>
+    pagination ? results.slice(offset, PAGESIZE + offset) : results;
+
   return (
     <ReactiveBorder>
       <Grid
@@ -184,9 +192,9 @@ const Sisaltohaku = (props) => {
             className={classes.paper}>
             <InputBase
               className={classes.input}
-              defaultValue={state.search}
+              defaultValue={search}
               onKeyPress={(event) => event.key === 'Enter' && doSearch(event)}
-              onChange={({ target }) => setState({ ...state, search: target.value })}
+              onChange={({ target }) => setSearch(_.trim(target.value))}
               placeholder={t('sidebar.etsi-tietoa-opintopolusta')}
               inputProps={{
                 'aria-label': t('sidebar.etsi-tietoa-opintopolusta'),
@@ -202,7 +210,7 @@ const Sisaltohaku = (props) => {
             </Button>
           </Paper>
         </Grid>
-        {activeSearch && _.isEmpty(state.results) ? (
+        {activeSearch && _.isEmpty(results) ? (
           data.loading ? null : (
             <React.Fragment>
               <Grid item xs={12}>
@@ -226,28 +234,24 @@ const Sisaltohaku = (props) => {
                 <Result
                   id={id}
                   key={id}
-                  url={forwardTo(s.id)}
+                  url={forwardTo(s.id)!}
                   sivu={s}
                   assetUrl={assetUrl(image.url)}
                   image={image}
                 />
               );
             })}
-            {pagination ? (
+            {pagination && (
               <MuiFlatPagination
-                limit={pageSize}
-                offset={state.currentOffset}
-                total={state.results.length}
-                onClick={(e, offset, page) =>
-                  setState({ ...state, currentOffset: offset })
-                }
+                limit={PAGESIZE}
+                offset={offset}
+                total={results.length}
+                onClick={(e, newOffset) => setOffset(newOffset)}
               />
-            ) : null}
+            )}
           </>
         )}
       </Grid>
     </ReactiveBorder>
   );
 };
-
-export default withRouter(Sisaltohaku);

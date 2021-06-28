@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Typography, Grid } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import { withRouter } from 'react-router-dom';
 
 import { useContentful } from '#/src/hooks';
 
@@ -11,9 +10,12 @@ import { InfoGrid } from '../common/InfoGrid';
 import Tree from '../common/Tree';
 import Sisalto from './Sisalto';
 
+// TODO: Mikä tämä komponentti on? Kovakoodattuja käännöksiä, testitekstillä
+const testiTeksti = `Ammatillisia tutkintoja ovat ammatilliset perustutkinnot, ammattitutkinnot ja erikoisammattitutkinnot.  Tässä osiossa kerrotaan yleisesti opinnoista ja tutkinnon suorittamisesta.`;
 const uutisHelper = (data, noPics, greenTitle) => {
-  const testiTeksti = `Ammatillisia tutkintoja ovat ammatilliset perustutkinnot, ammattitutkinnot ja erikoisammattitutkinnot.  Tässä osiossa kerrotaan yleisesti opinnoista ja tutkinnon suorittamisesta.`;
-  if (!data) return;
+  if (!data) {
+    return;
+  }
   return Object.values(data)
     .slice(0, 3)
     .map((e) => ({
@@ -25,11 +27,12 @@ const uutisHelper = (data, noPics, greenTitle) => {
         : {
             url:
               'http://images.ctfassets.net/4h0h2z8iv5uv/3p31bFzEUEkxtE2fAT7NQY/f2ebe5602b3890d45afd22a4b0fadc17/Screenshot_2019-10-01_at_10.09.36.png',
-            title: 'TODO',
+            title: e.name,
           },
     }));
 };
 
+// TODO: module on keyword eikä se saisi olla muuttujannimi
 const Module = ({ module }) => {
   const { data } = useContentful();
   if (module.type === 'infoGrid') {
@@ -70,7 +73,7 @@ const Module = ({ module }) => {
   }
 };
 
-const SivuKooste = ({ id }) => {
+export const SivuKooste = ({ id }) => {
   const { data } = useContentful();
   const pageId = id;
   const pads = {
@@ -79,18 +82,14 @@ const SivuKooste = ({ id }) => {
   const kooste = data.sivuKooste[pageId] || {};
 
   return (
-    <React.Fragment>
-      <main id="main-content" className="center-content" style={pads}>
-        <Box display="flex" flexDirection="column" alignItems="center">
-          <Typography variant="h1">{kooste.name}</Typography>
+    <main id="main-content" className="center-content" style={pads}>
+      <Box display="flex" flexDirection="column" alignItems="center">
+        <Typography variant="h1">{kooste.name}</Typography>
 
-          {(kooste.modules || []).map((module, index) => (
-            <Module module={module} key={`module-${index}`} />
-          ))}
-        </Box>
-      </main>
-    </React.Fragment>
+        {(kooste.modules || []).map((module, index) => (
+          <Module module={module} key={`module-${index}`} />
+        ))}
+      </Box>
+    </main>
   );
 };
-
-export default withRouter(SivuKooste);

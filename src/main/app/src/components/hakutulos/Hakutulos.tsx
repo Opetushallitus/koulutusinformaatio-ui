@@ -28,7 +28,7 @@ import {
 } from '#/src/store/reducers/hakutulosSlice';
 import { getHakutulosProps } from '#/src/store/reducers/hakutulosSliceSelector';
 
-import BackendErrorMessage from './BackendErrorMessage';
+import { BackendErrorMessage } from './BackendErrorMessage';
 import { HakutulosResults } from './HakutulosResults';
 import { HakutapaSuodatin } from './hakutulosSuodattimet/HakutapaSuodatin';
 import { KoulutusalaSuodatin } from './hakutulosSuodattimet/KoulutusalaSuodatin';
@@ -39,7 +39,7 @@ import { PohjakoulutusvaatimusSuodatin } from './hakutulosSuodattimet/Pohjakoulu
 import { SijaintiSuodatin } from './hakutulosSuodattimet/SijaintiSuodatin';
 import { SuodatinValinnat } from './hakutulosSuodattimet/SuodatinValinnat';
 import { ValintatapaSuodatin } from './hakutulosSuodattimet/ValintatapaSuodatin';
-import HakutulosToggle from './HakutulosToggle';
+import { HakutulosToggle } from './HakutulosToggle';
 import { MobileFiltersOnTopMenu } from './MobileFiltersOnTopMenu';
 import { Pagination } from './Pagination';
 

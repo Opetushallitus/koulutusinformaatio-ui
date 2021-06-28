@@ -7,11 +7,11 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Markdown from 'markdown-to-jsx';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
+import { colors } from '#/src/colors';
 import { useContentful } from '#/src/hooks';
-
-import { colors } from '../../colors';
+import { formatDateString } from '#/src/tools/utils';
 
 const useStyles = makeStyles({
   card: {
@@ -44,10 +44,12 @@ const useStyles = makeStyles({
   },
 });
 
-const Uutinen = ({ id, history }) => {
+export const Uutinen = ({ id }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
+  const history = useHistory();
   const { data, forwardTo, assetUrl } = useContentful();
+
   const uutinen = data.uutinen[id];
   const link = (uutinen.sivu || {}).id;
 
@@ -65,8 +67,7 @@ const Uutinen = ({ id, history }) => {
     history.push(`/${i18n.language}${forwardTo(id)}`);
   };
   const timestamp = uutinen.updated || uutinen.created;
-  const date = timestamp ? new Date(Date.parse(timestamp)) : null;
-  const leadingZero = (d) => ('0' + d).slice(-2);
+
   return (
     <Grid item xs={12} sm={6} md={4} onClick={() => link && forwardToPage(link)}>
       <Card className={classes.card} elevation={6}>
@@ -82,11 +83,7 @@ const Uutinen = ({ id, history }) => {
               {t('uutinen.kategoria')}
             </Grid>
             <Grid item xs={6} className={classes.pvm}>
-              {date
-                ? `${leadingZero(date.getDate())}.${leadingZero(
-                    date.getMonth() + 1
-                  )}.${date.getFullYear()}`
-                : null}
+              {timestamp && formatDateString(timestamp)}
             </Grid>
           </Grid>
           <div className={classes.content}>
@@ -97,5 +94,3 @@ const Uutinen = ({ id, history }) => {
     </Grid>
   );
 };
-
-export default withRouter(Uutinen);

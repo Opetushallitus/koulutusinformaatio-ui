@@ -1,4 +1,4 @@
-// NOTE: These names should match what is written in specs (invision)
+// NOTE: kts. speksi Invision -> Oppija styleguide -> Konfo-UI colors
 export const colors = {
   brandGreen: '#3A7A10', // Header, CTA, Links
   darkGreen: '#254905', // Hover states
@@ -16,22 +16,27 @@ export const colors = {
   grey: '#EEEEEE',
 };
 
-export const educationTypeColorCode = {
+// NOTE: kts. speksi Invision -> Oppija styleguide -> Konfo-UI colors
+export const educationTypeColorCode: Record<string, string> = {
   // ammatillinenGreen
-  amm: '#3A7A10', // NOTE: Same as brand green
-  'amm-osaamisala': '#3A7A10',
-  'amm-tutkinnon-osa': '#3A7A10',
+  amm: colors.brandGreen,
+  'amm-osaamisala': colors.brandGreen,
+  'amm-tutkinnon-osa': colors.brandGreen,
   ammatillinenGreenBg: '#F4FFF4', // Highlight BG color
 
   // korkeakouluPurple
   kk: '#990066',
   yo: '#990066',
   amk: '#990066',
-  korkeakouluPurpleBg: '#FFEFF9', // Highlight BG color
+  korkeakouluBg: '#FFEFF9', // Highlight BG color
 
   // lukioBlue
   lk: '#0033CC',
-  lukioBlueBg: '#F2FBFF', // Highlight BG color
+  lkBg: '#F2FBFF', // Highlight BG color
+
+  // tuva
+  tuva: '#FF5000', // TODO Tarkistaa pitikö olla oranssi
+  tuvaBg: '#FFEDE5',
 
   // TODO: What should these be?
   ako: '#1976D2', // Water Blue

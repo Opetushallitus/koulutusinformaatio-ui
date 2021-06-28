@@ -9,7 +9,6 @@ import {
   ThemeProvider,
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router-dom';
 
 import Image from '../assets/images/o-EDUCATION-facebook.jpg';
 import { colors } from '../colors';
@@ -17,7 +16,7 @@ import { theme } from '../theme';
 import { Hakupalkki } from './haku/Hakupalkki';
 import { ReactiveBorder } from './ReactiveBorder';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   callToAction: {
     backgroundImage: `url(${Image})`,
     backgroundRepeat: 'no-repeat',
@@ -49,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Jumpotron = () => {
+export const Jumpotron = () => {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -80,5 +79,3 @@ const Jumpotron = () => {
     </ThemeProvider>
   );
 };
-
-export default withRouter(Jumpotron);

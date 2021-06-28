@@ -237,13 +237,9 @@ describe('Haku', () => {
 
     searchBox().type('Hevosten hyvinvoinnista huolehtiminen');
     searchButton().click();
-    cy.findByTestId('1.2.246.562.13.00000000000000000598').within((kortti) => {
-      cy.findByTestId('tutkintonimikkeet-1.2.246.562.13.00000000000000000598').contains(
-        'Tutkinnon osa'
-      );
-      cy.findByTestId('opintojenlaajuus-1.2.246.562.13.00000000000000000598').contains(
-        '25 + 50 osaamispistettä'
-      );
+    cy.findByTestId('Hevosten hyvinvoinnista huolehtiminen').within(() => {
+      cy.findByText('Tutkinnon osa').should('exist');
+      cy.findByText('25 + 50 osaamispistettä').should('exist');
     });
   });
   it("Koulutuskortti data should be presented correctly for 'Osaamisala'", () => {
@@ -255,13 +251,9 @@ describe('Haku', () => {
 
     searchBox().type('Jalkojenhoidon osaamisala');
     searchButton().click();
-    cy.findByTestId('1.2.246.562.13.00000000000000000615').within((kortti) => {
-      cy.findByTestId('tutkintonimikkeet-1.2.246.562.13.00000000000000000615').contains(
-        'Osaamisala'
-      );
-      cy.findByTestId('opintojenlaajuus-1.2.246.562.13.00000000000000000615').contains(
-        '145 osaamispistettä'
-      );
+    cy.findByTestId('Jalkojenhoidon osaamisala').within(() => {
+      cy.findByText('Osaamisala').should('exist');
+      cy.findByText('145 osaamispistettä').should('exist');
     });
   });
 });

@@ -1,19 +1,21 @@
 import React from 'react';
 
 import { Typography, Grid, Container, makeStyles } from '@material-ui/core';
+import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
+import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
+import PublicIcon from '@material-ui/icons/Public';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
 
+import { EntiteettiKortti } from '#/src/components/common/EntiteettiKortti';
+import { OppilaitosKorttiLogo } from '#/src/components/common/KorttiLogo';
 import {
   LoadingCircle,
   OverlayLoadingCircle,
 } from '#/src/components/common/LoadingCircle';
-import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Spacer from '#/src/components/common/Spacer';
-import { ToteutusCard } from '#/src/components/common/ToteutusCard';
 
 import { usePaginatedTarjonta } from './hooks';
-import TarjontaPagination from './TarjontaPagination';
+import { TarjontaPagination } from './TarjontaPagination';
 
 const useStyles = makeStyles({
   container: {
@@ -27,7 +29,12 @@ const useStyles = makeStyles({
   },
 });
 
-const TarjontaList = ({ oid, isOppilaitosOsa }) => {
+type Props = {
+  oid: string;
+  isOppilaitosOsa: boolean;
+};
+
+export const TarjontaList = ({ oid, isOppilaitosOsa }: Props) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const { queryResult } = usePaginatedTarjonta({
@@ -36,7 +43,7 @@ const TarjontaList = ({ oid, isOppilaitosOsa }) => {
     isTuleva: false,
   });
 
-  const { data: tarjonta = {}, status, isFetching } = queryResult;
+  const { data: tarjonta = {} as any, status, isFetching } = queryResult;
   const { values, total } = tarjonta;
 
   switch (status) {
@@ -52,22 +59,28 @@ const TarjontaList = ({ oid, isOppilaitosOsa }) => {
           <div style={{ position: 'relative' }}>
             <OverlayLoadingCircle isLoading={isFetching} />
             <Grid container className={classes.grid} direction="column" spacing={1}>
-              {values?.map((toteutus) => (
+              {values?.map((toteutus: any) => (
                 <Grid item key={toteutus?.toteutusOid}>
-                  <LocalizedLink
-                    underline="none"
-                    component={RouterLink}
-                    to={`/toteutus/${toteutus?.toteutusOid}`}>
-                    <ToteutusCard
-                      heading={toteutus?.toteutusName}
-                      description={toteutus?.description}
-                      locations={toteutus?.locations}
-                      opetustapa={toteutus?.opetustapa}
-                      price={toteutus?.price}
-                      tyyppi={toteutus?.tyyppi}
-                      image={toteutus?.kuva}
-                    />
-                  </LocalizedLink>
+                  <EntiteettiKortti
+                    koulutustyyppi={toteutus?.tyyppi}
+                    to={`/toteutus/${toteutus?.toteutusOid}`}
+                    logoElement={
+                      <OppilaitosKorttiLogo
+                        image={toteutus?.kuva}
+                        alt={`${toteutus?.toteutusName} ${t(
+                          'koulutus.koulutuksen-teemakuva'
+                        )}`}
+                      />
+                    }
+                    header={toteutus?.toteutusName}
+                    kuvaus={toteutus?.description}
+                    wrapDirection="column-reverse"
+                    iconTexts={[
+                      [toteutus?.locations, PublicIcon],
+                      [toteutus?.opetustapa, HourglassEmptyIcon],
+                      [toteutus?.price, EuroSymbolIcon],
+                    ]}
+                  />
                 </Grid>
               ))}
             </Grid>
@@ -79,5 +92,3 @@ const TarjontaList = ({ oid, isOppilaitosOsa }) => {
       return null;
   }
 };
-
-export default TarjontaList;

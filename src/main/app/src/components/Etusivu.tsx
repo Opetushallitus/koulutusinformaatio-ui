@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
-import { makeStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import { Button, Grid, makeStyles, Paper } from '@material-ui/core';
 import _ from 'lodash';
 import Markdown from 'markdown-to-jsx';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { colors } from '#/src/colors';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import { useContentful } from '#/src/hooks';
+import { clearSelectedFilters } from '#/src/store/reducers/hakutulosSlice';
+import { Info, Uutiset as UutisetType, Kortit } from '#/src/types/ContentfulTypes';
 
-import { clearSelectedFilters } from '../store/reducers/hakutulosSlice';
-import Jumpotron from './Jumpotron';
+import { Jumpotron } from './Jumpotron';
 import Kortti from './kortti/Kortti';
 import { ReactiveBorder } from './ReactiveBorder';
 import { Uutiset } from './uutinen/Uutiset';
@@ -40,51 +38,13 @@ const useStyles = makeStyles({
   },
 });
 
-type Contentful = {
-  id: string;
-  name: string;
-  type: string;
-  created: string;
-  updated: string;
-};
-
-type ContentfulItem = {
-  id: string;
-  name: string;
-  type: string;
-};
-
-// TODO: Tarkka tyypitys puuttuu, ei tietoa millaista dataa on
-type Info = Record<
-  string,
-  {
-    id: string;
-    linkki: { id: string };
-    content: string;
-  }
->;
-
-type Kortit = Record<
-  string,
-  Contentful & {
-    kortit: Array<ContentfulItem>;
-  }
->;
-
-type UutisetType = Record<
-  string,
-  Contentful & {
-    slug: string;
-    linkit: Array<ContentfulItem>;
-  }
->;
-
 const getFirst = (entry: Kortit) => Object.values(entry || {})[0] || {};
 
-export const Etusivu = withRouter(({ history }) => {
+export const Etusivu = () => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { i18n } = useTranslation();
+  const history = useHistory();
   const dispatch = useDispatch();
   const { data, isLoading, forwardTo } = useContentful();
   const {
@@ -166,4 +126,4 @@ export const Etusivu = withRouter(({ history }) => {
       )}
     </React.Fragment>
   );
-});
+};

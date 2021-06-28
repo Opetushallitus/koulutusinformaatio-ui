@@ -6,7 +6,7 @@ import MuiFlatPagination from 'material-ui-flat-pagination';
 
 import { usePaginatedTarjonta } from './hooks';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   sizeSmall: {
     padding: '1px 6px',
     margin: '0 4px',
@@ -29,7 +29,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TarjontaPagination = ({ total, oid, isOppilaitosOsa }) => {
+type Props = {
+  total: number;
+  oid: string;
+  isOppilaitosOsa: boolean;
+};
+
+export const TarjontaPagination = ({ total, oid, isOppilaitosOsa }: Props) => {
   const classes = useStyles();
 
   const {
@@ -51,25 +57,21 @@ const TarjontaPagination = ({ total, oid, isOppilaitosOsa }) => {
     [setPagination]
   );
 
-  return (
-    total > size && (
-      <div style={{ textAlign: 'center', marginTop: 30 }}>
-        <CssBaseline />
-        <MuiFlatPagination
-          limit={size}
-          offset={offset}
-          total={total}
-          onClick={handleClick}
-          classes={classes}
-          otherPageColor="secondary"
-          currentPageColor="primary"
-          size="small"
-          previousPageLabel={<ChevronLeftOutlined />}
-          nextPageLabel={<ChevronRightOutlined />}
-        />
-      </div>
-    )
-  );
+  return total > size ? (
+    <div style={{ textAlign: 'center', marginTop: 30 }}>
+      <CssBaseline />
+      <MuiFlatPagination
+        limit={size}
+        offset={offset}
+        total={total}
+        onClick={handleClick}
+        classes={classes}
+        otherPageColor="secondary"
+        currentPageColor="primary"
+        size="small"
+        previousPageLabel={<ChevronLeftOutlined />}
+        nextPageLabel={<ChevronRightOutlined />}
+      />
+    </div>
+  ) : null;
 };
-
-export default TarjontaPagination;

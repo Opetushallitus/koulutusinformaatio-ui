@@ -8,6 +8,7 @@ import { colors } from '#/src/colors';
 const useStyles = makeStyles({
   textWithBackgroundBox: {
     backgroundColor: colors.lightGreenBg,
+    height: 'fit-content',
   },
   textWithBackgroundText: {
     textAlign: 'center',
@@ -28,8 +29,9 @@ export const TextWithBackground = (props: React.PropsWithChildren<object>) => {
       className={classes.textWithBackgroundBox}
       display="flex"
       justifyContent="center"
-      justifyItems="center">
-      <div className={classes.textWithBackgroundText}>{props.children}</div>
+      justifyItems="center"
+      component="span">
+      <span className={classes.textWithBackgroundText}>{props.children}</span>
     </Box>
   );
 };

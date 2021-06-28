@@ -21,7 +21,7 @@ import { useUrlParams } from '../hakutulos/UseUrlParams';
 import { useOppilaitos } from './hooks';
 import { OppilaitosinfoGrid } from './OppilaitosinfoGrid';
 import OppilaitosOsaList from './OppilaitosOsaList';
-import TarjontaList from './TarjontaList';
+import { TarjontaList } from './TarjontaList';
 import { TietoaOpiskelusta } from './TietoaOpiskelusta';
 import { TulevaTarjontaList } from './TulevaTarjontaList';
 import { hasYhteystiedot, Yhteystiedot } from './Yhteystiedot';

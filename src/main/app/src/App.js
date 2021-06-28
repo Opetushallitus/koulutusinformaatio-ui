@@ -18,11 +18,11 @@ import { Haku } from './components/haku/Haku';
 import { Hakupalkki } from './components/haku/Hakupalkki';
 import { KoulutusPage } from './components/koulutus/KoulutusPage';
 import { OppilaitosPage } from './components/oppilaitos/OppilaitosPage';
-import PalautePopup from './components/palaute/PalautePopup';
-import Palvelut from './components/palvelu/Palvelut';
+import { PalautePopup } from './components/palaute/PalautePopup';
+import { Palvelut } from './components/palvelu/Palvelut';
 import { ReactiveBorder } from './components/ReactiveBorder';
-import Sisaltohaku from './components/Sisaltohaku';
-import SivuRouter from './components/sivu/SivuRouter';
+import { Sisaltohaku } from './components/Sisaltohaku';
+import { SivuRouter } from './components/sivu/SivuRouter';
 import { ToteutusPage } from './components/toteutus/ToteutusPage';
 import {
   ValintaperustePage,
