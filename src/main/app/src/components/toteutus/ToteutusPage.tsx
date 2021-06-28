@@ -1,6 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { Box, Grid, Link, makeStyles, Typography } from '@material-ui/core';
+import {
+  Box,
+  Grid,
+  Link,
+  LinkBaseProps,
+  makeStyles,
+  Typography,
+} from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
@@ -46,6 +53,8 @@ import { ToteutusInfoGrid } from './ToteutusInfoGrid';
 
 const useStyles = makeStyles({
   root: { marginTop: '100px' },
+  contentHeader: { marginBottom: '16px' },
+  externalLinkIcon: { verticalAlign: 'middle', marginRight: '8px' },
 });
 
 const ListContent = ({
@@ -57,46 +66,58 @@ const ListContent = ({
 }) => {
   return items?.length > 0 ? (
     <>
-      <Typography>{localize(leadParagraph)}</Typography>
+      {leadParagraph && <Typography>{localize(leadParagraph)}</Typography>}
       <ul>
-        {_.map(items, (item) => (
-          <li>{localize(item)}</li>
+        {_.map(items, (item, i) => (
+          <li key={i}>{localize(item)}</li>
         ))}
       </ul>
     </>
   ) : null;
 };
 
+const ExternalLink = ({ children, ...props }: LinkBaseProps) => {
+  const classes = useStyles();
+  return (
+    <Link {...props}>
+      <OpenInNewIcon className={classes.externalLinkIcon} />
+      {children}
+    </Link>
+  );
+};
+
 const DiplomiContent = ({ diplomi }: { diplomi: Lukiodiplomi }) => {
   const { t } = useTranslation();
+  const classes = useStyles();
   const linkki = localize(diplomi?.linkki);
   const altTeksti = localize(diplomi?.linkinAltTeksti);
-
   return (
     <>
-      <Typography>{t('toteutus.yleiset-tavoitteet')}</Typography>
+      <Typography variant="h4" className={classes.contentHeader}>
+        {t('toteutus.yleiset-tavoitteet')}
+      </Typography>
       <ListContent leadParagraph={diplomi?.tavoitteetKohde} items={diplomi.tavoitteet} />
-      <Typography>{t('toteutus.keskeiset-sisällöt')}</Typography>
+      <Typography variant="h4">{t('toteutus.keskeiset-sisällöt')}</Typography>
       <ListContent items={diplomi?.sisallot} />
-      <Link target="_blank" rel="noopener" href={linkki}>
-        {altTeksti}
-        <OpenInNewIcon fontSize="small" />
-      </Link>
+      {!_.isEmpty(linkki) && (
+        <ExternalLink target="_blank" rel="noopener" href={linkki}>
+          {_.isEmpty(altTeksti) ? t('toteutus.lisätietoa') : altTeksti}
+        </ExternalLink>
+      )}
     </>
   );
 };
 
-const Diplomit = ({ diplomit }: { diplomit: Array<Lukiodiplomi> }) => {
-  return !_.isEmpty(diplomit) ? (
+const Diplomit = ({ diplomit }: { diplomit: Array<Lukiodiplomi> }) =>
+  diplomit?.length > 0 ? (
     <AccordionWithTitle
-      titleTranslationKey="toteutus.diplomit"
+      titleTranslationKey="toteutus.lukiodiplomit"
       data={diplomit.map((diplomi: any) => ({
         title: localize(diplomi?.koodi),
         content: <DiplomiContent diplomi={diplomi} />,
       }))}
     />
   ) : null;
-};
 
 export const ToteutusPage = () => {
   const classes = useStyles();
