@@ -35,7 +35,8 @@ import {
 } from '#/src/store/reducers/toteutusSlice';
 import { getLanguage, localize } from '#/src/tools/localization';
 import { getLocalizedOpintojenLaajuus, sanitizedHTMLParser } from '#/src/tools/utils';
-import { Toteutus } from '#/src/types/ToteutusTypes';
+import { Translateable } from '#/src/types/common';
+import { Lukiodiplomi, Toteutus } from '#/src/types/ToteutusTypes';
 
 import { HakuKaynnissaCard } from './HakuKaynnissaCard';
 import { ToteutuksenYhteystiedot } from './ToteutuksenYhteystiedot';
@@ -74,6 +75,56 @@ const useOsaamisalatPageData = ({ ePerusteId, requestParams }: OsaamisalatProps)
   );
 };
 
+const ListContent = ({
+  leadParagraph,
+  items,
+}: {
+  leadParagraph?: Translateable;
+  items: Array<Translateable>;
+}) => {
+  return items?.length > 0 ? (
+    <>
+      <Typography>{localize(leadParagraph)}</Typography>
+      <ul>
+        {_.map(items, (item) => (
+          <li>{localize(item)}</li>
+        ))}
+      </ul>
+    </>
+  ) : null;
+};
+
+const DiplomiContent = ({ diplomi }: { diplomi: Lukiodiplomi }) => {
+  const { t } = useTranslation();
+  const linkki = localize(diplomi?.linkki);
+  const altTeksti = localize(diplomi?.linkinAltTeksti);
+
+  return (
+    <>
+      <Typography>{t('toteutus.yleiset-tavoitteet')}</Typography>
+      <ListContent leadParagraph={diplomi?.tavoitteetKohde} items={diplomi.tavoitteet} />
+      <Typography>{t('toteutus.keskeiset-sisällöt')}</Typography>
+      <ListContent items={diplomi?.sisallot} />
+      <Link target="_blank" rel="noopener" href={linkki}>
+        {altTeksti}
+        <OpenInNewIcon fontSize="small" />
+      </Link>
+    </>
+  );
+};
+
+const Diplomit = ({ diplomit }: { diplomit: Array<Lukiodiplomi> }) => {
+  return !_.isEmpty(diplomit) ? (
+    <AccordionWithTitle
+      titleTranslationKey="toteutus.diplomit"
+      data={diplomit.map((diplomi: any) => ({
+        title: localize(diplomi?.koodi),
+        content: <DiplomiContent diplomi={diplomi} />,
+      }))}
+    />
+  ) : null;
+};
+
 export const ToteutusPage = () => {
   const classes = useStyles();
   const { oid } = useParams<{ oid: string }>();
@@ -94,6 +145,7 @@ export const ToteutusPage = () => {
     ammattinimikkeet,
     osaamisalat,
     yhteyshenkilot,
+    diplomit,
   } = toteutus?.metadata ?? {};
   const koulutus = useSelector(selectKoulutus(koulutusOid), shallowEqual);
   const haut = useSelector(selectHakukohteet(oid), shallowEqual);
@@ -252,6 +304,7 @@ export const ToteutusPage = () => {
             }))}
           />
         )}
+        <Diplomit diplomit={diplomit} />
         {!_.isEmpty(osaamisalatCombined) && (
           <AccordionWithTitle
             titleTranslationKey="koulutus.osaamisalat"
