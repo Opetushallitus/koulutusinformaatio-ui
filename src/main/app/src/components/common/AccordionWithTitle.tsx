@@ -22,6 +22,10 @@ export type AccordionProps = {
   data: React.ComponentProps<typeof Accordion>['items'];
 };
 
+const ContentWrapper: React.FC = ({ children }) => (
+  <Typography component="div">{children}</Typography>
+);
+
 export const AccordionWithTitle = ({ titleTranslationKey, data }: AccordionProps) => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -33,12 +37,7 @@ export const AccordionWithTitle = ({ titleTranslationKey, data }: AccordionProps
       alignItems="center">
       <Typography variant="h2">{t(titleTranslationKey)}</Typography>
       <Spacer />
-      <Accordion
-        items={data}
-        ContentWrapper={({ children }) => (
-          <Typography component="div">{children}</Typography>
-        )}
-      />
+      <Accordion items={data} ContentWrapper={ContentWrapper} />
     </Box>
   );
 };
