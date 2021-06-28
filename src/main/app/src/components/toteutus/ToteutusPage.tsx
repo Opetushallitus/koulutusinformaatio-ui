@@ -4,12 +4,10 @@ import { Box, Grid, Link, makeStyles, Typography } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from 'react-query';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
-import { getToteutusOsaamisalaKuvaus } from '#/src/api/konfoApi';
 import { colors } from '#/src/colors';
 import { AccordionWithTitle } from '#/src/components/common/AccordionWithTitle';
 import ContentWrapper from '#/src/components/common/ContentWrapper';
@@ -39,6 +37,7 @@ import { Translateable } from '#/src/types/common';
 import { Lukiodiplomi, Toteutus } from '#/src/types/ToteutusTypes';
 
 import { HakuKaynnissaCard } from './HakuKaynnissaCard';
+import { Osaamisalat } from './Osaamisalat';
 import { ToteutuksenYhteystiedot } from './ToteutuksenYhteystiedot';
 import { ToteutusHakuEiSahkoista } from './ToteutusHakuEiSahkoista';
 import { ToteutusHakukohteet } from './ToteutusHakukohteet';
@@ -48,32 +47,6 @@ import { ToteutusInfoGrid } from './ToteutusInfoGrid';
 const useStyles = makeStyles({
   root: { marginTop: '100px' },
 });
-
-type OsaamisalatProps = {
-  ePerusteId: string;
-  requestParams: { 'koodi-urit': string };
-};
-
-const getOsaamisalatPageData = async ({
-  ePerusteId,
-  requestParams,
-}: OsaamisalatProps) => {
-  const osaamisalat: Array<any> = await getToteutusOsaamisalaKuvaus({
-    ePerusteId,
-    requestParams,
-  });
-  return { osaamisalat };
-};
-
-const useOsaamisalatPageData = ({ ePerusteId, requestParams }: OsaamisalatProps) => {
-  return useQuery(
-    ['getOsaamisalatPageData', { ePerusteId, requestParams }],
-    () => getOsaamisalatPageData({ ePerusteId, requestParams }),
-    {
-      enabled: !_.isNil(ePerusteId) && !_.isEmpty(requestParams),
-    }
-  );
-};
 
 const ListContent = ({
   leadParagraph,
@@ -143,7 +116,6 @@ export const ToteutusPage = () => {
     erityisetKoulutustehtavat,
     opetus,
     ammattinimikkeet,
-    osaamisalat,
     yhteyshenkilot,
     diplomit,
   } = toteutus?.metadata ?? {};
@@ -162,26 +134,7 @@ export const ToteutusPage = () => {
     .filter((asiasana: any) => asiasana.kieli === currentLanguage)
     .map((asiasana: any) => asiasana.arvo);
 
-  const { data: osaamisalaData = {} as any, isFetching } = useOsaamisalatPageData({
-    ePerusteId: koulutus?.ePerusteId?.toString(),
-    requestParams: {
-      'koodi-urit': osaamisalat?.map((oa: any) => oa?.koodi?.koodiUri)?.join(','),
-    },
-  });
-
-  // NOTE: This must *not* handle alemmanKorkeakoulututkinnonOsaamisalat or ylemmanKorkeakoulututkinnonOsaamisalat
-  const osaamisalatCombined = osaamisalat?.map((toa: any) => {
-    const extendedData =
-      osaamisalaData?.osaamisalat?.find(
-        (koa: any) => toa?.koodi?.koodiUri === koa?.osaamisalakoodiUri
-      ) || {};
-    const kuvaus = !_.isEmpty(extendedData?.kuvaus)
-      ? localize(extendedData?.kuvaus)
-      : `<p>${t('toteutus.osaamisalalle-ei-loytynyt-kuvausta')}</p>`;
-    return { ...toa, extendedData, kuvaus };
-  });
-
-  const loading = koulutusLoading || toteutusLoading || isFetching;
+  const loading = koulutusLoading || toteutusLoading;
 
   useEffect(() => {
     if (!toteutus) {
@@ -305,28 +258,7 @@ export const ToteutusPage = () => {
           />
         )}
         <Diplomit diplomit={diplomit} />
-        {!_.isEmpty(osaamisalatCombined) && (
-          <AccordionWithTitle
-            titleTranslationKey="koulutus.osaamisalat"
-            data={osaamisalatCombined?.map((osaamisala: any) => ({
-              title: localize(osaamisala?.koodi),
-              content: (
-                <>
-                  {sanitizedHTMLParser(osaamisala?.kuvaus)}
-                  {!_.isEmpty(osaamisala?.linkki) && !_.isEmpty(osaamisala?.otsikko) && (
-                    <Link
-                      target="_blank"
-                      rel="noopener"
-                      href={localize(osaamisala?.linkki)}>
-                      {localize(osaamisala?.otsikko)}
-                      <OpenInNewIcon fontSize="small" />
-                    </Link>
-                  )}
-                </>
-              ),
-            }))}
-          />
-        )}
+        <Osaamisalat toteutus={toteutus} koulutus={koulutus} />
         {hasAnyHaku && <ToteutusHakukohteet haut={haut} />}
         {toteutus?.hasMuuHaku && <ToteutusHakuMuu oid={toteutus?.oid} />}
         {toteutus?.hasEiSahkoistaHaku && <ToteutusHakuEiSahkoista oid={toteutus?.oid} />}
