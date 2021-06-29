@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { MuiThemeProvider, makeStyles, useMediaQuery, Box } from '@material-ui/core';
+import { makeStyles, useMediaQuery, Box } from '@material-ui/core';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -156,36 +156,34 @@ const App = () => {
   };
 
   return (
-    <MuiThemeProvider theme={theme}>
-      <React.Fragment>
-        <Draft />
-        <CookieModal />
-        <Box display="flex">
-          <Header
-            toggleMenu={toggleMenu}
-            isOpen={menuVisible}
-            betaBanner={betaBanner}
-            setBetaBanner={setBetaBanner}
-          />
-          <SideMenu
-            isSmall={isSmall}
-            menuVisible={menuVisible}
-            closeMenu={closeMenu}
-            betaBannerVisible={betaBanner}
-          />
-          <main
-            id="app-main-content"
-            className={clsx(isSmall ? classes.smContent : classes.content, {
-              [isSmall ? classes.smContentShift : classes.contentShift]: menuVisible,
-            })}>
-            <Route path="/:lng?" component={TranslatedRoutes} />
-            <Palvelut />
-            <Footer />
-          </main>
-        </Box>
-        <PalautePopup />
-      </React.Fragment>
-    </MuiThemeProvider>
+    <React.Fragment>
+      <Draft />
+      <CookieModal />
+      <Box display="flex">
+        <Header
+          toggleMenu={toggleMenu}
+          isOpen={menuVisible}
+          betaBanner={betaBanner}
+          setBetaBanner={setBetaBanner}
+        />
+        <SideMenu
+          isSmall={isSmall}
+          menuVisible={menuVisible}
+          closeMenu={closeMenu}
+          betaBannerVisible={betaBanner}
+        />
+        <main
+          id="app-main-content"
+          className={clsx(isSmall ? classes.smContent : classes.content, {
+            [isSmall ? classes.smContentShift : classes.contentShift]: menuVisible,
+          })}>
+          <Route path="/:lng?" component={TranslatedRoutes} />
+          <Palvelut />
+          <Footer />
+        </main>
+      </Box>
+      <PalautePopup />
+    </React.Fragment>
   );
 };
 

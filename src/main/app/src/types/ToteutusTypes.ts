@@ -53,6 +53,15 @@ export type Yhteyshenkilo = {
   wwwSivu: Translateable;
 };
 
+export type Lukiodiplomi = {
+  koodi: Koodi;
+  sisallot: Array<Translateable>;
+  tavoitteetKohde: Translateable;
+  tavoitteet: Array<Translateable>;
+  linkki: Translateable;
+  linkinAltTeksti: Translateable;
+};
+
 export type ToteutusMetadata = {
   ammattinimikkeet: Array<{ kieli: string; arvo: string }>;
   asiasanat: [];
@@ -63,6 +72,7 @@ export type ToteutusMetadata = {
   yhteyshenkilot: Array<Yhteyshenkilo>;
   painotukset: Array<{ koodi: Koodi; kuvaus: Translateable }>;
   erityisetKoulutustehtavat: Array<{ koodi: Koodi; kuvaus: Translateable }>;
+  diplomit: Array<Lukiodiplomi>;
 };
 
 export type Organisaatio = {

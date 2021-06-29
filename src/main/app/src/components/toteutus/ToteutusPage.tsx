@@ -1,21 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { Box, Button, Grid, Link, makeStyles, Typography } from '@material-ui/core';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import clsx from 'clsx';
+import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from 'react-query';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
-import { getToteutusOsaamisalaKuvaus } from '#/src/api/konfoApi';
 import { colors } from '#/src/colors';
-import { Accordion } from '#/src/components/common/Accordion';
+import { AccordionWithTitle } from '#/src/components/common/AccordionWithTitle';
 import ContentWrapper from '#/src/components/common/ContentWrapper';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
-import { OppilaitosKorttiLogo } from '#/src/components/common/KorttiLogo';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
 import Murupolku from '#/src/components/common/Murupolku';
@@ -39,154 +34,19 @@ import { getLanguage, localize } from '#/src/tools/localization';
 import { getLocalizedOpintojenLaajuus, sanitizedHTMLParser } from '#/src/tools/utils';
 import { Toteutus } from '#/src/types/ToteutusTypes';
 
-import { useOppilaitokset } from '../oppilaitos/hooks';
-import { hasYhteystiedot, Yhteystiedot } from '../oppilaitos/Yhteystiedot';
+import { ExternalLink } from '../common/ExternalLink';
+import { Diplomit } from './Diplomit';
 import { HakuKaynnissaCard } from './HakuKaynnissaCard';
+import { Osaamisalat } from './Osaamisalat';
+import { ToteutuksenYhteystiedot } from './ToteutuksenYhteystiedot';
 import { ToteutusHakuEiSahkoista } from './ToteutusHakuEiSahkoista';
 import { ToteutusHakukohteet } from './ToteutusHakukohteet';
 import { ToteutusHakuMuu } from './ToteutusHakuMuu';
 import { ToteutusInfoGrid } from './ToteutusInfoGrid';
 
-const useStyles = makeStyles((theme) => ({
-  accordion: {
-    width: '50%',
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
-    },
-  },
+const useStyles = makeStyles({
   root: { marginTop: '100px' },
-}));
-
-type AccordionProps = {
-  titleTranslationKey: string;
-  data: React.ComponentProps<typeof Accordion>['items'];
-};
-
-const AccordionWithTitle = ({ titleTranslationKey, data }: AccordionProps) => {
-  const classes = useStyles();
-  const { t } = useTranslation();
-  return (
-    <Box
-      className={clsx([classes.accordion, classes.root])}
-      display="flex"
-      flexDirection="column"
-      alignItems="center">
-      <Typography variant="h2">{t(titleTranslationKey)}</Typography>
-      <Spacer />
-      <Accordion
-        items={data}
-        ContentWrapper={({ children }) => (
-          <Typography component="div">{children}</Typography>
-        )}
-      />
-    </Box>
-  );
-};
-
-type OsaamisalatProps = {
-  ePerusteId: string;
-  requestParams: { 'koodi-urit': string };
-};
-
-const getOsaamisalatPageData = async ({
-  ePerusteId,
-  requestParams,
-}: OsaamisalatProps) => {
-  const osaamisalat: Array<any> = await getToteutusOsaamisalaKuvaus({
-    ePerusteId,
-    requestParams,
-  });
-  return { osaamisalat };
-};
-
-const useOsaamisalatPageData = ({ ePerusteId, requestParams }: OsaamisalatProps) => {
-  return useQuery(
-    ['getOsaamisalatPageData', { ePerusteId, requestParams }],
-    () => getOsaamisalatPageData({ ePerusteId, requestParams }),
-    {
-      enabled: !_.isNil(ePerusteId) && !_.isEmpty(requestParams),
-    }
-  );
-};
-
-// NOTE: In most cases there is only one oppilaitos per KOMOTO but there is no limit in data model
-const ToteutuksenYhteystiedot = ({ oids }: { oids: Array<string> }) => {
-  const { t } = useTranslation();
-  const oppilaitokset = useOppilaitokset({
-    isOppilaitosOsa: false,
-    oids,
-  });
-  const filtered = useMemo(
-    () =>
-      oppilaitokset
-        .filter(
-          (v) =>
-            !_.isEmpty(v.data.metadata?.wwwSivu) ||
-            !_.isEmpty(v.data.metadata?.esittely) ||
-            hasYhteystiedot(v.data.metadata)
-        )
-        .map((v) => v.data),
-    [oppilaitokset]
-  );
-
-  return (
-    <>
-      {filtered?.length > 0 && (
-        <Box
-          mt={8}
-          width="100%"
-          display="flex"
-          flexDirection="column"
-          alignItems="center">
-          {filtered.map((oppilaitos: any) => (
-            <React.Fragment key={oppilaitos.oid}>
-              <Typography variant="h2">
-                {t('oppilaitos.tietoa-oppilaitoksesta')}
-              </Typography>
-              <Spacer />
-              {oppilaitos.metadata.esittely && (
-                <Grid
-                  item
-                  container
-                  sm={12}
-                  md={6}
-                  direction="column"
-                  alignItems="center">
-                  {oppilaitos.logo && (
-                    <OppilaitosKorttiLogo
-                      alt={t('oppilaitos.oppilaitoksen-logo')}
-                      image={oppilaitos.logo}
-                    />
-                  )}
-                  <LocalizedHTML data={oppilaitos.metadata.esittely} noMargin />
-                </Grid>
-              )}
-
-              {oppilaitos.metadata.wwwSivu && (
-                <Button
-                  style={{
-                    marginTop: 20,
-                    fontWeight: 600,
-                  }}
-                  target="_blank"
-                  href={localize(oppilaitos.metadata.wwwSivu.url)}
-                  variant="contained"
-                  size="medium"
-                  color="primary">
-                  {!_.isEmpty(oppilaitos.metadata.wwwSivu.nimi)
-                    ? localize(oppilaitos.metadata.wwwSivu)
-                    : t('oppilaitos.oppilaitoksen-www-sivut')}
-                  <OpenInNewIcon fontSize="small" />
-                </Button>
-              )}
-              <Yhteystiedot id={localize(oppilaitos)} {...oppilaitos.metadata} />
-            </React.Fragment>
-          ))}
-        </Box>
-      )}
-    </>
-  );
-};
+});
 
 export const ToteutusPage = () => {
   const classes = useStyles();
@@ -206,8 +66,8 @@ export const ToteutusPage = () => {
     erityisetKoulutustehtavat,
     opetus,
     ammattinimikkeet,
-    osaamisalat,
     yhteyshenkilot,
+    diplomit,
   } = toteutus?.metadata ?? {};
   const koulutus = useSelector(selectKoulutus(koulutusOid), shallowEqual);
   const haut = useSelector(selectHakukohteet(oid), shallowEqual);
@@ -224,26 +84,7 @@ export const ToteutusPage = () => {
     .filter((asiasana: any) => asiasana.kieli === currentLanguage)
     .map((asiasana: any) => asiasana.arvo);
 
-  const { data: osaamisalaData = {} as any, isFetching } = useOsaamisalatPageData({
-    ePerusteId: koulutus?.ePerusteId?.toString(),
-    requestParams: {
-      'koodi-urit': osaamisalat?.map((oa: any) => oa?.koodi?.koodiUri)?.join(','),
-    },
-  });
-
-  // NOTE: This must *not* handle alemmanKorkeakoulututkinnonOsaamisalat or ylemmanKorkeakoulututkinnonOsaamisalat
-  const osaamisalatCombined = osaamisalat?.map((toa: any) => {
-    const extendedData =
-      osaamisalaData?.osaamisalat?.find(
-        (koa: any) => toa?.koodi?.koodiUri === koa?.osaamisalakoodiUri
-      ) || {};
-    const kuvaus = !_.isEmpty(extendedData?.kuvaus)
-      ? localize(extendedData?.kuvaus)
-      : `<p>${t('toteutus.osaamisalalle-ei-loytynyt-kuvausta')}</p>`;
-    return { ...toa, extendedData, kuvaus };
-  });
-
-  const loading = koulutusLoading || toteutusLoading || isFetching;
+  const loading = koulutusLoading || toteutusLoading;
 
   useEffect(() => {
     if (!toteutus) {
@@ -289,18 +130,15 @@ export const ToteutusPage = () => {
         <Typography style={{ marginTop: '20px' }} variant="h1">
           {localize(toteutus?.nimi)}
         </Typography>
-        <Grid
-          className={classes.root}
-          alignItems="center"
-          justify="center"
-          container
-          spacing={1}>
-          {asiasanat.map((asiasana, i) => (
-            <Grid item key={i}>
-              <TextWithBackground>{asiasana}</TextWithBackground>
-            </Grid>
-          ))}
-        </Grid>
+        {!_.isEmpty(asiasanat) && (
+          <Grid alignItems="center" justify="center" container spacing={1}>
+            {asiasanat.map((asiasana, i) => (
+              <Grid item key={i}>
+                <TextWithBackground>{asiasana}</TextWithBackground>
+              </Grid>
+            ))}
+          </Grid>
+        )}
         <Box mt={7}>
           <TeemakuvaImage
             imgUrl={toteutus?.teemakuva}
@@ -366,28 +204,8 @@ export const ToteutusPage = () => {
             }))}
           />
         )}
-        {!_.isEmpty(osaamisalatCombined) && (
-          <AccordionWithTitle
-            titleTranslationKey="koulutus.osaamisalat"
-            data={osaamisalatCombined?.map((osaamisala: any) => ({
-              title: localize(osaamisala?.koodi),
-              content: (
-                <>
-                  {sanitizedHTMLParser(osaamisala?.kuvaus)}
-                  {!_.isEmpty(osaamisala?.linkki) && !_.isEmpty(osaamisala?.otsikko) && (
-                    <Link
-                      target="_blank"
-                      rel="noopener"
-                      href={localize(osaamisala?.linkki)}>
-                      {localize(osaamisala?.otsikko)}
-                      <OpenInNewIcon fontSize="small" />
-                    </Link>
-                  )}
-                </>
-              ),
-            }))}
-          />
-        )}
+        <Diplomit diplomit={diplomit} />
+        <Osaamisalat toteutus={toteutus} koulutus={koulutus} />
         {hasAnyHaku && <ToteutusHakukohteet haut={haut} />}
         {toteutus?.hasMuuHaku && <ToteutusHakuMuu oid={toteutus?.oid} />}
         {toteutus?.hasEiSahkoistaHaku && <ToteutusHakuEiSahkoista oid={toteutus?.oid} />}
@@ -432,19 +250,9 @@ export const ToteutusPage = () => {
                         </Grid>
                         {!_.isEmpty(yhteyshenkilo.wwwSivu) && (
                           <Grid item>
-                            <Link
-                              target="_blank"
-                              rel="noopener"
-                              href={localize(yhteyshenkilo.wwwSivu)}
-                              variant="body1">
-                              <Grid container direction="row" alignItems="center">
-                                {localize(yhteyshenkilo.wwwSivu)}
-                                <OpenInNewIcon
-                                  fontSize="small"
-                                  style={{ marginLeft: '5px' }}
-                                />
-                              </Grid>
-                            </Link>
+                            <ExternalLink href={localize(yhteyshenkilo.wwwSivu)}>
+                              {localize(yhteyshenkilo.wwwSivu)}
+                            </ExternalLink>
                           </Grid>
                         )}
                       </Grid>

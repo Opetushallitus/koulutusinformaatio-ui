@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 
-import { MuiThemeProvider } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/core';
 import ReactDOM from 'react-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -75,12 +75,12 @@ ReactDOM.render(
       <ReactQueryDevtools initialIsOpen={false} />
       <Provider store={getKonfoStore()}>
         <BrowserRouter basename={'/konfo'}>
-          <MuiThemeProvider theme={theme}>
+          <ThemeProvider theme={theme}>
             <InitGate>
               <ScrollToTop />
               <App />
             </InitGate>
-          </MuiThemeProvider>
+          </ThemeProvider>
         </BrowserRouter>
       </Provider>
     </QueryClientProvider>

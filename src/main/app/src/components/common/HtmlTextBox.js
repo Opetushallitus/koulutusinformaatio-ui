@@ -1,21 +1,14 @@
 import React, { useState } from 'react';
 
-import { makeStyles, Typography, Paper, Box } from '@material-ui/core';
+import { makeStyles, Typography, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
 
 import { educationTypeColorCode } from '#/src/colors';
-
-import Spacer from './Spacer';
+import { ColoredPaperContent } from '#/src/components/common/ColoredPaperContent';
+import Spacer from '#/src/components/common/Spacer';
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    width: '80%',
-    backgroundColor: educationTypeColorCode.ammatillinenGreenBg, // TODO: Not sure if color should come from current koulutus theme
-    [theme.breakpoints.down('sm')]: {
-      width: '95%',
-    },
-  },
   textArea: {
     margin: '60px auto',
     width: '63%',
@@ -68,7 +61,7 @@ const HtmlTextBox = (props) => {
       className={className}>
       <Typography variant="h2">{heading}</Typography>
       <Spacer />
-      <Paper className={classes.paper}>
+      <ColoredPaperContent backgroundColor={educationTypeColorCode.ammatillinenGreenBg}>
         <Box className={classes.textArea}>
           <HTMLEllipsis
             unsafeHTML={html}
@@ -83,7 +76,7 @@ const HtmlTextBox = (props) => {
             </div>
           ) : null}
         </Box>
-      </Paper>
+      </ColoredPaperContent>
     </Box>
   );
 };

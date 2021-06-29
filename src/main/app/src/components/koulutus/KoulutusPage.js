@@ -2,19 +2,17 @@ import React, { useEffect, useMemo } from 'react';
 
 import { Box, Link as MuiLink, makeStyles, Typography } from '@material-ui/core';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import clsx from 'clsx';
 import _ from 'lodash';
 import { urls } from 'oph-urls-js';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { Accordion } from '#/src/components/common/Accordion';
+import { AccordionWithTitle } from '#/src/components/common/AccordionWithTitle';
 import ContentWrapper from '#/src/components/common/ContentWrapper';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import Murupolku from '#/src/components/common/Murupolku';
-import Spacer from '#/src/components/common/Spacer';
 import TeemakuvaImage from '#/src/components/common/TeemakuvaImage';
 import { getHakuUrl } from '#/src/store/reducers/hakutulosSliceSelector';
 import {
@@ -45,34 +43,7 @@ const useStyles = makeStyles((theme) => ({
   tutkintoHeader: {
     textAlign: 'center',
   },
-  accordion: {
-    width: '50%',
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
-    },
-  },
 }));
-
-const AccordionWithTitle = ({ titleTranslation, data }) => {
-  const classes = useStyles();
-  const { t } = useTranslation();
-  return (
-    <Box
-      className={clsx([classes.accordion, classes.root])}
-      display="flex"
-      flexDirection="column"
-      alignItems="center">
-      <Typography variant="h2">{t(titleTranslation)}</Typography>
-      <Spacer />
-      <Accordion
-        items={data}
-        ContentWrapper={({ children }) => (
-          <Typography component="div">{children}</Typography>
-        )}
-      />
-    </Box>
-  );
-};
 
 const findEperuste = (koulutus) => (id) =>
   _.head(koulutus.eperusteet.filter((e) => e.id === id));
