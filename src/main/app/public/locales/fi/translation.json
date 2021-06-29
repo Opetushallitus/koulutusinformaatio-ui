@@ -477,6 +477,13 @@
     "lukiodiplomit": "Lukiodiplomit",
     "yleiset-tavoitteet": "Yleiset tavoitteet",
     "keskeiset-sisällöt": "Keskeiset sisällöt",
-    "lisätietoa": "Lisätietoa"
+    "lisätietoa": "Lisätietoa",
+    "A1Kielet": "A1-kielet",
+    "A2Kielet": "A2-kielet",
+    "B1Kielet": "B1-kielet",
+    "B2Kielet": "B2-kielet",
+    "B3Kielet": "B3-kielet",
+    "aidinkielet": "Valinnainen oman äidinkielen opetus",
+    "muutKielet": "Muut kielet"
   }
 }

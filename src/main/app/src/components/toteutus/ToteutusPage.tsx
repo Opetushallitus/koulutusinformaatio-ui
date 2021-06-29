@@ -9,7 +9,9 @@ import { HashLink } from 'react-router-hash-link';
 
 import { colors } from '#/src/colors';
 import { AccordionWithTitle } from '#/src/components/common/AccordionWithTitle';
+import { ColoredPaperContent } from '#/src/components/common/ColoredPaperContent';
 import ContentWrapper from '#/src/components/common/ContentWrapper';
+import { ExternalLink } from '#/src/components/common/ExternalLink';
 import HtmlTextBox from '#/src/components/common/HtmlTextBox';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
 import { LocalizedHTML } from '#/src/components/common/LocalizedHTML';
@@ -30,11 +32,14 @@ import {
   selectLoading as selectToteutusLoading,
   selectToteutus,
 } from '#/src/store/reducers/toteutusSlice';
-import { getLanguage, localize } from '#/src/tools/localization';
+import {
+  getLanguage,
+  localize,
+  localizeArrayToCommaSeparated,
+} from '#/src/tools/localization';
 import { getLocalizedOpintojenLaajuus, sanitizedHTMLParser } from '#/src/tools/utils';
-import { Toteutus } from '#/src/types/ToteutusTypes';
+import { Kielivalikoima, Toteutus } from '#/src/types/ToteutusTypes';
 
-import { ExternalLink } from '../common/ExternalLink';
 import { Diplomit } from './Diplomit';
 import { HakuKaynnissaCard } from './HakuKaynnissaCard';
 import { Osaamisalat } from './Osaamisalat';
@@ -46,7 +51,64 @@ import { ToteutusInfoGrid } from './ToteutusInfoGrid';
 
 const useStyles = makeStyles({
   root: { marginTop: '100px' },
+  table: {
+    borderSpacing: 0,
+    borderCollapse: 'separate',
+  },
+  cell: {
+    textAlign: 'left',
+    maxWidth: '150px',
+    padding: '8px',
+    verticalAlign: 'top',
+  },
 });
+
+const kielivalikoimaKeys: Array<keyof Kielivalikoima> = [
+  'A1Kielet',
+  'A2Kielet',
+  'B1Kielet',
+  'B2Kielet',
+  'B3Kielet',
+  'aidinkielet',
+  'muutKielet',
+];
+
+const KielivalikoimaBox = ({ kielivalikoima }: { kielivalikoima?: Kielivalikoima }) => {
+  const { t } = useTranslation();
+
+  const classes = useStyles();
+
+  return (
+    <Box
+      className={classes.root}
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      width="100%">
+      <Typography variant="h2">{t('toteutus.kielivalikoima')}</Typography>
+      <Spacer />
+      <ColoredPaperContent>
+        <Box margin={4}>
+          <table className={classes.table}>
+            <tbody>
+              {kielivalikoimaKeys.map(
+                (valikoimaKey) =>
+                  kielivalikoima?.[valikoimaKey] && (
+                    <tr key={valikoimaKey}>
+                      <th className={classes.cell}>{t(`toteutus.${valikoimaKey}`)}</th>
+                      <td className={classes.cell}>
+                        {localizeArrayToCommaSeparated(kielivalikoima[valikoimaKey])}
+                      </td>
+                    </tr>
+                  )
+              )}
+            </tbody>
+          </table>
+        </Box>
+      </ColoredPaperContent>
+    </Box>
+  );
+};
 
 export const ToteutusPage = () => {
   const classes = useStyles();
@@ -68,6 +130,7 @@ export const ToteutusPage = () => {
     ammattinimikkeet,
     yhteyshenkilot,
     diplomit,
+    kielivalikoima,
   } = toteutus?.metadata ?? {};
   const koulutus = useSelector(selectKoulutus(koulutusOid), shallowEqual);
   const haut = useSelector(selectHakukohteet(oid), shallowEqual);
@@ -184,7 +247,7 @@ export const ToteutusPage = () => {
         {kuvaus && (
           <HtmlTextBox
             heading={t('koulutus.kuvaus')}
-            html={localize(toteutus.metadata.kuvaus)}
+            html={localize(kuvaus)}
             className={classes.root}
           />
         )}
@@ -206,6 +269,7 @@ export const ToteutusPage = () => {
             }))}
           />
         )}
+        <KielivalikoimaBox kielivalikoima={kielivalikoima} />
         <Diplomit diplomit={diplomit} />
         <Osaamisalat toteutus={toteutus} koulutus={koulutus} />
         {hasAnyHaku && <ToteutusHakukohteet haut={haut} />}

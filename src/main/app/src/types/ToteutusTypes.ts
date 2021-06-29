@@ -62,6 +62,16 @@ export type Lukiodiplomi = {
   linkinAltTeksti: Translateable;
 };
 
+export type Kielivalikoima = {
+  A1Kielet: Array<Translateable>;
+  A2Kielet: Array<Translateable>;
+  B1Kielet: Array<Translateable>;
+  B2Kielet: Array<Translateable>;
+  B3Kielet: Array<Translateable>;
+  aidinkielet: Array<Translateable>;
+  muutKielet: Array<Translateable>;
+};
+
 export type ToteutusMetadata = {
   ammattinimikkeet: Array<{ kieli: string; arvo: string }>;
   asiasanat: [];
@@ -73,6 +83,7 @@ export type ToteutusMetadata = {
   painotukset: Array<{ koodi: Koodi; kuvaus: Translateable }>;
   erityisetKoulutustehtavat: Array<{ koodi: Koodi; kuvaus: Translateable }>;
   diplomit: Array<Lukiodiplomi>;
+  kielivalikoima: Kielivalikoima;
 };
 
 export type Organisaatio = {
