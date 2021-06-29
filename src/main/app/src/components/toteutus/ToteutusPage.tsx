@@ -45,7 +45,7 @@ import { ToteutusHakukohteet } from './ToteutusHakukohteet';
 import { ToteutusHakuMuu } from './ToteutusHakuMuu';
 import { ToteutusInfoGrid } from './ToteutusInfoGrid';
 
-export const useStyles = makeStyles({
+const useStyles = makeStyles({
   root: { marginTop: '100px' },
 });
 
