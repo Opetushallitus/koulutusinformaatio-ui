@@ -24,9 +24,12 @@ import {
   getFilterWithChecked,
   sortValues,
 } from '#/src/tools/filters';
-import { localize, getLocalizedMaksullisuus } from '#/src/tools/localization';
+import {
+  localize,
+  getLocalizedMaksullisuus,
+  localizeArrayToCommaSeparated,
+} from '#/src/tools/localization';
 import { mapValues } from '#/src/tools/lodashFpUncapped';
-import { Translateable } from '#/src/types/common';
 import { FilterValue } from '#/src/types/SuodatinTypes';
 import { Jarjestaja } from '#/src/types/ToteutusTypes';
 
@@ -55,12 +58,6 @@ const useStyles = makeStyles({
     minWidth: '250px',
   },
 });
-
-const localizeArrayToString = (toLocalizeArray: Array<{ nimi: Translateable }>) =>
-  toLocalizeArray
-    ?.map((item) => localize(item))
-    .sort()
-    .join(', ');
 
 type Props = {
   oid: string;
@@ -261,8 +258,14 @@ export const ToteutusList = ({ oid }: Props) => {
                 kuvaus={localize(toteutus.kuvaus)}
                 wrapDirection="column-reverse"
                 iconTexts={[
-                  [localizeArrayToString(toteutus.kunnat), PublicIcon],
-                  [localizeArrayToString(toteutus.opetusajat), HourglassEmptyIcon],
+                  [
+                    localizeArrayToCommaSeparated(toteutus.kunnat, { sorted: true }),
+                    PublicIcon,
+                  ],
+                  [
+                    localizeArrayToCommaSeparated(toteutus.opetusajat, { sorted: true }),
+                    HourglassEmptyIcon,
+                  ],
                   [
                     getLocalizedMaksullisuus(
                       toteutus.maksullisuustyyppi,

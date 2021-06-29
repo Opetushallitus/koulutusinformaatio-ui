@@ -21,7 +21,7 @@ import {
 } from '#/src/store/reducers/oppilaitosSliceSelector';
 import {
   localize,
-  localizeSortedArrayToString,
+  localizeArrayToCommaSeparated,
   getLocalizedMaksullisuus,
 } from '#/src/tools/localization';
 
@@ -117,8 +117,8 @@ const selectTarjonta = (tarjonta: any) => {
       (t: any) => ({
         toteutusName: localize(t.nimi),
         description: localize(t.kuvaus),
-        locations: localizeSortedArrayToString(t.kunnat),
-        opetustapa: localizeSortedArrayToString(t.opetusajat),
+        locations: localizeArrayToCommaSeparated(t.kunnat, { sorted: true }),
+        opetustapa: localizeArrayToCommaSeparated(t.opetusajat, { sorted: true }),
         price: getLocalizedMaksullisuus(t.maksullisuustyyppi, t.maksunMaara),
         tyyppi: t.koulutustyyppi,
         kuva: t.kuva,
@@ -137,8 +137,10 @@ const selectTulevaTarjonta = (tulevaTarjonta: any) => {
   const localizedTulevaTarjonta = hits.map((k: any) => ({
     koulutusOid: k.koulutusOid,
     koulutusName: localize(k.nimi),
-    tutkintonimikkeet: localizeSortedArrayToString(k.tutkintonimikkeet),
-    koulutustyypit: localizeSortedArrayToString(k.koulutustyypit),
+    tutkintonimikkeet: localizeArrayToCommaSeparated(k.tutkintonimikkeet, {
+      sorted: true,
+    }),
+    koulutustyypit: localizeArrayToCommaSeparated(k.koulutustyypit, { sorted: true }),
     opintojenlaajuus: `${localize(k.opintojenLaajuus)} ${localize(
       k.opintojenLaajuusyksikko
     )}`,

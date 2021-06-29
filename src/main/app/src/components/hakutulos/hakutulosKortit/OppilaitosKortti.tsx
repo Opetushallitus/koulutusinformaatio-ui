@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { EntiteettiKortti } from '#/src/components/common/EntiteettiKortti';
 import { OppilaitosKorttiLogo } from '#/src/components/common/KorttiLogo';
-import { localize } from '#/src/tools/localization';
+import { localize, localizeArrayToCommaSeparated } from '#/src/tools/localization';
 import { Koodi, Translateable } from '#/src/types/common';
 
 type Props = {
@@ -23,7 +23,7 @@ type Props = {
 export const OppilaitosKortti = ({ oppilaitos }: Props) => {
   const { t } = useTranslation();
 
-  const paikkakunnatStr = (oppilaitos?.paikkakunnat || []).map(localize).join(', ');
+  const paikkakunnatStr = localizeArrayToCommaSeparated(oppilaitos?.paikkakunnat);
 
   const kuvaus =
     _.truncate(localize(oppilaitos?.kuvaus).replace(/<[^>]*>/gm, ''), {
