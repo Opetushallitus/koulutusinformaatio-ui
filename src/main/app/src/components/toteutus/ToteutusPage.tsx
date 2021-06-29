@@ -131,15 +131,17 @@ export const ToteutusPage = () => {
           {localize(toteutus?.nimi)}
         </Typography>
         {!_.isEmpty(asiasanat) && (
-          <Grid alignItems="center" justify="center" container spacing={1}>
-            {asiasanat.map((asiasana, i) => (
-              <Grid item key={i}>
-                <TextWithBackground>{asiasana}</TextWithBackground>
-              </Grid>
-            ))}
-          </Grid>
+          <Box mt={4}>
+            <Grid alignItems="center" justify="center" container spacing={1}>
+              {asiasanat.map((asiasana, i) => (
+                <Grid item key={i}>
+                  <TextWithBackground>{asiasana}</TextWithBackground>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
         )}
-        <Box mt={7}>
+        <Box mt={6}>
           <TeemakuvaImage
             imgUrl={toteutus?.teemakuva}
             altText={t('toteutus.toteutuksen-teemakuva')}
