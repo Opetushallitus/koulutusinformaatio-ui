@@ -6,6 +6,8 @@ import { educationTypeColorCode } from '#/src/colors';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
+    display: 'flex',
+    justifyContent: 'center',
     width: '80%',
     backgroundColor: ({ backgroundColor }) =>
       backgroundColor ?? educationTypeColorCode.ammatillinenGreenBg,

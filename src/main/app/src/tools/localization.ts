@@ -1,6 +1,6 @@
 import _fp from 'lodash/fp';
 
-import { Koodi } from '#/src/types/common';
+import { Koodi, Translateable } from '#/src/types/common';
 import { Maksullisuustyyppi } from '#/src/types/ToteutusTypes';
 
 import i18n from './i18n';
@@ -27,12 +27,17 @@ export const localize = (obj: any) => (obj ? translate(obj.nimi || obj) : '');
 export const localizeIfNimiObject = (obj: any) =>
   obj ? (_fp.isString(obj.nimi) ? obj.nimi : translate(obj.nimi || obj)) : '';
 
-export const localizeSortedArrayToString = (arr: Array<Koodi> = []) =>
-  _fp.compose(
-    _fp.join(', '),
+export const localizeArrayToCommaSeparated = (
+  arr: Array<Koodi | Translateable>,
+  { sorted }: { sorted?: boolean } = { sorted: false }
+) =>
+  _fp.flow(
+    _fp.map(_fp.flow(localize, _fp.trim)),
+    _fp.filter(_fp.negate(_fp.isEmpty)),
+    (v) => (sorted ? _fp.sortBy(_fp.identity)(v) : v),
     _fp.uniq,
-    _fp.map(localize),
-    _fp.sortBy(`nimi.${getLanguage()}`)
+    _fp.join(', '),
+    (v) => (_fp.isEmpty(v) ? '' : v)
   )(arr);
 
 export const getTranslationForKey = (key = '') => i18n.t(key);

@@ -4,8 +4,7 @@ import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
 import Spacer from '#/src/components/common/Spacer';
-import { localize } from '#/src/tools/localization';
-import { Koodi } from '#/src/types/common';
+import { localize, localizeArrayToCommaSeparated } from '#/src/tools/localization';
 import { Jarjestaja } from '#/src/types/ToteutusTypes';
 
 import { OppilaitosCard } from './OppilaitosCard';
@@ -18,9 +17,6 @@ const useStyles = makeStyles({
     marginTop: '100px',
   },
 });
-
-const localizeArrayToString = (toLocalizeArray: Array<Koodi>) =>
-  toLocalizeArray.map(localize).sort().join(', ');
 
 type Props = {
   jarjestajat: Array<Jarjestaja>;
@@ -41,7 +37,7 @@ export const TulevaJarjestajaList = ({ jarjestajat }: Props) => {
           <OppilaitosCard
             key={jarjestaja.oppilaitosOid}
             heading={localize(jarjestaja.nimi)}
-            locations={localizeArrayToString(jarjestaja.kunnat)}
+            locations={localizeArrayToCommaSeparated(jarjestaja.kunnat, { sorted: true })}
             tyyppi={jarjestaja.koulutustyyppi}
             oppilaitosOid={jarjestaja.oppilaitosOid}
             image={jarjestaja.kuva}

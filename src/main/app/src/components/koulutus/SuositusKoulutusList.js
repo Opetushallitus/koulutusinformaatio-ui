@@ -7,7 +7,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { LocalizedLink } from '#/src/components/common/LocalizedLink';
 import Spacer from '#/src/components/common/Spacer';
-import { localize, localizeSortedArrayToString } from '#/src/tools/localization';
+import { localize, localizeArrayToCommaSeparated } from '#/src/tools/localization';
 
 import SuositusKoulutusCard from './SuositusKoulutusCard';
 
@@ -44,7 +44,10 @@ const SuositusKoulutusList = ({ koulutukset, oid }) => {
                   to={`/koulutus/${kts?.oid}`}>
                   <SuositusKoulutusCard
                     koulutusName={localize(kts?.nimi)}
-                    tutkintonimikkeet={localizeSortedArrayToString(kts?.tutkintonimike)}
+                    tutkintonimikkeet={localizeArrayToCommaSeparated(
+                      kts?.tutkintonimike,
+                      { sorted: true }
+                    )}
                     opintojenlaajuus={localize(kts?.opintojenLaajuus)}
                     opintojenLaajuusyksikko={localize(kts?.opintojenLaajuusyksikko)}
                     onSuosikki={kts?.onSuosikki}
