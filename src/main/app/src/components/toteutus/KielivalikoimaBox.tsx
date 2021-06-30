@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Box, makeStyles, Typography } from '@material-ui/core';
+import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import { ColoredPaperContent } from '#/src/components/common/ColoredPaperContent';
@@ -39,9 +40,13 @@ export const KielivalikoimaBox = ({
 }) => {
   const { t } = useTranslation();
 
+  const hasKielivalikoima = !(
+    _.isEmpty(kielivalikoima) || _.every(kielivalikoima, _.isEmpty)
+  );
+
   const classes = useStyles();
 
-  return (
+  return hasKielivalikoima ? (
     <Box
       className={classes.root}
       display="flex"
@@ -70,5 +75,5 @@ export const KielivalikoimaBox = ({
         </Box>
       </ColoredPaperContent>
     </Box>
-  );
+  ) : null;
 };
