@@ -8,6 +8,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import 'typeface-open-sans';
 
+import StackTrace from 'stacktrace-js';
+
 import { postClientError } from '#/src/api/konfoApi';
 import App from '#/src/App';
 import { LoadingCircle } from '#/src/components/common/LoadingCircle';
@@ -47,14 +49,24 @@ if ('serviceWorker' in navigator) {
 }
 
 window.onerror = (errorMsg, url, line, col, errorObj) => {
-  postClientError({
-    'error-message': errorMsg,
-    url: url,
-    line: line,
-    col: col,
-    'user-agent': window.navigator.userAgent,
-    stack: '' + errorObj,
-  });
+  const send = (trace) => {
+    postClientError({
+      'error-message': errorMsg,
+      url: window.location.href,
+      line: line,
+      col: col,
+      'user-agent': window.navigator.userAgent,
+      stack: trace,
+    });
+  };
+  StackTrace.fromError(errorObj)
+    .then((err) => {
+      console.log(err);
+      send(JSON.stringify(err));
+    })
+    .catch((err) => {
+      send(JSON.stringify(errorObj));
+    });
 };
 
 const InitGate = ({ children }) => {
