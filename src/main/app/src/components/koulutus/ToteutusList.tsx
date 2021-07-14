@@ -274,7 +274,7 @@ export const ToteutusList = ({ oid }: Props) => {
                     EuroSymbolIcon,
                   ],
                   [
-                    <TextWithBackground>{t('haku.hakukaynnissa')}</TextWithBackground>,
+                    toteutus.hakukaynnissa ? <TextWithBackground>{t('haku.hakukaynnissa')}</TextWithBackground> : <></>,
                     undefined,
                   ],
                 ]}
